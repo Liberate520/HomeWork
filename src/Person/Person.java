@@ -1,4 +1,4 @@
-package Tree;
+package Person;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable {
+public class Person implements Serializable, Comparable<Person> {
     private int id; //Добавляем id,кооторый будет увеличиваться, как автоинкремент в Main.
     private String fullName;
     private Gender gender;
@@ -28,6 +28,7 @@ public class Person implements Serializable {
         this.father = father;
         childrenList=new ArrayList<>();
     }
+
 
     public String getFullName() {
         return fullName;
@@ -222,4 +223,8 @@ public class Person implements Serializable {
     }
 
 
+    @Override
+    public int compareTo(Person o) {
+        return fullName.compareTo(o.getFullName());
+    }
 }

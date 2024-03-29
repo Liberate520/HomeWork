@@ -1,23 +1,28 @@
-import Tree.Gender;
-import Tree.Person;
+import Person.Gender;
+import Person.Person;
 import Tree.FamilyTree;
 import writer.FileHandler;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args)  {
+
         FamilyTree tree=upLoadTree();
         //FamilyTree tree=createTree();
-
-        System.out.println(tree);
         //saveTree(tree);
+        System.out.println(tree);
 
+        //Выводит на основе применения Итератора
+        System.out.println(getTreeInfo(tree));
+
+
+        tree.sortByName();
+        System.out.println("Генеалогическое древо после сортировки по имени:\n"+tree);
+
+        tree.sortByDateOfBirth();
+        System.out.println("Генеалогическое древо после сортировки по дате рождения:\n"+tree);
     }
-
 
 
     static FamilyTree createTree() {
@@ -61,12 +66,20 @@ public class Main {
                 ludmila,
                 sergey);
 
+        Person vladimir2 = new Person(id++, "Владимир Сергеевич Т.",
+                Gender.male,
+                LocalDate.of(1977, 9, 20),
+                LocalDate.of(2007, 3, 11),
+                ludmila,
+                sergey);
+
 
         tree.add(maria);
         tree.add(vladimir);
         tree.add(sergey);
         tree.add(ludmila);
         tree.add(alexandr);
+        tree.add(vladimir2);
         return tree;
 
     }
@@ -84,10 +97,14 @@ public class Main {
         return fileHandler.uploadFromFile(filePath);
     }
 
-
-
-
-
-
+    private static String getTreeInfo(FamilyTree tree){
+        StringBuilder str=new StringBuilder();
+        str.append("Генеалогическое древо:\n");
+        for (Person person: tree){
+            str.append(person);
+            str.append("\n");
+        }
+        return str.toString();
+    }
 
 }

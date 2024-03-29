@@ -1,18 +1,19 @@
 package Tree;
 
+import Person.Person;
 import java.io.Serializable;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Person> {
     private List<Person> personList;
 
     public FamilyTree(){
+
         this(new ArrayList<>());
     }
     public FamilyTree(List <Person> personList){
+
         this.personList=personList;
     }
 
@@ -72,5 +73,26 @@ public class FamilyTree implements Serializable {
         return sb.toString();
 
     }
+
+    public void sortByName(){
+
+        Collections.sort(personList,new PersonComparatorByName());
+    }
+
+
+    public void sortByDateOfBirth() {
+        Collections.sort(personList, new PersonComparatorByBirthDate());
+    };
+
+
+
+    @Override
+    public Iterator<Person> iterator() {
+
+        return new TreeIterator(personList);
+    }
+
+
+
 
 }
