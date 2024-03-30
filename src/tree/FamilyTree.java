@@ -1,52 +1,54 @@
 package tree;
 
-import utils.FamilyTreeIterator;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
+public class FamilyTree<T extends FamilyTreeEntity> implements Serializable, Iterable<T> {
 
-    private List<Person> people;
+    private List<T> people;
 
     public FamilyTree() {
         this.people = new ArrayList<>();
     }
 
-    public void addPerson(Person person) {
+    public void addPerson(T person) {
         people.add(person);
     }
 
     public void addRelationship(String parentName, String childName) {
-        Person parent = findPerson(parentName);
-        Person child = findPerson(childName);
+        T parent = findPerson(parentName);
+        T child = findPerson(childName);
 
         if (parent != null && child != null) {
             parent.addChild(child);
             if (parent.getGender().equals(Gender.Male)){
-                child.setFather(parent);
-            }
-            else{
-                child.setMother(parent);
+                child.setFather((Person) parent); // Приведение к Person
+            } else {
+                child.setMother((Person) parent); // Приведение к Person
             }
         } else {
-            System.out.println("tree.Person not found in the family tree.");
+            System.out.println("Person not found in the family tree.");
         }
     }
 
-    public List<Person> getChildrenOfPerson(String name) {
-        Person person = findPerson(name);
+    public List<? extends FamilyTreeEntity> getChildrenOfPerson(String name) {
+        T person = findPerson(name);
         if (person != null) {
             return person.getChildren();
         } else {
-            System.out.println("tree.Person not found in the family tree.");
+            System.out.println("Person not found in the family tree.");
             return new ArrayList<>();
         }
     }
 
-    private Person findPerson(String name) {
-        for (Person person : people) {
-            if (person.getName().equals(name)) {
+    private T findPerson(String name) {
+        for (T person : people) {
+            String personName = person.getName();
+            if (personName != null && personName.equals(name)) {
                 return person;
             }
         }
@@ -54,18 +56,18 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     }
 
     public void sortByName() {
-        Collections.sort(people, new Comparator<Person>() {
+        Collections.sort(people, new Comparator<T>() {
             @Override
-            public int compare(Person person1, Person person2) {
+            public int compare(T person1, T person2) {
                 return person1.getName().compareTo(person2.getName());
             }
         });
     }
 
     public void sortByDateOfBirth() {
-        Collections.sort(people, new Comparator<Person>() {
+        Collections.sort(people, new Comparator<T>() {
             @Override
-            public int compare(Person person1, Person person2) {
+            public int compare(T person1, T person2) {
                 return person1.getBirthYear().compareTo(person2.getBirthYear());
             }
         });
@@ -73,13 +75,13 @@ public class FamilyTree implements Serializable, Iterable<Person> {
 
     @Override
     public String toString() {
-        return "tree.FamilyTree{" +
+        return "FamilyTree{" +
                 "people=" + people +
                 '}';
     }
 
     @Override
-    public Iterator iterator() {
-        return new FamilyTreeIterator(people);
+    public Iterator<T> iterator() {
+        return people.iterator();
     }
 }

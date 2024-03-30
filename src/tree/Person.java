@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable{
+public class Person extends FamilyTreeEntity implements Serializable {
     private String name;
     private Gender gender;
     private LocalDate birthYear;
@@ -13,7 +13,15 @@ public class Person implements Serializable{
     private Person mother;
     private Person father;
 
-    private List<Person> children;
+    private List<FamilyTreeEntity> children;
+
+    public Person(String name, Gender gender, LocalDate birthYear) {
+        super(name,gender,birthYear);
+        this.name = name;
+        this.gender = gender;
+        this.birthYear = birthYear;
+        this.children = new ArrayList<>();
+    }
 
     public Person getMother() {
         return mother;
@@ -31,43 +39,40 @@ public class Person implements Serializable{
         this.father = father;
     }
 
-
-
-    public Person(String name, Gender gender, LocalDate birthYear) {
-        this.name = name;
-        this.gender = gender;
-        this.birthYear = birthYear;
-        this.children = new ArrayList<>();
-    }
-
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
 
+    @Override
     public LocalDate getBirthYear() {
         return birthYear;
     }
 
+    @Override
     public LocalDate getDeathYear() {
         return deathYear;
     }
 
+    @Override
     public void setDeathYear(LocalDate deathYear) {
         this.deathYear = deathYear;
     }
 
-    public List<Person> getChildren() {
+    @Override
+    public List<FamilyTreeEntity> getChildren() {
         return children;
     }
 
-    public void addChild(Person child) {
+    @Override
+    public void addChild(FamilyTreeEntity child) {
         children.add(child);
     }
-
 
     @Override
     public String toString() {
