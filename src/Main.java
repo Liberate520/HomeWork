@@ -7,8 +7,7 @@ public class Main {
                 Gender.male,
                 new Date(112, 11, 23));
         Human human2 = new Human("Daniil", "Yermoshin", Gender.male, new Date(84, 7, 28));
-//        human2.setDod(new Date(175, 11, 15));
-        System.out.println(human2);
+        human2.setChildren(human1);
         human1.setFather(human2);
         System.out.println(human1.getFather());
         System.out.println(human2.getChildren());

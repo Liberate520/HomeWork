@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Human {
     private final String firstName;
@@ -17,7 +14,7 @@ public class Human {
         this.lastName = lastName;
         this.gender = gender;
         this.dob = dob;
-        this.childrens = new ArrayList<>();
+        this.childrens = new LinkedList<>();
     }
 
     public String getFirstName() {
@@ -49,8 +46,15 @@ public class Human {
     }
 
     public void setChildren(Human children) {
-        this.childrens.add(children);
-    }
+        boolean flag = true;
+        for (Human human : this.childrens) {
+            if (children == human) {
+                flag = false;
+            }
+        }
+            if (flag) this.childrens.add(children);
+        }
+
 
     public void setDod(Date dod) {
         this.dod = dod;
@@ -58,33 +62,18 @@ public class Human {
 
     public void setMother(Human mother) {
         this.mother = mother;
-        for (Human human: this.mother.childrens){
-            if (equals(human, this)){
-                return;
-            }
-        }
         mother.setChildren(this);
-    }
-    public boolean equals(Human human1, Human human2){
-        return human1.firstName.equals(human2.firstName) &&
-                human1.lastName.equals(human2.lastName) &&
-                human1.dob.equals(human2.dob);
     }
 
     public void setFather(Human father) {
         this.father = father;
-        for (Human human: this.father.childrens){
-            if (equals(human, this)){
-                return;
-            }
-        }
         father.setChildren(this);
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Name:\n");
+        stringBuilder.append("\nName:\n");
         stringBuilder.append(firstName);
         stringBuilder.append("\nLast Name:\n");
         stringBuilder.append(lastName);
