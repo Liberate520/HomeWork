@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Human {
     private String firstName;
@@ -17,12 +18,19 @@ public class Human {
     private Human husband;
     private int inn;
 
-    public Human(String firstName, String lastName, Gender gender, LocalDate birtDay) {
+    private Human(String firstName, String lastName, Gender gender, LocalDate birtDay) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.birtDay = birtDay;
         this.children = new ArrayList<>();
+    }
+
+    public static Human create(String firstName, String lastName, Gender gender, LocalDate birtDay) {
+        if (!birtDay.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("некорректная дата рождения");
+        }
+        return new Human(firstName, lastName, gender, birtDay);
     }
 
     /**
@@ -83,6 +91,27 @@ public class Human {
         if (this.inn == 0) {
             this.inn = inn;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(firstName, human.firstName) &&
+                Objects.equals(lastName, human.lastName) &&
+                gender == human.gender &&
+                Objects.equals(birtDay, human.birtDay) &&
+                Objects.equals(mortDay, human.mortDay) &&
+                Objects.equals(mother, human.mother) &&
+                Objects.equals(father, human.father) &&
+                Objects.equals(children, human.children) &&
+                Objects.equals(husband, human.husband);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, gender, birtDay, mortDay, mother, father, children, husband);
     }
 
     @Override
