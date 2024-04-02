@@ -1,7 +1,7 @@
-package tree;
+package model.tree;
 
-import entity.Gender;
-import entity.Person;
+import model.entity.Gender;
+import model.entity.Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class FamilyTree<T extends FamilyTreeEntity> implements Serializable, Ite
                 child.setMother((Person) parent); // Приведение к Person
             }
         } else {
-            System.out.println("Person not found in the family tree.");
+            System.out.println("Person not found in the family model.tree.");
         }
     }
 
@@ -43,7 +43,7 @@ public class FamilyTree<T extends FamilyTreeEntity> implements Serializable, Ite
         if (person != null) {
             return person.getChildren();
         } else {
-            System.out.println("Person not found in the family tree.");
+            System.out.println("Person not found in the family model.tree.");
             return new ArrayList<>();
         }
     }

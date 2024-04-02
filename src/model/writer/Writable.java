@@ -1,8 +1,7 @@
-package writer;
+package model.writer;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import tree.FamilyTree;
+import model.tree.FamilyTree;
 public interface Writable {
 
     FamilyTree load() throws IOException, ClassNotFoundException;

@@ -1,9 +1,9 @@
-package tree;
+package model.tree;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import entity.*;
+import model.entity.*;
 
 public abstract class FamilyTreeEntity {
 

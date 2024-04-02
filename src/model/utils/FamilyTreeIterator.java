@@ -1,6 +1,6 @@
-package utils;
+package model.utils;
 
-import entity.Person;
+import model.entity.Person;
 
 import java.util.Iterator;
 import java.util.List;

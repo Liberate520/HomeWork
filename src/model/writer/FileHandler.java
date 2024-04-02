@@ -1,8 +1,8 @@
-package writer;
+package model.writer;
 
 import java.io.*;
 
-import tree.FamilyTree;
+import model.tree.FamilyTree;
 
 public class FileHandler implements Writable {
     private String filePath = "serial.txt";

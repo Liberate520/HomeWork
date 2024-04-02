@@ -1,7 +1,7 @@
-package entity;
+package model.entity;
 
-import tree.FamilyTreeEntity;
-import entity.*;
+import model.tree.FamilyTreeEntity;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
