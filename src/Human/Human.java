@@ -60,7 +60,14 @@ public class Human {
     }
 
     public void setChildren(Human children) {
-        if (!childrens.contains(children)) this.childrens.add(children);
+        if (!childrens.contains(children)) {
+            this.childrens.add(children);
+            if (this.gender.equals(Gender.male) && children.father == null) {
+                children.father = this;
+            } else if (this.gender.equals(Gender.female) && children.mother == null) {
+                children.mother = this;
+            }
+        }
         }
 
 
@@ -85,7 +92,9 @@ public class Human {
     }
     public String getInfo(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Name: ");
+        stringBuilder.append("ID: ");
+        stringBuilder.append(id);
+        stringBuilder.append(", Name: ");
         stringBuilder.append(firstName);
         stringBuilder.append(", Last Name: ");
         stringBuilder.append(lastName);
@@ -98,13 +107,13 @@ public class Human {
         }
         stringBuilder.append(", Father: ");
         if (father != null) stringBuilder.append(father.firstName);
-        else stringBuilder.append(", N/D");
+        else stringBuilder.append("N/D");
         stringBuilder.append(", Mother: ");
         if (mother != null) stringBuilder.append(mother.firstName);
-        else stringBuilder.append(", N/D");
+        else stringBuilder.append("N/D");
         stringBuilder.append(", Spouse: ");
         if (spouse != null) stringBuilder.append(spouse.firstName);
-        else stringBuilder.append(", N/D");
+        else stringBuilder.append("N/D");
         return stringBuilder.toString();
     }
 

@@ -19,7 +19,14 @@ public class Main {
                 Gender.female,
                 LocalDate.of(1986, 10, 8));
         alina.setWending(daniil);
+        Human yulia = new Human("Yulia", "Yermoshina", Gender.female, LocalDate.of(2018, 2, 7));
+        daniil.setChildren(yulia);
+        alina.setChildren(yulia);
         System.out.println(alina.getInfo());
         System.out.println(daniil.getInfo());
+        dima.addParent(alina);
+        System.out.println(dima.getInfo());
+        System.out.println(yulia);
+        System.out.println(alina);
     }
 }
