@@ -3,7 +3,6 @@ package writer;
 import java.io.*;
 
 import tree.FamilyTree;
-import tree.Person;
 
 public class FileHandler implements Writable {
     private String filePath = "serial.txt";

@@ -1,6 +1,6 @@
 package utils;
 
-import tree.Person;
+import entity.Person;
 
 import java.util.Iterator;
 import java.util.List;

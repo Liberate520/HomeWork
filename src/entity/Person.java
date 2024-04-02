@@ -1,5 +1,7 @@
-package tree;
+package entity;
 
+import tree.FamilyTreeEntity;
+import entity.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
-package tree;
-
+import tree.FamilyTree;
+import tree.FamilyTreeEntity;
+import entity.Gender;
+import entity.Person;
 import writer.FileHandler;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {

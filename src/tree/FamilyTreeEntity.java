@@ -3,6 +3,7 @@ package tree;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import entity.*;
 
 public abstract class FamilyTreeEntity {
 
@@ -15,7 +16,7 @@ public abstract class FamilyTreeEntity {
 
     private List<FamilyTreeEntity> children;
 
-    FamilyTreeEntity(String name, Gender gender, LocalDate birthYear){
+    protected FamilyTreeEntity(String name, Gender gender, LocalDate birthYear){
             this.name = name;
             this.gender = gender;
             this.birthYear = birthYear;
@@ -24,47 +25,47 @@ public abstract class FamilyTreeEntity {
     }
 
 
-    String getName() {
+    public String getName() {
         return null;
     }
 
-    Gender getGender() {
+    public Gender getGender() {
         return null;
     }
 
-    LocalDate getBirthYear() {
+    public LocalDate getBirthYear() {
         return null;
     }
 
-    LocalDate getDeathYear() {
+    public LocalDate getDeathYear() {
         return null;
     }
 
-    void setDeathYear(LocalDate deathYear) {
+    public void setDeathYear(LocalDate deathYear) {
 
     }
 
-    List<FamilyTreeEntity> getChildren() {
+    public List<FamilyTreeEntity> getChildren() {
         return null;
     }
 
-    void addChild(Person child) {
+    public void addChild(Person child) {
 
     }
 
-    Person getMother() {
+    public Person getMother() {
         return null;
     }
 
-    void setMother(Person mother) {
+    public void setMother(Person mother) {
 
     }
 
-    Person getFather() {
+    public Person getFather() {
         return null;
     }
 
-    void setFather(Person father) {
+    public void setFather(Person father) {
 
     }
 
