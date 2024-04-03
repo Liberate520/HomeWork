@@ -1,6 +1,6 @@
-import Person.Gender;
-import Person.Person;
-import Tree.FamilyTree;
+import person.Gender;
+import person.Person;
+import tree.FamilyTree;
 import writer.FileHandler;
 
 import java.time.LocalDate;
@@ -8,9 +8,9 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args)  {
 
-        FamilyTree tree=upLoadTree();
-        //FamilyTree tree=createTree();
-        //saveTree(tree);
+        //FamilyTree tree=upLoadTree();
+        FamilyTree tree=createTree();
+        saveTree(tree);
         System.out.println(tree);
 
         //Выводит на основе применения Итератора
@@ -100,7 +100,7 @@ public class Main {
     private static String getTreeInfo(FamilyTree tree){
         StringBuilder str=new StringBuilder();
         str.append("Генеалогическое древо:\n");
-        for (Person person: tree){
+        for (Object person: tree){ // Правильно ли использован object?
             str.append(person);
             str.append("\n");
         }

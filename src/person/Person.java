@@ -1,4 +1,6 @@
-package Person;
+package person;
+
+import tree.TreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +8,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable, Comparable<Person> {
+public class Person implements Serializable, Comparable<Person>, TreeItem<Person> {
     private int id; //Добавляем id,кооторый будет увеличиваться, как автоинкремент в Main.
     private String fullName;
     private Gender gender;

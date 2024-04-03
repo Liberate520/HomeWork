@@ -1,30 +1,32 @@
-package Tree;
+package tree;
 
-import Person.Person;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 
-public class FamilyTree implements Serializable, Iterable<Person> {
-    private List<Person> personList;
+public class FamilyTree<E extends TreeItem<E>> implements Serializable, Iterable<E> {
+    private List<E> objectsList;
 
     public FamilyTree(){
 
         this(new ArrayList<>());
     }
-    public FamilyTree(List <Person> personList){
+    public FamilyTree(List <E> personList){
 
-        this.personList=personList;
+        this.objectsList =personList;
     }
 
     //Добавление человека в генеалогическое древо
-    public boolean add(Person person){
-        if(person==null || personList.contains(person)){
+    public boolean add(E person){
+        if(person==null || objectsList.contains(person)){
             System.out.println("Пустой объект или такой объект имеется");
             return false;
         }
         else{
-            personList.add(person);
+            objectsList.add(person);
             addToParents(person);//Добавление родственных связей
             addToChildren(person);//Добавление родственных связей
             return true;
@@ -32,24 +34,24 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     }
 
     //Связь с родителями
-    private void addToParents(Person person){
-        for (Person parent: person.getParents()) {
+    private void addToParents(E person){
+        for (E parent: person.getParents()) {
             parent.addChild(person);
         }
     }
 
     //СВязь с детьми
-    private void addToChildren(Person person){
-        for (Person child: person.getChildrenList()) {
+    private void addToChildren(E person){
+        for (E child: person.getChildrenList()) {
             child.addParent(person);
         }
     }
 
 
     //Поиск по имени. Могут быть однофамильцы. Возвращается список объектов
-    public List<Person> getByName(String fullName){
-        List<Person> res=new ArrayList<>();
-        for (Person person: personList){
+    public List<E> getByName(String fullName){
+        List<E> res=new ArrayList<>();
+        for (E person: objectsList){
             if (person.getFullName().equals(fullName)){
                 res.add(person);
             }
@@ -64,9 +66,9 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     public String getInfo(){
         StringBuilder sb=new StringBuilder();
         sb.append("В генеалогическом древе ");
-        sb.append(personList.size());
+        sb.append(objectsList.size());
         sb.append(" объектов: \n ");
-        for(Person person: personList){
+        for(E person: objectsList){
             sb.append(person);
             sb.append("\n");
         }
@@ -76,20 +78,22 @@ public class FamilyTree implements Serializable, Iterable<Person> {
 
     public void sortByName(){
 
-        Collections.sort(personList,new PersonComparatorByName());
+        Collections.sort(objectsList,new ComparatorByName());
     }
 
 
     public void sortByDateOfBirth() {
-        Collections.sort(personList, new PersonComparatorByBirthDate());
+
+        Collections.sort(objectsList, new ComparatorByBirthDate());
     };
 
 
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<E> iterator() {
 
-        return new TreeIterator(personList);
+        TreeIterator treeIterator = new TreeIterator(objectsList);
+        return treeIterator;
     }
 
 

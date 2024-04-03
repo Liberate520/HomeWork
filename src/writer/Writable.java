@@ -1,11 +1,6 @@
 package writer;
 
-import Tree.FamilyTree;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Serializable;
+import tree.FamilyTree;
 
 public interface Writable {
 

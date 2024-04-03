@@ -1,6 +1,6 @@
 package writer;
 
-import Tree.FamilyTree;
+import tree.FamilyTree;
 
 import java.io.*;
 
