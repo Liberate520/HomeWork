@@ -4,14 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree {
-    private List<Human> list;
+    private long currentLastId;
 
-    public FamilyTree() {
-        list = new ArrayList<>();
+    private List<Human> humanList;
+
+    public FamilyTree(List<Human> humanList) {
+        this.humanList = humanList;
     }
 
-    public void add(Human human) {
-        list.add(human);
+    public FamilyTree() { this(new ArrayList<>()); }
+
+    public boolean add(Human human) {
+        if (human == null) {
+            return  false;
+        }
+
+        if (!humanList.contains(human)) {
+            humanList.add(human);
+            human.setId(currentLastId++);
+
+            addToParents(human);
+            addToChildren(human);
+            return true;
+        }
+
     }
 
     @Override
