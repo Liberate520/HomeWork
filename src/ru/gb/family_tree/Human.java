@@ -40,6 +40,7 @@ public class Human {
     public boolean addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
+            child.addParent(this);
             return true;
         }
         return false;
@@ -105,12 +106,20 @@ public class Human {
         this.mother = mother;
     }
 
+    public String getMotherInfo() {
+        return Helpers.formatDataString("spouse", mother == null ? "none" : mother.getName() + ' ' + mother.getSecondName());
+    }
+
     public Human getFather() {
         return father;
     }
 
     public void setFather(Human father) {
         this.father = father;
+    }
+
+    public String getFatherInfo() {
+        return Helpers.formatDataString("spouse", father == null ? "none" : father.getName() + ' ' + father.getSecondName());
     }
 
     public List<Human> getParents() {
@@ -153,6 +162,10 @@ public class Human {
         this.spouse = spouse;
     }
 
+    public String getSpouseInfo() {
+        return Helpers.formatDataString("spouse", spouse == null ? "none" : spouse.getName() + ' ' + spouse.getSecondName());
+    }
+
     public List<Human> getChildren() {
         return children;
     }
@@ -169,26 +182,43 @@ public class Human {
         this.id = id;
     }
 
-    public getInfo() {
+    public boolean isAlive() {
+        return dayOfDeath == null;
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Helpers.formatDataString("id", String.valueOf(id)));
+        sb.append(Helpers.formatDataString("is alive", (isAlive() ? "alive" : "dead")));
+        sb.append(Helpers.formatDataString("name", name));
+        sb.append(Helpers.formatDataString("second name", secondName));
+        sb.append(Helpers.formatDataString("gender", String.valueOf(getGender())));
+        sb.append(Helpers.formatDataString("date of birth", dayOfBirth.toString()));
+        sb.append((dayOfDeath != null ? Helpers.formatDataString("date of birth", dayOfBirth.toString()) : ""));
+        sb.append(Helpers.formatDataString("age", String.valueOf(getAge())));
+        sb.append(Helpers.formatDataString("mother", mother != null ? getMotherInfo() : "unknown"));
+        sb.append(Helpers.formatDataString("father", father != null ? getFatherInfo() : "unknown"));
+
+        sb.append(spouse != null? Helpers.formatDataString("spouse", spouse.getName() + " " + spouse.getSecondName()) : "");
+
+        return sb.toString();
 
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Helpers.formatDataString("id", String.valueOf(id)));
-        sb.append(Helpers.formatDataString("name", name));
-        sb.append(Helpers.formatDataString("second name", secondName));
-        sb.append(Helpers.formatDataString("gender", String.valueOf(getGender())));
-        sb.append(Helpers.formatDataString("age", String.valueOf(getAge())));
-        sb.append(Helpers.formatDataString("age", String.valueOf(getAge())));
-
-//                Helpers.formatDataString("birth date", dob.toString()) + "\n";
-        return sb.toString();
+        return getInfo();
     }
 
     @Override
-    public boolean equals () {
-        return true;
+    public boolean equals (Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof Human human) {
+            return human.getId() == getId();
+        }
+        return false;
     }
 }
