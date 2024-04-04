@@ -20,7 +20,7 @@ public class Main {
         family.addMember(h4);
 
         System.out.println(family.allMembers());
-        System.out.println(family.allChildren("Irina"));
+        System.out.println(family.allChildren(h2));
 
     }
 }

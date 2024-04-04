@@ -22,10 +22,10 @@ public class FamilyTree {
         return output.toString();
     }
 
-    public String allChildren(String name) {
-        StringBuilder children = new StringBuilder("Все дети " + name + "\n");
+    public String allChildren(Human name) {
+        StringBuilder children = new StringBuilder("Все дети " + name.getName() + "\n");
         for (Human member : family) {
-            if (member.getMother().getName().equals(name)) {
+            if (member.getMother() == name) {
                 children.append("------------\n");
                 children.append("Имя: ").append(member.getName()).append("\nДата рождения: ").append(member.getDob()).append("\nПол: ").append(member.getGender()).append("\n");
             }
