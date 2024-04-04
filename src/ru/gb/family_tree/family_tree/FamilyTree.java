@@ -6,8 +6,10 @@ import ru.gb.family_tree.human.Human;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.io.Serializable;
 
-public class FamilyTree {
+
+public class FamilyTree implements Serializable {
 
     private long humanId;
     private List<Human> humanList;
@@ -22,7 +24,7 @@ public class FamilyTree {
         if (human == null) {
             return false;
         }
-        if (!humanList.contains(human)){
+        if (!humanList.contains(human)) {
             humanList.add(human);
             human.setId(humanId++);
 
@@ -72,10 +74,10 @@ public class FamilyTree {
     }
 
 
-    public List<Human> findByName(String name){
+    public List<Human> findByName(String name) {
         List<Human> res = new ArrayList<>();
         for (Human human: humanList) {
-            if (human.getName().equalsIgnoreCase(name)){
+            if (human.getName().equalsIgnoreCase(name)) {
                 res.add(human);
             }
         }

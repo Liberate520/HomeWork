@@ -1,5 +1,6 @@
 package ru.gb.family_tree.human;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.time.Period;
 
 
 
-public class Human {
+public class Human implements Serializable {
     private long id;
     private String name;
     private Gender gender;
@@ -19,35 +20,45 @@ public class Human {
     private HashMap<Human, SpouseStatus> spouses = new HashMap<>();
 
 
-    public Human(String name, Gender gender, LocalDate dob, LocalDate dod) {
+    public Human(String name, Gender gender, LocalDate dob, LocalDate dod, Human mother, Human father) {
         this.id = -1;
         this.name = name;
         this.gender = gender;
         this.dob = dob;
         this.dod = dod;
         this.children = new ArrayList<>();
-        this.mother = null;
-        this.father = null;
+        this.mother = mother;
+        this.father = father;
         this.spouses = new HashMap<>();
     }
 
 
-    public Human(String name, Gender gender, LocalDate dob){
-        this(name, gender, dob, null);
+    public Human(String name, Gender gender, LocalDate dob, Human mother, Human father) {
+        this(name, gender, dob, null, mother, father);
     }
 
 
-    public long getId(){
+    public Human(String name, Gender gender, LocalDate dob, LocalDate dod) {
+        this(name, gender, dob, dod, null, null);
+    }
+
+
+    public Human(String name, Gender gender, LocalDate dob) {
+        this(name, gender, dob, null, null, null);
+    }
+
+
+    public long getId() {
         return id;
     }
 
 
-    public void setId(long id){
+    public void setId(long id) {
         this.id=id;
     }
 
 
-    public void PrintId(){
+    public void PrintId() {
         System.out.println("Id: " + this.getId());
     }
 
@@ -121,7 +132,7 @@ public class Human {
     }
 
 
-    public boolean addChild (Human child){
+    public boolean addChild (Human child) {
         if (!children.contains(child)){
             children.add(child);
             return true;
@@ -130,7 +141,7 @@ public class Human {
     }
 
 
-    public String getChildrenAbout(){
+    public String getChildrenAbout() {
         StringBuilder childrenAbout = new StringBuilder();
         childrenAbout.append("Children: ");
         if(children.size() > 0) {
@@ -161,10 +172,10 @@ public class Human {
     }
 
 
-    public String getMotherAbout(){
+    public String getMotherAbout() {
         String motherAbout = "Mother: ";
         Human mother = getMother();
-        if (mother == null){
+        if (mother == null) {
             motherAbout += "Unknown";
         } else {
             motherAbout += mother.getName();
@@ -188,10 +199,10 @@ public class Human {
     }
 
 
-    public String getFatherAbout(){
+    public String getFatherAbout() {
         String fatherAbout = "Father: ";
         Human father = getFather();
-        if (father == null){
+        if (father == null) {
             fatherAbout += "Unknown";
         } else {
             fatherAbout += father.getName();
@@ -287,12 +298,12 @@ public class Human {
 
 
     @Override
-    public String toString(){
+    public String toString() {
         return getAbout();
     }
 
 
-    public String getAbout(){
+    public String getAbout() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name: ");
         sb.append(name);
