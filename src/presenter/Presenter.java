@@ -8,7 +8,7 @@ import model.tree.FamilyTree;
 
 import java.time.LocalDate;
 
-public class Presenter {
+public class Presenter implements PresenterInt{
 
     private View view;
     private Service service;

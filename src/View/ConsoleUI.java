@@ -4,6 +4,7 @@ import model.Service;
 import model.entity.Gender;
 import model.entity.Person;
 import presenter.Presenter;
+import presenter.PresenterInt;
 
 import java.sql.SQLOutput;
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 
 public class ConsoleUI implements View{
     private Scanner scanner = new Scanner(System.in);
-    private Presenter presenter;
+    private PresenterInt presenter;
 
     public ConsoleUI(){
         scanner = new Scanner(System.in);
