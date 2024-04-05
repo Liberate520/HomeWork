@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Human {
+public class Human implements Serializable {
     private long id;
     private String name;
     private LocalDate dob;
