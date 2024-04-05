@@ -5,7 +5,7 @@ import java.io.*;
 import model.tree.FamilyTree;
 
 public class FileHandler implements Writable {
-    private String filePath = "serial.txt";
+    private String filePath = "person.out";
 
     public FileHandler() {
     }
@@ -14,7 +14,7 @@ public class FileHandler implements Writable {
     public boolean save(FamilyTree tree) {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-                    new FileOutputStream("person.out"));
+                    new FileOutputStream(filePath));
             objectOutputStream.writeObject(tree);
             return true;
         } catch (IOException e) {
@@ -27,7 +27,7 @@ public class FileHandler implements Writable {
     @Override
     public FamilyTree load() throws IOException, ClassNotFoundException {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(
-                new FileInputStream("person.out"))) {
+                new FileInputStream(filePath))) {
 
             // Считываем объект FamilyTree из файла
             FamilyTree loadedTree = (FamilyTree) objectInputStream.readObject();

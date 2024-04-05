@@ -4,15 +4,18 @@ import model.entity.Gender;
 import model.entity.Person;
 import model.tree.FamilyTree;
 import model.tree.FamilyTreeEntity;
+import model.writer.FileHandler;
 
 import java.time.LocalDate;
 
 public class Service {
 
     private FamilyTree<Person> familyTree;
+    private FileHandler fh = new FileHandler();
 
     public Service() {
         this.familyTree = new FamilyTree();
+
     }
 
     public FamilyTree<Person> prep() {
@@ -33,7 +36,7 @@ public class Service {
         familyTree.addRelationship("Jane", "Tom");
         familyTree.addRelationship("John", "Emily");
         familyTree.addRelationship("Jane", "Emily");
-
+        fh.save(familyTree);
         return familyTree;
     }
 
