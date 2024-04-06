@@ -1,32 +1,58 @@
+// Не могу понять почему не работает сереализация древа, хотя файл создается прочитать его не получатся.
+// Если пытаться записывать в файл строки то в файл пишется.
+
+import family_tree.FamilyTree;
+import human.Gender;
+import human.Human;
+import writer.FileHandler;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) {
-        Human human1 = new Human("Ivan Konstantinov", LocalDate.of(1999, Month.APRIL,12), null, Gender.Male );
-        Human human2 = new Human("Irina Konstantinova", LocalDate.of(1998, Month.DECEMBER,12), null, Gender.Female );
-        Human human3 = new Human("Maria Petrova", LocalDate.of(1964, Month.APRIL,12), null, Gender.Female );
-        Human human4 = new Human("Semen Konstantinov", LocalDate.of(1968, Month.DECEMBER,12), null, Gender.Male );
+        String pathFile = "src/mytree.txt";
+        String pathFile1 = "src/mytreeSTR.txt";
+        FamilyTree  myFamilyTree = read(pathFile);
 
-        List<Human> children1 = new ArrayList<>();
-        children1.add(human1);
-        children1.add(human2);
-        human4.setChildren(children1);
-        human3.setChildren(children1);
+        //FamilyTree myFamilyTree = testTree();
+        System.out.println(myFamilyTree);
+        //save(myFamilyTree,pathFile);
+        //saveString(myFamilyTree,pathFile1);
 
-        human1.setMother(human3.getName());
-        human1.setFather(human4.getName());
-        human2.setMother(human3.getName());
-        human2.setFather(human4.getName());
+    }
+    static FamilyTree  read(String pathFile){
+        FileHandler fileHandler = new FileHandler();
+        return  (FamilyTree) fileHandler.read(pathFile);
+    }
 
-        FamilyTree familyTree1 = new FamilyTree();
-        familyTree1.addHuman(human1);
-        familyTree1.addHuman(human2);
-        familyTree1.addHuman(human3);
-        familyTree1.addHuman(human4);
+    static void save(FamilyTree familyTree, String pathFile){
+        FileHandler fileHandler = new FileHandler();
+           fileHandler.save(familyTree, pathFile);
+   }
+    static void saveString(FamilyTree familyTree, String pathFile){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree.getInfo(), pathFile);
+    }
 
-        System.out.println(familyTree1);
+    static FamilyTree testTree() {
+        FamilyTree myFamilyTree = new FamilyTree();
+        Human human1 = new Human("Ivan Konstantinov", Gender.Male, LocalDate.of(1964, Month.APRIL, 12));
+        Human human2 = new Human("Irina Konstantinova", Gender.Female, LocalDate.of(1968, Month.DECEMBER, 12));
+        myFamilyTree.addHuman(human1);
+        myFamilyTree.addHuman(human2);
+
+        Human human3 = new Human("Maria Petrova", Gender.Female, LocalDate.of(1991, Month.APRIL, 12),human2,human1);
+        Human human4 = new Human("Semen Konstantinov", Gender.Male, LocalDate.of(1994, Month.DECEMBER, 16),human2,human1);
+        myFamilyTree.addHuman(human3);
+        myFamilyTree.addHuman(human4);
+        Human human5 = new Human("Irina Petrova", Gender.Female, LocalDate.of(1971, Month.APRIL, 12));
+        Human human6 = new Human("Ivan Konstantinov", Gender.Male, LocalDate.of(1974, Month.DECEMBER, 16));
+        myFamilyTree.addHuman(human5);
+        myFamilyTree.addHuman(human6);
+
+        return myFamilyTree;
     }
 }
