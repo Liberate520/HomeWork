@@ -1,9 +1,10 @@
 package writable;
 
-import family_tree.FamilyTree;
+import java.io.Serializable;
 
 public interface Writable {
-    void write(FamilyTree familyTree);
-    FamilyTree load();
+    void save(Serializable serializable);
+
+    Object load();
 
 }

@@ -1,15 +1,12 @@
 package human;
 
-import family_tree.FamilyTree;
-
-import java.io.PrintStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private LocalDate dateOfBirthday, dateOfDeath;
     private Gender gender;
@@ -108,8 +105,6 @@ public class Human {
         } else
             return "неизв.";
     }
-
-
 
     @Override
     public String toString() {
