@@ -1,4 +1,3 @@
-
 import family_tree.FamilyTree;
 import human.Gender;
 import human.Human;
