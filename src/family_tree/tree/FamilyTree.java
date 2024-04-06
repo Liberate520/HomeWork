@@ -4,10 +4,7 @@ import family_tree.person.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FamilyTree implements Serializable {
     private long countPeople = 1;
@@ -72,7 +69,7 @@ public class FamilyTree implements Serializable {
         StringBuilder sb = new StringBuilder();
         for (Integer key : familyTree.keySet()) {
             sb.append("Generation ").append(key).append(": \n");
-            for(Human person: familyTree.get(key)){
+            for (Human person : familyTree.get(key)) {
                 sb.append(person.getInfo()).append("\n").append("-".repeat(20)).append("\n");
             }
             sb.append("--".repeat(20)).append("\n");
@@ -84,4 +81,34 @@ public class FamilyTree implements Serializable {
     public String toString() {
         return getInfo();
     }
+
+
+    private ArrayList<Human> convertToList() {
+        ArrayList<Human> res = new ArrayList<>();
+        for (ArrayList<Human> item : familyTree.values()) {
+            res.addAll(item);
+        }
+        return res;
+    }
+
+    public ArrayList<Human> sortByAge() {
+        ArrayList<Human> sortedFamilyList = convertToList();
+        sortedFamilyList.sort(Comparator.comparingInt(Human::getAge));
+        return sortedFamilyList;
+    }
+
+    public ArrayList<Human> sortByName() {
+        ArrayList<Human> sortedFamilyList = convertToList();
+        sortedFamilyList.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
+        return sortedFamilyList;
+    }
+
+    public ArrayList<String> getListOfNames(ArrayList<Human> peopleList) {
+        ArrayList<String> listOfNames = new ArrayList<>();
+        for (Human item : peopleList) {
+            listOfNames.add(item.getName());
+        }
+        return listOfNames;
+    }
+
 }

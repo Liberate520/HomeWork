@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private LocalDate dob, dod;
@@ -21,10 +21,14 @@ public class Human implements Serializable {
 
 
     public Human(String name, LocalDate dob, Gender gender) {
-        this(name, dob, gender, null, null, null);
+        this(name, dob, null, gender, null, null);
     }
 
-    public Human(String name, LocalDate dob, Gender gender, LocalDate dod,
+    public Human(String name, LocalDate dob, LocalDate dod, Gender gender) {
+        this(name, dob, dod, gender, null, null);
+    }
+
+    public Human(String name, LocalDate dob,  LocalDate dod, Gender gender,
                  Human father, Human mother) {
         id = -1;
         this.name = name;
@@ -37,7 +41,7 @@ public class Human implements Serializable {
     }
 
     public Human(String name, LocalDate dob, Gender gender, Human father, Human mother) {
-        this(name, dob, gender, null, father, mother);
+        this(name, dob, null, gender, father, mother);
     }
 
     public void addChildFromUnknownPartner(Human child) {
@@ -208,5 +212,11 @@ public class Human implements Serializable {
 
     }
 
-
+    @Override
+    public int compareTo(Human o) {
+        int res = name.compareTo(o.name);
+        if(res == 0){
+            return getAge() - o.getAge();
+        } else return res;
+    }
 }
