@@ -1,21 +1,20 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree {
-    List<Human> familyTree;
+    private List<Human> familyTree;
 
-    public void SetFamilyTree() {
-        familyTree = new ArrayList<>();
+    public void SetFamilyTree(List<Human> familyTree) {
+        this.familyTree = familyTree;
     }
 
-    public void addHumanToFamilyTree(Human human) {
+    public void add(List<Human> familyTree, Human human) {
         familyTree.add(human);
     }
 
-    public void getFamilyTree() {
+    public String getFamilyTree() {
         for (Human human : familyTree) {
-            human.getInfo();
-            System.out.println("\n");
+            return human.getInfo();
         }
+        return "";
     }
 }
