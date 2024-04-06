@@ -1,6 +1,6 @@
-package person;
+package model.person;
 
-import tree.TreeItem;
+import model.tree.TreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -20,14 +20,12 @@ public class Person implements Serializable, Comparable<Person>, TreeItem<Person
 
 
     //Полный конструктор
-    public Person(int id, String fullName, Gender gender, LocalDate birthDate, LocalDate deathDate, Person mother, Person father) {
+    public Person(int id, String fullName, Gender gender, LocalDate birthDate, LocalDate deathDate) {
         this.id = id;
         this.fullName = fullName;
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
-        this.mother = mother;
-        this.father = father;
         childrenList=new ArrayList<>();
     }
 
@@ -107,7 +105,7 @@ public class Person implements Serializable, Comparable<Person>, TreeItem<Person
     public void addParent(Person parent){
         if(parent.getGender().equals(Gender.male)){
             setFather(parent);
-        } else if (parent.getGender().equals(Gender.male)){
+        } else {
             setMother(parent);
         }
     }
@@ -146,7 +144,7 @@ public class Person implements Serializable, Comparable<Person>, TreeItem<Person
                     str.append("  мать: " + mother.getFullName());
                 } else {
                     str.append("отец: " + father.getFullName());
-                    str.append("  мать: неизвестена");
+                    str.append("  мать: неизвестна");
                 }
             }
         }
@@ -181,7 +179,6 @@ public class Person implements Serializable, Comparable<Person>, TreeItem<Person
             }
             return res.toString();
         }
-
 
 
         //Вывод информации на консоль о соответсвующем экземпляре класса

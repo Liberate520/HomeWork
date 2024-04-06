@@ -1,6 +1,6 @@
-package writer;
+package model.writer;
 
-import tree.FamilyTree;
+import model.tree.FamilyTree;
 
 public interface Writable {
 

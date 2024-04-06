@@ -1,8 +1,11 @@
-package writer;
+package model.writer;
 
-import tree.FamilyTree;
+import model.tree.FamilyTree;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 
@@ -33,5 +36,7 @@ public class FileHandler implements Writable {
         }
 
     }
+
+
 
 }

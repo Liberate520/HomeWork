@@ -1,4 +1,4 @@
-package tree;
+package model.tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,25 +27,35 @@ public class FamilyTree<E extends TreeItem<E>> implements Serializable, Iterable
         }
         else{
             objectsList.add(person);
-            addToParents(person);//Добавление родственных связей
-            addToChildren(person);//Добавление родственных связей
             return true;
         }
     }
 
-    //Связь с родителями
-    private void addToParents(E person){
-        for (E parent: person.getParents()) {
-            parent.addChild(person);
+
+    //Добавление родственных связей
+    public void addKinship(String parentName, String childName) {
+        E parent = findObject(parentName);
+        E child = findObject(childName);
+
+        if (parent != null && child != null) {
+            parent.addChild(child);
+            child.addParent(parent);
+        }else {
+            System.out.println("Данный объект отсутвует в семейном дереве");
         }
     }
 
-    //СВязь с детьми
-    private void addToChildren(E person){
-        for (E child: person.getChildrenList()) {
-            child.addParent(person);
+    //Метод поиска объекта по имени
+    private E findObject (String fullName){
+        for (E person : objectsList) {
+            String personName = person.getFullName();
+            if (personName != null && personName.equals(fullName)) {
+                return person;
+            }
         }
+        return null;
     }
+
 
 
     //Поиск по имени. Могут быть однофамильцы. Возвращается список объектов
@@ -95,8 +105,4 @@ public class FamilyTree<E extends TreeItem<E>> implements Serializable, Iterable
         TreeIterator treeIterator = new TreeIterator(objectsList);
         return treeIterator;
     }
-
-
-
-
 }

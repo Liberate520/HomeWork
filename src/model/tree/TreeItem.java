@@ -1,4 +1,4 @@
-package tree;
+package model.tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,6 +16,8 @@ public interface TreeItem<T> extends Serializable {
     LocalDate getDeathDate();
     List<T> getChildrenList();
     List<T> getParents();
+
+
 
 
 }
