@@ -1,8 +1,13 @@
 package FamilyTree;
 
+import FamilyTree.Comparator.TreeIterator;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Фамильное дерево. при создании дерево необходимо указать челловека (персону) для которого будет строится дерево.
@@ -12,7 +17,7 @@ import java.util.List;
 //TODO убрала ссылку на Human (буду возвращать только строковые данные),
 // чтобы не было возможности напрямую вносить изменения. пока не поняла: нужно это делать или нет
 
-public class FamilyTree {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private final List<Human> familyTree;
     private int inn;
 
@@ -21,7 +26,6 @@ public class FamilyTree {
         this.inn = 0;
         addAllKinInTree(root);
     }
-
 
     /**
      * регистрация брака, если они уже оба есть в дереве.
@@ -47,7 +51,9 @@ public class FamilyTree {
         marriage(first, second);
     }
 
-    //TODO нужно подумать
+    //TODO нужно подумать.
+    // Комм(Лучше создавать обоюдные связи, чтобы не было путаницы и было подобие автоматизации)
+    // возможно буду переделывать
     public void addChildren(int innParent, Human child) {
         Human parent = getHumanForINN(innParent);
         parent.addChildren(child);
@@ -90,9 +96,11 @@ public class FamilyTree {
      * @return
      */
     public List<String> getAllFamilyTree() {
+
+
         return familyTree.stream()
-                .map(e->e.toString())
-                .toList();
+                .map(e -> e.toString())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -104,10 +112,11 @@ public class FamilyTree {
     public List<String> getChildren(int innHuman) {
         return familyTree.stream()
                 .filter(e -> e.getInn() == innHuman)
-                .toList().get(0)
+                .collect(Collectors.toList())
+                .stream().findFirst().get()
                 .getChildren().stream()
                 .map(e -> e.toString())
-                .toList();
+                .collect(Collectors.toList());
     }
 
     /**
@@ -120,7 +129,7 @@ public class FamilyTree {
     public List<String> getParent(int innHuman) {
         Human human = familyTree.stream()
                 .filter(e -> e.getInn() == innHuman)
-                .toList().get(0);
+                .collect(Collectors.toList()).get(0);
         List<String> res = new ArrayList<>();
         if (human.getMother() != null) {
             res.add(human.getMother().toString());
@@ -226,9 +235,19 @@ public class FamilyTree {
     private Human getHumanForINN(int innHuman) {
         return familyTree.stream()
                 .filter(e -> e.getInn() == innHuman)
-                .toList().get(0);
+                .collect(Collectors.toList()).get(0);
     }
 
-    //endregion
+    public List<Human> getFamilyTree() {
+        return familyTree;
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new TreeIterator(familyTree);
+    }
+
+
+//endregion
 
 }
