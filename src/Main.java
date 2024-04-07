@@ -1,7 +1,7 @@
 package family_tree;
 
-import family_tree.family_tree.FamilyTree;
-import family_tree.family_tree.FamilyTreeIterable;
+import family_tree.family_tree.family_tree.FamilyTree;
+import family_tree.family_tree.family_tree.FamilyTreeIterable;
 import family_tree.human.Gender;
 import family_tree.human.Human;
 
@@ -9,8 +9,8 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree tree = testTree();
-        FamilyTreeIterable iterable = tree.iterable();
+        FamilyTree<Human> tree = testTree();
+        FamilyTreeIterable<Human> iterable = tree.iterable();
 
         // Сортировка по имени
         iterable.sortByLastName();
@@ -27,8 +27,8 @@ public class Main {
         }
     }
 
-    static FamilyTree testTree() {
-        FamilyTree tree = new FamilyTree();
+    static FamilyTree<Human> testTree() {
+        FamilyTree<Human> tree = new FamilyTree<>();
 
         Human vasya = new Human("Василий", Gender.Male, LocalDate.of(1963, 12, 10));
         Human masha = new Human("Мария", Gender.Female, LocalDate.of(1965, 9, 15));
@@ -50,4 +50,3 @@ public class Main {
         return tree;
     }
 }
-

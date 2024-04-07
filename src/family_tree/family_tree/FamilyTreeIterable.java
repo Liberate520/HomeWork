@@ -1,19 +1,34 @@
-package family_tree.family_tree;
+package family_tree.family_tree.family_tree;
 
 import family_tree.human.Human;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Collections;
 
-public class FamilyTreeIterable implements Iterable<Human> {
-    private final List<Human> humanList;
+public class FamilyTreeIterable<T extends Human> implements Iterable<Human> {
+    private final List<T> humanList;
 
-    public FamilyTreeIterable(List<Human> humanList) {
+    public FamilyTreeIterable(List<T> humanList) {
         this.humanList = humanList;
     }
 
     @Override
     public Iterator<Human> iterator() {
-        return humanList.iterator();
+        return new Iterator<>() {
+            private final Iterator<T> iter = humanList.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return iter.hasNext();
+            }
+
+            @Override
+            public Human next() {
+                return iter.next();
+            }
+        };
     }
 
     public void sortByLastName() {
@@ -21,8 +36,7 @@ public class FamilyTreeIterable implements Iterable<Human> {
     }
 
     public void sortByBirthDate() {
-        Comparator<Human> byBirthDate = Comparator.comparing(Human::getBirthDate);
+        Comparator<T> byBirthDate = Comparator.comparing(Human::getBirthDate);
         humanList.sort(Collections.reverseOrder(byBirthDate));
     }
 }
-

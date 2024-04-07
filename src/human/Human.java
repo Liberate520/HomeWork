@@ -169,7 +169,7 @@ public class Human {
         sb.append(getFatherInfo());
         sb.append(", ");
         sb.append(getChildrenInfo());
-        //TODO добавить информацию о том жив ли человек
+        //TODO добавить информацию о том, жив ли человек
         return sb.toString();
     }
 
