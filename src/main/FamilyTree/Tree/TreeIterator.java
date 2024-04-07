@@ -1,6 +1,6 @@
-package FamilyTree.Comparator;
+package FamilyTree.Tree;
 
-import FamilyTree.Human;
+import FamilyTree.Human.Human;
 
 import java.util.Iterator;
 import java.util.List;

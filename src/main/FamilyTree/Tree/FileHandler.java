@@ -1,4 +1,7 @@
-package FamilyTree;
+package FamilyTree.Tree;
+
+import FamilyTree.Tree.FamilyTree;
+import FamilyTree.Tree.Writable;
 
 import java.io.*;
 

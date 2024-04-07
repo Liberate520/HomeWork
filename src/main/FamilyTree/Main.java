@@ -1,7 +1,11 @@
 package FamilyTree;
 
-import FamilyTree.Comparator.ComparatorByAge;
-import FamilyTree.Comparator.ComparatorByFullName;
+import FamilyTree.Human.Gender;
+import FamilyTree.Human.Human;
+import FamilyTree.Tree.Comparator.ComparatorByAge;
+import FamilyTree.Tree.Comparator.ComparatorByFullName;
+import FamilyTree.Tree.FamilyTree;
+import FamilyTree.Tree.FileHandler;
 
 import java.io.File;
 import java.time.LocalDate;

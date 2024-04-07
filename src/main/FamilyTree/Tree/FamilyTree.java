@@ -1,6 +1,4 @@
-package FamilyTree;
-
-import FamilyTree.Comparator.TreeIterator;
+package FamilyTree.Tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
