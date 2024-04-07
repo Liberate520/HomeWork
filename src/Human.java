@@ -1,38 +1,40 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-public class Human {
+public class Human implements Serializable {
     private int id;
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
     private Human father, mother;
-
     private Human spouse;
-
     private List<Human> childrenList;
     private List<Human> parentsList;
+//    public Human(String name, Gender gender, LocalDate dob, LocalDate dod, Object father, Object mother) {
+//    }
 
-    public Human(String name, Gender gender, LocalDate dob, LocalDate dod, Object father, Object mother) {
-
-    }
-    public Human(String name, Gender gender, LocalDate dob){
-        this(name, gender, dob, null, null, null);
-    }
-
-    public Human() {
+    public Human(String name, Gender gender, LocalDate dob, LocalDate dod, Human father, Human mother){
+        this.name = name;
+        this.gender = gender;
+        this.dob=dob;
+        this.father= father;
+        this.mother=mother;
         childrenList = new ArrayList<>();
         parentsList = new ArrayList<>();
         NumerateHuman numerateHuman = new NumerateHuman();
         id = numerateHuman.gethumanId();
-
+    }
+    public Human(String name, Gender gender, LocalDate dob, Human father, Human mother) {
+        this(name, gender, dob,null, father, mother);
     }
 
-
-
+    public Human(String name, Gender gender, LocalDate dob) {
+        this(name, gender, dob, null, null, null);
+    }
 
     public void addChildren (Human child){
         if(!childrenList.contains(child)){
@@ -193,8 +195,6 @@ public class Human {
         else {
             sb.append("____").append("\n");
         }
-
-
         sb.append("Дети: ");
         if (childrenList != null && !childrenList.isEmpty()) {
             for (Human human : childrenList) {
@@ -209,3 +209,6 @@ public class Human {
 
 
 }
+
+
+
