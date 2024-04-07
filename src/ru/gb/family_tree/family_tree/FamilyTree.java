@@ -1,11 +1,13 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.family_tree;
 
+import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.util.Helpers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private final List<Human> humanList;
     private long countPeople;
 
