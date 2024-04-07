@@ -1,46 +1,62 @@
 package src;
 
-import src.family_tree.FamilyTree;
+import src.familyTree.FamilyTree;
 import src.human.Gender;
-import src.human.Human;
-import src.save_family_tree.FileHandler;
-import src.save_family_tree.Writable;
+import src.backup.FileHandler;
+import src.service.Service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
+        String filePath = "src/backup/myTree.out";
         FileHandler fh = new FileHandler();
-//        Writable tree = fh.loadTree();
+        Service service = new Service();
 
-        FamilyTree tree = myFamilyTree();
-        System.out.println(tree);
+//        FamilyTree tree = fh.read(filePath);
 
-        fh.saveTree(tree);
+        FamilyTree tree = new FamilyTree();
+        addHumanToFamilyTree(service, tree);
+
+        System.out.println(service.getHumanListInfo(tree));
+
+        service.sortByName(tree);
+        System.out.println("Сортировка по имени:");
+        System.out.println(service.getHumanListInfo(tree));
+
+        service.sortByDOB(tree);
+        System.out.println("Сортировка по дате рождения:");
+        System.out.println(service.getHumanListInfo(tree));
+
+        service.sortById(tree);
+        System.out.println("Сортировка по Id:");
+        System.out.println(service.getHumanListInfo(tree));
+
+        fh.save(tree, filePath);
     }
 
-    /**
-     * Initial initiation family tree.
-     *
-     * @return the family tree
-     */
-    static FamilyTree myFamilyTree() {
-        FamilyTree tree = new FamilyTree();
+    private static void addHumanToFamilyTree(Service service, FamilyTree tree) {
+        service.addHuman(tree, "Ivan", Gender.Male, LocalDate.of(1945, 5, 28));
+        service.addHuman(tree, "Zoia", Gender.Female, LocalDate.of(1950, 1, 1));
+        service.addHuman(tree, "Kostia", Gender.Male, LocalDate.of(1973, 12, 13));
+        service.addHuman(tree, "Irina", Gender.Female, LocalDate.of(1975, 3, 6));
+        service.addHuman(tree, "Katia", Gender.Female, LocalDate.of(2001, 11, 29));
 
-        Human ivan = new Human("Ivan", Gender.Male, LocalDate.of(1945, 5, 28));
-        ivan.setDeathDate(LocalDate.of(2021, 8, 22));
-        Human zoia = new Human("Zoia", Gender.Female, LocalDate.of(1950, 1, 1));
-        zoia.setDeathDate(LocalDate.of(2021, 2, 19));
+        tree.getByName("Zoia").getFirst().setDeathDate(LocalDate.of(2021, 2, 19));
+        tree.getByName("Ivan").getFirst().setDeathDate(LocalDate.of(2021, 8, 22));
 
-        tree.add(ivan);
-        tree.add(zoia);
-        tree.setWedding(ivan, zoia);
+//        tree.getByName("Kostia").getFirst().addParent(tree.getByName("Ivan").getFirst());
+//        tree.getByName("Kostia").getFirst().addParent(tree.getByName("Zoia").getFirst());
+//        tree.getByName("Katia").getFirst().addParent(tree.getByName("Kostia").getFirst());
+//        tree.getByName("Katia").getFirst().addParent(tree.getByName("Irina").getFirst());
+        service.addParent(tree, "Kostia", "Ivan");
+        service.addParent(tree, 2, 1);
+        service.addParent(tree, 4, 2);
+        service.addParent(tree, 4, 3);
 
-        Human kostia = new Human("Kostia", Gender.Male, LocalDate.of(1973, 12, 13),
-                null, ivan, zoia);
-        tree.add(kostia);
-
-        return tree;
+//        tree.setWedding(tree.getByName("Ivan").getFirst(), tree.getByName("Zoia").getFirst());
+//        tree.setWedding(tree.getByName("Kostia").getFirst(), tree.getByName("Irina").getFirst());
+        service.setWedding(tree, "Zoia", "Ivan");
+        service.setWedding(tree, 2,3);
     }
 }
