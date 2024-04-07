@@ -53,17 +53,6 @@ public class Main {
         serega.setFather(nikita);
         serega.setMother(nina);
 
-        /*
-        Create the family tree
-         */
-//        FamilyTree tree = new FamilyTree();
-//        tree.addPersonToFamily(nikita, 2);
-//        tree.addPersonToFamily(nina, 2);
-//        tree.addPersonToFamily(serega, 1);
-//        tree.addPersonToFamily(lyonya, 1);
-//        tree.addPersonToFamily(frosya, 2);
-//        tree.addPersonToFamily(juliya1st, 1);
-//        tree.addPersonToFamily(rada, 1);
 
         /*
         Try to use the Service class
@@ -89,19 +78,18 @@ public class Main {
         service.setParentsForHuman("Khrushev Nikita Sergeevich", service.findByName("Khrushev Sergey Nikanorovich"));
         service.setParentsForHuman("Khrushev Nikita Sergeevich", service.findByName("Khrusheva Kseniya Ivanovna"));
 
-
         String filePathForTree = "src/family_tree/writer/familyTree.out";
 
         /*
-         Serialization using ObjectOutputStream class
+         Serialization using ObjectOutputStream class using the service.
          Created the method for writing an object as byte code
          */
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.writeTreeAsByteCode(service.getFamilyTree(), filePathForTree);
+        service.initializationFileHandler();
+        service.writeTreeAsByteCode(service.getFamilyTree(), filePathForTree);
+
 
         //Renewing of an object from a byte code file using the class ObjectInputStream
-
-        FamilyTree treeRestored = fileHandler.readFromByteCodeFile(filePathForTree);
+        FamilyTree treeRestored = service.readTreeFromByteCodeFile(filePathForTree);
 
 
         /*

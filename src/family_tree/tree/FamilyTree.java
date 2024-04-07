@@ -1,5 +1,6 @@
 package family_tree.tree;
 
+import family_tree.interfaces.Comparable;
 import family_tree.person.Human;
 
 import java.io.Serializable;

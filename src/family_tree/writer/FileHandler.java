@@ -31,7 +31,7 @@ public class FileHandler implements Writable {
         }
     }
 
-    public FamilyTree readFromByteCodeFile(String fileNameForTree) {
+    public FamilyTree readTreeFromByteCodeFile(String fileNameForTree) {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileNameForTree))){
             return (FamilyTree) in.readObject();
         } catch (Exception e) {

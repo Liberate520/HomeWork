@@ -9,7 +9,7 @@ import java.io.Serializable;
 public interface Writable {
     boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree);
     boolean writeHumanAsByteCode(Serializable outputObject, String fileNameForPeople);
-    FamilyTree readFromByteCodeFile(String fileNameForTree);
+    FamilyTree readTreeFromByteCodeFile(String fileNameForTree);
     Human readHumanFromByteCodeFile(String fileNameForPeople);
 
 
