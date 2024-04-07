@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human  {
+public class Human implements Serializable {
     private  long id;
     private String name;
     private Gender gender;
@@ -15,7 +15,7 @@ public class Human  {
     private List<Human> children;
    // private Human spouse;
 
-    public Human(String name, Gender gender, LocalDate brithDate, LocalDate deathDate, Human mother, Human father) {
+    public Human( String name, Gender gender, LocalDate brithDate, LocalDate deathDate, Human mother, Human father) {
         id = -1;
         this.name = name;
         this.gender = gender;
@@ -26,10 +26,10 @@ public class Human  {
         children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate brithDate) {
-        this(name,gender,brithDate,null,null,null);
+    public Human( String name, Gender gender, LocalDate brithDate) {
+        this( name,gender,brithDate,null,null,null);
     }
-    public Human(String name, Gender gender, LocalDate brithDate, Human mother, Human father){
+    public Human( String name, Gender gender, LocalDate brithDate, Human mother, Human father){
         this(name,gender,brithDate,null,mother,father);}
 
     public boolean addChild(Human ciild) {
