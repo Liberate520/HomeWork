@@ -1,8 +1,11 @@
+
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable{
    private int id;
    private String firstName;
    private String middleName;
@@ -12,7 +15,6 @@ public class Human {
    private Gender gender;
    private Human father, mother;
    private List<Human> children;
-
 
    public Human() {
       children = new ArrayList<>();
@@ -107,8 +109,10 @@ public class Human {
    }
 
    public void setFather(Human father) {
-      this.father = father;
-      if (father != null) father.addChild(this,Gender.Male);
+      if (father != null && !(father.children.contains(this))) {
+         this.father = father;
+         if (father != null) father.addChild(this,Gender.Male);
+      }
    }
 
    public Human getMother() {
@@ -116,8 +120,10 @@ public class Human {
    }
 
    public void setMother(Human mother) {
-      this.mother = mother;
-      if (mother != null) mother.addChild(this,Gender.Female);
+      if (mother != null && !(mother.children.contains(this))) {
+         this.mother = mother;
+         if (mother != null) mother.addChild(this,Gender.Female);
+      }
    }
 
    public List<Human> getChildren() {
@@ -183,3 +189,4 @@ public class Human {
    }
 
 }
+  
