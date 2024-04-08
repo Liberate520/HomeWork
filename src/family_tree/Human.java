@@ -4,11 +4,20 @@ import java.util.List;
 import java.time.LocalDate;
 
 public class Human {
-    String name;
-    LocalDate dob, dod;
-    Gender gender;
-    List<Human> children;
-    Human mother, father;
+    private String name;
+    private LocalDate dob, dod;
+    private Gender gender;
+    private List<Human> children;
+
+    public List<Human> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Human> children) {
+        this.children = children;
+    }
+
+    private Human mother, father;
 
     public Human(String name, LocalDate dob, Gender gender) {
         this.name = name;
