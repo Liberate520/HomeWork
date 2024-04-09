@@ -3,10 +3,7 @@ package family_tree.person;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Human implements Serializable, Comparable<Human> {
     private long id;
@@ -28,7 +25,7 @@ public class Human implements Serializable, Comparable<Human> {
         this(name, dob, dod, gender, null, null);
     }
 
-    public Human(String name, LocalDate dob,  LocalDate dod, Gender gender,
+    public Human(String name, LocalDate dob, LocalDate dod, Gender gender,
                  Human father, Human mother) {
         id = -1;
         this.name = name;
@@ -37,7 +34,12 @@ public class Human implements Serializable, Comparable<Human> {
         this.dod = dod;
         this.father = father;
         this.mother = mother;
-        //kids.put(null, new ArrayList<>());
+//        if (father != null) {
+//            this.father.getKidsFromPartner(this.mother).add(this);
+//        }
+//        if (mother != null) {
+//            this.mother.getKidsFromPartner(this.father).add(this);
+//        }
     }
 
     public Human(String name, LocalDate dob, Gender gender, Human father, Human mother) {
@@ -51,29 +53,39 @@ public class Human implements Serializable, Comparable<Human> {
             kids.put(null, new ArrayList<>());
         }
         kids.get(null).add(child);
+        child.setParent(this);
         countOfChildren++;
     }
 
-    public void addChildFromThisPartner(Human partner, Human child) {
+    public boolean addChildFromThisPartner(Human partner, Human child) {
         ArrayList<Human> temp = getKidsFromPartner(partner);
-        if (temp != null) {
+        if (!temp.isEmpty()) {
             if (!temp.contains(child)) {
                 getKidsFromPartner(partner).add(child);
+                partner.getKidsFromPartner(this).add(child);
+                child.setParent(partner);
+                child.setParent(this);
                 countOfChildren++;
+                return true;
             } else {
                 System.out.println("This child already recorded in this union");
+                return false;
             }
         } else {
             kids.put(partner, new ArrayList<Human>());
             kids.get(partner).add(child);
+            partner.addChildFromThisPartner(this, child);
+            child.setParent(partner);
+            child.setParent(this);
             countOfChildren++;
+            return true;
         }
     }
 
     public ArrayList<Human> getKidsFromPartner(Human partner) {
-        for (Map.Entry<Human, ArrayList<Human>> entry : kids.entrySet()) {
-            if (partner.equals(entry.getKey())) {
-                return entry.getValue();
+        for (Human entry : kids.keySet()) {
+            if (entry.equals(partner)) {
+                return kids.get(entry);
             }
         }
         System.out.println("This partner and their kids is not found.");
@@ -101,16 +113,16 @@ public class Human implements Serializable, Comparable<Human> {
         return mother;
     }
 
-    public void setMother(Human mother) {
-        this.mother = mother;
+    public void setParent(Human partner) {
+        if (partner.getGender().equals(Gender.Male)) {
+            this.father = partner;
+        } else if (partner.getGender().equals(Gender.Female)) {
+            this.mother = partner;
+        }
     }
 
     public Human getFather() {
         return father;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
     }
 
     public String getName() {
@@ -125,8 +137,12 @@ public class Human implements Serializable, Comparable<Human> {
         }
     }
 
-    public Map<Human, ArrayList<Human>> getListOfChildren() {
-        return kids;
+    public ArrayList<Human> getListOfChildren() {
+        ArrayList<Human> temp = new ArrayList<>();
+        for (ArrayList<Human> item : kids.values()) {
+            temp.addAll(item);
+        }
+        return temp;
     }
 
     public LocalDate getDateOfBirth() {
@@ -139,9 +155,10 @@ public class Human implements Serializable, Comparable<Human> {
      * @param partner
      */
     public void setPartner(Human partner) {
-        this.partner = partner;
         kids.put(partner, new ArrayList<Human>());
-
+        partner.kids.put(this, new ArrayList<Human>());
+        this.partner = partner;
+        partner.partner = this;
     }
 
     public List<Human> getListOfPartner() {
@@ -193,7 +210,7 @@ public class Human implements Serializable, Comparable<Human> {
         sb.append("id: ");
         sb.append(id);
         sb.append(" , name: ");
-        sb.append(name  + "\n");
+        sb.append(name + "\n");
         sb.append("gender: ");
         sb.append(getGender() + "\n");
         sb.append("age: ");
@@ -209,13 +226,12 @@ public class Human implements Serializable, Comparable<Human> {
         sb.append(" ");
         //TODO need to add information: is the person alive?
         return sb.toString();
-
     }
 
     @Override
     public int compareTo(Human o) {
         int res = name.compareTo(o.name);
-        if(res == 0){
+        if (res == 0) {
             return getAge() - o.getAge();
         } else return res;
     }

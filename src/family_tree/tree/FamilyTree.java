@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Comparable, Iterable<Human> {
     private long countPeople = 1;
     private Map<Integer, ArrayList<Human>> familyTree; //Integer - generation
 
@@ -23,14 +23,12 @@ public class FamilyTree implements Serializable {
         if (person == null) {
             return false;
         }
-        if (!familyTree.containsKey(generation)) {
+        if (!familyTree.containsKey(generation)) { //TODO может быть ошибка в generation. Не безопасно! Пересмотреть условия
             familyTree.put(generation, new ArrayList<>());
         } else {
-            for (Human item : familyTree.get(generation)) {
-                if (item.equals(person)) {
-                    System.out.println("This man already recorded in the family tree");
-                    return false;
-                }
+            if (familyTree.get(generation).contains(person)) {
+                System.out.println("This man already recorded in the family tree");
+                return false;
             }
         }
         familyTree.get(generation).add(person);
@@ -39,12 +37,10 @@ public class FamilyTree implements Serializable {
     }
 
     public Human findHumanByName(String name) {
-        for (ArrayList<Human> item : familyTree.values()) {
-            for (Human person : item) {
+        for (Human person : this) {
                 if (person.getName().equalsIgnoreCase(name)) {
                     return person;
                 }
-            }
         }
         System.out.println("Human with name: " + name + " is not found");
         return null;
@@ -84,11 +80,38 @@ public class FamilyTree implements Serializable {
     }
 
 
-    private ArrayList<Human> convertToList() {
+    public ArrayList<Human> convertToList() {
         ArrayList<Human> res = new ArrayList<>();
         for (ArrayList<Human> item : familyTree.values()) {
             res.addAll(item);
         }
+        return res;
+    }
+    public ArrayList<Human> sort(){
+        Scanner in = new Scanner(System.in);
+        boolean flag = true;
+        ArrayList<Human> res = new ArrayList<>();
+        while (flag) {
+            System.out.println("Enter the number of type of sorting (Name is 1 or Age is 2 or Date of birth is 3): ");
+            int request = in.nextInt();
+            switch (request) {
+                case (1):
+                    res = sortByName();
+                    flag = false;
+                    break;
+                case (2):
+                    res = sortByAge();
+                    flag = false;
+                    break;
+                case (3):
+                    res = sortByDateOfBirth();
+                    flag = false;
+                    break;
+                default:
+                    System.out.println("An incorrect request was entered. Try to enter again");
+            }
+        }
+        in.close();
         return res;
     }
 
@@ -98,18 +121,28 @@ public class FamilyTree implements Serializable {
         return sortedFamilyList;
     }
 
+
     public ArrayList<Human> sortByName() {
         ArrayList<Human> sortedFamilyList = convertToList();
         sortedFamilyList.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
         return sortedFamilyList;
     }
+    public ArrayList<Human> sortByDateOfBirth() {
+        ArrayList<Human> sortedFamilyList = convertToList();
+        sortedFamilyList.sort((o1, o2) -> o1.getDateOfBirth().compareTo(o2.getDateOfBirth()));
+        return sortedFamilyList;
+    }
 
     public ArrayList<String> getListOfNames(ArrayList<Human> peopleList) {
         ArrayList<String> listOfNames = new ArrayList<>();
-        for (Human item : peopleList) {
+        for (Human item : this) {
             listOfNames.add(item.getName());
         }
         return listOfNames;
     }
 
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(this);
+    }
 }

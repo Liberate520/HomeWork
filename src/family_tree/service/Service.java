@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Service implements Comparable, Writable {
+public class Service {
     private long genId;
     private FamilyTree familyTree;
     private FileHandler fh;
@@ -58,16 +58,10 @@ public class Service implements Comparable, Writable {
         familyTree.addPersonToFamily(human, generation);
     }
 
-    public boolean setParentsForHuman(String nameForSearching, Human parent) {
+    public void setParentsForHuman(String nameForSearching, Human parent) {
         if (findByName(nameForSearching) != null) {
-            if (parent.getGender().equals(Gender.Male)) {
-                findByName(nameForSearching).setFather(parent);
-                return true;
-            }
-            findByName(nameForSearching).setMother(parent);
-            return true;
+            findByName(nameForSearching).setParent(parent);
         }
-        return false;
     }
 
     public Human findByName(String nameForSearching){
@@ -84,34 +78,28 @@ public class Service implements Comparable, Writable {
     public FileHandler getFileHandler(){
         return fh;
     }
-    @Override
+
     public boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree){
         return  fh.writeTreeAsByteCode(outputObject, fileNameForTree);
     }
 
-    @Override
+
     public boolean writeHumanAsByteCode(Serializable outputObject, String fileNameForPeople) {
         return  fh.writeHumanAsByteCode(outputObject,  fileNameForPeople);
     }
 
-    @Override
+
     public FamilyTree readTreeFromByteCodeFile(String fileNameForTree) {
         return fh.readTreeFromByteCodeFile(fileNameForTree);
     }
 
-    @Override
+
     public Human readHumanFromByteCodeFile(String fileNameForPeople) {
         return fh.readHumanFromByteCodeFile(fileNameForPeople);
     }
 
-    @Override
-    public ArrayList<String> sortByAge(){
-        return familyTree.getListOfNames(familyTree.sortByAge());
-    }
-
-    @Override
-    public ArrayList<String> sortByName(){
-        return familyTree.getListOfNames(familyTree.sortByName());
+    public ArrayList<String> sort(){
+        return familyTree.getListOfNames(familyTree.sort());
     }
 
 }

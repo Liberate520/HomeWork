@@ -2,6 +2,7 @@ import family_tree.person.Gender;
 import family_tree.person.Human;
 import family_tree.service.Service;
 import family_tree.tree.FamilyTree;
+import family_tree.tree.HumanIterator;
 import family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
@@ -25,33 +26,19 @@ public class Main {
         /*
         1-st wife
          */
+        System.out.println("1-st wife");
         nikita.setPartner(frosya);
         nikita.addChildFromThisPartner(frosya, lyonya);
         nikita.addChildFromThisPartner(frosya, juliya1st);
 
-        frosya.setPartner(nikita);
-        frosya.addChildFromThisPartner(nikita, lyonya);
-        frosya.addChildFromThisPartner(nikita, juliya1st);
 
         /*
         3-rd wife
          */
+        System.out.println("2-nd");
         nikita.setPartner(nina);
         nikita.addChildFromThisPartner(nina, serega);
         nikita.addChildFromThisPartner(nina, rada);
-
-        nina.setPartner(nikita);
-        nina.addChildFromThisPartner(nikita, serega);
-        nina.addChildFromThisPartner(nikita, rada);
-
-        /*
-        Add the information about parents
-         */
-        lyonya.setFather(nikita);
-        lyonya.setMother(frosya);
-
-        serega.setFather(nikita);
-        serega.setMother(nina);
 
 
         /*
@@ -65,6 +52,7 @@ public class Main {
         service.addHumanToFamilyTree(2, frosya);
         service.addHumanToFamilyTree(1, juliya1st);
         service.addHumanToFamilyTree(1, rada);
+
 
         service.addHumanToFamilyTree(3, "Khrushev Sergey Nikanorovich",
                 LocalDate.of(1869, new Random().nextInt(1, 13), new Random().nextInt(1, 28)),
@@ -97,9 +85,14 @@ public class Main {
          */
         ArrayList<Human> sortedByNameFamily = service.getFamilyTree().sortByName();
 
-        System.out.println(service.sortByAge());
+
+
+        System.out.println(service.getFamilyTree().sortByAge());
         System.out.println(("==".repeat(20)));
-        System.out.println(service.sortByName());
+        System.out.println(service.sort());
+
+        HumanIterator iterator = new HumanIterator(service.getFamilyTree());
+
 
     }
 }
