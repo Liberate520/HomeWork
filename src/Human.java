@@ -1,14 +1,15 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Human {
-    String name;
-    LocalDate dob, dod;
-    Gender gender;
-    List<Human> children;
-    Human mother, father;
+public class Human implements Serializable {
+    private String name;
+    private LocalDate dob, dod;
+    private Gender gender;
+    private List<Human> children = new ArrayList<>();
+    private Human mother, father;
 
 
 
@@ -22,6 +23,9 @@ public class Human {
         this.father = father;
     }
 
+    public void addChild(Human child){
+        children.add(child);
+    }
 
     public String getName() {
         return name;
