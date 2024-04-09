@@ -1,3 +1,4 @@
+package family_tree.writer;
 import java.io.*;
 
 public class FileHandler implements Writable{

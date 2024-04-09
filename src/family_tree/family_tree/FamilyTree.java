@@ -1,8 +1,15 @@
+package family_tree.family_tree;
+
+import family_tree.human.Human;
+import family_tree.human.ComparatorBirthday;
+import family_tree.human.ComparatorHumanName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long countPeople;
     private final List<Human> humanList;;
 
@@ -150,7 +157,19 @@ public class FamilyTree implements Serializable {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public void sortName() {
+        humanList.sort(new ComparatorHumanName());
+    }
+
+    public void sortBirthday() {
+        humanList.sort(new ComparatorBirthday());
+    }
         
+    @Override
+    public Iterator<Human> iterator() { 
+        return new FamilyTreeIterator(humanList);
     }
 
 

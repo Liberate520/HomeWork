@@ -1,14 +1,33 @@
+package family_tree;
 
 import java.time.LocalDate;
+import family_tree.human.Human;
+import family_tree.human.Gender;
+import family_tree.writer.FileHandler;
+import family_tree.family_tree.*;
 
 public class Main {
     public static void main(String[] args) {
         FileHandler handler = new FileHandler();
-        String filePath = "src/family.txt";
+        String filePath = "src/family_tree/writer/myfamily.txt";
         
         FamilyTree tree = read(filePath);
-        // FamilyTree tree = myTree();
+        //FamilyTree tree = myTree();
+        System.out.println("Дерево до сортировки:");
         System.out.println(tree);
+
+        tree.sortName();
+        System.out.println("Отсортированное дерево по имени:");
+        for (Human human : tree) {
+            System.out.println(human.getInfo());
+        }
+
+        tree.sortBirthday();
+        System.out.println();
+        System.out.println("Отсортированное дерево по возрасту:");
+        for (Human human : tree) {
+            System.out.println(human.getInfo());
+        }
 
         handler.save(tree, filePath);
         
@@ -44,4 +63,5 @@ public class Main {
 
         return tree;
     }
+
 }

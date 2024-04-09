@@ -1,3 +1,5 @@
+package family_tree.human;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -147,7 +149,7 @@ public class Human implements Serializable {
 
     public String getFatherInfo() {
         String res = "отец: ";
-        Human mother = getFather();
+        Human father = getFather();
         if (father!= null) {
             res += father.getName();
         } else {
@@ -177,4 +179,5 @@ public class Human implements Serializable {
         }
         return false;
     }
+
 }
