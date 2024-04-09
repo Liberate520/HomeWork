@@ -70,4 +70,5 @@ public abstract class FamilyTreeEntity {
     }
 
     public abstract void addChild(FamilyTreeEntity child);
+
 }

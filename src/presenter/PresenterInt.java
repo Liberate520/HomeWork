@@ -17,7 +17,7 @@ public interface PresenterInt {
 
     public void addRelationship(String parentName, String childName);
 
-    public void showTree();
+    public String showTree();
 
 }
 

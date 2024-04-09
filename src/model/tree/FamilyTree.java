@@ -78,10 +78,30 @@ public class FamilyTree<T extends FamilyTreeEntity> implements Serializable, Ite
 
     @Override
     public String toString() {
-        return "FamilyTree{" +
-                "people=" + people +
+        return "Генеалогическое древо{\n" +
+                "people=\n" + formatPeopleList() +
                 '}';
     }
+
+    // Вспомогательный метод для форматирования списка людей в более красивый вид
+    private String formatPeopleList() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[");
+        for (int i = 0; i < people.size(); i++) {
+            T person = people.get(i);
+            stringBuilder.append(person.getName())
+                    .append(" (")
+                    .append(person.getGender())
+                    .append(") - ")
+                    .append(person.getBirthYear());
+            if (i < people.size() - 1) {
+                stringBuilder.append(", \n");
+            }
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
+    }
+
 
     @Override
     public Iterator<T> iterator() {

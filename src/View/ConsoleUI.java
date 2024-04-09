@@ -10,11 +10,11 @@ import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI implements View{
+public class ConsoleUI implements View {
     private Scanner scanner = new Scanner(System.in);
     private PresenterInt presenter;
 
-    public ConsoleUI(){
+    public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
     }
@@ -24,7 +24,7 @@ public class ConsoleUI implements View{
         menu();
     }
 
-    public void menu(){
+    public void menu() {
         boolean running = true;
         while (running) {
             System.out.println("Выберите действие:");
@@ -38,26 +38,13 @@ public class ConsoleUI implements View{
 
             switch (choice) {
                 case 1:
-                    System.out.println("Введите имя пользователя:");
-                    String name = scanner.nextLine();
-                    System.out.println("Введите пол пользователя (Male/Female):");
-                    Gender gender = Gender.valueOf(scanner.nextLine());
-                    System.out.println("Введите год рождения пользователя (гггг-мм-дд):");
-                    LocalDate birthDate = LocalDate.parse(scanner.nextLine());
-                    presenter.addPerson(name,gender,birthDate);
-                    System.out.println("Пользователь успешно добавлен в дерево.");
+                    addUser();
                     break;
                 case 2:
-                    System.out.println("Введите имя родителя:");
-                    String parentName = scanner.nextLine();
-                    System.out.println("Введите имя ребенка:");
-                    String childName = scanner.nextLine();
-                    presenter.addRelationship(parentName,childName);
-                    System.out.println("Отношения успешно добавлены.");
+                    addRelationship();
                     break;
                 case 3:
-                    System.out.println("Дерево:");
-                    presenter.showTree();
+                    showTree();
                     break;
                 case 4:
                     running = false;
@@ -68,6 +55,32 @@ public class ConsoleUI implements View{
             }
         }
     }
+
+    private void addUser() {
+        System.out.println("Введите имя пользователя:");
+        String name = scanner.nextLine();
+        System.out.println("Введите пол пользователя (Male/Female):");
+        Gender gender = Gender.valueOf(scanner.nextLine());
+        System.out.println("Введите год рождения пользователя (гггг-мм-дд):");
+        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+        presenter.addPerson(name, gender, birthDate);
+        System.out.println("Пользователь успешно добавлен в дерево.");
+    }
+
+    private void addRelationship() {
+        System.out.println("Введите имя родителя:");
+        String parentName = scanner.nextLine();
+        System.out.println("Введите имя ребенка:");
+        String childName = scanner.nextLine();
+        presenter.addRelationship(parentName, childName);
+        System.out.println("Отношения успешно добавлены.");
+    }
+
+    private void showTree() {
+        System.out.println("Дерево:");
+        System.out.println(presenter.showTree());
+    }
+
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);

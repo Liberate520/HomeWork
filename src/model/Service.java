@@ -7,6 +7,7 @@ import model.tree.FamilyTreeEntity;
 import model.writer.FileHandler;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Service {
 
@@ -15,6 +16,7 @@ public class Service {
 
     public Service() {
         this.familyTree = new FamilyTree();
+        prep();
 
     }
 
@@ -45,10 +47,9 @@ public class Service {
         familyTree.addPerson(person);
     }
 
-    public void displayFamilyTree() {
-        for (FamilyTreeEntity person : familyTree) {
-            displayPerson(person, 0);
-        }
+
+    public String displayFamilyTree() {
+        return familyTree.toString();
     }
 
     public void addRelationship(String parentName, String childName) {

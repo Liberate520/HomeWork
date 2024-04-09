@@ -16,7 +16,6 @@ public class Presenter implements PresenterInt{
     public Presenter(View view) {
         this.service = new Service();
         this.view = view;
-        this.service.prep();
     }
 
     public FamilyTree<Person> prep(){
@@ -31,8 +30,8 @@ public class Presenter implements PresenterInt{
         service.addRelationship(parentName, childName);
     }
 
-    public void showTree(){
-        service.displayFamilyTree();
+    public String showTree(){
+        return service.displayFamilyTree();
     }
 
 }
