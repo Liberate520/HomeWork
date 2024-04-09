@@ -1,10 +1,18 @@
 package family_tree;
 
+import family_tree.human.Gender;
+import family_tree.human.Human;
+import family_tree.writer.FileHandler;
+import family_tree.writer.Writable;
+
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree tree = new FamilyTree();
+        List<Human> members = new ArrayList<>();
 
         Human vito = new Human("Vito", LocalDate.of(1891, 12, 7), Gender.Male);
         vito.setDateOfDeath(LocalDate.of(1955, 7, 29));
@@ -63,32 +71,41 @@ public class Main {
         hagen.setFather(vito);
         hagen.setMother(kay);
 
-        // Добавляем членов семьи в дерево
-        tree.addMember(vito);
-        tree.addMember(carmine);
-        tree.addMember(antonio);
-        tree.addMember(andolini);
-        tree.addMember(andoliniMother);
-        tree.addMember(michael);
-        tree.addMember(sonny);
-        tree.addMember(fredo);
-        tree.addMember(connie);
-        tree.addMember(carlo);
-        tree.addMember(tom);
-        tree.addMember(hagen);
-        tree.addMember(kay);
+        // Добавляем членов семьи в список
+        members.add(vito);
+        members.add(carmine);
+        members.add(antonio);
+        members.add(andolini);
+        members.add(andoliniMother);
+        members.add(michael);
+        members.add(sonny);
+        members.add(fredo);
+        members.add(connie);
+        members.add(carlo);
+        members.add(tom);
+        members.add(hagen);
+        members.add(kay);
 
-        // Пример других действий с деревом семьи
-        System.out.println("Члены семьи Карлеоне:");
-        for (Human member : tree.getMembers()) {
-            System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth() + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
-            if (member.getMother() != null) {
-                System.out.println("Мать: " + member.getMother().getName());
+        // Сохраняем в файл и загружаем из файла
+        try {
+            Writable fileHandler = new FileHandler();
+            fileHandler.saveToFile("family_tree_data.txt", members);
+            List<Human> loadedMembers = fileHandler.loadFromFile("family_tree_data.txt");
+
+            // Дальнейшие операции с членами семьи
+            System.out.println("Члены семьи Карлеоне:");
+            for (Human member : loadedMembers) {
+                System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth() + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
+                if (member.getMother() != null) {
+                    System.out.println("Мать: " + member.getMother().getName());
+                }
+                if (member.getFather() != null) {
+                    System.out.println("Отец: " + member.getFather().getName());
+                }
+                System.out.println();
             }
-            if (member.getFather() != null) {
-                System.out.println("Отец: " + member.getFather().getName());
-            }
-            System.out.println();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

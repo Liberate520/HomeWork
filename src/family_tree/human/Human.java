@@ -1,28 +1,24 @@
-package family_tree;
+package family_tree.human;
 
 import java.util.List;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
     private List<Human> children;
-
-    public List<Human> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Human> children) {
-        this.children = children;
-    }
-
     private Human mother, father;
 
     public Human(String name, LocalDate dob, Gender gender) {
         this.name = name;
         this.dob = dob;
         this.gender = gender;
+    }
+
+    public List<Human> getChildren() {
+        return children;
     }
 
     public String getName() {
@@ -55,6 +51,10 @@ public class Human {
 
     public LocalDate getDateOfDeath() {
         return dod;
+    }
+
+    public void setChildren(List<Human> children) {
+        this.children = children;
     }
 
     public Gender getGender() {
