@@ -1,3 +1,8 @@
+package service;
+
+import familytree.FamilyTree;
+import human.Human;
+
 import java.io.Serializable;
 
 public class Service implements Serializable {

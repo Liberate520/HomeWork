@@ -1,3 +1,7 @@
+package human;
+
+import human.gender.Gender;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -61,7 +65,7 @@ public class Human implements Serializable, Comparable<Human> {
     public String getInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Name: ").append(name).append("\n");
-        stringBuilder.append("Gender: ").append(getGender()).append("\n");
+        stringBuilder.append("human.gender.Gender: ").append(getGender()).append("\n");
         stringBuilder.append("Age: ").append(getAge()).append("\n");
         if (father != null) {stringBuilder.append("Father: ").append(father.getName()).append("\n");}
         if (mother != null) {stringBuilder.append("Mother: ").append(mother.getName()).append("\n");}

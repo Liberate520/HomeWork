@@ -1,3 +1,8 @@
+import familytree.FamilyTree;
+import filehandler.FileHandler;
+import human.Human;
+import service.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         String filePath = "/Users/ramilbagirov/Desktop/Murad/GeekBrains/git_education/Git_Java/homeWork/src/tree.txt";
 
-        //FamilyTree tree = testTree();
+        //familytree.FamilyTree tree = testTree();
         Service service = testTree();
         System.out.println(service.getTreeInfo());
 
