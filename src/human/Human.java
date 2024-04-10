@@ -1,14 +1,14 @@
 package src.human;
 
+import src.familyTree.FamilyTreeElement;
+
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Comparable<Human>, Serializable {
+public class Human implements Comparable<Human>, Serializable, FamilyTreeElement {
     //  Поля:
     private int id;
     private String name;
@@ -110,6 +110,10 @@ public class Human implements Comparable<Human>, Serializable {
         return parents;
     }
 
+    public void addParent(FamilyTreeElement human) {
+
+    }
+
     public Human getFather() {
         for (Human parent : parents) {
             if (parent.getGender() == Gender.Male) {
@@ -129,11 +133,19 @@ public class Human implements Comparable<Human>, Serializable {
     }
 
     public List<Human> getChildren() {
-        return children;
+        return this.children;
+    }
+
+    public void addChild(FamilyTreeElement human) {
+
     }
 
     public Human getSpouse() {
         return spouse;
+    }
+
+    public void setSpouse(FamilyTreeElement human) {
+
     }
 
     //  Overrides:
@@ -236,6 +248,5 @@ public class Human implements Comparable<Human>, Serializable {
     public int compareTo(Human o) {
         return this.getName().compareTo(o.getName());
     }
-
 
 }

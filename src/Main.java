@@ -7,7 +7,8 @@ import src.service.Service;
 
 import java.time.LocalDate;
 
-public class Main {
+public class
+Main {
     public static void main(String[] args) {
         String filePath = "src/backup/myTree.out";
         FileHandler fh = new FileHandler();
@@ -42,8 +43,8 @@ public class Main {
         service.addHuman(tree, "Irina", Gender.Female, LocalDate.of(1975, 3, 6));
         service.addHuman(tree, "Katia", Gender.Female, LocalDate.of(2001, 11, 29));
 
-        tree.getByName("Zoia").getFirst().setDeathDate(LocalDate.of(2021, 2, 19));
-        tree.getByName("Ivan").getFirst().setDeathDate(LocalDate.of(2021, 8, 22));
+//        tree.getByName("Zoia").getFirst().setDeathDate(LocalDate.of(2021, 2, 19));
+//        tree.getByName("Ivan").getFirst().setDeathDate(LocalDate.of(2021, 8, 22));
 
 //        tree.getByName("Kostia").getFirst().addParent(tree.getByName("Ivan").getFirst());
 //        tree.getByName("Kostia").getFirst().addParent(tree.getByName("Zoia").getFirst());
