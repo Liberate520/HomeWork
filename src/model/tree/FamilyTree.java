@@ -40,8 +40,12 @@ public class FamilyTree<E extends TreeItem<E>> implements Serializable, Iterable
         if (parent != null && child != null) {
             parent.addChild(child);
             child.addParent(parent);
+            System.out.println("Родственные связи между "+parent.getFullName()+" и "+ child.getFullName()+" установлены.");
+            System.out.println();
+
         }else {
             System.out.println("Данный объект отсутвует в семейном дереве");
+            System.out.println();
         }
     }
 

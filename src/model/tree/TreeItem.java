@@ -18,6 +18,4 @@ public interface TreeItem<T> extends Serializable {
     List<T> getParents();
 
 
-
-
 }

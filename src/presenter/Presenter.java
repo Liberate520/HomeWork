@@ -2,6 +2,7 @@ package presenter;
 
 import model.person.Gender;
 import model.service.Service;
+import model.writer.Writable;
 import view.View;
 
 import java.time.LocalDate;
@@ -12,9 +13,10 @@ public class Presenter {
 
     private Service service;
 
-    public Presenter(View view) {
+
+    public Presenter(View view, Writable writable) {
         this.view = view;
-        service = new Service();
+        service = new Service(writable);
     }
 
     public void addPerson (String fullName, Gender gender, LocalDate birthDate, LocalDate deathDate){
@@ -43,9 +45,9 @@ public class Presenter {
         service.saveTree();
     }
 
-    //Загрузка из файла свыводом на консоль
-    public void upLoadTree(){
-        System.out.println(service.upLoadTree());
+    //Загрузка из файла с выводом в консоль
+    public void printLoadedTree(){
+        service.printLoadedTree();
     }
 
 }

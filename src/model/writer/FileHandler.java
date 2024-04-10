@@ -11,10 +11,10 @@ import java.io.ObjectOutputStream;
 
 public class FileHandler implements Writable {
 
-
+    private String filePath = "src/model/writer/familyTree.txt";
 
     @Override
-    public boolean saveToFile(FamilyTree familyTree, String filePath) {
+    public boolean saveToFile(FamilyTree familyTree) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath))) {
             out.writeObject(familyTree);
             return true;
@@ -26,7 +26,7 @@ public class FileHandler implements Writable {
 
 
     @Override
-    public FamilyTree uploadFromFile (String filePath) {
+    public FamilyTree uploadFromFile () {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
             FamilyTree uploadedTree=(FamilyTree) in.readObject();
             return uploadedTree;

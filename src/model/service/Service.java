@@ -3,16 +3,18 @@ package model.service;
 import model.person.Gender;
 import model.person.Person;
 import model.tree.FamilyTree;
-import model.writer.FileHandler;
+import model.writer.Writable;
 
 import java.time.LocalDate;
 
 public class Service {
     private int idPerson;
     private FamilyTree<Person> tree;
+    private Writable writable;
 
-    public Service() {
+    public Service(Writable writable) {
         tree = new FamilyTree<Person>();
+        this.writable=writable;
     }
 
 
@@ -54,20 +56,19 @@ public class Service {
 
     //Сохрание древа в файл
     public void saveTree(){
-        String filePath="src/model/writer/familyTree.txt";
-        FileHandler fileHandler=new FileHandler();
-        fileHandler.saveToFile(tree,filePath);
-
+        writable.saveToFile(tree);
+        System.out.println("Древо сохранено");
+        System.out.println();
     }
 
     //Загрузка древа из файла
     public FamilyTree<Person> upLoadTree() {
-        String filePath="src/model/writer/familyTree.txt";
-        FileHandler fileHandler=new FileHandler();
-        return fileHandler.uploadFromFile(filePath);
+        return writable.uploadFromFile();
     }
 
-
-
+    // Вывод загруженного из файла дерева на консоль
+    public void printLoadedTree(){
+        System.out.println(upLoadTree());
+    }
 
 }
