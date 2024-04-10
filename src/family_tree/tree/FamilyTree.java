@@ -1,25 +1,28 @@
 package family_tree.tree;
 
-import family_tree.interfaces.Comparable;
+import family_tree.tree.sorting.Comparable;
+import family_tree.tree.sorting.SortByAge;
+import family_tree.tree.sorting.SortByDateOfBirth;
+import family_tree.tree.sorting.SortByName;
 import family_tree.person.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class FamilyTree implements Serializable, Comparable, Iterable<Human> {
+public class FamilyTree<T extends Human> implements Serializable, Iterable<T>, Comparable<T> {
     private long countPeople = 1;
-    private Map<Integer, ArrayList<Human>> familyTree; //Integer - generation
+    private Map<Integer, ArrayList<T>> familyTree; //Integer - generation
 
     public FamilyTree() {
         familyTree = new HashMap<>();
     }
 
-    public FamilyTree(HashMap<Integer, ArrayList<Human>> tree) {
+    public FamilyTree(HashMap<Integer, ArrayList<T>> tree) {
         familyTree = tree;
     }
 
-    public boolean addPersonToFamily(Human person, Integer generation) {
+    public boolean addPersonToFamily(T person, Integer generation) {
         if (person == null) {
             return false;
         }
@@ -36,11 +39,12 @@ public class FamilyTree implements Serializable, Comparable, Iterable<Human> {
         return true;
     }
 
-    public Human findHumanByName(String name) {
-        for (Human person : this) {
-                if (person.getName().equalsIgnoreCase(name)) {
-                    return person;
-                }
+    public T findHumanByName(String name) {
+        iterator();
+        for (T person : this) { //?
+            if (person.getName().equalsIgnoreCase(name)) {
+                return person;
+            }
         }
         System.out.println("Human with name: " + name + " is not found");
         return null;
@@ -50,9 +54,9 @@ public class FamilyTree implements Serializable, Comparable, Iterable<Human> {
      * @param dob (LocalDate)
      * @return first human with this date of birth
      */
-    public Human findHumanByDateOfBirth(LocalDate dob) {
-        for (ArrayList<Human> item : familyTree.values()) {
-            for (Human person : item) {
+    public T findHumanByDateOfBirth(LocalDate dob) {
+        for (ArrayList<T> item : familyTree.values()) {
+            for (T person : item) {
                 if (person.getDateOfBirth().isEqual(dob)) {
                     return person;
                 }
@@ -66,7 +70,7 @@ public class FamilyTree implements Serializable, Comparable, Iterable<Human> {
         StringBuilder sb = new StringBuilder();
         for (Integer key : familyTree.keySet()) {
             sb.append("Generation ").append(key).append(": \n");
-            for (Human person : familyTree.get(key)) {
+            for (T person : familyTree.get(key)) {
                 sb.append(person.getInfo()).append("\n").append("-".repeat(20)).append("\n");
             }
             sb.append("--".repeat(20)).append("\n");
@@ -80,31 +84,32 @@ public class FamilyTree implements Serializable, Comparable, Iterable<Human> {
     }
 
 
-    public ArrayList<Human> convertToList() {
-        ArrayList<Human> res = new ArrayList<>();
-        for (ArrayList<Human> item : familyTree.values()) {
+    public ArrayList<T> convertToList(Map<Integer, ArrayList<T>> familyTree) {
+        ArrayList<T> res = new ArrayList<>();
+        for (ArrayList<T> item : familyTree.values()) {
             res.addAll(item);
         }
         return res;
     }
-    public ArrayList<Human> sort(){
+    @Override
+    public ArrayList<T> sorting() {
         Scanner in = new Scanner(System.in);
         boolean flag = true;
-        ArrayList<Human> res = new ArrayList<>();
+        ArrayList<T> res = convertToList(familyTree);
         while (flag) {
-            System.out.println("Enter the number of type of sorting (Name is 1 or Age is 2 or Date of birth is 3): ");
+            System.out.println("Enter the number of type of sorting (by Name is 1, by Age is 2 or by Date of birth is 3): ");
             int request = in.nextInt();
             switch (request) {
                 case (1):
-                    res = sortByName();
+                    res.sort(new SortByName<>());
                     flag = false;
                     break;
                 case (2):
-                    res = sortByAge();
+                    res.sort(new SortByAge<>());
                     flag = false;
                     break;
                 case (3):
-                    res = sortByDateOfBirth();
+                    res.sort(new SortByDateOfBirth<>());
                     flag = false;
                     break;
                 default:
@@ -115,34 +120,22 @@ public class FamilyTree implements Serializable, Comparable, Iterable<Human> {
         return res;
     }
 
-    public ArrayList<Human> sortByAge() {
-        ArrayList<Human> sortedFamilyList = convertToList();
-        sortedFamilyList.sort(Comparator.comparingInt(Human::getAge));
-        return sortedFamilyList;
-    }
 
-
-    public ArrayList<Human> sortByName() {
-        ArrayList<Human> sortedFamilyList = convertToList();
-        sortedFamilyList.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
-        return sortedFamilyList;
-    }
-    public ArrayList<Human> sortByDateOfBirth() {
-        ArrayList<Human> sortedFamilyList = convertToList();
-        sortedFamilyList.sort((o1, o2) -> o1.getDateOfBirth().compareTo(o2.getDateOfBirth()));
-        return sortedFamilyList;
-    }
-
-    public ArrayList<String> getListOfNames(ArrayList<Human> peopleList) {
+    public ArrayList<String> getListOfNames(ArrayList<T> peopleList) {
         ArrayList<String> listOfNames = new ArrayList<>();
-        for (Human item : this) {
+        for (Human item : peopleList) {
             listOfNames.add(item.getName());
         }
         return listOfNames;
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(this);
+    public Iterator<T> iterator() {
+        return new HumanIterator<T>(convertToList(familyTree));
     }
+
+    public Map<Integer, ArrayList<T>> getFamilyTree() {
+        return familyTree;
+    }
+
 }

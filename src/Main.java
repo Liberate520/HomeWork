@@ -2,11 +2,9 @@ import family_tree.person.Gender;
 import family_tree.person.Human;
 import family_tree.service.Service;
 import family_tree.tree.FamilyTree;
-import family_tree.tree.HumanIterator;
-import family_tree.writer.FileHandler;
+
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
@@ -44,27 +42,36 @@ public class Main {
         /*
         Try to use the Service class
          */
-        Service service = new Service();
-        service.addHumanToFamilyTree(2, nikita);
-        service.addHumanToFamilyTree(2, nina);
-        service.addHumanToFamilyTree(1, serega);
-        service.addHumanToFamilyTree(1, lyonya);
-        service.addHumanToFamilyTree(2, frosya);
-        service.addHumanToFamilyTree(1, juliya1st);
-        service.addHumanToFamilyTree(1, rada);
+        Service<Human> humanService = new Service<>(Human.class);
+        humanService.addHumanToFamilyTree(2, nikita);
+        humanService.addHumanToFamilyTree(2, nina);
+        humanService.addHumanToFamilyTree(1, serega);
+        humanService.addHumanToFamilyTree(1, lyonya);
+        humanService.addHumanToFamilyTree(2, frosya);
+        humanService.addHumanToFamilyTree(1, juliya1st);
+        humanService.addHumanToFamilyTree(1, rada);
 
 
-        service.addHumanToFamilyTree(3, "Khrushev Sergey Nikanorovich",
+        humanService.addHumanToFamilyTree(3, "Khrushev Sergey Nikanorovich",
                 LocalDate.of(1869, new Random().nextInt(1, 13), new Random().nextInt(1, 28)),
                 LocalDate.of(1938, new Random().nextInt(1, 13), new Random().nextInt(1, 28)),
-                Gender.Male);
-        service.addHumanToFamilyTree(3, "Khrusheva Kseniya Ivanovna",
+                Gender.Male, Human.class);
+        humanService.addHumanToFamilyTree(3, "Khrusheva Kseniya Ivanovna",
                 LocalDate.of(1872, new Random().nextInt(1, 13), new Random().nextInt(1, 28)),
                 LocalDate.of(1945, new Random().nextInt(1, 13), new Random().nextInt(1, 28)),
-                Gender.Male);
+                Gender.Female, Human.class);
 
-        service.setParentsForHuman("Khrushev Nikita Sergeevich", service.findByName("Khrushev Sergey Nikanorovich"));
-        service.setParentsForHuman("Khrushev Nikita Sergeevich", service.findByName("Khrusheva Kseniya Ivanovna"));
+        humanService.setParentsForHuman("Khrushev Nikita Sergeevich", humanService.findByName("Khrushev Sergey Nikanorovich"));
+        humanService.setParentsForHuman("Khrushev Nikita Sergeevich", humanService.findByName("Khrusheva Kseniya Ivanovna"));
+
+        Human papaNikity = humanService.findByName("Khrushev Sergey Nikanorovich");
+        if( papaNikity != null){
+            humanService.findByName("Khrushev Sergey Nikanorovich").
+                    setPartner(humanService.findByName("Khrusheva Kseniya Ivanovna") != null ?
+                            humanService.findByName("Khrusheva Kseniya Ivanovna"): null);
+        }
+
+
 
         String filePathForTree = "src/family_tree/writer/familyTree.out";
 
@@ -72,26 +79,30 @@ public class Main {
          Serialization using ObjectOutputStream class using the service.
          Created the method for writing an object as byte code
          */
-        service.initializationFileHandler();
-        service.writeTreeAsByteCode(service.getFamilyTree(), filePathForTree);
+        humanService.initializationFileHandler();
+        humanService.writeTreeAsByteCode(humanService.getFamilyTree(), filePathForTree);
 
 
         //Renewing of an object from a byte code file using the class ObjectInputStream
-        FamilyTree treeRestored = service.readTreeFromByteCodeFile(filePathForTree);
+        FamilyTree treeRestored = humanService.readTreeFromByteCodeFile(filePathForTree);
 
 
         /*
          Different displaying of methods of sorting using the service (List of Humans or List of Names of Humans)
          */
-        ArrayList<Human> sortedByNameFamily = service.getFamilyTree().sortByName();
+        //ArrayList<Human> sortedByNameFamily = service.getFamilyTree().sortByName();
+        //System.out.println(service.getListOfNames(sortedByNameFamily));
 
 
+        //System.out.println(service.getListOfNames(service.getFamilyTree().sortByAge()));
 
-        System.out.println(service.getFamilyTree().sortByAge());
         System.out.println(("==".repeat(20)));
-        System.out.println(service.sort());
+        //System.out.println(service.sorting());
 
-        HumanIterator iterator = new HumanIterator(service.getFamilyTree());
+
+//        HumanIterator<Human> iterator= new HumanIterator<>(service.getFamilyTree().
+//                convertToList(service.getFamilyTree().getFamilyTree()));
+//        System.out.println(service.getFamilyTree().getInfo());
 
 
     }

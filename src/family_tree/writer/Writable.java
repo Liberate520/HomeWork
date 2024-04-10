@@ -1,4 +1,4 @@
-package family_tree.interfaces;
+package family_tree.writer;
 
 import family_tree.person.Human;
 import family_tree.tree.FamilyTree;

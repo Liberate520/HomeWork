@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable {
     private long id;
     private String name;
     private LocalDate dob, dod;
@@ -63,6 +63,7 @@ public class Human implements Serializable, Comparable<Human> {
             if (!temp.contains(child)) {
                 getKidsFromPartner(partner).add(child);
                 partner.getKidsFromPartner(this).add(child);
+                partner.countOfChildren++;
                 child.setParent(partner);
                 child.setParent(this);
                 countOfChildren++;
@@ -72,11 +73,11 @@ public class Human implements Serializable, Comparable<Human> {
                 return false;
             }
         } else {
-            kids.put(partner, new ArrayList<Human>());
-            kids.get(partner).add(child);
-            partner.addChildFromThisPartner(this, child);
+            kids.getOrDefault(partner, new ArrayList<Human>()).add(child);
+            partner.kids.getOrDefault(this, new ArrayList<>()).add(child);
             child.setParent(partner);
             child.setParent(this);
+            partner.countOfChildren++;
             countOfChildren++;
             return true;
         }
@@ -222,17 +223,8 @@ public class Human implements Serializable, Comparable<Human> {
         sb.append("father: ");
         sb.append(getFather() == null ? "no info\n" : getFather().getName() + "\n");
         sb.append("number of kids: ");
-        sb.append(countOfChildren);
-        sb.append(" ");
+        sb.append(countOfChildren + "\n");
         //TODO need to add information: is the person alive?
         return sb.toString();
-    }
-
-    @Override
-    public int compareTo(Human o) {
-        int res = name.compareTo(o.name);
-        if (res == 0) {
-            return getAge() - o.getAge();
-        } else return res;
     }
 }

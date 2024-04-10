@@ -1,6 +1,5 @@
 package family_tree.writer;
 
-import family_tree.interfaces.Writable;
 import family_tree.person.Human;
 import family_tree.tree.FamilyTree;
 
