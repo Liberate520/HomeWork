@@ -1,10 +1,12 @@
-
+package ru.gb.family_tree.file_work;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+
+import ru.gb.family_tree.tree.FamilyTree;
 
 public class FileHandler implements Writable {
 

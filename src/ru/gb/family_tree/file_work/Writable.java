@@ -1,4 +1,4 @@
-
+package ru.gb.family_tree.file_work;
 
 import java.io.Serializable;
 

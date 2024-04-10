@@ -1,11 +1,12 @@
-
+package ru.gb.family_tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable{
+public class Human implements Serializable {
    private int id;
    private String firstName;
    private String middleName;
@@ -24,14 +25,22 @@ public class Human implements Serializable{
       this(firstName,null,lastName,null,null);
    }
 
+   public Human(String firstName, String lastName,LocalDate birthDate) {
+      this(firstName,null,lastName,birthDate,null);
+   }
+
    public Human(String firstName, String middleName, String lastName) {
       this(firstName, middleName,lastName,null,null);
    }
 
-
    public Human(String firstName, String middleName, String lastName,
                 LocalDate birthDate, Gender gender) {
       this(firstName, middleName,lastName,birthDate,null,gender,null,null);
+   }
+
+   public Human(String firstName, String middleName, String lastName,
+                LocalDate birthDate, LocalDate deathDate, Gender gender) {
+      this(firstName, middleName,lastName,birthDate,deathDate,gender,null,null);
    }
 
    public Human(String firstName, String middleName, String lastName,
@@ -164,6 +173,8 @@ public class Human implements Serializable{
          sb.append(String.format(", дата смерти %s", deathDate));
       if (gender != null)
          sb.append(String.format(", %s", gender));
+      if (getDeathAge() != null)
+         sb.append(String.format(", умер в %d лет", getDeathAge()));
       return sb.toString();
    }
 
@@ -188,5 +199,18 @@ public class Human implements Serializable{
               equals(getFirstName()+getMiddleName()+getLastName()+getBirthDate());
    }
 
+   public Integer getDeathAge() {
+      if (birthDate != null && deathDate != null)
+         return Period.between(birthDate, deathDate).getYears();
+      else
+         return null;
+   }
+
+   public String getFullName() {
+      if (middleName != null)
+         return String.format("%d %s %s %s", id,firstName,middleName,lastName);
+      else
+         return String.format("%d %s %s", id, firstName,lastName);
+   }
+
 }
-  
