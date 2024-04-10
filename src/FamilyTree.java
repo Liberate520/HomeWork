@@ -1,20 +1,30 @@
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
 
-public class FamilyTree {
-    private List<Human> familyTree;
+public class FamilyTree implements Serializable, Iterable<Human> {
+    private final List<Human> familyTree;
 
-    public void SetFamilyTree(List<Human> familyTree) {
-        this.familyTree = familyTree;
-    }
 
-    public void add(List<Human> familyTree, Human human) {
+    public FamilyTree() {familyTree = new ArrayList<>();}
+
+    public void add(Human human) {
         familyTree.add(human);
     }
 
-    public String getFamilyTree() {
-        for (Human human : familyTree) {
-            return human.getInfo();
-        }
-        return "";
+    public List<Human> getList() {
+        return familyTree;
+    }
+
+    public void sortByName() {
+        familyTree.sort(new HumanComparatorByName());
+    }
+
+    public void sortByAge() {
+        familyTree.sort(new HumanComparatorByAge());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(familyTree);
     }
 }
