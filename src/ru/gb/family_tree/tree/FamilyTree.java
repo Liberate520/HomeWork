@@ -5,32 +5,31 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.human.comparators.HumanComparatorByBirthDate;
-import ru.gb.family_tree.human.comparators.HumanComparatorByName;
+import ru.gb.family_tree.comparators.ComparatorByBirthDate;
+import ru.gb.family_tree.comparators.ComparatorByName;
 
-public class FamilyTree implements Serializable,Iterable<Human>{
+public class FamilyTree<E extends TreeItem> implements Serializable,Iterable<E>{
     private int id_human;
-    private List<Human> humanList;
+    private List<E> itemList;
 
     public FamilyTree() {
-        humanList = new ArrayList<>();
+        itemList = new ArrayList<>();
         id_human = 1;
     }
 
-    public void addHuman(Human human) {
+    public void addHuman(E human) {
         human.setId(id_human++);
-        humanList.add(human);
+        itemList.add(human);
     }
 
-    public List<Human> getProductList() {
-        return humanList;
+    public List<E> getProductList() {
+        return itemList;
     }
 
     public String getTreeInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("Список персон: \n");
-        for (Human human: humanList) {
+        for (E human: itemList) {
             sb.append(human.getFullInfo());
             sb.append("\n");
         }
@@ -38,16 +37,16 @@ public class FamilyTree implements Serializable,Iterable<Human>{
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(humanList);
+    public Iterator<E> iterator() {
+        return new TreeIterator<>(itemList);
     }
 
     public void sortByName() {
-        humanList.sort(new HumanComparatorByName());
+        itemList.sort(new ComparatorByName<>());
     }
 
     public void sortByAge() {
-        humanList.sort(new HumanComparatorByBirthDate());
+        itemList.sort(new ComparatorByBirthDate<>());
     }
 
 }

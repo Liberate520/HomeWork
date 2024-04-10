@@ -6,8 +6,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import ru.gb.family_tree.tree.FamilyTree;
-
 public class FileHandler implements Writable {
 
     @Override
@@ -37,3 +35,5 @@ public class FileHandler implements Writable {
     }
 
 }
+
+

@@ -2,14 +2,14 @@ package ru.gb.family_tree;
 
 import java.time.LocalDate;
 
-import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.tree.FamilyTree;
 import ru.gb.family_tree.file_work.FileHandler;
+import ru.gb.family_tree.gender.Gender;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
         Human person1 = new Human("Григорий","Рыжков",LocalDate.parse("1920-12-05"));
         Human person2 = new Human("Семен","Григорьевич","Рыжков",
                 LocalDate.parse("1960-01-23"),LocalDate.parse("2000-05-23"),Gender.Male);
@@ -52,8 +52,6 @@ public class Main {
         familyTree.sortByAge();
         System.out.println("Отсортировано по возрасту:");
         System.out.println(familyTree.getTreeInfo());
-
     }
 
 }
-
