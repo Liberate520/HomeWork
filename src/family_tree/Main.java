@@ -3,9 +3,10 @@ package family_tree;
 import family_tree.family_tree.FamilyTree;
 import family_tree.human.Gender;
 import family_tree.human.Human;
+import family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
-import java.util.logging.FileHandler;
+//import java.util.logging.FileHandler;
 
 public class Main {
     public static void main(String[] args) {
