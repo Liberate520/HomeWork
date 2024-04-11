@@ -1,16 +1,16 @@
 package family_tree.writer;
 
-import family_tree.person.Human;
+import family_tree.person.BasicUnit;
 import family_tree.tree.FamilyTree;
 
 
 import java.io.Serializable;
 
-public interface Writable {
+public interface Writable <T extends BasicUnit> {
     boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree);
-    boolean writeHumanAsByteCode(Serializable outputObject, String fileNameForPeople);
+    boolean writeUnitAsByteCode(Serializable outputObject, String fileNameForPeople);
     FamilyTree readTreeFromByteCodeFile(String fileNameForTree);
-    Human readHumanFromByteCodeFile(String fileNameForPeople);
+    T readUnitFromByteCodeFile(String fileNameForPeople);
 
 
 

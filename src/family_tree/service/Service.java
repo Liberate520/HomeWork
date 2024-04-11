@@ -1,5 +1,6 @@
 package family_tree.service;
 
+import family_tree.person.BasicUnit;
 import family_tree.person.Gender;
 import family_tree.person.Human;
 import family_tree.tree.FamilyTree;
@@ -9,13 +10,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Service<T extends Human> {
+public class Service<T extends BasicUnit> {
     private long genId;
     private FamilyTree familyTree;
     private FileHandler fh;
 
 
-    public Service(FamilyTree familyTree) {
+    public Service(FamilyTree<T> familyTree) {
         this.familyTree = familyTree;
     }
 
@@ -39,7 +40,7 @@ public class Service<T extends Human> {
                                      LocalDate dob, LocalDate dod,
                                      Gender gender, T father, T mother, Class<T> clazz) {
         if (clazz.equals(Human.class)) {
-            Human human = new Human(name, dob, dod, gender, father, mother);
+            Human human = new Human(name, dob, dod, gender, (Human) father, (Human) mother);
             human.setId(genId++);
             familyTree.addPersonToFamily(human, generation);
         }
@@ -49,7 +50,7 @@ public class Service<T extends Human> {
     public void addHumanToFamilyTree(int generation, String name,
                                      LocalDate dob, Gender gender, T father, T mother, Class<T> clazz) {
         if (clazz.equals(Human.class)) {
-            Human human = new Human(name, dob, gender, father, mother);
+            Human human = new Human(name, dob, gender, (Human) father, (Human) mother);
             human.setId(genId++);
             familyTree.addPersonToFamily(human, generation);
         }
@@ -61,6 +62,8 @@ public class Service<T extends Human> {
         human.setId(genId++);
         familyTree.addPersonToFamily(human, generation);
     }
+
+    @SuppressWarnings("unchecked")
 
     public void addHumanToFamilyTree(int generation, String name,
                                      LocalDate dob, LocalDate dod,
@@ -78,48 +81,48 @@ public class Service<T extends Human> {
         }
     }
 
-    public Human findByName(String nameForSearching) {
-        return familyTree.findHumanByName(nameForSearching);
+    public T findByName(String nameForSearching) {
+        return (T) familyTree.findUnitByName(nameForSearching); //??
     }
 
 
-    public FamilyTree getFamilyTree() {
+    @SuppressWarnings("unchecked")
+    public FamilyTree<T> getFamilyTree() {
         return familyTree;
     }
 
     public void initializationFileHandler() {
-        fh = new FileHandler();
+        fh = new FileHandler(); // ??
     }
 
-    public FileHandler getFileHandler() {
-        return fh;
-    }
+
 
     public boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree) {
         return fh.writeTreeAsByteCode(outputObject, fileNameForTree);
     }
 
 
-    public boolean writeHumanAsByteCode(Serializable outputObject, String fileNameForPeople) {
-        return fh.writeHumanAsByteCode(outputObject, fileNameForPeople);
+    public boolean writeUnitAsByteCode(Serializable outputObject, String fileNameForPeople) {
+        return fh.writeUnitAsByteCode(outputObject, fileNameForPeople);
     }
-
 
     public FamilyTree readTreeFromByteCodeFile(String fileNameForTree) {
         return fh.readTreeFromByteCodeFile(fileNameForTree);
     }
 
 
-    public Human readHumanFromByteCodeFile(String fileNameForPeople) {
-        return fh.readHumanFromByteCodeFile(fileNameForPeople);
+    public T readUnitFromByteCodeFile(String fileNameForPeople) {
+        return (T) fh.readUnitFromByteCodeFile(fileNameForPeople); //??
     }
 
-    public ArrayList<String> getListOfNames(ArrayList<T> peopleList) {
-        return familyTree.getListOfNames(peopleList);
-    }
 
-    public ArrayList<String> sorting() {
-        return getListOfNames(familyTree.sorting());
+    @SuppressWarnings("unchecked")
+    public ArrayList<String> sorting(int request) {
+        ArrayList<T> res = switch (request) {
+            case (1) -> familyTree.sortByName();
+            case (2) -> familyTree.sortByAge();
+            default -> familyTree.sortByDateOfBirth();
+        };
+        return familyTree.getListOfNames(res);
     }
-
 }

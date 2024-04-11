@@ -1,11 +1,11 @@
 package family_tree.writer;
 
-import family_tree.person.Human;
+import family_tree.person.BasicUnit;
 import family_tree.tree.FamilyTree;
 
 import java.io.*;
 
-public class FileHandler implements Writable {
+public class FileHandler<T extends BasicUnit> implements Writable<T> {
 
 
     public boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree) {
@@ -19,7 +19,7 @@ public class FileHandler implements Writable {
         }
     }
 
-    public boolean writeHumanAsByteCode(Serializable outputObject, String fileNameForPeople) {
+    public boolean writeUnitAsByteCode(Serializable outputObject, String fileNameForPeople) {
         try(ObjectOutputStream out = new ObjectOutputStream(
                 new FileOutputStream(fileNameForPeople))){
             out.writeObject(outputObject);
@@ -39,9 +39,9 @@ public class FileHandler implements Writable {
         }
     }
 
-    public Human readHumanFromByteCodeFile(String fileNameForPeople) {
+    public T readUnitFromByteCodeFile(String fileNameForPeople) {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileNameForPeople))){
-            return (Human) in.readObject();
+            return (T) in.readObject();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

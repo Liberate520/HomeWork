@@ -6,6 +6,7 @@ import family_tree.tree.FamilyTree;
 
 import java.time.LocalDate;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -99,11 +100,19 @@ public class Main {
         System.out.println(("==".repeat(20)));
         //System.out.println(service.sorting());
 
+        Scanner in = new Scanner(System.in);
+        int request = 0;
+        while ((request < 1) || (request > 3)){
+            System.out.println("Enter the number of type of sorting (by Name is 1, by Age is 2 or by Date of birth is 3): ");
+            try {
+                request = in.nextInt();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(humanService.sorting(request));
 
-//        HumanIterator<Human> iterator= new HumanIterator<>(service.getFamilyTree().
-//                convertToList(service.getFamilyTree().getFamilyTree()));
-//        System.out.println(service.getFamilyTree().getInfo());
-
+        System.out.println(humanService.getFamilyTree());
 
     }
 }

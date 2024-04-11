@@ -1,10 +1,10 @@
 package family_tree.tree.sorting;
 
-import family_tree.person.Human;
+import family_tree.person.BasicUnit;
 
 import java.util.Comparator;
 
-public class SortByAge<T extends Human> implements Comparator<T> {
+public class SortByAge<T extends BasicUnit> implements Comparator<T> {
 
     @Override
     public int compare(T o1, T o2) {
