@@ -1,7 +1,6 @@
 package ru.gb.family_tree.family_tree;
 
 import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.iterator.ComparatorByAge;
 import ru.gb.family_tree.iterator.ComparatorByName;
 import ru.gb.family_tree.iterator.FamilyTreeIterator;
@@ -15,25 +14,25 @@ import java.util.Iterator;
 
 public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable, Iterable<E> {
 
-    private long humanId;
-    private List<E> humanList;
+    private long MemberId;
+    private List<E> MemberList;
 
 
     public FamilyTree() {
-        this.humanList = new ArrayList<>();
+        this.MemberList = new ArrayList<>();
     }
 
 
-    public boolean addHuman(E human) {
-        if (human == null) {
+    public boolean addMember(E member) {
+        if (member == null) {
             return false;
         }
-        if (!humanList.contains(human)) {
-            humanList.add(human);
-            human.setId(humanId++);
+        if (!MemberList.contains(member)) {
+            MemberList.add(member);
+            member.setId(MemberId++);
 
-            addParentsRelations(human);
-            addChildrenRelations(human);
+            addParentsRelations(member);
+            addChildrenRelations(member);
 
             return true;
         }
@@ -41,26 +40,26 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
 
-    private void addParentsRelations(E human) {
-        E mother = human.getMother();
+    private void addParentsRelations(E member) {
+        E mother = member.getMother();
         if (mother != null) {
-            mother.addChild(human);
+            mother.addChild(member);
         }
 
-        E father = human.getFather();
+        E father = member.getFather();
         if (father != null) {
-            father.addChild(human);
+            father.addChild(member);
         }
     }
 
 
-    private void addChildrenRelations(E human) {
-        if (human.getChildren().size() > 0) {
-            for (E child : human.getChildren()) {
-                if (human.getGender() == Gender.female) {
-                    child.setMother(human);
+    private void addChildrenRelations(E member) {
+        if (member.getChildren().size() > 0) {
+            for (E child : member.getChildren()) {
+                if (member.getGender() == Gender.female) {
+                    child.setMother(member);
                 } else {
-                    child.setFather(human);
+                    child.setFather(member);
                 }
             }
         }
@@ -68,10 +67,10 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
 
 
     public E findById(long id) {
-        for (E human: humanList) {
-            if (human.getId() == id) {
-                System.out.println(human);
-                return human;
+        for (E member: MemberList) {
+            if (member.getId() == id) {
+                System.out.println(member);
+                return member;
             }
         }
         return null;
@@ -80,13 +79,13 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
 
     public List<E> findByName(String name) {
         List<E> res = new ArrayList<>();
-        for (E human: humanList) {
-            if (human.getName().equalsIgnoreCase(name)) {
-                res.add(human);
+        for (E member: MemberList) {
+            if (member.getName().equalsIgnoreCase(name)) {
+                res.add(member);
             }
         }
-        for (E human : res) {
-            System.out.println(human);
+        for (E member : res) {
+            System.out.println(member);
         }
         return res;
     }
@@ -94,10 +93,10 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
 
     public String getAboutFamily() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Humans in family: ");
-        sb.append(humanList.size() + "\n\n------------\nThey are:\n\n");
-        for (E human : humanList) {
-            sb.append(human);
+        sb.append("Members in family: ");
+        sb.append(MemberList.size() + "\n\n------------\nThey are:\n\n");
+        for (E member : MemberList) {
+            sb.append(member);
             sb.append("\n");
             sb.append("-----------\n");
         }
@@ -113,17 +112,17 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
 
     @Override
     public Iterator<E> iterator() {
-        return new FamilyTreeIterator<>(humanList);
+        return new FamilyTreeIterator<>(MemberList);
     }
 
 
     public void sortByAge() {
-        humanList.sort(new ComparatorByAge<>());
+        MemberList.sort(new ComparatorByAge<>());
     }
 
 
     public void sortByName() {
-        humanList.sort(new ComparatorByName<>());
+        MemberList.sort(new ComparatorByName<>());
     }
 
 }

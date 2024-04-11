@@ -163,11 +163,11 @@ public class Main {
 //        System.out.println("--------");
 
 
-        familyTree.addHuman(human1);
-        familyTree.addHuman(human2);
-        familyTree.addHuman(human3);
-        familyTree.addHuman(human4);
-        familyTree.addHuman(human5);
+        familyTree.addMember(human1);
+        familyTree.addMember(human2);
+        familyTree.addMember(human3);
+        familyTree.addMember(human4);
+        familyTree.addMember(human5);
 
 //        human1.PrintId();
 
