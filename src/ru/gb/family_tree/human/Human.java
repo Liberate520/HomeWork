@@ -1,5 +1,7 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.family_tree.FamilyTreeElement;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.time.Period;
 
 
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyTreeElement<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -132,7 +134,7 @@ public class Human implements Serializable {
     }
 
 
-    public boolean addChild (Human child) {
+    public boolean addChild(Human child) {
         if (!children.contains(child)){
             children.add(child);
             return true;
@@ -263,7 +265,7 @@ public class Human implements Serializable {
     }
 
 
-    private int getInterval(LocalDate dob, LocalDate dod) {
+    public int getInterval(LocalDate dob, LocalDate dod) {
         Period interval = Period.between(dob, dod);
         return interval.getYears();
     }

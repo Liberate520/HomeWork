@@ -20,7 +20,7 @@ public class Main {
         FileHandler fileHandler = new FileHandler();
 
 //        Инициализируем экземпляр класса семейного древа:
-        FamilyTree familyTree = testTree();
+        FamilyTree<Human> familyTree = testTree();
 
         System.out.println("\nДанные из семейного древа ДО чтения из файла:\n");
         System.out.println(familyTree);
@@ -51,14 +51,14 @@ public class Main {
 //  ------------------------------------
 
 //        Чтение из файла:
-        FamilyTree familyTreeRestored1 = (FamilyTree) fileHandler.read(path1);
+        FamilyTree<Human> familyTreeRestored1 = (FamilyTree<Human>) fileHandler.read(path1);
         System.out.println("\nДанные из семейного древа c сортировкой по имени\nПОСЛЕ чтения из файла:\n");
         System.out.println(familyTreeRestored1);
 
 //  ------------------------------------
 
 //        Чтение из файла:
-        FamilyTree familyTreeRestored2 = (FamilyTree) fileHandler.read(path2);
+        FamilyTree<Human> familyTreeRestored2 = (FamilyTree<Human>) fileHandler.read(path2);
         System.out.println("\nДанные из семейного древа c сортировкой по возрасту\nПОСЛЕ чтения из файла:\n");
         System.out.println(familyTreeRestored2);
     }
@@ -68,8 +68,8 @@ public class Main {
 
 //    -------------------------------------------
 
-    static FamilyTree testTree() {
-        FamilyTree familyTree = new FamilyTree();
+     static FamilyTree<Human> testTree() {
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
 //        Human human1 = new Human("Иванов Валерий Петрович", Gender.male, LocalDate.of(1978, 4, 11));
 //        Human human2 = new Human("Максимов Петр Геннадьевич", Gender.male, LocalDate.of(1957, 12,4), LocalDate.of(1999, 6, 12));
