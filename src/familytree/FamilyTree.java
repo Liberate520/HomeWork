@@ -8,30 +8,30 @@ import iterators.HumanIterator;
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private final List<Human> familyTree;
+public class FamilyTree<T extends FamilyTreeElement> implements Serializable, Iterable<T> {
+    private final List<T> familyTree;
 
 
     public FamilyTree() {familyTree = new ArrayList<>();}
 
-    public void add(Human human) {
+    public void add(T human) {
         familyTree.add(human);
     }
 
-    public List<Human> getList() {
+    public List<T> getList() {
         return familyTree;
     }
 
     public void sortByName() {
-        familyTree.sort(new HumanComparatorByName());
+        familyTree.sort(new HumanComparatorByName<>());
     }
 
     public void sortByAge() {
-        familyTree.sort(new HumanComparatorByAge());
+        familyTree.sort(new HumanComparatorByAge<>());
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(familyTree);
+    public Iterator<T> iterator() {
+        return new HumanIterator<>(familyTree);
     }
 }

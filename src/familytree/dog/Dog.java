@@ -1,26 +1,28 @@
-package human;
+package familytree.dog;
 
 import familytree.FamilyTreeElement;
+import human.Human;
 import human.gender.Gender;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human>, FamilyTreeElement {
-    public Human(String name,  String gender, Human father, Human mother) {
-        this.name = name;
-        this.gender = gender;
-        this.father = father;
-        this.mother = mother;
-    }
+public class Dog implements FamilyTreeElement, Comparable<Dog> {
     private  final String name;
     private LocalDate dateOfBirth;
     private LocalDate dateOfDeath;
     private final String gender;
-    private final Human father, mother;
-    private List<Human> children;
+    private final Dog father, mother;
+    private List<Dog> children;
+
+    public Dog(String name, String gender, Dog father, Dog mother, List<Dog> children) {
+        this.name = name;
+        this.gender = gender;
+        this.father = father;
+        this.mother = mother;
+        this.children = children;
+    }
 
     public void SetDateOfBirth(int year, int month, int day) {
         this.dateOfBirth = LocalDate.of(year, month, day);
@@ -28,31 +30,31 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeElement
 
     public void SetDateOfDeath(int year, int month, int day) {this.dateOfDeath = LocalDate.of(year, month, day);}
 
-    public String getChildren() {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (children == null) {
-            return "";
-        } else {
-            for (Human child : children) {
-                stringBuilder.append(child.getName()).append(" | ");
-            }
-            return stringBuilder.toString();
-        }
+    public String getName() {
+        return name;
     }
-    public String getName () {return name;}
 
-    public void setChildren(List<Human> children) {
-        this.children = children;
+
+    public void addChild(List<Dog> children, Dog child) {
+        children.remove(child);
+        children.add(child);
     }
 
     public int getAge() {
         LocalDate now = LocalDate.now();
         return Objects.requireNonNullElse(dateOfDeath, now).getYear() - dateOfBirth.getYear();
     }
-    
-    public void addChild(List<Human> children, Human child) {
-        children.remove(child);
-        children.add(child);
+
+    public String getChildren() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (children == null) {
+            return "";
+        } else {
+            for (Dog child : children) {
+                stringBuilder.append(child.getName()).append(" | ");
+            }
+            return stringBuilder.toString();
+        }
     }
 
     public Gender getGender() {
@@ -76,7 +78,7 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeElement
     }
 
     @Override
-    public int compareTo(Human o) {
+    public int compareTo(Dog o) {
         return name.compareTo(o.name);
     }
 }

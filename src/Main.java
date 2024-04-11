@@ -1,4 +1,5 @@
 import familytree.FamilyTree;
+import familytree.dog.Dog;
 import filehandler.FileHandler;
 import human.Human;
 import service.Service;
@@ -10,11 +11,13 @@ public class Main {
     public static void main(String[] args) {
         String filePath = "/Users/ramilbagirov/Desktop/Murad/GeekBrains/git_education/Git_Java/homeWork/src/tree.txt";
 
-        //familytree.FamilyTree tree = testTree();
-        Service service = testTree();
-        System.out.println(service.getTreeInfo());
+        Service service1 = testTreeHuman();
+        Service service2 = testTreeDog();
+        //Service service = read(filePath);
+        System.out.println(service1.getTreeInfoHuman());
+        System.out.println(service2.getTreeInfoDog());
 
-        save(service, filePath);
+        save(service1, filePath);
 
     }
 
@@ -24,13 +27,13 @@ public class Main {
             fileHandler.save(service, filePath);
         }
 
-       static FamilyTree read(String filePath) {
+       static Service read(String filePath) {
             FileHandler fileHandler = new FileHandler();
-            return (FamilyTree) fileHandler.read(filePath);
+            return (Service) fileHandler.read(filePath);
     }
 
-    static Service testTree() {
-        FamilyTree familyTree = new FamilyTree();
+    static Service testTreeHuman() {
+        FamilyTree<Human> familyTree = new FamilyTree<>();
         Service service = new Service(familyTree);
 
         List<Human> children1 = new ArrayList<>();
@@ -57,14 +60,36 @@ public class Main {
         human4.addChild(children2, human5);
         human3.addChild(children2, human6);
         human4.addChild(children2, human6);
-        service.addFamilyMember(human1);
-        service.addFamilyMember(human2);
-        service.addFamilyMember(human3);
-        service.addFamilyMember(human4);
-        service.addFamilyMember(human5);
-        service.addFamilyMember(human6);
+        service.addFamilyMemberHuman(human1);
+        service.addFamilyMemberHuman(human2);
+        service.addFamilyMemberHuman(human3);
+        service.addFamilyMemberHuman(human4);
+        service.addFamilyMemberHuman(human5);
+        service.addFamilyMemberHuman(human6);
 
         return service;
+        }
+
+        static Service testTreeDog() {
+        FamilyTree<Dog> dogFamilyTree = new FamilyTree<>();
+        Service dogService = new Service(dogFamilyTree);
+        dogService.setService(dogFamilyTree);
+
+        List<Dog> dogs1 = new ArrayList<>();
+
+        Dog dog1 = new Dog("Layka", "Male", null, null, dogs1);
+        Dog dog2 = new Dog("Lyelya", "Female", null, null, dogs1);
+        Dog dog3 = new Dog("Ben", "Male", dog1, dog2, null);
+        dog1.SetDateOfBirth(2008, 12, 5);
+        dog2.SetDateOfBirth(2009, 2, 15);
+        dog3.SetDateOfBirth(2017, 5, 31);
+        dog1.addChild(dogs1, dog3);
+        dog2.addChild(dogs1, dog3);
+        dogService.addFamilyMemberDog(dog1);
+        dogService.addFamilyMemberDog(dog2);
+        dogService.addFamilyMemberDog(dog3);
+
+        return dogService;
         }
 
     }
