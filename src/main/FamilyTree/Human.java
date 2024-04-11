@@ -47,6 +47,7 @@ public class Human implements Serializable, Person<Human> {
     public boolean setParent(Human parent) {
         if (parent.gender.equals(Gender.MAN) && this.father == null) {
             this.father = parent;
+
             return true;
         }
         if (parent.gender.equals(Gender.WOMAN) && this.mother == null) {
@@ -71,7 +72,6 @@ public class Human implements Serializable, Person<Human> {
         if (!children.contains(child)) {
             if ((this.gender == Gender.MAN && (child.father == this || child.father == null)) ||
                     (this.gender == Gender.WOMAN && (child.mother == this || child.mother == null))) {
-                child.setParent(this);
                 children.add(child);
             }
         }

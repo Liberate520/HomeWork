@@ -33,6 +33,9 @@ public class Main {
         System.out.println("---- сохранение и восстановление дерева");
         dataInputOutput(familyTree);
 
+                System.out.printf("\n----родители (%s): \n", 7);
+        familyTree.getParent(7).forEach(System.out::println);
+
     }
 
     private static void init() {
@@ -53,15 +56,22 @@ public class Main {
         //добавим родственников в дерево
         //добавим супруга:
         Human newKin = Human.create("Doe", "John", Gender.MAN, LocalDate.of(1974, 10, 5));
-        familyTree.addHusband(4, newKin);
+        familyTree.establishMarriage(4, newKin);
 
-//        System.out.printf("\n супруг %s: \n", familyTree.getInfo(4));
-//        System.out.println(familyTree.getHusband(4));
+        System.out.printf("\n супруг %s: \n", familyTree.getInfo(4));
+        System.out.println(familyTree.getHusband(4));
 
-        //добавим ребенка
-        familyTree.addChildren(4, Human.create("Doe", "Ann", Gender.WOMAN, LocalDate.of(1990, 1, 1)));
+        System.out.printf("\n супруг %s: \n", familyTree.getInfo(6));
+        System.out.println(familyTree.getHusband(6));
+
+        //установим отцовство(родительство)
+        familyTree.establishPaternity(4, Human.create("Doe", "Ann", Gender.WOMAN, LocalDate.of(1990, 1, 1)));
         // установим ребенку воторого родителя
-        familyTree.addParent(7, 6);
+        //print(familyTree, "ltt");
+         familyTree.addParent(7, 6);
+
+
+
     }
 
     private static void sortedPrint(FamilyTree tree) {

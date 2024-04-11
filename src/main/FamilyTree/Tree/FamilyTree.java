@@ -29,68 +29,113 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
         addAllKinInTree(root);
     }
 
-    /**
-     * регистрация брака, если они уже оба есть в дереве.
-     *
-     * @param innFirst  - инн партнера
-     * @param innSecond - инн партнера
-     * @return успешность операции
-     */
-    public void addHusband(int innFirst, int innSecond) {
+    //region Установка супружеских связей
+
+    public boolean establishMarriage(E first, E second) {
+        if (first.getHusband() == null && second.getHusband() == null && first.getGender() != second.getGender()) {
+            first.setHusband(second);
+            second.setHusband(first);
+            addPersonInTree(first);
+            addPersonInTree(second);
+            return true;
+        }
+        return false;
+
+    }
+
+    public void establishMarriage(int innFirst, int innSecond) {
         E first = getPersonForINN(innFirst);
         E second = getPersonForINN(innSecond);
-        marriage(first, second);
+        establishMarriage(first, second);
     }
 
-    /**
-     * регистрация брака со сторонним человеком
-     *
-     * @param innFirst
-     * @param second
-     */
-    public void addHusband(int innFirst, E second) {
+    public void establishMarriage(int innFirst, E second) {
         E first = getPersonForINN(innFirst);
-        marriage(first, second);
+        establishMarriage(first, second);
     }
 
-    //TODO нужно подумать.
-    // Комм(Лучше создавать обоюдные связи, чтобы не было путаницы и было подобие автоматизации)
-    // возможно буду переделывать
-    public void addChildren(int innParent, E child) {
-        E parent = getPersonForINN(innParent);
-        parent.addChildren(child);
-        addPerson(child);
-    }
+    //endregion
+
+    //region Установка связей родитель - ребенок
 
     /**
-     * устанвить родителя, если его еще нет в дереве
+     * Метод устанавливает родственную связь родитель - ребенок.
+     * Метод добавляет в дерево нового участника через родственную связь родитель - ребенок
      *
-     * @param innChild
      * @param parent
+     * @param children
+     * @return
      */
-    public void addParent(int innChild, E parent) {
-        E child = getPersonForINN(innChild);
-        child.setParent(parent);
-        addPerson(parent);
+    public boolean establishPaternity(E parent, E children) {
+        if (children.setParent(parent)) {
+            parent.addChildren(children);
+            addPersonInTree(children);
+            addPersonInTree(parent);
+            return true;
+        }
+        return false;
     }
 
     /**
-     * установить родителя если он уже есть в дереве
+     * перегруженный метод, установка родительской связи по ИНН
      *
-     * @param innChild
      * @param innParent
+     * @param innChildren
+     * @return
      */
-    public void addParent(int innChild, int innParent) {
-        E child = getPersonForINN(innChild);
+    public boolean establishPaternity(int innParent, int innChildren) {
+        E children = getPersonForINN(innChildren);
         E parent = getPersonForINN(innParent);
-        child.setParent(parent);
+        return establishPaternity(parent, children);
+
     }
 
+    public boolean establishPaternity(int innParent, E children) {
+        E parent = getPersonForINN(innParent);
+        return establishPaternity(parent, children);
+    }
+
+    public boolean establishPaternity(E parent, int innChildren) {
+        E children = getPersonForINN(innChildren);
+        return establishPaternity(parent, children);
+    }
 
     public void mortRegistration(int inn, LocalDate mort) {
         getPersonForINN(inn).setMortDay(mort);
     }
 
+    /**
+     * Добавить второго родителя ребенка родителя, если его еще нет в дереве
+     *
+     * @param children
+     * @param parent
+     */
+    public void addParent(E children, E parent) {
+        children.setParent(parent);
+        parent.addChildren(children);
+        addPersonInTree(children);
+        addPersonInTree(parent);
+    }
+
+    public void addParent(int innChild, E parent) {
+        E children = getPersonForINN(innChild);
+        addParent(children, parent);
+    }
+
+    public void addParent(int innChild, int innParent) {
+        E children = getPersonForINN(innChild);
+        E parent = getPersonForINN(innParent);
+        addParent(children, parent);
+    }
+
+    public void addParent(E children, int innParent) {
+        E parent = getPersonForINN(innParent);
+        addParent(children, parent);
+    }
+
+    //endregion
+
+    //region Getters
 
     /**
      * вернет список всех людей в дереве
@@ -165,6 +210,25 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
         return getPersonForINN(inn).toString();
     }
 
+    /**
+     * получение члена дерева по инн
+     *
+     * @param innPerson - инн
+     * @return член дерева
+     */
+    //TODO добавить проверку  и исключение
+    private E getPersonForINN(int innPerson) {
+        return familyTree.stream()
+                .filter(e -> e.getInn() == innPerson)
+                .collect(Collectors.toList()).get(0);
+    }
+
+    //TODO потом убрать по возможности
+    public List<E> getFamilyTree() {
+        return familyTree;
+    }
+
+    //endregion
 
     //region Private-Methods
 
@@ -173,7 +237,7 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
      *
      * @param person
      */
-    private boolean addPerson(E person) {
+    private boolean addPersonInTree(E person) {
         if (!familyTree.contains(person)) {
             familyTree.add(person);
             person.setInn(++inn);
@@ -191,23 +255,23 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
     private void addAllKinInTree(E person) {
 
 
-        if (addPerson(person)) {
+        if (addPersonInTree(person)) {
 
             //добавим супруга
             if (person.getHusband() != null) {
 
-                if (addPerson(person.getHusband())) {
+                if (addPersonInTree(person.getHusband())) {
                     addAllKinInTree(person.getHusband());
                 }
             }
             //добавим родителей
             if (person.getFather() != null) {
-                if (addPerson(person.getFather())) {
+                if (addPersonInTree(person.getFather())) {
                     addAllKinInTree(person.getFather());
                 }
             }
             if (person.getMother() != null) {
-                if (addPerson(person.getMother())) {
+                if (addPersonInTree(person.getMother())) {
                     addAllKinInTree(person.getMother());
                 }
             }
@@ -215,7 +279,7 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
             if (!person.getListChildren().isEmpty()) {
                 person.getListChildren()
                         .forEach(e -> {
-                            addPerson(e);
+                            addPersonInTree(e);
                             addAllKinInTree(e);
 
                         });
@@ -223,35 +287,9 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
         }
     }
 
-
-    private void marriage(E first, E second) {
-        if (first.getHusband() == null && second.getHusband() == null && first.getGender() != second.getGender()) {
-            first.setHusband(second);
-            second.setHusband(first);
-//            addPerson(first);
-            addPerson(second);
-        }
-    }
-
-    /**
-     * получение члена дерева по инн
-     *
-     * @param innPerson - инн
-     * @return член дерева
-     */
-    //TODO добавить проверку  и исключение
-    private E getPersonForINN(int innPerson) {
-        return familyTree.stream()
-                .filter(e -> e.getInn() == innPerson)
-                .collect(Collectors.toList()).get(0);
-    }
     //endregion
 
-    //TODO потом убрать по возможности
-    public List<E> getFamilyTree() {
-        return familyTree;
-    }
-
+    //region Servise-methods
     /**
      * Метод сортирует членов дерева по полному имени
      */
@@ -271,4 +309,6 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
     public Iterator<E> iterator() {
         return new TreeIterator(familyTree);
     }
+
+    //endregion
 }
