@@ -1,4 +1,4 @@
-package FamilyTree.Human;
+package FamilyTree.ItemTree;
 
 public enum Gender {
     MAN ("Man"),

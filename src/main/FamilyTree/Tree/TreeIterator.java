@@ -1,15 +1,15 @@
 package FamilyTree.Tree;
 
-import FamilyTree.Human.Human;
+import FamilyTree.ItemTree.Person;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class TreeIterator implements Iterator<Human> {
-    private List<Human> humanList;
+public class TreeIterator<E extends Person<E>> implements Iterator<E> {
+    private List<E> humanList;
     private int index;
 
-    public TreeIterator(List<Human> humanList) {
+    public TreeIterator(List<E> humanList) {
         this.humanList = humanList;
         this.index = 0;
     }
@@ -20,7 +20,7 @@ public class TreeIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public E next() {
         return humanList.get(index++);
     }
 }

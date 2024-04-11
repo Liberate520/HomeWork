@@ -1,5 +1,9 @@
 package FamilyTree.Tree;
 
+import FamilyTree.ItemTree.Comparator.ComparatorByAge;
+import FamilyTree.ItemTree.Comparator.ComparatorByFullName;
+import FamilyTree.ItemTree.Person;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,11 +19,11 @@ import java.util.stream.Collectors;
 //TODO убрала ссылку на Human (буду возвращать только строковые данные),
 // чтобы не было возможности напрямую вносить изменения. пока не поняла: нужно это делать или нет
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private final List<Human> familyTree;
+public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E> {
+    private final List<E> familyTree;
     private int inn;
 
-    public FamilyTree(Human root) {
+    public FamilyTree(E root) {
         this.familyTree = new ArrayList<>();
         this.inn = 0;
         addAllKinInTree(root);
@@ -33,8 +37,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
      * @return успешность операции
      */
     public void addHusband(int innFirst, int innSecond) {
-        Human first = getHumanForINN(innFirst);
-        Human second = getHumanForINN(innSecond);
+        E first = getPersonForINN(innFirst);
+        E second = getPersonForINN(innSecond);
         marriage(first, second);
     }
 
@@ -44,18 +48,18 @@ public class FamilyTree implements Serializable, Iterable<Human> {
      * @param innFirst
      * @param second
      */
-    public void addHusband(int innFirst, Human second) {
-        Human first = getHumanForINN(innFirst);
+    public void addHusband(int innFirst, E second) {
+        E first = getPersonForINN(innFirst);
         marriage(first, second);
     }
 
     //TODO нужно подумать.
     // Комм(Лучше создавать обоюдные связи, чтобы не было путаницы и было подобие автоматизации)
     // возможно буду переделывать
-    public void addChildren(int innParent, Human child) {
-        Human parent = getHumanForINN(innParent);
+    public void addChildren(int innParent, E child) {
+        E parent = getPersonForINN(innParent);
         parent.addChildren(child);
-        addHuman(child);
+        addPerson(child);
     }
 
     /**
@@ -64,10 +68,10 @@ public class FamilyTree implements Serializable, Iterable<Human> {
      * @param innChild
      * @param parent
      */
-    public void addParent(int innChild, Human parent) {
-        Human child = getHumanForINN(innChild);
+    public void addParent(int innChild, E parent) {
+        E child = getPersonForINN(innChild);
         child.setParent(parent);
-        addHuman(parent);
+        addPerson(parent);
     }
 
     /**
@@ -77,14 +81,14 @@ public class FamilyTree implements Serializable, Iterable<Human> {
      * @param innParent
      */
     public void addParent(int innChild, int innParent) {
-        Human child = getHumanForINN(innChild);
-        Human parent = getHumanForINN(innParent);
+        E child = getPersonForINN(innChild);
+        E parent = getPersonForINN(innParent);
         child.setParent(parent);
     }
 
 
     public void mortRegistration(int inn, LocalDate mort) {
-        getHumanForINN(inn).setMortDay(mort);
+        getPersonForINN(inn).setMortDay(mort);
     }
 
 
@@ -108,32 +112,34 @@ public class FamilyTree implements Serializable, Iterable<Human> {
      * @return возвращает лист детей
      */
     public List<String> getChildren(int innHuman) {
-        return familyTree.stream()
+        List<E> listChildren = familyTree.stream()
                 .filter(e -> e.getInn() == innHuman)
                 .collect(Collectors.toList())
                 .stream().findFirst().get()
-                .getChildren().stream()
+                .getListChildren();
+        return listChildren.stream()
                 .map(e -> e.toString())
                 .collect(Collectors.toList());
+
     }
 
     /**
      * возвращает родителей
      *
-     * @param innHuman
+     * @param innPerson
      * @return
      */
     //TODO возможно нужно разбить на возврат матери и отца отдельно и возвращать строковое представление. пока не решила
-    public List<String> getParent(int innHuman) {
-        Human human = familyTree.stream()
-                .filter(e -> e.getInn() == innHuman)
+    public List<String> getParent(int innPerson) {
+        E person = familyTree.stream()
+                .filter(e -> e.getInn() == innPerson)
                 .collect(Collectors.toList()).get(0);
         List<String> res = new ArrayList<>();
-        if (human.getMother() != null) {
-            res.add(human.getMother().toString());
+        if (person.getMother() != null) {
+            res.add(person.getMother().toString());
         }
-        if (human.getFather() != null) {
-            res.add(human.getFather().toString());
+        if (person.getFather() != null) {
+            res.add(person.getFather().toString());
         }
         return res;
     }
@@ -145,7 +151,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
      * @return
      */
     public String getHusband(int innHuman) {
-        return getHumanForINN(innHuman).getHusband().toString();
+        return getPersonForINN(innHuman).getHusband().toString();
     }
 
     /**
@@ -156,7 +162,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
      */
 
     public String getInfo(int inn) {
-        return getHumanForINN(inn).toString();
+        return getPersonForINN(inn).toString();
     }
 
 
@@ -165,47 +171,51 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     /**
      * добавление в дерево.
      *
-     * @param human
+     * @param person
      */
-    private boolean addHuman(Human human) {
-        if (!familyTree.contains(human)) {
-            familyTree.add(human);
-            human.setInn(++inn);
+    private boolean addPerson(E person) {
+        if (!familyTree.contains(person)) {
+            familyTree.add(person);
+            person.setInn(++inn);
             return true;
         }
         return false;
     }
 
     /**
-     * если у human есть родственники - добавит их рекурсивно в дерево.
+     * если у члена дерева есть родственники - добавит их рекурсивно в дерево.
      *
-     * @param human
+     * @param person
      */
     //TODO тут могут быть проблемы с дублированием ИНН из-за рекурсии.
-    private void addAllKinInTree(Human human) {
-        if (addHuman(human)) {
+    private void addAllKinInTree(E person) {
+
+
+        if (addPerson(person)) {
+
             //добавим супруга
-            if (human.getHusband() != null) {
-                if (addHuman(human.getHusband())) {
-                    addAllKinInTree(human.getHusband());
+            if (person.getHusband() != null) {
+
+                if (addPerson(person.getHusband())) {
+                    addAllKinInTree(person.getHusband());
                 }
             }
             //добавим родителей
-            if (human.getFather() != null) {
-                if (addHuman(human.getFather())) {
-                    addAllKinInTree(human.getFather());
+            if (person.getFather() != null) {
+                if (addPerson(person.getFather())) {
+                    addAllKinInTree(person.getFather());
                 }
             }
-            if (human.getMother() != null) {
-                if (addHuman(human.getMother())) {
-                    addAllKinInTree(human.getMother());
+            if (person.getMother() != null) {
+                if (addPerson(person.getMother())) {
+                    addAllKinInTree(person.getMother());
                 }
             }
             // добавим детей
-            if (!human.getChildren().isEmpty()) {
-                human.getChildren()
+            if (!person.getListChildren().isEmpty()) {
+                person.getListChildren()
                         .forEach(e -> {
-                            addHuman(e);
+                            addPerson(e);
                             addAllKinInTree(e);
 
                         });
@@ -214,38 +224,51 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
 
-    private void marriage(Human first, Human second) {
+    private void marriage(E first, E second) {
         if (first.getHusband() == null && second.getHusband() == null && first.getGender() != second.getGender()) {
             first.setHusband(second);
             second.setHusband(first);
-//            addHuman(first);
-            addHuman(second);
+//            addPerson(first);
+            addPerson(second);
         }
     }
 
     /**
-     * получение human по инн
+     * получение члена дерева по инн
      *
-     * @param innHuman - инн
-     * @return human
+     * @param innPerson - инн
+     * @return член дерева
      */
     //TODO добавить проверку  и исключение
-    private Human getHumanForINN(int innHuman) {
+    private E getPersonForINN(int innPerson) {
         return familyTree.stream()
-                .filter(e -> e.getInn() == innHuman)
+                .filter(e -> e.getInn() == innPerson)
                 .collect(Collectors.toList()).get(0);
     }
+    //endregion
 
-    public List<Human> getFamilyTree() {
+    //TODO потом убрать по возможности
+    public List<E> getFamilyTree() {
         return familyTree;
     }
 
-    @Override
-    public Iterator<Human> iterator() {
-        return new TreeIterator(familyTree);
+    /**
+     * Метод сортирует членов дерева по полному имени
+     */
+    public void sortByName() {
+        familyTree.sort(new ComparatorByFullName());
+    }
+
+    /**
+     * Метод сортирует членов дерева по возрасту
+     */
+    public void sortByAge() {
+        familyTree.sort(new ComparatorByAge());
     }
 
 
-//endregion
-
+    @Override
+    public Iterator<E> iterator() {
+        return new TreeIterator(familyTree);
+    }
 }

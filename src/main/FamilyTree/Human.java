@@ -1,4 +1,7 @@
-package FamilyTree.Human;
+package FamilyTree;
+
+import FamilyTree.ItemTree.Gender;
+import FamilyTree.ItemTree.Person;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Person<Human> {
     private String firstName;
     private String lastName;
     private Gender gender;
@@ -40,6 +43,7 @@ public class Human implements Serializable {
      * @param parent - родитель
      * @return - успешность операции
      */
+
     public boolean setParent(Human parent) {
         if (parent.gender.equals(Gender.MAN) && this.father == null) {
             this.father = parent;
@@ -52,8 +56,9 @@ public class Human implements Serializable {
         return false;
     }
 
-    public void setHusband(Human human) {
+    public boolean setHusband(Human human) {
         this.husband = human;
+        return true;
     }
 
     /**
@@ -61,6 +66,7 @@ public class Human implements Serializable {
      *
      * @param child
      */
+
     public void addChildren(Human child) {
         if (!children.contains(child)) {
             if ((this.gender == Gender.MAN && (child.father == this || child.father == null)) ||
@@ -75,17 +81,16 @@ public class Human implements Serializable {
      * устанавливает дату смерти. установить можно только 1 раз
      *
      * @param mort - дата смерти
-     * @return успешность операции.
      */
-    public boolean setMortDay(LocalDate mort) {
+    @Override
+    public void setMortDay(LocalDate mort) {
         if (this.mortDay != null) {
-            return false;
+            return;
         }
         if (mort.isBefore(birtDay)) {
-            return false;
+            return;
         }
         this.mortDay = mort;
-        return true;
     }
 
     public void setInn(int inn) {
@@ -123,7 +128,18 @@ public class Human implements Serializable {
             mort = mortDay.format(dtf);
         }
         return String.format("inn %d: %s %s (%s - %s), %s",
-                inn, firstName, lastName, birtDay.format(dtf), mort, gender.description);
+                inn, firstName, lastName, birtDay.format(dtf), mort, gender);
+    }
+
+    @Override
+    public String info() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String mort = "";
+        if (mortDay != null) {
+            mort = mortDay.format(dtf);
+        }
+        return String.format("inn %d: %s %s (%s - %s), %s",
+                inn, firstName, lastName, birtDay.format(dtf), mort, gender);
     }
 
     //region Getter
@@ -152,7 +168,8 @@ public class Human implements Serializable {
         return father;
     }
 
-    public List<Human> getChildren() {
+    @Override
+    public List<Human> getListChildren() {
         return children;
     }
 

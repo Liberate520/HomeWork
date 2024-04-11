@@ -1,21 +1,43 @@
 package FamilyTree;
 
-import FamilyTree.Human.Gender;
-import FamilyTree.Human.Human;
-import FamilyTree.Tree.Comparator.ComparatorByAge;
-import FamilyTree.Tree.Comparator.ComparatorByFullName;
 import FamilyTree.Tree.FamilyTree;
-import FamilyTree.Tree.FileHandler;
+import FamilyTree.ItemTree.Gender;
 
 import java.io.File;
 import java.time.LocalDate;
 
-public class Main {
-    public static void main(String[] args) {
 
-//region INIT
+public class Main {
+    private static Human root;
+    private static FamilyTree<Human> familyTree;
+
+    public static void main(String[] args) {
+        //инициализация дерева
+        init();
+
+//        System.out.printf("\n----родители (%s): \n", familyTree.getInfo(7));
+//        familyTree.getParent(7).forEach(System.out::println);
+
+        //        System.out.printf("\n----дети (%s): \n", root);
+//        familyTree.getChildren(1).forEach(System.out::println);
+//
+//        System.out.printf("\n----родители (%s): \n", root);
+//        familyTree.getParent(1).forEach(System.out::println);
+
+        print(familyTree, "\n----- первоначальный список");
+
+        //сортировки
+        sortedPrint(familyTree);
+
+        //сохранение и восстановление дерева
+        System.out.println("---- сохранение и восстановление дерева");
+        dataInputOutput(familyTree);
+
+    }
+
+    private static void init() {
         //создам человека с родителями и 2мя детьми
-        Human root = Human.create("Smit", "Adam", Gender.MAN, LocalDate.of(1955, 11, 25));
+        root = Human.create("Smit", "Adam", Gender.MAN, LocalDate.of(1955, 11, 25));
         root.setParent(Human.create("Smit", "Tony", Gender.MAN, LocalDate.of(1935, 1, 20)));
         root.setParent(Human.create("Luis", "Sofa", Gender.WOMAN, LocalDate.of(1936, 12, 20)));
 
@@ -23,7 +45,7 @@ public class Main {
         root.addChildren(Human.create("Smit", "Rob", Gender.MAN, LocalDate.of(1977, 1, 10)));
 
         //  создадим фамильное дерево для человека
-        FamilyTree familyTree = new FamilyTree(root);
+        familyTree = new FamilyTree<>(root);
 
         //зарегистрируем смерть
         familyTree.mortRegistration(2, LocalDate.of(1980, 12, 12));
@@ -40,35 +62,13 @@ public class Main {
         familyTree.addChildren(4, Human.create("Doe", "Ann", Gender.WOMAN, LocalDate.of(1990, 1, 1)));
         // установим ребенку воторого родителя
         familyTree.addParent(7, 6);
-//        System.out.printf("\n----родители (%s): \n", familyTree.getInfo(7));
-//        familyTree.getParent(7).forEach(System.out::println);
-
-        //        System.out.printf("\n----дети (%s): \n", root);
-//        familyTree.getChildren(1).forEach(System.out::println);
-//
-//        System.out.printf("\n----родители (%s): \n", root);
-//        familyTree.getParent(1).forEach(System.out::println);
-
-//endregion
-        print(familyTree, "\n----- первоначальный список");
-
-        //сортировки
-        sortedPrint(familyTree);
-
-        //сохранение и восстановление дерева
-        System.out.println("---- сохранение и восстановление дерева");
-        dataInputOutput(familyTree);
-
     }
 
     private static void sortedPrint(FamilyTree tree) {
-        tree.getFamilyTree().sort(new ComparatorByFullName());
+        tree.sortByName();
         print(tree, "\n Сортировка по полному имени)");
 
-        tree.getFamilyTree().sort(new ComparatorByFullName());
-        print(tree, "\n Сортировка по полному имени)");
-
-        tree.getFamilyTree().sort(new ComparatorByAge());
+        tree.sortByAge();
         print(tree, "\n Сортировка по возрасту");
     }
 
@@ -78,12 +78,12 @@ public class Main {
         fileHandler.save(familyTree, new File("archive.txt"));
 
         File file = new File("archive.txt");
-        FamilyTree newTree = fileHandler.read(file);
+        FamilyTree<Human> newTree = fileHandler.read(file);
         print(newTree, "\n Печать восстановленного дерева");
 
     }
 
-    private static void print(FamilyTree tree, String mess) {
+    private static void print(FamilyTree<Human> tree, String mess) {
         System.out.println(mess);
         for (Human item : tree) {
             System.out.println(item.toString());
