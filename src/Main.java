@@ -7,10 +7,10 @@ public class Main {
         FamilyTree tree = testFamilyTree();
         System.out.print(tree);
     }
-    static FamilyTree testFamilyTree(){
+    static FamilyTree testFamilyTree() {
         FamilyTree tree = new FamilyTree();
 
-        Human Ivan = new Human("Василий", Gender.Male, LocalDate.of(1978, 9,4));
+        Human Ivan = new Human("Василий", Gender.Male, LocalDate.of(1978, 9, 4));
         tree.add(Ivan);
         return tree;
     }
