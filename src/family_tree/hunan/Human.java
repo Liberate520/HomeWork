@@ -31,7 +31,7 @@ public class Human {
     }
 
     public Human (String name, Gender gender, LocalDate birthDate){
-        this(name, gender, birthDate, null, null, null);
+        this (name, gender, birthDate, null, null, null);
     }
 
     public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father){
@@ -39,7 +39,7 @@ public class Human {
     }
 
     public void setId(long id) { this.id = id; }
-    public void setName(String name){
+    public void setName (String name){
         this.name = name;
     }
     public void setBirthDate (LocalDate birthDate) { this.birthDate = birthDate; }
@@ -58,7 +58,7 @@ public class Human {
     }
 
     public long getId() { return id;}
-    public String getName(String name){ return name; }
+    public String getName(){ return name; }
     public LocalDate getBirthDate () { return birthDate; }
     public  LocalDate getDeathDate () { return deathDate; }
     public Human getMother(){ return mother;}
@@ -99,14 +99,14 @@ public class Human {
 
     public int getAge() {
         if (deathDate == null) {
-            return  getPeriod (birthDate, LocalDate.now());
+            return getPeriod (birthDate, LocalDate.now());
         }
         else {
             return getPeriod(birthDate, deathDate);
         }
     }
 
-    private int cetPeriod (LocalDate birthDate, LocalDate deathDate){
+    private int getPeriod (LocalDate birthDate, LocalDate deathDate){
         Period diff = Period.between(birthDate,deathDate);
         return diff.getYears();
     }
@@ -116,57 +116,61 @@ public class Human {
     }
 
     public String getInfo() {
-        StringBuilder Sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("id: ");
         sb.append(id);
         sb.append(", имя: ");
-        sb.append(named);
+        sb.append(name);
         sb.append(", пол: ");
         sb.append(getGender());
         sb.append(", дата рождения: ");
         sb.append(birthDate);
         sb.append(", возраст: ");
         sb.append(getAge());
-        sb.append(", супруг(а): ");
+        sb.append(", ");
         sb.append(getSpouseInfo());
-        sb.append(", мать: ");
+        sb.append(", ");
         sb.append(getMotherInfo());
-        sb.append(", отец: ");
+        sb.append(", ");
         sb.append(getFatherInfo());
-        sb.append(", дети: ");
+        sb.append(", ");
         sb.append(getChildrenInfo());
         return sb.toString();
     }
 
     public String getSpouseInfo(){
+        String res = "супруг(а) :";
         if (spouse == null){
-            String res = "нет";
-        }else {
-            String res = spouse.getName();
+            res += "нет";
+        }
+        else {
+            res += spouse.getName();
         }
         return res;
     }
     public String getMotherInfo(){
+        String res = "мать: ";
         Human mother = getMother();
         if (mother != null){
-            String res = mother.getName();
+            res += mother.getName();
         }else {
-            String res = "нет данных";
+            res = "нет данных";
         }
         return res;
     }
     public String getFatherInfo(){
+        String res = "отец: ";
         Human father = getFather();
         if (father != null){
-            String res = fatherr.getName();
+            res += father.getName();
         }else {
-            String res = "нет данных";
+            res += "нет данных";
         }
         return res;
     }
-    public String getChildrenInfoo(){
+    public String getChildrenInfo(){
         StringBuilder res = new StringBuilder();
-        String res = null;
+        res.append("дети: ");
         if (!children.isEmpty()) {
             res.append(children.get(0).getName());
             for (int i = 1; i < children.size(); i++) {
@@ -179,10 +183,8 @@ public class Human {
         return res.toString();
     }
 
-
-    @Override
-    public boolean equals(Objects obj){
-        if (this = obj) {
+    public boolean equals (Object obj){
+        if (this == obj) {
             return true;
         }
         if (obj instanceof Human human) {

@@ -1,10 +1,11 @@
 package family_tree.family_tree;
 import family_tree.hunan.Human;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private long igForGen;
     private final List<Human> humanList;
 
@@ -15,7 +16,7 @@ public class FamilyTree {
         this(new ArrayList<>());
     }
 
-    public boolean add(Human human) {
+    public boolean add (Human human) {
         if (human == null) {
             return false;
         }
@@ -60,8 +61,8 @@ public class FamilyTree {
     public List<Human> getByName (String name){
         List<Human> res = new ArrayList<>();
         for(Human human: humanList)
-            if (human.getName(name).equals(name)) res.add(human);
-            return res;
+            if (human.getName().equals(name)) res.add(human);
+        return res;
     }
 
     public boolean setWedding(long humanId1, long humanId2){
