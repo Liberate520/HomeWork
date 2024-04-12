@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements java.io.Serializable {
     private String name;
     private List<Person> children;
 
@@ -28,7 +28,7 @@ public class Person {
     }
 }
 
-public class GenealogyTree {
+public class GenealogyTree implements java.io.Serializable {
     private Person root;
 
     public GenealogyTree(Person root) {
@@ -55,9 +55,24 @@ public class Main {
         person1.addChild(person3);
 
         GenealogyTree tree = new GenealogyTree(person1);
-        List<Person> allChildren = tree.getAllChildrenOfPerson("Иван");
-        for (Person child : allChildren) {
-            System.out.println(child.getName());
+
+        FileHandler fileHandler = new FileHandler();
+
+        try {
+            fileHandler.serialize("genealogy_tree.dat", tree);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            GenealogyTree loadedTree = (GenealogyTree) fileHandler.deserialize("genealogy_tree.dat");
+            // Используем загруженное древо
+            List<Person> allChildren = loadedTree.getAllChildrenOfPerson("Иван");
+            for (Person child : allChildren) {
+                System.out.println(child.getName());
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
