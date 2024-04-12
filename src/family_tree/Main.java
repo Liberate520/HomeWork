@@ -10,24 +10,24 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree tree = testTree();
         System.out.println(tree);
+
+        String filePath = "src/family_tree/writer/tree.txt";
+
+//        FamilyTree tree = read(filePath);
+
+
+        save(tree, filePath);
     }
-    String filePath = "src/family_tree/writer/tree.txt";
 
-    FamilyTree tree = read (filePath);
+    static FamilyTree read(String filePath) {
+        FileHandler fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.read(filePath);
+    }
 
-
-     save (tree, filePath);
-}
-
-static FamilyTree read (String filePath){
-    FileHandler fileHandler = new FileHandler();
-    return (FamilyTree) fileHandler.read(filePath);
-}
-
-static void save (FamilyTree familyTree, String filePath){
-    FileHandler fileHandler = new FileHandler();
-    fileHandler.save(familyTree,filePath);
-}
+    static void save(FamilyTree familyTree, String filePath) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree, filePath);
+    }
 
     static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
@@ -43,3 +43,5 @@ static void save (FamilyTree familyTree, String filePath){
         return tree;
     }
 }
+
+
