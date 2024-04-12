@@ -20,8 +20,14 @@ public class Service {
 
     // Добавление человека
     public void addPerson( String fullName, Gender gender, LocalDate birthDate, LocalDate deathDate){
-        Person person = new Person(idPerson++, fullName, gender,birthDate, deathDate);
+        Person person = new Person(setPersonId(), fullName, gender,birthDate, deathDate);
         tree.add(person);
+    }
+
+    // Добавляем id члена семьи исходя из размера семейного древа
+    private int setPersonId() {
+        idPerson=tree.treeSize();
+        return idPerson;
     }
 
     // Добавление родства
@@ -31,44 +37,30 @@ public class Service {
 
     //Вывод семейного древа
     public String getTreeInfo() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Генеалогическое древо\n");
-
-        for (Person person: tree){
-            stringBuilder.append(person);
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
+        return tree.toString();
     }
 
 
     //Сортировка по имени
     public void sortByName(){
         tree.sortByName();
-        System.out.println("Сортировка в алфавитном порядке выполнена.\n"+tree.getInfo());
     }
 
     //Сортировка по дате рождения
     public void sortByDateOfBirth(){
         tree.sortByDateOfBirth();
-        System.out.println("Сортировка по дате рождения выполнена.\n"+tree.getInfo());
     }
 
     //Сохрание древа в файл
     public void saveTree(){
         writable.saveToFile(tree);
-        System.out.println("Древо сохранено");
-        System.out.println();
+
     }
 
     //Загрузка древа из файла
     public FamilyTree<Person> upLoadTree() {
-        return writable.uploadFromFile();
-    }
-
-    // Вывод загруженного из файла дерева на консоль
-    public void printLoadedTree(){
-        System.out.println(upLoadTree());
+        tree=writable.uploadFromFile();
+        return tree;
     }
 
 }

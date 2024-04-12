@@ -29,16 +29,18 @@ public class Presenter {
     }
 
     public void getTreeInfo(){
-        String info = service.getTreeInfo();
+        String info=service.getTreeInfo();
         view.printAnswer(info);
     }
 
     public void sortByName() {
         service.sortByName();
+        getTreeInfo();
     }
 
     public void sortByDateOfBirth() {
         service.sortByDateOfBirth();
+        getTreeInfo();
     }
 
     public void saveTree(){
@@ -47,7 +49,8 @@ public class Presenter {
 
     //Загрузка из файла с выводом в консоль
     public void printLoadedTree(){
-        service.printLoadedTree();
+        service.upLoadTree();
+        getTreeInfo();
     }
 
 }

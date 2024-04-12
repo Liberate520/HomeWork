@@ -82,11 +82,19 @@ public class ConsoleUI implements View {
         System.out.println(menu.menu());
     }
 
-
+    // Добавляем члена семьи
     public void addFamilyMember() {
-        System.out.println("Добавьте члена семьи:");
-        String name = scanner.nextLine();
+        presenter.addPerson(addName(),addGender(),addBDate(),addDeathDate());
+    }
 
+    //Добавляем имя члена семьи
+    private String addName() {
+        System.out.println("Добавьте члена семьи:");
+        return scanner.nextLine();
+    }
+
+    //Добавляем пол и проверяем на валидность введенное значение
+    private Gender addGender() {
         System.out.println("Укажите пол (male/female):");
         //Проверяем на валидность введенные данные
         String printGender=scanner.nextLine();
@@ -95,8 +103,11 @@ public class ConsoleUI implements View {
             printGender=scanner.nextLine();
         }
         Gender gender = Gender.valueOf(printGender);
+        return gender;
+    }
 
-
+    //Добавляем дату рождения и проверяем на валидность введенное значение
+    private LocalDate addBDate(){
         System.out.println("Введите год рождения члена семьи в формате гггг-мм-дд:");
         //Проверяем на валидность введенную дату рождения.
         LocalDate today = LocalDate.now();
@@ -105,21 +116,20 @@ public class ConsoleUI implements View {
             System.out.println("Вы ввели некорректное значение. Попробуйте снова.");
             bDay = LocalDate.parse(scanner.nextLine());
         }
-        LocalDate birthDate = bDay;
+        return bDay;
+    }
 
-
-        System.out.println("В случае необходимости укажите дату смерти члена семьи в формате гггг-мм-дд. В противном случае пропустите, нажав Enter");
-        String dateOfDeath=scanner.nextLine();
-        LocalDate deathDate;
-        if (dateOfDeath != "") {
-            deathDate = LocalDate.parse(dateOfDeath);
-        } else {
-            deathDate=null;
-        }
-
-        presenter.addPerson(name,gender,birthDate,deathDate);
-        System.out.println("Член семьи добавлен в древо.");
-        System.out.println();
+    //В случае необходимости добавляем дату смерти
+   private LocalDate addDeathDate(){
+       System.out.println("В случае необходимости укажите дату смерти члена семьи в формате гггг-мм-дд. В противном случае пропустите, нажав Enter");
+       String dateOfDeath=scanner.nextLine();
+       LocalDate deathDate;
+       if (dateOfDeath != "") {
+           deathDate = LocalDate.parse(dateOfDeath);
+           return deathDate;
+       } else {
+           return null;
+       }
     }
 
     public void addKinship() {
@@ -136,16 +146,20 @@ public class ConsoleUI implements View {
     }
 
     public void sortByName() {
+        System.out.println("Древо отcортировано по имени.");
         presenter.sortByName();
 
     }
 
     public void sortByDateOfBirth() {
+        System.out.println("Древо отcортировано по дате рождения.");
         presenter.sortByDateOfBirth();
     }
 
     public void saveTree() {
+
         presenter.saveTree();
+        System.out.println("Древо сохранено!");
     }
 
     public void printLoadedTree() {

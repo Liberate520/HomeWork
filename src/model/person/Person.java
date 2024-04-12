@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person implements Serializable, Comparable<Person>, TreeItem<Person> {
-    private int id; //Добавляем id,кооторый будет увеличиваться, как автоинкремент в Main.
+    private int id; //Добавляем id,кооторый будет увеличиваться по мере роста ко.
     private String fullName;
     private Gender gender;
     private LocalDate birthDate;
@@ -218,7 +218,7 @@ public class Person implements Serializable, Comparable<Person>, TreeItem<Person
             return false;
         }
         Person person=(Person) obj;
-        return person.getFullName()==getFullName();
+        return person.getFullName().equals(getFullName());
     }
 
 

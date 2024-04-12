@@ -22,7 +22,7 @@ public class FamilyTree<E extends TreeItem<E>> implements Serializable, Iterable
     //Добавление человека в генеалогическое древо
     public boolean add(E person){
         if(person==null || objectsList.contains(person)){
-            System.out.println("Пустой объект или такой объект имеется");
+//            System.out.println("Пустой объект или такой объект имеется");
             return false;
         }
         else{
@@ -40,13 +40,14 @@ public class FamilyTree<E extends TreeItem<E>> implements Serializable, Iterable
         if (parent != null && child != null) {
             parent.addChild(child);
             child.addParent(parent);
-            System.out.println("Родственные связи между "+parent.getFullName()+" и "+ child.getFullName()+" установлены.");
-            System.out.println();
+//            System.out.println("Родственные связи между "+parent.getFullName()+" и "+ child.getFullName()+" установлены.");
+//            System.out.println();
 
-        }else {
-            System.out.println("Данный объект отсутвует в семейном дереве");
-            System.out.println();
         }
+//      else {
+//            System.out.println("Данный объект отсутвует в семейном дереве");
+//            System.out.println();
+//      }
     }
 
     //Метод поиска объекта по имени
@@ -109,4 +110,9 @@ public class FamilyTree<E extends TreeItem<E>> implements Serializable, Iterable
         TreeIterator treeIterator = new TreeIterator(objectsList);
         return treeIterator;
     }
+
+    public int treeSize() {
+        return objectsList.size();
+    }
+
 }
