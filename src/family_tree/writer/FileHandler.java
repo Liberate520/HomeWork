@@ -1,6 +1,9 @@
 package family_tree.writer;
 import java.io.*;
 
+import family_tree.family_tree.FamilyTree;
+import family_tree.human.Human;
+
 public class FileHandler implements Writable{
     @Override
 public boolean save(Serializable serializable, String filePath) {
@@ -13,10 +16,11 @@ public boolean save(Serializable serializable, String filePath) {
     }
 }
 
+    @SuppressWarnings("unchecked")  
     @Override
-    public Object read(String filePath) { 
+    public FamilyTree<Human> read(String filePath) { 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            return ois.readObject();
+            return (FamilyTree<Human>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;

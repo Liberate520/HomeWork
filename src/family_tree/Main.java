@@ -11,8 +11,8 @@ public class Main {
         FileHandler handler = new FileHandler();
         String filePath = "src/family_tree/writer/myfamily.txt";
         
-        FamilyTree tree = read(filePath);
-        //FamilyTree tree = myTree();
+        FamilyTree<Human> tree = read(filePath);
+        // FamilyTree<Human> tree = myTree();
         System.out.println("Дерево до сортировки:");
         System.out.println(tree);
 
@@ -33,13 +33,13 @@ public class Main {
         
     }
 
-    static FamilyTree read(String filePath) {
+    static FamilyTree<Human> read(String filePath) {
         FileHandler handler = new FileHandler();
-        return (FamilyTree) handler.read(filePath);
+        return handler.read(filePath);
     }
 
-    static FamilyTree myTree() {
-        FamilyTree tree = new FamilyTree();
+    static FamilyTree<Human> myTree() {
+        FamilyTree<Human> tree = new FamilyTree<>();
 
         Human ivan = new Human("Иван", Gender.Male, LocalDate.of(1985, 5, 5));
         Human olga = new Human("Ольга", Gender.Female, LocalDate.of(1984, 8, 16));
