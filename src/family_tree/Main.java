@@ -51,5 +51,4 @@ static void save(FamilyTree familyTree, String filePath) {
 
         return tree;
     }
-
 }
