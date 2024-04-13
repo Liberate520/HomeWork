@@ -6,7 +6,6 @@ import family_tree.human.Human;
 import family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
-//import java.util.logging.FileHandler;
 
 public class Main {
     public static void main(String[] args) {

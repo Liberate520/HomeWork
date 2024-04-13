@@ -1,11 +1,13 @@
 package family_tree.family_tree;
 
 import family_tree.human.Human;
+import family_tree.human.HumanComparatorByBirthDate;
+import family_tree.human.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
 
 public class FamilyTree implements Serializable{
     private long countPeople;
@@ -147,5 +149,11 @@ public class FamilyTree implements Serializable{
         }
         return sb.toString();
     }
-}
+
+    public void sortByName() {humanList.sort(new HumanComparatorByName());}
+
+    public void sortByDeathDate() {humanList.sort(new HumanComparatorByBirthDate());}
+
+    public Iterator<Human> iterator() {return new FamilyTreeIterator(humanList);}
+    }
  
