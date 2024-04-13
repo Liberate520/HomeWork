@@ -1,24 +1,41 @@
 package family_tree.family_tree;
 
 import family_tree.human.Human;
+import family_tree.human.HumanComparatorByName;
+import family_tree.human.HumanComparatorByBirthDate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
-public class FamilyTree {
-    private List<Human> members;
+public class FamilyTree implements Iterable<Human> {
+    private List<Human> humanList;
 
     public FamilyTree() {
-        this.members = new ArrayList<>();
+        this.humanList = new ArrayList<>();
     }
 
     public void addMember(Human member) {
-        members.add(member);
+        this.humanList.add(member);
     }
 
     public List<Human> getMembers() {
-        return members;
+        return humanList;
     }
 
-    // Другие методы для работы с деревом семьи
+    // Методы сортировки
+
+    public void sortByName() {
+        humanList.sort(new HumanComparatorByName());
+    }
+
+    public void sortByDateOfBirth() {
+        humanList.sort(new HumanComparatorByBirthDate());
+    }
+
+    // Реализация интерфейса Iterable<Human>
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humanList);
+    }
 }

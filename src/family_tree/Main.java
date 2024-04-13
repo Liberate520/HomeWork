@@ -8,6 +8,8 @@ import family_tree.writer.Writable;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -104,8 +106,25 @@ public class Main {
                 }
                 System.out.println();
             }
+
+             // Сортировка по имени
+            Collections.sort(loadedMembers, Comparator.comparing(Human::getName));
+            System.out.println("\nОтсортированный список по имени:");
+            for (Human member : loadedMembers) {
+            System.out.println(member.getName());
+            }
+
+            // Сортировка по дате рождения
+            Collections.sort(loadedMembers, Comparator.comparing(Human::getDateOfBirth));
+            System.out.println("\nОтсортированный список по дате рождения:");
+            for (Human member : loadedMembers) {
+            System.out.println(member.getName() + " - " + member.getDateOfBirth());
+            }
+
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        
     }
 }
