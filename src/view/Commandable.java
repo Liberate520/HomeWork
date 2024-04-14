@@ -1,6 +1,6 @@
-package View;
+package view;
 
-public interface Options {
+public interface Commandable {
     void execute();
     String description();
 
