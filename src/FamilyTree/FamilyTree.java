@@ -1,12 +1,14 @@
 package FamilyTree;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.io.Serializable;
 
-import Human.Human;
+import Human.*;
+
 import Writer.FileHandler;
 // import Writable.Writable;
 
-public class FamilyTree implements Serializable{
+public class FamilyTree implements Serializable, Iterable{
     public void write(){
 
     }
@@ -15,7 +17,7 @@ public class FamilyTree implements Serializable{
     }
     private int idLeaf;
 //    public static final String FILEPATH = "src\\familyTree.txt";
-    private LinkedList<Human> familyTree;
+    private final LinkedList<Human> familyTree;
     public FamilyTree(){
         this.idLeaf = 0;
         this.familyTree = new LinkedList<Human>();
@@ -63,13 +65,13 @@ public class FamilyTree implements Serializable{
         }
         else return false;
     }
-//    public boolean saveTree(){
-//        FileHandler handler = new FileHandler();
-//        handler.save(this, this.FILEPATH);
-//        return true;
-//    }
-//    public boolean readTree(){
-//        FileHandler handler = new FileHandler();
-//        this =handler.read(FILEPATH);
-//    }
+    public Iterator<Human> iterator(){return new FamilyTreeIterator(familyTree);}
+
+    public void sortByAge(){familyTree.sort(new HumanComparatorByAge());}
+
+    public void sortByName(){familyTree.sort(new HumanComparatorByName());}
+
+    public void sortByNameRevers(){familyTree.sort(new HumanComparatorByName().reversed());}
+
+    public void sortByAgeRevers(){familyTree.sort(new HumanComparatorByAge().reversed());}
 }

@@ -1,5 +1,7 @@
 package Writer;
 
+import Human.Human;
+
 import java.io.*;
 
 public class FileHandler implements Writable{

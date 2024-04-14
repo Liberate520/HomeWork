@@ -9,7 +9,8 @@ public class Human implements Serializable {
     private int id = -1;
     private final String firstName;
     private String lastName;
-    private Human mother, father;
+    private Human mother;
+    private Human father;
     private List<Human> childrens;
     private final Gender gender;
     private final LocalDate dob;
