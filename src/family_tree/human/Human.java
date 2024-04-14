@@ -1,12 +1,14 @@
 package family_tree.human;
 
+import family_tree.family_tree.TreeNode;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable{
+public class Human implements TreeNode<Human> {
     private long id;
     private String name;
     private LocalDate birthDate;
@@ -99,6 +101,8 @@ public class Human implements Serializable{
 
     public long getId() {return id; }
 
+
+
     public void setId(long id) {this.id = id; }
 
     public LocalDate getBirthDate() {return birthDate; }
@@ -113,7 +117,7 @@ public class Human implements Serializable{
 
     public Gender getGender() {return gender; }
 
-
+    public String toString() {return getInfo();}
     public String getInfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("id: ");
