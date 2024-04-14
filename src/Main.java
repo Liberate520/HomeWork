@@ -16,6 +16,23 @@ public class Main {
 
 //        save(familyTree);
 
+        familyTree.sortByName();
+        System.out.println(familyTree);
+
+        familyTree.sortByAge();
+        System.out.println(familyTree);
+
+        System.out.println(FamilyTreeName(familyTree));
+    }
+
+    static String FamilyTreeName(FamilyTree familyTree){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Список имен:\n");
+        for (Human human: familyTree) {
+            stringBuilder.append(human.getName());
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 
     static FamilyTree load() {

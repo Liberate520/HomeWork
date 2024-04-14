@@ -26,20 +26,11 @@ public class Human implements Serializable {
     }
 
     public Human(String name, LocalDate dateOfBirthday, LocalDate dateOfDeath, Gender gender) {
-        this.name = name;
-        this.dateOfBirthday = dateOfBirthday;
-        this.dateOfDeath = dateOfDeath;
-        this.gender = gender;
-        this.childrenList = new ArrayList<>();
-        this.id = -1;
+        this(name, dateOfBirthday, dateOfDeath, gender, null, null, null);
     }
 
     public Human(String name, LocalDate dateOfBirthday, Gender gender) {
-        this.name = name;
-        this.dateOfBirthday = dateOfBirthday;
-        this.gender = gender;
-        this.childrenList = new ArrayList<>();
-        this.id = -1;
+        this(name, dateOfBirthday, null, gender, null, null, null);
     }
 
     public void setId(int id) {
@@ -69,6 +60,10 @@ public class Human implements Serializable {
             setMother(human);
         }
         human.addChildren(this);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Gender getGender() {
