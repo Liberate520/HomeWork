@@ -9,6 +9,7 @@ import java.util.Map;
 public class GenealogyTree {
     private final Map<Integer, Person> people;
 
+
     public GenealogyTree() {
         this.people = new HashMap<>();
     }
