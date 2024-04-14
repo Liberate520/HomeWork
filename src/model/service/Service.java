@@ -58,9 +58,9 @@ public class Service {
     }
 
     //Загрузка древа из файла
-    public FamilyTree<Person> upLoadTree() {
+    public void upLoadTree() {
         tree=writable.uploadFromFile();
-        return tree;
+
     }
 
 }
