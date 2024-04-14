@@ -45,7 +45,7 @@ public class FamilyTree {
     public String printList() {
         StringBuilder fTree = new StringBuilder();
         for (Person person : listPersons) {
-            fTree.append(person.getPersCard());
+            fTree.append(person.getPersCard(person));
             }
         return fTree.toString();
     }

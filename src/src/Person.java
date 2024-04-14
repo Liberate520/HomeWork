@@ -102,13 +102,13 @@ public class Person {
         return children;
     }
     
-    public Integer getAge(LocalDate dateB, LocalDate dateD){
+    public Integer getAge(Person pers){
         Integer years;
-        if (dateD==null){
-            years = Period.between(dateB, LocalDate.now()).getYears();
+        if (pers.getDateD()==null){
+            years = Period.between(pers.getDateB(), LocalDate.now()).getYears();
             return years;
         }else{
-            years = Period.between(dateB, dateD).getYears();
+            years = Period.between(pers.getDateB(), pers.getDateD()).getYears();
             return years;
         }
     }
@@ -119,7 +119,8 @@ public class Person {
 
     // }
 
-    public String getNumOfChild (List<Person> children){
+    public String getNumOfChild (Person pers){
+        children= pers.getChildren();
         if (children != null) {
             int count=0;
             for (Person person : children) {
@@ -141,32 +142,32 @@ public class Person {
     //     return "Умерла:" + dateD;
     // }
 
-    public String getStatusLiveOrDead(LocalDate dateD,Gender gender){
-        if (dateD== null) {
-            if (gender== Gender.female) {
+    public String getStatusLiveOrDead(Person pers){
+        if (pers.getDateD()== null) {
+            if (pers.getGender()== Gender.female) {
                 return "Жива";                
             }else{
                 return "Жив";
             }
             
         }else{
-            if (gender == Gender.female) {
-                return "Умерла:" + dateD;                
+            if (pers.getGender() == Gender.female) {
+                return "Умерла:" + pers.getDateD();                
             }else{
-                return "Умер:" + dateD;
+                return "Умер:" + pers.getDateD();
             }
         }
     }
 
-    public StringBuilder getOffspring(List<Person> children){
+    public StringBuilder getOffspring(Person pers){
         StringBuilder child= new StringBuilder();
-        if (children.isEmpty()) {
+        if (pers.getChildren().isEmpty()) {
             child.append("");
             return child;                       
         }else{
         child.append("Дети: ");       
-        for (int i=0; i< children.size(); i++){
-            child.append(children.get(i).getName());}
+        for (int i=0; i< pers.getChildren().size(); i++){
+            child.append(pers.getChildren().get(i).getName());}
             return child;
         }
     }
@@ -189,7 +190,7 @@ public class Person {
 
     }
 
-    public StringBuilder getPersCard(){
+    public StringBuilder getPersCard(Person Person){
         StringBuilder pc = new StringBuilder();
         pc.append("_____Личная карточка____\n");
         pc.append("Имя: ");
@@ -200,13 +201,13 @@ public class Person {
         pc.append(patronymic);
         pc.append("\n");
         pc.append("Возраст: ");
-        pc.append(getAge(dateB, dateD));
+        pc.append(getAge(Person));
         pc.append(" ");
-        pc.append(getNumOfChild(children));
+        pc.append(getNumOfChild(Person));
         pc.append(" ");
-        pc.append(getStatusLiveOrDead(dateD,gender));
+        pc.append(getStatusLiveOrDead(Person));
         pc.append("\n");
-        pc.append(getOffspring(children));
+        pc.append(getOffspring(Person));
         pc.append("\n");
         return pc;
     }
