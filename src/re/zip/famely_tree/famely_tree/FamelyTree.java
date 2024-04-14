@@ -21,7 +21,7 @@ public class FamelyTree {
         }
         if (!humanList.contains(human)){
             humanList.add(human);
-            human.setIdNo(humanId++);
+            human.setIdNo(++humanId);
 
             addHumanToCildren(human);
             addHumanToParents(human);
@@ -61,7 +61,7 @@ public class FamelyTree {
     }
 
     public List<Human> searchByNane(String name){
-        List<Human> ListByName = new  ArrayList<>();
+        List<Human> ListByName = new ArrayList<>();
         for (Human human : humanList){
             if (human.getFatherName().equals(name)){
                 ListByName.add(human);
@@ -82,9 +82,9 @@ public class FamelyTree {
     }
 
     public boolean setWeddding (Human partner1, Human partner2){
-        if (partner1.getSpouseInfo() == null && partner1.getSpouseInfo() == null){
+        if (partner1.getSpouse() == null && partner1.getSpouse() == null){
             partner1.setSpouse(partner2);
-            partner1.setSpouse(partner2);
+            partner2.setSpouse(partner1);
             return true;
         }
         return false;

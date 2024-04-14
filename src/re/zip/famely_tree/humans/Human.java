@@ -18,7 +18,7 @@ public class Human {
     // private Human child; 
     
     public Human(String firstName, String lastName, LocalDate dateOfBirsday, LocalDate dateOfDead, Gender gender, Human mother, Human father) {
-        idNo = 0;
+        idNo = -1;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirsday = dateOfBirsday;
@@ -130,6 +130,10 @@ public class Human {
         this.spouse = spouse;
     }
 
+    public Human getSpouse() {
+        return spouse;
+    }
+
     public void setMother(Human mother) {
         this.mother = mother;
     }
@@ -141,6 +145,7 @@ public class Human {
     public void setParentNoHuman(Human parentNoHuman) {
         this.parentNoHuman = parentNoHuman;
     }
+
 
     public String bio() {
         if (this.firstName == null){
@@ -154,6 +159,7 @@ public class Human {
 
     public String getHumanInfo() {
         StringBuilder stringBuilder = new StringBuilder();
+        // stringBuilder.append("\nID: " + getIdNo());
         stringBuilder.append("\nФИО: ");
         stringBuilder.append(bio());
         stringBuilder.append("\nВозраст: ");
@@ -166,7 +172,7 @@ public class Human {
         else stringBuilder.append("нет информации");
 
         stringBuilder.append("\nСупруг/супругв: ");
-        if (this.spouse != null) stringBuilder.append(spouse.bio());
+        if (this.spouse != null) stringBuilder.append(getSpouseInfo());
         else stringBuilder.append("нет информации");
 
         stringBuilder.append("\nДети: ");
