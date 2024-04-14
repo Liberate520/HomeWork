@@ -101,6 +101,10 @@ public class Human implements TreeNode<Human> {
 
     public long getId() {return id; }
 
+    @Override
+    public Human getFather() {
+        return null;
+    }
 
 
     public void setId(long id) {this.id = id; }
@@ -110,6 +114,16 @@ public class Human implements TreeNode<Human> {
     public LocalDate getDeathDate() {return deathDate; }
 
     public List<Human> getChildren() {return children; }
+
+    @Override
+    public Human getSprouse() {
+        return null;
+    }
+
+    @Override
+    public void setSprouse(Human human) {
+
+    }
 
     public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate; }
 
