@@ -24,8 +24,6 @@ public class Main {
         System.out.println(myFamilyTree);
     }
 
-
-
     static FamilyTree  read(String pathFile){
         FileHandler fileHandler = new FileHandler();
         return  (FamilyTree) fileHandler.read(pathFile);
@@ -54,7 +52,6 @@ public class Main {
         Human human6 = new Human("Ivan Konstantinov", Gender.Male, LocalDate.of(1974, Month.DECEMBER, 16));
         myFamilyTree.addHuman(human5);
         myFamilyTree.addHuman(human6);
-
         return myFamilyTree;
     }
 
