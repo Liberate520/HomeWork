@@ -1,25 +1,22 @@
-package human;
+package familytree.model.human;
 
-import familytree.FamilyTreeElement;
-import human.gender.Gender;
+import familytree.model.familytree.FamilyTreeElement;
+import familytree.model.human.gender.Gender;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human>, FamilyTreeElement {
-    public Human(String name,  String gender, Human father, Human mother) {
+public class Human implements  Comparable<Human>, FamilyTreeElement<Human> {
+    public Human(String name,  String gender) {
         this.name = name;
         this.gender = gender;
-        this.father = father;
-        this.mother = mother;
     }
     private  final String name;
     private LocalDate dateOfBirth;
     private LocalDate dateOfDeath;
     private final String gender;
-    private final Human father, mother;
+    private Human father, mother;
     private List<Human> children;
 
     public void SetDateOfBirth(int year, int month, int day) {
@@ -27,6 +24,18 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeElement
     }
 
     public void SetDateOfDeath(int year, int month, int day) {this.dateOfDeath = LocalDate.of(year, month, day);}
+
+    public void setFather(Human father) {
+        this.father = father;
+    }
+
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    public boolean isDead(int year) {
+        return year > LocalDate.now().getYear();
+    }
 
     public String getChildren() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -56,7 +65,7 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeElement
     }
 
     public Gender getGender() {
-        if (gender.equals("Male")) {
+        if (gender.equals("Мужчина")) {
             return Gender.Male;
         }
         return Gender.Female;

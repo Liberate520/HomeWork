@@ -1,14 +1,13 @@
-package familytree;
+package familytree.model.familytree;
 
-import human.Human;
-import human.comparators.HumanComparatorByAge;
-import human.comparators.HumanComparatorByName;
-import iterators.HumanIterator;
+import familytree.model.human.comparators.HumanComparatorByAge;
+import familytree.model.human.comparators.HumanComparatorByName;
+import familytree.model.human.iterators.HumanIterator;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree<T extends FamilyTreeElement> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends FamilyTreeElement<T>> implements Serializable, Iterable<T> {
     private final List<T> familyTree;
 
 

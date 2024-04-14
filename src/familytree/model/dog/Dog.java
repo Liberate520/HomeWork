@@ -1,14 +1,13 @@
-package familytree.dog;
+package familytree.model.dog;
 
-import familytree.FamilyTreeElement;
-import human.Human;
-import human.gender.Gender;
+import familytree.model.familytree.FamilyTreeElement;
+import familytree.model.human.gender.Gender;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-public class Dog implements FamilyTreeElement, Comparable<Dog> {
+public class Dog implements FamilyTreeElement<Dog>, Comparable<Dog> {
     private  final String name;
     private LocalDate dateOfBirth;
     private LocalDate dateOfDeath;
@@ -16,12 +15,11 @@ public class Dog implements FamilyTreeElement, Comparable<Dog> {
     private final Dog father, mother;
     private List<Dog> children;
 
-    public Dog(String name, String gender, Dog father, Dog mother, List<Dog> children) {
+    public Dog(String name, String gender, Dog father, Dog mother) {
         this.name = name;
         this.gender = gender;
         this.father = father;
         this.mother = mother;
-        this.children = children;
     }
 
     public void SetDateOfBirth(int year, int month, int day) {
@@ -34,6 +32,7 @@ public class Dog implements FamilyTreeElement, Comparable<Dog> {
         return name;
     }
 
+    public void setChildren(List<Dog> children) {this.children = children;}
 
     public void addChild(List<Dog> children, Dog child) {
         children.remove(child);
