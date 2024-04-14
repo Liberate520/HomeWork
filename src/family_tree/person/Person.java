@@ -103,4 +103,8 @@ public class Person implements Serializable {
 
         }
     }
+
+    public <U> U getBirthDate() {
+        return null;
+    }
 }
