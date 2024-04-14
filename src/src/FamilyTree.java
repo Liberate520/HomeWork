@@ -1,9 +1,10 @@
 package src;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
 
     private List<Person> listPersons;
 
@@ -11,10 +12,15 @@ public class FamilyTree {
         this.listPersons = new ArrayList<>();
     }
 
+    
     public FamilyTree(List<Person> listPersons) {
         this.listPersons = listPersons;
     }
-
+    
+    public List<Person> getFamilyTree(){
+        return listPersons;
+    }
+    
     public void addPerson(Person person) {
         if (!listPersons.contains(person)) {
             listPersons.add(person);
