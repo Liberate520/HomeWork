@@ -1,13 +1,13 @@
 package human.comparator;
 
+import family_tree.FamilyTreeElement;
 import human.Human;
-
 import java.util.Comparator;
 
-public class HumanComparatorByName implements Comparator<Human> {
+public class HumanComparatorByName<T extends FamilyTreeElement> implements Comparator<T> {
 
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(T o1, T o2) {
         return o1.getName().compareTo(o2.getName());
     }
 }
