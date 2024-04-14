@@ -1,62 +1,55 @@
 package family_tree;
 
+
 import family_tree.person.Person;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class GenealogyTree implements Serializable, Iterable<Person> {
-    private final Map<Integer, Person> people;
+public class GenealogyTree<T> implements Serializable, Iterable<T> {
+    private final Map<Integer, T> elements;
 
     public GenealogyTree() {
-        this.people = new HashMap<>();
+        this.elements = new HashMap<>();
     }
 
-    // Метод для поиска человека по его id
-    public Person findPersonById(int id) {
-        return people.getOrDefault(id, null);
+    public T findById(int id) {
+        return elements.getOrDefault(id, null);
     }
 
-    public void displayPersonInfo(int id) {
-        Person person = findPersonById(id);
-        if (person != null) {
-            System.out.println("id: " + id +
-                    ", имя: " + person.getName() +
-                    ", пол: " + person.getGender() +
-                    ", возраст: " + person.getAge() + // Используем возраст вместо даты рождения
-                    ", супруг(а): " + (person.getSpouse() != null ? person.getSpouse().getName() : "Нет") +
-                    ", мать: " + (person.getMother() != null ? person.getMother().getName() : "Нет") +
-                    ", отец: " + (person.getFather() != null ? person.getFather().getName() : "Нет") +
-                    ", дети: " + person.getChildrenNames());
+    public void displayInfo(int id) {
+        T element = findById(id);
+        if (element != null) {
+            System.out.println("id: " + id + ", " + element.toString());
         } else {
-            System.out.println("Человек с id " + id + " не найден.");
+            System.out.println("Элемент с id " + id + " не найден.");
         }
     }
 
-    public void addPerson(Person person) {
-        people.put(person.getId(), person);
+    public void addElement(int id, T element) {
+        elements.put(id, element);
     }
 
-    public Collection<Person> getAllPeople() {
-        return people.values();
+    public Collection<T> getAllElements() {
+        return elements.values();
     }
 
     @Override
-    public Iterator<Person> iterator() {
-        return people.values().iterator();
+    public Iterator<T> iterator() {
+        return elements.values().iterator();
     }
 
-    // Метод сортировки списка людей по имени
-    public List<Person> sortByNames(Collection<Person> people) {
-        List<Person> sortedList = new ArrayList<>(people);
-        Collections.sort(sortedList, Comparator.comparing(Person::getName));
-        return sortedList;
-    }
+    // Метод сортировки списка элементов по имени (если объекты имеют метод getName())
+  public List<T> sortByName(Collection<T> elements) {
+    List<T> sortedList = new ArrayList<>(elements);
+    sortedList.sort(Comparator.comparing(o -> ((Person) o).getName()));
+    return sortedList;
+}
 
-    // Метод сортировки списка людей по возрасту
-    public List<Person> sortByAge(Collection<Person> people) {
-        List<Person> sortedList = new ArrayList<>(people);
-        Collections.sort(sortedList, Comparator.comparingInt(Person::getAge));
-        return sortedList;
-    }
+    // Метод сортировки списка элементов по возрасту (если объекты имеют метод getAge())
+   public List<T> sortByAge(Collection<T> elements) {
+    List<T> sortedList = new ArrayList<>(elements);
+    sortedList.sort(Comparator.comparingInt(o -> ((Person) o).getAge()));
+    return sortedList;
+}
 }

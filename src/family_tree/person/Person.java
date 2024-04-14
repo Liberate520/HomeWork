@@ -3,6 +3,7 @@ package family_tree.person;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Person implements Serializable {
     private int id;
     private String name;
@@ -33,17 +34,6 @@ public class Person implements Serializable {
         return gender;
     }
 
-    public String getChildrenNames() {
-        if (children.isEmpty()) {
-            return "Нет";
-        }
-        StringBuilder builder = new StringBuilder();
-        for (Person child : children) {
-            builder.append(child.getName()).append(", ");
-        }
-        return builder.substring(0, builder.length() - 2);
-    }
-
     public int getAge() {
         return age;
     }
@@ -52,59 +42,63 @@ public class Person implements Serializable {
         return spouse;
     }
 
+    public void setSpouse(Person spouse) {
+        this.spouse = spouse;
+    }
+
     public Person getMother() {
         return mother;
+    }
+
+    public void setMother(Person mother) {
+        this.mother = mother;
     }
 
     public Person getFather() {
         return father;
     }
 
+    public void setFather(Person father) {
+        this.father = father;
+    }
+
     public List<Person> getChildren() {
         return children;
     }
 
-    public void setSpouse(Person spouse) {
-        this.spouse = spouse;
-        // Установите супруга/супругу для spouse, чтобы создать двунаправленную связь
-        if (spouse != null && spouse.getSpouse() != this) {
-            spouse.setSpouse(this);
-        }
-    }
-
-    public void setMother(Person mother) {
-        this.mother = mother;
-        // Добавьте этого человека в список детей матери
-        if (mother != null) {
-            mother.addChild(this);
-        }
-    }
-
-    public void setFather(Person father) {
-        this.father = father;
-        // Добавьте этого человека в список детей отца
-        if (father != null) {
-            father.addChild(this);
-        }
-    }
-
     public void addChild(Person child) {
-        // Добавьте ребенка в список детей этого человека
-        if (!children.contains(child)) {
-            children.add(child);
-            // Установите этого человека в качестве родителя для ребенка, если родитель не установлен
-            if (child.getMother() == null && child.getFather() == null) {
-                if ("Female".equals(gender)) {
-                    child.setMother(this);
-                } else {
-                    child.setFather(this);
-                }
-            }
+        children.add(child);
+    }
 
+    // Метод для вывода информации о человеке
+    public void displayInfo() {
+        System.out.println("id: " + id +
+                ", имя: " + name +
+                ", пол: " + gender +
+                ", возраст: " + age +
+                ", супруг(а): " + (spouse != null ? spouse.getName() : "Нет") +
+                ", мать: " + (mother != null ? mother.getName() : "Нет") +
+                ", отец: " + (father != null ? father.getName() : "Нет") +
+                ", дети: " + (children.isEmpty() ? "Нет" : getChildrenNames()));
+    }
+
+    // Метод для получения имен детей в виде строки
+    private String getChildrenNames() {
+        StringBuilder builder = new StringBuilder();
+        for (Person child : children) {
+            builder.append(child.getName()).append(", ");
         }
+        return builder.substring(0, builder.length() - 2);
     }
 
-    public <U> U getBirthDate() {
-        return null;
-    }
+    @Override
+public String toString() {
+    return "Имя: " + name +
+            ", Пол: " + gender +
+            ", Возраст: " + age +
+            ", Супруг(а): " + (spouse != null ? spouse.getName() : "Нет") +
+            ", Мать: " + (mother != null ? mother.getName() : "Нет") +
+            ", Отец: " + (father != null ? father.getName() : "Нет") +
+            ", Дети: " + (children.isEmpty() ? "Нет" : getChildrenNames());
+}
 }
