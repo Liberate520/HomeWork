@@ -1,22 +1,25 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 //Определяем метод для создания экземпляра класса человека
-public class Human {
+public class Human implements Serializable {
     private String name;
     private LocalDate dob;
     private LocalDate dod;
     private Gender gender;
     private List<Human> children;
     private Human mother, father;
+    private boolean check;
 
     //Первый конструктор
     public Human(String name, LocalDate dob, Gender gender) {
         this.name = name;
         this.dob = dob;
         this.gender = gender;
+        this.check = false;
     }
 
     //Второй. Расширенный конструктор, если имеется дата смерти и-или информация о детях и родителях
@@ -27,6 +30,7 @@ public class Human {
         this.mother = mother;
         this.father = father;
         this.children = children;
+        this.check = true;
     }
 
     public List<Human> getParents(){
@@ -122,7 +126,11 @@ public class Human {
 
     @Override
     public String toString() {
-        return getInfo();
+        if(check == true){
+        return getInfoTrue();}
+    else {
+        return getInfoFalse();
+        }
     }
     public String getMotherInfo(){
         String res = "Мать: ";
@@ -147,7 +155,7 @@ public class Human {
         return res;
     }
 
-    public String getInfo(){
+    public String getInfoTrue(){
         StringBuilder sb = new StringBuilder();
         sb.append("Name = " + name + "\n");
         sb.append("DOB = " + dob + "\n");
@@ -155,6 +163,13 @@ public class Human {
         sb.append("Children = " + children + "\n");
         sb.append(getMotherInfo() + "\n");
         sb.append(getFatherInfo() + "\n");
+        return sb.toString();
+    }
+    public String getInfoFalse(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name = " + name + "\n");
+        sb.append("DOB = " + dob + "\n");
+        sb.append("Gender = " + gender + "\n");
         return sb.toString();
     }
 }
