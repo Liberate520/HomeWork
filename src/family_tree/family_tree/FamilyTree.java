@@ -39,6 +39,6 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     // Реализация интерфейса Iterable<Human>
     @Override
     public Iterator<E> iterator() {
-        return (Iterator<E>) new FamilyTreeIterator<Human>(humanList);
+        return new FamilyTreeIterator<>(humanList);
     }
 }
