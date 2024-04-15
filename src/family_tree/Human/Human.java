@@ -1,3 +1,5 @@
+package family_tree.Human;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -5,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Human implements Serializable {
+
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
@@ -14,6 +17,7 @@ public class Human implements Serializable {
 
 
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender, List<Human> children, Human mother, Human father) {
+
         this.name = name;
         this.dob = dob;
         this.dod = dod;
@@ -30,6 +34,8 @@ public class Human implements Serializable {
     public String getName() {
         return name;
     }
+
+
 
     public LocalDate getDob() {
         return dob;
@@ -72,7 +78,7 @@ public class Human implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Human{")
+        sb.append("family_tree.Human.family_tree.Human{")
                 .append("name='").append(name)
                 .append(", dob=").append(dob)
                 .append(", dod=").append(dod)

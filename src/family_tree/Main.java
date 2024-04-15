@@ -1,13 +1,14 @@
-import writer.FileHandler;
+package family_tree;
+
+import family_tree.FamilyTree.FamilyTree;
+import family_tree.Human.Gender;
+import family_tree.Human.Human;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException {
         FamilyTree familyTree = new FamilyTree();
 
         Human child1 = new Human("София", LocalDate.of(2000, 5, 12), null, Gender.Female, null, null, null);
@@ -17,12 +18,13 @@ public class Main {
         Human mother = new Human("Анна", LocalDate.of(1975, 6, 4), null, Gender.Female, null, null, null);
 
 
+
         child1.setFather(father);
         child2.setFather(father);
         child1.setMother(mother);
         child2.setMother(mother);
 
-//        List<Human> children = new ArrayList<>();
+//        List<family_tree.Human.family_tree.Human> children = new ArrayList<>();
 //        children.add(child1);
 //        children.add(child2);
 //        father.setChildren(children);
@@ -38,10 +40,17 @@ public class Main {
         familyTree.addHuman(mother);
 
         System.out.println(familyTree);
-        System.out.println(familyTree.getHumanChildren(mother));
+//        System.out.println(familyTree.getHumanChildren(mother));
 
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.writeExternal(familyTree, "Tree.txt");
+        familyTree.sortByName();
+        System.out.println(familyTree);
+
+        familyTree.sortByBirthday();
+        System.out.println(familyTree);
+
+
+//        FileHandler fileHandler = new FileHandler();
+//        fileHandler.writeExternal(familyTree, "Tree.txt");
 
     }
 
