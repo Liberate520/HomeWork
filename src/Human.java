@@ -1,6 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
 
     private String name;
     private LocalDate dob;
@@ -8,6 +12,7 @@ public class Human {
     private Gender gender;
     private Human mother;
     private Human father;
+    List<Human> children;
 
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender, Human mother, Human father) {
         this.name = name;
@@ -16,6 +21,7 @@ public class Human {
         this.mother = mother;
         this.father = father;
         this.dod = dod;
+        this.children = new ArrayList<Human>();
     }
 
     public Human(String name, Gender gender, LocalDate dob) {
@@ -34,27 +40,12 @@ public class Human {
         return this.gender;
     }
 
-    public LocalDate getDod() {
-        if (this.dod == null) {
-            return LocalDate.now();
-        }
-        return dod;
-    }
-
     public Human getMother() {
         return mother;
     }
 
     public Human getFather() {
         return father;
-    }
-
-    public void setMother(Human mother) {
-        this.mother = mother;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
     }
 
     public void setName(String name) {
@@ -73,4 +64,127 @@ public class Human {
         this.gender = gender;
     }
 
+    public List<Human> getChildren() {
+        return children;
+    }
+
+    public LocalDate getDod() {
+        return dod;
+    }
+
+    private void addChild(Human child) {
+        if (!children.contains(child)) {
+            children.add(child);
+        }
+    }
+
+    public void addParent(Human parent) {
+        if (parent.gender.equals(Gender.Male)) {
+            setFather(parent);
+        }
+        else if (parent.gender.equals(Gender.Female)) {
+            setMother(parent);
+        }
+    }
+
+    private void setMother(Human mother) {
+            if (this.mother == null) {
+                this.mother = mother;
+                this.mother.addChild(this);
+            }
+    }
+
+    private void setFather(Human father) {
+        if (this.father == null) {
+            this.father = father;
+            this.father.addChild(this);
+        }
+    }
+
+    public List<Human> getParents() {
+        List<Human> list = new ArrayList<>(2);
+        if (father != null) {
+            list.add(father);
+        }
+        if (mother != null) {
+            list.add(mother);
+        }
+        return list;
+    }
+
+    public boolean isAlive() {
+        return this.dod == null;
+    }
+
+    public int getAge() {
+        if (dod != null) {
+            return getPeriod(dob, dod);
+        }
+        else {
+            return getPeriod(dob, LocalDate.now());
+        }
+    }
+
+    private int getPeriod(LocalDate dob, LocalDate dod) {
+        Period diff = Period.between(dob, dod);
+        return diff.getYears();
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Имя: ");
+        sb.append(getName());
+        sb.append(", пол: ");
+        sb.append(getGender());
+        sb.append(", возраст: ");
+        sb.append(getAge());
+        sb.append(", ");
+        sb.append(getMotherInfo());
+        sb.append(", ");
+        sb.append(getFatherInfo());
+        sb.append(", ");
+        sb.append(getChildrenInfo());
+
+        return sb.toString();
+    }
+
+    public String getMotherInfo() {
+        String res = "Мать: ";
+        Human mother = getMother();
+        if (mother == null) {
+            res += "неизвестна";
+        }
+        else {
+            res += mother.getName();
+        }
+        return res;
+    }
+
+    public String getFatherInfo() {
+        String res = "Отец: ";
+        Human father = getFather();
+        if (father == null) {
+            res += "неизвестен";
+        }
+        else {
+            res += father.getName();
+        }
+        return res;
+    }
+
+    public String getChildrenInfo() {
+        StringBuilder res = new StringBuilder();
+        res.append("Дети: ");
+        if (!children.isEmpty()) {
+            res.append(children.getFirst().getName());
+            for (int i = 1; i < children.size(); i++) {
+                res.append(", ");
+                res.append(children.get(i).getName());
+            }
+        }
+        else {
+            res.append("отсутствуют");
+        }
+        return res.toString();
+    }
 }

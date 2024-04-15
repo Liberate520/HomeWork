@@ -1,19 +1,30 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
 
-    private List<Human> family;
+
+    private final List<Human> family;
+
+    public FamilyTree(List<Human> family) {
+        this.family = family;
+    }
 
     public FamilyTree() {
         this.family = new ArrayList<Human>();
     }
 
     public void addMember(Human member) {
-        this.family.add(member);
+        if (!(member == null) && !family.contains(member)) {
+            this.family.add(member);
+
+            //addToChildren(member);
+            //addToParents(member);
+        }
     }
 
-    public String allMembers() {
+    public String MembersInfo() {
         StringBuilder output = new StringBuilder("Все члены семьи:\n");
         for (Human member : family) {
             output.append("------------\n");
@@ -22,7 +33,7 @@ public class FamilyTree {
         return output.toString();
     }
 
-    public String allChildren(Human name) {
+    public String ChildrenInfo(Human name) {
         StringBuilder children = new StringBuilder("Все дети " + name.getName() + "\n");
         for (Human member : family) {
             if (member.getMother() == name) {
@@ -32,4 +43,18 @@ public class FamilyTree {
         }
         return children.toString();
     }
+
+    /*
+    private void addToParents(Human human) {
+        for (Human parent: human.getParents()) {
+            parent.addChild(human);
+        }
+    }
+
+    private void addToChildren(Human human) {
+        for (Human child: human.getChildren()) {
+            child.addParent(human);
+        }
+    }
+     */
 }
