@@ -4,11 +4,14 @@ import family_tree.human.Human;
 import family_tree.human.HumanComparatorByName;
 import family_tree.human.HumanComparatorByBirthDate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
-public class FamilyTree implements Iterable<Human> {
+
+
+public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
     private List<Human> humanList;
 
     public FamilyTree() {
@@ -26,16 +29,16 @@ public class FamilyTree implements Iterable<Human> {
     // Методы сортировки
 
     public void sortByName() {
-        humanList.sort(new HumanComparatorByName());
+        humanList.sort(new HumanComparatorByName<>());
     }
 
     public void sortByDateOfBirth() {
-        humanList.sort(new HumanComparatorByBirthDate());
+        humanList.sort(new HumanComparatorByBirthDate<>());
     }
 
     // Реализация интерфейса Iterable<Human>
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humanList);
+    public Iterator<E> iterator() {
+        return (Iterator<E>) new FamilyTreeIterator<Human>(humanList);
     }
 }

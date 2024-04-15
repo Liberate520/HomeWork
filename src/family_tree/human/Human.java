@@ -1,10 +1,11 @@
 package family_tree.human;
 
-import java.util.List;
-import java.io.Serializable;
-import java.time.LocalDate;
+import family_tree.family_tree.TreeNode;
 
-public class Human implements Serializable {
+import java.time.LocalDate;
+import java.util.List;
+
+public class Human implements TreeNode<Human>, Comparable<Human> {
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
@@ -59,5 +60,61 @@ public class Human implements Serializable {
 
     public Gender getGender() {
         return gender;
+    }
+
+    // Методы интерфейса TreeNode
+
+    @Override
+    public void setId(long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
+
+    @Override
+    public long getId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    }
+
+    @Override
+    public boolean addChild(Human node) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addChild'");
+    }
+
+    @Override
+    public boolean addParent(Human node) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addParent'");
+    }
+
+    @Override
+    public LocalDate getDeathDate() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDeathDate'");
+    }
+
+    @Override
+    public LocalDate getBirthDate() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBirthDate'");
+    }
+
+    @Override
+    public List<Human> getParents() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getParents'");
+    }
+
+    @Override
+    public Human getSpouse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSpouse'");
+    }
+
+    @Override
+    public void setSpouse(Human node) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setSpouse'");
     }
 }

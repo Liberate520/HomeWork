@@ -2,10 +2,11 @@ package family_tree.family_tree;
 
 import family_tree.human.Human;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator implements Iterator<Human> {
+public class FamilyTreeIterator<E extends TreeNode<E>> implements Serializable, Iterator<E> {
     private List<Human> list;
     private int position;
 
@@ -20,7 +21,7 @@ public class FamilyTreeIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public E next() {
         return list.get(position++);
     }
 }
