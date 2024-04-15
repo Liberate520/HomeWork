@@ -1,11 +1,12 @@
-package homeWork;
+package homeWork.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import homeWork.gender.Gender;
 
-public class Human implements Serializable{
+public class Human implements Serializable, Comparable<Human>{
     String name;
     LocalDate dob, dod;
     Gender gender;
@@ -13,14 +14,29 @@ public class Human implements Serializable{
     Human mother, father;
     
     public Human(String name, LocalDate dob, Gender gender){
-        this(name, dob, null, gender);
+        this(name, dob, null, gender, null, null);
     }
 
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender){
+        this(name, dob, dod, gender, null, null);
+    }
+
+    public Human(String name, LocalDate dob, Gender gender, Human mother, Human father){
+        this(name, dob, null, gender, mother, father);
+    }
+
+    public Human(String name, LocalDate dob, LocalDate dod, Gender gender, Human mother, Human father){
         this.name=name;
         this.dob=dob;
         this.dod=dod;
         this.gender=gender;
+        this.mother = mother;
+        this.father = father;
+
+        if (mother != null)
+            mother.children.add(this);
+        if (father != null)
+            father.children.add(this);
     }
 
     public int getAge(){
@@ -33,16 +49,14 @@ public class Human implements Serializable{
         return age;
     }
     
-    public void addChild(Human child, Human mother, Human father) {
-        child.mother = mother;
-        child.father = father;
-
-        mother.children.add(child);
-        father.children.add(child);
-        
-        this.children.add(child);
+    public LocalDate getDob() {
+        return dob;
     }
     
+    public String getName() {
+        return name;
+    }
+
     public List<Human> getChildren(Human parent) {
         List<Human> childrenOfParent = new ArrayList<>();
         for (Human child : this.children) {
@@ -55,6 +69,11 @@ public class Human implements Serializable{
 
     @Override
     public String toString() {
-        return "Name: " + name + ", age: " + Integer.toString(getAge()) + ", gender: " +  gender + ", mother: " + (mother != null ? mother.name : "Unknown") + ", father: " + (father != null ? father.name : "Unknown");
+        return "Name: " + name + ", age: " + Integer.toString(getAge()) +", date of Birthday: " + dob+ ", gender: " +  gender + ", mother: " + (mother != null ? mother.name : "Unknown") + ", father: " + (father != null ? father.name : "Unknown");
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 }

@@ -1,4 +1,4 @@
-package homeWork;
+package homeWork.service;
 
 import java.io.Serializable;
 
