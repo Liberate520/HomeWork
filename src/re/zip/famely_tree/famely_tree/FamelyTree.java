@@ -1,9 +1,10 @@
 package re.zip.famely_tree.famely_tree;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import re.zip.famely_tree.humans.Human;
 
-public class FamelyTree {
+public class FamelyTree implements Serializable{
     private long humanId;
     private List<Human> humanList;
 

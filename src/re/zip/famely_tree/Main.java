@@ -7,10 +7,13 @@ import re.zip.famely_tree.humans.Gender;
 
 public class Main {
     public static void main(String[] args) {
+        
+        //TODO загружаем
+
         FamelyTree tree = simpleTree();
         System.out.println(tree);
 
-  
+        //TODO сохраняем
 
     }
 
