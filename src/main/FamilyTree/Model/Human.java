@@ -1,7 +1,9 @@
-package FamilyTree;
+package FamilyTree.Model;
 
-import FamilyTree.ItemTree.Gender;
-import FamilyTree.ItemTree.Person;
+
+
+import FamilyTree.Model.ItemTree.Gender;
+import FamilyTree.Model.ItemTree.Person;
 
 import java.io.Serializable;
 import java.time.LocalDate;

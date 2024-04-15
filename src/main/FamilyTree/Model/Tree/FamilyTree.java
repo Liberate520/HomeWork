@@ -1,8 +1,9 @@
-package FamilyTree.Tree;
+package FamilyTree.Model.Tree;
 
-import FamilyTree.ItemTree.Comparator.ComparatorByAge;
-import FamilyTree.ItemTree.Comparator.ComparatorByFullName;
-import FamilyTree.ItemTree.Person;
+import FamilyTree.Model.ItemTree.Comparator.ComparatorByAge;
+import FamilyTree.Model.ItemTree.Comparator.ComparatorByFullName;
+import FamilyTree.Model.ItemTree.Person;
+
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -66,7 +67,7 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
      * @param children
      * @return
      */
-    public boolean establishPaternity(E parent, E children) {
+    private boolean establishPaternity(E parent, E children) {
         if (children.setParent(parent)) {
             parent.addChildren(children);
             addPersonInTree(children);
@@ -100,38 +101,15 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
         return establishPaternity(parent, children);
     }
 
+
+    /**
+     * @param inn
+     * @param mort
+     */
     public void mortRegistration(int inn, LocalDate mort) {
         getPersonForINN(inn).setMortDay(mort);
     }
 
-    /**
-     * Добавить второго родителя ребенка родителя, если его еще нет в дереве
-     *
-     * @param children
-     * @param parent
-     */
-    public void addParent(E children, E parent) {
-        children.setParent(parent);
-        parent.addChildren(children);
-        addPersonInTree(children);
-        addPersonInTree(parent);
-    }
-
-    public void addParent(int innChild, E parent) {
-        E children = getPersonForINN(innChild);
-        addParent(children, parent);
-    }
-
-    public void addParent(int innChild, int innParent) {
-        E children = getPersonForINN(innChild);
-        E parent = getPersonForINN(innParent);
-        addParent(children, parent);
-    }
-
-    public void addParent(E children, int innParent) {
-        E parent = getPersonForINN(innParent);
-        addParent(children, parent);
-    }
 
     //endregion
 
@@ -143,8 +121,6 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
      * @return
      */
     public List<String> getAllFamilyTree() {
-
-
         return familyTree.stream()
                 .map(e -> e.toString())
                 .collect(Collectors.toList());
@@ -290,6 +266,7 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
     //endregion
 
     //region Servise-methods
+
     /**
      * Метод сортирует членов дерева по полному имени
      */

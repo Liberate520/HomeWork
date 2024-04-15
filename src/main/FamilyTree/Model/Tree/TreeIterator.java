@@ -1,6 +1,8 @@
-package FamilyTree.Tree;
+package FamilyTree.Model.Tree;
 
-import FamilyTree.ItemTree.Person;
+
+
+import FamilyTree.Model.ItemTree.Person;
 
 import java.util.Iterator;
 import java.util.List;
