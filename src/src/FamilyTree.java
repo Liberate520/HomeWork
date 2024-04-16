@@ -2,9 +2,11 @@ package src;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+
+public class FamilyTree implements Serializable, Iterable<Person> {
 
     private List<Person> listPersons;
 
@@ -59,5 +61,16 @@ public class FamilyTree implements Serializable {
     // public String toString() {
     //     return printList();
     // }
+    @Override
+    public java.util.Iterator<Person> iterator() {
+        return new PersonIterator(listPersons);
+    }
+   
+
+    public void sortByName (){
+        Collections.sort(listPersons);
+    }
+
+
 
 }

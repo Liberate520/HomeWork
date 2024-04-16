@@ -5,7 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable {
+public class Person implements Serializable, Comparable<Person> {
     private String name;
     private String surname;
     private String patronymic;
@@ -15,6 +15,7 @@ public class Person implements Serializable {
     private List<Person> children;
     private Person mother;
     private Person father;
+    private Integer age;
 
     public Person(String name, String surname, String patronymic, Gender gender, LocalDate dateB, LocalDate dateD,
             Person mother, Person father) {
@@ -27,11 +28,24 @@ public class Person implements Serializable {
         this.mother = mother;
         this.father = father;
         this.children = new ArrayList<>();
-
+        this.age=getAge();
     }
 
     public Person(String name, Gender gender, LocalDate dateB) {
         this(name, null, null, gender, dateB, null, null, null);
+    }
+    
+    public void setAge(){
+        this.age = getAge();
+    }
+    public Integer getAge(){
+        if (dateD==null){
+            age = Period.between(dateB, LocalDate.now()).getYears();
+            return age;
+        }else{
+            age = Period.between(dateB,dateD).getYears();
+            return age;
+        }
     }
 
     
@@ -103,16 +117,17 @@ public class Person implements Serializable {
         return children;
     }
     
-    public Integer getAge(Person pers){
-        Integer years;
-        if (pers.getDateD()==null){
-            years = Period.between(pers.getDateB(), LocalDate.now()).getYears();
-            return years;
-        }else{
-            years = Period.between(pers.getDateB(), pers.getDateD()).getYears();
-            return years;
-        }
-    }
+
+    // public Integer getAge(Person pers){
+    //     Integer years;
+    //     if (pers.getDateD()==null){
+    //         years = Period.between(pers.getDateB(), LocalDate.now()).getYears();
+    //         return years;
+    //     }else{
+    //         years = Period.between(pers.getDateB(), pers.getDateD()).getYears();
+    //         return years;
+    //     }
+    // }
     
     // public String toString(){
     //     String ps=getPersCard().toString();
@@ -202,7 +217,8 @@ public class Person implements Serializable {
         pc.append(patronymic);
         pc.append("\n");
         pc.append("Возраст: ");
-        pc.append(getAge(Person));
+        // pc.append(getAge(Person));
+        pc.append(age);
         pc.append(" ");
         pc.append(getNumOfChild(Person));
         pc.append(" ");
@@ -211,6 +227,11 @@ public class Person implements Serializable {
         pc.append(getOffspring(Person));
         pc.append("\n");
         return pc;
+    }
+
+    @Override
+    public int compareTo(Person o){
+        return name.compareTo(o.name);        
     }
 
 }

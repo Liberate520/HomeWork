@@ -23,11 +23,15 @@ public class main {
         vania.setChild(ura);
         any.setChild(ura);
 
-        ft.addPerson(any);
         ft.addPerson(vania);
+        ft.addPerson(any);
         ft.addPerson(ura);
 
-        savingToFile(ft, filePath);
+        // savingToFile(ft, filePath);
+
+        System.out.println(ft.printList());
+
+        ft.sortByName();
 
         System.out.println(ft.printList());
     }
@@ -49,8 +53,8 @@ public class main {
         } catch (ClassNotFoundException | IOException e) {
 
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
 }
