@@ -1,6 +1,7 @@
 package family_tree;
 
 import family_tree.FamilyTree.FamilyTree;
+import family_tree.FamilyTree.FamilyTreeElements;
 import family_tree.Human.Gender;
 import family_tree.Human.Human;
 
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree familyTree = new FamilyTree<>();
 
         Human child1 = new Human("София", LocalDate.of(2000, 5, 12), null, Gender.Female, null, null, null);
         Human child2 = new Human("Андрей", LocalDate.of(1998, 1, 8), null, Gender.Male, null, null, null);
