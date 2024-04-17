@@ -34,6 +34,10 @@ public class main {
         ft.sortByName();
 
         System.out.println(ft.printList());
+
+        ft.sortByAge();
+
+        System.out.println(ft.printList());
     }
 
     static void savingToFile(FamilyTree ft, File filePath) {

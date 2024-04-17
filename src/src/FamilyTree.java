@@ -71,6 +71,8 @@ public class FamilyTree implements Serializable, Iterable<Person> {
         Collections.sort(listPersons);
     }
 
-
+    public void sortByAge(){
+        Collections.sort(listPersons, new PersonComparatorByAge());
+    }
 
 }
