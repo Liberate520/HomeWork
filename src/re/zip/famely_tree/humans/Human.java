@@ -9,7 +9,7 @@ import java.util.List;
 public class Human {
     private long idNo;
     private String firstName;
-    private String lastName;
+    private String famelyName;
     private LocalDate dateOfBirsday; 
     private LocalDate dateOfDead;
     private Gender gender;
@@ -17,10 +17,10 @@ public class Human {
     private Human mother, father, parentNoHuman, spouse;
     // private Human child; 
     
-    public Human(String firstName, String lastName, LocalDate dateOfBirsday, LocalDate dateOfDead, Gender gender, Human mother, Human father) {
+    public Human(String firstName, String famelyName, LocalDate dateOfBirsday, LocalDate dateOfDead, Gender gender, Human mother, Human father) {
         idNo = -1;
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.famelyName = famelyName;
         this.dateOfBirsday = dateOfBirsday;
         this.dateOfDead = dateOfDead;
         this.gender = gender;
@@ -146,15 +146,23 @@ public class Human {
         this.parentNoHuman = parentNoHuman;
     }
 
+    public void setFamelyName(String famelyName) {
+        this.famelyName = famelyName;
+    }
+
+    public String getFamelyName() {
+        return famelyName;
+    }
+
 
     public String bio() {
         if (this.firstName == null){
             this.firstName = "не известно";
         }
-        if (this.lastName == null){
-            this.lastName = "не известно";
+        if (this.famelyName == null){
+            this.famelyName = "не известно";
         }
-            return this.firstName + " " + getFatherName() + " " + this.lastName;
+            return this.firstName + " " + getFatherName() + " " + this.famelyName;
     }
 
     public String getHumanInfo() {
@@ -193,9 +201,6 @@ public class Human {
         List<Human> listParents = new ArrayList<>(3);
         if (father != null){
             listParents.add(father);
-        }
-        if (mother != null){
-            listParents.add(mother);
         }
         if (mother != null){
             listParents.add(mother);

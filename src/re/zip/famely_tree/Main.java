@@ -1,6 +1,8 @@
 package re.zip.famely_tree;
 import re.zip.famely_tree.humans.Human;
+
 import java.time.LocalDate;
+import java.util.logging.FileHandler;
 
 import re.zip.famely_tree.famely_tree.FamelyTree;
 import re.zip.famely_tree.humans.Gender;
@@ -8,15 +10,31 @@ import re.zip.famely_tree.humans.Gender;
 public class Main {
     public static void main(String[] args) {
         
-        //TODO загружаем
+
+        String filePath = "src/re/zip/famely_tree/writer/tree.sav";
+
+        //загружаем
+        //FamelyTree tree = readFromFile(filePath);
+
 
         FamelyTree tree = simpleTree();
         System.out.println(tree);
 
-        //TODO сохраняем
-
+        //сохраняем
+        saveToFile(tree, filePath);
     }
 
+    static FamelyTree readFromFile(String filePath){
+        FileHandler fileHandler = new FileHandler();
+        return (FamelyTree) fileHandler.readFromFile(filePath);
+    }
+
+    static void saveToFile(FamelyTree tree, String filePath){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.saveToFile(tree, filePath);
+    }
+
+    
     static FamelyTree simpleTree() {
 
         FamelyTree tree = new FamelyTree();
@@ -32,7 +50,7 @@ public class Main {
         tree.addToFamely(lev);
         tree.addToFamely(irina);
         tree.addToFamely(evgenij);
-        tree.setWeddding(irina, evgenij);
+        tree.setWeddding(irina, evgenij, "Шапиро");
         tree.addToFamely(andrej1);
         tree.addToFamely(pavel);
 

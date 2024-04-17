@@ -45,8 +45,8 @@ public class FamelyTree implements Serializable{
  
     }
 
-    public List<Human> GetSiblingsList (int humanId){
-        Human human = HumanWithId(humanId);
+    public List<Human> getSiblingsList (int humanId){
+        Human human = searchHumanById(humanId);
         if (human == null){
             return null;
         }
@@ -72,14 +72,48 @@ public class FamelyTree implements Serializable{
     return ListByName;
     }
 
-    public boolean setWeddding (long partner1ID, Long partner2ID){
+    public boolean setWeddding (long partner1ID, Long partner2ID, Integer getFamelyName){
         if (checkID(partner1ID) && checkID(partner2ID)){
-            Human partner1 = HumanWithId(partner1ID);
-            Human partner2 = HumanWithId(partner2ID);
-            return setWeddding(partner1, partner2);
+            Human partner1 = searchHumanById(partner1ID);
+            Human partner2 = searchHumanById(partner2ID);
+            return setWeddding(partner1, partner2, getFamelyName);
         }
         return false;
 
+    }
+
+    public boolean setWeddding (long partner1ID, Long partner2ID){
+        return setWeddding(partner1ID, partner2ID, 0);
+    }
+
+//TODO необходимо что-то сделать с перводом мужских фамилий в женские и обратно
+
+    public boolean setWeddding (Human partner1, Human partner2, Integer getFamelyName){
+        if (partner1.getSpouse() == null && partner1.getSpouse() == null){
+            partner1.setSpouse(partner2);
+            partner2.setSpouse(partner1);
+            if (getFamelyName == 1){
+                partner2.setFamelyName(partner1.getFamelyName() + " (" + partner2.getFamelyName() + ")");
+            }
+            else{
+                if (getFamelyName == 2){
+                    partner1.setFamelyName(partner2.getFamelyName() + " (" + partner1.getFamelyName() + ")");
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setWeddding (Human partner1, Human partner2, String newFamelyName){
+        if (partner1.getSpouse() == null && partner1.getSpouse() == null){
+            partner1.setSpouse(partner2);
+            partner2.setSpouse(partner1);
+            partner2.setFamelyName(newFamelyName + " (" + partner2.getFamelyName() + ")");
+            partner1.setFamelyName(newFamelyName + " (" + partner1.getFamelyName() + ")");
+            return true;
+        }
+        return false;
     }
 
     public boolean setWeddding (Human partner1, Human partner2){
@@ -93,8 +127,8 @@ public class FamelyTree implements Serializable{
 
     public boolean setDivorse (long partner1ID, Long partner2ID){
         if (checkID(partner1ID) && checkID(partner2ID)){
-            Human partner1 = HumanWithId(partner1ID);
-            Human partner2 = HumanWithId(partner2ID);
+            Human partner1 = searchHumanById(partner1ID);
+            Human partner2 = searchHumanById(partner2ID);
             return setDivorse(partner1, partner2);
         }
         return false;
@@ -112,7 +146,7 @@ public class FamelyTree implements Serializable{
 
     public boolean removeFromFamely (long humanID){
         if (checkID(humanID)){
-            Human human = HumanWithId(humanID);
+            Human human = searchHumanById(humanID);
             return removeFromFamely(human);
         }
         return false;
@@ -129,7 +163,7 @@ public class FamelyTree implements Serializable{
         return id < humanId && id > 0;
     }
 
-    public Human HumanWithId(long id){
+    public Human searchHumanById(long id){
         if (checkID(id)){
             for (Human human: humanList){
                 if (human.getIdNo() == id) {
