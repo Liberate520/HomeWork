@@ -1,4 +1,4 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 import java.util.Comparator;
 
 public class ComparatorBirthday<T extends TreeClass<T>> implements Comparator<T>{

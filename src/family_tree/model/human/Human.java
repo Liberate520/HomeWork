@@ -1,11 +1,11 @@
-package family_tree.human;
+package family_tree.model.human;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import family_tree.family_tree.TreeClass;
+import family_tree.model.family_tree.TreeClass;
 
 public class Human implements TreeClass<Human> {
     private long id;
@@ -116,17 +116,31 @@ public class Human implements TreeClass<Human> {
         StringBuilder sb = new StringBuilder();
         sb.append("id: ").append(id);
         sb.append(", имя: ").append(name);
-        sb.append(", пол: ").append(getGender());
+        sb.append(", пол: ").append(gender == Gender.Male ? "Male" : "Female");
         sb.append(", возраст: ").append(getAge());
-        sb.append(", супруг(а): ");
-        sb.append(getSpouseInfo());
-        sb.append(", ");
-        sb.append(getFatherInfo());
-        sb.append(", ");
-        sb.append(getMotherInfo());
-        sb.append(", ");
-        sb.append(getChildrenInfo());
+        sb.append(", супруг(а): ").append(spouse != null ? spouse.getName() : "не указан(а)");
+        sb.append(", отец: ");
+        if (getFather() != null) {
+            sb.append(getFather().getName());
+        } else {
+            sb.append("неизвестен");
+        }
+
+        sb.append(", мать: ");
+        if (getMother() != null) {
+            sb.append(getMother().getName());
+        } else {
+            sb.append("неизвестна");
+        }
+
+        sb.append(", дети: ");
+        if (children.isEmpty()) {
+            sb.append("нет детей");
+        } else {
+            sb.append(children.stream().map(Human::getName).collect(Collectors.joining(", ")));
+        }
         return sb.toString();
+
     }
 
     public String getSpouseInfo() {

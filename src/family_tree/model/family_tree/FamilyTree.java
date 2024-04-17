@@ -1,4 +1,4 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -161,6 +161,15 @@ public class FamilyTree<E extends TreeClass<E>> implements Serializable, Iterabl
 
     public void sortBirthday() {
         humanList.sort(new ComparatorBirthday<E>());
+    }
+
+    public E findFirstByName(String name) {
+        for (E human : humanList) {
+            if (human.getName().equalsIgnoreCase(name)) {
+                return human;
+            }
+        }
+        return null;
     }
         
     @Override
