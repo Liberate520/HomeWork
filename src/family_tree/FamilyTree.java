@@ -3,24 +3,25 @@ package family_tree;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import family_tree.iterators.TreeIterator;
 import human.*;
-import human.comparators.HumanComparatorByAge;
-import human.comparators.HumanComparatorByName;
+import family_tree.comporators.TreeComparatorByBrithDate;
+import family_tree.comporators.TreeComparatorByName;
 
 import java.util.Iterator;
 import java.util.List;
 //import java.io.*;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<E extends TreeElement<E>> implements Serializable, Iterable<E> {
     private long idTree;
-    private List<Human> listHuman;
-    public FamilyTree(List<Human> listHuman){
+    private List<E> listHuman;
+    public FamilyTree(List<E> listHuman){
         this.listHuman = listHuman;
     }
     public FamilyTree() {
         listHuman =new ArrayList<>();
         }
-    public boolean  addHuman (Human human){
+    public boolean  addHuman (E human){
         if (human == null) {return  false;}
         if (!listHuman.contains(human)){
             listHuman.add(human);
@@ -31,14 +32,14 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         }   return false;
     }
 
-    private void  addToParents(Human human){
-        for (Human parent: human.getParents()){
+    private void  addToParents(E human){
+        for (E parent: human.getParents()){
             parent.addChild(human);
         }
     }
-    private void  addToChildren(Human human){
-        for (Human parent: human.getChildren()){
-            parent.addParents(human);
+    private void  addToChildren(E human){
+        for (E children: human.getChildren()){
+            children.addChild(human);
         }
     }
 
@@ -50,7 +51,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 public  String getInfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("Генеалогическое древо\n");
-        for (Human human: listHuman){
+        for (E human: listHuman){
             sb.append(human);
             sb.append("\n");
             sb.append("\n");
@@ -58,16 +59,16 @@ public  String getInfo(){
         return sb.toString();
     }
     public void sortByName(){
-        listHuman.sort(new HumanComparatorByName());
+        listHuman.sort(new TreeComparatorByName());
     }
 
     public void sortByAge(){
-        listHuman.sort(new HumanComparatorByAge());
+        listHuman.sort(new TreeComparatorByBrithDate());
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(listHuman);
+    public Iterator<E> iterator() {
+        return new TreeIterator(listHuman);
     }
 
 
