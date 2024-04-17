@@ -1,11 +1,11 @@
-package family_tree.tree;
+package family_tree.model.tree;
 
-import family_tree.person.BasicUnit;
+import family_tree.model.person.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class HumanIterator<T extends BasicUnit> implements Iterator<T> {
+public class HumanIterator<T extends TreeNode<T>> implements Iterator<T> {
     private ArrayList<T> unitsList;
     private int index;
 

@@ -1,4 +1,4 @@
-package family_tree.person;
+package family_tree.model.person;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,13 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BasicUnit implements Serializable {
+public abstract class BasicUnit implements Serializable, TreeNode<BasicUnit> {
     private long id;
     private int generation;
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
-    //private List<Human> allChildren = new ArrayList<>();
     private BasicUnit mother, father;
     private BasicUnit partner;
     private Map<BasicUnit, ArrayList<BasicUnit>> kids = new HashMap<>();
@@ -55,6 +54,7 @@ public abstract class BasicUnit implements Serializable {
         countOfChildren++;
     }
 
+    @Override
     public boolean addChildFromThisPartner(BasicUnit partner, BasicUnit child) {
         ArrayList<BasicUnit> temp = getKidsFromPartner(partner);
         if (!temp.isEmpty()) {
@@ -81,6 +81,7 @@ public abstract class BasicUnit implements Serializable {
         }
     }
 
+    @Override
     public ArrayList<BasicUnit> getKidsFromPartner(BasicUnit partner) {
         for (BasicUnit entry : kids.keySet()) {
             if (entry.equals(partner)) {
@@ -92,6 +93,7 @@ public abstract class BasicUnit implements Serializable {
     }
 
 
+    @Override
     public BasicUnit findChildByName(String name) {
         if (kids.isEmpty()) {
             System.out.println("This man don't have children");
@@ -107,6 +109,7 @@ public abstract class BasicUnit implements Serializable {
         System.out.println("Child with this name: " + name + " is not found");
         return null;
     }
+    @Override
     public ArrayList<BasicUnit> getListOfChildren() {
         ArrayList<BasicUnit> temp = new ArrayList<>();
         for (ArrayList<BasicUnit> item : kids.values()) {
@@ -115,6 +118,7 @@ public abstract class BasicUnit implements Serializable {
         return temp;
     }
 
+    @Override
     public BasicUnit getMother() {
         return mother;
     }
@@ -128,6 +132,7 @@ public abstract class BasicUnit implements Serializable {
         }
     }
 
+    @Override
     public BasicUnit getFather() {
         return father;
     }
@@ -136,6 +141,7 @@ public abstract class BasicUnit implements Serializable {
         return name;
     }
 
+    @Override
     public void setDeadDate(LocalDate dod) {
         if ((dod.isAfter(this.dob)) || (dod.isBefore(this.dob.plusYears(140)))) {
             this.dod = dod;
@@ -143,20 +149,18 @@ public abstract class BasicUnit implements Serializable {
             System.out.println("Date of dead incorrect!"); //некорктна
         }
     }
+    @Override
     public void setDateOfBirth(LocalDate dob) {
         this.dob = dob;
     }
 
 
+    @Override
     public LocalDate getDateOfBirth() {
         return this.dob;
     }
 
-    /**
-     * Not finished
-     *
-     * @param partner
-     */
+    @Override
     public void setPartner(BasicUnit partner) {
         kids.put(partner, new ArrayList<BasicUnit>());
         partner.kids.put(this, new ArrayList<BasicUnit>());
@@ -164,9 +168,10 @@ public abstract class BasicUnit implements Serializable {
         partner.partner = this;
     }
 
+    @Override
     public List<BasicUnit> getListOfPartner() {
         if (!kids.isEmpty()) {
-            List<BasicUnit> partners = new ArrayList<BasicUnit>(kids.keySet().size());
+            List<BasicUnit> partners = new ArrayList<>(kids.keySet().size());
             partners.addAll(kids.keySet());
             return partners;
         }
@@ -174,8 +179,9 @@ public abstract class BasicUnit implements Serializable {
         return null;
     }
 
+    @Override
     public int getAge() {
-        if (this.dod == null) {
+        if (this.dod == null) { // getPeriod(dob, Objects.requireNonNullElseGet(this.dod, LocalDate::now));
             return getPeriod(dob, LocalDate.now());
         } else {
             return getPeriod(dob, dod);
@@ -187,18 +193,22 @@ public abstract class BasicUnit implements Serializable {
         return diff.getYears();
     }
 
+    @Override
     public BasicUnit getPartner() {
         return partner;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
 
+    @Override
     public long getId() {
         return id;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }
@@ -208,16 +218,16 @@ public abstract class BasicUnit implements Serializable {
         return getInfo();
     }
 
-    public String getInfo() {
+    private String getInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("id: ");
         sb.append(id);
         sb.append(" , name: ");
-        sb.append(name + "\n");
+        sb.append(name).append("\n");
         sb.append("gender: ");
-        sb.append(getGender() + "\n");
+        sb.append(getGender()).append("\n");
         sb.append("age: ");
-        sb.append(getAge() + "\n");
+        sb.append(getAge()).append("\n");
         sb.append("partner: ");
         sb.append(getPartner() == null ? "no info\n" : getPartner().getName() + "\n");
         sb.append("mother: ");
@@ -230,10 +240,12 @@ public abstract class BasicUnit implements Serializable {
         return sb.toString();
     }
 
+    @Override
     public int getGeneration() {
         return generation;
     }
 
+    @Override
     public void setGeneration(int generation) {
         this.generation = generation;
     }

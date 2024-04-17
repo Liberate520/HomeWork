@@ -1,11 +1,11 @@
-package family_tree.writer;
+package family_tree.model.writer;
 
-import family_tree.person.BasicUnit;
-import family_tree.tree.FamilyTree;
+import family_tree.model.person.TreeNode;
+import family_tree.model.tree.FamilyTree;
 
 import java.io.*;
 
-public class FileHandler<T extends BasicUnit> implements Writable<T> {
+public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
 
 
     public boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree) {
@@ -19,7 +19,7 @@ public class FileHandler<T extends BasicUnit> implements Writable<T> {
         }
     }
 
-    public boolean writeUnitAsByteCode(Serializable outputObject, String fileNameForPeople) {
+    public boolean writeSubjectAsByteCode(Serializable outputObject, String fileNameForPeople) {
         try(ObjectOutputStream out = new ObjectOutputStream(
                 new FileOutputStream(fileNameForPeople))){
             out.writeObject(outputObject);
@@ -30,7 +30,7 @@ public class FileHandler<T extends BasicUnit> implements Writable<T> {
         }
     }
 
-    public FamilyTree readTreeFromByteCodeFile(String fileNameForTree) {
+    public FamilyTree<T> readTreeFromByteCodeFile(String fileNameForTree) {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileNameForTree))){
             return (FamilyTree) in.readObject();
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class FileHandler<T extends BasicUnit> implements Writable<T> {
         }
     }
 
-    public T readUnitFromByteCodeFile(String fileNameForPeople) {
+    public T readSubjectFromByteCodeFile(String fileNameForPeople) {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileNameForPeople))){
             return (T) in.readObject();
         } catch (Exception e) {

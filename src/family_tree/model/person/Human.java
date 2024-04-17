@@ -1,8 +1,8 @@
-package family_tree.person;
+package family_tree.model.person;
 
 import java.time.LocalDate;
 
-public class Human extends BasicUnit {
+public class Human extends BasicUnit{
 
     public Human(String name, LocalDate dob, Gender gender) {
         super(name, dob, null, gender, null, null);
@@ -20,4 +20,5 @@ public class Human extends BasicUnit {
                  Human father, Human mother) {
         super(name, dob, dod, gender, father, mother);
     }
+
 }
