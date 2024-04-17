@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree implements Serializable, Iterable <Human> {
-    private long igForGen;
+    private long countPeople;
     private final List<Human> humanList;
 
     public FamilyTree(List<Human> humanList){
@@ -26,7 +26,7 @@ public class FamilyTree implements Serializable, Iterable <Human> {
         }
         if (!humanList.contains(human)){
             humanList.add(human);
-            human.setId(igForGen++);
+            human.setId(countPeople++);
             addToParents(human);
             addToChhildren(human);
             return true;
@@ -62,10 +62,13 @@ public class FamilyTree implements Serializable, Iterable <Human> {
         return res;
     }
 
-    public List<Human> getByName (String name){
+    public List<Human> getByName (String name) {
         List<Human> res = new ArrayList<>();
-        for(Human human: humanList)
-            if (human.getName().equals(name)) res.add(human);
+        for (Human human : humanList) {
+            if (human.getName().equals(name)) {
+                res.add(human);
+            }
+        }
         return res;
     }
 
@@ -98,7 +101,7 @@ public class FamilyTree implements Serializable, Iterable <Human> {
     }
 
     private boolean checkId (long id){
-        return id < igForGen && id >= 0;
+        return id < countPeople && id >= 0;
     }
 
     public Human getById(long id){
@@ -112,11 +115,14 @@ public class FamilyTree implements Serializable, Iterable <Human> {
         return null;
     }
 
-      public String getInfo(){
+    @Override
+    public String toString() {return getInfo();}
+
+    public String getInfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("В дереве ");
         sb.append(humanList.size());
-        sb.append(" объуктов: \n");
+        sb.append(" объектов: \n");
         for (Human human: humanList){
             sb.append(human);
             sb.append("\n");

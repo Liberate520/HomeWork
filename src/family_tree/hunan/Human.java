@@ -37,6 +37,25 @@ public class Human {
     public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father){
         this(name, gender, birthDate, null, mother, father);
     }
+    public boolean addChild(Human child){
+        if (!children.contains(child)){
+            children.add(child);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addParent (Human parent) {
+        if (parent.getGender().equals(Gender.Male)) {
+            setFather(parent);
+        } else {
+            if (parent.getGender().equals(Gender.Female)) {
+                setMother(parent);
+            }
+        }
+        return true;
+    }
+
 
     public void setId(long id) { this.id = id; }
     public void setName (String name){
@@ -67,28 +86,9 @@ public class Human {
     public Human getSpouse(){ return spouse; }
     public List<Human> getChildren() { return children; }
 
-    public boolean addChild(Human child){
-        if (!children.contains(child)){
-            children.add(child);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean addParent (Human parent) {
-        if (parent.getGender().equals(Gender.Male)) {
-            setFather(parent);
-        } else {
-            if (parent.getGender().equals(Gender.Female)) {
-                setMother(parent);
-            }
-        }
-        return true;
-    }
-
     public List<Human> getParents(){
-        List<Human> list = new ArrayList<>();
-        if (father != null) {
+        List<Human> list = new ArrayList<>(2);
+            if (father != null) {
             list.add(father);
         }
         if (mother != null) {
@@ -111,6 +111,7 @@ public class Human {
         return diff.getYears();
     }
 
+    @Override
     public String toString() {
         return getInfo();
     }
@@ -123,8 +124,6 @@ public class Human {
         sb.append(name);
         sb.append(", пол: ");
         sb.append(getGender());
-        sb.append(", дата рождения: ");
-        sb.append(birthDate);
         sb.append(", возраст: ");
         sb.append(getAge());
         sb.append(", ");
@@ -154,7 +153,7 @@ public class Human {
         if (mother != null){
             res += mother.getName();
         }else {
-            res = "нет данных";
+            res += "нет данных";
         }
         return res;
     }
@@ -183,6 +182,7 @@ public class Human {
         return res.toString();
     }
 
+    @Override
     public boolean equals (Object obj){
         if (this == obj) {
             return true;
