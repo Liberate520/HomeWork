@@ -1,11 +1,12 @@
-package Family_Tree;
+package Family_Tree.human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.Period;
 
-public class Human implements Serializable{
+public class Human implements Serializable {
     private long id;
     private String name;
     private LocalDate birth;
@@ -35,6 +36,7 @@ public class Human implements Serializable{
                  Human father, Human mother) {
         this(name, birth, null, gender, father, mother);
     }
+
 
     public boolean addParents(Human parents){
         if (parents.getGender().equals(Gender.Female)) {
@@ -160,3 +162,4 @@ public class Human implements Serializable{
         return human.getID() == getID();
     }
 }
+
