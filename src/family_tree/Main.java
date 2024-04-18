@@ -4,7 +4,6 @@ import family_tree.family_tree.FamilyTree;
 import family_tree.hunan.Gender;
 import family_tree.hunan.Human;
 import family_tree.writer.FileHandler;
-
 import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
