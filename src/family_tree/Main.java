@@ -2,17 +2,16 @@ package family_tree;
 
 import family_tree.human.Gender;
 import family_tree.human.Human;
-import family_tree.writer.FileHandler;
-import family_tree.writer.Writable;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         List<Human> members = new ArrayList<>();
 
@@ -53,6 +52,10 @@ public class Main {
 
         Human kay = new Human("Kay", LocalDate.of(1925, 5, 10), Gender.Female);
 
+        Human luci = new Human("Luci", LocalDate.of(1923, 4, 22), Gender.Female);
+
+        Human vincent = new Human("Vincent", LocalDate.of(1948, 9, 15), Gender.Male);
+
         // Устанавливаем отношения
         vito.setFather(carmine);
         vito.setMother(antonia);
@@ -72,6 +75,8 @@ public class Main {
         tom.setMother(kay);
         hagen.setFather(vito);
         hagen.setMother(kay);
+        vincent.setFather(sonny);
+        vincent.setMother(luci);
 
         // Добавляем членов семьи в список
         members.add(vito);
@@ -87,44 +92,114 @@ public class Main {
         members.add(tom);
         members.add(hagen);
         members.add(kay);
+        members.add(luci);
 
-        // Сохраняем в файл и загружаем из файла
-        try {
-            Writable fileHandler = new FileHandler();
-            fileHandler.saveToFile("family_tree_data.txt", members);
-            List<Human> loadedMembers = fileHandler.loadFromFile("family_tree_data.txt");
+        Scanner scanner = new Scanner(System.in);
 
-            // Дальнейшие операции с членами семьи
-            System.out.println("Члены семьи Карлеоне:");
-            for (Human member : loadedMembers) {
-                System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth() + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
-                if (member.getMother() != null) {
-                    System.out.println("Мать: " + member.getMother().getName());
+        int choice;
+        while (true) {
+            System.out.println();
+            System.out.println("Выберите действие:");
+            System.out.println("1. Вывести список членов семьи");
+            System.out.println("2. Добавить нового члена семьи");
+            System.out.println("3. Отсортировать по имени");
+            System.out.println("4. Отсортировать по дате рождения");
+            System.out.println("5. Завершить программу");
+            System.out.println();
+
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        System.out.println("Список членов семьи Карлеоне:");
+                        for (Human member : members) {
+                            System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth() + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
+                            if (member.getMother() != null) {
+                                System.out.println("Мать: " + member.getMother().getName());
+                            }
+                            if (member.getFather() != null) {
+                                System.out.println("Отец: " + member.getFather().getName());
+                            }
+                            System.out.println();
+                        }
+                        break;
+                    case 2:
+                        // Логика добавления нового члена семьи
+                        System.out.println("Введите имя нового члена семьи:");
+                        String name = scanner.next();
+                        System.out.println("Введите дату рождения в формате ГГГГ-ММ-ДД:");
+                        LocalDate birthDate = LocalDate.parse(scanner.next());
+                        System.out.println("Введите пол (Male/Female):");
+                        String genderInput = scanner.next().toLowerCase();
+                        Gender gender;
+                        if (genderInput.equals("male")) {
+                            gender = Gender.Male;
+                        } else if (genderInput.equals("female")) {
+                            gender = Gender.Female;
+                        } else {
+                            System.out.println("Ошибка: Некорректный ввод пола.");
+                            break;
+                        }
+                        
+                        Human newMember = new Human(name, birthDate, gender);
+                        
+                        // Запрос информации о родителях
+                        System.out.println("Введите имя отца:");
+                        String fatherName = scanner.next();
+                        System.out.println("Введите имя матери:");
+                        String motherName = scanner.next();
+                        
+                        // Поиск отца и матери в списке членов семьи
+                        Human father = null;
+                        Human mother = null;
+                        for (Human member : members) {
+                            if (member.getName().equals(fatherName)) {
+                                father = member;
+                            }
+                            if (member.getName().equals(motherName)) {
+                                mother = member;
+                            }
+                            if (father != null && mother != null) {
+                                break;
+                            }
+                        }
+                        
+                        // Установка родителей новому члену семьи
+                        if (father != null && mother != null) {
+                            newMember.setFather(father);
+                            newMember.setMother(mother);
+                            members.add(newMember);
+                            System.out.println("Новый член семьи успешно добавлен!");
+                        } else {
+                            System.out.println("Ошибка: Один из родителей не найден в списке членов семьи.");
+                        }
+                        break;
+                    case 3:
+                        Collections.sort(members, Comparator.comparing(Human::getName));
+                        System.out.println("Отсортированный список по имени:");
+                        for (Human member : members) {
+                            System.out.println(member.getName());
+                        }
+                        break;
+                    case 4:
+                        Collections.sort(members, Comparator.comparing(Human::getDateOfBirth));
+                        System.out.println("Отсортированный список по дате рождения:");
+                        for (Human member : members) {
+                            System.out.println(member.getName() + " - " + member.getDateOfBirth());
+                        }
+                        break;
+                    case 5:
+                        System.out.println("Программа завершена.");
+                        scanner.close();
+                        return;
+                    default:
+                        System.out.println("Некорректный ввод. Попробуйте еще раз.");
+                        break;
                 }
-                if (member.getFather() != null) {
-                    System.out.println("Отец: " + member.getFather().getName());
-                }
-                System.out.println();
+            } else {
+                System.out.println("Ошибка: Введите число от 1 до 5");
+                scanner.nextLine(); // Очистка буфера ввода
             }
-
-             // Сортировка по имени
-            Collections.sort(loadedMembers, Comparator.comparing(Human::getName));
-            System.out.println("\nОтсортированный список по имени:");
-            for (Human member : loadedMembers) {
-            System.out.println(member.getName());
-            }
-
-            // Сортировка по дате рождения
-            Collections.sort(loadedMembers, Comparator.comparing(Human::getDateOfBirth));
-            System.out.println("\nОтсортированный список по дате рождения:");
-            for (Human member : loadedMembers) {
-            System.out.println(member.getName() + " - " + member.getDateOfBirth());
-            }
-
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        
     }
 }

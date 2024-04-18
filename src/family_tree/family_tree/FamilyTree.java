@@ -9,31 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
-
-
+// Определение класса FamilyTree
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
-    private List<Human> humanList;
+    private List<Human> humanList; // Список людей в дереве
 
+    // Конструктор класса
     public FamilyTree() {
-        this.humanList = new ArrayList<>();
+        this.humanList = new ArrayList<>(); // Создание пустого списка людей
     }
 
+    // Метод добавления члена семьи
     public void addMember(Human member) {
-        this.humanList.add(member);
+        this.humanList.add(member); // Добавление члена семьи в список
     }
 
+    // Метод получения всех членов семьи
     public List<Human> getMembers() {
-        return humanList;
+        return humanList; // Возвращаем список всех членов семьи
     }
 
-    // Методы сортировки
-
+    // Метод сортировки по имени
     public void sortByName() {
-        humanList.sort(new HumanComparatorByName<>());
+        humanList.sort(new HumanComparatorByName<>()); // Сортировка списка по имени
     }
 
+    // Метод сортировки по дате рождения
     public void sortByDateOfBirth() {
-        humanList.sort(new HumanComparatorByBirthDate<>());
+        humanList.sort(new HumanComparatorByBirthDate<>()); // Сортировка списка по дате рождения
     }
 
     // Реализация интерфейса Iterable<Human>

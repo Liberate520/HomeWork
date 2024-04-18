@@ -117,4 +117,10 @@ public class Human implements TreeNode<Human>, Comparable<Human> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setSpouse'");
     }
+
+    @Override
+    public int compareTo(Human o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    }
 }
