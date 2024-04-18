@@ -19,11 +19,12 @@ public class Main {
         familyTree.addMember(h3);
         familyTree.addMember(h4);
 
-        //System.out.println(familyTree.MembersInfo());
+        System.out.println(familyTree.MembersListInfo());
 
-        FileHandler handler = new FileHandler();
-        handler.saveTree(familyTree);
-        FamilyTree newTree = handler.downloadTree();
-        System.out.println(newTree.MembersInfo());
+        familyTree.sortByName();
+        System.out.println(familyTree.MembersListInfo());
+
+        familyTree.sortByAge();
+        System.out.println(familyTree.MembersListInfo());
     }
 }

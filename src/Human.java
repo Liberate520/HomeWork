@@ -187,4 +187,9 @@ public class Human implements Serializable {
         }
         return res.toString();
     }
+
+    @Override
+    public String toString() {
+        return getInfo();
+    }
 }

@@ -1,8 +1,9 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human>{
 
 
     private final List<Human> family;
@@ -18,19 +19,18 @@ public class FamilyTree implements Serializable {
     public void addMember(Human member) {
         if (!(member == null) && !family.contains(member)) {
             this.family.add(member);
-
-            //addToChildren(member);
-            //addToParents(member);
         }
     }
 
-    public String MembersInfo() {
-        StringBuilder output = new StringBuilder("Все члены семьи:\n");
-        for (Human member : family) {
-            output.append("------------\n");
-            output.append("Имя: ").append(member.getName()).append("\nДата рождения: ").append(member.getDob()).append("\nПол: ").append(member.getGender()).append("\n");
+    public String MembersListInfo() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Члены семьи:\n");
+
+        for (Human human: family) {
+            stringBuilder.append(human);
+            stringBuilder.append("\n");
         }
-        return output.toString();
+        return stringBuilder.toString();
     }
 
     public String ChildrenInfo(Human name) {
@@ -44,17 +44,21 @@ public class FamilyTree implements Serializable {
         return children.toString();
     }
 
-    /*
-    private void addToParents(Human human) {
-        for (Human parent: human.getParents()) {
-            parent.addChild(human);
-        }
+    @Override
+    public Iterator<Human> iterator() {
+        return new MembersIterator(family);
     }
 
-    private void addToChildren(Human human) {
-        for (Human child: human.getChildren()) {
-            child.addParent(human);
-        }
+    @Override
+    public String toString() {
+        return MembersListInfo();
     }
-     */
+
+    public void sortByName() {
+        family.sort(new HumanComparatorByName());
+    }
+
+    public void sortByAge() {
+        family.sort(new HumanComparatorByAge());
+    }
 }
