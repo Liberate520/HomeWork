@@ -265,7 +265,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
-    public int getInterval(LocalDate dob, LocalDate dod) {
+    private int getInterval(LocalDate dob, LocalDate dod) {
         Period interval = Period.between(dob, dod);
         return interval.getYears();
     }

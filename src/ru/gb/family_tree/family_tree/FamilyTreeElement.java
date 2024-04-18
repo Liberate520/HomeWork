@@ -3,12 +3,13 @@ package ru.gb.family_tree.family_tree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.SpouseStatus;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
 
-public interface FamilyTreeElement<T> {
+public interface FamilyTreeElement<T> extends Serializable {
     long getId();
     void setId(long id);
     void PrintId();
@@ -40,13 +41,11 @@ public interface FamilyTreeElement<T> {
     boolean addSpouse(T spouse, SpouseStatus status);
     String getSpousesAbout();
     void PrintSpouses();
-    int getInterval(LocalDate dob, LocalDate dod);
     int getAge();
     String getLifeStatus();
     void PrintAge();
-    String toString();
     String getAbout();
-    boolean equals(Object obj);
+
 }
 
 
