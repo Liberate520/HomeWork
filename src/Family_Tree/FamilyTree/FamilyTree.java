@@ -1,16 +1,21 @@
-package Family_Tree.familytree;
-import Family_Tree.human.Human;
+package Family_Tree.FamilyTree;
 
-import java.io.Serializable;
+import Family_Tree.Human.Human;
+import Family_Tree.Human.SortByAge;
+import Family_Tree.Human.SortByName;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Iterable<Human> {
     private long countPeople; //Лучше перенести в main
     private List<Human> HumanList;
+    private FamilyTree familytree;
 
     public FamilyTree() {
-        this(new ArrayList<>());
+        HumanList = new ArrayList<>();
     }
 
     public FamilyTree(List<Human> HumanList) {
@@ -31,6 +36,32 @@ public class FamilyTree implements Serializable {
         return false;
     }
 
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(HumanList);
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("В дереве");
+        sb.append(HumanList.size());
+        sb.append(" объектов ");
+        sb.append("\n");
+        for (Human human : HumanList) {
+            sb.append(human);
+            sb.append("\n");
+        }
+
+        /*Iterator<Human> iterator = HumanList.iterator();
+        while (iterator.hasNext()) {
+            Human human = iterator.next();
+            sb.append(human);
+            sb.append("\n");
+        }*/
+        return sb.toString();
+    }
+
+
     private void addToParents(Human human) {
         for (Human parent : human.getParents()) {
             parent.addChild(human);
@@ -50,6 +81,13 @@ public class FamilyTree implements Serializable {
             }
         }
         return null;
+    }
+
+    public void sortByName(){
+        Collections.sort(HumanList, new SortByName());
+    }
+    public void sortByAge(){
+        Collections.sort(HumanList, new SortByAge());
     }
     /*public List<Human> getSib(int id){   Разобраться в методе(нахождение братьев и сестер)
         Human human = getID(id);
@@ -72,7 +110,7 @@ public class FamilyTree implements Serializable {
         return getInfo();
     }
 
-    public String getInfo() {
+    /*public String getInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("В дереве");
         sb.append(HumanList.size());
@@ -83,6 +121,10 @@ public class FamilyTree implements Serializable {
         }
         return sb.toString();
 
-    }
+    }*/
+
 }
+
+
+
 

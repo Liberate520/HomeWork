@@ -1,4 +1,4 @@
-package Family_Tree.human;
+package Family_Tree.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -90,8 +90,8 @@ public class Human implements Serializable {
             return calculateAge(birth, LocalDate.now());
         }else{
             return calculateAge(birth, death);
+            }
         }
-    }
 
     public String getName(){
         return name;
@@ -131,17 +131,17 @@ public class Human implements Serializable {
         return sb.toString();
     }
 
-    public String getMotherInf() {
-        String res = "Мама: ";
-        Human mother = getMother();
-        if (mother != null) {
-            res += mother.getName();
-        } else {
-            res = "Неизвестна";
+        public String getMotherInf() {
+            String res = "Мама: ";
+            Human mother = getMother();
+            if (mother != null) {
+                res += mother.getName();
+            } else {
+                res = "Неизвестна";
+            }
+            return res;
         }
-        return res;
-    }
-    public String getFatherInf() {
+        public String getFatherInf() {
         String res = "Отец: ";
         Human father = getFather();
         if (father != null) {
@@ -161,5 +161,11 @@ public class Human implements Serializable {
         }
         return human.getID() == getID();
     }
+
+   /* @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }*/
 }
+
 
