@@ -16,7 +16,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     private String name;
     private Gender gender;
     private LocalDate dob, dod;
-    private List<Human> children = new List<Human>;
+    private List<Human> children;
     private Human mother, father;
     private HashMap<Human, SpouseStatus> spouses = new HashMap<>();
 
@@ -26,10 +26,10 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         this.gender = gender;
         this.dob = LocalDate.parse(dob);
         this.dod = dod;
-        this.children = children;
+        this.children = new ArrayList<>();
         this.mother = mother;
         this.father = father;
-        this.spouses = spouses;
+        this.spouses = new HashMap<>();
     }
 
 
