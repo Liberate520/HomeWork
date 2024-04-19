@@ -5,13 +5,13 @@ import java.util.List;
 
 
 
-public class PersonIterator implements Iterator<Person> {
+public class PersonIterator<E extends FamilyObject<E>> implements Iterator<E> {
     
-    private List<Person> listPersons;
+    private List<E> listPersons;
 
     private int index;
 
-    public PersonIterator (List<Person> listPersons){
+    public PersonIterator (List<E> listPersons){
         this.listPersons=listPersons;
     }
     @Override
@@ -19,7 +19,7 @@ public class PersonIterator implements Iterator<Person> {
         return index < listPersons.size();
     }
     @Override
-    public Person next(){
+    public E next(){
         return listPersons.get(index++);
     }
 }

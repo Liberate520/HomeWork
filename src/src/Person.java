@@ -5,7 +5,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable, Comparable<Person> {
+
+public class Person implements Serializable, Comparable<Person>, FamilyObject<Person> {
     private String name;
     private String surname;
     private String patronymic;
@@ -16,6 +17,7 @@ public class Person implements Serializable, Comparable<Person> {
     private Person mother;
     private Person father;
     private Integer age;
+
 
     public Person(String name, String surname, String patronymic, Gender gender, LocalDate dateB, LocalDate dateD,
             Person mother, Person father) {
@@ -113,6 +115,7 @@ public class Person implements Serializable, Comparable<Person> {
         return father;
     }
 
+    
     public List<Person> getChildren(){
         return children;
     }
@@ -234,4 +237,16 @@ public class Person implements Serializable, Comparable<Person> {
         return name.compareTo(o.name);        
     }
 
+  
+
+  
+
+    
+
+
+   
+   
+  
+
+  
 }

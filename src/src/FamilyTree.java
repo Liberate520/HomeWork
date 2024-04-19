@@ -3,27 +3,28 @@ package src;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 
-public class FamilyTree implements Serializable, Iterable<Person> {
+public class FamilyTree<E extends FamilyObject<E>> implements Serializable, Iterable<E> {
 
-    private List<Person> listPersons;
+    private List<E> listPersons;
 
     public FamilyTree() {
         this.listPersons = new ArrayList<>();
     }
 
     
-    public FamilyTree(List<Person> listPersons) {
+    public FamilyTree(List<E> listPersons) {
         this.listPersons = listPersons;
     }
     
-    public List<Person> getFamilyTree(){
+    public List<E> getFamilyTree(){
         return listPersons;
     }
     
-    public void addPerson(Person person) {
+    public void addPerson(E person) {
         if (!listPersons.contains(person)) {
             listPersons.add(person);
         }
@@ -31,9 +32,10 @@ public class FamilyTree implements Serializable, Iterable<Person> {
         childAddition(person);
     }
 
-    private void parentalAddition(Person person) {
+    
+    private void parentalAddition(E person) {
         if (person.getChildren() != null) {
-            for (Person child : person.getChildren()) {
+            for (E child : person.getChildren()) {
                 if (listPersons.contains(child)) {
                     child.getParent(person);
                 }
@@ -41,7 +43,7 @@ public class FamilyTree implements Serializable, Iterable<Person> {
         }
     }
 
-    private void childAddition(Person person) {
+    private void childAddition(E person) {
         if (person.getFather() != null) {
             person.getFather().setChild(person);
         } else if (person.getMother() != null) {
@@ -52,7 +54,7 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     
     public String printList() {
         StringBuilder fTree = new StringBuilder();
-        for (Person person : listPersons) {
+        for (E person : listPersons) {
             fTree.append(person.getPersCard(person));
             }
         return fTree.toString();
@@ -62,17 +64,17 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     //     return printList();
     // }
     @Override
-    public java.util.Iterator<Person> iterator() {
-        return new PersonIterator(listPersons);
+    public Iterator<E> iterator() {
+        return new PersonIterator<>(listPersons);
     }
    
 
     public void sortByName (){
-        Collections.sort(listPersons);
+        listPersons.sort( new PersonComporatorByName<>());
     }
 
     public void sortByAge(){
-        Collections.sort(listPersons, new PersonComparatorByAge());
+        Collections.sort(listPersons, new PersonComparatorByAge<>());
     }
 
 }
