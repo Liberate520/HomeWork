@@ -1,8 +1,14 @@
-package src;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+
+import src.Model.FamilyTree;
+import src.Model.FileHandler;
+import src.Model.Gender;
+import src.Model.Person;
+
 import java.io.File;
 
 public class main {
