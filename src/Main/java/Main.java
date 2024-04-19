@@ -1,4 +1,7 @@
+package Main.java;
 import java.util.List;
+import com.example.genealogy.model.Person;
+import com.example.genealogy.service.GenealogyTree;
 
 public class Main {
 

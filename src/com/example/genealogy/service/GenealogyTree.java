@@ -1,8 +1,11 @@
+package com.example.genealogy.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
+import com.example.genealogy.model.Person;
 
 public class GenealogyTree implements Iterable<Person> {
 
@@ -40,7 +43,6 @@ public class GenealogyTree implements Iterable<Person> {
         }
 
         private Person findNextPerson(Person person) {
-            // Реализуйте логику поиска следующего человека в дереве здесь
             if (!person.getChildren().isEmpty()) {
                 return person.getChildren().get(0);
             } else {
