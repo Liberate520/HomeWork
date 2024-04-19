@@ -2,8 +2,9 @@ package homeWork;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private long idForGen;
     private final List<Human> humanList;
 

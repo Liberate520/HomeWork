@@ -4,9 +4,13 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        String filePath = "tree.txt";
         
         FamilyTree tree = testTree();
         System.out.println(tree);
+
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(tree, filePath);
     }
 
     static FamilyTree testTree(){
@@ -28,10 +32,5 @@ public class Main {
         tree.add(grandMother);
 
         return tree;
-
     }
-
-
-
-
 }
