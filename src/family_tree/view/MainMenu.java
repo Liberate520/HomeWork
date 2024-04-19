@@ -15,6 +15,8 @@ public class MainMenu {
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByDateOfBirth(consoleUI));
         commands.add(new SortByAge(consoleUI));
+        commands.add(new WriteTreeAsByteCode(consoleUI));
+        commands.add(new ReadTreeFromByteCodeFile(consoleUI));
         commands.add(new Finish(consoleUI));
     }
 

@@ -6,10 +6,10 @@ import family_tree.model.tree.FamilyTree;
 import java.io.Serializable;
 
 public interface Writable <T extends TreeNode<T>> {
-    boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree);
-    boolean writeSubjectAsByteCode(Serializable outputObject, String fileNameForPeople);
-    FamilyTree<T> readTreeFromByteCodeFile(String fileNameForTree);
-    T readSubjectFromByteCodeFile(String fileNameForPeople);
+    boolean writeTreeAsByteCode(Serializable outputObject);
+    boolean writeSubjectAsByteCode(Serializable outputObject);
+    FamilyTree<T> readTreeFromByteCodeFile();
+    T readSubjectFromByteCodeFile();
 
 
 

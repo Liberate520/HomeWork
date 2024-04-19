@@ -14,6 +14,7 @@ public class Service<T extends TreeNode<T>> {
     private long genId;
     private FamilyTree<T> familyTree;
     private FileHandler fh;
+
     Class clazz; //хранение информации о классе дерева, если будет список деревьев, то будет и список классов. Будут мэтчится по индексам
 
 
@@ -25,45 +26,37 @@ public class Service<T extends TreeNode<T>> {
         this.familyTree = new FamilyTree<>();
         this.clazz = clazz;
     }
+
     public Service() {
         this.familyTree = new FamilyTree<>();
     }
 
-    public boolean addSubjectToFamilyTree(String name, LocalDate dob, Gender gender, Class<T> clazz) {
-        if (clazz.equals(Human.class)) {
-            Human human = new Human(name, dob, gender);
-            human.setId(genId++);
-            familyTree.addPersonToFamily((T) human);
-            return true;
-        }
-        return false;
+    public boolean addSubjectToFamilyTree(String name, LocalDate dob, Gender gender) {
+        Human human = new Human(name, dob, gender);
+        human.setId(genId++);
+        familyTree.addPersonToFamily((T) human);
+        return true;
     }
 
 
     public boolean addSubjectToFamilyTree(String name,
                                           LocalDate dob, LocalDate dod,
-                                          Gender gender, T father, T mother, Class<T> clazz) {
-        if (clazz.equals(Human.class)) {
-            Human human = new Human(name, dob, dod, gender, (Human) father, (Human) mother);
-            human.setId(genId++);
-            familyTree.addPersonToFamily((T) human);
-            return true;
-        }
-        return false;
+                                          Gender gender, T father, T mother) {
+        Human human = new Human(name, dob, dod, gender, (Human) father, (Human) mother);
+        human.setId(genId++);
+        familyTree.addPersonToFamily((T) human);
+        return true;
     }
 
     public boolean addSubjectToFamilyTree(String name,
-                                          LocalDate dob, Gender gender, T father, T mother, Class<T> clazz) {
-        if (clazz.equals(Human.class)) {
-            Human human = new Human(name, dob, gender, (Human) father, (Human) mother);
-            human.setId(genId++);
-            familyTree.addPersonToFamily((T) human);
-            return true;
-        }
-        return false;
+                                          LocalDate dob, Gender gender, T father, T mother) {
+        Human human = new Human(name, dob, gender, (Human) father, (Human) mother);
+        human.setId(genId++);
+        familyTree.addPersonToFamily((T) human);
+        return true;
     }
 
-    public boolean addSubjectToFamilyTree( T human) {
+    public boolean addSubjectToFamilyTree(T human) {
         // Переписать на итерацию по списку классов и поиск совпадений
         // Может быть ошибка, если будет несколько деревьев одного класса
         if (clazz.equals(human.getClass())) {
@@ -78,12 +71,10 @@ public class Service<T extends TreeNode<T>> {
 
     public void addSubjectToFamilyTree(String name,
                                        LocalDate dob, LocalDate dod,
-                                       Gender gender, Class<T> clazz) {
-        if (clazz.equals(Human.class)) {
-            Human human = new Human(name, dob, dod, gender);
-            human.setId(genId++);
-            familyTree.addPersonToFamily((T) human);
-        }
+                                       Gender gender) {
+        Human human = new Human(name, dob, dod, gender);
+        human.setId(genId++);
+        familyTree.addPersonToFamily((T) human);
     }
 
     public void setParentsForSubject(String nameForSearching, T parent) {
@@ -93,23 +84,19 @@ public class Service<T extends TreeNode<T>> {
     }
 
     public T findByName(String nameForSearching) {
-        T subject =  familyTree.findUnitByName(nameForSearching);
-        if(subject != null) return subject;
+        T subject = familyTree.findUnitByName(nameForSearching);
+        if (subject != null) return subject;
         System.out.println("Subject with name: " + nameForSearching + " is not found");
         return null;
     }
 
-    public T findByDateOfBirth(LocalDate dob){
+    public T findByDateOfBirth(LocalDate dob) {
         T subject = familyTree.findHumanByDateOfBirth(dob);
-        if(subject != null) return subject;
+        if (subject != null) return subject;
         System.out.println("Subject with this date of birth: " + dob + " is not found");
         return null;
     }
 
-
-    public FamilyTree<T> getFamilyTree() {
-        return familyTree;
-    }
     public ArrayList<T> sortByAge() {
         return familyTree.sortByAge();
     }
@@ -123,31 +110,41 @@ public class Service<T extends TreeNode<T>> {
     }
 
     public void initializationFileHandler() {
-        fh = new FileHandler<T>(); // ??
+        fh = new FileHandler<T>();
     }
 
-
-    public boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree) {
-        return fh.writeTreeAsByteCode(outputObject, fileNameForTree);
+    public boolean writeTreeAsByteCode(Serializable outputObject) {
+        return fh.writeTreeAsByteCode(outputObject);
     }
 
     public boolean writeSubjectAsByteCode(Serializable outputObject, String fileNameForPeople) {
-        return fh.writeSubjectAsByteCode(outputObject, fileNameForPeople);
+        return fh.writeSubjectAsByteCode(outputObject);
     }
 
-    public FamilyTree<T> readTreeFromByteCodeFile(String fileNameForTree) {
-        return fh.readTreeFromByteCodeFile(fileNameForTree);
+    public FamilyTree<T> readTreeFromByteCodeFile() {
+        return fh.readTreeFromByteCodeFile();
     }
 
-    public T readSubjectFromByteCodeFile(String fileNameForPeople) {
-        return (T) fh.readSubjectFromByteCodeFile(fileNameForPeople); //??
+    public T readSubjectFromByteCodeFile() {
+        return (T) fh.readSubjectFromByteCodeFile(); //??
     }
-    public ArrayList<String> getListOfNamesFromFamilyTree(){
+    public String getFilePathForTree() {
+        return fh.getFilePathForTree();
+    }
+
+    public void setFilePathForTree(String filePathForTree) {
+        fh.setFilePathForTree(filePathForTree);
+    }
+
+    public ArrayList<String> getListOfNamesFromFamilyTree() {
         return getFamilyTree().getListOfNames();
     }
 
-    public ArrayList<String> getListOfNamesFromInputLIstOfSubjects(ArrayList<T> inputList){
+    public ArrayList<String> getListOfNamesFromInputListOfSubjects(ArrayList<T> inputList) {
         return familyTree.getListOfNamesFromInputList(inputList);
+    }
+    public FamilyTree<T> getFamilyTree() {
+        return familyTree;
     }
 
 }

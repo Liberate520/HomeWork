@@ -6,11 +6,28 @@ import family_tree.model.tree.FamilyTree;
 import java.io.*;
 
 public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
+    private String filePathForTree = "src/family_tree/model/writer/familyTree.out";
+    private String filePathForSubject = "src/family_tree/model/writer/subjects.out";
 
+    public String getFilePathForTree() {
+        return filePathForTree;
+    }
 
-    public boolean writeTreeAsByteCode(Serializable outputObject, String fileNameForTree) {
+    public void setFilePathForTree(String filePathForTree) {
+        this.filePathForTree = filePathForTree;
+    }
+
+    public String getFilePathForSubject() {
+        return filePathForSubject;
+    }
+
+    public void setFilePathForSubject(String filePathForSubject) {
+        this.filePathForSubject = filePathForSubject;
+    }
+
+    public boolean writeTreeAsByteCode(Serializable outputObject) {
         try(ObjectOutputStream out = new ObjectOutputStream(
-                new FileOutputStream(fileNameForTree))){
+                new FileOutputStream(filePathForTree))){
             out.writeObject(outputObject);
             return true;
         } catch (Exception e) {
@@ -19,9 +36,9 @@ public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
         }
     }
 
-    public boolean writeSubjectAsByteCode(Serializable outputObject, String fileNameForPeople) {
+    public boolean writeSubjectAsByteCode(Serializable outputObject) {
         try(ObjectOutputStream out = new ObjectOutputStream(
-                new FileOutputStream(fileNameForPeople))){
+                new FileOutputStream(filePathForSubject))){
             out.writeObject(outputObject);
             return true;
         } catch (Exception e) {
@@ -30,8 +47,8 @@ public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
         }
     }
 
-    public FamilyTree<T> readTreeFromByteCodeFile(String fileNameForTree) {
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileNameForTree))){
+    public FamilyTree<T> readTreeFromByteCodeFile() {
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePathForTree))){
             return (FamilyTree) in.readObject();
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,8 +56,8 @@ public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
         }
     }
 
-    public T readSubjectFromByteCodeFile(String fileNameForPeople) {
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileNameForPeople))){
+    public T readSubjectFromByteCodeFile() {
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePathForSubject))){
             return (T) in.readObject();
         } catch (Exception e) {
             e.printStackTrace();

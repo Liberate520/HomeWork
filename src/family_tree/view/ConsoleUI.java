@@ -26,7 +26,7 @@ public class ConsoleUI implements View {
         hello();
         while (work) {
             int choice = checkUserChoice(getUserChoice());
-            if(choice != 0) mainMenu.execute(choice);
+            if (choice != 0) mainMenu.execute(choice);
             else System.out.println("Try to enter the number of command again please.");
         }
     }
@@ -39,7 +39,7 @@ public class ConsoleUI implements View {
 
     private int checkUserChoice(String userChoice) {
         int choice = 0;
-        if (userChoice.matches("\\d+")) {
+        if (userChoice.matches("\\d")) {
             choice = Integer.parseInt(userChoice);
         } else {
             return choice;
@@ -72,15 +72,43 @@ public class ConsoleUI implements View {
     }
 
     public void addNewSubjectToFamilyTree() {
-        System.out.println("Enter the type of subject (human or another(not yet developed): ");
-        String type = scanner.nextLine();
-        if (type.equalsIgnoreCase("human")) {
-            Class clazz = Human.class;
-        }
-        Class clazz = Human.class; // temporary solution
-        System.out.println("Enter the name of subject: ");
-        String name = scanner.nextLine();
+        setClassForFamilyTree();
+        String name = setNameForNewSubject();
+        LocalDate birthDate = setDateOfBirth();
 
+        System.out.println("Do you know the date of dead of this subject? Enter \"yes\" or \"no\": ");
+        LocalDate deadDate;
+        if (scanner.nextLine().equalsIgnoreCase("yes")) {
+            deadDate = setDateOfDead();
+        } else {
+            deadDate = null;
+        }
+        Gender gender = setGender();
+
+        presenter.addSubjectToFamilyTree(name, birthDate, deadDate, gender);
+    }
+
+    private Gender setGender() {
+        System.out.println("Enter the gender of subject (male or female): ");
+        String strGender = scanner.nextLine();
+        Gender gender = Gender.Male;
+        if (strGender.toLowerCase().contains("fe")) gender = Gender.Female;
+        return gender;
+    }
+
+    private LocalDate setDateOfDead() {
+        System.out.println("Enter the date of dead of subject");
+        System.out.print("year of dead -> ");
+        int deadYear = Integer.parseInt(scanner.nextLine());// Method for searching the correctness of the entered data
+        System.out.print("month of dead -> ");
+        int deadMonth = Integer.parseInt(scanner.nextLine());
+        System.out.print("day of dead -> ");
+        int deadDay = Integer.parseInt(scanner.nextLine());
+        LocalDate deadDate = LocalDate.of(deadYear, deadMonth, deadDay);
+        return deadDate;
+    }
+
+    private LocalDate setDateOfBirth() {
         System.out.println("Enter the date of birth of subject");
         System.out.print("year of birth -> ");
         int year = Integer.parseInt(scanner.nextLine());// Method for searching the correctness of the entered data
@@ -88,26 +116,23 @@ public class ConsoleUI implements View {
         int month = Integer.parseInt(scanner.nextLine());
         System.out.print("day of birth -> ");
         int day = Integer.parseInt(scanner.nextLine());
+        LocalDate dateOfBirth = LocalDate.of(year, month, day);
+        return dateOfBirth;
+    }
 
-        System.out.println("Do you know the date of dead of this subject? Enter \"yes\" or \"no\": ");
-        LocalDate deadDate = null;
-        if (scanner.nextLine().equalsIgnoreCase("yes")) {
-            System.out.println("Enter the date of dead of subject");
-            System.out.print("year of dead -> ");
-            int deadYear = Integer.parseInt(scanner.nextLine());// Method for searching the correctness of the entered data
-            System.out.print("month of dead -> ");
-            int deadMonth = Integer.parseInt(scanner.nextLine());
-            System.out.print("day of dead -> ");
-            int deadDay = Integer.parseInt(scanner.nextLine());
-            deadDate = LocalDate.of(deadYear, deadMonth, deadDay);
+    private String setNameForNewSubject() {
+        System.out.println("Enter the name of subject: ");
+        String name = scanner.nextLine();
+        return name;
+    }
+
+    private void setClassForFamilyTree() {
+        System.out.println("Enter the type of subject (human or another(not yet developed): ");
+        String type = scanner.nextLine();
+        if (type.equalsIgnoreCase("human")) {
+            Class clazz = Human.class;
         }
-
-        System.out.println("Enter the gender of subject (male or female): ");
-        String strGender = scanner.nextLine();
-        Gender gender = Gender.Male;
-        if (strGender.toLowerCase().contains("fe")) gender = Gender.Female;
-
-        presenter.addSubjectToFamilyTree(name, LocalDate.of(year, month, day), deadDate != null ? deadDate : null, gender, clazz);
+        Class clazz = Human.class; // temporary solution
     }
 
     public void finish() {
@@ -120,4 +145,14 @@ public class ConsoleUI implements View {
     public void getAnswer(String text) {
         System.out.print(text);
     }
+
+    public void writeTreeAsByteCode() {
+        presenter.writeTreeAsByteCode();
+    }
+
+    public void readTreeFromByteCodeFile() {
+        presenter.readTreeFromByteCodeFile();
+    }
+
+
 }
