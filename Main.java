@@ -22,16 +22,18 @@ public class Main {
         tree.add(masha);
         tree.setWedding(vasya, masha);
 
+        
         Human christina = new Human("Кристина", Gender.Female, LocalDate.of(1988, 7, 5), vasya, masha);
         Human semyon = new Human("Семен", Gender.Male, LocalDate.of(1991, 1, 25), vasya, masha);
         tree.add(christina);
         tree.add(semyon);
+
 
         Human grandMother = new Human("Лариса", Gender.Female, LocalDate. of(1945, 9, 1));
         grandMother.addChild(vasya);
         tree.add(grandMother);
 
         return tree;
-        
+
     }
 }
