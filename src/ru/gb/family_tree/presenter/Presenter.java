@@ -1,5 +1,6 @@
 package ru.gb.family_tree.presenter;
 
+import ru.gb.family_tree.model.human.SpouseStatus;
 import ru.gb.family_tree.model.service.Service;
 
 import ru.gb.family_tree.model.human.Gender;
@@ -34,18 +35,18 @@ public class Presenter {
     }
 
 
-    public boolean setMother(int personId, int motherId) {
-        if (service.checkById(personId) & service.checkById(motherId)) {
-            service.setMother(personId, motherId);
+    public boolean setParent(int memberId, int parentId){
+        if (service.checkById(memberId) & service.checkById(parentId)){
+            service.setParent(memberId,parentId);
             return true;
         }
         return false;
     }
 
 
-    public boolean setFather(int personId, int fatherId) {
-        if (service.checkById(personId) & service.checkById(fatherId)) {
-            service.setMother(personId, fatherId);
+    public boolean setSpouse(int firstMemberId, int secondMemberId, SpouseStatus spouseStatus) {
+        if (service.checkById(firstMemberId) & service.checkById(secondMemberId)) {
+            service.setSpouse(firstMemberId, secondMemberId, spouseStatus);
             return true;
         }
         return false;

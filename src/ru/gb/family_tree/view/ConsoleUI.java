@@ -1,6 +1,7 @@
 package ru.gb.family_tree.view;
 
 import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.SpouseStatus;
 import ru.gb.family_tree.presenter.Presenter;
 import ru.gb.family_tree.view.menus.Menu;
 import ru.gb.family_tree.view.menus.MainMenu;
@@ -95,25 +96,26 @@ public class ConsoleUI implements View {
     }
 
 
-    public void setMother() {
+    public void setParent() {
+
         this.getNoSortTree();
-        System.out.println("----------------");
-        System.out.println("Введите id члена семьи, для которого надо указать мать. Id можно увидеть в списке выше.");
-        int personId = Integer.parseInt(scanner.nextLine());
-        System.out.println("Введите id матери. Id можно увидеть в списке выше.");
-        int motherId = Integer.parseInt(scanner.nextLine());
-        presenter.setMother(personId, motherId);
+        System.out.println("Введите id члена семьи, для которого надо указать родителя. Id можно увидеть в списке выше");
+        int memberId = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите id родителя. Id можно увидеть в списке выше");
+        int parentId = Integer.parseInt(scanner.nextLine());
+        presenter.setParent(memberId, parentId);
     }
 
 
-    public void setFather() {
+    public void setSpouse() {
         this.getNoSortTree();
-        System.out.println("----------------");
-        System.out.println("Введите id члена семьи, для которого надо указать отца. Id можно увидеть в списке выше.");
-        int personId = Integer.parseInt(scanner.nextLine());
-        System.out.println("Введите id отца. Id можно увидеть в списке выше.");
-        int fatherId = Integer.parseInt(scanner.nextLine());
-        presenter.setFather(personId, fatherId);
+        System.out.println("Введите id члена семьи, для которого надо указать супруга(у). Id можно увидеть в списке выше");
+        int firstMemberId = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите id супруга(и). Id можно увидеть в списке выше");
+        int secondMemberId = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите статус супругов (ex/actual): ");
+        SpouseStatus spouseStatus = SpouseStatus.valueOf(scanner.nextLine());
+        presenter.setSpouse(firstMemberId, secondMemberId, spouseStatus);
     }
 
 
@@ -121,25 +123,25 @@ public class ConsoleUI implements View {
         System.out.println("Укажите путь к файлу для чтения информации по дереву\n(Например: src/ru/gb/family_tree/model/tools/writer/family_tree.out): ");
         String path = scanner.nextLine();
         while (!presenter.read(path)) {
-            System.out.println("Не удалось загрузить файл. Будете попробовать снова? y/n: ");
+            System.out.println("Не удалось загрузить файл. Будете пробовать снова? y/n: ");
             if (scanner.nextLine().equals("n")) {
                 break;
             }
-            System.out.println("Укажите путь к файлу для чтения информации по дереву: ");
+            System.out.println("Укажите путь к файлу для чтения информации по дереву\n(Например: src/ru/gb/family_tree/model/tools/writer/family_tree.out): ");
             path = scanner.nextLine();
         }
     }
 
 
     public void write() {
-        System.out.println("Укажите путь к файлу для сохранения информации по дереву: ");
+        System.out.println("Укажите путь к файлу для сохранения информации по дереву\n(Например: src/ru/gb/family_tree/model/tools/writer/family_tree.out): ");
         String path = scanner.nextLine();
-        while(! presenter.write(path)) {
-            System.out.println("Не удалось сохранить файл. Будете попробовать снова? y/n");
+        while(!presenter.write(path)) {
+            System.out.println("Не удалось сохранить файл. Будете пробовать снова? y/n");
             if(scanner.nextLine().equals("n")) {
                 break;
             }
-            System.out.println("Укажите путь к файлу для сохранения информации по дереву: ");
+            System.out.println("Укажите путь к файлу для сохранения информации по дереву\n(Например: src/ru/gb/family_tree/model/tools/writer/family_tree.out): ");
             path = scanner.nextLine();
         }
     }

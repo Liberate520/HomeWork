@@ -6,7 +6,7 @@ import ru.gb.family_tree.view.ConsoleUI;
 public class SortTreeByAge extends Command {
     public SortTreeByAge(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Вывести список членов в семьи в порядке сортировки по возрасту";
+        description = "Вывести список членов семьи в порядке сортировки по возрасту";
     }
 
     @Override

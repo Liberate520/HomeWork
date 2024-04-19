@@ -7,7 +7,7 @@ public class Finish extends Command {
 
     public Finish(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Завершить работу";
+        description = "Завершить работу приложения";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.gb.family_tree.model.family_tree;
 
 import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.SpouseStatus;
 
 import java.io.Serializable;
@@ -37,8 +38,9 @@ public interface FamilyTreeElement<T> extends Serializable {
     void setFather(T father);
     String getFatherAbout();
     void PrintFather();
+    void addParent(T parent);
     HashMap<T, SpouseStatus> getSpouse();
-    boolean addSpouse(T spouse, SpouseStatus status);
+    void addSpouse(T spouse, SpouseStatus status);
     String getSpousesAbout();
     void PrintSpouses();
     int getAge();

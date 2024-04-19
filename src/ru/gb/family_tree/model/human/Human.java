@@ -3,13 +3,11 @@ package ru.gb.family_tree.model.human;
 import ru.gb.family_tree.model.family_tree.FamilyTreeElement;
 
 import java.io.Serializable;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter.*;
 import java.time.Period;
 
 
@@ -18,7 +16,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     private String name;
     private Gender gender;
     private LocalDate dob, dod;
-    private List<Human> children;
+    private List<Human> children = new List<Human>;
     private Human mother, father;
     private HashMap<Human, SpouseStatus> spouses = new HashMap<>();
 
@@ -28,39 +26,11 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         this.gender = gender;
         this.dob = LocalDate.parse(dob);
         this.dod = dod;
-        this.children = new ArrayList<>();
+        this.children = children;
         this.mother = mother;
         this.father = father;
-        this.spouses = new HashMap<>();
+        this.spouses = spouses;
     }
-
-
-//    public Human(String name, Gender gender, String dob, String dod, Human mother, Human father) {
-//        this.id = -1;
-//        this.name = name;
-//        this.gender = gender;
-//        this.dob = LocalDate.parse(dob);
-//        this.dod = LocalDate.parse(dod);
-//        this.children = new ArrayList<>();
-//        this.mother = mother;
-//        this.father = father;
-//        this.spouses = new HashMap<>();
-//    }
-//
-//
-//    public Human(String name, Gender gender, String dob, Human mother, Human father) {
-//        this(name, gender, dob, null, mother, father);
-//    }
-//
-//
-//    public Human(String name, Gender gender, String dob, String dod) {
-//        this(name, gender, dob, dod, null, null);
-//    }
-//
-//
-//    public Human(String name, Gender gender, String dob) {
-//        this(name, gender, dob, null, null, null);
-//    }
 
 
     public long getId() {
@@ -231,18 +201,31 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
+    public void addParent(Human parent) {
+        if (parent.gender.equals(Gender.male)) {
+            this.setFather(parent);
+            if (!parent.getChildren().contains(this)){
+                parent.addChild(this);
+            }
+        }else if (parent.gender.equals(Gender.female)) {
+            this.setMother(parent);
+            if (!parent.getChildren().contains(this)){
+                parent.addChild(this);
+            }
+        }
+    }
+
+
     public HashMap<Human, SpouseStatus> getSpouse() {
         return spouses;
     }
 
 
-    public boolean addSpouse(Human spouse, SpouseStatus status) {
-        if (this.spouses.containsKey(spouse)) {
-            return false;
-        } else {
+    public void addSpouse(Human spouse, SpouseStatus status) {
+        if (!this.spouses.containsKey(spouse)) {
             this.spouses.put(spouse, status);
+            spouse.addSpouse(this, status);
         }
-        return true;
     }
 
 

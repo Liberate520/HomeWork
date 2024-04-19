@@ -3,6 +3,7 @@ package ru.gb.family_tree.model.service;
 import ru.gb.family_tree.model.family_tree.FamilyTree;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.SpouseStatus;
 import ru.gb.family_tree.model.tools.writer.FileHandler;
 
 import java.time.LocalDate;
@@ -14,9 +15,14 @@ public class Service {
     public Service() {
         tree = new FamilyTree<>();
     }
+
+
+//    Опция чтения из файла:
 //        public Service(String path){
 //        tree = fileHandler.read(path);
 //    }
+
+
     public boolean read(String path) {
         FamilyTree<Human> treeRead = new FamilyTree<Human>();
         treeRead = fileHandler.read(path);
@@ -45,15 +51,15 @@ public class Service {
     }
 
 
-    public void setMother(int personId, int motherId) {
-        Human human = tree.findById(personId);
-        human.setMother(tree.findById(motherId));
+    public void setParent(int memberId, int parentId){
+        Human human = tree.findById(memberId);
+        human.addParent(tree.findById(parentId));
     }
 
 
-    public void setFather(int personId, int fatherId) {
-        Human human = tree.findById(personId);
-        human.setFather(tree.findById(fatherId));
+    public void setSpouse(int firstMemberId, int secondMemberId, SpouseStatus spouseStatus){
+        Human human = tree.findById(firstMemberId);
+        human.addSpouse(tree.findById(secondMemberId), spouseStatus);
     }
 
 

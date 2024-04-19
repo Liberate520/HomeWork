@@ -3,15 +3,16 @@ package ru.gb.family_tree.view.commands;
 import ru.gb.family_tree.view.ConsoleUI;
 
 
-public class SetDeathDate extends Command {
-    public SetDeathDate(ConsoleUI consoleUI) {
+public class SetParent extends Command {
+
+    public SetParent(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Обозначить дату смерти члена семьи";
+        description = "Установить родителя";
     }
 
     @Override
     public void execute() {
-        consoleUI.setDeathDate();
+        consoleUI.setParent();
     }
 }
 

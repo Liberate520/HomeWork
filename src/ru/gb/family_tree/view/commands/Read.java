@@ -6,7 +6,7 @@ import ru.gb.family_tree.view.ConsoleUI;
 public class Read extends Command {
     public Read(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Прочитать информацию по дереву из файла";
+        description = "Прочитать информацию по древу из файла";
     }
 
     @Override

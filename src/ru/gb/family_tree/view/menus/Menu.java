@@ -25,7 +25,7 @@ public class Menu {
         return stringBuilder.toString();
     }
 
-    public void execute(int choice){
+    public void execute(int choice) {
         Command command = commandList.get(choice - 1);
         command.execute();
     }
@@ -34,5 +34,6 @@ public class Menu {
         return commandList.size();
     }
 }
+
 
 //-------------------------------------------------------------------

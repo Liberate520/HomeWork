@@ -69,7 +69,7 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     public E findById(long id) {
         for (E member: MemberList) {
             if (member.getId() == id) {
-                System.out.println(member);
+//                System.out.println(member);
                 return member;
             }
         }
