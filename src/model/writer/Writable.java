@@ -3,7 +3,7 @@ package model.writer;
 import java.io.Serializable;
 
 public interface Writable {
-    void save(Serializable serializable, String fileName);
+    String save(Serializable serializable);
 
-    Object read(String fileName);
+    Object read();
 }

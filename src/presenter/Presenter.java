@@ -1,5 +1,6 @@
 package presenter;
 
+import model.human.Gender;
 import model.service.Service;
 import model.writer.FileHandler;
 import view.View;
@@ -15,82 +16,90 @@ public class Presenter {
         service = new Service(new FileHandler());
     }
 
-    public boolean addFirst() {
-        if (service.addFirst()) {
-            return true;
-        }
-        return false;
+    public void getTreeInfo() {
+        String answer = service.getTreeInfo();
+        view.printAnswerLn(answer);
     }
 
-    public boolean addHuman(String name, String genderStr, LocalDate birthDate) {
-        return service.addHuman(name, genderStr, birthDate);
+    public void addFirst() {
+        if (service.addFirstHumanToFamily()) success();
+        else error();
     }
 
-    public boolean setWedding(int id1, int id2) {
-        return service.setWedding(id1, id2);
+    public void addHuman(String name, Gender gender, LocalDate birthDate) {
+        getInfoById(service.addNewHumanToFamily(name, gender, birthDate));
     }
 
-    public boolean setDivorce(int id1, int id2) {
-        return service.setDivorce(id1, id2);
+    public void setWedding(int id1, int id2) {
+        if (service.setWedding(id1, id2)) success();
+        else error();
     }
 
-    public boolean addChild(int parentId, int childId) {
+    public void setDivorce(int id1, int id2) {
+        if (service.setDivorce(id1, id2)) success();
+        else error();
+    }
+
+    public void addChild(int parentId, int childId) {
         if (service.addChild(parentId, childId)) {
-            getBodyInfoById(parentId);
-            return true;
-        } else return false;
+            getInfoById(parentId);
+            getInfoById(childId);
+        } else error();
+    }
+
+    public void setBirthDate(int id, LocalDate birthDate) {
+        if (service.setBirthDate(id, birthDate)) {
+            getInfoById(id);
+        } else error();
+    }
+
+    public void setDeathDate(int id, LocalDate deathDate) {
+        if (service.setDeathDate(id, deathDate)) {
+            getInfoById(id);
+        } else error();
+    }
+
+    public void sortByAge() {
+        service.sortByAge();
+        getTreeInfo();
+    }
+
+    public void sortById() {
+        service.sortById();
+        getTreeInfo();
+    }
+
+    public void sortByName() {
+        service.sortByName();
+        getTreeInfo();
+    }
+
+    public void sortByBirthDate() {
+        service.sortByBirthDate();
+        getTreeInfo();
+    }
+
+    public void saveTree() {
+        view.printAnswerLn(service.save());
+    }
+
+    public void loadTree() {
+        view.printAnswerLn(service.read());
+    }
+
+    public void getInfoById(int id) {
+        view.printAnswerLn(service.infoByID(id));
     }
 
     public boolean checkId(int id) {
         return service.checkId(id);
     }
 
-    public boolean setBirthDate(int id, int year, int month, int day) {
-        if (service.setBirthDate(id, year, month, day)) {
-            getBodyInfoById(id);
-            return true;
-        }
-        return false;
+    private void success() {
+        view.printAnswerLn("Данные успешно обновлены!\n");
     }
 
-    public boolean setDeathDate(int id, int year, int month, int day) {
-        if (service.setDeathDate(id, year, month, day)) {
-            getBodyInfoById(id);
-            return true;
-        }
-        return false;
-    }
-
-    public void getBodyInfoById(int id) {
-        view.printAnswer(service.infoByID(id));
-    }
-
-    public void getTreeInfo() {
-        String answer = service.getTreeInfo();
-        view.printAnswer(answer);
-    }
-
-    public void sortByAge() {
-        service.sortByAge();
-    }
-
-    public void sortById() {
-        service.sortById();
-    }
-
-    public void sortByName() {
-        service.sortByName();
-    }
-
-    public void sortByBirthDate() {
-        service.sortByBirthDate();
-    }
-
-    public void saveTree() {
-        service.save();
-    }
-
-    public void loadSaveTree() {
-        service.read();
+    private void error() {
+        view.printAnswerLn("Данные не записаны!\n");
     }
 }

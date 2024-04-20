@@ -3,19 +3,19 @@ package model.writer;
 import java.io.*;
 
 public class FileHandler implements Writable {
+    private final String fileName = "src/model/writer/BackUp.txt";
 
-    public void save(Serializable serializable, String fileName) {
+    public String save(Serializable serializable) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
             objectOutputStream.writeObject(serializable);
-            System.out.println("File " + fileName + " has been created\n");
+            return "File " + fileName + " has been created\n";
         } catch (Exception e) {
-            e.printStackTrace();
+            return e.toString();
         }
     }
 
-    public Object read(String fileName) {
+    public Object read() {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName))) {
-            System.out.println("File " + fileName + " has been loaded\n");
             return objectInputStream.readObject();
         } catch (Exception e) {
             e.printStackTrace();

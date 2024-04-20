@@ -41,37 +41,6 @@ public class Human implements TreeNode<Human> {
     }
 
     //  Method:
-    //  Setters:
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setDeathDate(LocalDate deathDate) {
-        this.deathDate = deathDate;
-    }
-
-    public void setSpouse(Human spouse) {
-        this.spouse = spouse;
-    }
-
-    public void addChild(Human child) {
-        if (!children.contains(child)) {
-            children.add(child);
-            child.addParent(this);
-        }
-    }
-
-    public void addParent(Human parent) {
-        if (!parents.contains(parent)) {
-            parents.add(parent);
-            parent.addChild(this);
-        }
-    }
-
     //  Getters:
     public int getId() {
         return id;
@@ -93,17 +62,17 @@ public class Human implements TreeNode<Human> {
         return deathDate;
     }
 
+    public int getPeriod(LocalDate date1, LocalDate date2) {
+        Period diff = Period.between(date1, date2);
+        return diff.getYears();
+    }
+
     public int getAge() {
         if (deathDate == null) {
             return getPeriod(birthDate, LocalDate.now());
         } else {
             return getPeriod(birthDate, deathDate);
         }
-    }
-
-    public int getPeriod(LocalDate date1, LocalDate date2) {
-        Period diff = Period.between(date1, date2);
-        return diff.getYears();
     }
 
     public Human getFather() {
@@ -136,7 +105,46 @@ public class Human implements TreeNode<Human> {
         return children;
     }
 
-    //  Overrides:
+    //  Setters:
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+
+    public void addChild(Human child) {
+        if (!children.contains(child)) {
+            children.add(child);
+            child.addParent(this);
+        }
+    }
+
+    public void addParent(Human parent) {
+        if (!parents.contains(parent)) {
+            parents.add(parent);
+            parent.addChild(this);
+        }
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Human human)) {
+            return false;
+        }
+        return human.getId() == getId();
+    }
+
+    //  Overrides toString:
     @Override
     public String toString() {
         return getInfo();
@@ -226,13 +234,5 @@ public class Human implements TreeNode<Human> {
         }
         res.append("\u001B[0m");
         return res.toString();
-    }
-
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Human human)) {
-            return false;
-        }
-        return human.getId() == getId();
     }
 }
