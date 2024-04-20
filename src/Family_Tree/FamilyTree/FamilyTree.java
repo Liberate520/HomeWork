@@ -1,28 +1,27 @@
 package Family_Tree.FamilyTree;
 
-import Family_Tree.Human.Human;
 import Family_Tree.Human.SortByAge;
 import Family_Tree.Human.SortByName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Human> {
+public class FamilyTree<E extends TreeVersatility<E>> implements Iterable<E>, Serializable {
     private long countPeople; //Лучше перенести в main
-    private List<Human> HumanList;
+    private List<E> HumanList;
     private FamilyTree familytree;
 
     public FamilyTree() {
         HumanList = new ArrayList<>();
     }
 
-    public FamilyTree(List<Human> HumanList) {
+    public FamilyTree(List<E> HumanList) {
         this.HumanList = HumanList;
     }
 
-    public boolean add(Human human) {
+    public boolean add(E human) {
         if (human == null) {
             return false;
         }
@@ -37,7 +36,7 @@ public class FamilyTree implements Iterable<Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<E> iterator() {
         return new HumanIterator(HumanList);
     }
 
@@ -47,7 +46,7 @@ public class FamilyTree implements Iterable<Human> {
         sb.append(HumanList.size());
         sb.append(" объектов ");
         sb.append("\n");
-        for (Human human : HumanList) {
+        for (E human : HumanList) {
             sb.append(human);
             sb.append("\n");
         }
@@ -62,20 +61,20 @@ public class FamilyTree implements Iterable<Human> {
     }
 
 
-    private void addToParents(Human human) {
-        for (Human parent : human.getParents()) {
+    private void addToParents(E human) {
+        for (E parent : human.getParents()) {
             parent.addChild(human);
         }
     }
 
-    private void addToChildren(Human human) {
-        for (Human child : human.getChildren()) {
+    private void addToChildren(E human) {
+        for (E child : human.getChildren()) {
             child.addParents(human);
         }
     }
 
-    public Human getID(long id) {
-        for (Human human : HumanList) {
+    public E getID(long id) {
+        for (E human : HumanList) {
             if (human.getID() == id) {
                 return human;
             }
@@ -84,10 +83,10 @@ public class FamilyTree implements Iterable<Human> {
     }
 
     public void sortByName(){
-        Collections.sort(HumanList, new SortByName());
+        HumanList.sort(new SortByName<>());
     }
     public void sortByAge(){
-        Collections.sort(HumanList, new SortByAge());
+        HumanList.sort(new SortByAge<>());
     }
     /*public List<Human> getSib(int id){   Разобраться в методе(нахождение братьев и сестер)
         Human human = getID(id);

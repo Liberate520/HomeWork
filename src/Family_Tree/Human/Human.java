@@ -1,12 +1,13 @@
 package Family_Tree.Human;
 
-import java.io.Serializable;
+import Family_Tree.FamilyTree.TreeVersatility;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements TreeVersatility<Human> {
     private long id;
     private String name;
     private LocalDate birth;
@@ -33,7 +34,7 @@ public class Human implements Serializable {
     }
 
     public Human(String name, Gender gender, LocalDate birth,
-                 Human father, Human mother) {
+             Human father, Human mother) {
         this(name, birth, null, gender, father, mother);
     }
 

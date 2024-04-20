@@ -6,7 +6,8 @@ import java.io.IOException;
 
 public interface WriteTo {
 
-   void save(Human human) throws IOException;
-   void read(Human human) throws IOException, ClassNotFoundException;
+    void save(Human human) throws IOException;
+
+    void read(Human human) throws IOException, ClassNotFoundException;
 
 }
