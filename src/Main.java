@@ -74,8 +74,6 @@ public class Main {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         saveTree(familyTree, filePath);
-//        FamilyTree familyTree = read(filePath);
-//        System.out.println(familyTree);
         for (Object human: familyTree){
             System.out.println(human);
         }

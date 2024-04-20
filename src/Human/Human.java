@@ -1,14 +1,16 @@
 package Human;
 
+import FamilyTree.LeafFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class Human implements Serializable {
-    private int id = -1;
+public class Human implements Serializable, LeafFamilyTree {
+    private long id = -1;
     private final String firstName;
-    private String lastName;
+    private final String lastName;
     private Human mother;
     private Human father;
     private List<Human> childrens;
@@ -66,10 +68,10 @@ public class Human implements Serializable {
         return dod;
     }
 
-    public int getId(){
+    public long getId(){
         return this.id;
     }
-    public void setId(int id){
+    public void setId(long id){
         this.id = id;
     }
 
@@ -87,6 +89,11 @@ public class Human implements Serializable {
 
     public void setDod(LocalDate dod) {
         this.dod = dod;
+    }
+
+    @Override
+    public void addParent(Object human) {
+
     }
 
     public void addParent(Human parent) {
@@ -186,6 +193,11 @@ public class Human implements Serializable {
         stringBuilder.append(this.getStatus());
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public void setSpouse(Object human) {
+
     }
 
     public void setSpouse(Human spouse) {
