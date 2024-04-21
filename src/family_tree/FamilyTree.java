@@ -1,49 +1,80 @@
-package family_tree;
+package familly_tree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
-    private List<Children> childrenList;
+class FamilyTree {
+    private List<Human> people;
 
     public FamilyTree() {
-        this.childrenList = new ArrayList<>();
+        this.people = new ArrayList<>();
     }
 
-    public void addPerson(Human person, Human parent1, Human parent2) {
-        Children child = new Children(person);
-        child.addParent(parent1.getName(), parent1);
-        child.addParent(parent2.getName(), parent2);
-        childrenList.add(child);
+
+    public void addHuman(Human human) {
+        this.people.add(human);
     }
 
-    public void addPerson(Human person, Human parent) {
-        Children child = new Children(person);
-        child.addParent(parent.getName(), parent);
-        childrenList.add(child);
+
+    public List<Human> getPeople() {
+        return this.people;
     }
 
-    public void addPerson(Human person) {
-        childrenList.add(new Children(person));
-    }
 
-    public void addChild(Human child, Human parent1, Human parent2) {
-        Children children = new Children(child);
-        children.addParent(parent1.getName(), parent1);
-        children.addParent(parent2.getName(), parent2);
-        childrenList.add(children);
-    }
-
-    public void displayFamilyTree() {
-        System.out.println("Family Tree:");
-        for (Children children : childrenList) {
-            if (children.getParents().isEmpty()) {
-                System.out.println("Unknown -> " + children.getChild().getName());
-            } else {
-                for (String parentName : children.getParents().keySet()) {
-                    System.out.println(parentName + " -> " + children.getChild().getName());
-                }
+    public Human findHuman(String personName) {
+        for (Human person : people) {
+            if (person.getName().equals(personName)) {
+                return person;
             }
         }
+        return null;
+    }
+
+
+    public void printTree() {
+        // Создаем список, чтобы отслеживать уже выведенных людей
+        List<Human> printedPeople = new ArrayList<>();
+
+
+        for (Human person : people) {
+            if (!printedPeople.contains(person)) {
+                printPerson(person, 0, printedPeople);
+            }
+        }
+    }
+
+
+    private void printPerson(Human person, int level, List<Human> printedPeople) {
+
+        if (!printedPeople.contains(person)) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < level; i++) {
+                sb.append("  ");
+            }
+            sb.append(person.getName());
+            System.out.println(sb.toString());
+
+
+            printedPeople.add(person);
+
+
+            for (Human child : person.getChildren()) {
+                printPerson(child, level + 1, printedPeople);
+            }
+        }
+    }
+
+    // Метод для преобразования древа в текстовый формат
+    public List<String> convertTreeToText() {
+        List<String> lines = new ArrayList<>();
+        for (Human person : people) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(person.getName()).append(",").append(person.getGender()).append(",").append(person.getBirthDate()).append(",").append(person.getDeathDate());
+            lines.add(sb.toString());
+            for (Human parent : person.getParents()) {
+                lines.add(parent.getName() + "," + person.getName());
+            }
+        }
+        return lines;
     }
 }
