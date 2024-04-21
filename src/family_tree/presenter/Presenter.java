@@ -7,14 +7,26 @@ import family_tree.model.human.Gender;
 import family_tree.view.View;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Presenter {
     private View view;
     private Service service;
+    private FamilyTree<Human> familyTree;
+    private static final String filePath = "src/family_tree/model/writer/family.txt";
 
-    public Presenter(View view, FamilyTree<Human> tree) {
+    public Presenter(View view) {
         this.view = view;
-        this.service = new Service(tree);
+        this.service = new Service(familyTree);
+    }
+
+    public void initialize() {
+        loadFamilyTree();
+    }
+
+    public String getFamilyTreeInfo() {
+        return service.getFamilyTreeInfo();
     }
 
     public void createAndAddHuman(String name, Gender gender, LocalDate dob) {
@@ -62,25 +74,57 @@ public class Presenter {
         getHumanListInfo();
     }
 
-    public boolean saveFamilyTreeToFile(String filePath) {
+    public boolean saveFamilyTree() {
         return service.saveFamilyTreeToFile(filePath);
     }
     
-    public FamilyTree<Human> readFamilyTreeFromFile(String filePath) {
-        return service.readFamilyTreeFromFile(filePath);
-    }
-    
-    public void setFamilyTree(FamilyTree<Human> tree) {
-        this.service.setFamilyTree(tree);
+    public void loadFamilyTree() {
+        FamilyTree<Human> loadedTree = service.readFamilyTreeFromFile(filePath);
+        if (loadedTree != null) {
+            System.out.println("Дерево успешно загружено.");
+            setFamilyTree(loadedTree);
+        } else {
+            System.out.println("Не удалось загрузить дерево из файла.");
+        }
     }
 
-    public void createRelationships(Human husband, Human wife, Human... children) {
-        service.createRelationships(husband, wife, children);
-        getHumanListInfo();
+    public void setFamilyTree(FamilyTree<Human> newTree) {
+        this.familyTree = newTree;
+        service.setFamilyTree(newTree); 
+        updateFamilyTreeView(); 
+    }
+    
+    private void updateFamilyTreeView() {
+        if (view != null && familyTree != null) {
+            view.displayFamilyTree();
+        }
+    }
+
+    public Human findHumanByName(String name) {
+        return service.findHumanByName(name);
+    }
+
+    public void createRelationships(String husbandName, String wifeName, List<String> childrenNames) {
+        Human husband = findHumanByName(husbandName);
+        Human wife = findHumanByName(wifeName);
+        List<Human> children = childrenNames.stream()
+                                            .map(this::findHumanByName)
+                                            .collect(Collectors.toList());
+        service.createRelationships(husband, wife, children.toArray(new Human[0]));
+        updateHumanListInfo();
+    }
+
+    private void updateHumanListInfo() {
+        String humanListInfo = service.getFamilyTreeInfo();
+        view.printAnswer(humanListInfo);
     }
 
     public FamilyTree<Human> getFamilyTree() {
         return service.getFamilyTree();
+    }
+
+    public boolean doesHumanExist(String name) {
+        return findHumanByName(name) != null;
     }
 
 }

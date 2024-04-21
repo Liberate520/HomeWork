@@ -19,12 +19,12 @@ public class MainMenu {
     public MainMenu(ConsoleUI consoleUI) {
         commands = new ArrayList<>();
         commands.add(new AddHuman(consoleUI));
+        commands.add(new AddCreateRelationshipsCommand(consoleUI));
         commands.add(new GetHumanListInfo(consoleUI));
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByAge(consoleUI));
         commands.add(new LoadTreeFromFile(consoleUI));
         commands.add(new SaveTreeToFile(consoleUI));
-        commands.add(new AddCreateRelationshipsCommand(consoleUI));
         commands.add(new Finish(consoleUI));
     }
 

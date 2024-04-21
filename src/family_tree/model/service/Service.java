@@ -78,4 +78,17 @@ public class Service {
         }
     }
 
+    public Human findHumanByName(String name) {
+        for (Human human : tree) {
+            if (human.getName().equalsIgnoreCase(name)) {
+                return human;
+            }
+        }
+        return null;
+    }
+
+    public String getFamilyTreeInfo() {
+        return tree.getInfo();
+    }
+
 }
