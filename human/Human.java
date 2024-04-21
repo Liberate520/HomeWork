@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import homeWork.familyTree.FamTree;
 import homeWork.gender.Gender;
 
-public class Human implements Serializable, Comparable<Human>{
+public class Human implements Serializable, Comparable<Human>, FamTree{
     String name;
     LocalDate dob, dod;
     Gender gender;

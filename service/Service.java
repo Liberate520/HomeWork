@@ -7,11 +7,11 @@ import homeWork.gender.Gender;
 
 
 public class Service {
-    private FamilyTree tree1;
+    private FamilyTree<Human> tree1;
 
 
     public Service() {
-        tree1 = new FamilyTree();
+        tree1 = new FamilyTree<>();
     }
 
     public void addHuman(String name, LocalDate dob, LocalDate dod, Gender gender, Human mother, Human father){
