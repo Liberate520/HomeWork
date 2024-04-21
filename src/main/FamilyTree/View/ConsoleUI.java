@@ -14,12 +14,17 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private boolean work;
     private MainMenu menu;
+    private PaternityMenu paternityMenu;
+    private MarriageMenu marriageMenu;
+
 
     public ConsoleUI() {
         this.scanner = new Scanner(System.in);
         this.presenter = new Presenter(this);
         this.work = true;
         this.menu = new MainMenu(this);
+        this.paternityMenu = new PaternityMenu(this);
+        this.marriageMenu = new MarriageMenu(this);
     }
 
     /**
@@ -69,80 +74,46 @@ public class ConsoleUI implements View {
     /**
      * метод установления связи родитель-ребенок
      */
-    public void establishPaternity() {
+    public void establishPaternity() throws IOException {
+        int intChoice = 0;
         boolean flag = true;
-
         while (flag) {
-            int innParent = -1;
-            int innChildren = -1;
-
-            System.out.println("Выберете вариант добавления:\n" +
-                    "1. Оба есть в дереве -> добавление по ИНН\n" +
-                    "2. В дереве есть только родитель -> \n" +
-                    "3. В дереве есть только ребенок ->\n" +
-                    "0. Выход в главное меню \n");
+            System.out.println(paternityMenu.printMenu());
+            System.out.println("Выберете вариант добавления:\n");
             String choice = scanner.nextLine();
-            if (choice.matches("[0-3]")) {
-                int intChoice = Integer.parseInt(choice);
-                switch (intChoice) {
-                    case 1:
-                        innParent = getInnPerson("ИНН родителя");
-
-                        innChildren = getInnPerson("ИНН ребенка");
-                        presenter.establishPaternity(innParent, innChildren);
-                        break;
-                    case 2:
-                        innParent = getInnPerson("ИНН родителя");
-                        System.out.println("Введите данные ребенка:");
-                        Map<String, Object> children = getDataPerson();
-                        presenter.establishPaternity(innParent, (String) children.get("fName"), (String) children.get("lName"),
-                                (Gender) children.get("gender"), (LocalDate) children.get("dataB"));
-                        break;
-                    case 3:
-                        innChildren = getInnPerson("ИНН ребенка");
-                        System.out.println("Введите данные родителя:");
-                        Map<String, Object> parent = getDataPerson();
-                        presenter.establishPaternity((String) parent.get("fName"), (String) parent.get("lName"),
-                                (Gender) parent.get("gender"), (LocalDate) parent.get("dataB"), innChildren);
-                        break;
+            if (choice.matches("[0-9]+")) {
+                intChoice = Integer.parseInt(choice);
+                if ((intChoice <= paternityMenu.getSize()) && (intChoice > 0)) {
+                    paternityMenu.execute(intChoice);
+                    flag = false;
+                } else {
+                    System.out.println("Пункта меню с таким номером нет. Попробуйте еще раз");
                 }
-                flag = false;
+            } else {
+                System.out.println("Необходимо ввести номер пункта меню. Попробуйте еще раз");
             }
         }
     }
 
-    public void establishMarriage() {
+    public void establishMarriage() throws IOException {
+        int intChoice = 0;
         boolean flag = true;
-
         while (flag) {
-            int innFirstPartner = -1;
-            int innSecondPartner = -1;
-
-            System.out.println("Выберете вариант регистрации:\n" +
-                    "1. Оба есть в дереве -> регистрация по ИНН\n" +
-                    "2. В дереве есть только один партнер -> \n" +
-                    "0. Выход в главное меню \n");
+            System.out.println(marriageMenu.printMenu());
+            System.out.println("Выберете вариант добавления:\n");
             String choice = scanner.nextLine();
-            if (choice.matches("[0-2]")) {
-                int intChoice = Integer.parseInt(choice);
-                switch (intChoice) {
-                    case 1:
-                        innFirstPartner = getInnPerson("ИНН первого партнера");
-                        innSecondPartner = getInnPerson("ИНН второго партнера");
-                        presenter.establishMarriage(innFirstPartner, innSecondPartner);
-                        break;
-                    case 2:
-                        innFirstPartner = getInnPerson("ИНН парнера");
-                        System.out.println("Введите данные второго партнера:");
-                        Map<String, Object> partner = getDataPerson();
-                        presenter.establishMarriage(innFirstPartner, (String) partner.get("fName"), (String) partner.get("lName"),
-                                (Gender) partner.get("gender"), (LocalDate) partner.get("dataB"));
-                        break;
+            if (choice.matches("[0-9]+")) {
+                intChoice = Integer.parseInt(choice);
+                if ((intChoice <= marriageMenu.getSize()) && (intChoice > 0)) {
+                    marriageMenu.execute(intChoice);
+                    flag = false;
+                } else {
+                    System.out.println("Пункта меню с таким номером нет. Попробуйте еще раз");
                 }
-                flag = false;
+            } else {
+                System.out.println("Необходимо ввести номер пункта меню. Попробуйте еще раз");
             }
         }
-
     }
 
     /**
@@ -203,11 +174,9 @@ public class ConsoleUI implements View {
         return Integer.parseInt(choice);
     }
 
-    //
     public void getTree() { //вывести дерево на экран
         presenter.getTree();
     }
-
 
     public void sortByName() {
         presenter.sortByName();
@@ -217,14 +186,13 @@ public class ConsoleUI implements View {
         presenter.sortByAge();
     }
 
-
-    public void readToFile() {
+    public void readToFile() throws IOException {
         System.out.println("введите имя файла с архивом данных");
         String namefile = scanner.nextLine();
         presenter.readToFile(namefile);
     }
 
-    public void saveToFile() {
+    public void saveToFile() throws IOException {
         System.out.println("введите имя файла для сохранения");
         String namefile = scanner.nextLine();
         presenter.saveToFile(namefile);
@@ -249,4 +217,40 @@ public class ConsoleUI implements View {
         work = false;
     }
 
+    public void paternityForINN() {
+        int innParent = getInnPerson("ИНН родителя");
+        int innChildren = getInnPerson("ИНН ребенка");
+        presenter.establishPaternity(innParent, innChildren);
+    }
+
+    public void paternityNewParent() {
+        int innChildren = getInnPerson("ИНН ребенка");
+        System.out.println("Введите данные родителя:");
+        Map<String, Object> parent = getDataPerson();
+        presenter.establishPaternity((String) parent.get("fName"), (String) parent.get("lName"),
+                (Gender) parent.get("gender"), (LocalDate) parent.get("dataB"), innChildren);
+    }
+
+    public void paternityNewChildren() {
+        int innParent = getInnPerson("ИНН родителя");
+        System.out.println("Введите данные ребенка:");
+        Map<String, Object> children = getDataPerson();
+        presenter.establishPaternity(innParent, (String) children.get("fName"), (String) children.get("lName"),
+                (Gender) children.get("gender"), (LocalDate) children.get("dataB"));
+    }
+
+    public void marriageForINN() {
+        int innFirstPartner = getInnPerson("ИНН первого партнера");
+        int innSecondPartner = getInnPerson("ИНН второго партнера");
+        presenter.establishMarriage(innFirstPartner, innSecondPartner);
+
+    }
+
+    public void marriageNewPartner() {
+        int innFirstPartner = getInnPerson("ИНН парнера");
+        System.out.println("Введите данные второго партнера:");
+        Map<String, Object> partner = getDataPerson();
+        presenter.establishMarriage(innFirstPartner, (String) partner.get("fName"), (String) partner.get("lName"),
+                (Gender) partner.get("gender"), (LocalDate) partner.get("dataB"));
+    }
 }

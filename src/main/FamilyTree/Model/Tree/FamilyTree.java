@@ -2,6 +2,7 @@ package FamilyTree.Model.Tree;
 
 import FamilyTree.Model.ItemTree.Comparator.ComparatorByAge;
 import FamilyTree.Model.ItemTree.Comparator.ComparatorByFullName;
+import FamilyTree.Model.ItemTree.Gender;
 import FamilyTree.Model.ItemTree.Person;
 
 
@@ -17,17 +18,14 @@ import java.util.stream.Collectors;
  * добавление персоналия в дерево только через установление его родственной связи (родитель, ребенок, супруг)
  */
 
-//TODO убрала ссылку на Human (буду возвращать только строковые данные),
-// чтобы не было возможности напрямую вносить изменения. пока не поняла: нужно это делать или нет
-
-public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E> {
+public class FamilyTree<E extends Person> implements Serializable, Iterable<E> {
     private final List<E> familyTree;
     private int inn;
 
     public FamilyTree(E root) {
         this.familyTree = new ArrayList<>();
         this.inn = 0;
-        addAllKinInTree(root);
+        addPersonInTree(root);
     }
 
     //region Установка супружеских связей
@@ -52,6 +50,7 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
 
     public void establishMarriage(int innFirst, E second) {
         E first = getPersonForINN(innFirst);
+
         establishMarriage(first, second);
     }
 
@@ -88,10 +87,10 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
         E children = getPersonForINN(innChildren);
         E parent = getPersonForINN(innParent);
         return establishPaternity(parent, children);
-
     }
 
     public boolean establishPaternity(int innParent, E children) {
+
         E parent = getPersonForINN(innParent);
         return establishPaternity(parent, children);
     }
@@ -100,9 +99,7 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
         E children = getPersonForINN(innChildren);
         return establishPaternity(parent, children);
     }
-
-
-    /**
+  /**
      * @param inn
      * @param mort
      */
@@ -220,47 +217,6 @@ public class FamilyTree<E extends Person<E>> implements Serializable, Iterable<E
             return true;
         }
         return false;
-    }
-
-    /**
-     * если у члена дерева есть родственники - добавит их рекурсивно в дерево.
-     *
-     * @param person
-     */
-    //TODO тут могут быть проблемы с дублированием ИНН из-за рекурсии.
-    private void addAllKinInTree(E person) {
-
-
-        if (addPersonInTree(person)) {
-
-            //добавим супруга
-            if (person.getHusband() != null) {
-
-                if (addPersonInTree(person.getHusband())) {
-                    addAllKinInTree(person.getHusband());
-                }
-            }
-            //добавим родителей
-            if (person.getFather() != null) {
-                if (addPersonInTree(person.getFather())) {
-                    addAllKinInTree(person.getFather());
-                }
-            }
-            if (person.getMother() != null) {
-                if (addPersonInTree(person.getMother())) {
-                    addAllKinInTree(person.getMother());
-                }
-            }
-            // добавим детей
-            if (!person.getListChildren().isEmpty()) {
-                person.getListChildren()
-                        .forEach(e -> {
-                            addPersonInTree(e);
-                            addAllKinInTree(e);
-
-                        });
-            }
-        }
     }
 
     //endregion

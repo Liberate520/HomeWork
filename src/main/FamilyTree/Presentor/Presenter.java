@@ -1,8 +1,10 @@
 package FamilyTree.Presentor;
 
 
+import FamilyTree.Model.FileHandler;
 import FamilyTree.Model.Human;
 import FamilyTree.Model.ItemTree.Gender;
+import FamilyTree.Model.ItemTree.Person;
 import FamilyTree.Model.Service.Service;
 import FamilyTree.View.View;
 
@@ -19,7 +21,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        service = new Service(new FileHandler());
     }
 
     public void beginTree(String fName, String lName, Gender gender, LocalDate dataB) {
@@ -101,12 +103,12 @@ public class Presenter {
         getTree();
     }
 
-    public void readToFile(String namefile) {
+    public void readToFile(String namefile) throws IOException {
         service.readToFile(namefile); //сохранить в файл
         getTree();
     }
 
-    public void saveToFile(String namefile) {
+    public void saveToFile(String namefile) throws IOException {
         service.saveToFile(namefile); // извлечь из файла
     }
 

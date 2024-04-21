@@ -1,21 +1,21 @@
 package FamilyTree.Model.Service;
 
-import FamilyTree.Model.FileHandler;
 import FamilyTree.Model.Human;
 import FamilyTree.Model.ItemTree.Gender;
-import FamilyTree.Model.ItemTree.Person;
 import FamilyTree.Model.Tree.FamilyTree;
+import FamilyTree.Model.Tree.Writable;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 public class Service {
     private FamilyTree<Human> tree;
-    private FileHandler fileHandler;
+    private Writable fileHandler;
 
-    public Service() {
-        this.fileHandler = new FileHandler();
+    public Service(Writable fileHandler) {
+        this.fileHandler = fileHandler;
     }
 
     public void beginTree(Human root) {
@@ -61,13 +61,13 @@ public class Service {
     }
 
 
-    public void readToFile(String namefile) {
+    public void readToFile(String namefile) throws IOException {
         File file = new File(namefile);
         this.tree = this.fileHandler.read(file);
 
     }
 
-    public void saveToFile(String namefile) {
+    public void saveToFile(String namefile) throws IOException {
         this.fileHandler.save(this.tree, new File(namefile));
     }
 }

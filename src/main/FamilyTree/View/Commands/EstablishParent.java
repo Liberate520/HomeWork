@@ -3,6 +3,8 @@ package FamilyTree.View.Commands;
 
 import FamilyTree.View.ConsoleUI;
 
+import java.io.IOException;
+
 public class EstablishParent extends Commands{
     private String description;
     private ConsoleUI consoleUI;
@@ -12,7 +14,7 @@ public class EstablishParent extends Commands{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         super.getConsoleUI().establishPaternity();
     }
 }
