@@ -1,9 +1,9 @@
-package familly_tree;
+package family_tree.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Human {
+public class Human {
     private String name;
     private String gender;
     private String birthDate;
@@ -20,18 +20,15 @@ class Human {
         this.children = new ArrayList<>();
     }
 
-    // Добавить ребенка
     public void addChild(Human child) {
         this.children.add(child);
-        child.addParent(this); // добавляем текущего человека в список родителей ребенка
+        child.addParent(this);
     }
 
-    // Добавить родителя
     public void addParent(Human parent) {
         this.parents.add(parent);
     }
 
-    // Дополнительные геттеры и сеттеры
     public List<Human> getParents() {
         return parents;
     }

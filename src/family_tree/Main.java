@@ -1,4 +1,7 @@
-package familly_tree;
+import family_tree.model.Human;
+import family_tree.model.FamilyTree;
+import family_tree.io.FileIO;
+import family_tree.io.TextFileHandler;
 
 import java.util.List;
 
@@ -32,18 +35,26 @@ public class Main {
         natalya.addChild(andrey);
 
 
-        familyTree.printTree();
+        //Сортировка по имени
+        //familyTree.sortByNames();
+        // Сортировка списка по дате рождения
+        familyTree.sortByBirthDate(familyTree.getPeople());
 
-
-        FileIO fileIO = new TextFileHandler();
-        List<String> dataToWrite = familyTree.convertTreeToText();
-        fileIO.writeToFile("family_tree.txt", dataToWrite);
-
-
-        List<String> dataFromFile = fileIO.readFromFile("family_tree.txt");
-        System.out.println("Данные из файла:");
-        for (String line : dataFromFile) {
-            System.out.println(line);
+        // Выводим отсортированный список на экран
+        System.out.println("Отсортированный список по дате рождения:");
+        for (Human person : familyTree) {
+            System.out.println(person.getName() + " - " + person.getBirthDate());
         }
+        //Запись в файл
+        FileIO fileIO = new TextFileHandler();
+        var dataToWrite = familyTree.convertTreeToText();
+        fileIO.writeToFile("family_tree.txt", dataToWrite);
+//
+        //Чтение из файла
+//        List<String> dataFromFile = fileIO.readFromFile("family_tree.txt");
+//        System.out.println("Данные из файла:");
+//        for (String line : dataFromFile) {
+//           System.out.println(line);
+//        }
     }
 }
