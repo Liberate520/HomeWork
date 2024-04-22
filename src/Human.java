@@ -2,6 +2,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 //Определяем метод для создания экземпляра класса человека
@@ -25,7 +27,7 @@ public class Human implements Serializable {
     //Второй. Расширенный конструктор, если имеется дата смерти и-или информация о детях и родителях
     public Human(String name, LocalDate dob, Gender gender, LocalDate dod,
                  Human mother, Human father, List<Human> children) {
-        this(name, dod, gender);
+        this(name, dob, gender);
         this.dod = dod;
         this.mother = mother;
         this.father = father;
@@ -111,15 +113,15 @@ public class Human implements Serializable {
 
 
     // Возвращает возраст к экземпляру класса
-    public String getAge() {
-        String age = new String();
-        age += "Возраст " + name +": ";
+    public int getAge() {
         if (dod != null) {
-            age += Period.between(dob, dod).getYears();
+            return Period.between(dob, dod).getYears();
         } else {
-            age += Period.between(dob, LocalDate.now()).getYears();
+            return Period.between(dob, LocalDate.now()).getYears();
         }
-        return age;
+    }
+    public LocalDate getDateOfBirth(){
+        return dob;
     }
 
 //Метод тустринг выбирает, как осуществлять вывод на экран для полного конструктора или нет
