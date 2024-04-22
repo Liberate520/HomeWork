@@ -18,14 +18,18 @@ public class Main {
         h4.addParent(h1);
         h4.addParent(h2);
 
-        FamilyTree<FamilyTreeElement> familyTree = new FamilyTree<>();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
+        familyTree.addMember(h1);
+        familyTree.addMember(h2);
+        familyTree.addMember(h3);
+        familyTree.addMember(h4);
 
         System.out.println(familyTree.MembersListInfo());
 
-        familyTree.sortByName();
-        System.out.println(familyTree.MembersListInfo());
-
-        familyTree.sortByAge();
-        System.out.println(familyTree.MembersListInfo());
+//        familyTree.sortByName();
+//        System.out.println(familyTree.MembersListInfo());
+//
+//        familyTree.sortByAge();
+//        System.out.println(familyTree.MembersListInfo());
     }
 }

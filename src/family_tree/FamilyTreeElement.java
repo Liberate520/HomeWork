@@ -10,4 +10,5 @@ public interface FamilyTreeElement {
         int getAge();
         LocalDate getDob();
         Gender getGender();
+
 }
