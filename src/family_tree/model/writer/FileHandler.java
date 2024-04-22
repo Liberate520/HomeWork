@@ -9,6 +9,16 @@ public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
     private String filePathForTree = "src/family_tree/model/writer/familyTree.out";
     private String filePathForSubject = "src/family_tree/model/writer/subjects.out";
 
+    private static FileHandler fileHandler;
+    public static FileHandler getFileHandler(){
+        if(fileHandler == null){
+            fileHandler = new FileHandler();
+        }
+        return fileHandler;
+    }
+    private FileHandler(){
+    }
+
     public String getFilePathForTree() {
         return filePathForTree;
     }
@@ -36,6 +46,7 @@ public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
         }
     }
 
+    @Override
     public boolean writeSubjectAsByteCode(Serializable outputObject) {
         try(ObjectOutputStream out = new ObjectOutputStream(
                 new FileOutputStream(filePathForSubject))){
@@ -47,6 +58,7 @@ public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
         }
     }
 
+    @Override
     public FamilyTree<T> readTreeFromByteCodeFile() {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePathForTree))){
             return (FamilyTree) in.readObject();
@@ -56,6 +68,7 @@ public class FileHandler<T extends TreeNode<T>> implements Writable<T> {
         }
     }
 
+    @Override
     public T readSubjectFromByteCodeFile() {
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePathForSubject))){
             return (T) in.readObject();

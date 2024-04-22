@@ -2,150 +2,150 @@ package family_tree.model.service;
 
 import family_tree.model.person.Gender;
 import family_tree.model.person.Human;
-import family_tree.model.person.TreeNode;
 import family_tree.model.tree.FamilyTree;
 import family_tree.model.writer.FileHandler;
+import family_tree.model.writer.Writable;
 
+import javax.swing.tree.TreeNode;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Service<T extends TreeNode<T>> {
+public class Service implements Writable {
     private long genId;
-    private FamilyTree<T> familyTree;
-    private FileHandler fh;
+    private FamilyTree familyTree;;
 
-    Class clazz; //хранение информации о классе дерева, если будет список деревьев, то будет и список классов. Будут мэтчится по индексам
-
-
-    public Service(FamilyTree<T> familyTree) {
+    public Service(FamilyTree familyTree) {
         this.familyTree = familyTree;
     }
 
-    public Service(Class clazz) {
-        this.familyTree = new FamilyTree<>();
-        this.clazz = clazz;
-    }
-
     public Service() {
-        this.familyTree = new FamilyTree<>();
+        this.familyTree = new FamilyTree();
     }
 
     public boolean addSubjectToFamilyTree(String name, LocalDate dob, Gender gender) {
         Human human = new Human(name, dob, gender);
         human.setId(genId++);
-        familyTree.addPersonToFamily((T) human);
+        familyTree.addPersonToFamily(human);
         return true;
     }
 
 
     public boolean addSubjectToFamilyTree(String name,
                                           LocalDate dob, LocalDate dod,
-                                          Gender gender, T father, T mother) {
-        Human human = new Human(name, dob, dod, gender, (Human) father, (Human) mother);
+                                          Gender gender, Human father, Human mother) {
+        Human human = new Human(name, dob, dod, gender, father, mother);
         human.setId(genId++);
-        familyTree.addPersonToFamily((T) human);
+        familyTree.addPersonToFamily(human);
         return true;
     }
 
     public boolean addSubjectToFamilyTree(String name,
-                                          LocalDate dob, Gender gender, T father, T mother) {
-        Human human = new Human(name, dob, gender, (Human) father, (Human) mother);
+                                          LocalDate dob, Gender gender, Human father, Human mother) {
+        Human human = new Human(name, dob, gender, father, mother);
         human.setId(genId++);
-        familyTree.addPersonToFamily((T) human);
+        familyTree.addPersonToFamily(human);
         return true;
     }
 
-    public boolean addSubjectToFamilyTree(T human) {
-        // Переписать на итерацию по списку классов и поиск совпадений
-        // Может быть ошибка, если будет несколько деревьев одного класса
-        if (clazz.equals(human.getClass())) {
-            human.setId(genId++);
-            familyTree.addPersonToFamily(human);
-            return true;
-        }
-        return false;
+    public boolean addSubjectToFamilyTree(Human human) {
+        human.setId(genId++);
+        familyTree.addPersonToFamily(human);
+        return true;
     }
 
-    @SuppressWarnings("unchecked")
 
     public void addSubjectToFamilyTree(String name,
                                        LocalDate dob, LocalDate dod,
                                        Gender gender) {
         Human human = new Human(name, dob, dod, gender);
         human.setId(genId++);
-        familyTree.addPersonToFamily((T) human);
+        familyTree.addPersonToFamily(human);
     }
 
-    public void setParentsForSubject(String nameForSearching, T parent) {
+    public void setParentsForSubject(String nameForSearching, Human parent) {
         if (findByName(nameForSearching) != null) {
             findByName(nameForSearching).setParent(parent);
         }
     }
 
-    public T findByName(String nameForSearching) {
-        T subject = familyTree.findUnitByName(nameForSearching);
+    public Human findByName(String nameForSearching) {
+        Human subject = (Human) familyTree.findUnitByName(nameForSearching);
         if (subject != null) return subject;
         System.out.println("Subject with name: " + nameForSearching + " is not found");
         return null;
     }
 
-    public T findByDateOfBirth(LocalDate dob) {
-        T subject = familyTree.findHumanByDateOfBirth(dob);
+    public Human findByDateOfBirth(LocalDate dob) {
+        Human subject = (Human) familyTree.findHumanByDateOfBirth(dob);
         if (subject != null) return subject;
         System.out.println("Subject with this date of birth: " + dob + " is not found");
         return null;
     }
 
-    public ArrayList<T> sortByAge() {
+    public ArrayList<Human> sortByAge() {
         return familyTree.sortByAge();
     }
 
-    public ArrayList<T> sortByDateOfBirth() {
+    public ArrayList<Human> sortByDateOfBirth() {
         return familyTree.sortByDateOfBirth();
     }
 
-    public ArrayList<T> sortByName() {
+    public ArrayList<Human> sortByName() {
         return familyTree.sortByName();
     }
 
-    public void initializationFileHandler() {
-        fh = new FileHandler<T>();
+
+    public boolean writeTreeAsByteCode() {
+        return FileHandler.getFileHandler()
+                .writeTreeAsByteCode(familyTree);
     }
 
-    public boolean writeTreeAsByteCode(Serializable outputObject) {
-        return fh.writeTreeAsByteCode(outputObject);
+    @Override
+    public boolean writeTreeAsByteCode(Serializable outputObject) { //заглушка, нарушаящая 4 принцип SOLID
+        return false;
     }
 
-    public boolean writeSubjectAsByteCode(Serializable outputObject, String fileNameForPeople) {
-        return fh.writeSubjectAsByteCode(outputObject);
+    public boolean writeSubjectAsByteCode(Serializable outputObject) {
+        return FileHandler.getFileHandler()
+                .writeSubjectAsByteCode(outputObject);
     }
 
-    public FamilyTree<T> readTreeFromByteCodeFile() {
-        return fh.readTreeFromByteCodeFile();
+    public FamilyTree readTreeFromByteCodeFile() {
+        return FileHandler.getFileHandler()
+                .readTreeFromByteCodeFile();
     }
 
-    public T readSubjectFromByteCodeFile() {
-        return (T) fh.readSubjectFromByteCodeFile(); //??
+    public Human readSubjectFromByteCodeFile() {
+        return (Human) FileHandler.getFileHandler()
+                .readSubjectFromByteCodeFile();
     }
+
     public String getFilePathForTree() {
-        return fh.getFilePathForTree();
+        return FileHandler.getFileHandler()
+                .getFilePathForTree();
     }
 
     public void setFilePathForTree(String filePathForTree) {
-        fh.setFilePathForTree(filePathForTree);
+        FileHandler.getFileHandler()
+                .setFilePathForTree(filePathForTree);
     }
 
     public ArrayList<String> getListOfNamesFromFamilyTree() {
         return getFamilyTree().getListOfNames();
     }
 
-    public ArrayList<String> getListOfNamesFromInputListOfSubjects(ArrayList<T> inputList) {
+    public ArrayList<String> getListOfNamesFromInputListOfSubjects(ArrayList<Human> inputList) {
         return familyTree.getListOfNamesFromInputList(inputList);
     }
-    public FamilyTree<T> getFamilyTree() {
+
+    public FamilyTree getFamilyTree() {
         return familyTree;
     }
+    public void setFamilyTree(FamilyTree tree) {
+        this.familyTree = tree;
+    }
+
 
 }
 

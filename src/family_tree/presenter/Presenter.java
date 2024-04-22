@@ -18,7 +18,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service<>();
+        service = new Service();
     }
 
     public void addSubjectToFamilyTree(String name, LocalDate dob, LocalDate dod, Gender gender) {
@@ -30,7 +30,7 @@ public class Presenter {
     }
 
     public void getFamilyTree() {
-        System.out.println(service.getFamilyTree());
+        view.getAnswer(service.getFamilyTree().toString());
     }
 
     public void sortByName() {
@@ -55,8 +55,7 @@ public class Presenter {
     }
 
     public void writeTreeAsByteCode() {
-        service.initializationFileHandler();
-        if (service.writeTreeAsByteCode(service.getFamilyTree())) {
+        if (service.writeTreeAsByteCode()) {
             view.getAnswer("The family successfully registered\n");
         } else {
             view.getAnswer("The family not registered\n");
@@ -64,11 +63,10 @@ public class Presenter {
     }
 
     public void readTreeFromByteCodeFile() {
-        service.initializationFileHandler();
         FamilyTree tree = service.readTreeFromByteCodeFile(); // возможно расширение функционала до запррса файла от пользователя.
         if (tree != null) {
-            Service anotherService = new Service<>(tree);
-            for (Object name : anotherService.getListOfNamesFromFamilyTree()) {
+            service.setFamilyTree(tree);
+            for (Object name : service.getListOfNamesFromFamilyTree()) {
                 view.getAnswer((String) name); // можно лучше, но как?
             }
         } else {

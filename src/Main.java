@@ -1,6 +1,7 @@
 import family_tree.view.ConsoleUI;
 import family_tree.view.View;
 
+
 public class Main {
     public static void main(String[] args) {
 
@@ -105,8 +106,8 @@ public class Main {
 //
 //        System.out.println(humanService.getFamilyTree());
 
-View view = new ConsoleUI();
-view.start();
+        View view = new ConsoleUI();
+        view.start();
 
     }
 }

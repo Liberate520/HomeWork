@@ -162,8 +162,8 @@ public abstract class BasicUnit implements Serializable, TreeNode<BasicUnit> {
 
     @Override
     public void setPartner(BasicUnit partner) {
-        kids.put(partner, new ArrayList<BasicUnit>());
-        partner.kids.put(this, new ArrayList<BasicUnit>());
+        kids.putIfAbsent(partner, new ArrayList<BasicUnit>());
+        partner.kids.putIfAbsent(this, new ArrayList<BasicUnit>());
         this.partner = partner;
         partner.partner = this;
     }

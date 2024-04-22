@@ -11,7 +11,7 @@ public class ConsoleUI implements View {
 
     private Scanner scanner;
     private Presenter presenter;
-    boolean work;
+    private boolean work;
     private MainMenu mainMenu;
 
     public ConsoleUI() {
@@ -72,17 +72,9 @@ public class ConsoleUI implements View {
     }
 
     public void addNewSubjectToFamilyTree() {
-        setClassForFamilyTree();
         String name = setNameForNewSubject();
         LocalDate birthDate = setDateOfBirth();
-
-        System.out.println("Do you know the date of dead of this subject? Enter \"yes\" or \"no\": ");
-        LocalDate deadDate;
-        if (scanner.nextLine().equalsIgnoreCase("yes")) {
-            deadDate = setDateOfDead();
-        } else {
-            deadDate = null;
-        }
+        LocalDate deadDate = setDateOfDead();
         Gender gender = setGender();
 
         presenter.addSubjectToFamilyTree(name, birthDate, deadDate, gender);
@@ -97,42 +89,36 @@ public class ConsoleUI implements View {
     }
 
     private LocalDate setDateOfDead() {
-        System.out.println("Enter the date of dead of subject");
-        System.out.print("year of dead -> ");
-        int deadYear = Integer.parseInt(scanner.nextLine());// Method for searching the correctness of the entered data
-        System.out.print("month of dead -> ");
-        int deadMonth = Integer.parseInt(scanner.nextLine());
-        System.out.print("day of dead -> ");
-        int deadDay = Integer.parseInt(scanner.nextLine());
-        LocalDate deadDate = LocalDate.of(deadYear, deadMonth, deadDay);
-        return deadDate;
+        System.out.println("Do you know the date of dead of this subject? Enter \"yes\" or \"no\": ");
+        if (scanner.nextLine().equalsIgnoreCase("yes")) {
+            System.out.println("Enter the date of dead of subject");
+            LocalDate deadDate = setDate();
+            return deadDate;
+        } else {
+            return null;
+        }
     }
 
     private LocalDate setDateOfBirth() {
         System.out.println("Enter the date of birth of subject");
-        System.out.print("year of birth -> ");
+        LocalDate birthDate = setDate();
+        return birthDate;
+    }
+
+    private LocalDate setDate() {
+        System.out.print("year -> ");
         int year = Integer.parseInt(scanner.nextLine());// Method for searching the correctness of the entered data
-        System.out.print("month of birth -> ");
+        System.out.print("month -> ");
         int month = Integer.parseInt(scanner.nextLine());
-        System.out.print("day of birth -> ");
+        System.out.print("day -> ");
         int day = Integer.parseInt(scanner.nextLine());
-        LocalDate dateOfBirth = LocalDate.of(year, month, day);
-        return dateOfBirth;
+        return LocalDate.of(year, month, day);
     }
 
     private String setNameForNewSubject() {
         System.out.println("Enter the name of subject: ");
         String name = scanner.nextLine();
         return name;
-    }
-
-    private void setClassForFamilyTree() {
-        System.out.println("Enter the type of subject (human or another(not yet developed): ");
-        String type = scanner.nextLine();
-        if (type.equalsIgnoreCase("human")) {
-            Class clazz = Human.class;
-        }
-        Class clazz = Human.class; // temporary solution
     }
 
     public void finish() {
@@ -153,6 +139,5 @@ public class ConsoleUI implements View {
     public void readTreeFromByteCodeFile() {
         presenter.readTreeFromByteCodeFile();
     }
-
 
 }
