@@ -1,6 +1,6 @@
-package FamilyTree;
+package Model.FamilyTree;
 
-import Human.Human;
+import Model.Human.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -22,8 +22,8 @@ public interface LeafFamilyTree<E> extends Serializable {
     long getId();
     void setId(long id);
     void setDod(LocalDate dod);
-    void addParent(E human);
     E getSpouse();
+
     Long getAge();
     String toString();
     String getStatus();

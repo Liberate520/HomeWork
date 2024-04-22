@@ -1,12 +1,11 @@
-import Human.Human;
-import Human.Gender;
-import FamilyTree.FamilyTree;
-import Writer.FileHandler;
-
-import java.time.format.DateTimeFormatter;
-import java.time.Period;
+import Model.FamilyTree.FamilyTree;
+import Model.Human.Human;
+import Model.Human.Gender;
+import Model.Service.Service;
+import Model.Writer.FileHandler;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class Main {
 
     public static void main(String[] args) {
@@ -32,7 +31,8 @@ public class Main {
         daniil.setChildren(yulia);
         alina.setChildren(yulia);
         dima.addParent(alina);
-        FamilyTree familyTree = new FamilyTree();
+        Service service = new Service();
+//        FamilyTree familyTree = new FamilyTree();
         Human tatyana1 = new Human("Tatyana", "Yermoshina",
                 Gender.female, LocalDate.of(1950, 7, 24));
         Human tatyana2 = new Human("Tatyana", "Kuznetsova",
@@ -47,49 +47,42 @@ public class Main {
                 Gender.male, LocalDate.of(1982, 3, 29));
         Human pavel = new Human("Pavel", "Yermoshin",
                 Gender.male, LocalDate.of(1979, 11, 15));
-        tatyana1.setChildren(daniil);
-        fedor.setChildren(daniil);
-        tatyana1.setChildren(alexey);
-        fedor.setChildren(alexey);
-        tatyana1.setChildren(kirill);
-        fedor.setChildren(kirill);
-        tatyana1.setChildren(pavel);
-        fedor.setChildren(pavel);
-        tatyana2.setChildren(alina);
-        alexander.setChildren(alina);
-        familyTree.addHuman(dima);
-        familyTree.addHuman(yulia);
-        familyTree.addHuman(alina);
-        familyTree.addHuman(daniil);
-        familyTree.addHuman(kirill);
-        familyTree.addHuman(pavel);
-        familyTree.addHuman(alexey);
-        familyTree.addHuman(fedor);
-        familyTree.addHuman(tatyana1);
-        familyTree.addHuman(tatyana2);
-        familyTree.addHuman(alexander);
-        familyTree.setWedding(daniil, alina);
-        familyTree.setWedding(tatyana1, fedor);
-        familyTree.setWedding(tatyana2, alexander);
+        boolean x = tatyana1.setChildren(daniil);
+        x = fedor.setChildren(daniil);
+        x = tatyana1.setChildren(alexey);
+        x = fedor.setChildren(alexey);
+        x = tatyana1.setChildren(kirill);
+        x = fedor.setChildren(kirill);
+        x = tatyana1.setChildren(pavel);
+        x = fedor.setChildren(pavel);
+        x = tatyana2.setChildren(alina);
+        x = alexander.setChildren(alina);
+        boolean y = Service.addLeaf(dima);
+        y = Service.addLeaf(yulia);
+        y = Service.addLeaf(alina);
+        y = Service.addLeaf(daniil);
+        y = Service.addLeaf(kirill);
+        y = Service.addLeaf(pavel);
+        y = Service.addLeaf(alexey);
+        y = Service.addLeaf(fedor);
+        y = Service.addLeaf(tatyana1);
+        y = Service.addLeaf(tatyana2);
+        y = Service.addLeaf(alexander);
+        boolean z = service.setWedding(daniil, alina);
+        z = service.setWedding(tatyana1, fedor);
+        z = service.setWedding(tatyana2, alexander);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        saveTree(familyTree, filePath);
-        for (Object human: familyTree){
+        Service.saveTree(service.familyTree, filePath);
+        for (Object human: service.familyTree){
             System.out.println(human);
         }
-        familyTree.sortByAge();
+        service.familyTree.sortByAge();
         System.out.println();
-        System.out.println(familyTree);
-        familyTree.sortByAgeRevers();
+        System.out.println(service.familyTree);
+        service.familyTree.sortByAgeRevers();
         System.out.println();
-        System.out.println(familyTree);
+        System.out.println(service.familyTree);
     }
-    static void saveTree(FamilyTree tree, String filePath){
-        FileHandler handler = new FileHandler();
-        handler.save(tree, filePath);
-    }
-    static FamilyTree read(String filePath){
-        FileHandler handler = new FileHandler();
-        return (FamilyTree) handler.read(filePath);
-    }
+
 }

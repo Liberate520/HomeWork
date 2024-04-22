@@ -1,6 +1,6 @@
-package Human;
+package Model.Human;
 
-import FamilyTree.LeafFamilyTree;
+import Model.FamilyTree.LeafFamilyTree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -75,7 +75,7 @@ public class Human implements Serializable, LeafFamilyTree {
         this.id = id;
     }
 
-    public void setChildren(Human children) {
+    public boolean setChildren(Human children) {
         if (!childrens.contains(children)) {
             this.childrens.add(children);
             if (this.gender.equals(Gender.male) && children.father == null) {
@@ -83,7 +83,9 @@ public class Human implements Serializable, LeafFamilyTree {
             } else if (this.gender.equals(Gender.female) && children.mother == null) {
                 children.mother = this;
             }
+        return true;
         }
+        else return false;
     }
 
 
@@ -91,20 +93,18 @@ public class Human implements Serializable, LeafFamilyTree {
         this.dod = dod;
     }
 
-    @Override
-    public void addParent(Object human) {
-
-    }
-
-    public void addParent(Human parent) {
-        if (parent.gender.equals(Gender.female)) {
+    public boolean addParent(Human parent) {
+        if (this.getMother() == null && parent.gender.equals(Gender.female)) {
             this.mother = parent;
-            parent.setChildren(this);
+            boolean x = parent.setChildren(this);
+            return true;
         }
-        else if (parent.gender.equals(Gender.male)) {
+        else if (this.getFather() == null && parent.gender.equals(Gender.male)) {
             this.father = parent;
-            parent.setChildren(this);
+            boolean x = parent.setChildren(this);
+            return true;
         }
+        else return false;
     }
 
     public List<Human> getParents(){
@@ -197,12 +197,18 @@ public class Human implements Serializable, LeafFamilyTree {
 
     @Override
     public void setSpouse(Object human) {
-
+        this.spouse = (Human) human;
     }
 
-    public void setSpouse(Human spouse) {
-        this.spouse = spouse;
-    }
+
+//    public boolean setSpouse(Human spouse) {
+//        if (spouse.getSpouse() == null && this.getSpouse() == null){
+//            this.spouse = spouse;
+//            return true;
+//        }
+//        else return false;
+//
+//    }
 
     public Human getSpouse() {
         return spouse;
