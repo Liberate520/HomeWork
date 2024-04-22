@@ -1,4 +1,5 @@
 import family_tree.FamilyTree;
+import family_tree.FamilyTreeElement;
 import human.Gender;
 import human.Human;
 
@@ -17,11 +18,7 @@ public class Main {
         h4.addParent(h1);
         h4.addParent(h2);
 
-        FamilyTree familyTree = new FamilyTree();
-        familyTree.addMember(h1);
-        familyTree.addMember(h2);
-        familyTree.addMember(h3);
-        familyTree.addMember(h4);
+        FamilyTree<FamilyTreeElement> familyTree = new FamilyTree<>();
 
         System.out.println(familyTree.MembersListInfo());
 
