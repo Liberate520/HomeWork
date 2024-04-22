@@ -177,9 +177,13 @@ public class Human {
         stringBuilder.append(name);
         stringBuilder.append(", Возраст: ");
         stringBuilder.append(getAge());
+        stringBuilder.append(" ");
         stringBuilder.append(getHusbandInfo());
+        stringBuilder.append(" ");
         stringBuilder.append(getMotherInfo());
+        stringBuilder.append(" ");
         stringBuilder.append(getFatherInfo());
+        stringBuilder.append(" ");
         stringBuilder.append(getChildrenInfo());
         return stringBuilder.toString();
     }
@@ -244,9 +248,9 @@ public class Human {
         if(this == obj){
             return true;
         }
-        if(!(obj instanceof Human human)){
-            return false;
+        if(obj instanceof Human human){
+            return human.getId() == getId();
         }
-        return human.getId() == getId();
+        return false;
     }
 }

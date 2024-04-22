@@ -1,31 +1,31 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class familyTree {
+public class FamilyTree {
     private int countPeople;
     private List<Human> humanList;
-    public familyTree(List<Human> humanList) {
+    public FamilyTree(List<Human> humanList) {
         this.humanList = humanList;
     }
-    public familyTree(){
+    public FamilyTree(){
         this(new ArrayList<>());
     }
 
 
-    public boolean add(Human human){
-        if(human == null){
-            return false;
-        }
-        if(!humanList.contains(human)){
+    public void add(Human human){
+//        if(human == null){
+//            return false;
+//        }
+//        if(!humanList.contains(human)){
             humanList.add(human);
             human.setId(countPeople++);
-
-            addToParents(human);
-            addToChildren(human);
-
-            return true;
-        }
-        return false;
+//
+//            addToParents(human);
+//            addToChildren(human);
+//
+//            return true;
+//        }
+//        return false;
     }
 
     private void addToParents(Human human){
