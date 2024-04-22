@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,7 +6,7 @@ import java.util.List;
 /***
  Класс человека
  */
-public class Human {
+public class Human implements Serializable {
     private String name;
     private Gender gender;
     private LocalDate dob, dod;
@@ -19,11 +20,11 @@ public class Human {
      * @param gender пол
      * @param dob дата рождения
      */
-    public Human(String name, Gender gender, LocalDate dob) {
-        this.name = name;
-        this.gender = gender;
-        this.dob = dob;
-    }
+//    public Human(String name, Gender gender, LocalDate dob) {
+//        this.name = name;
+//        this.gender = gender;
+//        this.dob = dob;
+//    }
 
     /***
      * Класс Human
@@ -115,18 +116,26 @@ public class Human {
         }
         return stringBuilder;
     }
-    @Override
-    public String toString() {
+
+    public String toString1(){
+        String result;
         if(dod == null && mother == null && father == null) {
-            return "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob;
+            result = "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob;
         }else if (dod == null && mother == null){
-            return "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob +
+            result = "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob +
                     "\nОтец: " + father;
         }else if(dod == null && father == null){
-            return "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob + "\nМать: " + mother;
+            result = "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob + "\nМать: " + mother;
         }else if (mother == null && father == null){
-            return "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob + ", Дата сметри: " + dod;
-        } else return "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob + ", Дата сметри: " + dod +
-                "\nМать: " + mother + "\nОтец: " + father;
+            result = "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob + ", Дата сметри: " + dod;
+        } else {
+            result = "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + dob + ", Дата сметри: " + dod +
+                    "\nМать: " + mother + "\nОтец: " + father;
+        }
+        return result;
+    }
+    @Override
+    public String toString() {
+        return toString1();
     }
 }

@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /***
  * Класс семейного дерева
  */
-public class TreeFamily {
+public class TreeFamily implements Serializable {
     private List<Human> humanList;
     private String name;
 
