@@ -1,6 +1,4 @@
-package model.save.base;
-
-import model.save.Writable;
+package model.writer.base;
 
 import java.io.*;
 

@@ -10,7 +10,7 @@ public class GetHumanList {
     }
 
     public String getDescription(){
-        return "Получить список людей";
+        return "Get Human List";
     }
 
     public void execute(){

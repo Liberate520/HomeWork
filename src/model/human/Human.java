@@ -1,7 +1,7 @@
 package model.human;
 
 import model.familyTree.TreeNode;
-import presenter.util.Helpers;
+import view.util.Helpers;
 
 import java.io.Serializable;
 import java.time.LocalDate;

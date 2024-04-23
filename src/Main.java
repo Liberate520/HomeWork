@@ -2,8 +2,7 @@ import model.FamilyTreeService;
 import model.familyTree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
-import model.save.FileHandlerForFamilyTree;
-import model.save.base.FileHandler;
+import model.writer.FileHandlerForFamilyTree;
 import view.Console;
 import view.View;
 

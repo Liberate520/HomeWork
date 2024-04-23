@@ -1,7 +1,7 @@
 package model.familyTree;
 
 import model.human.Human;
-import presenter.util.Helpers;
+import view.util.Helpers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
     private final List<E> humanList;
-    private long countPeople;
+    private long countHumans;
 
     public FamilyTree(List<E> humanList) {
         this.humanList = humanList;
@@ -27,7 +27,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
         if (!humanList.contains(human)) {
             humanList.add(human);
-            human.setId(countPeople++);
+            human.setId(countHumans++);
 
             addToParents(human);
             addToChildren(human);
@@ -49,7 +49,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     }
 
     private boolean checkId(long id) {
-        return id < countPeople && id >= 0;
+        return id < countHumans && id >= 0;
     }
 
     public E getById(long id) {
@@ -116,7 +116,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Helpers.formatDataString("Total people in tree: ", String.valueOf(countPeople)));
+        sb.append(Helpers.formatDataString("Total humans in tree: ", String.valueOf(countHumans)));
         for (E human : humanList) {
             sb.append("\n===============\n");
             sb.append(human);

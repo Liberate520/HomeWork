@@ -1,10 +1,8 @@
-package model.save;
+package model.writer;
 
 import model.familyTree.FamilyTree;
 import model.human.Human;
-import model.save.base.FileHandler;
-
-import java.io.Serializable;
+import model.writer.base.FileHandler;
 
 public class FileHandlerForFamilyTree extends FileHandler implements Writable{
     private String filePath = "tree.out";

@@ -1,9 +1,7 @@
-package model.save;
+package model.writer;
 
 import model.familyTree.FamilyTree;
 import model.human.Human;
-
-import java.io.Serializable;
 
 public interface Writable {
     boolean save(FamilyTree<Human> tree);

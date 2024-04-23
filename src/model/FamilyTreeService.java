@@ -3,7 +3,7 @@ package model;
 import model.familyTree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
-import model.save.Writable;
+import model.writer.Writable;
 
 import java.time.LocalDate;
 
@@ -42,7 +42,7 @@ public class FamilyTreeService {
         LocalDate humanBirthDate = LocalDate.parse(birthDate);
         Human human = new Human(name, secondName, gender, humanBirthDate, father, mother);
         activeTree.add(human);
-        return "new human added";
+        return "new human added!";
     }
 
     public void setWritable(Writable writable) {
