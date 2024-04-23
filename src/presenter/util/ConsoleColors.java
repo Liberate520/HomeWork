@@ -1,4 +1,4 @@
-package ru.gb.family_tree.util;
+package presenter.util;
 
 public class ConsoleColors {
     // Reset

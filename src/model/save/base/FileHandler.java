@@ -1,22 +1,26 @@
-package ru.gb.family_tree.writer;
+package model.save.base;
+
+import model.save.Writable;
 
 import java.io.*;
 
-public class FileHandler implements Writable {
+
+public class FileHandler {
+
     public boolean save(Serializable serializable, String filePath) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(serializable);
             return true;
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
             return false;
         }
     }
 
     public Object read(String filePath) {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))){
             return objectInputStream.readObject();
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
             return null;
         }

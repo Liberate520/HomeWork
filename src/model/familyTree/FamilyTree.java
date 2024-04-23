@@ -1,7 +1,7 @@
-package ru.gb.family_tree.family_tree;
+package model.familyTree;
 
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.util.Helpers;
+import model.human.Human;
+import presenter.util.Helpers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,12 +52,10 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         return id < countPeople && id >= 0;
     }
 
-    private E getById(long id) {
-        if (checkId(id)) {
-            for (E human : humanList) {
-                if (human.getId() == id) {
-                    return human;
-                }
+    public E getById(long id) {
+        for (E human : humanList) {
+            if (human.getId() == id) {
+                return human;
             }
         }
         return null;
@@ -96,7 +94,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         if (checkId(humanId1) && checkId(humanId2)) {
             E human1 = getById(humanId1);
             E human2 = getById(humanId2);
-            if (human1.getSpouse() == null && human2.getSpouse() == null){
+            if (human1.getSpouse() == null && human2.getSpouse() == null) {
                 human1.setSpouse(human2);
                 human2.setSpouse(human1);
             } else {
@@ -116,15 +114,19 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         }
     }
 
-    @Override
-    public String toString() {
+    public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Helpers.formatDataString("Total people in tree", String.valueOf(countPeople)));
-        for(E human: humanList) {
+        sb.append(Helpers.formatDataString("Total people in tree: ", String.valueOf(countPeople)));
+        for (E human : humanList) {
             sb.append("\n===============\n");
             sb.append(human);
         }
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getInfo();
     }
 
     public void sortByName() {

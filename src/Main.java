@@ -1,9 +1,11 @@
-package ru.gb.family_tree;
-
-import ru.gb.family_tree.family_tree.FamilyTree;
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.writer.FileHandler;
+import model.FamilyTreeService;
+import model.familyTree.FamilyTree;
+import model.human.Gender;
+import model.human.Human;
+import model.save.FileHandlerForFamilyTree;
+import model.save.base.FileHandler;
+import view.Console;
+import view.View;
 
 import java.time.LocalDate;
 
@@ -39,22 +41,15 @@ public class Main {
 
     public static void main(String[] args) {
 //        System.out.println(testTree());
-        String filePath = "src/ru/gb/family_tree/writer/tree.txt";
-
-        FamilyTree tree = testTree();
+        FamilyTree<Human> tree = testTree();
 
         System.out.println(tree);
 
-        save(tree, filePath);
-    }
+        FamilyTreeService service = new FamilyTreeService(tree);
+        service.setWritable(new FileHandlerForFamilyTree());
+        service.save();
 
-    static FamilyTree read(String filePath) {
-        FileHandler fileHandler = new FileHandler();
-        return (FamilyTree) fileHandler.read(filePath);
-    }
-
-    static void save(FamilyTree familyTree, String filePath) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.save(familyTree, filePath);
+        View view = new Console();
+        view.start();
     }
 }

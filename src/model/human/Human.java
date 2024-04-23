@@ -1,6 +1,7 @@
-package ru.gb.family_tree.human;
+package model.human;
 
-import ru.gb.family_tree.util.*;
+import model.familyTree.TreeNode;
+import presenter.util.Helpers;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, TreeNode<Human> {
     private long id;
     private String name;
     private String secondName;
