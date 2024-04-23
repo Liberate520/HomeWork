@@ -1,6 +1,6 @@
-package family_tree.Human;
+package family_tree.model.Human;
 
-import family_tree.FamilyTree.FamilyTreeElements;
+import family_tree.model.FamilyTree.FamilyTreeElements;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Human implements Serializable, FamilyTreeElements {
+public class Human implements Serializable, FamilyTreeElements<Human> {
 
     private String name;
     private LocalDate dob, dod;
@@ -29,9 +29,16 @@ public class Human implements Serializable, FamilyTreeElements {
         this.father = father;
     }
 
+    public Human(String name) {
+
+        this.name = name;
+    }
+
+
     public void addChild(Human child){
         children.add(child);
     }
+
 
     public String getName() {
         return name;
@@ -75,21 +82,31 @@ public class Human implements Serializable, FamilyTreeElements {
         this.children = children != null ? children : new ArrayList<>();
     }
 
+    public String getNameChildren(List<Human> children) {
+        StringBuilder sb = new StringBuilder();
+        for (Human human : children) {
+            sb.append(STR."\{human.getName()} ");
+        }
+        return sb.toString();
+    }
+
 
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("family_tree.Human.family_tree.Human{")
+        sb.append("Human{")
                 .append("name='").append(name)
                 .append(", dob=").append(dob)
                 .append(", dod=").append(dod)
                 .append(", gender=").append(gender != null ? gender : "null")
-                .append(", children=").append(children != null ? Arrays.toString(children.toArray()) : "[]")
+                .append(", children=").append(getNameChildren(children))
                 .append(", mother=").append(mother != null ? mother.getName() : "null")
                 .append(", father=").append(father != null ? father.getName() : "null")
                 .append('}');
         return sb.toString();
     }
+
+
 
 }

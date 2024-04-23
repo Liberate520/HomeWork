@@ -1,6 +1,4 @@
-package family_tree.FamilyTree;
-
-import family_tree.Human.Human;
+package family_tree.model.FamilyTree;
 
 import java.time.LocalDate;
 import java.util.List;
