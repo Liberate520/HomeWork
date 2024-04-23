@@ -1,14 +1,14 @@
 package family_tree;
 
-import family_tree.human.Gender;
-import family_tree.human.Human;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+
+import family_tree.human.Gender;
+import family_tree.human.Human;
 
 public class Main {
 

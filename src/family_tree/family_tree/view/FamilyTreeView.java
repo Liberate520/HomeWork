@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import family_tree.human.Gender;
 import family_tree.human.Human;
+import family_tree.human.HumanComparatorByBirthDate;
+import family_tree.human.HumanComparatorByName;
 
 public class FamilyTreeView {
     private Scanner scanner;
@@ -79,5 +81,31 @@ public class FamilyTreeView {
         scanner.close();
     }
 
-    // Другие методы для взаимодействия с пользователем
+    public void runApplicationLoop() {
+        int choice = 0;
+        while (choice != 5) {
+            displayMenu();
+            choice = getUserChoice();
+            switch (choice) {
+                case 1:
+                    displayFamilyMembers();
+                    break;
+                case 2:
+                    addNewFamilyMember();
+                    break;
+                case 3:
+                    sortByName();
+                    break;
+                case 4:
+                    sortByBirthDate();
+                    break;
+                case 5:
+                    closeScanner();
+                    System.out.println("Программа завершена.");
+                    break;
+                default:
+                    displayErrorMessage("Некорректный выбор. Пожалуйста, выберите действие из списка.");
+            }
+        }
+    }
 }
