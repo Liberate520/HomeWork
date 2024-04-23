@@ -1,9 +1,27 @@
+import writer.FileHandler;
+
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree tree = newTree();
+
+        String filePath = "src/writer/tree.txt";
+
+        FamilyTree tree = read(filePath);
+//        FamilyTree tree = newTree();
         System.out.println(tree);
+
+        save(tree, filePath);
+    }
+
+    static FamilyTree read(String filePath){
+        FileHandler fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.read(filePath);
+    }
+
+    static void save(FamilyTree familyTree, String filePath){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree, filePath);
     }
 
     static FamilyTree newTree(){
