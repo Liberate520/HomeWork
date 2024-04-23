@@ -1,10 +1,13 @@
-package homeWork;
+package homeWork.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends TreeNode<E>> implements Iterable<E> {
+import homeWork.TreeNode;
+
+public class FamilyTree<E extends TreeNode<E>> implements Iterable<E>, Serializable {
     private long idForGen;
     private final List<E> memberList;
 

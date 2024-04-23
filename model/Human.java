@@ -1,9 +1,12 @@
-package homeWork;
+package homeWork.model;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+
+import homeWork.Gender;
+import homeWork.TreeNode;
 
 public class Human implements TreeNode<Human>{
     private long id;

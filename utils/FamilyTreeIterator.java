@@ -1,8 +1,10 @@
-package homeWork;
+package homeWork.utils;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import homeWork.model.Human;
 
 public class FamilyTreeIterator implements Iterator<Human> {
     private List<Human> list;

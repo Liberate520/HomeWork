@@ -1,6 +1,8 @@
-package homeWork;
+package homeWork.utils;
 
 import java.io.*;
+
+import homeWork.Writable;
 
 public class FileHandler implements Writable {
     @Override

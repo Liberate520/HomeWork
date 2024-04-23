@@ -1,6 +1,8 @@
-package homeWork;
+package homeWork.utils;
 
 import java.util.Comparator;
+
+import homeWork.model.Human;
 
 public class HumanComparatorByBirthDate implements Comparator<Human> {
     @Override
