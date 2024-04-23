@@ -57,23 +57,23 @@ public class Main {
         x = fedor.setChildren(pavel);
         x = tatyana2.setChildren(alina);
         x = alexander.setChildren(alina);
-        boolean y = Service.addLeaf(dima);
-        y = Service.addLeaf(yulia);
-        y = Service.addLeaf(alina);
-        y = Service.addLeaf(daniil);
-        y = Service.addLeaf(kirill);
-        y = Service.addLeaf(pavel);
-        y = Service.addLeaf(alexey);
-        y = Service.addLeaf(fedor);
-        y = Service.addLeaf(tatyana1);
-        y = Service.addLeaf(tatyana2);
-        y = Service.addLeaf(alexander);
+        boolean y = service.addLeaf(dima);
+        y = service.addLeaf(yulia);
+        y = service.addLeaf(alina);
+        y = service.addLeaf(daniil);
+        y = service.addLeaf(kirill);
+        y = service.addLeaf(pavel);
+        y = service.addLeaf(alexey);
+        y = service.addLeaf(fedor);
+        y = service.addLeaf(tatyana1);
+        y = service.addLeaf(tatyana2);
+        y = service.addLeaf(alexander);
         boolean z = service.setWedding(daniil, alina);
         z = service.setWedding(tatyana1, fedor);
         z = service.setWedding(tatyana2, alexander);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        Service.saveTree(service.familyTree, filePath);
+        service.saveTree(service.familyTree, filePath);
         for (Object human: service.familyTree){
             System.out.println(human);
         }

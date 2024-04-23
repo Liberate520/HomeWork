@@ -1,15 +1,15 @@
 package Model.Service;
 
 import Model.FamilyTree.FamilyTree;
-import Model.Human.Human;
+import Model.FamilyTree.LeafFamilyTree;
 import Model.Writer.FileHandler;
 
-public class Service {
+public class Service<E extends LeafFamilyTree<E>> {
     private static int genLeafID;
-    public static FamilyTree<Human> familyTree;
+    public FamilyTree<E> familyTree;
 
-    public Service() {familyTree = new FamilyTree<>();}
-    public static boolean addLeaf(Human leaf){
+    public Service() {familyTree = new FamilyTree<E>();}
+    public boolean addLeaf(E leaf){
         if (leaf.getId() == -1){
             leaf.setId(genLeafID++);
             familyTree.addHuman(leaf);
@@ -17,7 +17,7 @@ public class Service {
         }
         else return false;
     }
-    public boolean setWedding(Human human1, Human human2) {
+    public boolean setWedding(E human1, E human2) {
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
             human2.setSpouse(human1);
@@ -25,11 +25,11 @@ public class Service {
         }
         else return false;
     }
-    public static void saveTree(FamilyTree<Human> tree, String filePath) {
+    public void saveTree(FamilyTree<E> tree, String filePath) {
         FileHandler handler = new FileHandler();
         handler.save(tree, filePath);
     }
-    public static FamilyTree read(String filePath){
+    public FamilyTree read(String filePath){
         FileHandler handler = new FileHandler();
         return (FamilyTree) handler.read(filePath);
     }

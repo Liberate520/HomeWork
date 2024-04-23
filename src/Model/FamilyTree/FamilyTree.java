@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.io.Serializable;
 
-public class FamilyTree<E extends LeafFamilyTree> implements Iterable<E>, Serializable{
+public class FamilyTree<E extends LeafFamilyTree<E>> implements Iterable<E>, Serializable{
 
 //    private long idLeaf;
     private final LinkedList<E> familyTree;
