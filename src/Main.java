@@ -27,5 +27,5 @@ public class Main {
         System.out.println("Отсортированное дерево: \n" + mustermanTree.sortByDateOfBirth().toString());
     }
     //ToDo сделать класс итерируемым и добавить две сортировки по возрасту и по дате рождения.
-    // Добавить создание ID
+
 }

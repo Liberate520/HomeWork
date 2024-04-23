@@ -2,12 +2,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 //Определяем метод для создания экземпляра класса человека
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyTreeElement {
     private String name;
     private LocalDate dob;
     private LocalDate dod;
