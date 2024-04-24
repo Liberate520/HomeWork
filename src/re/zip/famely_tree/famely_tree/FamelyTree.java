@@ -1,10 +1,14 @@
 package re.zip.famely_tree.famely_tree;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import re.zip.famely_tree.humans.Human;
+import re.zip.famely_tree.srv.HumanComparatorByFirstName;
+import re.zip.famely_tree.srv.HumanIterator;
+import re.zip.famely_tree.srv.HumanComparatorByFamelyName;
 
-public class FamelyTree implements Serializable{
+public class FamelyTree implements Serializable, Iterable<Human>{
     private long humanId;
     private List<Human> humanList;
 
@@ -13,7 +17,7 @@ public class FamelyTree implements Serializable{
     }
     
     public FamelyTree(){
-        this(new ArrayList<>());
+        humanList = new ArrayList<>();
     }
 
     public boolean addToFamely(Human human){
@@ -23,7 +27,6 @@ public class FamelyTree implements Serializable{
         if (!humanList.contains(human)){
             humanList.add(human);
             human.setIdNo(++humanId);
-
             addHumanToCildren(human);
             addHumanToParents(human);
             return true;
@@ -35,14 +38,12 @@ public class FamelyTree implements Serializable{
         for (Human parent : human.getListParents()) {
            parent.addACild(human); 
         }
-
     }
 
     private void addHumanToCildren(Human human){
         for (Human child : human.getChildren() ) {
             child.addAParent(human); 
          }
- 
     }
 
     public List<Human> getSiblingsList (int humanId){
@@ -67,7 +68,6 @@ public class FamelyTree implements Serializable{
             if (human.getFatherName().equals(name)){
                 ListByName.add(human);
             }
-
         }
     return ListByName;
     }
@@ -79,7 +79,6 @@ public class FamelyTree implements Serializable{
             return setWeddding(partner1, partner2, getFamelyName);
         }
         return false;
-
     }
 
     public boolean setWeddding (long partner1ID, Long partner2ID){
@@ -132,7 +131,6 @@ public class FamelyTree implements Serializable{
             return setDivorse(partner1, partner2);
         }
         return false;
-
     }
 
     public boolean setDivorse (Human partner1, Human partner2){
@@ -172,6 +170,24 @@ public class FamelyTree implements Serializable{
             }
         }
     return null;
+    }
+
+    // public void addToFamely(Human human){
+    //     humanList.add(human);
+    // }   
+
+    public void sortByFamelyName() {
+        humanList.sort(new HumanComparatorByFamelyName());
+    }
+
+    public void sortByFirstName() {
+        humanList.sort(new  HumanComparatorByFirstName());
+    }
+
+    
+    @Override
+    public Iterator<Human> iterator() {   
+        return new HumanIterator(humanList);
     }
 
     public String getFamelyInfo() {

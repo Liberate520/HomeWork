@@ -1,8 +1,9 @@
 package re.zip.famely_tree;
 import re.zip.famely_tree.humans.Human;
+// import re.zip.famely_tree.srv.Service;
+import re.zip.famely_tree.writer.FileHandler;
 
 import java.time.LocalDate;
-import java.util.logging.FileHandler;
 
 import re.zip.famely_tree.famely_tree.FamelyTree;
 import re.zip.famely_tree.humans.Gender;
@@ -14,10 +15,17 @@ public class Main {
         String filePath = "src/re/zip/famely_tree/writer/tree.sav";
 
         //загружаем
-        //FamelyTree tree = readFromFile(filePath);
+        // FamelyTree tree = readFromFile(filePath);
 
-
+        // создаем
         FamelyTree tree = simpleTree();
+
+        System.out.println(tree);
+
+        tree.sortByFirstName();
+        System.out.println(tree);
+
+        tree.sortByFamelyName();
         System.out.println(tree);
 
         //сохраняем
@@ -37,7 +45,9 @@ public class Main {
     
     static FamelyTree simpleTree() {
 
+        // FamelyTree tree = new FamelyTree();
         FamelyTree tree = new FamelyTree();
+
 
         Human viktor = new Human("Виктор", "Кондрухов", LocalDate.of(1936, 1, 1), Gender.Male);
         Human lev = new Human("Лев", "Бор", LocalDate.of(1930, 1, 1), Gender.Male);

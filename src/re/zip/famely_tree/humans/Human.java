@@ -1,4 +1,5 @@
 package re.zip.famely_tree.humans;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -6,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 // import re.zip.famely_tree.humans.Gender;
 
-public class Human {
+public class Human implements Serializable, Comparable<Human>{
     private long idNo;
     private String firstName;
     private String famelyName;
@@ -37,6 +38,11 @@ public class Human {
     public Human(String firstName, String lastName, LocalDate dateOfBirsday, Gender gender) {
         this(firstName, lastName, dateOfBirsday, null, gender, null, null);
     }
+
+    // public Human(long id, String firstName, String lastName, LocalDate dateOfBirsday, Gender gender) {
+    //     idNo = id;
+    //     this(firstName, lastName, dateOfBirsday, null, gender, null, null);
+    // }
 
     public boolean addACild(Human child) {
         if (!children.contains(child)){
@@ -100,6 +106,10 @@ public class Human {
         return Period.between(dateLive1, dateLive2).getYears();
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+    
     public Gender getGender() {
         return gender;
     }
@@ -153,7 +163,6 @@ public class Human {
     public String getFamelyName() {
         return famelyName;
     }
-
 
     public String bio() {
         if (this.firstName == null){
@@ -231,7 +240,9 @@ public class Human {
         return getHumanInfo();
     }
 
-    // public String getFirstName() {
-    //     return firstName;
-    // }
+    @Override
+    public int compareTo(Human o) {
+        return firstName.compareTo(o.famelyName);
+    }
+
 }
