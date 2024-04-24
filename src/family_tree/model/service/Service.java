@@ -1,20 +1,24 @@
 package family_tree.model.service;
 
 import family_tree.model.human.Human;
-import family_tree.model.writer.FileHandler;
+import family_tree.model.writer.Writable;
 import family_tree.model.human.Gender;
 import family_tree.model.family_tree.FamilyTree;
+import java.util.stream.Collectors;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 
 public class Service {
 
     private FamilyTree<Human> tree;
-    private FileHandler fileHandler;
+    private Writable<?> fileHandler;
+    public static final String FILE_PATH = "src/family_tree/model/writer/family.txt";
 
-    public Service(FamilyTree<Human> tree) {
-        this.tree = tree;
-        this.fileHandler = new FileHandler();
+    public Service(Writable<?> fileHandler) {
+        this.tree = new FamilyTree<>();
+        this.fileHandler = fileHandler;
     }
 
     public void createAndAddHuman(String name, Gender gender, LocalDate dob) {
@@ -59,16 +63,40 @@ public class Service {
         tree.sortBirthday();
     }
 
-    public boolean saveFamilyTreeToFile(String filePath) {
-        return fileHandler.save(tree, filePath);
+    @SuppressWarnings("unchecked")
+    public boolean saveFamilyTreeToFile() {
+        return ((Writable<FamilyTree<Human>>)fileHandler).save(tree);
     }
     
-    public FamilyTree<Human> readFamilyTreeFromFile(String filePath) {
-        return fileHandler.read(filePath);
+    @SuppressWarnings("unchecked")
+    public void readFamilyTreeFromFile() {
+        Object object = fileHandler.read();
+        if (object instanceof FamilyTree) {
+            tree = (FamilyTree<Human>) object;
+        }
     }
     
     public void setFamilyTree(FamilyTree<Human> tree) {
         this.tree=tree;
+    }
+
+    public void createRelationships(String husbandName, String wifeName, List<String> childrenNames) {
+        Human husband = findHumanByName(husbandName);
+        Human wife = findHumanByName(wifeName);
+        if (husband == null || wife == null) {
+            return;
+        }
+    
+        List<Human> children = childrenNames.stream()
+                                            .map(this::findHumanByName)
+                                            .filter(Objects::nonNull)
+                                            .collect(Collectors.toList());
+    
+        if (children.size() != childrenNames.size()) {
+            return;
+        }
+    
+        createRelationships(husband, wife, children.toArray(new Human[0]));
     }
 
     public void createRelationships(Human husband, Human wife, Human... children) {

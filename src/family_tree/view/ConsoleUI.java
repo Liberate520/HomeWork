@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import family_tree.model.human.Gender;
+import family_tree.model.writer.Writable;
 import family_tree.presenter.Presenter;
 
 public class ConsoleUI implements View {
@@ -15,20 +16,15 @@ public class ConsoleUI implements View {
     private boolean flag;
     private MainMenu mainMenu;
 
-    public ConsoleUI() {
-        scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+    public ConsoleUI(Writable<?> fileHandler) { 
+        this.scanner = new Scanner(System.in);
         flag = true;
         mainMenu = new MainMenu(this);
-    }
-
-    public void initialize() {
-        presenter.initialize();
+        presenter = new Presenter(this, fileHandler);
     }
 
     @Override
-    public void displayFamilyTree() {
-        String familyTreeInfo = presenter.getFamilyTreeInfo();
+    public void displayFamilyTree(String familyTreeInfo) {
         System.out.println("Текущее семейное дерево:");
         System.out.println(familyTreeInfo);
     }
