@@ -28,6 +28,9 @@ public class Main {
         tree.sortByFamelyName();
         System.out.println(tree);
 
+        tree.sortByBirthDate();
+        System.out.println(tree);
+
         //сохраняем
         saveToFile(tree, filePath);
     }

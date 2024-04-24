@@ -90,6 +90,10 @@ public class Human implements Serializable, Comparable<Human>{
         return fatherNames.get(this.father.firstName) + "но";
     }
 
+    public LocalDate getDateOfBirsday() {
+        return dateOfBirsday;
+    }
+
     public int getAge() {
         if (dateOfBirsday == null){
             return 0;

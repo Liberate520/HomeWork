@@ -6,6 +6,7 @@ import java.util.List;
 import re.zip.famely_tree.humans.Human;
 import re.zip.famely_tree.srv.HumanComparatorByFirstName;
 import re.zip.famely_tree.srv.HumanIterator;
+import re.zip.famely_tree.srv.HumanComparatorByBirthDate;
 import re.zip.famely_tree.srv.HumanComparatorByFamelyName;
 
 public class FamelyTree implements Serializable, Iterable<Human>{
@@ -182,6 +183,10 @@ public class FamelyTree implements Serializable, Iterable<Human>{
 
     public void sortByFirstName() {
         humanList.sort(new  HumanComparatorByFirstName());
+    }
+
+    public void sortByBirthDate() {
+        humanList.sort(new  HumanComparatorByBirthDate());
     }
 
     
