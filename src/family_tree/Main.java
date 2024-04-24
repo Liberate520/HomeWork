@@ -1,7 +1,9 @@
-import family_tree.model.Human;
-import family_tree.model.FamilyTree;
+package family_tree;
+
 import family_tree.io.FileIO;
 import family_tree.io.TextFileHandler;
+import family_tree.model.FamilyTree;
+import family_tree.model.Human;
 
 import java.util.List;
 
@@ -16,16 +18,14 @@ public class Main {
         Human natalya = new Human("Наталья", "Female", "25-07-1978", null);
         Human andrey = new Human("Андрей", "Male", "13-09-1998", null);
 
-
-        FamilyTree familyTree = new FamilyTree();
-        familyTree.addHuman(mikhail);
-        familyTree.addHuman(lyudmila);
-        familyTree.addHuman(vladimir);
-        familyTree.addHuman(ivan);
-        familyTree.addHuman(nina);
-        familyTree.addHuman(natalya);
-        familyTree.addHuman(andrey);
-
+        FamilyTree<Human> familyTree = new FamilyTree<>();
+        familyTree.addBeing(mikhail);
+        familyTree.addBeing(lyudmila);
+        familyTree.addBeing(vladimir);
+        familyTree.addBeing(ivan);
+        familyTree.addBeing(nina);
+        familyTree.addBeing(natalya);
+        familyTree.addBeing(andrey);
 
         mikhail.addChild(vladimir);
         lyudmila.addChild(vladimir);
@@ -34,27 +34,15 @@ public class Main {
         vladimir.addChild(andrey);
         natalya.addChild(andrey);
 
+        familyTree.sortByBirthDate();
 
-        //Сортировка по имени
-        //familyTree.sortByNames();
-        // Сортировка списка по дате рождения
-        familyTree.sortByBirthDate(familyTree.getPeople());
-
-        // Выводим отсортированный список на экран
         System.out.println("Отсортированный список по дате рождения:");
         for (Human person : familyTree) {
             System.out.println(person.getName() + " - " + person.getBirthDate());
         }
-        //Запись в файл
+
         FileIO fileIO = new TextFileHandler();
         var dataToWrite = familyTree.convertTreeToText();
         fileIO.writeToFile("family_tree.txt", dataToWrite);
-//
-        //Чтение из файла
-//        List<String> dataFromFile = fileIO.readFromFile("family_tree.txt");
-//        System.out.println("Данные из файла:");
-//        for (String line : dataFromFile) {
-//           System.out.println(line);
-//        }
     }
 }

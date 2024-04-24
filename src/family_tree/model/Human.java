@@ -3,7 +3,7 @@ package family_tree.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements LivingBeing {
     private String name;
     private String gender;
     private String birthDate;
