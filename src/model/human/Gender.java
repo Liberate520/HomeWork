@@ -1,5 +1,10 @@
 package model.human;
 
 public enum Gender {
-    Male, Female;
+    Male("Man"), Female("Woman");
+    String description;
+
+    Gender(String description) {
+        this.description = description;
+    }
 }

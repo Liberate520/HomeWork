@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Интерфейс для описания члена фамильного дерева
+ */
 public interface TreeNode<T> extends Serializable {
     //  Method:
     //  Getters:
@@ -25,11 +28,16 @@ public interface TreeNode<T> extends Serializable {
 
     //  Setters:
     void setId(int id);
+
     void setBirthDate(LocalDate birthDate);
+
     void setDeathDate(LocalDate deathDate);
 
     void setSpouse(T human);
+
     void addParent(T human);
+
     List<T> getChildren();
+
     void addChild(T human);
 }
