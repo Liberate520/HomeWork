@@ -1,4 +1,4 @@
-package homeWork.service;
+package homeWork.model.service;
 
 import java.io.*;
 

@@ -1,8 +1,8 @@
-package homeWork.human.humanComparator;
+package homeWork.model.human.humanComparator;
 
 import java.util.Comparator;
 
-import homeWork.familyTree.FamTree;
+import homeWork.model.familyTree.FamTree;
 
 public class HumanComparatorByName<E extends FamTree> implements Comparator<E>{
     @Override

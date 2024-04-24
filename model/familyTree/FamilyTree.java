@@ -1,12 +1,12 @@
-package homeWork.familyTree;
+package homeWork.model.familyTree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 //import homeWork.human.Human;
-import homeWork.human.humanComparator.HumanComparatorByDate;
-import homeWork.human.humanComparator.HumanComparatorByName;
+import homeWork.model.human.humanComparator.HumanComparatorByDate;
+import homeWork.model.human.humanComparator.HumanComparatorByName;
 
 public class FamilyTree<T extends FamTree> implements Serializable, Iterable<T>{
     private List<T> list;

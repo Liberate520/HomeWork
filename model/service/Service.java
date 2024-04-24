@@ -1,9 +1,9 @@
-package homeWork.service;
+package homeWork.model.service;
 
 import java.time.LocalDate;
-import homeWork.human.Human;
-import homeWork.familyTree.FamilyTree;
-import homeWork.gender.Gender;
+import homeWork.model.human.Human;
+import homeWork.model.familyTree.FamilyTree;
+import homeWork.model.gender.Gender;
 
 
 public class Service {
@@ -27,6 +27,10 @@ public class Service {
         addHuman(name, dob, null, gender, null, null);
     }
 
+    public void addHuman(String name, LocalDate dob, LocalDate dod ,Gender gender){
+        addHuman(name, dob, dod, gender, null, null);
+    }
+
     public String getTree(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Семейное дерево:\n");
@@ -35,6 +39,15 @@ public class Service {
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
+    }
+
+    public Human findPerson(String name, LocalDate dob) {
+        for (Human human : tree1) {
+            if (human.getName().equals(name) && human.getDob().equals(dob)) {
+                return human;
+            }
+        }
+        return null;
     }
 
     @Override

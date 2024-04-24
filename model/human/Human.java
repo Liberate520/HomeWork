@@ -1,12 +1,12 @@
-package homeWork.human;
+package homeWork.model.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import homeWork.familyTree.FamTree;
-import homeWork.gender.Gender;
+import homeWork.model.familyTree.FamTree;
+import homeWork.model.gender.Gender;
 
 public class Human implements Serializable, Comparable<Human>, FamTree{
     String name;
