@@ -10,13 +10,12 @@ import java.time.LocalDate;
 
 public class Service {
     private FamilyTree<Human> familyTree;
-    private final Writable writable;
+    private Writable writable;
     private Human human;
 
-    public Service(Writable writable) {
-        this.human = new Human();
-        this.familyTree = new FamilyTree<>();
-        this.writable = writable;
+    public Service() {
+        human = new Human();
+        familyTree = new FamilyTree<>();
     }
 
     public boolean addFirstHumanToFamily() {
@@ -125,5 +124,9 @@ public class Service {
 
     public void sortById() {
         familyTree.sortById();
+    }
+
+    public void setWritable(Writable writable) {
+        this.writable = writable;
     }
 }

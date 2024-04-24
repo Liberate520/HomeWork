@@ -2,7 +2,7 @@ package presenter;
 
 import model.human.Gender;
 import model.service.Service;
-import model.writer.FileHandler;
+import model.writer.Writable;
 import view.View;
 
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service(new FileHandler());
+        service = new Service();
     }
 
     public void getTreeInfo() {
@@ -101,5 +101,9 @@ public class Presenter {
 
     private void error() {
         view.printAnswerLn("Данные не записаны!\n");
+    }
+
+    public void setWritable(Writable writable) {
+        service.setWritable(writable);
     }
 }

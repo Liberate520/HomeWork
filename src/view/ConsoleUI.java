@@ -1,6 +1,7 @@
 package view;
 
 import model.human.Gender;
+import model.writer.Writable;
 import presenter.Presenter;
 
 import java.time.DateTimeException;
@@ -43,6 +44,10 @@ public class ConsoleUI implements View {
             check = choice();
         }
     }
+
+    public void setWritable(Writable writable) {
+        presenter.setWritable(writable);
+    } // Установить режим записи
 
     private boolean choice() {
         String choiceStr = scanner.nextLine();
