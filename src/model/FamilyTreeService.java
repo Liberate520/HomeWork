@@ -34,13 +34,12 @@ public class FamilyTreeService {
         return true;
     }
 
-    public String addHuman(String name, String secondName, String genderString, String birthDate,
-                           long idFather, long idMother){
-        Human father = activeTree.getById(idFather);
-        Human mother = activeTree.getById(idMother);
+    public String addHuman(String name, String secondName, String genderString, String birthDate){
+//        Human father = activeTree.getById(idFather);
+//        Human mother = activeTree.getById(idMother);
         Gender gender = Gender.valueOf(genderString);
         LocalDate humanBirthDate = LocalDate.parse(birthDate);
-        Human human = new Human(name, secondName, gender, humanBirthDate, father, mother);
+        Human human = new Human(name, secondName, gender, humanBirthDate);
         activeTree.add(human);
         return "new human added!";
     }

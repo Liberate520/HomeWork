@@ -3,7 +3,7 @@ import model.familyTree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
 import model.writer.FileHandlerForFamilyTree;
-import view.Console;
+import view.ConsoleUI;
 import view.View;
 
 import java.time.LocalDate;
@@ -48,7 +48,7 @@ public class Main {
         service.setWritable(new FileHandlerForFamilyTree());
         service.save();
 
-        View view = new Console();
+        View view = new ConsoleUI();
         view.start();
     }
 }
