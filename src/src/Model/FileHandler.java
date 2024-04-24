@@ -1,4 +1,4 @@
-package src.Model;
+package src.model;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+
+import src.Writable;
 
 
 public class FileHandler implements Writable {

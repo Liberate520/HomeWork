@@ -5,6 +5,7 @@ import java.util.Scanner;
 import src.presenter.Presenter;
 import src.view.ConsoleUI;
 
+
 public abstract class Command {
     
     Scanner scanner;
