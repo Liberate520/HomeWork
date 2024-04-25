@@ -1,19 +1,29 @@
 package family_tree.family_tree.view;
 
+import family_tree.family_tree.presenter.FamilyTreePresenter;
+import family_tree.human.Gender;
+import family_tree.human.Human;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import family_tree.human.Gender;
-import family_tree.human.Human;
-import family_tree.human.HumanComparatorByBirthDate;
-import family_tree.human.HumanComparatorByName;
-
 public class FamilyTreeView {
+    private FamilyTreePresenter presenter; // Добавлено поле для FamilyTreePresenter
     private Scanner scanner;
 
-    public FamilyTreeView() {
+    public FamilyTreeView(FamilyTreePresenter presenter) { // Добавлен параметр в конструктор
+        this.presenter = presenter; // Инициализация FamilyTreePresenter
         this.scanner = new Scanner(System.in);
+    }
+
+    public void startApplication() {
+        int choice = 0;
+        while (choice != 5) {
+            displayMenu();
+            choice = getUserChoice();
+            presenter.handleUserChoice(choice);
+        }
     }
 
     public void displayMenu() {
@@ -59,7 +69,8 @@ public class FamilyTreeView {
     public void displayFamilyMembers(List<Human> familyMembers) {
         System.out.println("Члены семьи Карлеоне:");
         for (Human member : familyMembers) {
-            System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth() + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
+            System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth()
+                    + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
             if (member.getMother() != null) {
                 System.out.println("Мать: " + member.getMother().getName());
             }
@@ -73,7 +84,8 @@ public class FamilyTreeView {
     public void displaySortedFamilyMembers(List<Human> familyMembers) {
         System.out.println("Отсортированный список:");
         for (Human member : familyMembers) {
-            System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth() + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
+            System.out.println("Имя: " + member.getName() + ", Дата рождения: " + member.getDateOfBirth()
+                    + ", Дата смерти: " + member.getDateOfDeath() + ", Пол: " + member.getGender());
         }
     }
 
@@ -81,31 +93,5 @@ public class FamilyTreeView {
         scanner.close();
     }
 
-    public void runApplicationLoop() {
-        int choice = 0;
-        while (choice != 5) {
-            displayMenu();
-            choice = getUserChoice();
-            switch (choice) {
-                case 1:
-                    displayFamilyMembers();
-                    break;
-                case 2:
-                    addNewFamilyMember();
-                    break;
-                case 3:
-                    sortByName();
-                    break;
-                case 4:
-                    sortByBirthDate();
-                    break;
-                case 5:
-                    closeScanner();
-                    System.out.println("Программа завершена.");
-                    break;
-                default:
-                    displayErrorMessage("Некорректный выбор. Пожалуйста, выберите действие из списка.");
-            }
-        }
-    }
+    // Другие методы для взаимодействия с пользователем
 }

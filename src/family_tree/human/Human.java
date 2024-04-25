@@ -1,9 +1,9 @@
 package family_tree.human;
 
+import family_tree.family_tree.TreeNode;
+
 import java.time.LocalDate;
 import java.util.List;
-
-import family_tree.family_tree.TreeNode;
 
 public class Human implements TreeNode<Human>, Comparable<Human> {
     private String name;
@@ -124,4 +124,3 @@ public class Human implements TreeNode<Human>, Comparable<Human> {
         throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
     }
 }
-
