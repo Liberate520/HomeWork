@@ -1,5 +1,4 @@
 import family_tree.FamilyTree;
-import family_tree.FamilyTreeElement;
 import human.Gender;
 import human.Human;
 
@@ -13,14 +12,12 @@ public class Main {
         Human h2 = new Human("Irina", Gender.Female, LocalDate.of(1975, 3, 29));
         Human h3 = new Human("Ekaterina", Gender.Female, LocalDate.of(1994, 3, 2));
         Human h4 = new Human("Ilya", Gender.Male, LocalDate.of(2000, 6, 5));
-
         h3.addParent(h1);
         h3.addParent(h2);
         h4.addParent(h1);
         h4.addParent(h2);
 
-        FamilyTree<Human> familyTree = new FamilyTree<>();
-
+        FamilyTree familyTree = new FamilyTree();
         familyTree.addMember(h1);
         familyTree.addMember(h2);
         familyTree.addMember(h3);

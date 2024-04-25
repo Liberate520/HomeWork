@@ -1,5 +1,6 @@
 package family_tree;
 
+import human.Human;
 import human.comparators.HumanComparatorByAge;
 import human.comparators.HumanComparatorByName;
 
@@ -8,20 +9,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends FamilyTreeElement> implements Serializable, Iterable<E>{
+public class FamilyTree implements Serializable, Iterable<Human>{
 
 
-    private final List<E> family;
+    private final List<Human> family;
 
-    public FamilyTree(List<E> family) {
+    public FamilyTree(List<Human> family) {
         this.family = family;
     }
 
     public FamilyTree() {
-        this.family = new ArrayList<E>();
+        this.family = new ArrayList<Human>();
     }
 
-    public void addMember(E member) {
+    public void addMember(Human member) {
         if (!(member == null) && !family.contains(member)) {
             this.family.add(member);
         }
@@ -31,26 +32,27 @@ public class FamilyTree<E extends FamilyTreeElement> implements Serializable, It
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Члены семьи:\n");
 
-        for (E human: family) {
+        for (Human human: family) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
 
-//    public String ChildrenInfo(E name) {
-//        StringBuilder children = new StringBuilder("Все дети " + name.getName() + "\n");
-//        for (E member : name.getChildren() {
-//                children.append("------------\n");
-//                children.append("Имя: ").append(member.getName()).append("\nДата рождения: ").append(member.getDob()).append("\nПол: ").append(member.getGender()).append("\n");
-//            }
-//        }
-//        return children.toString();
-//    }
+    public String ChildrenInfo(Human name) {
+        StringBuilder children = new StringBuilder("Все дети " + name.getName() + "\n");
+        for (Human member : family) {
+            if (member.getMother() == name) {
+                children.append("------------\n");
+                children.append("Имя: ").append(member.getName()).append("\nДата рождения: ").append(member.getDob()).append("\nПол: ").append(member.getGender()).append("\n");
+            }
+        }
+        return children.toString();
+    }
 
     @Override
-    public Iterator<E> iterator() {
-        return new MembersIterator<>(family);
+    public Iterator<Human> iterator() {
+        return new MembersIterator(family);
     }
 
     @Override
@@ -59,10 +61,10 @@ public class FamilyTree<E extends FamilyTreeElement> implements Serializable, It
     }
 
     public void sortByName() {
-        family.sort(new HumanComparatorByName<>());
+        family.sort(new HumanComparatorByName());
     }
 
     public void sortByAge() {
-        family.sort(new HumanComparatorByAge<>());
+        family.sort(new HumanComparatorByAge());
     }
 }

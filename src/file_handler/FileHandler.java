@@ -23,7 +23,6 @@ public class FileHandler implements Writable {
 
         FamilyTree familyTree = (FamilyTree) objectInputStream.readObject();
         objectInputStream.close();
-        
         System.out.println("Загружено!");
         return familyTree;
     }
