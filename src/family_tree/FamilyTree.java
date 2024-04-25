@@ -1,6 +1,5 @@
 package family_tree;
 
-import human.Human;
 import human.comparators.HumanComparatorByAge;
 import human.comparators.HumanComparatorByName;
 
@@ -41,8 +40,7 @@ public class FamilyTree<E extends FamilyTreeElement> implements Serializable, It
 
 //    public String ChildrenInfo(E name) {
 //        StringBuilder children = new StringBuilder("Все дети " + name.getName() + "\n");
-//        for (E member : family) {
-//            if (member.getMother() == name) {
+//        for (E member : name.getChildren() {
 //                children.append("------------\n");
 //                children.append("Имя: ").append(member.getName()).append("\nДата рождения: ").append(member.getDob()).append("\nПол: ").append(member.getGender()).append("\n");
 //            }
