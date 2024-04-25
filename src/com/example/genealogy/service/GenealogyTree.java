@@ -2,31 +2,30 @@ package com.example.genealogy.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import com.example.genealogy.model.Person;
+public class GenealogyTree<T> implements Iterable<T> {
 
-public class GenealogyTree implements Iterable<Person> {
+    private T root;
+    private List<T> people;
 
-    private Person root;
-    private List<Person> people;
-
-    public GenealogyTree(Person root) {
+    public GenealogyTree(T root) {
         this.root = root;
         this.people = new ArrayList<>();
     }
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<T> iterator() {
         return new GenealogyTreeIterator(root);
     }
 
-    private class GenealogyTreeIterator implements Iterator<Person> {
+    private class GenealogyTreeIterator implements Iterator<T> {
 
-        private Person currentPerson;
+        private T currentPerson;
 
-        public GenealogyTreeIterator(Person root) {
+        public GenealogyTreeIterator(T root) {
             this.currentPerson = root;
         }
 
@@ -36,23 +35,23 @@ public class GenealogyTree implements Iterable<Person> {
         }
 
         @Override
-        public Person next() {
-            Person nextPerson = currentPerson;
+        public T next() {
+            T nextPerson = currentPerson;
             currentPerson = findNextPerson(currentPerson);
             return nextPerson;
         }
 
-        private Person findNextPerson(Person person) {
-            if (!person.getChildren().isEmpty()) {
-                return person.getChildren().get(0);
+        private T findNextPerson(T person) {
+            if (!getChildren(person).isEmpty()) {
+                return getChildren(person).get(0);
             } else {
-                Person parent = person.getParent();
-                while (parent != null && parent.getChildren().indexOf(person) == parent.getChildren().size() - 1) {
+                T parent = getParent(person);
+                while (parent != null && getChildren(parent).indexOf(person) == getChildren(parent).size() - 1) {
                     person = parent;
-                    parent = parent.getParent();
+                    parent = getParent(parent);
                 }
                 if (parent != null) {
-                    return parent.getChildren().get(parent.getChildren().indexOf(person) + 1);
+                    return getChildren(parent).get(getChildren(parent).indexOf(person) + 1);
                 }
             }
             return null;
@@ -60,28 +59,44 @@ public class GenealogyTree implements Iterable<Person> {
     }
 
     public void sortByName() {
-        Collections.sort(people, new Comparator<Person>() {
+        Collections.sort(people, new Comparator<T>() {
             @Override
-            public int compare(Person p1, Person p2) {
-                return p1.getName().compareTo(p2.getName());
+            public int compare(T p1, T p2) {
+                return getName(p1).compareTo(getName(p2));
             }
         });
     }
 
     public void sortByDateOfBirth() {
-        Collections.sort(people, new Comparator<Person>() {
+        Collections.sort(people, new Comparator<T>() {
             @Override
-            public int compare(Person p1, Person p2) {
-                return p1.getDateOfBirth().compareTo(p2.getDateOfBirth());
+            public int compare(T p1, T p2) {
+                return getDateOfBirth(p1).compareTo(getDateOfBirth(p2));
             }
         });
     }
 
-    public void addPerson(Person person) {
+    public void addPerson(T person) {
         people.add(person);
     }
 
-    public void removePerson(Person person) {
+    public void removePerson(T person) {
         people.remove(person);
+    }
+
+    public String getName(T person) {
+        return getName(person);
+    }
+
+    public T getParent(T person) {
+        return getParent(person);
+    }
+
+    public List<T> getChildren(T person) {
+        return getChildren(person);
+    }
+
+    public Date getDateOfBirth(T person) {
+        return getDateOfBirth(person);
     }
 }
