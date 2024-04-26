@@ -1,6 +1,6 @@
 package Family_Tree.Writer;
 
-import Family_Tree.Human.Human;
+import Family_Tree.model.Human.Human;
 
 import java.io.IOException;
 

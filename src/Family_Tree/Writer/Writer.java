@@ -1,29 +1,31 @@
-package Family_Tree.Writer;
-
-
-import Family_Tree.Human.Human;
-
-import java.io.*;
-
-//public class Writer implements WriteTo Переделать под все дерево{
-
-        public void save (Human human) throws IOException {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-                    new FileOutputStream("human.out"));
-            objectOutputStream.writeObject(human);
-            objectOutputStream.close();
-            /*System.out.println("Before Serialize: " + "\n" + human + "\n");*/
-        }
-
-
-        public void read (Human human) throws IOException, ClassNotFoundException {
-            ObjectInputStream objectInputStream = new ObjectInputStream(
-                    new FileInputStream("human.out"));
-            human = (Human) objectInputStream.readObject();
-            objectInputStream.close();
-            /*System.out.println("After Restored: " + "\n" + human + "\n");*/
-        }
-    }
+package Family_Tree.Writer;//package Family_Tree.Writer;
+//
+//
+//
+//import Family_Tree.model.FamilyTree.FamilyTree;
+//import Family_Tree.model.FamilyTree.TreeVersatility;
+//import Family_Tree.model.Human.Human;
+//
+//import java.io.*;
+//
+////public class Writer implements WriteTo Переделать под все дерево{
+//
+//        public void save (Human human) throws IOException {
+//            ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+//                    new FileOutputStream("human.out"));
+//            objectOutputStream.writeObject(human);
+//            objectOutputStream.close();
+//            /*System.out.println("Before Serialize: " + "\n" + human + "\n");*/
+//        }
+//
+//
+//        public void read (Human human) throws IOException, ClassNotFoundException {
+//            ObjectInputStream objectInputStream = new ObjectInputStream(
+//                    new FileInputStream("human.out"));
+//            human = (Human) objectInputStream.readObject();
+//            objectInputStream.close();
+//            /*System.out.println("After Restored: " + "\n" + human + "\n");*/
+//        }
 
 
 

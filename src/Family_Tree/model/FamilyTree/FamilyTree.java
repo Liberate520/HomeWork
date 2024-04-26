@@ -1,7 +1,7 @@
-package Family_Tree.FamilyTree;
+package Family_Tree.model.FamilyTree;
 
-import Family_Tree.Human.SortByAge;
-import Family_Tree.Human.SortByName;
+import Family_Tree.model.Human.SortByAge;
+import Family_Tree.model.Human.SortByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;

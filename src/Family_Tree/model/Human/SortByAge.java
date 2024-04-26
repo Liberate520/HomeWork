@@ -1,6 +1,6 @@
-package Family_Tree.Human;
+package Family_Tree.model.Human;
 
-import Family_Tree.FamilyTree.TreeVersatility;
+import Family_Tree.model.FamilyTree.TreeVersatility;
 
 import java.util.Comparator;
 
