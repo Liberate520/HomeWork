@@ -1,28 +1,27 @@
-package model.builder;
-
-import model.human.Gender;
-import model.human.Human;
+package model.human;
 
 import java.time.LocalDate;
 
-public abstract class HumanBuilder {
+public class HumanBuilder {
 
-    protected Human human;
-
-    public abstract Human createName(String name);
-
-    public abstract Human createGender(Gender gender);
+    private Human human;
 
     public HumanBuilder() {
         createHuman();
     }
 
-    public void createHuman() {
+    void createHuman() {
         human = new Human();
     }
 
-    public Human getHuman() {
-        return human;
+    public HumanBuilder setName(String name) {
+        human.setName(name);
+        return this;
+    }
+
+    public HumanBuilder setGender(Gender gender) {
+        human.setGender(gender);
+        return this;
     }
 
     public HumanBuilder setBirthDate(LocalDate birthDate) {
@@ -52,9 +51,7 @@ public abstract class HumanBuilder {
         return this;
     }
 
-    public Human build(String name, Gender gender) {
-        createName(name);
-        createGender(gender);
+    public Human build() {
         return human;
     }
 }

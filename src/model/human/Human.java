@@ -19,6 +19,12 @@ public class Human implements TreeNode<Human> {
     private Human spouse;
 
     //  Constructor:
+    public Human() {
+        this.id = -1;
+        this.parents = new ArrayList<>();
+        this.children = new ArrayList<>();
+    }
+
 //    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother, Human spouse) {
 //        id = -1;
 //        this.name = name;

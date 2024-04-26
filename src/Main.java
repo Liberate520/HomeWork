@@ -1,5 +1,4 @@
 import view.ConsoleUI;
-import view.View;
 import model.writer.FileHandler;
 
 public class Main {

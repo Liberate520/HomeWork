@@ -1,6 +1,6 @@
 package model.service;
 
-import model.builder.BasicHumanBuilder;
+import model.human.HumanBuilder;
 import model.family_tree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
@@ -20,37 +20,47 @@ public class Service {
 
     public boolean addFirstHumanToFamily() {
 
-        human = new BasicHumanBuilder()
+        human = new HumanBuilder()
                 .setBirthDate(LocalDate.of(1945, 5, 28))
                 .setDeathDate(LocalDate.of(2021, 8, 22))
-                .build("Ivan", Gender.Male);
+                .setName("Ivan")
+                .setGender(Gender.Male)
+                .build();
         familyTree.add(human);
 
-        human = new BasicHumanBuilder()
+        human = new HumanBuilder()
                 .setBirthDate(LocalDate.of(1950, 1, 1))
                 .setDeathDate(LocalDate.of(2021, 2, 19))
                 .setSpouse(familyTree.getById(0))
-                .build("Zoia", Gender.Female);
+                .setName("Zoia")
+                .setGender(Gender.Female)
+                .build();
         familyTree.add(human);
 
-        human = new BasicHumanBuilder()
+        human = new HumanBuilder()
                 .setBirthDate(LocalDate.of(1973, 12, 13))
                 .addParent(familyTree.getById(0))
                 .addParent(familyTree.getById(1))
-                .build("Kostia", Gender.Male);
+                .setName("Kostia")
+                .setGender(Gender.Male)
+                .build();
         familyTree.add(human);
 
-        human = new BasicHumanBuilder()
+        human = new HumanBuilder()
                 .setBirthDate(LocalDate.of(1975, 3, 6))
                 .setSpouse(familyTree.getById(2))
-                .build("Irina", Gender.Female);
+                .setName("Irina")
+                .setGender(Gender.Female)
+                .build();
         familyTree.add(human);
 
-        human = new BasicHumanBuilder()
+        human = new HumanBuilder()
                 .setBirthDate(LocalDate.of(2001, 11, 29))
                 .addParent(familyTree.getById(2))
                 .addParent(familyTree.getById(3))
-                .build("Katia", Gender.Female);
+                .setName("Katia")
+                .setGender(Gender.Female)
+                .build();
         familyTree.add(human);
 
         return true;
@@ -58,9 +68,11 @@ public class Service {
 
     public int addNewHumanToFamily(String name, Gender gender, LocalDate birthDate) {
 
-        human = new BasicHumanBuilder()
+        human = new HumanBuilder()
                 .setBirthDate(birthDate)
-                .build(name, gender);
+                .setName(name)
+                .setGender(gender)
+                .build();
         return familyTree.add(human);
     } //добавление нового человека в семейное древо
 
