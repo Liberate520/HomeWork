@@ -24,12 +24,14 @@ public class FamilyTree<E extends FamilyObject<E>> implements Serializable, Iter
         return listPersons;
     }
     
-    public void addPerson(E person) {
+    public boolean addPerson(E person) {
         if (!listPersons.contains(person)) {
             listPersons.add(person);
-        }
-        parentalAddition(person);
-        childAddition(person);
+            parentalAddition(person);
+            childAddition(person);
+            return true;
+        }else{return false;}
+
     }
 
     
@@ -69,12 +71,14 @@ public class FamilyTree<E extends FamilyObject<E>> implements Serializable, Iter
     }
    
 
-    public void sortByName (){
+    public boolean sortByName (){
         listPersons.sort( new PersonComporatorByName<>());
+        return true;
     }
 
-    public void sortByAge(){
+    public boolean sortByAge(){
         Collections.sort(listPersons, new PersonComparatorByAge<>());
+        return true;
     }
 
 }

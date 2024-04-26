@@ -138,6 +138,7 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
 
     // }
 
+    @SuppressWarnings("unused")
     public String getNumOfChild (Person pers){
         children= pers.getChildren();
         if (children != null) {

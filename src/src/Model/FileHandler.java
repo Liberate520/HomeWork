@@ -24,6 +24,7 @@ public class FileHandler implements Writable {
     }
 
         // Востановление из файла с помощью класса ObjectInputStream
+    @SuppressWarnings("rawtypes")
     public Object fileUpload(File filePath) throws FileNotFoundException, IOException, ClassNotFoundException{
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath));
         FamilyTree fTRestored = (FamilyTree) objectInputStream.readObject();
