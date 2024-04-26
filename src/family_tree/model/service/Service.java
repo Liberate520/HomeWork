@@ -14,7 +14,6 @@ public class Service {
 
     private FamilyTree<Human> tree;
     private Writable<?> fileHandler;
-    public static final String FILE_PATH = "src/family_tree/model/writer/family.txt";
 
     public Service(Writable<?> fileHandler) {
         this.tree = new FamilyTree<>();
