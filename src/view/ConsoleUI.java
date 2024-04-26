@@ -6,10 +6,6 @@ import view.util.ConsoleColors;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-//public void getHumanList() {
-//    presenter.getHumanList();
-//}
-
 public class ConsoleUI implements View {
 
     private static final String INPUT_ERROR = ConsoleColors.RED_BOLD + "Wrong Namber!" + ConsoleColors.RESET;
@@ -112,5 +108,4 @@ public class ConsoleUI implements View {
     private void inputError() {
         System.out.println(INPUT_ERROR);
     }
-}
 }
