@@ -1,9 +1,9 @@
-package family_tree;
+package family_TREE;
 
-import family_tree.family_tree.FamilyTree;
-import family_tree.human.Gender;
-import family_tree.human.Human;
-import family_tree.writer.FileHandler;
+import family_TREE.model.family_tree.FamilyTree;
+import family_TREE.model.save.base.FileHandler;
+import family_TREE.model.human.Human;
+import family_TREE.model.human.Gender;
 
 import java.time.LocalDate;
 
