@@ -31,13 +31,6 @@ public class Console implements View {
         }
     }
 
-//    public void addHuman(){
-//        getHumanList();
-//        System.out.println("Введите имя человека");
-//        String name = scanner.nextLine();
-//        presenter.addHuman(name);
-//    }
-
     public void getHumanList(){
         presenter.getHumanList();
     }
