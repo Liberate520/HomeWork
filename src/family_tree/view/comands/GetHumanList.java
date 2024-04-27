@@ -1,9 +1,9 @@
-package family_tree.view.comands;
+package family_TREE.view.comands;
 
-import view.Console;
+import family_TREE.view.Console;
 
 public class GetHumanList {
-    private Console console;
+    private final Console console;
 
     public GetHumanList(Console console) {
         this.console = console;

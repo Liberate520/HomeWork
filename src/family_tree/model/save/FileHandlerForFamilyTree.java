@@ -1,9 +1,12 @@
-package family_tree.model.save;
+package family_TREE.model.save;
 
+import family_TREE.model.family_tree.FamilyTree;
+import family_TREE.model.human.Human;
+import family_TREE.model.save.base.FileHandler;
 
 import java.io.Serializable;
 
-public class FileHandlerForFamilyTree extends FileHandler implements Writable{
+public class FileHandlerForFamilyTree extends FileHandler implements family_tree.writer.Writable {
     private String filePath = "tree.out";
 
     @Override
