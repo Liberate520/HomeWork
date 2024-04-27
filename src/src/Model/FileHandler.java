@@ -9,13 +9,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import src.Writable;
-
 
 public class FileHandler implements Writable {
 
     // Сериализация в файл с помощью класса ObjectOutputStream
-    public  void savingToFile (Serializable serializable, File filePath ) throws FileNotFoundException, IOException{
+    public  void savingToFile (Serializable serializable, String filePath ) throws FileNotFoundException, IOException{
         
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(
                 new FileOutputStream(filePath));
@@ -24,10 +22,10 @@ public class FileHandler implements Writable {
     }
 
         // Востановление из файла с помощью класса ObjectInputStream
-    @SuppressWarnings("rawtypes")
-    public Object fileUpload(File filePath) throws FileNotFoundException, IOException, ClassNotFoundException{
+    
+    public FamilyTree<Person> fileUpload(File filePath) throws FileNotFoundException, IOException, ClassNotFoundException{
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath));
-        FamilyTree fTRestored = (FamilyTree) objectInputStream.readObject();
+        FamilyTree<Person> fTRestored = (FamilyTree<Person>) objectInputStream.readObject();
         objectInputStream.close();
         return fTRestored;
     }

@@ -1,5 +1,8 @@
 package src.presenter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import src.model.Gender;
@@ -38,6 +41,16 @@ public class Presenter {
 
     public void prinrtListInfo() {
         model.printList();
+    }
+
+    public boolean fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException{
+        model.fileUpload(file);
+        return true;
+    }
+
+    public boolean savingToFile(String file) throws FileNotFoundException, IOException{
+        model.savingToFile(file);
+        return true;
     }
 
 }

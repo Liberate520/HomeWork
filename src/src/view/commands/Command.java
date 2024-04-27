@@ -1,5 +1,7 @@
 package src.view.commands;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import src.presenter.Presenter;
@@ -22,6 +24,6 @@ public abstract class Command {
         return description;
     }
 
-    public abstract void execute();
+    public abstract void execute() throws FileNotFoundException, IOException, ClassNotFoundException;
 
 }

@@ -12,6 +12,6 @@ public class SortByName extends Command {
 
 @Override
 public void execute() {
-    consoleUI.sortByName();
+    presenter.sortByName();
 }
 }

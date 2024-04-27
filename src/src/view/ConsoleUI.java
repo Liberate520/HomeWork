@@ -1,5 +1,8 @@
 package src.view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -25,7 +28,7 @@ public class ConsoleUI implements View {
     }
 
     @Override
-    public void start() {
+    public void start() throws FileNotFoundException, IOException, ClassNotFoundException {
         // presenter.addPerson("v", Gender.male ,LocalDate.of(1987, 8, 7) );
         // presenter.addPerson("b", Gender.female ,LocalDate.of(1988, 10,3) );
         // presenter.addPerson("n", Gender.male ,LocalDate.of(2014, 4, 18) );
@@ -36,7 +39,7 @@ public class ConsoleUI implements View {
         }
     }
 
-    private void execut() {
+    private void execut() throws FileNotFoundException, IOException, ClassNotFoundException {
         String input = scanner.nextLine();
         if (validationInput(input)) {
             mainMenu.execut(input);
@@ -72,9 +75,6 @@ public class ConsoleUI implements View {
 
     public void addPerson() {
         Gender gendr = null;
-        // int year;
-        // int mn;
-        // int day;
         StringBuilder dt = new StringBuilder();
 
         printAnswer("Введите имя");
@@ -239,6 +239,44 @@ public class ConsoleUI implements View {
         }else{
             printAnswer(ERROR_ENTER);
         }
+    }
+    
+    public void savingToFile() {
+        printAnswer("Введите имя файла");
+        String nameFile = scanner.nextLine();
+        try {StringBuilder nF = new StringBuilder();
+            nF.append(nameFile);
+            nF.append(".");
+            nF.append("out");
+           if(presenter.savingToFile(nF.toString())){
+                printAnswer(COMPLETED);
+           }
+        } catch (FileNotFoundException e) {
+            printAnswer("Файл не существует");
+            e.printStackTrace();
+        } catch (IOException e) {
+            printAnswer("Ошибка");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void fileUpload() throws FileNotFoundException, ClassNotFoundException, IOException{
+        printAnswer("Введите имя файла");
+        String title = scanner.nextLine();
+        StringBuilder fullTitle = new StringBuilder();
+        fullTitle.append(title);
+        fullTitle.append(".out");
+        File file = new File(fullTitle.toString());
+
+        if(file.exists()){
+            if(presenter.fileUpload(file)){
+                printAnswer(COMPLETED);
+            } 
+        }else{
+            printAnswer("Файл не существует");
+        }
+       
     }
 
 }

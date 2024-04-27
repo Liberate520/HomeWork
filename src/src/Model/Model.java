@@ -1,15 +1,19 @@
 package src.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
-
+import java.util.List;
 
 public class Model {
 
     private FamilyTree<Person> family;
-    
+    private Writable writable;
 
     public Model() {
         family = new FamilyTree<>();
+        writable = new FileHandler();
 
     }
 
@@ -18,14 +22,13 @@ public class Model {
 
     }
 
-
     public boolean addPerson(String name, Gender gender, LocalDate dateB) {
         Person person = new Person(name, null, null, gender, dateB, null, null, null);
         return family.addPerson(person);
     }
 
     public boolean sortByName() {
-       return family.sortByName();
+        return family.sortByName();
     }
 
     public boolean sortByAge() {
@@ -36,7 +39,7 @@ public class Model {
         if (person.getFather() != null) {
             person.getFather().setChild(person);
         }
-        
+
         if (person.getMother() != null) {
             person.getMother().setChild(person);
         }
@@ -48,7 +51,7 @@ public class Model {
         for (Person person : family) {
             if (person.getName().equals(fM[0])) {
                 child = person;
-            
+
             }
         }
         for (Person person : family) {
@@ -60,7 +63,7 @@ public class Model {
         for (Person person : family) {
             if (person.getName().equals(fM[2])) {
                 child.setMother(person);
-            
+
             }
         }
 
@@ -72,8 +75,17 @@ public class Model {
         return family.printList();
     }
 
-    public void getFamilyTreeList() {
-        family.getFamilyTree();
+  
+    @SuppressWarnings("unchecked")
+    public void setFamilyTree(FamilyTree<Person> list) {
+        List<Person> lst = (List<Person>)list;
+        family.setFamilyTree(lst);
+    }
+
+    
+    public List<Person> getFamilyTreeList() {
+        List<Person> fT = family.getFamilyTree();
+        return fT;
     }
 
     public void printList() {
@@ -84,6 +96,13 @@ public class Model {
         System.out.println(fTree.toString());
     }
 
-    
+    public void fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException {
+        family = (FamilyTree<Person>) writable.fileUpload(file);
+
+    }
+
+    public void savingToFile(String file) throws FileNotFoundException, IOException {
+        writable.savingToFile(family , file);
+    }
 
 }
