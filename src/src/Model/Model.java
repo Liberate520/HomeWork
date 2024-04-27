@@ -96,6 +96,7 @@ public class Model {
         System.out.println(fTree.toString());
     }
 
+    @SuppressWarnings("unchecked")
     public void fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException {
         family = (FamilyTree<Person>) writable.fileUpload(file);
 
