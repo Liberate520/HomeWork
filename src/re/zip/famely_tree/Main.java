@@ -1,5 +1,6 @@
 package re.zip.famely_tree;
 import re.zip.famely_tree.humans.Human;
+// import re.zip.famely_tree.srv.FamelyTreeElement;
 // import re.zip.famely_tree.srv.Service;
 import re.zip.famely_tree.writer.FileHandler;
 
@@ -49,7 +50,7 @@ public class Main {
     static FamelyTree simpleTree() {
 
         // FamelyTree tree = new FamelyTree();
-        FamelyTree tree = new FamelyTree();
+        FamelyTree tree = new FamelyTree<>();
 
 
         Human viktor = new Human("Виктор", "Кондрухов", LocalDate.of(1936, 1, 1), Gender.Male);

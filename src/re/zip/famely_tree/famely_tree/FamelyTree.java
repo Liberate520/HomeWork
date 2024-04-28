@@ -3,17 +3,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import re.zip.famely_tree.humans.Human;
-import re.zip.famely_tree.srv.HumanComparatorByFirstName;
-import re.zip.famely_tree.srv.HumanIterator;
-import re.zip.famely_tree.srv.HumanComparatorByBirthDate;
-import re.zip.famely_tree.srv.HumanComparatorByFamelyName;
+// import re.zip.famely_tree.humans.Human;
+import re.zip.famely_tree.srv.FamelyTreeElementComparatorByFirstName;
+import re.zip.famely_tree.srv.FamelyTreeElementIterator;
+// import re.zip.famely_tree.srv.Service;
+import re.zip.famely_tree.srv.FamelyTreeElement;
+import re.zip.famely_tree.srv.FamelyTreeElementComparatorByBirthDate;
+import re.zip.famely_tree.srv.FamelyTreeElementComparatorByFamelyName;
 
-public class FamelyTree implements Serializable, Iterable<Human>{
+public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable, Iterable<E>{
+    // private Service service;
     private long humanId;
-    private List<Human> humanList;
+    private final List<E> humanList;
 
-    public FamelyTree(List<Human> humanList){
+    public FamelyTree(List<E> humanList){
         this.humanList = humanList;
     }
     
@@ -21,7 +24,7 @@ public class FamelyTree implements Serializable, Iterable<Human>{
         humanList = new ArrayList<>();
     }
 
-    public boolean addToFamely(Human human){
+    public boolean addToFamely(E human){
         if (human == null) {
             return false;
         }
@@ -35,26 +38,26 @@ public class FamelyTree implements Serializable, Iterable<Human>{
         return false;
     }
 
-    private void addHumanToParents(Human human){
-        for (Human parent : human.getListParents()) {
+    private void addHumanToParents(E human){
+        for (E parent : human.getListParents()) {
            parent.addACild(human); 
         }
     }
 
-    private void addHumanToCildren(Human human){
-        for (Human child : human.getChildren() ) {
+    private void addHumanToCildren(E human){
+        for (E child : human.getChildren() ) {
             child.addAParent(human); 
          }
     }
 
-    public List<Human> getSiblingsList (int humanId){
-        Human human = searchHumanById(humanId);
+    public List<E> getSiblingsList (int humanId){
+        E human = searchHumanById(humanId);
         if (human == null){
             return null;
         }
-        List<Human> ListSiblings = new ArrayList<>();
-        for (Human parent : human.getListParents()) {
-            for (Human child : parent.getChildren()) {
+        List<E> ListSiblings = new ArrayList<>();
+        for (E parent : human.getListParents()) {
+            for (E child : parent.getChildren()) {
                 if (!child.equals(human)){
                     ListSiblings.add(child);
                 }
@@ -63,9 +66,9 @@ public class FamelyTree implements Serializable, Iterable<Human>{
     return ListSiblings;
     }
 
-    public List<Human> searchByNane(String name){
-        List<Human> ListByName = new ArrayList<>();
-        for (Human human : humanList){
+    public List<E> searchByNane(String name){
+        List<E> ListByName = new ArrayList<>();
+        for (E human : humanList){
             if (human.getFatherName().equals(name)){
                 ListByName.add(human);
             }
@@ -75,8 +78,8 @@ public class FamelyTree implements Serializable, Iterable<Human>{
 
     public boolean setWeddding (long partner1ID, Long partner2ID, Integer getFamelyName){
         if (checkID(partner1ID) && checkID(partner2ID)){
-            Human partner1 = searchHumanById(partner1ID);
-            Human partner2 = searchHumanById(partner2ID);
+            E partner1 = searchHumanById(partner1ID);
+            E partner2 = searchHumanById(partner2ID);
             return setWeddding(partner1, partner2, getFamelyName);
         }
         return false;
@@ -88,7 +91,7 @@ public class FamelyTree implements Serializable, Iterable<Human>{
 
 //TODO необходимо что-то сделать с перводом мужских фамилий в женские и обратно
 
-    public boolean setWeddding (Human partner1, Human partner2, Integer getFamelyName){
+    public boolean setWeddding (E partner1, E partner2, Integer getFamelyName){
         if (partner1.getSpouse() == null && partner1.getSpouse() == null){
             partner1.setSpouse(partner2);
             partner2.setSpouse(partner1);
@@ -105,7 +108,7 @@ public class FamelyTree implements Serializable, Iterable<Human>{
         return false;
     }
 
-    public boolean setWeddding (Human partner1, Human partner2, String newFamelyName){
+    public boolean setWeddding (E partner1, E partner2, String newFamelyName){
         if (partner1.getSpouse() == null && partner1.getSpouse() == null){
             partner1.setSpouse(partner2);
             partner2.setSpouse(partner1);
@@ -116,7 +119,7 @@ public class FamelyTree implements Serializable, Iterable<Human>{
         return false;
     }
 
-    public boolean setWeddding (Human partner1, Human partner2){
+    public boolean setWeddding (E partner1, E partner2){
         if (partner1.getSpouse() == null && partner1.getSpouse() == null){
             partner1.setSpouse(partner2);
             partner2.setSpouse(partner1);
@@ -127,14 +130,14 @@ public class FamelyTree implements Serializable, Iterable<Human>{
 
     public boolean setDivorse (long partner1ID, Long partner2ID){
         if (checkID(partner1ID) && checkID(partner2ID)){
-            Human partner1 = searchHumanById(partner1ID);
-            Human partner2 = searchHumanById(partner2ID);
+            E partner1 = searchHumanById(partner1ID);
+            E partner2 = searchHumanById(partner2ID);
             return setDivorse(partner1, partner2);
         }
         return false;
     }
 
-    public boolean setDivorse (Human partner1, Human partner2){
+    public boolean setDivorse (E partner1, E partner2){
         if (partner1.getSpouseInfo() != null && partner1.getSpouseInfo() != null){
             partner1.setSpouse(null);
             partner1.setSpouse(null);
@@ -145,13 +148,13 @@ public class FamelyTree implements Serializable, Iterable<Human>{
 
     public boolean removeFromFamely (long humanID){
         if (checkID(humanID)){
-            Human human = searchHumanById(humanID);
+            E human = searchHumanById(humanID);
             return removeFromFamely(human);
         }
         return false;
     }
 
-    public boolean removeFromFamely(Human human){
+    public boolean removeFromFamely(E human){
         if (humanList.contains(human)){
             return humanList.remove(human);
         }
@@ -162,9 +165,9 @@ public class FamelyTree implements Serializable, Iterable<Human>{
         return id < humanId && id > 0;
     }
 
-    public Human searchHumanById(long id){
+    public E searchHumanById(long id){
         if (checkID(id)){
-            for (Human human: humanList){
+            for (E human: humanList){
                 if (human.getIdNo() == id) {
                     return human;
                 }
@@ -178,21 +181,21 @@ public class FamelyTree implements Serializable, Iterable<Human>{
     // }   
 
     public void sortByFamelyName() {
-        humanList.sort(new HumanComparatorByFamelyName());
+        humanList.sort(new FamelyTreeElementComparatorByFamelyName<>());
     }
 
     public void sortByFirstName() {
-        humanList.sort(new  HumanComparatorByFirstName());
+        humanList.sort(new  FamelyTreeElementComparatorByFirstName<>());
     }
 
     public void sortByBirthDate() {
-        humanList.sort(new  HumanComparatorByBirthDate());
+        humanList.sort(new  FamelyTreeElementComparatorByBirthDate<>());
     }
 
     
     @Override
-    public Iterator<Human> iterator() {   
-        return new HumanIterator(humanList);
+    public Iterator<E> iterator() {   
+        return new FamelyTreeElementIterator<>(humanList);
     }
 
     public String getFamelyInfo() {
@@ -200,7 +203,7 @@ public class FamelyTree implements Serializable, Iterable<Human>{
         stringBuilder.append("\nСуществ семье: ");
         stringBuilder.append(humanList.size());
         stringBuilder.append("\n");
-        for (Human human : humanList){
+        for (E human : humanList){
             stringBuilder.append(human);
             stringBuilder.append("\n");
         } 

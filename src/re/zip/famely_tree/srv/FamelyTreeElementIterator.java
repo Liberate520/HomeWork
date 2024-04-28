@@ -3,14 +3,12 @@ package re.zip.famely_tree.srv;
 import java.util.Iterator;
 import java.util.List;
 
-import re.zip.famely_tree.humans.Human;
-
-public class HumanIterator implements Iterator<Human>{
+public class FamelyTreeElementIterator<T extends FamelyTreeElement<T>> implements Iterator<T>{
     
     private int index;
-    private List<Human> humanList;
+    private List<T> humanList;
 
-    public HumanIterator(List<Human> humanList){
+    public FamelyTreeElementIterator(List<T> humanList){
         this.humanList = humanList;
     }
 
@@ -20,7 +18,7 @@ public class HumanIterator implements Iterator<Human>{
     }
     
     @Override
-    public Human next() {
+    public T next() {
         return humanList.get(index++);
     }
 }

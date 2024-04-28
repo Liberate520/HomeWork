@@ -1,5 +1,5 @@
 package re.zip.famely_tree.humans;
-import java.io.Serializable;
+// import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 // import re.zip.famely_tree.humans.Gender;
 
-public class Human implements Serializable, Comparable<Human>{
+import re.zip.famely_tree.srv.FamelyTreeElement;
+
+
+public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
     private long idNo;
     private String firstName;
     private String famelyName;
