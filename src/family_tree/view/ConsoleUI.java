@@ -123,30 +123,16 @@ public class ConsoleUI implements View {
         }
     }
 
-    public void setFather() {
+    public void setParent() {
         System.out.println("Введите ID ребенка:");
         String strChildId = scanner.nextLine();
         if (isNumeric(strChildId)) {
             long childId = Integer.parseInt(strChildId);
-            System.out.println("Введите ID отца:");
-            String strFatherId = scanner.nextLine();
-            if (isNumeric(strFatherId)) {
-                long fatherId = Integer.parseInt(strFatherId);
-                presenter.setFather(childId, fatherId);
-            }
-        }
-    }
-
-    public void setMother() {
-        System.out.println("Введите ID ребенка:");
-        String strChildId = scanner.nextLine();
-        if (isNumeric(strChildId)) {
-            long childId = Integer.parseInt(strChildId);
-            System.out.println("Введите ID матери:");
-            String strMotherId = scanner.nextLine();
-            if (isNumeric(strMotherId)) {
-                long motherId = Integer.parseInt(strMotherId);
-                presenter.setMother(childId, motherId);
+            System.out.println("Введите ID родителя:");
+            String strParentId = scanner.nextLine();
+            if (isNumeric(strParentId)) {
+                long parentId = Integer.parseInt(strParentId);
+                presenter.setParent(childId, parentId);
             }
         }
     }

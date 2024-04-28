@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import family_tree.model.family.comparator.FamilyTreeComparatorByName;
+import family_tree.model.human.Gender;
 
 
 public class FamilyTree<T extends TreeNode<T>> implements Serializable, Iterable<T> {
@@ -228,5 +229,22 @@ public class FamilyTree<T extends TreeNode<T>> implements Serializable, Iterable
 
     public void sortByName() {
         familyMembersList.sort(new FamilyTreeComparatorByName<>());
+    }
+
+    public boolean setParent(long childId, long parentId) {
+        if (checkId(childId) && checkId(parentId)) {
+            T humanChild = getById(childId);
+            T humanParent = getById(parentId);
+            return setParentToHuman(humanChild, humanParent);
+        }
+        return false;
+    }
+
+    private boolean setParentToHuman(T humanChild, T humanParent) {
+        if (humanParent.getGender() == Gender.Female){
+            return setMotherToHuman(humanChild, humanParent);
+        } else {
+            return setFatherToHuman(humanChild, humanParent);
+        }
     }
 }

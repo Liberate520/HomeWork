@@ -1,5 +1,7 @@
 package family_tree.model.family;
 
+import family_tree.model.human.Gender;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -39,4 +41,6 @@ public interface TreeNode<T> extends Serializable, Comparable<T> {
     void setFather(T human);
 
     void setMother(T human);
+
+    Gender getGender();
 }

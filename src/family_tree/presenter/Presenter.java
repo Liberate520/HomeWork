@@ -1,6 +1,7 @@
 package family_tree.presenter;
 
 import family_tree.model.service.Service;
+import family_tree.model.writer.FileHandler;
 import family_tree.view.View;
 
 public class Presenter {
@@ -9,7 +10,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        service = new Service(new FileHandler());
     }
 
     public void addFamilyMember(String gender, String name, String familyName, String strDate) {
@@ -45,13 +46,8 @@ public class Presenter {
         getFamilyTreeMembers();
     }
 
-    public void setFather(long childId, long fatherId) {
-        service.setFather(childId, fatherId);
-        getFamilyTreeMembers();
-    }
-
-    public void setMother(long childId, long motherId) {
-        service.setMother(childId, motherId);
+    public void setParent(long childId, long parentId) {
+        service.setParent(childId, parentId);
         getFamilyTreeMembers();
     }
 

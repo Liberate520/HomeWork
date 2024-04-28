@@ -4,7 +4,7 @@ import family_tree.model.family.FamilyTree;
 import family_tree.model.family.TreeNode;
 import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
-import family_tree.model.writer.FileHandler;
+
 import family_tree.model.writer.Writer;
 
 import java.time.LocalDate;
@@ -13,15 +13,14 @@ import java.time.format.DateTimeFormatter;
 public class Service {
     private FamilyTree<Human> familyTree;
     private Writer writer;
-    private TreeNode<Human> treeNode;
 
-
-    public Service(FamilyTree<Human> tree) {
+    public Service(FamilyTree<Human> tree, Writer writer) {
         this.familyTree = tree;
+        this.writer = writer;
     }
 
-    public Service() {
-        this(new FamilyTree<>());
+    public Service(Writer writer) {
+        this(new FamilyTree<>(), writer);
     }
 
     public void sortByName(FamilyTree<Human> tree) {
@@ -57,15 +56,11 @@ public class Service {
     }
 
     public boolean saveTreeToFile() {
-        String filePath = "src/family_tree/model/writer/tree";
-        writer = new FileHandler();
-        return writer.write(familyTree, filePath);
+        return writer.write(familyTree);
     }
 
     public FamilyTree<Human> getTreeFromFile() {
-        String filePath = "src/family_tree/model/writer/tree";
-        writer = new FileHandler();
-        familyTree = (FamilyTree<Human>) writer.read(filePath);
+        familyTree = (FamilyTree<Human>) writer.read();
         return familyTree;
     }
 
@@ -73,12 +68,8 @@ public class Service {
         familyTree.setWeddingById(humanId1, humanId2);
     }
 
-    public void setFather(long childId, long fatherId) {
-        familyTree.setFatherById(childId, fatherId);
-    }
-
-    public void setMother(long childId, long motherId) {
-        familyTree.setMotherById(childId, motherId);
+    public void setParent(long childId, long parentId) {
+        familyTree.setParent(childId, parentId);
     }
 
     public String getChildrenList(long parentId) {
