@@ -91,6 +91,10 @@ public class Person implements Serializable {
         return builder.substring(0, builder.length() - 2);
     }
 
+     public Person(String name, String surname, String gender, int age) {
+        // Инициализация полей объекта
+    }
+
     @Override
 public String toString() {
     return "Имя: " + name +

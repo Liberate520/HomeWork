@@ -4,15 +4,20 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import family_tree.GenealogyTree;
+import family_tree.util.GenealogyTree;
 import family_tree.person.Person;
+import family_tree.view.FamilyTreeViewImpl;
 import family_tree.writable.CSVFileHandler;
-
 
 public class Main {
     public static void main(String[] args) {
         // Создаем экземпляр обобщенного класса GenealogyTree<Person>
-        GenealogyTree<Person> tree = new GenealogyTree<>();
+            GenealogyTree<Person> tree = new GenealogyTree<>();
+            CSVFileHandler csvFileHandler = new CSVFileHandler("listfamily.csv");
+            FamilyTreeViewImpl familyTreeView = new FamilyTreeViewImpl(tree, csvFileHandler);
+
+            // Показываем меню
+        familyTreeView.showMenu();
 
         // Добавление людей в древо
         Person vasily = new Person(0, "Василий", "Male", 50);
@@ -41,7 +46,7 @@ public class Main {
         vasily.addChild(new Person(4, "Семен", "Male", 20));
 
         // Создаем экземпляр класса CSVFileHandler
-        CSVFileHandler csvFileHandler = new CSVFileHandler("listfamily.csv");
+        csvFileHandler = new CSVFileHandler("listfamily.csv");
 
         // Создаем и заполняем карту peopleMap
         Map<Integer, Person> peopleMap = new HashMap<>();
