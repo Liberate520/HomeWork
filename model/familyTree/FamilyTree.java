@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-//import homeWork.human.Human;
-import homeWork.model.human.humanComparator.HumanComparatorByDate;
-import homeWork.model.human.humanComparator.HumanComparatorByName;
 
 public class FamilyTree<T extends FamTree> implements Serializable, Iterable<T>{
     private List<T> list;
@@ -29,14 +26,10 @@ public class FamilyTree<T extends FamTree> implements Serializable, Iterable<T>{
         return stringBuilder.toString();
     }
 
-    public void sortbyName(){
-        list.sort(new HumanComparatorByName<>());
+    public List<T> getList() {
+        return list;
     }
-
-    public void sortbyDate(){
-        list.sort(new HumanComparatorByDate<>());
-    }
-
+    
     @Override
     public Iterator<T> iterator(){
         return new FamilyTreeIterator<>(list);

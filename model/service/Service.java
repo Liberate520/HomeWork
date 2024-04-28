@@ -1,13 +1,19 @@
 package homeWork.model.service;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import homeWork.model.human.Human;
 import homeWork.model.familyTree.FamilyTree;
+import homeWork.model.familyTree.FamilyTreeSorter;
 import homeWork.model.gender.Gender;
 
-
-public class Service {
+public class Service implements Writable {
     private FamilyTree<Human> tree1;
+    private FamilyTreeSorter<Human> tree2;
 
 
     public Service() {
@@ -56,10 +62,31 @@ public class Service {
     }
 
     public void sortbyName(){
-        tree1.sortbyName();
+        tree2.sortbyName();
     }
 
     public void sortbyDate(){
-        tree1.sortbyDate();
+        tree2.sortbyDate();
+    }
+
+    public void writeFile(Serializable serializable, String filename) {
+        try(ObjectOutputStream objectOutputStream  = new ObjectOutputStream(new FileOutputStream(filename))){
+            objectOutputStream .writeObject(serializable);
+            objectOutputStream.close();
+        }
+        catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public Object readFile(String filename) {
+        try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename))) {
+            Object list = objectInputStream.readObject();
+            objectInputStream.close();
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
     }
 }
