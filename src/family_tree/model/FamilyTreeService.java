@@ -44,9 +44,10 @@ public class FamilyTreeService {
         return "Человек успешно добавлен в дерево";
     }
 
-    public void setWritable(Writable writable) {
-        this.writable = writable;
+    public String getHumanList() {
+        return activeTree.getInfo();
     }
+
 
     public void sortByName(){
         activeTree.sortByName();
@@ -56,7 +57,9 @@ public class FamilyTreeService {
         activeTree.sortByDeathDate();
     }
 
-    public String getHumanList() {
-        return activeTree.getInfo();
+    public void setWritable(Writable writable) {
+        this.writable = writable;
     }
+
+
 }
