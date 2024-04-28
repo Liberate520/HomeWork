@@ -12,6 +12,9 @@ import re.zip.famely_tree.srv.FamelyTreeElementComparatorByBirthDate;
 import re.zip.famely_tree.srv.FamelyTreeElementComparatorByFamelyName;
 
 public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable, Iterable<E>{
+
+    // Почти получилось, но вот это я не смог сам додумать: "<E extends FamelyTreeElement<E>>"    
+    
     // private Service service;
     private long humanId;
     private final List<E> humanList;
