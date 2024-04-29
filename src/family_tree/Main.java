@@ -1,17 +1,19 @@
 package family_tree;
 
-import family_tree.model.*;
-import family_tree.presenter.FamilyTreePresenter;
+import family_tree.model.FamilyTreeModel;
+import family_tree.model.TextTreeReaderWriter;
 import family_tree.view.ConsoleFamilyTreeView;
+import family_tree.view.FamilyTreeView;
+import family_tree.presenter.FamilyTreePresenter;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTreeModel model = new FamilyTreeModel();
+        FamilyTreeModel model = new FamilyTreeModel(); // Инициализация модели
         ConsoleFamilyTreeView view = new ConsoleFamilyTreeView();
         FamilyTreePresenter presenter = new FamilyTreePresenter(model, view);
-        TextTreeReaderWriter readerWriter = new TextTreeReaderWriter();
+        TextTreeReaderWriter readerWriter = new TextTreeReaderWriter(); // Создание объекта для чтения/записи из/в файл
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -45,44 +47,7 @@ public class Main {
                     presenter.onSearch(name);
                     break;
                 case 5:
-                    System.out.print("Введите имя нового человека: ");
-                    String newName = scanner.nextLine();
-                    System.out.print("Введите пол нового человека: ");
-                    String newGender = scanner.nextLine();
-                    System.out.print("Введите дату рождения нового человека в формате день-месяц-год: ");
-                    String newBirthDate = scanner.nextLine();
-                    System.out.print("Введите дату смерти нового человека в формате день-месяц-год (оставьте пустым если нет информации): ");
-                    String newDeathDate = scanner.nextLine();
-                    Human newPerson = new Human(newName, newGender, newBirthDate, newDeathDate);
-                    System.out.print("Введите имена родителей через запятую (если есть): ");
-                    String parentsInput = scanner.nextLine();
-                    if (!parentsInput.isEmpty()) {
-                        String[] parentNames = parentsInput.split(",");
-                        for (String parentName : parentNames) {
-                            Human parent = model.findBeing(parentName.trim());
-                            if (parent != null) {
-                                parent.addChild(newPerson);
-                                newPerson.addParent(parent);
-                            } else {
-                                System.out.println("Человек с именем " + parentName + " не найден.");
-                            }
-                        }
-                    }
-                    System.out.print("Введите имена детей через запятую (если есть): ");
-                    String childrenInput = scanner.nextLine();
-                    if (!childrenInput.isEmpty()) {
-                        String[] childrenNames = childrenInput.split(",");
-                        for (String childName : childrenNames) {
-                            Human child = model.findBeing(childName.trim());
-                            if (child != null) {
-                                newPerson.addChild(child);
-                                child.addParent(newPerson);
-                            } else {
-                                System.out.println("Человек с именем " + childName + " не найден.");
-                            }
-                        }
-                    }
-                    model.addBeing(newPerson);
+                    model.addNewPerson(scanner, view);
                     break;
                 case 6:
                     System.out.print("Введите имя файла для сохранения: ");
@@ -92,21 +57,14 @@ public class Main {
                 case 7:
                     System.out.print("Введите имя файла для загрузки: ");
                     String loadFileName = scanner.nextLine();
-                    FamilyTreeModel loadedModel = readerWriter.loadTreeFromFile(loadFileName);
-                    if (loadedModel != null) {
-                        model = loadedModel; // Заменяем текущую модель загруженной моделью
-                        presenter = new FamilyTreePresenter(model, view); // Обновляем презентер с новой моделью
-                        System.out.println("Данные успешно загружены из файла.");
-                    } else {
-                        System.out.println("Ошибка при загрузке данных из файла.");
-                    }
+                    model = readerWriter.loadTreeFromFile(loadFileName);
+                    presenter = new FamilyTreePresenter(model, view); // Обновляем презентер с новой моделью
                     break;
-
                 case 0:
-                    System.out.println("Программа завершена.");
+                    view.displayMessage("Программа завершена.");
                     break;
                 default:
-                    System.out.println("Некорректный выбор.");
+                    view.displayErrorMessage("Некорректный выбор.");
                     break;
             }
         } while (choice != 0);

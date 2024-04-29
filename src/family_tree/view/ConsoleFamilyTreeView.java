@@ -1,10 +1,13 @@
 package family_tree.view;
-import java.util.Set;
-import family_tree.model.Human;
-import java.util.HashSet;
-import java.util.List;
 
-public class ConsoleFamilyTreeView {
+import family_tree.model.Human;
+
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
+public class ConsoleFamilyTreeView implements FamilyTreeView {
+    @Override
     public void displaySortedTree(List<Human> sortedTree) {
         System.out.println("Отсортированный список по алфавиту:");
         for (Human person : sortedTree) {
@@ -12,10 +15,12 @@ public class ConsoleFamilyTreeView {
         }
     }
 
+    @Override
     public void displayErrorMessage(String message) {
         System.err.println("Ошибка: " + message);
     }
 
+    @Override
     public void displayHumanDetails(Human human) {
         System.out.println("Имя: " + human.getName());
         System.out.println("Пол: " + human.getGender());
@@ -27,14 +32,38 @@ public class ConsoleFamilyTreeView {
         System.out.println("Дети: " + getHumanNames(human.getChildren()));
     }
 
-
-
+    @Override
     public void displayUnsortedTree(List<Human> unsortedTree) {
         System.out.println("Список членов семьи (неотсортированный):");
         Set<String> printedNames = new HashSet<>(); // Хранит имена уже выведенных людей
         for (Human person : unsortedTree) {
             displayPersonWithIndent(person, 0, printedNames);
         }
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
+    @Override
+    public void displaySaveSuccessMessage(String message) {
+        System.out.println("Успешно: " + message);
+    }
+
+    @Override
+    public void displaySaveErrorMessage(String message) {
+        System.err.println("Ошибка при сохранении: " + message);
+    }
+
+    @Override
+    public void displayLoadSuccessMessage(String message) {
+        System.out.println("Успешно: " + message);
+    }
+
+    @Override
+    public void displayLoadErrorMessage(String message) {
+        System.err.println("Ошибка при загрузке: " + message);
     }
 
     private void displayPersonWithIndent(Human person, int level, Set<String> printedNames) {
@@ -50,7 +79,6 @@ public class ConsoleFamilyTreeView {
             displayPersonWithIndent(child, level + 1, printedNames); // Увеличиваем уровень для детей
         }
     }
-
 
     private String getHumanNames(List<Human> humans) {
         StringBuilder names = new StringBuilder();
