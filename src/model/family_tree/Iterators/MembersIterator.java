@@ -1,16 +1,14 @@
-package family_tree;
-
-import human.Human;
+package model.family_tree.Iterators;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class MembersIterator implements Iterator<Human> {
+public class MembersIterator<E> implements Iterator<E> {
 
     private int index;
-    private final List<Human> familyMembers;
+    private final List<E> familyMembers;
 
-    public MembersIterator(List<Human> familyMembers) {
+    public MembersIterator(List<E> familyMembers) {
         this.familyMembers = familyMembers;
     }
 
@@ -20,7 +18,7 @@ public class MembersIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public E next() {
         return familyMembers.get(index++);
     }
 
