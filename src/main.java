@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import src.Model.FamilyTree;
-import src.Model.FileHandler;
-import src.Model.Gender;
-import src.Model.Person;
+import src.model.FamilyTree;
+import src.model.FileHandler;
+import src.model.Gender;
+import src.model.Person;
 
 import java.io.File;
 
