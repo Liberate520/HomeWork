@@ -4,11 +4,11 @@ import src.view.ConsoleUI;
 
 public class PrintList extends Command {
 
-    public PrintList (ConsoleUI consoleUI){
+    public PrintList(ConsoleUI consoleUI) {
 
         super(consoleUI);
         description = "Вывести на экран содержимое древа";
-               
+
     }
 
     @Override

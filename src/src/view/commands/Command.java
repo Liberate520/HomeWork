@@ -7,9 +7,8 @@ import java.util.Scanner;
 import src.presenter.Presenter;
 import src.view.ConsoleUI;
 
-
 public abstract class Command {
-    
+
     Scanner scanner;
     String description;
     ConsoleUI consoleUI;
@@ -20,7 +19,7 @@ public abstract class Command {
 
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 

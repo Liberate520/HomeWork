@@ -75,14 +75,12 @@ public class Model {
         return family.printList();
     }
 
-  
     @SuppressWarnings("unchecked")
     public void setFamilyTree(FamilyTree<Person> list) {
-        List<Person> lst = (List<Person>)list;
+        List<Person> lst = (List<Person>) list;
         family.setFamilyTree(lst);
     }
 
-    
     public List<Person> getFamilyTreeList() {
         List<Person> fT = family.getFamilyTree();
         return fT;
@@ -103,7 +101,7 @@ public class Model {
     }
 
     public void savingToFile(String file) throws FileNotFoundException, IOException {
-        writable.savingToFile(family , file);
+        writable.savingToFile(family, file);
     }
 
 }

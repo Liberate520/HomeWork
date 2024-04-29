@@ -1,10 +1,10 @@
 package src.model;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class Person implements Serializable, Comparable<Person>, FamilyObject<Person> {
     private String name;
@@ -18,7 +18,6 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
     private Person father;
     private Integer age;
 
-
     public Person(String name, String surname, String patronymic, Gender gender, LocalDate dateB, LocalDate dateD,
             Person mother, Person father) {
         this.name = name;
@@ -30,31 +29,31 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
         this.mother = mother;
         this.father = father;
         this.children = new ArrayList<>();
-        this.age=getAge();
+        this.age = getAge();
     }
 
     public Person(String name, Gender gender, LocalDate dateB) {
         this(name, null, null, gender, dateB, null, null, null);
     }
-    
-    public void setAge(){
+
+    public void setAge() {
         this.age = getAge();
     }
-    public Integer getAge(){
-        if (dateD==null){
+
+    public Integer getAge() {
+        if (dateD == null) {
             age = Period.between(dateB, LocalDate.now()).getYears();
             return age;
-        }else{
-            age = Period.between(dateB,dateD).getYears();
+        } else {
+            age = Period.between(dateB, dateD).getYears();
             return age;
         }
     }
 
-    
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -66,15 +65,15 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
     public String getSurname() {
         return surname;
     }
-    
+
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
     }
-    
+
     public String getPatronymic() {
         return patronymic;
     }
-    
+
     public void setGender(Gender gender) {
         this.gender = gender;
     }
@@ -82,7 +81,7 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
     public Gender getGender() {
         return gender;
     }
-    
+
     public void setDateB(LocalDate dateB) {
         this.dateB = dateB;
     }
@@ -90,11 +89,11 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
     public LocalDate getDateB() {
         return dateB;
     }
-    
+
     public void setDateD(LocalDate dateD) {
         this.dateD = dateD;
     }
-    
+
     public LocalDate getDateD() {
         return dateD;
     }
@@ -110,107 +109,105 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
     public void setFather(Person father) {
         this.father = father;
     }
-    
+
     public Person getFather() {
         return father;
     }
 
-    
-    public List<Person> getChildren(){
+    public List<Person> getChildren() {
         return children;
     }
-    
 
     // public Integer getAge(Person pers){
-    //     Integer years;
-    //     if (pers.getDateD()==null){
-    //         years = Period.between(pers.getDateB(), LocalDate.now()).getYears();
-    //         return years;
-    //     }else{
-    //         years = Period.between(pers.getDateB(), pers.getDateD()).getYears();
-    //         return years;
-    //     }
+    // Integer years;
+    // if (pers.getDateD()==null){
+    // years = Period.between(pers.getDateB(), LocalDate.now()).getYears();
+    // return years;
+    // }else{
+    // years = Period.between(pers.getDateB(), pers.getDateD()).getYears();
+    // return years;
     // }
-    
+    // }
+
     // public String toString(){
-    //     String ps=getPersCard().toString();
-    //     return ps;
+    // String ps=getPersCard().toString();
+    // return ps;
 
     // }
 
     @SuppressWarnings("unused")
-    public String getNumOfChild (Person pers){
-        children= pers.getChildren();
+    public String getNumOfChild(Person pers) {
+        children = pers.getChildren();
         if (children != null) {
-            int count=0;
+            int count = 0;
             for (Person person : children) {
                 count++;
             }
             String num = Integer.toString(count);
             return "Кол-во детей:" + num;
-        }else{
+        } else {
             return "Детей нет";
         }
-        
+
     }
-    
+
     // public String getStatusLiveOrDead(LocalDate dateD){
-    //     if (dateD== null) {
-    //         return "Жива";
-            
-    //     }
-    //     return "Умерла:" + dateD;
+    // if (dateD== null) {
+    // return "Жива";
+
+    // }
+    // return "Умерла:" + dateD;
     // }
 
-    public String getStatusLiveOrDead(Person pers){
-        if (pers.getDateD()== null) {
-            if (pers.getGender()== Gender.female) {
-                return "Жива";                
-            }else{
+    public String getStatusLiveOrDead(Person pers) {
+        if (pers.getDateD() == null) {
+            if (pers.getGender() == Gender.female) {
+                return "Жива";
+            } else {
                 return "Жив";
             }
-            
-        }else{
+
+        } else {
             if (pers.getGender() == Gender.female) {
-                return "Умерла:" + pers.getDateD();                
-            }else{
+                return "Умерла:" + pers.getDateD();
+            } else {
                 return "Умер:" + pers.getDateD();
             }
         }
     }
 
-    public StringBuilder getOffspring(Person pers){
-        StringBuilder child= new StringBuilder();
+    public StringBuilder getOffspring(Person pers) {
+        StringBuilder child = new StringBuilder();
         if (pers.getChildren().isEmpty()) {
             child.append("");
-            return child;                       
-        }else{
-        child.append("Дети: ");       
-        for (int i=0; i< pers.getChildren().size(); i++){
-            child.append(pers.getChildren().get(i).getName());}
+            return child;
+        } else {
+            child.append("Дети: ");
+            for (int i = 0; i < pers.getChildren().size(); i++) {
+                child.append(pers.getChildren().get(i).getName());
+            }
             return child;
         }
     }
-    
-    public void getParent (Person parent){
-        if (parent.getGender().equals(Gender.male)){
+
+    public void getParent(Person parent) {
+        if (parent.getGender().equals(Gender.male)) {
             setFather(parent);
-        }
-        else if (parent.getGender().equals(Gender.female)) {
+        } else if (parent.getGender().equals(Gender.female)) {
             setMother(parent);
-            
+
         }
     }
-    
+
     public void setChild(Person child) {
         if (!children.contains(child)) {
             children.add(child);
-            
+
         }
 
     }
 
-    public StringBuilder getPersCard(Person Person){
+    public StringBuilder getPersCard(Person Person) {
         StringBuilder pc = new StringBuilder();
         pc.append("_____Личная карточка____\n");
         pc.append("Имя: ");
@@ -234,20 +231,8 @@ public class Person implements Serializable, Comparable<Person>, FamilyObject<Pe
     }
 
     @Override
-    public int compareTo(Person o){
-        return name.compareTo(o.name);        
+    public int compareTo(Person o) {
+        return name.compareTo(o.name);
     }
 
-  
-
-  
-
-    
-
-
-   
-   
-  
-
-  
 }

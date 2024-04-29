@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public interface Writable {
 
-    void savingToFile (Serializable serializable, String filePath ) throws FileNotFoundException, IOException;
+    void savingToFile(Serializable serializable, String filePath) throws FileNotFoundException, IOException;
 
     Object fileUpload(File filePath) throws FileNotFoundException, IOException, ClassNotFoundException;
 }

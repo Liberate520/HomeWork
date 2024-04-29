@@ -69,7 +69,7 @@ public class ConsoleUI implements View {
     }
 
     public void addPerson() {
-               
+
         printAnswer("Введите имя");
         String name = enterString();
         Gender gendr = userGenderEntry();
@@ -99,8 +99,7 @@ public class ConsoleUI implements View {
                 wrk = false;
             } else {
                 printAnswer(ERROR_ENTER);
-                
-                
+
             }
         }
         return gender;

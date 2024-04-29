@@ -78,11 +78,8 @@ public class FamilyTree<E extends FamilyObject<E>> implements Serializable, Iter
         return true;
     }
 
-   
     public void setFamilyTree(List<E> listPersons) {
         this.listPersons = listPersons;
     }
-
-    
 
 }

@@ -43,15 +43,14 @@ public class Presenter {
         model.printList();
     }
 
-    public boolean fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException{
+    public boolean fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException {
         model.fileUpload(file);
         return true;
     }
 
-    public boolean savingToFile(String file) throws FileNotFoundException, IOException{
+    public boolean savingToFile(String file) throws FileNotFoundException, IOException {
         model.savingToFile(file);
         return true;
     }
-
 
 }

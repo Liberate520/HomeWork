@@ -4,8 +4,6 @@ import src.view.ConsoleUI;
 
 public class Kinship extends Command {
 
-    
-
     public Kinship(ConsoleUI consoleUI) {
         super(consoleUI);
         description = "установить родсвенную связь(родитель , ребенок)";
@@ -16,5 +14,3 @@ public class Kinship extends Command {
         consoleUI.kinship();
     }
 }
-
-   

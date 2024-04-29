@@ -9,5 +9,3 @@ public class PersonComparatorByAge<E extends FamilyObject<E>> implements Compara
         return Integer.compare(o1.getAge(), o2.getAge());
     }
 }
-
-   
