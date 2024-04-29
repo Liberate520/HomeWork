@@ -4,7 +4,7 @@ import family_TREE.view.Console;
 
 public class AddHuman extends Command{
     public AddHuman(Console console){
-        super("Добавить человека", console);
+        super("Добавить нового человека", console);
     }
 
     @Override

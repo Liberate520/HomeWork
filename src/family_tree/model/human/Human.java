@@ -44,13 +44,12 @@ public class Human implements TreeNode<Human> {
         }
      }
 
-     public boolean addParent(Human parent) {
+     public void addParent(Human parent) {
         if (parent.getGender().equals(Gender.Male)) {
             setFather(parent);
         } else if (parent.getGender().equals(Gender.Female)) {
             setMother(parent);
         }
-        return true;
      }
 
      public void setGender(Gender gender) {this.gender = gender;}

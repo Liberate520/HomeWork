@@ -6,52 +6,54 @@ import java.util.Scanner;
 public class Console implements View {
     private static Presenter presenter;
     private Scanner scanner;
-    private MainMenu menu;
     private boolean work;
+    private final MainMenu mainMenu;
 
     public Console() {
         presenter = new Presenter(this);
         scanner = new Scanner(System.in);
-        menu = new MainMenu(this);
         work = true;
+        mainMenu = new MainMenu(this);
     }
 
     @Override
     public void start() {
         System.out.println("Добрый день! Выбирите дейстивие:");
         while (work) {
-            System.out.println("1. Добавить нового человека");
-            System.out.println("2. Получить список людей");
-            System.out.println("3. Отсортировать по имени");
-            System.out.println("4. Отсортировать по возрасту");
-            System.out.println("5. Закончить работу");
-            String choice = scanner.nextLine();
-            switch (choice) {
-                case "1":
-                    addHuman();
-                    break;
-                case "2":
-                    getHumanList();
-                    break;
-                case "3":
-                    sortByName();
-                    break;
-                case "4":
-                    sortByDeathDate();
-                    break;
-                case "5":
-                    finish();
-                    break;
-                default:
-                    error();
-            }
+            System.out.println(mainMenu.getMenu());
+            String strChoice = scanner.nextLine();
+//          метод проверки на валидность strChoice -> error()
+            int choice = Integer.parseInt(strChoice);
+            mainMenu.execute(choice);
         }
-//        while (work){
-//            System.out.println(menu.print());
-//            String choice = scanner.nextLine();
-//            menu.execute(choice);
-//        }
     }
+//            System.out.println("1. Добавить нового человека");
+//            System.out.println("2. Получить список людей");
+//            System.out.println("3. Отсортировать по имени");
+//            System.out.println("4. Отсортировать по возрасту");
+//            System.out.println("5. Закончить работу");
+//            String choice = scanner.nextLine();
+//            switch (choice) {
+//                case "1":
+//                    addHuman();
+//                    break;
+//                case "2":
+//                    getHumanList();
+//                    break;
+//                case "3":
+//                    sortByName();
+//                    break;
+//                case "4":
+//                    sortByDeathDate();
+//                    break;
+//                case "5":
+//                    finish();
+//                    break;
+//                default:
+//                    error();
+//            }
+//        }
+//    }
 
     private void error() {
         System.out.println("Введено_неверное_значение");
@@ -81,8 +83,7 @@ public class Console implements View {
     }
 
     public void sortByName() {
-        presenter.sortByName()
-        ;
+        presenter.sortByName();
     }
 
     public void sortByDeathDate() {

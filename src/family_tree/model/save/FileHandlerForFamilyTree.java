@@ -5,7 +5,7 @@ import family_TREE.model.human.Human;
 import family_TREE.model.save.base.FileHandler;
 import java.io.Serializable;
 
-public class FileHandlerForFamilyTree extends FileHandler implements family_tree.model.save.Writable {
+public class FileHandlerForFamilyTree extends FileHandler implements Writable {
     private String filePath = "tree.out";
 
     public void setFilePath(String filePath) {
