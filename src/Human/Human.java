@@ -1,12 +1,14 @@
 package Human;
 
+import javax.swing.tree.TreeNode;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
-public class Human implements Serializable{
+public class Human implements TreeNode<Human> {
     private int id;
     private String name;
     private String secondName;
@@ -256,4 +258,5 @@ public class Human implements Serializable{
         }
         return false;
     }
+
 }
