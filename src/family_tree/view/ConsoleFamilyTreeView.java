@@ -1,7 +1,35 @@
+//package family_tree.view;
+//
+//import family_tree.model.Human;
+//
+//import java.util.List;
+//
+//public class ConsoleFamilyTreeView {
+//    public void displaySortedTree(List<Human> sortedTree) {
+//        System.out.println("Отсортированный список по алфавиту:");
+//        for (Human person : sortedTree) {
+//            System.out.println(person.getName() + " - " + person.getBirthDate());
+//        }
+//    }
+//
+//    public void displayErrorMessage(String message) {
+//        System.err.println("Ошибка: " + message);
+//    }
+//
+//    public void displayHumanDetails(Human human) {
+//        System.out.println("Имя: " + human.getName());
+//        System.out.println("Пол: " + human.getGender());
+//        System.out.println("Дата рождения: " + human.getBirthDate());
+//        System.out.println("Дата смерти: " + (human.getDeathDate() != null ? human.getDeathDate() : "Жив"));
+//        System.out.println("Родители: " + human.getParents());
+//        System.out.println("Дети: " + human.getChildren());
+//    }
+//}
+
 package family_tree.view;
-
+import java.util.Set;
 import family_tree.model.Human;
-
+import java.util.HashSet;
 import java.util.List;
 
 public class ConsoleFamilyTreeView {
@@ -20,8 +48,47 @@ public class ConsoleFamilyTreeView {
         System.out.println("Имя: " + human.getName());
         System.out.println("Пол: " + human.getGender());
         System.out.println("Дата рождения: " + human.getBirthDate());
-        System.out.println("Дата смерти: " + (human.getDeathDate() != null ? human.getDeathDate() : "Жив"));
-        System.out.println("Родители: " + human.getParents());
-        System.out.println("Дети: " + human.getChildren());
+        if (human.getDeathDate() != null) {
+            System.out.println("Дата смерти: " + human.getDeathDate());
+        }
+        System.out.println("Родители: " + getHumanNames(human.getParents()));
+        System.out.println("Дети: " + getHumanNames(human.getChildren()));
+    }
+
+
+
+    public void displayUnsortedTree(List<Human> unsortedTree) {
+        System.out.println("Список членов семьи (неотсортированный):");
+        Set<String> printedNames = new HashSet<>(); // Хранит имена уже выведенных людей
+        for (Human person : unsortedTree) {
+            displayPersonWithIndent(person, 0, printedNames);
+        }
+    }
+
+    private void displayPersonWithIndent(Human person, int level, Set<String> printedNames) {
+        if (!printedNames.contains(person.getName())) { // Проверяем, был ли человек уже выведен
+            StringBuilder indent = new StringBuilder();
+            for (int i = 0; i < level; i++) {
+                indent.append("  "); // Добавляем отступ для каждого уровня
+            }
+            System.out.println(indent.toString() + person.getName() + " - " + person.getBirthDate());
+            printedNames.add(person.getName()); // Добавляем имя человека в множество выведенных
+        }
+        for (Human child : person.getChildren()) {
+            displayPersonWithIndent(child, level + 1, printedNames); // Увеличиваем уровень для детей
+        }
+    }
+
+
+    private String getHumanNames(List<Human> humans) {
+        StringBuilder names = new StringBuilder();
+        for (Human human : humans) {
+            names.append(human.getName()).append(", ");
+        }
+        // Убираем последнюю запятую и пробел
+        if (names.length() > 0) {
+            names.setLength(names.length() - 2);
+        }
+        return names.toString();
     }
 }

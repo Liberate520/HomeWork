@@ -1,9 +1,13 @@
 package family_tree.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements LivingBeing {
+public class Human implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String id;
     private String name;
     private String gender;
     private String birthDate;
@@ -20,13 +24,22 @@ public class Human implements LivingBeing {
         this.children = new ArrayList<>();
     }
 
-    public void addChild(Human child) {
-        this.children.add(child);
-        child.addParent(this);
-    }
+    // Геттеры и сеттеры для полей
 
     public void addParent(Human parent) {
-        this.parents.add(parent);
+        parents.add(parent);
+    }
+
+    public void addChild(Human child) {
+        children.add(child);
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public List<Human> getParents() {
