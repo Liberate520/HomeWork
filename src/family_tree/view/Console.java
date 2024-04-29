@@ -4,23 +4,22 @@ import family_TREE.presenter.Presenter;
 import java.util.Scanner;
 
 public class Console implements View {
-
     private static Presenter presenter;
     private Scanner scanner;
-    private Menu menu;
+    private MainMenu menu;
     private boolean work;
 
     public Console() {
         presenter = new Presenter(this);
         scanner = new Scanner(System.in);
-        menu = new Menu(this);
+        menu = new MainMenu(this);
         work = true;
     }
 
     @Override
     public void start() {
         System.out.println("Добрый день! Выбирите дейстивие:");
-        while (true) {
+        while (work) {
             System.out.println("1. Добавить нового человека");
             System.out.println("2. Получить список людей");
             System.out.println("3. Отсортировать по имени");
@@ -32,7 +31,7 @@ public class Console implements View {
                     addHuman();
                     break;
                 case "2":
-                    getHumanList(presenter);
+                    getHumanList();
                     break;
                 case "3":
                     sortByName();
@@ -41,9 +40,10 @@ public class Console implements View {
                     sortByDeathDate();
                     break;
                 case "5":
+                    finish();
                     break;
                 default:
-                    System.out.println("Введено неверное значение");
+                    error();
             }
         }
 //        while (work){
@@ -53,9 +53,16 @@ public class Console implements View {
 //        }
     }
 
+    private void error() {
+        System.out.println("Введено_неверное_значение");
+    }
 
+    public void finish() {
+        System.out.println("До новых встреч!");
+        work = false;
+    }
 
-    private void addHuman() {
+    public void addHuman() {
         System.out.println("Укажите имя");
         String name = scanner.nextLine();
         System.out.println("Укажите пол");
@@ -73,12 +80,12 @@ public class Console implements View {
         presenter.getHumanList();
     }
 
-    private static void sortByName() {
+    public void sortByName() {
         presenter.sortByName()
         ;
     }
 
-    private void sortByDeathDate() {
+    public void sortByDeathDate() {
         presenter.sortByDeathDate();
     }
 
