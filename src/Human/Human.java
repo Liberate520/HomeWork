@@ -1,6 +1,6 @@
 package Human;
 
-import javax.swing.tree.TreeNode;
+import Human.Gender;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class Human implements TreeNode<Human> {
+public class Human implements Methods<Human> {
     private int id;
     private String name;
     private String secondName;
@@ -67,7 +67,7 @@ public class Human implements TreeNode<Human> {
         this.gender = gender;
     }
 
-    public Gender getGender(){
+    public Gender  getGender(){
         return gender;
     }
     public void setName(String name){
@@ -91,6 +91,10 @@ public class Human implements TreeNode<Human> {
     }
     public String getSecondName(){
         return secondName;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
     }
 
 
