@@ -60,6 +60,4 @@ public class FamilyTreeService {
     public void setWritable(Writable writable) {
         this.writable = writable;
     }
-
-
 }
