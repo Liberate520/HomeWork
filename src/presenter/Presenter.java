@@ -1,10 +1,10 @@
 package presenter;
 
-import model.FamilyTree.FamilyTree;
-import model.Human.Gender;
+
+import model.Human.*;
+import model.FamilyTree.*;
 import view.View;
 
-import java.security.Provider;
 import java.time.LocalDate;
 
 public class Presenter {
@@ -16,12 +16,12 @@ public class Presenter {
         service = new Service();
     }
 
-    public void addHuman(String name, String secondName, String gender, LocalDate birthDate) {
+    public void addHuman(String name, String secondName, Gender gender, LocalDate birthDate) {
         service.addHuman(name, secondName, gender, birthDate);
         getHumanListInfo();
     }
 
-    public String getHumanListInfo(){
+    public void getHumanListInfo(){
         String answer =  service.getHumanListInfo();
         view.printAnswer(answer);
     }

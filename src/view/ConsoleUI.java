@@ -1,5 +1,6 @@
 package view;
 
+import model.Human.Gender;
 import model.Human.Human;
 import presenter.Presenter;
 
@@ -58,7 +59,7 @@ public class ConsoleUI implements View{
         System.out.println("Укажите фамилию человека:");
         String secondName = scanner.nextLine();
         System.out.println("Выберите пол человека:");
-        String gender = scanner.nextLine();
+        Gender gender = Gender.valueOf(scanner.nextLine());
         System.out.println("Укажите дату рождения человека:");
         LocalDate birthDate = LocalDate.parse(scanner.nextLine());
 
