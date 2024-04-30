@@ -1,10 +1,10 @@
-package Human;
+package model.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface Methods<T> extends Serializable {
+public interface TreeNode<T> extends Serializable {
     void setId(int id);
     int getId();
     T getFather();

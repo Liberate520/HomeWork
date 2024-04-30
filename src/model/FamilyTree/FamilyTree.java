@@ -1,13 +1,13 @@
-package FamilyTree;
+package model.FamilyTree;
 
-import Human.Methods;
+import model.Human.TreeNode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends Methods<E>> implements Serializable, Iterable<E>{
+public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E>{
     private int countPeople;
     private List<E> humanList;
     public FamilyTree(List<E> humanList) {
@@ -89,11 +89,11 @@ public class FamilyTree<E extends Methods<E>> implements Serializable, Iterable<
     }
 
     public void sortByName(){
-        humanList.sort(new FamilyTreeComparatorByName<>());
+        humanList.sort(new FamilyTreeComparatorByName<E>());
     }
 
     public void sortByBirthDate(){
-        humanList.sort(new FamilyTreeComparatorByBirthDate<>());
+        humanList.sort(new FamilyTreeComparatorByBirthDate<E>());
     }
     @Override
     public Iterator<E> iterator(){

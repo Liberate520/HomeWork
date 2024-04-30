@@ -1,11 +1,11 @@
-package FamilyTree;
+package model.FamilyTree;
 
-import Human.Methods;
+import model.Human.TreeNode;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator<T extends Methods<T>> implements Iterator<T>{
+public class FamilyTreeIterator<T extends TreeNode<T>> implements Iterator<T>{
     private final List<T> list;
     private int index;
 

@@ -1,14 +1,11 @@
-package Human;
+package model.Human;
 
-import Human.Gender;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
-public class Human implements Methods<Human> {
+public class Human implements TreeNode<Human> {
     private int id;
     private String name;
     private String secondName;
