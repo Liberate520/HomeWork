@@ -1,14 +1,16 @@
 package presenter;
 
 import model.FamilyTreeService;
+import model.familyTree.FamilyTree;
+import model.human.Human;
 import view.View;
 
 public class Presenter {
     private View view;
     private FamilyTreeService service;
 
-    public Presenter(View view) {
-        service = new FamilyTreeService();
+    public Presenter(View view, FamilyTree<Human> familyTree) {
+        service = new FamilyTreeService(familyTree);
         this.view = view;
     }
 

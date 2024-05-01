@@ -1,6 +1,5 @@
 package view;
 
-import model.FamilyTreeService;
 import model.familyTree.FamilyTree;
 import model.human.Human;
 import presenter.Presenter;
@@ -17,9 +16,9 @@ public class ConsoleUI implements View {
     private Menu menu;
     private boolean work;
 
-    public ConsoleUI() {
+    public ConsoleUI(FamilyTree<Human> familyTree) {
         scanner = new Scanner(System.in);
-        presenter = new Presenter((view.View) this);
+        presenter = new Presenter(this, familyTree);
         work = true;
         menu = new Menu(this);
     }

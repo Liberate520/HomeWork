@@ -11,7 +11,6 @@ public class Menu {
 
     public Menu(ConsoleUI consoleUI) {
         commandList = new ArrayList<>();
-        commandList.add(new LoadTree(consoleUI));
         commandList.add(new ViewTree(consoleUI));
         commandList.add(new AddHuman(consoleUI));
         commandList.add(new GetHumanList(consoleUI));

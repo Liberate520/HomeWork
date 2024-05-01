@@ -40,11 +40,12 @@ public class Main {
 
     public static void main(String[] args) {
         FamilyTree<Human> tree = testTree();
-        FamilyTreeService service = new FamilyTreeService();
+
+        FamilyTreeService service = new FamilyTreeService(tree);
         service.setWritable(new FileHandlerForFamilyTree());
         service.save();
 
-        View view = new ConsoleUI();
+        View view = new ConsoleUI(tree);
         view.start();
     }
 }
