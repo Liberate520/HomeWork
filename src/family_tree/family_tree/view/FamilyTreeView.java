@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FamilyTreeView {
-    private FamilyTreePresenter presenter; // Добавлено поле для FamilyTreePresenter
+    private FamilyTreePresenter presenter;
     private Scanner scanner;
 
-    public FamilyTreeView(FamilyTreePresenter presenter) { // Добавлен параметр в конструктор
-        this.presenter = presenter; // Инициализация FamilyTreePresenter
+    public FamilyTreeView(FamilyTreePresenter presenter) {
+        this.presenter = presenter;
         this.scanner = new Scanner(System.in);
     }
 
@@ -92,6 +92,4 @@ public class FamilyTreeView {
     public void closeScanner() {
         scanner.close();
     }
-
-    // Другие методы для взаимодействия с пользователем
 }

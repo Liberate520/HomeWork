@@ -2,10 +2,11 @@ package family_tree.human;
 
 import family_tree.family_tree.TreeNode;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Human implements TreeNode<Human>, Comparable<Human> {
+public class Human implements TreeNode<Human>, Comparable<Human>, Serializable {
     private String name;
     private LocalDate dob, dod;
     private Gender gender;

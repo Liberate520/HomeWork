@@ -4,6 +4,7 @@ import family_tree.family_tree.model.FamilyTreeModel;
 import family_tree.human.Gender;
 import family_tree.human.Human;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,9 +29,24 @@ public class FamilyTreeService {
     }
 
     public List<Human> getFamilyMembers() {
-    return model.getFamilyMembers();
-}
+        return model.getFamilyMembers();
+    }
 
+    public void saveFamilyTreeToFile(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(model.getFamilyMembers());
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving data to file: " + e.getMessage(), e);
+        }
+    }
 
-    // Другие методы для работы с семейным деревом
+    @SuppressWarnings("unchecked")
+    public void loadFamilyTreeFromFile(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            List<Human> familyMembers = (List<Human>) ois.readObject();
+            model.setFamilyMembers(familyMembers);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Error loading data from file: " + e.getMessage(), e);
+        }
+    }
 }
