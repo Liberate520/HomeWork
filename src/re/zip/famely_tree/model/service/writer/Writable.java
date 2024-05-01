@@ -1,4 +1,4 @@
-package re.zip.famely_tree.writer;
+package re.zip.famely_tree.model.service.writer;
 
 import java.io.Serializable;
 

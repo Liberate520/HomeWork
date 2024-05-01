@@ -1,15 +1,14 @@
-package re.zip.famely_tree.famely_tree;
+package re.zip.famely_tree.model.famely_tree;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-// import re.zip.famely_tree.humans.Human;
-import re.zip.famely_tree.srv.FamelyTreeElementComparatorByFirstName;
-import re.zip.famely_tree.srv.FamelyTreeElementIterator;
-// import re.zip.famely_tree.srv.Service;
-import re.zip.famely_tree.srv.FamelyTreeElement;
-import re.zip.famely_tree.srv.FamelyTreeElementComparatorByBirthDate;
-import re.zip.famely_tree.srv.FamelyTreeElementComparatorByFamelyName;
+// import re.zip.famely_tree.model.human.Human;
+import re.zip.famely_tree.model.human.comparators.FamelyTreeElementComparatorByFirstName;
+import re.zip.famely_tree.model.famely_tree.iterators.FamelyTreeElementIterator;
+// import re.zip.famely_tree.model.service.Service;
+import re.zip.famely_tree.model.human.comparators.FamelyTreeElementComparatorByBirthDate;
+import re.zip.famely_tree.model.human.comparators.FamelyTreeElementComparatorByFamelyName;
 
 public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable, Iterable<E>{
 
@@ -58,15 +57,15 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
         if (human == null){
             return null;
         }
-        List<E> ListSiblings = new ArrayList<>();
+        List<E> listSiblings = new ArrayList<>();
         for (E parent : human.getListParents()) {
             for (E child : parent.getChildren()) {
                 if (!child.equals(human)){
-                    ListSiblings.add(child);
+                    listSiblings.add(child);
                 }
             }
         }
-    return ListSiblings;
+    return listSiblings;
     }
 
     public List<E> searchByNane(String name){
@@ -79,7 +78,7 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
     return ListByName;
     }
 
-    public boolean setWeddding (long partner1ID, Long partner2ID, Integer getFamelyName){
+    public boolean setWeddding (Integer partner1ID, Integer partner2ID, Integer getFamelyName){
         if (checkID(partner1ID) && checkID(partner2ID)){
             E partner1 = searchHumanById(partner1ID);
             E partner2 = searchHumanById(partner2ID);
@@ -88,7 +87,7 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
         return false;
     }
 
-    public boolean setWeddding (long partner1ID, Long partner2ID){
+    public boolean setWeddding (Integer partner1ID, Integer partner2ID){
         return setWeddding(partner1ID, partner2ID, 0);
     }
 
@@ -108,6 +107,7 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
             }
             return true;
         }
+        System.out.println("Не все парнеры свободны.");
         return false;
     }
 
@@ -131,7 +131,8 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
         return false;
     }
 
-    public boolean setDivorse (long partner1ID, Long partner2ID){
+
+    public boolean setDivorse (Integer partner1ID, Integer partner2ID){
         if (checkID(partner1ID) && checkID(partner2ID)){
             E partner1 = searchHumanById(partner1ID);
             E partner2 = searchHumanById(partner2ID);
@@ -179,10 +180,6 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
     return null;
     }
 
-    // public void addToFamely(Human human){
-    //     humanList.add(human);
-    // }   
-
     public void sortByFamelyName() {
         humanList.sort(new FamelyTreeElementComparatorByFamelyName<>());
     }
@@ -201,7 +198,7 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
         return new FamelyTreeElementIterator<>(humanList);
     }
 
-    public String getFamelyInfo() {
+    public String getFamelyListInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\nСуществ семье: ");
         stringBuilder.append(humanList.size());
@@ -215,6 +212,6 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
 
     @Override
     public String toString() {
-        return getFamelyInfo();
+        return getFamelyListInfo();
     }
 }

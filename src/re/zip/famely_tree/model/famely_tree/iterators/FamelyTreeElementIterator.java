@@ -1,4 +1,6 @@
-package re.zip.famely_tree.srv;
+package re.zip.famely_tree.model.famely_tree.iterators;
+
+import re.zip.famely_tree.model.famely_tree.FamelyTreeElement;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,4 +1,4 @@
-package re.zip.famely_tree.srv;
+package re.zip.famely_tree.model.famely_tree;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;

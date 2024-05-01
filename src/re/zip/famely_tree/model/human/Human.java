@@ -1,13 +1,13 @@
-package re.zip.famely_tree.humans;
+package re.zip.famely_tree.model.human;
 // import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-// import re.zip.famely_tree.humans.Gender;
+// import re.zip.famely_tree.model.human.Gender;
 
-import re.zip.famely_tree.srv.FamelyTreeElement;
+import re.zip.famely_tree.model.famely_tree.FamelyTreeElement;
 
 
 public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
@@ -184,6 +184,8 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
     public String getHumanInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         // stringBuilder.append("\nID: " + getIdNo());
+        stringBuilder.append("\nID: ");
+        stringBuilder.append(getIdNo());
         stringBuilder.append("\nФИО: ");
         stringBuilder.append(bio());
         stringBuilder.append("\nВозраст: ");
@@ -201,7 +203,9 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
 
         stringBuilder.append("\nДети: ");
         stringBuilder.append(getChildrenInfo());
+
         //TODO добавить информацию о бывших супругах и, соответственно, детях от других браков
+        
         return stringBuilder.toString();
     }
 
