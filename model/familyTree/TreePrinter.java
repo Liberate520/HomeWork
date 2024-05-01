@@ -7,7 +7,7 @@ public class TreePrinter<T extends FamTree> {
         this.tree = tree;
     } 
 
-    public  String printTree() {
+    public String printTree() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Семейное дерево:\n");
         for (T element : tree) {

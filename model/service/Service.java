@@ -1,23 +1,22 @@
 package homeWork.model.service;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import homeWork.model.human.Human;
 import homeWork.model.familyTree.FamilyTree;
-import homeWork.model.familyTree.FamilyTreeSorter;
+import homeWork.model.familyTree.TreePrinter;
 import homeWork.model.gender.Gender;
 
-public class Service implements Writable {
+public class Service {
     private FamilyTree<Human> tree1;
-    private FamilyTreeSorter<Human> tree2;
+    private TreePrinter<Human> treePrinter;
+    private FileHandler fileHandler;
 
 
     public Service() {
         tree1 = new FamilyTree<>();
+        this.treePrinter = new TreePrinter<>(tree1);
+        fileHandler = new FileHandler();
     }
 
     public void addHuman(String name, LocalDate dob, LocalDate dod, Gender gender, Human mother, Human father){
@@ -37,14 +36,8 @@ public class Service implements Writable {
         addHuman(name, dob, dod, gender, null, null);
     }
 
-    public String getTree(){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Семейное дерево:\n");
-        for (Human human: tree1){
-            stringBuilder.append(human);
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
+    public String printTree() {
+        return treePrinter.printTree();
     }
 
     public Human findPerson(String name, LocalDate dob) {
@@ -56,37 +49,23 @@ public class Service implements Writable {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return getTree();
-    }
-
     public void sortbyName(){
-        tree2.sortbyName();
+        tree1.sortbyName();
     }
 
     public void sortbyDate(){
-        tree2.sortbyDate();
+        tree1.sortbyDate();
+    }
+    public void saveToFile(Serializable serializable, String filename) {
+        fileHandler.writeFile(tree1, filename);
     }
 
-    public void writeFile(Serializable serializable, String filename) {
-        try(ObjectOutputStream objectOutputStream  = new ObjectOutputStream(new FileOutputStream(filename))){
-            objectOutputStream .writeObject(serializable);
-            objectOutputStream.close();
-        }
-        catch (Exception e) {
-            System.err.println(e);
-        }
+    public Object loadFromFile(String filename) {
+        return fileHandler.readFile(filename);
     }
-
-    public Object readFile(String filename) {
-        try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename))) {
-            Object list = objectInputStream.readObject();
-            objectInputStream.close();
-            return list;
-        } catch (Exception e) {
-            System.err.println(e);
-            return null;
-        }
+    
+    @Override
+    public String toString() {
+        return printTree();
     }
 }

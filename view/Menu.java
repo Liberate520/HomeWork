@@ -7,6 +7,8 @@ import homeWork.view.command.AddHuman;
 import homeWork.view.command.Command;
 import homeWork.view.command.Finish;
 import homeWork.view.command.GetTreeList;
+import homeWork.view.command.LoadTreeFromFile;
+import homeWork.view.command.SaveTreeToFile;
 import homeWork.view.command.SortbyDate;
 import homeWork.view.command.SortbyName;
 
@@ -19,6 +21,8 @@ public class Menu {
         commands.add(new GetTreeList(console));
         commands.add(new SortbyDate(console));
         commands.add(new SortbyName(console));
+        commands.add(new LoadTreeFromFile(console));
+        commands.add(new SaveTreeToFile(console));
         commands.add(new Finish(console));
     }
 

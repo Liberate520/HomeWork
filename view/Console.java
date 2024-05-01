@@ -40,33 +40,22 @@ public class Console implements View{
         System.out.println("Введите дату рождения в формате гггг-мм-дд");
         String strdob = scanner.nextLine();
         LocalDate dob = LocalDate.parse(strdob);
+
         System.out.println("Введите дату смерти(если есть), иначе 0");
         String strdod = scanner.nextLine();
         LocalDate dod = strdod.equals("0") ? null : LocalDate.parse(strdod);
-        System.out.println("Введите пол");
-        String genderString = scanner.nextLine();
-        Gender gender=null;
-        if (genderString.equalsIgnoreCase("Male")) {
-            gender = Gender.Male;
-        } else if (genderString.equalsIgnoreCase("Female")) {
-            gender = Gender.Female;
-        }
+
+        System.out.println("Введите пол (Male/Female)");
+        Gender gender = Gender.valueOf(scanner.nextLine());
+        
         System.out.println("Введите имя матери");
         String motherName = scanner.nextLine();
-        LocalDate dobMother = null;
-        if(!motherName.isEmpty()){
-            System.out.println("Введите день рождения матери");
-            String strdobMother = scanner.nextLine();
-            dobMother = LocalDate.parse(strdobMother);
-        }
+        LocalDate dobMother = !motherName.isEmpty() ? LocalDate.parse(scanner.nextLine()) : null;
+
         System.out.println("Введите имя отца");
         String fatherName = scanner.nextLine();
-        LocalDate dobFather = null;
-        if(!fatherName.isEmpty()){
-            System.out.println("Введите день рождения отца");
-            String strdobFather = scanner.nextLine();
-            dobFather = LocalDate.parse(strdobFather);
-        }
+        LocalDate dobFather = !fatherName.isEmpty() ? LocalDate.parse(scanner.nextLine()) : null;
+
         presenter.addHuman(name, dob, dod, gender, service.findPerson(motherName, dobMother), service.findPerson(fatherName, dobFather));
     }
 
@@ -85,6 +74,20 @@ public class Console implements View{
     public void finish(){
         System.out.println("Завершение работы...");
         flag = false;
+    }
+
+    public void saveTreeToFile() {
+        System.out.println("Введите имя файла для сохранения дерева:");
+        String filename = scanner.nextLine();
+        service.saveToFile(service.printTree(),filename);
+        System.out.println("Дерево успешно сохранено в файл " + filename);
+    }
+
+    public void loadTreeFromFile() {
+        System.out.println("Введите имя файла для загрузки дерева:");
+        String filename = scanner.nextLine();
+        service.loadFromFile(filename);
+        System.out.println("Дерево успешно загружено из файла " + filename);
     }
 
     @Override

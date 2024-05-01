@@ -1,6 +1,8 @@
 package homeWork.presenter;
 
 import homeWork.view.View;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import homeWork.model.gender.Gender;
@@ -23,7 +25,7 @@ public class Presenter {
     }
 
     public void getTree(){
-        String FamTree = service.getTree();
+        String FamTree = service.toString();
         view.print(FamTree);
     }
 
@@ -37,4 +39,11 @@ public class Presenter {
         getTree();
     }
     
+    public void saveTreeToFile(Serializable serializable, String filename) {
+        service.saveToFile(service.printTree(), filename);
+    }
+
+    public void loadTreeFromFile(String filename) {
+        service = (Service) service.loadFromFile(filename);
+    }
 }
