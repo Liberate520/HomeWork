@@ -1,5 +1,8 @@
 package view;
 
+import model.FamilyTreeService;
+import model.familyTree.FamilyTree;
+import model.human.Human;
 import presenter.Presenter;
 import view.util.ConsoleColors;
 
@@ -8,7 +11,7 @@ import java.util.Scanner;
 
 public class ConsoleUI implements View {
 
-    private static final String INPUT_ERROR = ConsoleColors.RED_BOLD + "Wrong Namber!" + ConsoleColors.RESET;
+    private static final String INPUT_ERROR = ConsoleColors.RED_BOLD + "Wrong Number!" + ConsoleColors.RESET;
     private Presenter presenter;
     private Scanner scanner;
     private Menu menu;
@@ -46,6 +49,10 @@ public class ConsoleUI implements View {
 
     public void sortByName() {
         presenter.sortByName();
+    }
+
+    public void loadTree () {
+        presenter.loadTree();
     }
 
     public void getHumanList() {
@@ -93,7 +100,7 @@ public class ConsoleUI implements View {
     }
 
     private boolean checkCommand(int numCommand) {
-        if (numCommand < menu.getSize()) {
+        if (numCommand <= menu.getSize()) {
             return true;
         } else {
             inputError();

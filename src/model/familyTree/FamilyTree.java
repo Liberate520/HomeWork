@@ -148,9 +148,9 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Helpers.formatDataString("Total humans in tree: ", String.valueOf(peopleCount)));
+        sb.append(Helpers.formatDataString("Total humans in tree", String.valueOf(peopleCount)));
         for (E human : humanList) {
-            sb.append("\n===============\n");
+            sb.append("===============\n");
             sb.append(human);
         }
         return sb.toString();

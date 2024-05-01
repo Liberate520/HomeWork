@@ -9,7 +9,7 @@ import view.View;
 import java.time.LocalDate;
 
 public class Main {
-    static FamilyTree testTree() {
+    static FamilyTree<Human> testTree() {
         Human peter = new Human("Peter", "Ryzhov", Gender.Male,
                 LocalDate.of(1981, 12, 14));
 
@@ -19,7 +19,7 @@ public class Main {
         Human tanya = new Human("Tatiana", "Moiseeva", Gender.Female, LocalDate.of(1952, 5, 2));
         Human vadim = new Human("Vadim", "Ryzhov", Gender.Male, LocalDate.of(1942, 3, 7));
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree();
 
         familyTree.add(peter);
         familyTree.add(katya);
@@ -39,12 +39,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-//        System.out.println(testTree());
         FamilyTree<Human> tree = testTree();
-
-        System.out.println(tree);
-
-        FamilyTreeService service = new FamilyTreeService(tree);
+        FamilyTreeService service = new FamilyTreeService();
         service.setWritable(new FileHandlerForFamilyTree());
         service.save();
 

@@ -15,26 +15,26 @@ public class FamilyTreeService {
         this.activeTree = activeTree;
     }
 
-    public FamilyTreeService(){
+    public FamilyTreeService() {
         activeTree = new FamilyTree<>();
     }
 
-    public boolean save(){
-        if (writable == null){
+    public boolean save() {
+        if (writable == null) {
             return false;
         }
         return writable.save(activeTree);
     }
 
-    public boolean load(){
-        if (writable == null){
+    public boolean load() {
+        if (writable == null) {
             return false;
         }
         activeTree = writable.read();
         return true;
     }
 
-    public String addHuman(String name, String secondName, String genderString, String birthDate){
+    public String addHuman(String name, String secondName, String genderString, String birthDate) {
 //        Human father = activeTree.getById(idFather);
 //        Human mother = activeTree.getById(idMother);
         Gender gender = Gender.valueOf(genderString);
@@ -48,11 +48,15 @@ public class FamilyTreeService {
         this.writable = writable;
     }
 
-    public void sortByName(){
+    public void sortByName() {
         activeTree.sortByName();
     }
 
-    public void sortByDayOfBirth(){
+    public void viewTree() {
+        activeTree.getInfo();
+    }
+
+    public void sortByDayOfBirth() {
         activeTree.sortByDayOfBirth();
     }
 
