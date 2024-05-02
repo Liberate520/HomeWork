@@ -8,7 +8,7 @@ public class FileHandler implements model.file_handler.Writable {
 
     @Override
     public void saveTree(FamilyTree familyTree) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream("C:\\Users\\masle\\OneDrive\\Desktop\\Katherine\\GeekBrains\\Объектно-ориентированное программирование (Java)\\model.family_tree.FamilyTree\\SavedTree.txt");
+        FileOutputStream outputStream = new FileOutputStream("C:\\Users\\masle\\OneDrive\\Desktop\\Katherine\\GeekBrains\\Объектно-ориентированное программирование (Java)\\SavedTree.txt");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 
         objectOutputStream.writeObject(familyTree);
@@ -16,7 +16,7 @@ public class FileHandler implements model.file_handler.Writable {
     }
 
     public FamilyTree downloadTree() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\masle\\OneDrive\\Desktop\\Katherine\\GeekBrains\\Объектно-ориентированное программирование (Java)\\model.family_tree.FamilyTree\\SavedTree.txt");
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\masle\\OneDrive\\Desktop\\Katherine\\GeekBrains\\Объектно-ориентированное программирование (Java)\\SavedTree.txt");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
         FamilyTree familyTree = (FamilyTree) objectInputStream.readObject();

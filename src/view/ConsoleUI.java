@@ -3,6 +3,7 @@ package view;
 import model.human.Gender;
 import presenter.Presenter;
 
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -33,7 +34,7 @@ public class ConsoleUI implements View{
     }
 
     @Override
-    public void start() {
+    public void start() throws IOException, ClassNotFoundException {
         hello();
         while (work){
             printMenu();
@@ -44,6 +45,14 @@ public class ConsoleUI implements View{
     public void finish() {
         System.out.println("До новых встреч!");
         work = false;
+    }
+
+    public void saveTree() throws IOException {
+        presenter.saveTree();
+    }
+
+    public void downloadTree() throws IOException, ClassNotFoundException {
+        presenter.downloadTree();
     }
 
     public void sortByAge() {
@@ -113,7 +122,7 @@ public class ConsoleUI implements View{
         System.out.println("Доброго времени суток!");
     }
 
-    private void execute(){
+    private void execute() throws IOException, ClassNotFoundException {
         String line = scanner.nextLine();
         if (checkTextForInt(line)){
             int numCommand = Integer.parseInt(line);

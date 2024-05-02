@@ -1,9 +1,11 @@
 package model.service;
 
 import model.family_tree.FamilyTree;
+import model.file_handler.FileHandler;
 import model.human.Gender;
 import model.human.Human;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Service {
@@ -63,6 +65,16 @@ public class Service {
 
     public void sortByAge() {
         family.sortByAge();
+    }
+
+    public void saveTree() throws IOException {
+        FileHandler fh = new FileHandler();
+        fh.saveTree(family);
+    }
+
+    public void downloadTree() throws IOException, ClassNotFoundException {
+        FileHandler fh = new FileHandler();
+        this.family = fh.downloadTree();
     }
 
 }

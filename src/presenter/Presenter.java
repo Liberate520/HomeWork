@@ -2,6 +2,8 @@ package presenter;
 
 import model.human.Gender;
 import view.View;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import model.service.Service;
 
@@ -50,6 +52,17 @@ public class Presenter {
 
     public void sortByName() {
         service.sortByName();
+        getMembersInfo();
+    }
+
+    public void saveTree() throws IOException {
+        service.saveTree();
+        view.printAnswer("Проект сохранён");
+    }
+
+    public void downloadTree() throws IOException, ClassNotFoundException {
+        service.downloadTree();
+        view.printAnswer("Проект загружен");
         getMembersInfo();
     }
 

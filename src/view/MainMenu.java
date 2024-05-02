@@ -2,6 +2,7 @@ package view;
 
 import view.commands.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class MainMenu {
         commandList.add(new GetChildrenInfo(consoleUI));
         commandList.add(new SortByName(consoleUI));
         commandList.add(new SortByAge(consoleUI));
+        commandList.add(new SaveProject(consoleUI));
+        commandList.add(new DownloadProject(consoleUI));
         commandList.add(new Finish(consoleUI));
 
 
@@ -33,7 +36,7 @@ public class MainMenu {
         return stringBuilder.toString();
     }
 
-    public void execute(int choice){
+    public void execute(int choice) throws IOException, ClassNotFoundException {
         Command command = commandList.get(choice-1);
         command.execute();
     }
