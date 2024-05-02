@@ -33,6 +33,10 @@ public class Human implements Serializable, FamilyItem<Human> {
         this(id, name, dob, null, gender, null, null);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -84,12 +88,14 @@ public class Human implements Serializable, FamilyItem<Human> {
     }
 
     public void addParent(Human parent) {
+
         if (parent.gender.equals(Gender.Male)) {
             setFather(parent);
         }
         else if (parent.gender.equals(Gender.Female)) {
             setMother(parent);
         }
+
     }
 
     private void setMother(Human mother) {
@@ -133,10 +139,6 @@ public class Human implements Serializable, FamilyItem<Human> {
     private int getPeriod(LocalDate dob, LocalDate dod) {
         Period diff = Period.between(dob, dod);
         return diff.getYears();
-    }
-
-    private int getId() {
-        return id;
     }
 
     public String getInfo() {

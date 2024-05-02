@@ -13,8 +13,6 @@ public class FileHandler implements model.file_handler.Writable {
 
         objectOutputStream.writeObject(familyTree);
         objectOutputStream.close();
-
-        System.out.println("Сохранено!");
     }
 
     public FamilyTree downloadTree() throws IOException, ClassNotFoundException {
@@ -23,7 +21,6 @@ public class FileHandler implements model.file_handler.Writable {
 
         FamilyTree familyTree = (FamilyTree) objectInputStream.readObject();
         objectInputStream.close();
-        System.out.println("Загружено!");
         return familyTree;
     }
 }

@@ -12,12 +12,14 @@ public class MainMenu {
     public MainMenu(ConsoleUI consoleUI) {
         commandList = new ArrayList<>();
         commandList.add(new AddMember(consoleUI));
+        commandList.add(new AddParent(consoleUI));
         commandList.add(new GetMembersInfo(consoleUI));
+        commandList.add(new GetChildrenInfo(consoleUI));
         commandList.add(new SortByName(consoleUI));
         commandList.add(new SortByAge(consoleUI));
         commandList.add(new Finish(consoleUI));
-        //commandList.add(new AddParent(consoleUI));
-        //commandList.add(new GetChildrenInfo(consoleUI));
+
+
     }
 
     public String menu(){

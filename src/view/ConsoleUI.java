@@ -3,6 +3,7 @@ package view;
 import model.human.Gender;
 import presenter.Presenter;
 
+import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,6 +58,15 @@ public class ConsoleUI implements View{
         presenter.getMembersInfo();
     }
 
+    public void getChildrenInfo() {
+        System.out.println("Введите id человека: ");
+        String stringMemberId = scanner.nextLine();
+        if (checkTextForInt(stringMemberId)) {
+            int numMemberId = Integer.parseInt(stringMemberId);
+            presenter.getChildrenInfo(numMemberId);
+        }
+    }
+
     public void addMember() {
         System.out.println("Введите имя члена семьи:");
         String name = scanner.nextLine();
@@ -82,6 +92,21 @@ public class ConsoleUI implements View{
             inputError();
         }
 
+    }
+
+    public void addParent() {
+        System.out.println("Введите id человека, кому нужно установить родителя: ");
+        String stringMemberId = scanner.nextLine();
+
+        if (checkTextForInt(stringMemberId)) {
+            int numMemberId = Integer.parseInt(stringMemberId);
+            System.out.println("Введите id родителя: ");
+            String stringParentId = scanner.nextLine();
+            if (checkTextForInt(stringParentId)) {
+                int numParentId = Integer.parseInt(stringParentId);
+                presenter.addParent(numMemberId, numParentId);
+            }
+        }
     }
 
     private void hello(){

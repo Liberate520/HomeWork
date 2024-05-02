@@ -21,9 +21,26 @@ public class Presenter {
         getMembersInfo();
     }
 
+    public void addParent(int numMemberId, int numParentId) {
+        if (numMemberId < service.getFamilySize() && numParentId < service.getFamilySize()) {
+            service.addParent(numMemberId, numParentId);
+            view.printAnswer("Члену семьи успешно добавлен родитель");
+            getMembersInfo();
+        } else {
+            view.printAnswer("Такого id не существует");
+        }
+    }
+
     public void getMembersInfo() {
         String info = service.getMembersInfo();
         view.printAnswer(info);
+    }
+
+    public void getChildrenInfo(int memberId) {
+        if (memberId < service.getFamilySize()) {
+            String info = service.getChildrenInfo(memberId);
+            view.printAnswer(info);
+        }
     }
 
     public void sortByAge() {

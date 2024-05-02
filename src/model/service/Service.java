@@ -15,9 +15,25 @@ public class Service {
         family = new FamilyTree<>();
     }
 
+    public int getFamilySize() {
+        return memberId;
+    }
+
     public void addMember(String name, LocalDate dob, Gender gender) {
         Human familyMember = new Human(memberId++, name, gender, dob);
         family.addMember(familyMember);
+    }
+
+    public void addParent(int numMemberId, int numParentId) {
+        for (Human human: family) {
+            if (human.getId() == numMemberId) {
+                for (Human parent: family) {
+                    if (parent.getId() == numParentId) {
+                        human.addParent(parent);
+                    }
+                }
+            }
+        }
     }
 
     public String getMembersInfo() {
@@ -27,6 +43,16 @@ public class Service {
         for (Human human: family) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getChildrenInfo(int memberId) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Human human: family) {
+            if (human.getId() == memberId) {
+                stringBuilder.append(human.getChildrenInfo());
+            }
         }
         return stringBuilder.toString();
     }
