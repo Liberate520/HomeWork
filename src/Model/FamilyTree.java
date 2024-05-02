@@ -1,6 +1,8 @@
 package Model;
 
-public class FamilyTree<E extends Human> {
+import java.io.Serializable;
+
+public class FamilyTree  <E extends Human> implements Serializable {
     private E root;
 
     public FamilyTree() {

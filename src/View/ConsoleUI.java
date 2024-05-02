@@ -1,11 +1,13 @@
 package View;
 
+import Model.FileHandler;
 import Model.Gender;
+import Model.Writable;
 import Presenter.Presenter;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI implements View{
+public class ConsoleUI implements View {
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
@@ -23,7 +25,8 @@ public class ConsoleUI implements View{
             System.out.println("2. Добавить отца");
             System.out.println("3. Добавить мать");
             System.out.println("4. Показать семейное дерево");
-            System.out.println("5. Закончить работу");
+            System.out.println("5. Сохранить семейное дерево");
+            System.out.println("6. Закончить работу");
 
             String line = scanner.nextLine();
             switch (line){
@@ -54,6 +57,8 @@ public class ConsoleUI implements View{
                     presenter.printFamilyTree();
                     break;
                 case "5":
+                    save();
+                case "6":
                     finish();
                 default:
                     System.out.println("Введено некорректное значение");
@@ -74,6 +79,13 @@ public class ConsoleUI implements View{
     public void printAnswer(String text){
         System.out.println(text);
     }
+    public void save() {
+        System.out.println("Сохранение семейного дерева...");
+        presenter.save("C:\\Users\\Podgaynyy\\Desktop\\Programming\\GeekBrains\\Программист\\" +
+                "Java\\OOP\\homeWork_Java_OOP\\save");
+        System.out.println("Семейное дерево успешно сохранено.");
+    }
+
     public void finish(){
         System.out.println("До новых встреч!");
         work = false;

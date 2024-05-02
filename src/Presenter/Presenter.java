@@ -1,10 +1,13 @@
 package Presenter;
 
 import Model.FamilyTree;
+import Model.FileHandler;
 import Model.Gender;
 import View.ConsoleUI;
 import View.View;
 import Model.Human;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Presenter {
@@ -46,8 +49,18 @@ public class Presenter {
             view.printAnswer("Ребёнок не найден");
         }
     }
+    public void save(){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree, "C:\\Users\\Podgaynyy\\Desktop\\Programming\\GeekBrains\\Программист\\" +
+                "Java\\OOP\\homeWork_Java_OOP\\save");
+    }
     public void printFamilyTree() {
         String treeRepresentation = familyTree.toString();
         view.printAnswer(treeRepresentation);
     }
+    public void save(String filePath) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree, filePath);
+    }
 }
+
