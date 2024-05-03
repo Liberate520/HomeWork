@@ -35,4 +35,14 @@ public class Presenter {
         service.sortByAge();
         getHumanListInfo();
     }
+
+    public void loadFamilyTree() {
+        service.loadFamilyTree();
+        getHumanListInfo();
+    }
+
+    public void saveFamilyTree() {
+        service.saveFamilyTree();
+        getHumanListInfo();
+    }
 }

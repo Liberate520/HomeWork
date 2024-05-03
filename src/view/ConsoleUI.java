@@ -45,6 +45,10 @@ public class ConsoleUI implements View{
         presenter.sortByAge();
     }
 
+    public void loadFamilyTree() { presenter.loadFamilyTree(); }
+
+    public void saveFamilyTree() { presenter.saveFamilyTree(); }
+
     public void sortByName() {
         presenter.sortByName();
     }
@@ -63,8 +67,11 @@ public class ConsoleUI implements View{
         System.out.println("Укажите дату рождения человека:");
         LocalDate birthDate = LocalDate.parse(scanner.nextLine());
 
+
         presenter.addHuman(name, secondName, gender, birthDate);
     }
+
+
 
     @Override
     public void printAnswer(String answer) {
