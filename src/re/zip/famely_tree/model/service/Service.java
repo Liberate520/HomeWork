@@ -14,6 +14,7 @@ public class Service{
 
 
     public Service() {
+        this.simpleTree = new FamelyTree<>();
         this.fileHandler = new FileHandler();
     }
 
