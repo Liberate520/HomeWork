@@ -1,5 +1,6 @@
 package model.FamilyTree;
 
+import model.Human.Human;
 import model.Human.TreeNode;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E>{
     private int countPeople;
-    private List<E> humanList;
+    private final List<E> humanList;
     public FamilyTree(List<E> humanList) {
         this.humanList = humanList;
     }
@@ -54,6 +55,19 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
             }
         }
         return res;
+    }
+
+    public E getParentsByName(String name){
+        for(E human: humanList) {
+            if (human.getName().equals(name)) {
+                return human;
+            } else {
+                Human newHuman = new Human(name);
+                add((E) newHuman);
+                return (E) newHuman;
+            }
+        }
+        return null;
     }
 
     private boolean checkId(int id){

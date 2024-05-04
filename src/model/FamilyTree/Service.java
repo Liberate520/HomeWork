@@ -11,8 +11,12 @@ public class Service {
     FamilyTree tree = new FamilyTree<>();
     String filePath = "src/writer/tree.txt";
 
-    public void addHuman(String name, String secondName, Gender gender, LocalDate birthDate){
-        Human human = new Human(name, secondName, gender, birthDate);
+    public void addHuman(String name, String secondName, Gender gender, LocalDate birthDate,LocalDate deathDate,
+                         String motherName, String fatherName){
+        Human mother = (Human) tree.getParentsByName(motherName);
+        Human father = (Human) tree.getParentsByName(fatherName);
+
+        Human human = new Human(name, secondName, gender, birthDate, deathDate,mother, father);
         tree.add(human);
     }
 
@@ -25,6 +29,7 @@ public class Service {
     public void sortByAge(){
         tree.sortByBirthDate();
     }
+
 
     public void loadFamilyTree(){
         FileHandler fileHandler = new FileHandler();

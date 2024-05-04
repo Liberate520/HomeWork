@@ -62,13 +62,20 @@ public class ConsoleUI implements View{
         String name = scanner.nextLine();
         System.out.println("Укажите фамилию человека:");
         String secondName = scanner.nextLine();
-        System.out.println("Выберите пол человека:");
+        System.out.println("Выберите пол человека: Male или Female:");
         Gender gender = Gender.valueOf(scanner.nextLine());
-        System.out.println("Укажите дату рождения человека:");
+        System.out.println("Укажите дату рождения человека (YYYY-MM-DD):");
         LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+        System.out.println("Известна ли дата смерти, если да - укажите (YYYY-MM-DD) :");
+        LocalDate deathDate = LocalDate.parse(scanner.nextLine());
+        System.out.println("Укажите имя мамы:");
+        String motherName = scanner.nextLine();
+        System.out.println("Укажите имя папы:");
+        String fatherName = scanner.nextLine();
 
 
-        presenter.addHuman(name, secondName, gender, birthDate);
+        presenter.addHuman(name, secondName, gender, birthDate, deathDate, motherName, fatherName);
+
     }
 
 

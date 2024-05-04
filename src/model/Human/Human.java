@@ -38,8 +38,23 @@ public class Human implements TreeNode<Human> {
     }
 
     public Human(String name, String secondName, Gender gender, LocalDate birthDate,
+                 LocalDate deathDate) {
+        this(name, secondName, gender, birthDate, deathDate, null, null);
+    }
+
+    public Human(String name, String secondName, Gender gender, LocalDate birthDate,
+                 LocalDate deathDate, Human mother) {
+        this(name, secondName, gender, birthDate, deathDate, mother, null);
+    }
+
+
+    public Human(String name, String secondName, Gender gender, LocalDate birthDate,
                  Human mother, Human father) {
         this(name, secondName, gender, birthDate, null, mother, father);
+    }
+
+    public Human(String name) {
+        this(name, null, null, null, null, null, null);
     }
 
     public boolean addChild(Human child) {
