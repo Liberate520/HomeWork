@@ -1,11 +1,8 @@
 package view;
 
 import model.human.Gender;
-import model.service.Service;
-import model.writable.FileHandler;
 import presenter.Presenter;
 
-import javax.swing.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -25,7 +22,9 @@ public class ConsoleUI implements View, Serializable {
 
     @Override
     public void start() {
-        System.out.println("Добрый день! Выберите действие:");
+        loadTree();
+//        getFamilyTreeInfo();
+        System.out.println("\nДобрый день! Выберите действие:\n");
         while (work) {
             System.out.println(mainMenu.getMenu());
             String strChoice = scanner.nextLine();
@@ -34,12 +33,24 @@ public class ConsoleUI implements View, Serializable {
             mainMenu.execute(choice);
         }
     }
+
+    public void loadTree() {
+        presenter.loadTree();
+    }
+
+    public void saveTree() {
+        presenter.saveTree();
+    }
+
     private void error() {
         System.out.println("Введено неверное значение");
     }
+
     public void finish() {
+        saveTree();
         System.out.println("До новых встреч");
         work = false;
+
     }
 
     public void sortByAge() {
@@ -50,8 +61,20 @@ public class ConsoleUI implements View, Serializable {
         presenter.sortByName();
     }
 
-    public void getFamalyTreeInfo() {
-        presenter.getFamalyTreeInfo();
+    public void sortByID() {
+        presenter.sortByID();
+    }
+
+    public void getFamilyTreeInfo() {
+        presenter.getFamilyTreeInfo();
+    }
+
+    public void addParent() {
+        //todo метод добавления родителя
+    }
+
+    public void addChildren() {
+        //todo метод добавления ребенка
     }
 
     public void addHuman() {
@@ -71,15 +94,18 @@ public class ConsoleUI implements View, Serializable {
         int date = Integer.parseInt(strDate);
         LocalDate localDate = LocalDate.of(year, month, date);
 
-        System.out.println("Укажите пол");
+        System.out.println("Укажите пол Male/Female");
         String strGender = scanner.nextLine();
         Gender gender = Gender.valueOf(strGender);
 
         presenter.addHuman(name, localDate, gender);
+        System.out.println("\n");
     }
 
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
     }
+
+
 }

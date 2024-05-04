@@ -2,7 +2,7 @@ package view.Commands;
 
 import view.ConsoleUI;
 
-public class SortByName extends Command{
+public class SortByName extends Command {
     public SortByName(ConsoleUI consoleUI) {
         super("Сортировать по имени", consoleUI);
     }

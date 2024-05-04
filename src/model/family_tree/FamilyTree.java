@@ -2,6 +2,7 @@ package model.family_tree;
 
 import model.family_tree.Iterators.HumanIterator;
 import model.human.comparator.HumanComparatorByAge;
+import model.human.comparator.HumanComparatorById;
 import model.human.comparator.HumanComparatorByName;
 
 import java.io.Serializable;
@@ -28,12 +29,16 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
         return id;
     }
 
-    public void sortByName(){
+    public void sortByName() {
         Collections.sort(humanList, new HumanComparatorByName<>());
     }
 
-    public void sortByAge(){
+    public void sortByAge() {
         Collections.sort(humanList, new HumanComparatorByAge<>());
+    }
+
+    public void sortByID() {
+        Collections.sort(humanList, new HumanComparatorById<>());
     }
 
     @Override

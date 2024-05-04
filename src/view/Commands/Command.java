@@ -18,5 +18,6 @@ public abstract class Command {
     public ConsoleUI getConsoleUI() {
         return consoleUI;
     }
+
     public abstract void execute();
 }

@@ -67,6 +67,10 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         human.addChildren(this);
     }
 
+    public int getID() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -109,7 +113,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     @Override
     public String toString() {
 
-        return "[ID: " + this.id +
+        return "[ID: " + getID() +
                 "] Имя: " + this.name +
                 ", Возраст: " + getAge() +
                 ", пол: " + this.gender +

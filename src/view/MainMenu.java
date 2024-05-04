@@ -15,14 +15,16 @@ public class MainMenu {
         commands.add(new GetFamilyTreeInfo(consoleUI));
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByAge(consoleUI));
+        commands.add(new SortByID(consoleUI));
+        commands.add(new AddParent(consoleUI));
+        commands.add(new AddChildren(consoleUI));
         commands.add(new Finish(consoleUI));
     }
 
     public String getMenu() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Список:\n");
         for (int i = 0; i < commands.size(); i++) {
-            stringBuilder.append(i+1);
+            stringBuilder.append(i + 1);
             stringBuilder.append(". ");
             stringBuilder.append(commands.get(i).getDescription());
             stringBuilder.append("\n");

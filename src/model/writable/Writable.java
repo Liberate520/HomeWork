@@ -6,5 +6,4 @@ public interface Writable {
     void save(Serializable serializable);
 
     Object load();
-
 }

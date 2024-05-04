@@ -1,20 +1,17 @@
 package model.writable;
 
-import model.service.Service;
-
 import java.io.*;
 
 public class FileHandler implements Writable {
-    Service service;
+    String path = "src/model/writable/FamilyTree.txt";
 
     public FileHandler() {
-        service = new Service();
     }
 
     @Override
     public void save(Serializable serializable) {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("src/model/writable/FamilyTree.txt"));
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(path));
             objectOutputStream.writeObject(serializable);
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,7 +21,7 @@ public class FileHandler implements Writable {
     @Override
     public Object load() {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/model/writable/FamilyTree.txt"));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(path));
             return objectInputStream.readObject();
         } catch (Exception e) {
             e.printStackTrace();

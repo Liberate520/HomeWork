@@ -2,7 +2,7 @@ package view.Commands;
 
 import view.ConsoleUI;
 
-public class AddHuman extends Command{
+public class AddHuman extends Command {
     public AddHuman(ConsoleUI consoleUI) {
         super("Добавить человека", consoleUI);
     }
