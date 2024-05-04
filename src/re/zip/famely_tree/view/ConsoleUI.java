@@ -10,39 +10,38 @@ import static java.lang.Integer.parseInt;
 
 public class ConsoleUI implements View {
 
-    private Scanner scanner;
+    private final InputOutput io;
     private Presenter presenter;
     boolean workFlag;
     private MainMenu mainMenu;
+    private final Scanner scanner;
 
-    public ConsoleUI() {
-        scanner = new Scanner(System.in);
+    public ConsoleUI(InputOutput io) {
+        this.io = io;
         presenter = new Presenter(this);
         workFlag = true;
         mainMenu = new MainMenu(this);
+        scanner = new Scanner(System.in);
     }
 
     @Override
     public void start() {
         while (workFlag) {
-            System.out.println(mainMenu.getMenu());
-            String strYourChoise = scanner.nextLine();
-            int choise = parseInt(strYourChoise);
-            mainMenu.execute(choise);
+            io.println(mainMenu.getMenu());
+            String strYourChoice = io.readLine();
+            int choice = parseInt(strYourChoice);
+            mainMenu.execute(choice);
         }
     }
 
     public void finish() {
-        scanner.close();
-        System.out.println("Работа закончена. До новых встреч");
+        io.println("Работа закончена. До новых встреч");
         workFlag = false;
-
     }
 
     @Override
     public void printAnswer(String text) {
-        System.out.println(text);
-
+        io.println(text);
     }
 
     public void sortByBirthDate() {

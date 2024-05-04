@@ -14,13 +14,13 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
     private long idNo;
     private String firstName;
     private String famelyName;
-    private LocalDate dateOfBirsday; 
+    private LocalDate dateOfBirsday;
     private LocalDate dateOfDead;
     private Gender gender;
     private List<Human> children;
     private Human mother, father, parentNoHuman, spouse;
-    // private Human child; 
-    
+    // private Human child;
+
     public Human(String firstName, String famelyName, LocalDate dateOfBirsday, LocalDate dateOfDead, Gender gender, Human mother, Human father) {
         idNo = -1;
         this.firstName = firstName;
@@ -31,13 +31,13 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         children = new ArrayList<>();
         this.mother = mother;
         this.father = father;
-        
+
     }
 
     public Human(String firstName, String lastName, LocalDate dateOfBirsday, Gender gender, Human mother, Human father) {
         this(firstName, lastName, dateOfBirsday, null, gender, mother, father);
     }
-    
+
     public Human(String firstName, String lastName, LocalDate dateOfBirsday, Gender gender) {
         this(firstName, lastName, dateOfBirsday, null, gender, null, null);
     }
@@ -61,14 +61,14 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
             return true;
         }
         else if (parent.getGender().equals(Gender.Female)) {
-               setMother(parent);
-               return true; 
-            }
-            else if(parent.getGender().equals(Gender.Alien)){
-                setParentNoHuman(parent);
-                return true; 
-            }
-        return false; 
+            setMother(parent);
+            return true;
+        }
+        else if(parent.getGender().equals(Gender.Alien)){
+            setParentNoHuman(parent);
+            return true;
+        }
+        return false;
     }
 
     public String getFatherName() {
@@ -103,7 +103,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         }
         if (dateOfDead == null){
             return getLivePeriod(dateOfBirsday, LocalDate.now());
-        } 
+        }
         else {
             return getLivePeriod(dateOfBirsday, dateOfDead);
         }
@@ -116,7 +116,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
     public String getFirstName() {
         return firstName;
     }
-    
+
     public Gender getGender() {
         return gender;
     }
@@ -127,7 +127,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
             stringBuilder.append(children.get(0).bio());
             for (int i = 1; i < children.size(); i++) {
                 stringBuilder.append(", ");
-                stringBuilder.append(children.get(i).bio()); 
+                stringBuilder.append(children.get(i).bio());
             }
         }
         else stringBuilder.append("нет информации");
@@ -138,7 +138,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         String string = new String();
         if (spouse == null){
             string += "нет информации";
-            }
+        }
         else string += this.spouse.bio();
         return string;
     }
@@ -178,7 +178,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         if (this.famelyName == null){
             this.famelyName = "не известно";
         }
-            return this.firstName + " " + getFatherName() + " " + this.famelyName;
+        return this.firstName + " " + getFatherName() + " " + this.famelyName;
     }
 
     public String getHumanInfo() {
@@ -205,7 +205,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         stringBuilder.append(getChildrenInfo());
 
         //TODO добавить информацию о бывших супругах и, соответственно, детях от других браков
-        
+
         return stringBuilder.toString();
     }
 

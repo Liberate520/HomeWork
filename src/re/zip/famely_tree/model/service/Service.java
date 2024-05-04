@@ -10,31 +10,21 @@ import java.time.LocalDate;
 public class Service{
     private FamelyTree<Human> simpleTree;
     private final FileHandler fileHandler;
-//     // private int genId;
 
 
     public Service() {
-        this.simpleTree = new FamelyTree<>();
         this.fileHandler = new FileHandler();
+        this.simpleTree = new FamelyTree<>();
     }
 
 
     public void addHumanToFamelyTree(String firstName, String lastName, LocalDate localDate, Gender gender) {
-//        FamelyTreeElement<E> famelyTreeElement1 = new FamelyTreelement<Human>(firstName, lastName, localDate, gender);
         Human human = new Human(firstName, lastName, localDate, gender);
         simpleTree.addToFamely(human);
 
     }
 
     public String getFamelyListInfo() {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("\nСуществ семье: ");
-//        stringBuilder.append(simpleTree.size());
-//        stringBuilder.append("\n");
-//        for (Human human : simpleTree){
-//            stringBuilder.append(human);
-//            stringBuilder.append("\n");
-//        }
         String famelyListInfo = simpleTree.getFamelyListInfo();
         return famelyListInfo;
     }
@@ -56,6 +46,7 @@ public class Service{
         fileHandler.saveToFile(simpleTree, filePath);
     }
 
+    @SuppressWarnings("unchecked")
     public void loadFromFile(String filePath) {
         FileHandler fileHandler = new FileHandler();
         simpleTree = (FamelyTree<Human>) fileHandler.readFromFile(filePath);

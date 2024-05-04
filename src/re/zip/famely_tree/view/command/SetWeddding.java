@@ -1,6 +1,5 @@
 package re.zip.famely_tree.view.command;
 
-import re.zip.famely_tree.model.human.Human;
 import re.zip.famely_tree.view.ConsoleUI;
 
 public class SetWeddding extends Command {
