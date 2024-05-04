@@ -9,12 +9,14 @@ import java.time.LocalDate;
 
 public class Service{
     private FamelyTree<Human> simpleTree;
+    private final FileHandler fileHandler;
 //     // private int genId;
 
 
     public Service() {
-        simpleTree = new FamelyTree<>();
+        this.fileHandler = new FileHandler();
     }
+
 
     public void addHumanToFamelyTree(String firstName, String lastName, LocalDate localDate, Gender gender) {
 //        FamelyTreeElement<E> famelyTreeElement1 = new FamelyTreelement<Human>(firstName, lastName, localDate, gender);
@@ -49,14 +51,8 @@ public class Service{
         simpleTree.sortByBirthDate();
     }
 
-
     public void saveToFile(String filePath) {
-        saveToFile(simpleTree, filePath);
-    }
-
-    static void saveToFile(FamelyTree<Human> tree, String filePath){
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.saveToFile(tree, filePath);
+        fileHandler.saveToFile(simpleTree, filePath);
     }
 
     public void loadFromFile(String filePath) {
