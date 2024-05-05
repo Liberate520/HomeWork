@@ -1,5 +1,8 @@
 package src.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,19 +12,23 @@ import java.util.List;
 public class FamilyTree<E extends FamilyObject<E>> implements Serializable, Iterable<E> {
 
     private List<E> listPersons;
+    private Writable writable;
 
     public FamilyTree() {
         this.listPersons = new ArrayList<>();
+        this.writable = new FileHandler();
     }
 
-    public FamilyTree(List<E> listPersons) {
-        this.listPersons = listPersons;
-    }
-
+    
+    
     public List<E> getFamilyTree() {
         return listPersons;
     }
 
+    public void setFamilyTree(List<E> listPersons) {
+        this.listPersons = listPersons;
+    }
+    
     public boolean addPerson(E person) {
         if (!listPersons.contains(person)) {
             listPersons.add(person);
@@ -78,8 +85,27 @@ public class FamilyTree<E extends FamilyObject<E>> implements Serializable, Iter
         return true;
     }
 
-    public void setFamilyTree(List<E> listPersons) {
-        this.listPersons = listPersons;
+    @SuppressWarnings("unchecked")
+    public void fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException {
+        setFamilyTree ((List<E>) writable.fileUpload(file));
     }
+
+    public void savingToFile(String file) throws FileNotFoundException, IOException {
+        writable.savingToFile((Serializable) getFamilyTree(), file);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Person searchPerson(String name){
+        List<Person> lP = (List<Person>) listPersons; 
+        for (Person person: lP){
+            if(person.getName().equals(name)){
+                return person;
+            }
+        }
+        return null;
+    }
+
+
+
 
 }

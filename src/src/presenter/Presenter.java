@@ -39,8 +39,8 @@ public class Presenter {
         return model.kinship(txt);
     }
 
-    public void prinrtListInfo() {
-        model.printList();
+    public String prinrtListInfo() {
+        return model.prinrtListInfo();
     }
 
     public boolean fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException {

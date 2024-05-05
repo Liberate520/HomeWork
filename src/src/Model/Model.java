@@ -9,11 +9,10 @@ import java.util.List;
 public class Model {
 
     private FamilyTree<Person> family;
-    private Writable writable;
-
+    
     public Model() {
         family = new FamilyTree<>();
-        writable = new FileHandler();
+        
 
     }
 
@@ -48,25 +47,9 @@ public class Model {
     public boolean kinship(String familyMembers) {
         Person child = null;
         String[] fM = familyMembers.split(" ");
-        for (Person person : family) {
-            if (person.getName().equals(fM[0])) {
-                child = person;
-
-            }
-        }
-        for (Person person : family) {
-            if (person.getName().equals(fM[1])) {
-                child.setFather(person);
-            }
-        }
-
-        for (Person person : family) {
-            if (person.getName().equals(fM[2])) {
-                child.setMother(person);
-
-            }
-        }
-
+        child = family.searchPerson(fM[0]);
+        child.setFather(family.searchPerson(fM[1]));
+        child.setMother(family.searchPerson(fM[2]));
         childAddition(child);
         return true;
     }
@@ -86,22 +69,15 @@ public class Model {
         return fT;
     }
 
-    public void printList() {
-        StringBuilder fTree = new StringBuilder();
-        for (Person person : family) {
-            fTree.append(person.getPersCard(person));
-        }
-        System.out.println(fTree.toString());
-    }
-
-    @SuppressWarnings("unchecked")
+    
+    
     public void fileUpload(File file) throws FileNotFoundException, ClassNotFoundException, IOException {
-        family = (FamilyTree<Person>) writable.fileUpload(file);
+        family.fileUpload(file);
 
     }
 
     public void savingToFile(String file) throws FileNotFoundException, IOException {
-        writable.savingToFile(family, file);
+        family.savingToFile(file);
     }
 
 }

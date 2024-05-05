@@ -224,7 +224,7 @@ public class ConsoleUI implements View {
     }
 
     public void printList() {
-        presenter.prinrtListInfo();
+        printAnswer(presenter.prinrtListInfo());
     }
 
     public void sortByName() {
