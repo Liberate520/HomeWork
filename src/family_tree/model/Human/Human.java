@@ -5,7 +5,6 @@ import family_tree.model.FamilyTree.FamilyTreeElements;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Human implements Serializable, FamilyTreeElements<Human> {
@@ -14,7 +13,8 @@ public class Human implements Serializable, FamilyTreeElements<Human> {
     private LocalDate dob, dod;
     private Gender gender;
     private List<Human> children = new ArrayList<>();
-    private Human mother, father;
+    private Human mother;
+    private Human father;
 
 
 

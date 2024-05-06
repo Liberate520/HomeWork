@@ -1,7 +1,7 @@
 package family_tree.view;
 
 import family_tree.model.Human.Gender;
-import family_tree.model.Human.Human;
+
 import family_tree.presenter.Presenter;
 
 import java.time.LocalDate;
@@ -60,24 +60,9 @@ public class ConsoleUI implements View {
     public void getHumanListInfo(){
         presenter.getHumanListInfo();
     }
-    public Gender stringToGender(String str) {
-        if (str.equals("null")){
-            return null;
-        } else{
-        return Gender.valueOf(str.trim().toUpperCase());
-        }
-    }
 
-    public List<Human> convertNamesToHumans(List<String> names) {
-        List<Human> humans = new ArrayList<>();
 
-        for (String name : names) {
 
-            Human human = new Human(name);
-            humans.add(human);
-        }
-        return humans;
-    }
 
     public void addHuman() {
         System.out.println("Укажите имя");
@@ -100,16 +85,46 @@ public class ConsoleUI implements View {
         System.out.println("Укажите имена детей через запятую");
         String strChildren = scanner.nextLine();
         List<String> myList = new ArrayList<String>(Arrays.asList(strChildren.split(",")));
-        List<Human> child = convertNamesToHumans(myList);
+//        List<Human> child = convertNamesToHumans(myList);
         System.out.println("Укажите имя мамы");
         String strMother = scanner.nextLine();
-        Human mother = new Human(strMother);
+//        Human mother = new Human(strMother);
         System.out.println("Укажите имя отца");
         String strFather = scanner.nextLine();
-        Human father = new Human(strFather);
+//        Human father = new Human(strFather);
 
-        presenter.addHuman(name, dob, dod, gender, child, mother, father);
+        presenter.addHuman(name, dob, dod, gender, myList, strMother, strFather);
     }
 
 
+    public void addChild() {
+        System.out.println("Укажите имя родителя");
+        String name = scanner.nextLine();
+        System.out.println("Укажите имена детей через запятую");
+        String strChildren = scanner.nextLine();
+        List<String> myList = new ArrayList<String>(Arrays.asList(strChildren.split(",")));
+
+
+        presenter.addChild(name, myList);
+    }
+
+    public void setMother() {
+        System.out.println("Укажите Ваше имя");
+        String name = scanner.nextLine();
+        System.out.println("Укажите имя Вашей мамы");
+        String nameMother = scanner.nextLine();
+
+
+        presenter.setMother(name, nameMother);
+    }
+
+    public void setFather() {
+        System.out.println("Укажите Ваше имя");
+        String name = scanner.nextLine();
+        System.out.println("Укажите имя Вашего отца");
+        String nameFather = scanner.nextLine();
+
+
+        presenter.setFather(name, nameFather);
+    }
 }

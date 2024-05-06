@@ -3,7 +3,9 @@ package family_tree.model.service;
 import family_tree.model.FamilyTree.FamilyTree;
 import family_tree.model.Human.Gender;
 import family_tree.model.Human.Human;
+import family_tree.model.writer.FileHandler;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +14,11 @@ public class Service {
 
 
     private final FamilyTree<Human> familyTree;
-    private String name;
-    private LocalDate dob;
-    private LocalDate dod;
-    private Gender gender;
-    private List<Human> children;
-    private Human mother;
-    private Human father;
-
-
+    private final FileHandler fileHandler;
 
     public Service(){
         familyTree = new FamilyTree<>();
-        List<Human> children = new ArrayList<>();
+        fileHandler = new FileHandler();
     }
 
     public void addHuman(String name, LocalDate dob, LocalDate dod, Gender gender, List<Human> children, Human mother, Human father){
@@ -36,17 +30,30 @@ public class Service {
         return familyTree.getHumanChildren(human);
     }
 
-    public void addChild(Human child, Human human) {
-//
-        human.addChild(child);
+    public void addChild(String nameParents, List<Human> nameChild) {
+
+        for(Human human: familyTree){
+            if(human.getName().equals(nameParents)){
+                human.setChildren(nameChild);
+            }
+        }
     }
 
-    public void setMother(Human mother, Human human) {
-        human.setMother(mother);
+    public void setMother(String name, Human nameMother) {
+
+        for(Human human: familyTree){
+            if(human.getName().equals(name)){
+                human.setMother(nameMother);
+            }
+        }
     }
 
-    public void setFather(Human father, Human human) {
-        human.setFather(father);
+    public void setFather(String name, Human nameFather) {
+        for(Human human: familyTree){
+            if(human.getName().equals(name)){
+                human.setFather(nameFather);
+            }
+        }
     }
 
     public String getHumanListInfo(){
@@ -66,5 +73,14 @@ public class Service {
 
     public void sortByBirthday(){
         familyTree.sortByBirthday();
+    }
+
+    public void writeExternal(Serializable serializable, String FilePath) throws IOException {
+        fileHandler.writeExternal(serializable, FilePath);
+
+    }
+
+    public Object readExternal(String FilePath) throws IOException, ClassNotFoundException {
+        return fileHandler.readExternal(FilePath);
     }
 }
