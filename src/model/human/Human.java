@@ -50,7 +50,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         this.mother = mother;
     }
 
-    public void addChildren(Human human) {
+    public void addChild(Human human) {
         if (!this.childrenList.contains(human)) {
             this.childrenList.add(human);
 //            System.out.println("///" + model.human);
@@ -64,7 +64,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         } else {
             setMother(human);
         }
-        human.addChildren(this);
+        human.addChild(this);
     }
 
     public int getID() {

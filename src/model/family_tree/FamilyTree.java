@@ -1,6 +1,7 @@
 package model.family_tree;
 
 import model.family_tree.Iterators.HumanIterator;
+import model.human.Human;
 import model.human.comparator.HumanComparatorByAge;
 import model.human.comparator.HumanComparatorById;
 import model.human.comparator.HumanComparatorByName;
@@ -39,6 +40,16 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
 
     public void sortByID() {
         Collections.sort(humanList, new HumanComparatorById<>());
+    }
+
+    public Human search(int id) {
+        for (E human: humanList) {
+            if (human.getID() == id){
+                return (Human) human;
+            }
+        }
+        System.out.println("Не найден");
+        return null;
     }
 
     @Override

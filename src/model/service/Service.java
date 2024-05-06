@@ -4,7 +4,6 @@ import model.family_tree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
 import model.writable.FileHandler;
-import view.ConsoleUI;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -24,6 +23,7 @@ public class Service implements Serializable {
 
     public void addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
         Human human = new Human(name, dateOfBirthday, gender);
+//        familyTree = new FamilyTree<>();
         familyTree.add(human);
     }
 
@@ -57,15 +57,28 @@ public class Service implements Serializable {
         fileHandler.save(familyTree);
     }
 
-    public void addParent(ConsoleUI human) {
-        //todo метод добавления родителя
-        human.addParent();
+    public void addParent(String name, LocalDate dateOfBirthday, Gender gender, int id) {
+        Human humanParent = new Human(name, dateOfBirthday, gender);
+        familyTree.add(humanParent);
+        Human child = searchByID(id);
+        child.addParent(humanParent);
+    }
+    public void addChild(String name, LocalDate dateOfBirthday, Gender gender, int id) {
+        Human humanChild = new Human(name, dateOfBirthday, gender);
+        familyTree.add(humanChild);
+        Human child = searchByID(id);
+        child.addChild(humanChild);
+    }
+
+    public Human searchByID(int id) {
+        return familyTree.search(id);
     }
 
     @Override
     public String toString() {
         return getFamilyTreeInfo();
     }
+
 
 
 }

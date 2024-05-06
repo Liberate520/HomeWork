@@ -1,15 +1,16 @@
 package presenter;
 
 import model.human.Gender;
+import model.human.Human;
 import model.service.Service;
 import model.writable.FileHandler;
-import view.ConsoleUI;
 import view.View;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class Presenter implements Serializable {
+public class Presenter {
     private final View view;
     private Service service;
 
@@ -23,8 +24,11 @@ public class Presenter implements Serializable {
         service.addHuman(name, dateOfBirthday, gender);
     }
 
-    public void addParent(ConsoleUI human) {
-        //todo метод добавления родителя
+    public void addParent(String name, LocalDate dateOfBirthday, Gender gender, int id) {
+        service.addParent(name, dateOfBirthday, gender, id);
+    }
+    public void addChild(String name, LocalDate dateOfBirthday, Gender gender, int id) {
+        service.addChild(name, dateOfBirthday, gender, id);
     }
 
     public void getFamilyTreeInfo() {

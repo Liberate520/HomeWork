@@ -69,18 +69,42 @@ public class ConsoleUI implements View, Serializable {
         presenter.getFamilyTreeInfo();
     }
 
+    public void addHuman() {
+        String name = questionName();
+        LocalDate dateOfBirthday = questionDate();
+        Gender gender = questionGender();
+
+        presenter.addHuman(name, dateOfBirthday, gender);
+        System.out.println("\n");
+    }
+
     public void addParent() {
+        String name = questionName();
+        LocalDate dateOfBirthday = questionDate();
+        Gender gender = questionGender();
+        int id = questionnaireChoice();
+        presenter.addParent(name, dateOfBirthday, gender, id);
+        System.out.println("\n");
         //todo метод добавления родителя
     }
 
     public void addChildren() {
+        String name = questionName();
+        LocalDate dateOfBirthday = questionDate();
+        Gender gender = questionGender();
+        int id = questionnaireChoice();
+        presenter.addChild(name, dateOfBirthday, gender, id);
+        System.out.println("\n");
         //todo метод добавления ребенка
     }
 
-    public void addHuman() {
+    public String questionName() {
         System.out.println("Укажите имя человека");
         String name = scanner.nextLine();
+        return name;
+    }
 
+    private LocalDate questionDate() {
         System.out.println("Укажите год рождения");
         String strYear = scanner.nextLine();
         int year = Integer.parseInt(strYear);
@@ -92,14 +116,24 @@ public class ConsoleUI implements View, Serializable {
         System.out.println("Укажите дату рождения");
         String strDate = scanner.nextLine();
         int date = Integer.parseInt(strDate);
-        LocalDate localDate = LocalDate.of(year, month, date);
 
+        LocalDate localDate = LocalDate.of(year, month, date);
+        return localDate;
+    }
+
+    public Gender questionGender() {
         System.out.println("Укажите пол Male/Female");
         String strGender = scanner.nextLine();
         Gender gender = Gender.valueOf(strGender);
+        return gender;
+    }
 
-        presenter.addHuman(name, localDate, gender);
-        System.out.println("\n");
+    public int questionnaireChoice() {
+        getFamilyTreeInfo();
+        System.out.println("Укажите id родственника");
+        String strID = scanner.nextLine();
+        int id = Integer.parseInt(strID);
+        return id;
     }
 
     @Override
