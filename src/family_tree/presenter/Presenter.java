@@ -31,4 +31,14 @@ public class Presenter {
         service.sortByDeathDate();
         getHumanList();
     }
+
+    public int save(){
+        String answer = service.getHumanList();
+        getHumanList();
+    }
+
+    public boolean load(){
+        String answer = service.getHumanList();
+        getHumanList();
+    }
 }

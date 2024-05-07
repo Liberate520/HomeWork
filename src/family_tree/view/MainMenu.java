@@ -15,6 +15,8 @@ public class MainMenu {
         commands.add(new SortByName(console));
         commands.add(new SortByDeathDate(console));
         commands.add(new Finish(console));
+        commands.add(new Save(console));
+        commands.add(new Load(console));
     }
 
     public String getMenu() {

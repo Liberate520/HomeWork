@@ -90,6 +90,14 @@ public class Console implements View {
         presenter.sortByDeathDate();
     }
 
+    public void save(){
+        final boolean save = presenter.save();
+    }
+
+    public void load(){
+        final boolean load = presenter.load();
+    }
+
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
