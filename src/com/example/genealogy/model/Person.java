@@ -1,35 +1,29 @@
 package com.example.genealogy.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 public class Person {
 
     private String name;
+    private LocalDate dateOfBirth;
     private Person parent;
-    private List<Person> children;
-    private Date dateOfBirth;
 
     public Person(String name, Person parent) {
         this.name = name;
+        this.dateOfBirth = LocalDate.now();
         this.parent = parent;
-        this.children = new ArrayList<>();
     }
 
     public String getName() {
         return name;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
     public Person getParent() {
         return parent;
     }
 
-    public List<Person> getChildren() {
-        return children;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
 }

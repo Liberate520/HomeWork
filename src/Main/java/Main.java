@@ -1,34 +1,42 @@
 package Main.java;
+
 import java.util.List;
+
+import com.example.genealogy.model.GenealogyTreeModel;
 import com.example.genealogy.model.Person;
-import com.example.genealogy.service.GenealogyTree;
+import com.example.genealogy.view.GenealogyTreeView;
+import com.example.genealogy.presenter.GenealogyTreePresenter;
 
 public class Main {
 
     public static void main(String[] args) {
-        Person person1 = new Person("Иван", null);
-        Person person2 = new Person("Алексей", person1);
-        Person person3 = new Person("Екатерина", person1);
+        GenealogyTreeModel model = new GenealogyTreeModel(new Person("Иван", null));
 
-        GenealogyTree tree = new GenealogyTree(person1);
+        GenealogyTreeView view = new GenealogyTreeView();
 
+        GenealogyTreePresenter presenter = new GenealogyTreePresenter(model, view);
 
-        tree.sortByName();
-        List<Person> sortedByName = (List<Person>) tree;
+        presenter.loadData();
 
+        model.addPerson(new Person("Мария", model.getRootPerson()));
 
-        tree.sortByDateOfBirth();
-        List<Person> sortedByDateOfBirth = (List<Person>) tree;
+        model.addPerson(new Person("Алексей", model.getRootPerson()));
+        model.addPerson(new Person("Екатерина", model.getRootPerson()));
+        model.addPerson(new Person("Мария", model.getRootPerson()));
+        model.addPerson(new Person("Петр", model.getRootPerson()));
+        model.addPerson(new Person("Анна", model.getRootPerson()));
 
+        presenter.sortByName();
 
-        for (Person person : sortedByName) {
-            System.out.println(person.getName());
-        }
+        List<Person> sortedByName = presenter.getSortedByName();
 
-        for (Person person : sortedByDateOfBirth) {
-            System.out.println(person.getName());
+        view.displaySortedByName(sortedByName);
 
-        }
+        presenter.sortByDateOfBirth();
+
+        List<Person> sortedByDateOfBirth = presenter.getSortedByDateOfBirth();
+
+        view.displaySortedByDateOfBirth(sortedByDateOfBirth);
     }
 }
 
