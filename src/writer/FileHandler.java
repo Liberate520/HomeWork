@@ -3,7 +3,9 @@ package writer;
 import java.io.*;
 
 public class FileHandler implements Writeable {
-    public boolean save(Serializable serializable, String filePath){
+
+    String filePath = "src/writer/tree.txt";
+    public boolean save(Serializable serializable){
         try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(serializable);
             return true;
@@ -13,7 +15,7 @@ public class FileHandler implements Writeable {
             return false;
         }
     }
-    public Object read(String filePath){
+    public Object read(){
         try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
             return objectInputStream.readObject();
         }
@@ -22,4 +24,6 @@ public class FileHandler implements Writeable {
             return null;
         }
     }
+
 }
+

@@ -47,7 +47,10 @@ public class ConsoleUI implements View{
 
     public void loadFamilyTree() { presenter.loadFamilyTree(); }
 
-    public void saveFamilyTree() { presenter.saveFamilyTree(); }
+    public void saveFamilyTree() {
+        presenter.saveFamilyTree();
+        System.out.println("Семейное древо сохранено\n");
+    }
 
     public void sortByName() {
         presenter.sortByName();

@@ -3,7 +3,7 @@ package writer;
 import java.io.Serializable;
 
 public interface Writeable {
-    boolean save(Serializable serializable, String filePath);
+    boolean save(Serializable serializable);
 
-    Object read(String filePath);
+    Object read();
 }

@@ -1,9 +1,11 @@
 package model.FamilyTree;
 
+import model.Human.Gender;
 import model.Human.Human;
 import model.Human.TreeNode;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,8 +26,8 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 //            return false;
 //        }
 //        if(!humanList.contains(human)){
-            humanList.add(human);
-            human.setId(countPeople++);
+        humanList.add(human);
+        human.setId(countPeople++);
 //
 //            addToParents(human);
 //            addToChildren(human);
@@ -33,6 +35,13 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 //            return true;
 //        }
 //        return false;
+    }
+    public void createHuman(String name, String secondName, Gender gender, LocalDate birthDate, LocalDate deathDate,
+                            String motherName, String fatherName) {
+        E mother = getParentsByName(motherName);
+        E father = getParentsByName(fatherName);
+        E newHuman = (E) new Human(name, secondName, gender, birthDate, deathDate, (Human) mother, (Human) father);
+        add(newHuman);
     }
 
     private void addToParents(E human){
@@ -58,13 +67,20 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     }
 
     public E getParentsByName(String name){
-        for(E human: humanList) {
-            if (human.getName().equals(name)) {
-                return human;
-            } else {
-                Human newHuman = new Human(name);
-                add((E) newHuman);
-                return (E) newHuman;
+        if(humanList.isEmpty()){
+            Human newHuman = new Human(name);
+            add((E) newHuman);
+            return (E) newHuman;
+        }
+        else{
+            for(E human: humanList) {
+                if (human.getName().equals(name)) {
+                    return human;
+                } else {
+                    Human newHuman = new Human(name);
+                    add((E) newHuman);
+                    return (E) newHuman;
+                }
             }
         }
         return null;
@@ -103,14 +119,14 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     }
 
     public void sortByName(){
-        humanList.sort(new FamilyTreeComparatorByName<E>());
+        humanList.sort(new FamilyTreeComparatorByName<>());
     }
 
     public void sortByBirthDate(){
-        humanList.sort(new FamilyTreeComparatorByBirthDate<E>());
+        humanList.sort(new FamilyTreeComparatorByBirthDate<>());
     }
     @Override
     public Iterator<E> iterator(){
-        return new FamilyTreeIterator(humanList);
+        return new FamilyTreeIterator<>(humanList);
     }
 }

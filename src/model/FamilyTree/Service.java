@@ -1,23 +1,23 @@
 package model.FamilyTree;
 
 import model.Human.Gender;
-import model.Human.Human;
+import model.Human.TreeNode;
 import writer.FileHandler;
+import writer.Writeable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Service {
-    private int countPeople;
-    FamilyTree tree = new FamilyTree<>();
-    String filePath = "src/writer/tree.txt";
+public class Service<E extends TreeNode<E>> extends FileHandler {
+
+    FamilyTree<E> tree = new FamilyTree<>();
+
+
 
     public void addHuman(String name, String secondName, Gender gender, LocalDate birthDate,LocalDate deathDate,
                          String motherName, String fatherName){
-        Human mother = (Human) tree.getParentsByName(motherName);
-        Human father = (Human) tree.getParentsByName(fatherName);
+        tree.createHuman(name, secondName, gender, birthDate, deathDate, motherName, fatherName);
 
-        Human human = new Human(name, secondName, gender, birthDate, deathDate,mother, father);
-        tree.add(human);
     }
 
     public String getHumanListInfo(){
@@ -32,16 +32,10 @@ public class Service {
 
 
     public void loadFamilyTree(){
-        FileHandler fileHandler = new FileHandler();
-        tree = (FamilyTree) fileHandler.read(filePath);
+        tree = (FamilyTree<E>) read();
     }
 
     public void saveFamilyTree(){
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.save(tree, filePath);
-        System.out.println("Семейное древо сохранено\n");
+        save(tree);
     }
-
-
-
 }
