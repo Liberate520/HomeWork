@@ -6,8 +6,8 @@ import re.zip.famely_tree.view.View;
 
 public class Main {
     public static void main(String[] args) {
-        InputOutput io = new InputOutput();
-        View view = new ConsoleUI(io);
+        InputOutput inputOutput = new InputOutput();
+        View view = new ConsoleUI(inputOutput);
         view.start();
     }
 }

@@ -1,11 +1,10 @@
 package re.zip.famely_tree.model.service;
 
+import java.time.LocalDate;
 import re.zip.famely_tree.model.famely_tree.FamelyTree;
 import re.zip.famely_tree.model.human.Gender;
 import re.zip.famely_tree.model.human.Human;
 import re.zip.famely_tree.model.service.writer.FileHandler;
-
-import java.time.LocalDate;
 
 public class Service{
     private FamelyTree<Human> simpleTree;
@@ -48,11 +47,15 @@ public class Service{
 
     @SuppressWarnings("unchecked")
     public void loadFromFile(String filePath) {
-        FileHandler fileHandler = new FileHandler();
         simpleTree = (FamelyTree<Human>) fileHandler.readFromFile(filePath);
     }
 
     public void setWeddding(Integer partner1ID, Integer partner2ID, Integer getFamelyName) {
         simpleTree.setWeddding(partner1ID, partner2ID, getFamelyName);
+    }
+
+
+    public void setChildParentRelationship(Integer parentID, Integer childID) {
+        simpleTree.setChildParentRelationship(parentID, childID);
     }
 }

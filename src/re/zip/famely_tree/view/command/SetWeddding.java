@@ -10,6 +10,6 @@ public class SetWeddding extends Command {
 
     @Override
     public void execute() {
-        getConsoleUI().SetWeddding();
+        getConsoleUI().setWeddding();
     }
 }

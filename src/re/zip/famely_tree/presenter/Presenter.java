@@ -1,14 +1,13 @@
 package re.zip.famely_tree.presenter;
 
+import java.time.LocalDate;
 import re.zip.famely_tree.model.human.Gender;
 import re.zip.famely_tree.model.service.Service;
 import re.zip.famely_tree.view.View;
 
-import java.time.LocalDate;
-
 public class Presenter {
-    private View view;
-    private Service service;
+    private final View view;
+    private final Service service;
 
     public Presenter(View view) {
         this.view = view;
@@ -51,5 +50,9 @@ public class Presenter {
 
     public void setWeddding(Integer partner1ID, Integer partner2ID, Integer getFamelyName) {
         service.setWeddding(partner1ID, partner2ID, getFamelyName);
+    }
+
+    public void setChildParentRelationship(Integer parentID, Integer childID) {
+        service.setChildParentRelationship(parentID, childID);
     }
 }

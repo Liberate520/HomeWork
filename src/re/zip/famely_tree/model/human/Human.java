@@ -3,13 +3,10 @@ package re.zip.famely_tree.model.human;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-// import re.zip.famely_tree.model.human.Gender;
-
 import re.zip.famely_tree.model.famely_tree.FamelyTreeElement;
 
-
+// public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
 public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
     private long idNo;
     private String firstName;
@@ -18,6 +15,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
     private LocalDate dateOfDead;
     private Gender gender;
     private List<Human> children;
+    private List<Human> parents;
     private Human mother, father, parentNoHuman, spouse;
     // private Human child;
 
@@ -28,7 +26,8 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         this.dateOfBirsday = dateOfBirsday;
         this.dateOfDead = dateOfDead;
         this.gender = gender;
-        children = new ArrayList<>();
+        this.children = new ArrayList<>();
+        this.parents = new ArrayList<>();
         this.mother = mother;
         this.father = father;
 
@@ -47,6 +46,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
     //     this(firstName, lastName, dateOfBirsday, null, gender, null, null);
     // }
 
+    @Override
     public boolean addACild(Human child) {
         if (!children.contains(child)){
             children.add(child);
@@ -55,44 +55,30 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         return false;
     }
 
-    public boolean addAParent(Human parent) {
-        if (parent.getGender().equals(Gender.Male)){
-            setFather(parent);
-            return true;
-        }
-        else if (parent.getGender().equals(Gender.Female)) {
-            setMother(parent);
-            return true;
-        }
-        else if(parent.getGender().equals(Gender.Alien)){
-            setParentNoHuman(parent);
-            return true;
-        }
-        return false;
-    }
+    // @Override
+    // public String getFatherName() {
+    //     HashMap <String, String> fatherNames = new HashMap<String, String> ();
+    //     fatherNames.put("Павел", "Павлов");
+    //     fatherNames.put("Андрей", "Андреев");
+    //     fatherNames.put("Евгений", "Евгеньев");
+    //     fatherNames.put("Лев", "Львов");
+    //     fatherNames.put("Мордух", "Мордухов");
+    //     fatherNames.put("Авраам", "Авраамов");
+    //     fatherNames.put("Абрам", "Абрамов");
+    //     fatherNames.put("Виктор", "Викторов");
+    //     if (this.father == null){
+    //         return "";
+    //     }
+    //     if (this.getGender().equals(Gender.Male)){
+    //         return fatherNames.get(this.father.firstName) + "ич";
+    //     }
+    //     else if (this.getGender().equals(Gender.Female)){
+    //         return fatherNames.get(this.father.firstName) + "на";
+    //     }
+    //     return fatherNames.get(this.father.firstName) + "но";
+    // }
 
-    public String getFatherName() {
-        HashMap <String, String> fatherNames = new HashMap<String, String> ();
-        fatherNames.put("Павел", "Павлов");
-        fatherNames.put("Андрей", "Андреев");
-        fatherNames.put("Евгений", "Евгеньев");
-        fatherNames.put("Лев", "Львов");
-        fatherNames.put("Мордух", "Мордухов");
-        fatherNames.put("Авраам", "Авраамов");
-        fatherNames.put("Абрам", "Абрамов");
-        fatherNames.put("Виктор", "Викторов");
-        if (this.father == null){
-            return "";
-        }
-        if (this.getGender().equals(Gender.Male)){
-            return fatherNames.get(this.father.firstName) + "ич";
-        }
-        else if (this.getGender().equals(Gender.Female)){
-            return fatherNames.get(this.father.firstName) + "на";
-        }
-        return fatherNames.get(this.father.firstName) + "но";
-    }
-
+    @Override
     public LocalDate getDateOfBirsday() {
         return dateOfBirsday;
     }
@@ -113,6 +99,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         return Period.between(dateLive1, dateLive2).getYears();
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -134,6 +121,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         return stringBuilder.toString();
     }
 
+    @Override
     public String getSpouseInfo() {
         String string = new String();
         if (spouse == null){
@@ -143,10 +131,12 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         return string;
     }
 
+    @Override
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
     }
 
+    @Override
     public Human getSpouse() {
         return spouse;
     }
@@ -163,10 +153,12 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         this.parentNoHuman = parentNoHuman;
     }
 
+    @Override
     public void setFamelyName(String famelyName) {
         this.famelyName = famelyName;
     }
 
+    @Override
     public String getFamelyName() {
         return famelyName;
     }
@@ -178,7 +170,7 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         if (this.famelyName == null){
             this.famelyName = "не известно";
         }
-        return this.firstName + " " + getFatherName() + " " + this.famelyName;
+        return this.firstName + " " + this.famelyName;
     }
 
     public String getHumanInfo() {
@@ -209,14 +201,17 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         return stringBuilder.toString();
     }
 
+    @Override
     public long getIdNo() {
         return idNo;
     }
 
+    @Override
     public void setIdNo(long idNo) {
         this.idNo = idNo;
     }
 
+    @Override
     public List<Human> getListParents() {
         List<Human> listParents = new ArrayList<>(3);
         if (father != null){
@@ -231,8 +226,59 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         return listParents;
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
+    }
+
+    @Override
+    public void addAChild(Human child) {
+        if (!children.contains(child)) {
+            children.add(child);
+            child.addAParent(this);
+        }
+    }
+    
+    @Override
+    public void removeAChild(Human child) {
+        if (children.contains(child)) {
+            children.remove((Human) child);
+            child.removeAParent(this); 
+        }
+    }
+
+    @Override
+    public boolean addAParent(Human parent) {
+        if (parent.getGender().equals(Gender.Male)) {
+            setFather(parent);
+        } else if (parent.getGender().equals(Gender.Female)) {
+            setMother(parent);
+        } else if(parent.getGender().equals(Gender.Alien)) {
+            setParentNoHuman(parent);
+        }
+    
+        if (!parents.contains(parent)) {
+            parents.add(parent);
+            parent.addAChild(this); 
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void removeAParent(Human parent) {
+        if (parent.getGender().equals(Gender.Male)) {
+            setFather(null);
+        } else if (parent.getGender().equals(Gender.Female)) {
+            setMother(null);
+        } else if(parent.getGender().equals(Gender.Alien)) {
+            setParentNoHuman(null);
+        }
+    
+        if (parents.contains(parent)) {
+            parents.remove(parent);
+            parent.removeAChild(this);
+        }
     }
 
     @Override

@@ -3,18 +3,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-// import re.zip.famely_tree.model.human.Human;
-import re.zip.famely_tree.model.human.comparators.FamelyTreeElementComparatorByFirstName;
 import re.zip.famely_tree.model.famely_tree.iterators.FamelyTreeElementIterator;
-// import re.zip.famely_tree.model.service.Service;
 import re.zip.famely_tree.model.human.comparators.FamelyTreeElementComparatorByBirthDate;
 import re.zip.famely_tree.model.human.comparators.FamelyTreeElementComparatorByFamelyName;
+import re.zip.famely_tree.model.human.comparators.FamelyTreeElementComparatorByFirstName;
 
 public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable, Iterable<E>{
 
-    // Почти получилось, но вот это я не смог сам додумать: "<E extends FamelyTreeElement<E>>"    
-    
-    // private Service service;
     private long humanId;
     private final List<E> humanList;
 
@@ -71,7 +66,7 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
     public List<E> searchByNane(String name){
         List<E> ListByName = new ArrayList<>();
         for (E human : humanList){
-            if (human.getFatherName().equals(name)){
+            if (human.getFirstName().equals(name)){
                 ListByName.add(human);
             }
         }
@@ -192,6 +187,23 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
         humanList.sort(new  FamelyTreeElementComparatorByBirthDate<>());
     }
 
+    public void setChildParentRelationship(Integer parentID, Integer childID) {
+        E parent = searchHumanById(parentID);
+        E child = searchHumanById(childID);
+        setChidParentRelationship(parent, child);
+
+    }
+
+    public void setChidParentRelationship(E parent, E child) {
+        if (parent != null && child != null) {
+            parent.addAChild(child);
+            if (parent.getSpouse() != null) {
+                parent.getSpouse().addAChild(child);
+            }
+        } else {
+            System.out.println("Родитель или ребенок не найден.");
+        }
+    }
     
     @Override
     public Iterator<E> iterator() {   
@@ -214,4 +226,5 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
     public String toString() {
         return getFamelyListInfo();
     }
+
 }

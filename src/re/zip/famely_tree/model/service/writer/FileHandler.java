@@ -6,18 +6,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class FileHandler implements Writable{
+
+
+public class FileHandler implements Writable, Serializable {
     public boolean saveToFile(Serializable serializable, String filePath) {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(serializable);
             return true;    
         } catch (Exception e) {
-            // вывод в консоль стека ошиюок
             e.printStackTrace();
             return false;
         }
     }
 
+    @Override
     public Object readFromFile(String filePath){
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))){
             return objectInputStream.readObject();
@@ -26,5 +28,4 @@ public class FileHandler implements Writable{
             return null;
         }
     }
-
 }
