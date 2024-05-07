@@ -32,13 +32,15 @@ public class Presenter {
         getHumanList();
     }
 
-    public int save(){
-        String answer = service.getHumanList();
+    public boolean save(){
+        service.save();
         getHumanList();
+        return false;
     }
 
     public boolean load(){
-        String answer = service.getHumanList();
+        service.load();
         getHumanList();
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package family_TREE.model.family_tree;
 
+import family_TREE.model.human.Human;
 import family_TREE.model.human.HumanComparatorByBirthDate;
 import family_TREE.model.human.HumanComparatorByName;
 
