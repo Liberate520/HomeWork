@@ -1,26 +1,23 @@
 package View;
-
-import Model.FileHandler;
+import Service.FamilyTreeService;
 import Model.Gender;
-import Model.Writable;
-import Presenter.Presenter;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
     private Scanner scanner;
-    private Presenter presenter;
-    private boolean work;
-    public ConsoleUI(){
-        scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
-        work = true;
+    private FamilyTreeService service;
+
+    public ConsoleUI(FamilyTreeService service) {
+        this.scanner = new Scanner(System.in);
+        this.service = service;
     }
 
     @Override
-    public void Start(){
+    public void Start() {
         System.out.println("Приветствую! Выберите действие:");
-        while (work) {
+        String line;
+        while (true) {
             System.out.println("1. Добавить человека");
             System.out.println("2. Добавить отца");
             System.out.println("3. Добавить мать");
@@ -28,66 +25,65 @@ public class ConsoleUI implements View {
             System.out.println("5. Сохранить семейное дерево");
             System.out.println("6. Закончить работу");
 
-            String line = scanner.nextLine();
-            switch (line){
+            line = scanner.nextLine();
+            switch (line) {
                 case "1":
                     addHuman();
                     break;
                 case "2":
-                    System.out.println("Введите имя человека, которому вы хотите добавить отца: ");
-                    String childName = scanner.nextLine();
-                    System.out.println("Введите имя отца");
-                    String fatherName = scanner.nextLine();
-                    System.out.println("Введите дату рождения отца: YYYY-MM-DD");
-                    LocalDate fatherDob = LocalDate.parse(scanner.nextLine());
-                    Gender fatherGender = Gender.Male;
-                    presenter.addFather(childName, fatherName, fatherDob, fatherGender);
-                    break;
                 case "3":
-                    System.out.println("Введите имя человека, которому вы хотите добавить мать: ");
-                    String childNameForMother = scanner.nextLine();
-                    System.out.println("Введите имя матери");
-                    String motherName = scanner.nextLine();
-                    System.out.println("Введите дату рождения матери: YYYY-MM-DD");
-                    LocalDate motherDob = LocalDate.parse(scanner.nextLine());
-                    Gender motherGender = Gender.Female;
-                    presenter.addMother(childNameForMother, motherName, motherDob, motherGender);
+                    addParent(line);
                     break;
                 case "4":
-                    presenter.printFamilyTree();
+                    service.printFamilyTree();
                     break;
                 case "5":
-                    save();
+                    service.saveTree("C:\\Users\\Podgaynyy\\Desktop\\Programming\\GeekBrains\\Программист\\" +
+                            "Java\\OOP\\homeWork_Java_OOP\\save");
+                    break;
                 case "6":
-                    finish();
+                    System.out.println("До новых встреч!");
+                    return;
                 default:
                     System.out.println("Введено некорректное значение");
             }
         }
     }
-    public void addHuman(){
+
+    private void addHuman() {
         System.out.println("Введите имя человека");
         String name = scanner.nextLine();
         System.out.println("Введите дату рождения: YYYY-MM-DD");
         LocalDate dob = LocalDate.parse(scanner.nextLine());
         System.out.println("Укажите пол: Male/Female");
         Gender gender = Gender.valueOf(scanner.nextLine());
-        presenter.addHuman(name, dob, gender);
+        service.addHuman(name, dob, gender);
+    }
+
+    private void addParent(String choice) {
+        System.out.println("Введите имя человека, которому вы хотите добавить " + (choice.equals("2") ? "отца" : "мать") + ": ");
+        String childName = scanner.nextLine();
+        System.out.println("Введите имя " + (choice.equals("2") ? "отца" : "матери"));
+        String parentName = scanner.nextLine();
+        System.out.println("Введите дату рождения: YYYY-MM-DD");
+        LocalDate dob = LocalDate.parse(scanner.nextLine());
+        Gender gender = choice.equals("2") ? Gender.Male : Gender.Female;
+
+        if (choice.equals("2")) {
+            service.addFather(childName, parentName, dob, gender);
+        } else {
+            service.addMother(childName, parentName, dob, gender);
+        }
     }
 
 
-    public void printAnswer(String text){
-        System.out.println(text);
+    @Override
+    public void printAnswer(String text) {
+
     }
+
+    @Override
     public void save() {
-        System.out.println("Сохранение семейного дерева...");
-        presenter.save("C:\\Users\\Podgaynyy\\Desktop\\Programming\\GeekBrains\\Программист\\" +
-                "Java\\OOP\\homeWork_Java_OOP\\save");
-        System.out.println("Семейное дерево успешно сохранено.");
-    }
 
-    public void finish(){
-        System.out.println("До новых встреч!");
-        work = false;
     }
 }

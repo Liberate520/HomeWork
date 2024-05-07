@@ -1,11 +1,8 @@
 import Model.FamilyTree;
 import Model.FileHandler;
-import Model.Gender;
-import Model.Human;
 import View.ConsoleUI;
-import View.View;
+import Service.FamilyTreeService;
 import java.io.File;
-import java.io.Serializable;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,9 +20,8 @@ public class Main {
             System.out.println("New family tree created.");
         }
 
-        View view = new ConsoleUI();
+        FamilyTreeService service = new FamilyTreeService(familyTree, fileHandler);
+        ConsoleUI view = new ConsoleUI(service);
         view.Start();
-
-
     }
 }
