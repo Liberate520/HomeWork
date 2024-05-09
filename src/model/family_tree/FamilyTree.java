@@ -26,10 +26,6 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
         human.setId(id);
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void sortByName() {
         Collections.sort(humanList, new HumanComparatorByName<>());
     }
@@ -43,8 +39,8 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
     public Human search(int id) {
-        for (E human: humanList) {
-            if (human.getID() == id){
+        for (E human : humanList) {
+            if (human.getID() == id) {
                 return (Human) human;
             }
         }

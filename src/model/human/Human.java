@@ -1,6 +1,7 @@
 package model.human;
 
 import model.family_tree.FamilyTreeElement;
+import view.Auxiliary.HumanData;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -38,6 +39,10 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         this(name, dateOfBirthday, null, gender, null, null, null);
     }
 
+    public Human(HumanData humanData) {
+        this(humanData.name, humanData.dateOfBirthday, null, humanData.gender, null, null, null);
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -53,7 +58,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     public void addChild(Human human) {
         if (!this.childrenList.contains(human)) {
             this.childrenList.add(human);
-//            System.out.println("///" + model.human);
             human.addParent(this);
         }
     }

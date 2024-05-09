@@ -1,12 +1,11 @@
 package model.service;
 
 import model.family_tree.FamilyTree;
-import model.human.Gender;
 import model.human.Human;
 import model.writable.FileHandler;
+import view.Auxiliary.HumanData;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Service implements Serializable {
     private FamilyTree<Human> familyTree;
@@ -21,9 +20,8 @@ public class Service implements Serializable {
         familyTree.add(human);
     }
 
-    public void addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
-        Human human = new Human(name, dateOfBirthday, gender);
-//        familyTree = new FamilyTree<>();
+    public void addHuman(HumanData humanData) {
+        Human human = new Human(humanData);
         familyTree.add(human);
     }
 
@@ -57,14 +55,15 @@ public class Service implements Serializable {
         fileHandler.save(familyTree);
     }
 
-    public void addParent(String name, LocalDate dateOfBirthday, Gender gender, int id) {
-        Human humanParent = new Human(name, dateOfBirthday, gender);
+    public void addParent(HumanData humanData, int id) {
+        Human humanParent = new Human(humanData);
         familyTree.add(humanParent);
         Human child = searchByID(id);
         child.addParent(humanParent);
     }
-    public void addChild(String name, LocalDate dateOfBirthday, Gender gender, int id) {
-        Human humanChild = new Human(name, dateOfBirthday, gender);
+
+    public void addChild(HumanData humanData, int id) {
+        Human humanChild = new Human(humanData);
         familyTree.add(humanChild);
         Human child = searchByID(id);
         child.addChild(humanChild);
@@ -78,7 +77,6 @@ public class Service implements Serializable {
     public String toString() {
         return getFamilyTreeInfo();
     }
-
 
 
 }

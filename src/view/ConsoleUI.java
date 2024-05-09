@@ -2,12 +2,12 @@ package view;
 
 import model.human.Gender;
 import presenter.Presenter;
+import view.Auxiliary.HumanData;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI implements View, Serializable {
+public class ConsoleUI implements View {
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
@@ -23,12 +23,11 @@ public class ConsoleUI implements View, Serializable {
     @Override
     public void start() {
         loadTree();
-//        getFamilyTreeInfo();
+        getFamilyTreeInfo();
         System.out.println("\nДобрый день! Выберите действие:\n");
         while (work) {
             System.out.println(mainMenu.getMenu());
             String strChoice = scanner.nextLine();
-//            todo    метод проверки на валидность strChoice
             int choice = Integer.parseInt(strChoice);
             mainMenu.execute(choice);
         }
@@ -69,33 +68,31 @@ public class ConsoleUI implements View, Serializable {
         presenter.getFamilyTreeInfo();
     }
 
-    public void addHuman() {
+    public HumanData readHumanData() {
         String name = questionName();
         LocalDate dateOfBirthday = questionDate();
         Gender gender = questionGender();
+        return new HumanData(name, dateOfBirthday, gender);
+    }
 
-        presenter.addHuman(name, dateOfBirthday, gender);
+    public void addHuman() {
+        HumanData humanData = readHumanData();
+        presenter.addHuman(humanData);
         System.out.println("\n");
     }
 
     public void addParent() {
-        String name = questionName();
-        LocalDate dateOfBirthday = questionDate();
-        Gender gender = questionGender();
+        HumanData humanData = readHumanData();
         int id = questionnaireChoice();
-        presenter.addParent(name, dateOfBirthday, gender, id);
+        presenter.addParent(humanData, id);
         System.out.println("\n");
-        //todo метод добавления родителя
     }
 
     public void addChildren() {
-        String name = questionName();
-        LocalDate dateOfBirthday = questionDate();
-        Gender gender = questionGender();
+        HumanData humanData = readHumanData();
         int id = questionnaireChoice();
-        presenter.addChild(name, dateOfBirthday, gender, id);
+        presenter.addChild(humanData, id);
         System.out.println("\n");
-        //todo метод добавления ребенка
     }
 
     public String questionName() {

@@ -1,8 +1,10 @@
 package model.writable;
 
+import model.family_tree.FamilyTree;
+
 import java.io.*;
 
-public class FileHandler implements Writable {
+public class FileHandler implements Writable, Readable {
     String path = "src/model/writable/FamilyTree.txt";
 
     public FileHandler() {
@@ -25,7 +27,7 @@ public class FileHandler implements Writable {
             return objectInputStream.readObject();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new FamilyTree<>();
         }
     }
 

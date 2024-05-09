@@ -1,14 +1,8 @@
 package presenter;
 
-import model.human.Gender;
-import model.human.Human;
 import model.service.Service;
-import model.writable.FileHandler;
+import view.Auxiliary.HumanData;
 import view.View;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Presenter {
     private final View view;
@@ -20,15 +14,16 @@ public class Presenter {
         service = new Service();
     }
 
-    public void addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
-        service.addHuman(name, dateOfBirthday, gender);
+    public void addHuman(HumanData humanData) {
+        service.addHuman(humanData);
     }
 
-    public void addParent(String name, LocalDate dateOfBirthday, Gender gender, int id) {
-        service.addParent(name, dateOfBirthday, gender, id);
+    public void addParent(HumanData humanData, int id) {
+        service.addParent(humanData, id);
     }
-    public void addChild(String name, LocalDate dateOfBirthday, Gender gender, int id) {
-        service.addChild(name, dateOfBirthday, gender, id);
+
+    public void addChild(HumanData humanData, int id) {
+        service.addChild(humanData, id);
     }
 
     public void getFamilyTreeInfo() {
@@ -57,14 +52,5 @@ public class Presenter {
 
     public void saveTree() {
         service.saveTree();
-    }
-
-    public Service getService() {
-        return service;
-    }
-
-    static void saveTree(Service service) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.save(service);
     }
 }
