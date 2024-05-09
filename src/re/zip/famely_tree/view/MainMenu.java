@@ -15,7 +15,8 @@ public class MainMenu {
         commands.add(new SortByFirstName(consoleUI));
         commands.add(new SortByFamelyName(consoleUI));
         commands.add(new SetWeddding(consoleUI));
-        commands.add(new setChildParentRelationship(consoleUI));       
+        commands.add(new SetChildParentRelationship(consoleUI));
+        commands.add(new SetSiblingsRelationship(consoleUI));               
         commands.add(new LoadFromFile(consoleUI));
         commands.add(new SaveToFile(consoleUI));
         commands.add(new Finish(consoleUI));

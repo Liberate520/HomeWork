@@ -7,6 +7,8 @@ public interface FamelyTreeElement<E> extends Serializable {
     List<E> getListParents();
     List<E> getChildren();
     E getSpouse();
+    E getMother();
+    E getFather();
     LocalDate getDateOfBirsday();
     String getFamelyName();
     String getSpouseInfo();

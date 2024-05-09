@@ -3,6 +3,7 @@ package re.zip.famely_tree.presenter;
 import java.time.LocalDate;
 import re.zip.famely_tree.model.human.Gender;
 import re.zip.famely_tree.model.service.Service;
+import re.zip.famely_tree.model.service.writer.FileHandler;
 import re.zip.famely_tree.view.View;
 
 public class Presenter {
@@ -11,7 +12,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        service = new Service(new FileHandler());
     }
 
     public void addHumanToFamelyTree(String firstName, String lastName, LocalDate localDate, Gender gender) {
@@ -54,5 +55,9 @@ public class Presenter {
 
     public void setChildParentRelationship(Integer parentID, Integer childID) {
         service.setChildParentRelationship(parentID, childID);
+    }
+
+    public void setSiblingsRelationship(Integer sibling1id, Integer sibling2id) {
+        service.setSiblingsRelationship(sibling1id, sibling2id);
     }
 }

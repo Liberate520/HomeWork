@@ -126,7 +126,6 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
         return false;
     }
 
-
     public boolean setDivorse (Integer partner1ID, Integer partner2ID){
         if (checkID(partner1ID) && checkID(partner2ID)){
             E partner1 = searchHumanById(partner1ID);
@@ -187,6 +186,28 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
         humanList.sort(new  FamelyTreeElementComparatorByBirthDate<>());
     }
 
+    public void setSiblingsRelationship(Integer sibling1Id, Integer sibling2Id) {
+        E sibling1 = searchHumanById(sibling1Id);
+        E sibling2 = searchHumanById(sibling2Id);
+        setSiblingsRelationship(sibling1, sibling2);
+    }
+
+    public void setSiblingsRelationship(E sibling1, E sibling2) {
+        if (sibling1 != null && sibling2 != null) {
+            if (sibling1.getFather() == null && sibling1.getMother() == null) {
+            sibling1.getFather().addAChild(sibling2);
+            sibling1.getMother().addAChild(sibling2);
+            }
+            else if (sibling2.getFather() == null && sibling2.getMother() == null) {
+                sibling2.getFather().addAChild(sibling1);
+                sibling2.getMother().addAChild(sibling1);
+                }
+            else {
+                System.out.println("У  указанных братьев(сестер) есть обозначенные родители. Установка такой связи невозможна");
+            }
+        }
+    }
+        
     public void setChildParentRelationship(Integer parentID, Integer childID) {
         E parent = searchHumanById(parentID);
         E child = searchHumanById(childID);
@@ -197,8 +218,10 @@ public class FamelyTree<E extends FamelyTreeElement<E>> implements Serializable,
     public void setChidParentRelationship(E parent, E child) {
         if (parent != null && child != null) {
             parent.addAChild(child);
+            child.addAParent(parent);
             if (parent.getSpouse() != null) {
                 parent.getSpouse().addAChild(child);
+                child.addAParent(parent.getSpouse());
             }
         } else {
             System.out.println("Родитель или ребенок не найден.");

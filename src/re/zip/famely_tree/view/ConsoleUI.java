@@ -111,4 +111,16 @@ public class ConsoleUI implements View {
         presenter.setChildParentRelationship(parentID, childID);
     }
 
+    public void setSiblingsRelationship() {
+        inputOutput.println("Введите ID номер первого(й) из братьев(систер): ");
+        String strSibling1ID = inputOutput.readLine();
+        Integer sibling1ID = parseInt(strSibling1ID);
+
+        inputOutput.println("Введите ID номер второго(й) из братьев(систер): ");
+        String strSibling2ID = inputOutput.readLine();
+        Integer sibling2ID = parseInt(strSibling2ID);
+
+        presenter.setSiblingsRelationship(sibling1ID, sibling2ID);
+    }
+
 }

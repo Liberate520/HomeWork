@@ -5,14 +5,16 @@ import re.zip.famely_tree.model.famely_tree.FamelyTree;
 import re.zip.famely_tree.model.human.Gender;
 import re.zip.famely_tree.model.human.Human;
 import re.zip.famely_tree.model.service.writer.FileHandler;
+import re.zip.famely_tree.model.service.writer.Writable;
 
 public class Service{
     private FamelyTree<Human> simpleTree;
-    private final FileHandler fileHandler;
+    private final Writable fileHandler;
 
 
-    public Service() {
-        this.fileHandler = new FileHandler();
+    public Service(Writable fileHandler) {
+        // this.fileHandler = new FileHandler();
+        this.fileHandler = fileHandler;
         this.simpleTree = new FamelyTree<>();
     }
 
@@ -57,5 +59,9 @@ public class Service{
 
     public void setChildParentRelationship(Integer parentID, Integer childID) {
         simpleTree.setChildParentRelationship(parentID, childID);
+    }
+
+    public void setSiblingsRelationship(Integer sibling1Id, Integer sibling2Id) {
+        simpleTree.setSiblingsRelationship(sibling1Id, sibling2Id);
     }
 }

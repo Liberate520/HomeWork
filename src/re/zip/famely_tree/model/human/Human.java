@@ -149,6 +149,14 @@ public class Human implements Comparable<Human>, FamelyTreeElement<Human>{
         this.father = father;
     }
 
+    public Human getFather() {
+        return father;
+    }
+    
+    public Human getMother() {
+        return mother;
+    }
+
     public void setParentNoHuman(Human parentNoHuman) {
         this.parentNoHuman = parentNoHuman;
     }
