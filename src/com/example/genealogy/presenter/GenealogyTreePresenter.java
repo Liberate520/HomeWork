@@ -1,7 +1,5 @@
 package com.example.genealogy.presenter;
-
 import java.util.List;
-
 import com.example.genealogy.model.GenealogyTreeModel;
 import com.example.genealogy.model.Person;
 import com.example.genealogy.view.GenealogyTreeView;
@@ -23,7 +21,6 @@ public class GenealogyTreePresenter {
 
     public void sortByName() {
         model.sortByName();
-
         view.displaySortedByName(model.getPeople());
     }
 
