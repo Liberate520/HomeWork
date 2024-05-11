@@ -1,14 +1,14 @@
 package Family_Tree.view;
 
-import Family_Tree.model.FamilyTree.FamilyTree;
+import Family_Tree.model.Human.Gender;
 import Family_Tree.presenter.Presenter;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ConsoleUI implements View{
     private Presenter presenter;
     private Scanner scanner;
-    private FamilyTree familytree;
     private boolean work;
 
     public ConsoleUI(){
@@ -23,7 +23,8 @@ public class ConsoleUI implements View{
             System.out.println("Получить информацию о древе 1");
             System.out.println("Отсортировать по имени 2");
             System.out.println("Отсортировать по возрасту 3");
-            System.out.println("Выход 4");
+            System.out.println("Добавить человека 4");
+            System.out.println("Выход 5");
             String choice = scanner.nextLine();
             switch (choice) {
 //                case "1":
@@ -34,7 +35,7 @@ public class ConsoleUI implements View{
 //                    int age=Integer.parseInt(strAge);
 
                 case "1":
-                    presenter.getInfo();
+                    presenter.getInf();
                     break;
                 case "2":
                     presenter.sortByAge();
@@ -43,6 +44,30 @@ public class ConsoleUI implements View{
                     presenter.sortByName();
                     break;
                 case "4":
+                    System.out.println("Введите имя: ");
+                    String name = scanner.nextLine();
+
+                    System.out.println("Введите возраст человека ");
+                    Integer age = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("Введите пол человека: ");
+                    String gend = scanner.nextLine();
+                    if(Objects.equals(gend, "Женщина")) {
+                        Gender gender = Gender.Female;
+//                        NewHuman(name, age, gender);
+                        presenter.addHuman(name, age, gender);
+                    }
+                    else if(Objects.equals(gend, "Мужчина")){
+                        Gender gender = Gender.Male;
+//                        NewHuman(name, age, gender);
+                        presenter.addHuman(name, age, gender);
+                    }
+                    else {
+                        System.out.println("Введите: Мужчина или Женщина");
+                    }
+                    break;
+                case "5":
                     finish();
                     break;
                 default:
@@ -59,6 +84,10 @@ public class ConsoleUI implements View{
         System.out.println("Конец работы!");
         work=false;
     }
+//    public void NewHuman(String name, Integer age, Gender gender) {
+//        Human human = new Human(name, age, gender);
+//    }
+
 
 //    private void getInfo() {
 //        String answer = familytree.getInfo();
@@ -73,4 +102,5 @@ public class ConsoleUI implements View{
 //        familytree.sortByName();
 //        getInfo();
 //    }
+
 }

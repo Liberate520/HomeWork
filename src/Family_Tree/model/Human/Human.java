@@ -17,8 +17,9 @@ public class Human implements TreeVersatility<Human> {
     private Human mother;
     private List<Human> children;
     private Human partner;
+    private Integer age;
 
-    public Human(String name, LocalDate birth, LocalDate death, Gender gender, Human father, Human mother) {
+    public Human(String name, LocalDate birth, LocalDate death, Gender gender, Human father, Human mother, Integer age) {
         id = -1;
         this.name = name;
         this.gender = gender;
@@ -27,15 +28,20 @@ public class Human implements TreeVersatility<Human> {
         this.father = father;
         this.mother = mother;
         children = new ArrayList<>();
+        this.age=age;
     }
 
     public Human(String name, Gender gender, LocalDate birth) {
-        this(name, birth, null, gender, null, null);
+        this(name, birth, null, gender, null, null, null);
     }
 
     public Human(String name, Gender gender, LocalDate birth,
              Human father, Human mother) {
-        this(name, birth, null, gender, father, mother);
+        this(name, birth, null, gender, father, mother, null);
+    }
+
+    public Human(String name, Integer age, Gender gender) {
+        this(name, null, null, gender, null, null, age);
     }
 
 
@@ -97,6 +103,7 @@ public class Human implements TreeVersatility<Human> {
     public String getName(){
         return name;
     }
+    public Integer getage(){return age;}
     public long getID(){
         return id;
     }
@@ -111,24 +118,36 @@ public class Human implements TreeVersatility<Human> {
     public void setDeath(LocalDate death){this.death = death;}
 
     @Override
-    public String toString(){return getInfo();}
-    public String getInfo() {
+    public String toString(){return getInf();}//Убери name, age, gender(Добавь о)
+//    public String getInfo() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("id: ");
+//        sb.append(id);
+//        sb.append("Имя: ");
+//        sb.append(name);
+//        sb.append("Возраст: ");
+//        sb.append(getAge());
+//        sb.append("Дети: ");
+//        sb.append(children);
+//        sb.append("Родители: ");
+//        sb.append(getFatherInf());
+//        sb.append(" , ");
+//        sb.append(getMotherInf());
+//        if (!(death == null)) {
+//            sb.append(getDeath());
+//        }
+//        return sb.toString();
+//    }
+
+
+    public String getInf() {
         StringBuilder sb = new StringBuilder();
-        sb.append("id: ");
-        sb.append(id);
         sb.append("Имя: ");
         sb.append(name);
-        sb.append("Возраст: ");
-        sb.append(getAge());
-        sb.append("Дети: ");
-        sb.append(children);
-        sb.append("Родители: ");
-        sb.append(getFatherInf());
-        sb.append(" , ");
-        sb.append(getMotherInf());
-        if (!(death == null)) {
-            sb.append(getDeath());
-        }
+        sb.append(" ,Возраст: ");
+        sb.append(age);
+        sb.append(" ,Гендр: ");
+        sb.append(gender);
         return sb.toString();
     }
 
