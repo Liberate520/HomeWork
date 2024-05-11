@@ -1,38 +1,31 @@
 package model.service;
 
 import model.family_tree.FamilyTree;
+import model.human.Element;
+import model.human.Gender;
 import model.human.Human;
 import model.writable.FileHandler;
-import view.Auxiliary.HumanData;
+import model.writable.Readable;
+import model.writable.Writable;
 
-import java.io.Serializable;
+import java.time.LocalDate;
 
-public class Service implements Serializable {
-    private FamilyTree<Human> familyTree;
-    private FileHandler fileHandler;
+public class Service<E extends Element<E>> {
+    private FamilyTree<E> familyTree;
+    private Writable writableHandler;
+    private Readable readableHandler;
 
     public Service() {
-        this.familyTree = new FamilyTree<>();
-        this.fileHandler = new FileHandler();
+        this.familyTree = new FamilyTree();
     }
 
-    public void addHuman(Human human) {
-        familyTree.add(human);
-    }
-
-    public void addHuman(HumanData humanData) {
-        Human human = new Human(humanData);
-        familyTree.add(human);
+    public int addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
+        Element<E> human = new Human(name, dateOfBirthday, gender);
+        return familyTree.add((E) human);
     }
 
     public String getFamilyTreeInfo() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Список дерева:\n");
-        for (Human human : familyTree) {
-            stringBuilder.append(human.toString());
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
+        return familyTree.toString();
     }
 
     public void sortByName() {
@@ -47,36 +40,30 @@ public class Service implements Serializable {
         familyTree.sortByID();
     }
 
-    public void loadTree() {
-        this.familyTree = (FamilyTree<Human>) fileHandler.load();
+    public void loadTreeSerialize() {
+        this.readableHandler = new FileHandler();
+        this.familyTree = (FamilyTree<E>) readableHandler.load();
     }
 
-    public void saveTree() {
-        fileHandler.save(familyTree);
+    public void saveTreeSerialize() {
+        this.writableHandler = new FileHandler();
+        writableHandler.save(familyTree);
     }
 
-    public void addParent(HumanData humanData, int id) {
-        Human humanParent = new Human(humanData);
-        familyTree.add(humanParent);
-        Human child = searchByID(id);
-        child.addParent(humanParent);
+    public void addParent(int child, int parent) {
+        familyTree.addParent(child, parent);
     }
 
-    public void addChild(HumanData humanData, int id) {
-        Human humanChild = new Human(humanData);
-        familyTree.add(humanChild);
-        Human child = searchByID(id);
-        child.addChild(humanChild);
+    public void addChild(int child, int parent) {
+        familyTree.addChild(child, parent);
     }
 
-    public Human searchByID(int id) {
-        return familyTree.search(id);
+    public boolean availability(int id) {
+        return familyTree.availability(id);
     }
 
     @Override
     public String toString() {
         return getFamilyTreeInfo();
     }
-
-
 }

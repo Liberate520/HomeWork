@@ -1,18 +1,16 @@
 package model.family_tree;
 
 import model.family_tree.Iterators.HumanIterator;
-import model.human.Human;
+import model.human.Element;
 import model.human.comparator.HumanComparatorByAge;
 import model.human.comparator.HumanComparatorById;
 import model.human.comparator.HumanComparatorByName;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
-public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable, Iterable<E> {
+import java.io.Serializable;
+import java.util.*;
+
+public class FamilyTree<E extends Element<E>> implements Serializable, Iterable<E> {
     private List<E> humanList;
     private int id;
 
@@ -20,32 +18,63 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
         humanList = new ArrayList<>();
     }
 
-    public void add(E human) {
-        humanList.add(human);
+    public int add(E human) {
+        humanList.add((E) human);
         id++;
         human.setId(id);
+        return id;
     }
 
+
+    public void addParent(int child, int parent) {
+        for (E human : humanList) {
+            if (human.getID() == child) {
+                human.addParent(search(parent));
+            }
+        }
+    }
+
+    public void addChild(int child, int parent) {
+        for (E human : humanList) {
+            if (human.getID() == parent) {
+                human.addChild(search(child));
+            }
+        }
+    }
+
+    //
     public void sortByName() {
         Collections.sort(humanList, new HumanComparatorByName<>());
     }
+
 
     public void sortByAge() {
         Collections.sort(humanList, new HumanComparatorByAge<>());
     }
 
+
     public void sortByID() {
         Collections.sort(humanList, new HumanComparatorById<>());
     }
 
-    public Human search(int id) {
+
+    public E search(int id) {
         for (E human : humanList) {
             if (human.getID() == id) {
-                return (Human) human;
+                return human;
             }
         }
-        System.out.println("Не найден");
         return null;
+    }
+
+
+    public boolean availability(int id) {
+        for (E human : humanList) {
+            if (human.getID() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

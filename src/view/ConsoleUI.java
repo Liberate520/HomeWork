@@ -2,7 +2,6 @@ package view;
 
 import model.human.Gender;
 import presenter.Presenter;
-import view.Auxiliary.HumanData;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -49,7 +48,6 @@ public class ConsoleUI implements View {
         saveTree();
         System.out.println("До новых встреч");
         work = false;
-
     }
 
     public void sortByAge() {
@@ -68,31 +66,24 @@ public class ConsoleUI implements View {
         presenter.getFamilyTreeInfo();
     }
 
-    public HumanData readHumanData() {
+    public int addHuman() {
         String name = questionName();
         LocalDate dateOfBirthday = questionDate();
         Gender gender = questionGender();
-        return new HumanData(name, dateOfBirthday, gender);
-    }
-
-    public void addHuman() {
-        HumanData humanData = readHumanData();
-        presenter.addHuman(humanData);
         System.out.println("\n");
+        return presenter.addHuman(name, dateOfBirthday, gender);
     }
 
     public void addParent() {
-        HumanData humanData = readHumanData();
-        int id = questionnaireChoice();
-        presenter.addParent(humanData, id);
-        System.out.println("\n");
+        int child = findHuman();
+        int parent = addHuman();
+        presenter.addParent(child, parent);
     }
 
     public void addChildren() {
-        HumanData humanData = readHumanData();
-        int id = questionnaireChoice();
-        presenter.addChild(humanData, id);
-        System.out.println("\n");
+        int parent = findHuman();
+        int child = addHuman();
+        presenter.addChild(child, parent);
     }
 
     public String questionName() {
@@ -125,18 +116,28 @@ public class ConsoleUI implements View {
         return gender;
     }
 
-    public int questionnaireChoice() {
+    public int findHuman() {
+        boolean flag;
         getFamilyTreeInfo();
         System.out.println("Укажите id родственника");
         String strID = scanner.nextLine();
         int id = Integer.parseInt(strID);
+        flag = availability(id);
+        while (!flag) {
+            System.out.println("id указан неверно");
+            strID = scanner.nextLine();
+            id = Integer.parseInt(strID);
+            flag = availability(id);
+        }
         return id;
+    }
+
+    public boolean availability(int id) {
+        return presenter.availability(id);
     }
 
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
     }
-
-
 }

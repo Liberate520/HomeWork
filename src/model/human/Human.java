@@ -1,26 +1,23 @@
 package model.human;
 
-import model.family_tree.FamilyTreeElement;
-import view.Auxiliary.HumanData;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, FamilyTreeElement<Human> {
+public class Human implements Element, Serializable {
     private String name;
     private LocalDate dateOfBirthday, dateOfDeath;
     private Gender gender;
-    private Human father, mother;
-    private List<Human> childrenList;
+    private Element father, mother;
+    private List<Element> childrenList;
     private int id;
 
     public Human() {
     }
 
-    public Human(String name, LocalDate dateOfBirthday, LocalDate dateOfDeath, Gender gender, Human father, Human mother, List<Human> children) {
+    public Human(String name, LocalDate dateOfBirthday, LocalDate dateOfDeath, Gender gender, Element father, Element mother, List<Element> children) {
         this.name = name;
         this.dateOfBirthday = dateOfBirthday;
         this.dateOfDeath = dateOfDeath;
@@ -39,48 +36,26 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         this(name, dateOfBirthday, null, gender, null, null, null);
     }
 
-    public Human(HumanData humanData) {
-        this(humanData.name, humanData.dateOfBirthday, null, humanData.gender, null, null, null);
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setFather(Human father) {
+    public void setFather(Element father) {
         this.father = father;
     }
 
-    public void setMother(Human mother) {
+    public void setMother(Element mother) {
         this.mother = mother;
     }
 
-    public void addChild(Human human) {
-        if (!this.childrenList.contains(human)) {
-            this.childrenList.add(human);
-            human.addParent(this);
-        }
-    }
-
-    public void addParent(Human human) {
-        if (human.gender == Gender.Male) {
-            setFather(human);
-        } else {
-            setMother(human);
-        }
-        human.addChild(this);
-    }
-
+    @Override
     public int getID() {
         return id;
     }
 
+    @Override
     public String getName() {
-        return name;
-    }
-
-    public Gender getGender() {
-        return gender;
+        return this.name;
     }
 
     public int getAge() {
@@ -88,9 +63,42 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         return period.getYears();
     }
 
+    @Override
+    public void addParent(Element human) {
+        if (human.getGender() == Gender.Male) {
+            setFather(human);
+        } else {
+            setMother(human);
+        }
+        human.addChild(this);
+    }
+
+    @Override
+    public void addChild(Element human) {
+        if (!this.childrenList.contains(human)) {
+            this.childrenList.add(human);
+            human.addParent(this);
+        }
+    }
+
     public String getMother() {
         if (mother != null) {
-            return this.mother.name;
+            return this.mother.getName();
+        } else
+            return "неизв.";
+    }
+
+    public String getName(String name) {
+        return this.name = name;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public String getFather() {
+        if (father != null) {
+            return this.father.getName();
         } else
             return "неизв.";
     }
@@ -98,20 +106,13 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     public String getChildren() {
         StringBuilder stringBuilder = new StringBuilder();
         if (!childrenList.isEmpty()) {
-            for (Human human : childrenList) {
-                stringBuilder.append(human.name);
+            for (Element human : childrenList) {
+                stringBuilder.append(human.getName());
                 stringBuilder.append(" ");
             }
             return stringBuilder.toString();
         } else
             return "нет";
-    }
-
-    public String getFather() {
-        if (father != null) {
-            return this.father.name;
-        } else
-            return "неизв.";
     }
 
     @Override
