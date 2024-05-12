@@ -1,8 +1,10 @@
 package presenter;
 
 
+import model.family_tree.FamilyTree;
 import model.human.Gender;
 import model.service.Service;
+import model.writable.FileHandler;
 import view.View;
 
 import java.time.LocalDate;
@@ -12,9 +14,10 @@ public class Presenter {
     private Service service;
 
 
+
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        service = new Service(new FamilyTree());
     }
 
     public int addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
@@ -54,10 +57,10 @@ public class Presenter {
     }
 
     public void loadTree() {
-        service.loadTreeSerialize();
+        service.loadTree(new FileHandler());
     }
 
     public void saveTree() {
-        service.saveTreeSerialize();
+        service.saveTree(new FileHandler());
     }
 }

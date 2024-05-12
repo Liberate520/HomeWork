@@ -1,5 +1,5 @@
 package model.writable;
 
-public interface Readable<T> {
+public interface Readable {
     Object load();
 }

@@ -1,27 +1,23 @@
 package model.service;
 
-import model.family_tree.FamilyTree;
-import model.human.Element;
+import model.family_tree.FamilyTreeElement;
 import model.human.Gender;
 import model.human.Human;
-import model.writable.FileHandler;
 import model.writable.Readable;
 import model.writable.Writable;
 
 import java.time.LocalDate;
 
-public class Service<E extends Element<E>> {
-    private FamilyTree<E> familyTree;
-    private Writable writableHandler;
-    private Readable readableHandler;
+public class Service {
+    private FamilyTreeElement familyTree;
 
-    public Service() {
-        this.familyTree = new FamilyTree();
+    public Service(FamilyTreeElement familyTree) {
+        this.familyTree = familyTree;
     }
 
     public int addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
-        Element<E> human = new Human(name, dateOfBirthday, gender);
-        return familyTree.add((E) human);
+        Human human = new Human(name, dateOfBirthday, gender);
+        return familyTree.add(human);
     }
 
     public String getFamilyTreeInfo() {
@@ -40,14 +36,12 @@ public class Service<E extends Element<E>> {
         familyTree.sortByID();
     }
 
-    public void loadTreeSerialize() {
-        this.readableHandler = new FileHandler();
-        this.familyTree = (FamilyTree<E>) readableHandler.load();
+    public void loadTree(Readable readable) {
+        this.familyTree = (FamilyTreeElement) readable.load();
     }
 
-    public void saveTreeSerialize() {
-        this.writableHandler = new FileHandler();
-        writableHandler.save(familyTree);
+    public void saveTree(Writable writable) {
+        writable.save(familyTree);
     }
 
     public void addParent(int child, int parent) {

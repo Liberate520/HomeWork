@@ -1,23 +1,25 @@
 package model.human;
 
+import model.family_tree.FamilyTreeElement;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Element, Serializable {
+public class Human implements FamilyTreeElement<Human>, Serializable {
     private String name;
     private LocalDate dateOfBirthday, dateOfDeath;
     private Gender gender;
-    private Element father, mother;
-    private List<Element> childrenList;
+    private Human father, mother;
+    private List<Human> childrenList;
     private int id;
 
     public Human() {
     }
 
-    public Human(String name, LocalDate dateOfBirthday, LocalDate dateOfDeath, Gender gender, Element father, Element mother, List<Element> children) {
+    public Human(String name, LocalDate dateOfBirthday, LocalDate dateOfDeath, Gender gender, Human father, Human mother, List<Human> children) {
         this.name = name;
         this.dateOfBirthday = dateOfBirthday;
         this.dateOfDeath = dateOfDeath;
@@ -40,31 +42,24 @@ public class Human implements Element, Serializable {
         this.id = id;
     }
 
-    public void setFather(Element father) {
+    public void setFather(Human father) {
         this.father = father;
     }
 
-    public void setMother(Element mother) {
+    public void setMother(Human mother) {
         this.mother = mother;
     }
 
     @Override
-    public int getID() {
-        return id;
+    public void addChild(Human human) {
+        if (!this.childrenList.contains(human)) {
+            this.childrenList.add(human);
+            human.addParent(this);
+        }
     }
 
     @Override
-    public String getName() {
-        return this.name;
-    }
-
-    public int getAge() {
-        Period period = Period.between(this.dateOfBirthday, LocalDate.now());
-        return period.getYears();
-    }
-
-    @Override
-    public void addParent(Element human) {
+    public void addParent(Human human) {
         if (human.getGender() == Gender.Male) {
             setFather(human);
         } else {
@@ -74,11 +69,59 @@ public class Human implements Element, Serializable {
     }
 
     @Override
-    public void addChild(Element human) {
-        if (!this.childrenList.contains(human)) {
-            this.childrenList.add(human);
-            human.addParent(this);
-        }
+    public String getName() {
+        return this.name;
+    }
+
+
+    @Override
+    public int getID() {
+        return id;
+    }
+
+    @Override
+    public void addParent(int child, int parent) {
+
+    }
+
+    @Override
+    public void addChild(int child, int parent) {
+
+    }
+
+    @Override
+    public int add(Human human) {
+        return 0;
+    }
+
+
+    @Override
+    public void sortByName() {
+
+    }
+
+    @Override
+    public void sortByAge() {
+
+    }
+
+    @Override
+    public void sortByID() {
+
+    }
+
+    @Override
+    public boolean availability(int id) {
+        return false;
+    }
+
+    @Override
+    public int getAge() {
+        Period period = Period.between(this.dateOfBirthday, LocalDate.now());
+        return period.getYears();
+    }
+    public Gender getGender() {
+        return gender;
     }
 
     public String getMother() {
@@ -86,14 +129,6 @@ public class Human implements Element, Serializable {
             return this.mother.getName();
         } else
             return "неизв.";
-    }
-
-    public String getName(String name) {
-        return this.name = name;
-    }
-
-    public Gender getGender() {
-        return gender;
     }
 
     public String getFather() {
@@ -106,7 +141,7 @@ public class Human implements Element, Serializable {
     public String getChildren() {
         StringBuilder stringBuilder = new StringBuilder();
         if (!childrenList.isEmpty()) {
-            for (Element human : childrenList) {
+            for (Human human : childrenList) {
                 stringBuilder.append(human.getName());
                 stringBuilder.append(" ");
             }
