@@ -14,7 +14,6 @@ public class Presenter {
     private Service service;
 
 
-
     public Presenter(View view) {
         this.view = view;
         service = new Service(new FamilyTree());

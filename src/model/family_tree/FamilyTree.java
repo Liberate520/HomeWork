@@ -1,6 +1,7 @@
 package model.family_tree;
 
 import model.family_tree.Iterators.HumanIterator;
+import model.human.Element;
 import model.human.comparator.HumanComparatorByAge;
 import model.human.comparator.HumanComparatorById;
 import model.human.comparator.HumanComparatorByName;
@@ -11,32 +12,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable, Iterable<E>, FamilyTreeElement{
+public class FamilyTree<E extends Element<E>> implements Serializable, Iterable<E>, Tree {
     private List<E> humanList;
     private int id;
 
     public FamilyTree() {
         humanList = new ArrayList<>();
-    }
-
-    @Override
-    public void setId(int id) {
-
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public int getAge() {
-        return 0;
-    }
-
-    @Override
-    public int getID() {
-        return 0;
     }
 
     public void addParent(int child, int parent) {
@@ -55,30 +36,6 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
         }
     }
 
-    @Override
-    public int add(Object human) {
-        humanList.add((E) human);
-        id++;
-        ((FamilyTreeElement<?>) human).setId(id);
-        return id;
-    }
-
-    //
-    public void sortByName() {
-        Collections.sort(humanList, new HumanComparatorByName<>());
-    }
-
-
-    public void sortByAge() {
-        Collections.sort(humanList, new HumanComparatorByAge<>());
-    }
-
-
-    public void sortByID() {
-        Collections.sort(humanList, new HumanComparatorById<>());
-    }
-
-
     public E search(int id) {
         for (E human : humanList) {
             if (human.getID() == id) {
@@ -87,7 +44,6 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
         }
         return null;
     }
-
 
     public boolean availability(int id) {
         for (E human : humanList) {
@@ -99,13 +55,26 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
     @Override
-    public void addParent(Object search) {
-
+    public int add(Object human) {
+        humanList.add((E) human);
+        id++;
+        ((Element<?>) human).setId(id);
+        return id;
     }
 
     @Override
-    public void addChild(Object search) {
+    public void sortByName() {
+        Collections.sort(humanList, new HumanComparatorByName<>());
+    }
 
+    @Override
+    public void sortByAge() {
+        Collections.sort(humanList, new HumanComparatorByAge<>());
+    }
+
+    @Override
+    public void sortByID() {
+        Collections.sort(humanList, new HumanComparatorById<>());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package model.service;
 
-import model.family_tree.FamilyTreeElement;
+import model.family_tree.Tree;
 import model.human.Gender;
 import model.human.Human;
 import model.writable.Readable;
@@ -9,9 +9,9 @@ import model.writable.Writable;
 import java.time.LocalDate;
 
 public class Service {
-    private FamilyTreeElement familyTree;
+    private Tree familyTree;
 
-    public Service(FamilyTreeElement familyTree) {
+    public Service(Tree familyTree) {
         this.familyTree = familyTree;
     }
 
@@ -37,7 +37,7 @@ public class Service {
     }
 
     public void loadTree(Readable readable) {
-        this.familyTree = (FamilyTreeElement) readable.load();
+        this.familyTree = (Tree) readable.load();
     }
 
     public void saveTree(Writable writable) {

@@ -1,14 +1,12 @@
 package model.human;
 
-import model.family_tree.FamilyTreeElement;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements FamilyTreeElement<Human>, Serializable {
+public class Human implements Element<Human>, Serializable {
     private String name;
     private LocalDate dateOfBirthday, dateOfDeath;
     private Gender gender;
@@ -73,46 +71,9 @@ public class Human implements FamilyTreeElement<Human>, Serializable {
         return this.name;
     }
 
-
     @Override
     public int getID() {
         return id;
-    }
-
-    @Override
-    public void addParent(int child, int parent) {
-
-    }
-
-    @Override
-    public void addChild(int child, int parent) {
-
-    }
-
-    @Override
-    public int add(Human human) {
-        return 0;
-    }
-
-
-    @Override
-    public void sortByName() {
-
-    }
-
-    @Override
-    public void sortByAge() {
-
-    }
-
-    @Override
-    public void sortByID() {
-
-    }
-
-    @Override
-    public boolean availability(int id) {
-        return false;
     }
 
     @Override
