@@ -1,7 +1,9 @@
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        DataLoad data = new DataLoad(); //Работа с файлом
         //Фиксация персон в формате Имя, Фамилия, пол. Дата рождения и дата смерти гггг, мм, дд (без 0)
         //getByName - указание родителя
         TypeOfRelationship tree = new TypeOfRelationship();
@@ -12,6 +14,8 @@ public class Main {
         tree.addHuman(new Рerson("Елена", "Никитина", Gender.Female,
                 LocalDate.of(1954, 2, 15), LocalDate.of(2022, 4, 1),
                 tree.getByName("Александра", "Никитина"), tree.getByName("Владимир", "Никитин")));
-        System.out.println(tree);
+        //Запись в файл
+        data.save(tree,"fileTree.out");
+        data.read("fileTree.out");
     }
 }

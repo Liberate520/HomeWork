@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TypeOfRelationship {
+public class TypeOfRelationship implements Serializable {
     private Set<Рerson> family;
 
     public TypeOfRelationship(HashSet<Рerson> family) {
@@ -29,7 +30,7 @@ public class TypeOfRelationship {
         }
         return null;
     }
-
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Рerson person: family){

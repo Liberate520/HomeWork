@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Рerson {
+public class Рerson implements Serializable {
     private String firstName;
     private String lastName;
     private Gender gender;
@@ -113,16 +114,26 @@ public class Рerson {
         return str.replaceAll(", $", "");
     }
 //Вывод списком всех персон с полученной информацией
+    @Override
     public String toString() {
         return "Имя: " + firstName + " " + lastName + ", пол: " + gender + ", дата рождения: " + birthDate +
                 ", дата смерти: " + deathDate + ", " + getAge() + ", " + getMotherInfo() + ", " + getFatherInfo() +
                 ", " + getChildrenInfo();
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Рerson person = (Рerson) o;
-        return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && gender == person.gender && Objects.equals(birthDate, person.birthDate) && Objects.equals(deathDate, person.deathDate) && Objects.equals(mother, person.mother) && Objects.equals(father, person.father) && Objects.equals(children, person.children);
+        return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) &&
+                gender == person.gender && Objects.equals(birthDate, person.birthDate) &&
+                Objects.equals(deathDate, person.deathDate) && Objects.equals(mother, person.mother) &&
+                Objects.equals(father, person.father) && Objects.equals(children, person.children);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, gender);
     }
 }
