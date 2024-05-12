@@ -1,7 +1,5 @@
 package com.example.genealogy.filehandler;
 import java.io.*;
-import java.util.List;
-
 
 import com.example.genealogy.model.GenealogyTreeModel;
 
