@@ -24,8 +24,7 @@ public class Service {
 
 
     public boolean read(String path) {
-        FamilyTree<Human> treeRead = new FamilyTree<Human>();
-        treeRead = fileHandler.read(path);
+        FamilyTree<Human> treeRead = fileHandler.read(path);
         if (treeRead.equals(null)) {
             return false;
         }

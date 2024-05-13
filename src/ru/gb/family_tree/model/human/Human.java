@@ -43,11 +43,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
-    public void PrintId() {
-        System.out.println("Id: " + this.getId());
-    }
-
-
     public String getName() {
         return name;
     }
@@ -55,11 +50,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-
-    public void PrintName() {
-        System.out.println("Surname Name Patronymic: " + this.getName());
     }
 
 
@@ -73,11 +63,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
-    public void PrintDob() {
-        System.out.println("Date of Birth (year-month-day): " + this.getDob());
-    }
-
-
     public LocalDate getDod() {
         return dod;
     }
@@ -88,15 +73,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
-    public void PrintDod() {
-        if (dod == null) {
-            System.out.println("Is alive");
-        } else {
-            System.out.println("Date of Death (year-month-day): " + this.getDod());
-        }
-    }
-
-
     public Gender getGender() {
         return gender;
     }
@@ -104,11 +80,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-
-    public void PrintGender() {
-        System.out.println("Gender: " + this.getGender());
     }
 
 
@@ -142,11 +113,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
-    public void PrintChildren() {
-        System.out.println(getChildrenAbout());
-    }
-
-
     public Human getMother() {
         return mother;
     }
@@ -169,11 +135,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
-    public void PrintMother() {
-        System.out.println(getMotherAbout());
-    }
-
-
     public Human getFather() {
         return father;
     }
@@ -193,11 +154,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
             fatherAbout += father.getName();
         }
         return fatherAbout;
-    }
-
-
-    public void PrintFather() {
-        System.out.println(getFatherAbout());
     }
 
 
@@ -256,11 +212,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
 
-    public void PrintSpouses() {
-        System.out.println(getSpousesAbout());
-    }
-
-
     private int getInterval(LocalDate dob, LocalDate dod) {
         Period interval = Period.between(dob, dod);
         return interval.getYears();
@@ -282,16 +233,6 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         } else {
             return "Dead";
         }
-    }
-
-
-    public void PrintAge() {
-        if (dod == null) {
-            System.out.println(getLifeStatus() + ", age is: " + this.getAge());
-        } else {
-            System.out.println(getLifeStatus() + ", age was: " + this.getAge());
-        }
-
     }
 
 
