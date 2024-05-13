@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends Element<E>> implements Serializable, Iterable<E>, Tree {
+public class FamilyTree<E extends Element<E>> implements Serializable, Iterable<E>, Tree<E> {
     private List<E> humanList;
     private int id;
 
@@ -55,10 +55,10 @@ public class FamilyTree<E extends Element<E>> implements Serializable, Iterable<
     }
 
     @Override
-    public int add(Object human) {
+    public int add(E human) {
         humanList.add((E) human);
         id++;
-        ((Element<?>) human).setId(id);
+        human.setId(id);
         return id;
     }
 

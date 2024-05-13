@@ -8,19 +8,19 @@ import model.writable.Writable;
 
 import java.time.LocalDate;
 
-public class Service {
-    private Tree familyTree;
+public class Service<T> {
+    private Tree<T> familyTree;
     private Readable readable;
     private Writable writable;
 
-    public Service(Tree familyTree, Readable readable, Writable writable) {
+    public Service(Tree<T> familyTree, Readable readable, Writable writable) {
         this.familyTree = familyTree;
         this.readable = readable;
         this.writable = writable;
     }
 
     public int addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
-        Human human = new Human(name, dateOfBirthday, gender);
+        T human = (T) new Human(name, dateOfBirthday, gender);
         return familyTree.add(human);
     }
 
@@ -41,7 +41,7 @@ public class Service {
     }
 
     public void loadTree() {
-        this.familyTree = (Tree) readable.load();
+        this.familyTree = (Tree<T>) readable.load();
     }
 
     public void saveTree() {
