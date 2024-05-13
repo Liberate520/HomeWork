@@ -10,9 +10,13 @@ import java.time.LocalDate;
 
 public class Service {
     private Tree familyTree;
+    private Readable readable;
+    private Writable writable;
 
-    public Service(Tree familyTree) {
+    public Service(Tree familyTree, Readable readable, Writable writable) {
         this.familyTree = familyTree;
+        this.readable = readable;
+        this.writable = writable;
     }
 
     public int addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
@@ -36,11 +40,11 @@ public class Service {
         familyTree.sortByID();
     }
 
-    public void loadTree(Readable readable) {
+    public void loadTree() {
         this.familyTree = (Tree) readable.load();
     }
 
-    public void saveTree(Writable writable) {
+    public void saveTree() {
         writable.save(familyTree);
     }
 

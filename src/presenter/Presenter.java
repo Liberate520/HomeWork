@@ -16,7 +16,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service(new FamilyTree());
+        service = new Service(new FamilyTree(), new FileHandler(), new FileHandler());
     }
 
     public int addHuman(String name, LocalDate dateOfBirthday, Gender gender) {
@@ -56,10 +56,10 @@ public class Presenter {
     }
 
     public void loadTree() {
-        service.loadTree(new FileHandler());
+        service.loadTree();
     }
 
     public void saveTree() {
-        service.saveTree(new FileHandler());
+        service.saveTree();
     }
 }
