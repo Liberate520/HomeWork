@@ -2,20 +2,20 @@ package com.example.genealogy.model;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
-import com.example.genealogy.model.relationships.Relationship;
 
 
-public class GenealogyTreeModel {
+
+public class GenealogyTree {
 
     private Person rootPerson;
     private List<Person> people;
 
-    public GenealogyTreeModel() {
+    public GenealogyTree() {
         this.rootPerson = null;
         this.people = new ArrayList<>();
     }
 
-    public GenealogyTreeModel(Person rootPerson) {
+    public GenealogyTree(Person rootPerson) {
         this.rootPerson = rootPerson;
         this.people = new ArrayList<>();
         this.people.add(rootPerson);
@@ -59,20 +59,7 @@ public class GenealogyTreeModel {
         }
     }
 
-    public void printTree() {
-        printTree(rootPerson, "");
-    }
-
-    private void printTree(Person person, String indent) {
-        System.out.println(indent + person.getName());
-
-        for (Relationship relationship : person.getRelationships()) {
-            System.out.println(indent + "  " + relationship.getPerson1().getName() + " (" + relationship.getType() + ")");
-            printTree(relationship.getPerson1(), indent + "  ");
-        }
-    }
-
-    public List<Person> getPeople() {
+    public List<Person> getAllPeople() {
         return people;
     }
 
@@ -88,7 +75,7 @@ public class GenealogyTreeModel {
         }
         return null;
     }
-    public void saveTree(GenealogyTreeModel genealogyTree, String filename) { 
+    public void saveTree(GenealogyTree genealogyTree, String filename) { 
         
     }
     

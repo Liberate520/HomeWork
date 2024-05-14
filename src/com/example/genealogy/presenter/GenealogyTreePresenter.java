@@ -1,41 +1,52 @@
-package com.example.genealogy.presenter;
 import java.util.List;
-import com.example.genealogy.model.GenealogyTreeModel;
+import com.example.genealogy.model.GenealogyTree;
 import com.example.genealogy.model.Person;
-import com.example.genealogy.view.GenealogyTreeView;
+import com.example.genealogy.view.GenealogyView;
+import com.example.genealogy.filehandler.FileHandlerInterface;
 
 public class GenealogyTreePresenter {
 
-    private GenealogyTreeModel model;
-    private GenealogyTreeView view;
+    private GenealogyTree model;
+    private GenealogyView view;
+    private FileHandlerInterface fileHandler;
 
-    public GenealogyTreePresenter(GenealogyTreeModel model, GenealogyTreeView view) {
+    public GenealogyTreePresenter(GenealogyTree model, GenealogyView view, FileHandlerInterface fileHandler) {
         this.model = model;
         this.view = view;
+        this.fileHandler = fileHandler;
     }
 
     public void loadData() {
         
-        view.displayData(model.getPeople());
+        view.displayData(model.getAllPeople());
     }
 
     public void sortByName() {
         model.sortByName();
-        view.displaySortedByName(model.getPeople());
+        view.displaySortedByName(model.getAllPeople());
     }
 
     public void sortByDateOfBirth() {
         model.sortByDateOfBirth();
 
-        view.displaySortedByDateOfBirth(model.getPeople());
+        view.displaySortedByDateOfBirth(model.getAllPeople());
+    }
+
+    public void saveTree(String filename) {
+        fileHandler.saveTree(model, filename);
+    }
+
+    public void loadTree(String filename) {
+        model = fileHandler.loadTree(filename);
+        view.displayData(model.getAllPeople());
     }
 
     public List<Person> getSortedByName() {
-        return model.getPeople();
+        return model.getAllPeople();
     }
 
     public List<Person> getSortedByDateOfBirth() {
-        return model.getPeople();
+        return model.getAllPeople();
     }
 
 }
