@@ -1,10 +1,11 @@
 package ru.gb.family_tree.presenter;
 
-import ru.gb.family_tree.model.human.SpouseStatus;
-import ru.gb.family_tree.model.service.Service;
-
+import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.SpouseStatus;
 import ru.gb.family_tree.view.View;
+import ru.gb.family_tree.model.service.Service;
+import ru.gb.family_tree.model.tools.writer.FileHandler;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        service = new Service(new FileHandler<Human>());
     }
 
 

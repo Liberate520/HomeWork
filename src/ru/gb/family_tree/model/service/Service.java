@@ -4,15 +4,17 @@ import ru.gb.family_tree.model.family_tree.FamilyTree;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.SpouseStatus;
-import ru.gb.family_tree.model.tools.writer.FileHandler;
+import ru.gb.family_tree.model.tools.writer.Writable;
 
 import java.time.LocalDate;
 
+
 public class Service {
     private FamilyTree<Human> tree;
-    private FileHandler<Human> fileHandler = new FileHandler();
+    private Writable<FamilyTree<Human>> fileHandler;
 
-    public Service() {
+    public Service(Writable fileHandler) {
+        this.fileHandler = fileHandler;
         tree = new FamilyTree<>();
     }
 
@@ -50,13 +52,13 @@ public class Service {
     }
 
 
-    public void setParent(int memberId, int parentId){
+    public void setParent(int memberId, int parentId) {
         Human human = tree.findById(memberId);
         human.addParent(tree.findById(parentId));
     }
 
 
-    public void setSpouse(int firstMemberId, int secondMemberId, SpouseStatus spouseStatus){
+    public void setSpouse(int firstMemberId, int secondMemberId, SpouseStatus spouseStatus) {
         Human human = tree.findById(firstMemberId);
         human.addSpouse(tree.findById(secondMemberId), spouseStatus);
     }

@@ -5,8 +5,8 @@ import ru.gb.family_tree.model.human.SpouseStatus;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
 
 
 public interface FamilyTreeElement<T> extends Serializable {

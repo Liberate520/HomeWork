@@ -6,10 +6,10 @@ import ru.gb.family_tree.model.family_tree.FamilyTreeElement;
 import java.io.*;
 
 
-public class FileHandler<E extends FamilyTreeElement<E>> implements Writable {
+public class FileHandler<E extends FamilyTreeElement<E>> implements Writable<FamilyTree<E>>  {
 
     @Override
-    public boolean write(Serializable serializable, String path) {
+    public boolean write(FamilyTree<E> serializable, String path) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(path))) {
             objectOutputStream.writeObject(serializable);
             return true;
@@ -24,7 +24,7 @@ public class FileHandler<E extends FamilyTreeElement<E>> implements Writable {
         try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(path))) {
             FamilyTree<E> treeRead = (FamilyTree<E>) objectInputStream.readObject();
             return treeRead;
-        }catch(Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
             return null;
         }
