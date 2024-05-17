@@ -1,13 +1,15 @@
+package Model.WorkingWithFile;
+import Model.TypeOfRelationship.TypeOfRelationship;
+
 import java.io.*;
-public class DataLoad {
+public class DataLoad implements FileProcessing {
     @Override
-    public void read(String fileAddress) throws IOException, ClassNotFoundException {
+    public TypeOfRelationship read(String fileAddress) throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileAddress));
         TypeOfRelationship tree =  (TypeOfRelationship)in.readObject();
-        System.out.println(tree);
         in.close();
+        return tree;
     }
-
     @Override
     public void save(TypeOfRelationship tree, String fileAddress) throws IOException {
         ObjectOutputStream out  = new ObjectOutputStream( new FileOutputStream(fileAddress));

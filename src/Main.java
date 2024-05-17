@@ -1,9 +1,16 @@
+import Model.FamilyTree.FamilyTree;
+import Model.Human.Human;
+import Model.Human.Sex;
+import Model.Service;
+import View.Console;
+import View.View;
+import Presenter.Presenter;
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        DataLoad data = new DataLoad(); //Работа с файлом
+        DataLoad<Рerson> tree = new DataLoad<>();//Работа с файлом
         //Фиксация персон в формате Имя, Фамилия, пол. Дата рождения и дата смерти гггг, мм, дд (без 0)
         //getByName - указание родителя
         TypeOfRelationship tree = new TypeOfRelationship();
@@ -14,8 +21,9 @@ public class Main {
         tree.addHuman(new Рerson("Елена", "Никитина", Gender.Female,
                 LocalDate.of(1954, 2, 15), LocalDate.of(2022, 4, 1),
                 tree.getByName("Александра", "Никитина"), tree.getByName("Владимир", "Никитин")));
-        //Запись в файл
-        data.save(tree,"fileTree.out");
-        data.read("fileTree.out");
+        Service service = new Service(tree);
+        View view = new Console();
+        Presenter presenter = new Presenter(view, service);
+        view.start();
     }
 }
