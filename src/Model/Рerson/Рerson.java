@@ -118,11 +118,11 @@ public class Рerson implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Рerson human = (Рerson) o;
-        return Objects.equals(firstName, human.firstName) && Objects.equals(lastName, human.lastName) &&
-                gender == human.gender && Objects.equals(birthDate, human.birthDate) &&
-                Objects.equals(deathDate, human.deathDate) && Objects.equals(mother, human.mother) &&
-                Objects.equals(father, human.father) && Objects.equals(children, human.children);
+        Рerson person = (Рerson) o;
+        return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) &&
+                gender == person.gender && Objects.equals(birthDate, person.birthDate) &&
+                Objects.equals(deathDate, person.deathDate) && Objects.equals(mother, person.mother) &&
+                Objects.equals(father, person.father) && Objects.equals(children, person.children);
     }
     @Override
     public int hashCode() {

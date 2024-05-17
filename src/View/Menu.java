@@ -25,6 +25,7 @@ public class Menu {
         }
         return stringBuilder.toString();
     }
+
     public void execute(int num){
         Option option = list.get(num-1);
         option.execute();
@@ -32,4 +33,5 @@ public class Menu {
     public int getSize(){
         return list.size();
     }
+}
 }
