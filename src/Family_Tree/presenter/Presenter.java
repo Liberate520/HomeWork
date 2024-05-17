@@ -1,55 +1,36 @@
 package Family_Tree.presenter;
-
-import Family_Tree.model.FamilyTree.FamilyTree;
-import Family_Tree.model.FamilyTree.TreeVersatility;
+import Family_Tree.model.FamilyTree.Service;
 import Family_Tree.model.Human.Gender;
-import Family_Tree.model.Human.Human;
 import Family_Tree.view.View;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
-
-public class Presenter<E extends TreeVersatility<E>> implements Iterable<E>, Serializable {
+public class Presenter{
     private final View view;
-    private final FamilyTree familytree;
-    private Scanner scanner;
-    private List<Human> HumanList;
-    private long countPeople;
+    private final Service service;
+
 
 
 
     public Presenter(View view) {
         this.view = view;
-        familytree = new FamilyTree();
-    }
-
-    public void getInf() {
-        String answer = familytree.getInfo();
-        view.PrintAnswer(answer);
+        service = new Service();
     }
 
     public void sortByAge(){
-        familytree.sortByAge();
+        service.sortByAge();
         getInf();
     }
     public void sortByName(){
-        familytree.sortByName();
+        service.sortByName();
         getInf();
     }
-    public void FamilyTree() {
-        HumanList = new ArrayList<>();
-    }
 
-public void addHuman(String name, Integer age, Gender gender){
-    Human human = new Human(name, age, gender);
-    familytree.add(human);
+    public void addHuman(String name, Integer age, Gender gender){
+ //   Human human = new Human(name, age, gender);
+    service.addHuman(name, age, gender);
 }
 
-    @Override
-    public Iterator<E> iterator() {
-        return null;
+    public void getInf() {
+        String answer = service.getInf();
+        view.printAnswer(answer);
     }
 }

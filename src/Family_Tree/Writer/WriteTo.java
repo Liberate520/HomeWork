@@ -1,13 +1,13 @@
 package Family_Tree.Writer;
 
-import Family_Tree.model.Human.Human;
+import Family_Tree.model.FamilyTree.FamilyTree;
 
 import java.io.IOException;
 
 public interface WriteTo {
 
-    void save(Human human) throws IOException;
+    void save(FamilyTree familyTree) throws IOException;
 
-    void read(Human human) throws IOException, ClassNotFoundException;
+    void read(FamilyTree familyTree) throws IOException, ClassNotFoundException;
 
 }

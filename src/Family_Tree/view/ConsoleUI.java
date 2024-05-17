@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ConsoleUI implements View{
-    private Presenter presenter;
-    private Scanner scanner;
+    private final Presenter presenter;
+    private final Scanner scanner;
     private boolean work;
 
     public ConsoleUI(){
@@ -27,45 +27,39 @@ public class ConsoleUI implements View{
             System.out.println("Выход 5");
             String choice = scanner.nextLine();
             switch (choice) {
-//                case "1":
-//                    System.out.println("Введите имя человека");
-//                    String name=scanner.nextLine();
-//                    System.out.println("Введите возраст человека");
-//                    String strAge=scanner.nextLine();
-//                    int age=Integer.parseInt(strAge);
-
                 case "1":
-                    presenter.getInf();
+                    getinf();
                     break;
                 case "2":
-                    presenter.sortByAge();
+                    sortByAge();
                     break;
                 case "3":
-                    presenter.sortByName();
+                    sortByName();
                     break;
                 case "4":
-                    System.out.println("Введите имя: ");
-                    String name = scanner.nextLine();
-
-                    System.out.println("Введите возраст человека ");
-                    Integer age = scanner.nextInt();
-                    scanner.nextLine();
-
-                    System.out.println("Введите пол человека: ");
-                    String gend = scanner.nextLine();
-                    if(Objects.equals(gend, "Женщина")) {
-                        Gender gender = Gender.Female;
-//                        NewHuman(name, age, gender);
-                        presenter.addHuman(name, age, gender);
-                    }
-                    else if(Objects.equals(gend, "Мужчина")){
-                        Gender gender = Gender.Male;
-//                        NewHuman(name, age, gender);
-                        presenter.addHuman(name, age, gender);
-                    }
-                    else {
-                        System.out.println("Введите: Мужчина или Женщина");
-                    }
+                    addhuman();
+//                    System.out.println("Введите имя: ");
+//                    String name = scanner.nextLine();
+//
+//                    System.out.println("Введите возраст: ");
+//                    Integer age = scanner.nextInt();
+//                    scanner.nextLine();
+//
+//                    System.out.println("Введите пол: ");
+//                    String gend = scanner.nextLine();
+//                    if(Objects.equals(gend, "Женщина")) {
+//                        Gender gender = Gender.Female;
+////                        NewHuman(name, age, gender);
+//                        presenter.addHuman(name, age, gender);
+//                    }
+//                    else if(Objects.equals(gend, "Мужчина")){
+//                        Gender gender = Gender.Male;
+////                        NewHuman(name, age, gender);
+//                        presenter.addHuman(name, age, gender);
+//                    }
+//                    else {
+//                        System.out.println("Введите: Мужчина или Женщина");
+//                    }
                     break;
                 case "5":
                     finish();
@@ -76,8 +70,20 @@ public class ConsoleUI implements View{
         }
     }
 
+    private void sortByName() {
+        presenter.sortByName();
+    }
+
+    private void sortByAge() {
+        presenter.sortByAge();
+    }
+
+    private void getinf() {
+        presenter.getInf();
+    }
+
     @Override
-    public void PrintAnswer(String answer) {
+    public void printAnswer(String answer) {
         System.out.println(answer);
     }
     private void finish(){
@@ -102,5 +108,27 @@ public class ConsoleUI implements View{
 //        familytree.sortByName();
 //        getInfo();
 //    }
+    private void addhuman() {
+        System.out.println("Введите имя: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Введите возраст: ");
+        Integer age = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Введите пол: ");
+        String gend = scanner.nextLine();
+        if (Objects.equals(gend, "Женщина")) {
+            Gender gender = Gender.Female;
+//                        NewHuman(name, age, gender);
+            presenter.addHuman(name, age, gender);
+        } else if (Objects.equals(gend, "Мужчина")) {
+            Gender gender = Gender.Male;
+//                        NewHuman(name, age, gender);
+            presenter.addHuman(name, age, gender);
+        } else {
+            System.out.println("Введите: Мужчина или Женщина");
+        }
+    }
 
 }
