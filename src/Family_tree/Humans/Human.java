@@ -74,6 +74,20 @@ public class Human {
         StringBuilder sb = new StringBuilder();
         sb.append(this);
         sb.append('\n');
+        sb.append("BirthDate: ");
+        if (birthDate == null){
+            sb.append("-\n");
+        }else{            
+            sb.append(birthDate.toString());
+            sb.append('\n');            
+        }
+        sb.append("DeathDate: ");
+        if (deathDate == null){
+            sb.append("-\n");
+        }else{            
+            sb.append(deathDate.toString());
+            sb.append('\n');            
+        }
         sb.append("Mother: ");
         if (mother == null){
             sb.append("-");

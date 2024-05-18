@@ -27,6 +27,8 @@ public class Main {
 
         man1.addChild(man3);
         lady1.addChild(lady3);
+        man1.addChild(lady3);
+        lady1.addChild(man3);
 
         man1.setFather(man2);
         man1.setMother(lady2);
@@ -52,6 +54,10 @@ public class Main {
         System.out.println("#############################################################################");
         System.out.println(man2.showInfo());
         System.out.println("#############################################################################");
+
+        Human h = tree.search("Василий");
+
+        System.out.println(h.showInfo());
         
     }
 
