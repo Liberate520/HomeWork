@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Human {
     private long id;
@@ -54,7 +55,6 @@ public class Human {
 
     public Human getFather() {
         for (Human parent : parents) {
-            if (parent.getGender() == Gender.Male) ;
             {
                 return parent;
             }
@@ -64,7 +64,6 @@ public class Human {
 
     public Human getMother() {
         for (Human parent : parents) {
-            if (parent.getGender() == Gender.Female) ;
             {
                 return parent;
             }
@@ -73,11 +72,7 @@ public class Human {
     }
 
     public int getAge() {
-        if (deathDate == null) {
-            return getPeriod(birthDate, LocalDate.now());
-        } else {
-            return getPeriod(birthDate, deathDate);
-        }
+        return getPeriod(birthDate, Objects.requireNonNullElseGet(deathDate, LocalDate::now));
     }
 
     private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
@@ -139,24 +134,22 @@ public class Human {
     }
 
     public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("id: ");
-        sb.append(id);
-        sb.append(", имя: ");
-        sb.append(name);
-        sb.append(", пол: ");
-        sb.append(getGender());
-        sb.append(", возраст: ");
-        sb.append(getAge());
-        sb.append(", ");
-        sb.append(getSpouseInfo());
-        sb.append(", ");
-        sb.append(getMotherInfo());
-        sb.append(", ");
-        sb.append(getFatherInfo());
-        sb.append(", ");
-        sb.append(getChildrenInfo());
-        return sb.toString();
+        return "id: " +
+                id +
+                ", имя: " +
+                name +
+                ", пол: " +
+                getGender() +
+                ", возраст: " +
+                getAge() +
+                ", " +
+                getSpouseInfo() +
+                ", " +
+                getMotherInfo() +
+                ", " +
+                getFatherInfo() +
+                ", " +
+                getChildrenInfo();
     }
 
     public String getSpouseInfo() {
