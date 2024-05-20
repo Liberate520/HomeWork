@@ -1,26 +1,15 @@
 package Family_tree.Humans;
-
 import java.time.LocalDate;
 
-import Family_tree.Gender;
 
 public class Male extends Human {
 
-    public Male(String name) {
-        super(name, Gender.Male);        
+    public Male(String name, Female mother, Male father, LocalDate birthDate, LocalDate deathDate){
+        super(name, mother, father, birthDate, deathDate);
     }
-    public Male(String name, LocalDate bday){
-        super(name, Gender.Male, bday);        
+    public Male(String name){
+        super(name);
     }
-
-    public void setMother(Female female){
-        this.mother = female;
-    }    
-    public void setFather(Male male){
-        this.father = male; 
-    }    
-    public void addPartner(Female female){
-        this.partners.add(female);
-    }
+    
     
 }

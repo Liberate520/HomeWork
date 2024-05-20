@@ -41,5 +41,16 @@ public class Link {
         this.isActual = value;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.male.toString());
+        sb.append(" and ");
+        sb.append(this.female.toString());
+        sb.append(" are ");
+        sb.append(this.type.toString());
+        return sb.toString();
+    }
+
 
 }

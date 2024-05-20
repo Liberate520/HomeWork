@@ -1,26 +1,24 @@
 package Family_tree.Humans;
-
 import java.time.LocalDate;
-
-import Family_tree.Gender;
 
 public class Female extends Human{
 
-    public Female(String name) {
-        super(name, Gender.Female);       
+    private String nee;
+
+    public Female(String name, Female mother, Male father, LocalDate birthDate, LocalDate deathDate, String nee){
+        super(name, mother, father, birthDate, deathDate);
+        this.nee = nee;
     }
-    public Female(String name, LocalDate bday){
-        super(name, Gender.Female, bday);        
-    }
-    public void setMother(Female female){
-        this.mother = female;
-    }    
-    public void setFather(Male male){
-        this.father = male; 
+    public Female(String name){
+        super(name);
+        this.nee = null;
     }
 
-    public void addPartner(Male male){
-        this.partners.add(male);
+    public String getNee(){
+        return this.nee;
+    }
+    public void setNee(String value){
+        this.nee = value;
     }
     
 }

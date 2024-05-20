@@ -83,7 +83,11 @@ public abstract class Human {
     public long getID(){
         return this.ID;
     }
-   
+    
+    public void addLink(Male male, Female female, LinkType type){
+        Link link = new Link(type, male, female);
+        this.links.add(link);
+    }
 
     
 
