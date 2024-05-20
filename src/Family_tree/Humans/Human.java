@@ -2,7 +2,7 @@ package Family_tree.Humans;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
-import Family_tree.Gender;
+
 
 public abstract class Human {
     private long ID;
@@ -10,117 +10,82 @@ public abstract class Human {
     private Human mother, father;
     private Set<Human> children;
     private LocalDate birthDate, deathDate;
-    private Set<Human> partners;
+    private Set<Link> links;
     private Vital vital;
 
-    public Human(String name, Human mother, Human father, Vital vital, LocalDate birthDate, LocalDate deathDate){
+    public Human(String name, Female mother, Male father, LocalDate birthDate, LocalDate deathDate){
         Instant instant = Instant.now();
-        long ID = instant.toEpochMilli();
-
-
-
-
-
+        this.ID = instant.toEpochMilli();
+        this.name = name;
+        this.birthDate = birthDate;
+        this.deathDate = deathDate;
+        this.mother = mother;
+        this.father = father;
+        this.vital = Vital.dead; 
+        this.children = new HashSet<>();
+        this.links = new HashSet<>();
     }
-    
+    public Human(String name){
+        this(name, null, null, null, null);
+        this.vital = Vital.alive;
+    }
 
     public String getName (){
         return this.name;
+    }  
+    public Human getFather(){
+        return this.father;
     }
-    public Gender getGender (){
-        return this.gender;
+    public void setFather(Male male){
+        this.father = male;
     }
+    public Human getMother(){
+        return this.mother;
+    } 
+    public void setMother(Female value){
+        this.mother = value;
+    }  
     public LocalDate getBirhDate(){
         return this.birthDate;
     }
     public void setBirhDate(LocalDate value){
         this.birthDate = value;
     }
-    public LocalDate getDeathDate(){
-        return this.deathDate;
+    public LocalDate getDeathDate(){        
+        return this.deathDate;                
     }
     public void setDeathDate(LocalDate value){
+        this.vital = Vital.dead;
         this.deathDate = value;
     }
-    public Human getMother(){
-        return this.mother;
-    }    
-    public Human getFather(){
-        return this.father;
+    public Vital getVital(){
+        return this.vital;
     }
-    //public void addPartner(){
-        //partners.add(human);
-    //}
+    public void setVital(Vital value){
+        this.vital = value;
+    }
+    
     public void addChild(Human child){
         children.add(child);
     }
 
     @Override
     public String toString(){
-        return (this.gender.toString() + ": " + this.name);        
+        return (this.name);        
     }
 
     public Set<Human> getChildren(){
-        return children;
+        return this.children;
     }
-    public Set<Human> getPartners(){
-        return partners;
+    public Set<Link> getLinks(){
+        return this.links;
     }
-    public Human(String name, Gender gender, LocalDate bday){
-        humaninit(name, gender, bday);
+    public long getID(){
+        return this.ID;
     }
+   
 
-    public String showInfo(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(this);
-        sb.append('\n');
-        sb.append("BirthDate: ");
-        if (birthDate == null){
-            sb.append("-\n");
-        }else{            
-            sb.append(birthDate.toString());
-            sb.append('\n');            
-        }
-        sb.append("DeathDate: ");
-        if (deathDate == null){
-            sb.append("-\n");
-        }else{            
-            sb.append(deathDate.toString());
-            sb.append('\n');            
-        }
-        sb.append("Mother: ");
-        if (mother == null){
-            sb.append("-");
-        }else{
-            sb.append(mother);
-        }
-        sb.append(" Father: ");
-        if (father == null){
-            sb.append("-");
-        }else{
-            sb.append(father);
-        }
-        sb.append('\n');
-        sb.append("Partners: \n");
-        if (partners.size() == 0){
-            sb.append("-\n");
-        }else{
-            for (Human human : partners) {
-                sb.append(human);
-                sb.append('\n');
-            }
-        }
-        sb.append("Children: \n");
-        if (children.size() == 0){
-            sb.append("-\n");
-        }else{
-            for (Human human : children) {
-                sb.append(human);
-                sb.append('\n');
-            }
-        }
-        return sb.toString();
-    }
+    
 
 
 
