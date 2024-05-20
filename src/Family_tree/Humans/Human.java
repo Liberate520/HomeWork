@@ -1,28 +1,28 @@
 package Family_tree.Humans;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import Family_tree.Gender;
 
-public class Human {
-    private String  name;
-    private Gender gender;
-    Human mother, father;
-    Set<Human> children;
+public abstract class Human {
+    private long ID;
+    private String  name;    
+    private Human mother, father;
+    private Set<Human> children;
     private LocalDate birthDate, deathDate;
-    Set<Human> partners;
-    public Human(String name, Gender gender){
-        humaninit(name, gender, null);
+    private Set<Human> partners;
+    private Vital vital;
+
+    public Human(String name, Human mother, Human father, Vital vital, LocalDate birthDate, LocalDate deathDate){
+        Instant instant = Instant.now();
+        long ID = instant.toEpochMilli();
+
+
+
+
+
     }
-    private void humaninit(String name, Gender gender, LocalDate bday){
-        this.gender = gender;
-        this.name = name;
-        this.birthDate = bday;
-        this.deathDate = null;
-        children = new HashSet<>();
-        partners = new HashSet<>();
-        mother = null;
-        father = null;
-    }
+    
 
     public String getName (){
         return this.name;
