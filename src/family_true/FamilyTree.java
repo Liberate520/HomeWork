@@ -7,11 +7,14 @@
 
 package family_true;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+
+    private static final long serialVersionUID = -8509829358230848460L;
 
     private long treeId;
     private long humanId;

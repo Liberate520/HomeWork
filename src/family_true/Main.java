@@ -1,6 +1,10 @@
 package family_true;
 
+import family_true.api.Externalizable;
+import family_true.impl.FileHandler;
+
 import java.time.LocalDate;
+import java.util.Collections;
 
 public class Main {
 
@@ -73,7 +77,10 @@ public class Main {
         familyTree.addHuman(child7);
         familyTree.addHuman(child8);
 
-        String str = familyTree.toString();
+        Externalizable ext = new FileHandler();
+        ext.writeExternal(Collections.singletonList(familyTree));
+
+        String str =  ext.readExternal().toString();
         System.out.println(str);
     }
 }

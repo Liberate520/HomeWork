@@ -7,6 +7,7 @@
 
 package family_true;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -17,7 +18,9 @@ import java.util.Objects;
 import static family_true.Gender.FEMALE;
 import static family_true.Gender.MALE;
 
-public class Human {
+public class Human implements Serializable {
+
+    private static final long serialVersionUID = 1054756843591674776L;
 
     private long id;
     private String name;
