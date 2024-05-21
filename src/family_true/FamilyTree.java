@@ -24,25 +24,23 @@ public class FamilyTree {
     public FamilyTree(long treeId, List<Human> humans) {
         this.treeId = treeId;
         this.humanId = 1;
-        this.humans = humans;
+        this.humans = humans == null ? new ArrayList<>() : humans;
     }
 
     public boolean addHuman(Human human) {
-        if (humans == null) {
-            humans = new ArrayList<>();
-        }
         if (human != null && !humans.contains(human)) {
-            human.setId(humanId++);
-            return humans.add(human);
+            if (human.getId() == -1) {
+                human.setId(humanId++);
+            }
+            return this.humans.add(human);
         }
         return false;
     }
 
     public FamilyTree addHumans(List<Human> humans) {
-        if (humans == null) {
-            humans = new ArrayList<>();
+        for (Human human : humans) {
+            addHuman(human);
         }
-        humans.addAll(humans);
         return this;
     }
 
