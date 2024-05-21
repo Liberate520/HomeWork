@@ -14,7 +14,7 @@ public class Main {
         Node mother = new Node("Мария", Gender.Female, LocalDate.of(1965, 9, 15));
         Node child1 = new Node("Кристина", Gender.Female, LocalDate.of(1988, 7, 5));
         Node child2 = new Node("Семен", Gender.Male, LocalDate.of(1991, 1, 25));
-n
+
         // Устанавливаем отношения супругов
         father.setSpouse(mother);
 
