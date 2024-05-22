@@ -1,19 +1,24 @@
+package family_tree;
+
+import human.Human;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<Human> familyList;
 
     /**
      * Основной консруктор класса
-     * @param familyList Arraylist<Human>
+     * @param familyList Arraylist<human.Human>
      */
     public FamilyTree(List<Human> familyList) {
         this.familyList = familyList;
     }
 
     /**
-     * Добавляет Human в familyList
+     * Добавляет human.Human в familyList
      * @param human
      */
     public void addHuman(Human human) {
@@ -21,10 +26,10 @@ public class FamilyTree {
     }
 
     /**
-     * возвращает первого Human в котором в имени встретилась искома строка
+     * возвращает первого human.Human в котором в имени встретилась искома строка
      * без учета регистра
      * @param text String
-     * @return Human
+     * @return human.Human
      */
     public Human findFirsIn(String text) {
         for (Human human: familyList) {
@@ -36,10 +41,10 @@ public class FamilyTree {
     }
 
     /**
-     * возвращает ArrayList<Human> в которых в имени встретилась искома строка
+     * возвращает ArrayList<human.Human> в которых в имени встретилась искома строка
      * без учета регистра
      * @param text
-     * @return ArrayList<Human>
+     * @return ArrayList<human.Human>
      */
     public List<Human> findFirsAll(String text) {
         List<Human> result = new ArrayList<>();
