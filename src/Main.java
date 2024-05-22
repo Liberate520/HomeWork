@@ -8,12 +8,32 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree tree = new FamilyTree();
 
-        Human vanya = new Human("Иван", "Золотов", Gender.мужской, LocalDate.of(1901, 01, 12));
-        Human vasilisa = new Human("Василиса", "Премудрая", Gender.женский, LocalDate.of(1903, 11, 02));
+        Human vanya = new Human("Иван", "Золотов", Gender.мужской,
+                LocalDate.of(1901, 01, 12));
 
+        Human vasilisa = new Human("Василиса", "Премудрая",
+                Gender.женский, LocalDate.of(1903, 11, 02));
 
-        System.out.println(vanya);
-        System.out.println(vasilisa);
+        tree.add(vanya);
+        tree.add(vasilisa);
+
+        tree.setWedding(vanya.getId(), vasilisa.getId());
+
+        Human petya = new Human("Петр","Золотов",Gender.мужской,
+                LocalDate.of(1921, 5, 20), vanya, vasilisa);
+
+        Human irina = new Human("Ирина", "Золотова", Gender.женский,
+                LocalDate.of(1923, 2, 4), vanya, vasilisa);
+
+        tree.add(petya);
+        tree.add(irina);
+
+        Human ulya = new Human("Урма", "Премудрая", Gender.женский, LocalDate.of(1879, 4, 11));
+        ulya.addChild(vasilisa);
+
+        tree.add(ulya);
+
+        System.out.println(tree);
 
 
 

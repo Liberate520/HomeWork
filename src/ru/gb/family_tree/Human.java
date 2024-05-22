@@ -1,11 +1,9 @@
 package ru.gb.family_tree;
 
-import javax.swing.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Human {
     private long id;
@@ -46,20 +44,16 @@ public class Human {
         this(name, lastName, gender, dateOfBirth, null, father, mather);
     }
 
-    public boolean addChild(Human child) {
+    public void addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
-            return true;
         }
-        return false;
     }
 
-    public boolean addParent(Human parent) {
-        if (!children.contains(parent)) {
-            children.add(parent);
-            return true;
+    public void addParent(Human parent) {
+        if (!parents.contains(parent)) {
+            parents.add(parent);
         }
-        return false;
     }
 
     public Human getFather() {
