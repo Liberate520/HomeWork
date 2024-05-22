@@ -1,5 +1,6 @@
 package ru.gb.family_tree;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -87,6 +88,53 @@ public class Human {
         }
     }
 
+    public String getMarriedPartnerInfo() {
+        String res = "супруг(а): ";
+        if (marriedPartner == null) {
+            res += "нет";
+        } else {
+            res += marriedPartner.getName();
+        }
+        return res;
+    }
+
+    public String getMatherInfo() {
+        String res = "мама: ";
+        Human mather = getMather();
+        if (mather != null) {
+            res += mather.getName();
+        } else {
+            res += "неизвестно";
+        }
+        return res;
+    }
+
+    public String getFatherInfo() {
+        String res = "папа: ";
+        Human father = getFather();
+        if (father != null) {
+            res += father.getName();
+        } else {
+            res += "неизвестно";
+        }
+        return res;
+    }
+
+    public String getChildrenInfo() {
+        StringBuilder res = new StringBuilder();
+        res.append("дети: ");
+        if (children.size() != 0) {
+            res.append(children.get(0).getName());
+            for (int i = 1; i < children.size(); i++) {
+                res.append(", ");
+                res.append(children.get(i).getName());
+            }
+            } else {
+                res.append("отсутствуют");
+            }
+            return res.toString();
+    }
+
     private int getPeriod(LocalDate dateOfBirth, LocalDate dateOfDeath) {
         Period diff = Period.between(dateOfBirth, dateOfDeath);
         return diff.getYears();
@@ -169,16 +217,30 @@ public class Human {
 
     @Override
     public String toString() {
-        return "Human{" +
-                "Имя: " + name +
-                ", Фамилия: " + lastName +
-                ", пол: " + gender +
-                ", годы жизни: " + dateOfBirth +
-                " - " + dateOfDeath +
-                ", родители: " + parents +
-                ", дети: " + children +
-                ", супруг: " + marriedPartner +
-                '}';
+        return getInfo();
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id: ");
+        sb.append(id);
+        sb.append(", имя: ");
+        sb.append(name);
+        sb.append(", фамилия: ");
+        sb.append(lastName);
+        sb.append(", пол: ");
+        sb.append(getGender());
+        sb.append(", возраст: ");
+        sb.append(getAge());
+        sb.append(", ");
+        sb.append(getMarriedPartnerInfo());
+        sb.append(", ");
+        sb.append(getMatherInfo());
+        sb.append(", ");
+        sb.append(getFatherInfo());
+        sb.append(", ");
+        sb.append(getChildrenInfo());
+        return sb.toString();
     }
 
     @Override
