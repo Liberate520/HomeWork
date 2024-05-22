@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree {
-    List<Person> tree;
+    private List<Person> tree;
 
     public FamilyTree() {
         this.tree = new ArrayList<>();
