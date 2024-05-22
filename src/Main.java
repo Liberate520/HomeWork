@@ -1,12 +1,11 @@
-import family_tree.FamilyTree;
-import family_tree.Gender;
-import family_tree.Human;
+import family_tree.*;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         FamilyTree familyTree = new FamilyTree(); //Создаем дерево
 
         //Первая промать
@@ -36,5 +35,14 @@ public class Main {
         familyTree.addHuman(human1);
 
         System.out.println(familyTree);
+
+        Writable writable = new FileHandler();
+        writable.writeToFamilyTree(familyTree, "savesFamilyTree.ftr");
+
+        FamilyTree familyTreeRead = writable.readFromFamilyTree("savesFamilyTree.ftr");
+
+        System.out.println("**********************************************");
+        System.out.println("Востановленное древо:");
+        System.out.println(familyTreeRead);
     }
 }

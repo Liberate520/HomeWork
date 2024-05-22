@@ -1,9 +1,10 @@
 package family_tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<Human> humans;
 
     public FamilyTree() {
@@ -14,10 +15,15 @@ public class FamilyTree {
      * Добавление человека в древо (если человек уже присутствует, то он не добавляется)
      * @param human Человек
      */
-    public void addHuman(Human human){
+    public boolean addHuman(Human human){
+        if(human == null){
+            return false;
+        }
         if(!humans.contains(human)){
             humans.add(human);
+            return true;
         }
+        return false;
     }
 
     @Override

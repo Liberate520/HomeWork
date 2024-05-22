@@ -1,18 +1,21 @@
 package family_tree;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
+    private long id;
     private String name;
     private Human mother, father;
     private List<Human> children;
     private Date birthDate, deathDate;
     private int age;
-    Gender gender;
+    private Gender gender;
+    private Human spouse; // Реализовать
 
     /**
      * Человек со всеми отребутами
@@ -24,6 +27,7 @@ public class Human {
      * @param gender Пол
      */
     public Human(String name, Human mother, Human father, Date birthDate, Date deathDate, Gender gender) {
+        id = - 1;
         this.name = name;
         this.mother = mother;
         this.father = father;
@@ -108,8 +112,13 @@ public class Human {
      * Добавление ребенка
      * @param child Ребенок
      */
-    public void addChild(Human child){
-        children.add(child);
+    public boolean addChild(Human child){
+        if(!children.contains(child)){
+            children.add(child);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
