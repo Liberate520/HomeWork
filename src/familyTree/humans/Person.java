@@ -16,18 +16,29 @@ public class Person {
      * Инициализация новой личности
      * @param name Имя
      * @param birth Дата рождения
+     * @param gender Гендер (Их ДВА)
+     * @param mother Мать
+     * @param father Отец
+     */
+    public Person(String name, LocalDate birth, Gender gender, Person mother, Person father) {
+        this.name = name;
+        this.birth = birth;
+        this.gender = gender;
+        this.mother = mother;
+        this.father = father;
+    }
+    /**
+     * Инициализация новой личности
+     * @param name Имя
+     * @param birth Дата рождения
      * @param death Дата смерти (иначе- null)
      * @param gender Гендер (Их ДВА)
      * @param mother Мать
      * @param father Отец
      */
     public Person(String name, LocalDate birth, LocalDate death, Gender gender, Person mother, Person father) {
-        this.name = name;
-        this.birth = birth;
+        this(name,birth, gender, mother, father);
         this.death = death;
-        this.gender = gender;
-        this.mother = mother;
-        this.father = father;
     }
 
     /**
@@ -41,10 +52,8 @@ public class Person {
      * @param father Отец
      */
     public Person(String name, LocalDate birth, LocalDate death, Gender gender, List<Person> children, Person mother, Person father) {
-        this.name = name;
-        this.birth = birth;
-        this.death = death;
-        this.gender = gender;
+        this(name, birth, death, gender, mother, father);
+        this.children = children;
     }
 
     public String getName() {
