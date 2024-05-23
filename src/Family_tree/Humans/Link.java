@@ -1,19 +1,25 @@
 package Family_tree.Humans;
 
+import java.time.LocalDate;
+
 public class Link {
     private LinkType type;
     private Human male;
     private Human female;
     private boolean isActual;
+    private LocalDate start;
+    private LocalDate finish;
 
-    public Link(LinkType type, Human male, Human female, boolean isActual){
+    public Link(LinkType type, Human male, Human female, boolean isActual, LocalDate start, LocalDate finish){
         this.type = type;
         this.female = female;
         this.male = male;
         this.isActual = isActual;
+        this.start = start;
+        this.finish = finish;
     }
     public Link(LinkType type, Human male, Human female){
-        this(type, male, female, true);
+        this(type, male, female, true, null, null);
     }
 
     public LinkType getType(){
@@ -49,11 +55,33 @@ public class Link {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.male.toString());
-        sb.append(" and ");
+        sb.append(" и ");
         sb.append(this.female.toString());
-        sb.append(" are ");
-        sb.append(this.type.toString());
+        if (this.finish == null){
+            sb.append(" являются "); 
+            sb.append(this.type.toString());           
+        } else {
+            sb.append(" были ");
+            sb.append(this.type.toString());
+            sb.append(" с ");
+            sb.append(this.start);
+            sb.append(" до ");
+            sb.append(this.finish);
+        }        
         return sb.toString();
+    }
+
+    public LocalDate getStartDate(){
+        return this.start;
+    }
+    public LocalDate getFinishDate(){
+        return this.finish;
+    }
+    public void setStartDate(LocalDate start){
+        this.start = start;
+    }
+    public void setFinishDate(LocalDate finish){
+        this.finish = finish;
     }
 
 

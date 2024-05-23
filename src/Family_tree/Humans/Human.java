@@ -184,6 +184,17 @@ public class Human {
         return sb.toString();
     }
 
+    public String showLinks(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Связи: ");
+        for (Link element : links) {
+            sb.append(element.toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+
+    }
+
 
     
 
