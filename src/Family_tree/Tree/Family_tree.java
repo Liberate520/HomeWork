@@ -1,12 +1,13 @@
 package Family_tree.Tree;
-import java.util.List;
-
 import Family_tree.Humans.Gender;
 import Family_tree.Humans.Human;
+import Family_tree.Humans.Link;
+import Family_tree.Humans.LinkType;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
+
+import java.util.*;
 
 public class Family_tree {
     private List<Human> list;
@@ -31,8 +32,10 @@ public class Family_tree {
     }
 
     public void add(Human human){
-        human.setInFamilyStatus(true);
-        list.add(human);
+        if (human != null && !this.list.contains(human)){
+            human.setInFamilyStatus(true);
+            list.add(human);
+        }        
     }    
     public void add(String name, Gender gender, LocalDate birthDate){
         Human human = new Human(name, gender, birthDate);
@@ -40,13 +43,14 @@ public class Family_tree {
         list.add(human);
     }
 
-    public Human search(String name){
+    public List<Human> searchByName(String name){
+        List<Human> result = new ArrayList<>();
         for (Human element : list) {
             if (element.getName().equalsIgnoreCase(name)){
-                return element;
+                result.add(element);
             }
         }
-        return null;
+        return result;
     }
     public Human search(long id){
         for (Human element : list) {
@@ -73,8 +77,35 @@ public class Family_tree {
         return memList;
     }
 
-    public void createUnion(){
-        
+    public void createUnion(LocalDate start, Human male, Human female, LinkType type){
+        Link newlink = new Link(type, male, female, true, start, null);
+        male.getLinks().add(newlink);
+        female.getLinks().add(newlink);
+    }
+    public Set<Human> getSiblings(long id){ 
+        Human human = this.search(id); 
+        if (human == null){
+            return null;
+        }
+        Set<Human> res = new HashSet<>();
+        Human father = human.getFather();
+        res.addAll(father.getChildren());
+        Human mother = human.getMother();
+        res.addAll(mother.getChildren());
+        res.remove(human);
+        return res;
+    }
+
+    public String getlnfo(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("B дереве ");
+        sb.append(list.size()); 
+        sb.append(" объектов: \n"); 
+        for (Human human: list){ 
+            sb.append(human);            
+            sb.append("\n"); 
+        }
+        return sb.toString();
     }
 
 

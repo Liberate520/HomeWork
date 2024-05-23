@@ -16,6 +16,7 @@ public class Human {
     private Gender gender;
     private Human spouse;
     private boolean isInFamily;
+    private Set<String> names;
     
     
 
@@ -36,6 +37,7 @@ public class Human {
         } else {
             this.vital = Vital.alive;
         }
+        names = new HashSet<String>();
     }
 
     public Human(String name, Gender gender, LocalDate birthDate) {
@@ -217,6 +219,15 @@ public class Human {
     }
     public void setInFamilyStatus(boolean value){
         this.isInFamily = value;
+    }
+
+    public Set<Link> getLinks(){
+        return this.links;
+    }
+
+    public void changeName(String value){
+        this.names.add(this.name);
+        this.name = value;
     }
     
 
