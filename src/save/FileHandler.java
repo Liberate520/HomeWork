@@ -1,6 +1,8 @@
+package save;
+
 import java.io.*;
 
-public class FileHandler implements Writable{
+public class FileHandler implements Writable {
     @Override
     public boolean save(Serializable serializable, String filePatch) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePatch))) {

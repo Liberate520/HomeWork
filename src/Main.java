@@ -1,6 +1,8 @@
 import family_tree.FamilyTree;
 import human.Gender;
 import human.Human;
+import save.FileHandler;
+import save.Writable;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,12 @@ public class Main {
         // Узнаем внуков Александра
         System.out.println(familyTree.findFirsIn("Александр").getGrandsons());
         printSeparator();
+        //Сортируем по имени
+//        familyTree.sortByName();
+        //Сортируем по возрасту
+//        familyTree.sortByAge();
+        //Сортируем по количеству детей
+        familyTree.sortByNumberChildren();
         // Печатаем краткое дерево
         System.out.println(familyTree);
         printSeparator();
@@ -53,7 +61,7 @@ public class Main {
     }
 
     /**
-     *   Создает и наплняет экземпляр класса family_tree.FamilyTree  экзеплярами класса human.Human с заданными данными.
+     *   Создает и наполняет экземпляр класса family_tree.FamilyTree  экзеплярами класса human.Human с заданными данными.
      *   Устанавливает родственные связи.
      * @return FamilyTree
      */
@@ -72,6 +80,7 @@ public class Main {
         // Добаляем членов семьи
         familyTree.addHuman(dyatchinYS);
         familyTree.addHuman(dyatchinaAS);
+        familyTree.addHuman(dyatchinSA);
         familyTree.addHuman(dyatchinaNV);
         familyTree.addHuman(dyatchinAA);
         familyTree.addHuman(dyatchinaTV);

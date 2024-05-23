@@ -32,6 +32,7 @@ public class Human implements Serializable {
             this.dod = null;
         }
         this.gender = gender;
+        this.children = new ArrayList<>();
     }
 
     /**
@@ -168,9 +169,6 @@ public class Human implements Serializable {
      * @param child
      */
     private void setChildren(Human child) {
-        if (this.children == null) {
-            this.children = new ArrayList<>();
-        }
         if (!this.children.contains(child)) {
             this.children.add(child);
         }
