@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 
-public abstract class Human {
+public class Human {
     private long ID;
     private String  name;    
     private Human mother, father;
@@ -12,83 +12,29 @@ public abstract class Human {
     private LocalDate birthDate, deathDate;
     private Set<Link> links;
     private Vital vital;
+    private Gender gender;
+    private Human spouse;
 
-    public Human(String name, Female mother, Male father, LocalDate birthDate, LocalDate deathDate){
-        Instant instant = Instant.now();
-        this.ID = instant.toEpochMilli();
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         this.name = name;
+        this.gender = gender;
         this.birthDate = birthDate;
-        this.deathDate = deathDate;
         this.mother = mother;
         this.father = father;
-        this.vital = Vital.dead; 
-        this.children = new HashSet<>();
-        this.links = new HashSet<>();
-    }
-    public Human(String name){
-        this(name, null, null, null, null);
-        this.vital = Vital.alive;
-    }
+        this.children = new HashSet<>() ;
+        this.birthDate = birthDate;
+        this.deathDate = deathDate;    
+        this.links = new HashSet<>() ;
+        Instant instant = Instant.now();
+        this.ID = instant.toEpochMilli();
+        if (deathDate != null){
+            this.vital = Vital.dead; 
+        } else {
+            this.vital = Vital.alive;
+        }
 
-    public String getName (){
-        return this.name;
-    }  
-    public Human getFather(){
-        return this.father;
     }
-    public void setFather(Male male){
-        this.father = male;
-    }
-    public Human getMother(){
-        return this.mother;
-    } 
-    public void setMother(Female value){
-        this.mother = value;
-    }  
-    public LocalDate getBirhDate(){
-        return this.birthDate;
-    }
-    public void setBirhDate(LocalDate value){
-        this.birthDate = value;
-    }
-    public LocalDate getDeathDate(){        
-        return this.deathDate;                
-    }
-    public void setDeathDate(LocalDate value){
-        this.vital = Vital.dead;
-        this.deathDate = value;
-    }
-    public Vital getVital(){
-        return this.vital;
-    }
-    public void setVital(Vital value){
-        this.vital = value;
-    }
-    
-    public void addChild(Human child){
-        children.add(child);
-    }
-
-    @Override
-    public String toString(){
-        return (this.name);        
-    }
-
-    public Set<Human> getChildren(){
-        return this.children;
-    }
-    public Set<Link> getLinks(){
-        return this.links;
-    }
-    public long getID(){
-        return this.ID;
-    }
-    
-    public void addLink(Male male, Female female, LinkType type){
-        Link link = new Link(type, male, female);
-        this.links.add(link);
-    }
-
+   
     
 
 
