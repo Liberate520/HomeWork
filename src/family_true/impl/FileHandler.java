@@ -18,7 +18,7 @@ public class FileHandler implements Externalizable {
 
     public final static String OUTPUT_DIR_DEFAULT = "family_tree.txt";
 
-    private static String outputDir;
+    private String outputDir;
 
     public FileHandler() {
         this.outputDir = OUTPUT_DIR_DEFAULT;
@@ -29,7 +29,7 @@ public class FileHandler implements Externalizable {
     }
 
     @Override
-    public void writeExternal(List<FamilyTree> familyTreeList) {
+    public void writeAllExternal(List<FamilyTree> familyTreeList) {
         File file = new File(outputDir);
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
             out.writeObject(familyTreeList);
@@ -40,10 +40,18 @@ public class FileHandler implements Externalizable {
     }
 
     @Override
+    public void updateExternal(FamilyTree familyTree) {
+        List<FamilyTree> familyTreeList = readExternal();
+        familyTreeList.add(familyTree);
+        writeAllExternal(familyTreeList);
+    }
+
+    @Override
     public List<FamilyTree> readExternal() {
         List<FamilyTree> familyTreeList = new ArrayList<>();
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(outputDir))) {
-            familyTreeList = (List<FamilyTree>) in.readObject();
+            // Чтобы можно было добавлять новые FamilyTree нужно не присвоить вычитываемый объект, а именно добавлять к новому List
+            familyTreeList.addAll((List<FamilyTree>) in.readObject());
         } catch (FileNotFoundException e) {
             System.out.println("File path '" + outputDir + "' NotFound!");
             e.printStackTrace();

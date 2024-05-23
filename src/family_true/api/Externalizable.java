@@ -14,6 +14,21 @@ import java.util.List;
 
 public interface Externalizable extends Serializable {
 
-    void writeExternal(List<FamilyTree> familyTreeList);
+    /**
+     * Запись в файл
+     * @param familyTreeList
+     */
+    void writeAllExternal(List<FamilyTree> familyTreeList);
+
+    /**
+     * Обновление объекта и запись в файл
+     * @param familyTreeList
+     */
+    void updateExternal(FamilyTree familyTreeList);
+
+    /**
+     * Чтение и возвращение объекта из файла
+     * @return List<FamilyTree>
+     */
     List<FamilyTree> readExternal();
 }

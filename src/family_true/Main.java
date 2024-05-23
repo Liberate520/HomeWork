@@ -5,6 +5,7 @@ import family_true.impl.FileHandler;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 
 public class Main {
 
@@ -78,9 +79,33 @@ public class Main {
         familyTree.addHuman(child8);
 
         Externalizable ext = new FileHandler();
-        ext.writeExternal(Collections.singletonList(familyTree));
+        // Записываем объект List<FamilyTree> в файл
+        ext.writeAllExternal(Collections.singletonList(familyTree));
 
-        String str =  ext.readExternal().toString();
-        System.out.println(str);
+        // Получаем объект из файла
+        List<FamilyTree> familyTreeList = ext.readExternal();
+
+        System.out.println(familyTreeList.toString());
+
+        Human father9 = new Human("Владимир", "Ильич", "Левин", Gender.MALE, LocalDate.of(1953, 10, 11));
+        Human mother9 = new Human("Мария", "Вячеславовна", "Левин", Gender.FEMALE, LocalDate.of(1955, 7, 15));
+        mother9.setSpouse(father9);
+
+        Human child9 = new Human("Митрофан", "Иванович", "Иванов", Gender.MALE, LocalDate.of(1986, 1, 11), mother9, father9);
+        Human child10 = new Human("Петр", "Петрович", "Петров", Gender.MALE, LocalDate.of(1988, 2, 12), mother9, father9);
+        FamilyTree familyTree2 = new FamilyTree(treeId++);
+
+        familyTree2.addHuman(father9);
+        familyTree2.addHuman(mother9);
+        familyTree2.addHuman(child9);
+        familyTree2.addHuman(child10);
+
+        // Обновляем объект List<FamilyTree> и перезаписываем в файл
+        ext.updateExternal(familyTree2);
+
+        // Получаем объект из файла
+        List<FamilyTree> familyTreeList2 = ext.readExternal();
+
+        System.out.println(familyTreeList2.toString());
     }
 }
