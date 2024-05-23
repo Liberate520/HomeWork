@@ -101,13 +101,56 @@ public class Human {
     public Vital getVital(){return this.vital;}
     public void setVital (Vital value){ this.vital = value;}
 
-    @Override
-    public String toString() {
-        return getlnfo();
+    @Override 
+    public String toString(){
+        return "id=" + ID + ", name=" + name ;
     }
+
+
 
     public long getID(){return this.ID;}
     public String getName(){return this.name;}
+
+    public String getlnfo(){
+        StringBuilder sb = new StringBuilder(); 
+        sb.append("ld: ");
+        sb.append(ID); 
+        sb.append(", имя: "); 
+        sb.append(name);
+        sb.append(", non: "); 
+        sb.append(getGender()); 
+        sb.append(", возраст: ");
+        sb.append(getAge()); 
+        sb.append(", ");
+        sb.append(getSpouselnfo()); 
+        sb.append(", ");
+        sb.append(getMotherlnfo());
+        sb.append(", ");
+        sb.append(getFatherlnfo()); 
+        sb.append(", ");
+        sb. append(getChildrenlnfo()); 
+        return sb.toString();
+    }
+
+    public String getSpouselnfo(){
+         String res = "cynpyr(a): ";
+         if (spouse == null){ 
+            res += "нет";
+        } else { 
+            res += spouse.getName();
+        }
+        return res;
+    }
+    public String getMotherlnfo(){ 
+        String res = "мать: ";
+        Human mother = getMother(); 
+        if (mother != null){
+            res += mother.getName() ;
+        } else {
+            res += "неизвестна";
+        }
+        return res;
+    }
 
 
     
