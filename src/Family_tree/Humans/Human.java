@@ -15,6 +15,7 @@ public class Human {
     private Vital vital;
     private Gender gender;
     private Human spouse;
+    
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         this.name = name;
@@ -84,7 +85,15 @@ public class Human {
         Period diff = Period.between(birthDate, deathDate);
         return diff.getYears();
     }
-    public void setSpouse(Human spouse) { this.spouse = spouse; }
+    public void setSpouse(Human spouse) {          
+        if (this.gender == spouse.gender){
+            this.spouse = null;           
+        } else {            
+            this.spouse = spouse; 
+        }       
+                       
+    }         
+   
     public Human getSpouse(){ return this.spouse; }
 
     public Set<Human> getChildren() { return children; }
@@ -143,13 +152,36 @@ public class Human {
     }
     public String getMotherlnfo(){ 
         String res = "мать: ";
-        Human mother = getMother(); 
-        if (mother != null){
-            res += mother.getName() ;
+        Human human = getMother(); 
+        if (human != null){
+            res += human.getName() ;
         } else {
             res += "неизвестна";
         }
         return res;
+    }
+    public String getFatherlnfo(){ 
+        String res = "отец: ";
+        Human human = getFather(); 
+        if (human != null){
+            res += human.getName() ;
+        } else {
+            res += "неизвестен";
+        }
+        return res;
+    }
+
+    public String getChildrenlnfo(){
+        StringBuilder sb = new StringBuilder(); 
+        for (Human human : children) {
+            sb.append(human);
+            sb.append(", мать: ");
+            sb.append(human.getMother().getName());
+            sb.append(", отец: ");
+            sb.append(human.getFather().getName());
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
 

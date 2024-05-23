@@ -2,27 +2,27 @@ package Family_tree.Humans;
 
 public class Link {
     private LinkType type;
-    private Male male;
-    private Female female;
+    private Human male;
+    private Human female;
     private boolean isActual;
 
-    public Link(LinkType type, Male male, Female female, boolean isActual){
+    public Link(LinkType type, Human male, Human female, boolean isActual){
         this.type = type;
         this.female = female;
         this.male = male;
         this.isActual = isActual;
     }
-    public Link(LinkType type, Male male, Female female){
+    public Link(LinkType type, Human male, Human female){
         this(type, male, female, true);
     }
 
     public LinkType getType(){
         return this.type;
     }
-    public Male getMale(){
+    public Human getMale(){
         return this.male;
     }
-    public Female getFemale(){
+    public Human getFemale(){
         return this.female;
     }
     public boolean getActuality(){
@@ -31,11 +31,15 @@ public class Link {
     public void setType(LinkType value){
         this.type = value;
     }
-    public void setMale(Male value){
-        this.male = value;
+    public void setMale(Human value){
+        if (value.getGender() == Gender.Male){
+            this.male = value;
+        }        
     }
-    public void setFemale(Female value){
-        this.female = value;
+    public void setFemale(Human value){
+        if (value.getGender() == Gender.Male){
+            this.female = value;
+        }  
     }
     public void setActuality(boolean value){
         this.isActual = value;
