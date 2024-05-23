@@ -1,6 +1,7 @@
 package Family_tree.Humans;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 
@@ -71,6 +72,44 @@ public class Human {
             this.father = value;
         } 
     }
+
+    public int getAge(){
+        if (deathDate == null){
+            return getPeriod(birthDate, LocalDate.now()); 
+        } else {
+            return getPeriod(birthDate, deathDate);
+        }
+    }
+    private int getPeriod(LocalDate birthDate, LocalDate deathDate){ 
+        Period diff = Period.between(birthDate, deathDate);
+        return diff.getYears();
+    }
+    public void setSpouse(Human spouse) { this.spouse = spouse; }
+    public Human getSpouse(){ return this.spouse; }
+
+    public Set<Human> getChildren() { return children; }
+    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+    public void setDeathDate(LocalDate deathDate) { 
+        if (deathDate == null){
+            this.vital = Vital.alive;
+        }else{
+            this.vital = Vital.dead;
+        }
+        this.deathDate = deathDate; 
+    }
+    public Gender getGender(){ return gender; }
+    public Vital getVital(){return this.vital;}
+    public void setVital (Vital value){ this.vital = value;}
+
+    @Override
+    public String toString() {
+        return getlnfo();
+    }
+
+    public long getID(){return this.ID;}
+    public String getName(){return this.name;}
+
+
     
 
 
