@@ -15,6 +15,8 @@ public class Human {
     private Vital vital;
     private Gender gender;
     private Human spouse;
+    private boolean isInFamily;
+    
     
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
@@ -85,11 +87,26 @@ public class Human {
         Period diff = Period.between(birthDate, deathDate);
         return diff.getYears();
     }
-    public void setSpouse(Human spouse) {          
+    public void setSpouse(Human spouse) {                
         if (this.gender == spouse.gender){
             this.spouse = null;           
         } else {            
             this.spouse = spouse; 
+            boolean flag = false;
+            for (Link iterable_element : links) {
+                if (spouse.equals(iterable_element.getMale()) || spouse.equals(iterable_element.getFemale())){ //может по ID надёжней?
+                    flag = true;
+                }
+            }
+            if (flag == false){
+                Link link; 
+                if (spouse.gender == Gender.Female){
+                    link = new Link(LinkType.Married, this, spouse);
+                }else{
+                    link = new Link(LinkType.Married, spouse, this);
+                }
+                links.add(link);
+            }
         }       
                        
     }         
@@ -195,7 +212,12 @@ public class Human {
 
     }
 
-
+    public boolean inFamily(){
+        return this.isInFamily;
+    }
+    public void setInFamilyStatus(boolean value){
+        this.isInFamily = value;
+    }
     
 
 
