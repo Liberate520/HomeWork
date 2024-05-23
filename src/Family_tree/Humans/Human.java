@@ -32,9 +32,45 @@ public class Human {
         } else {
             this.vital = Vital.alive;
         }
-
     }
-   
+
+    public Human(String name, Gender gender, LocalDate birthDate) {
+        this(name, gender, birthDate,  null,  null,  null); 
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother){
+        this(name, gender, birthDate,  null, father, mother);
+    }
+
+    public boolean addChild(Human child){ 
+        if (!children.contains(child)){ 
+            children.add(child);
+            if (this.gender == Gender.Female){
+                child.setMother(this);
+            } else {
+                child.setFather(this);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public Human getMother(){
+        return this.mother;
+    }
+    public void setMother(Human value){
+        if (value.gender == Gender.Female){
+            this.mother = value;
+        } 
+    }
+    public Human getFather(){
+        return this.father;
+    }
+    public void setFather(Human value){
+        if (value.gender == Gender.Male){
+            this.father = value;
+        } 
+    }
     
 
 
