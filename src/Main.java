@@ -40,6 +40,15 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println("Before sorting:");
+        loadedFamilyTree.printTree();
+
+        System.out.println("\nSorted by name:");
+        loadedFamilyTree.sortByName();
+        loadedFamilyTree.printTree();
+
+        System.out.println("\nSorted by birth date:");
+        loadedFamilyTree.sortByBirthDate();
         loadedFamilyTree.printTree();
     }
 }
