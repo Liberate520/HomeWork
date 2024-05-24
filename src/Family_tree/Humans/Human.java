@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
+import Family_tree.Math_Family;
+
 
 public class Human {
-    private long ID;
+    private long innerID;
     private String  name;    
     private Human mother, father;
     private Set<Human> children;
@@ -17,6 +19,7 @@ public class Human {
     private Human spouse;
     private boolean isInFamily;
     private Set<String> names;
+    private long famID;
     
     
 
@@ -31,13 +34,14 @@ public class Human {
         this.deathDate = deathDate;    
         this.links = new HashSet<>() ;
         Instant instant = Instant.now();
-        this.ID = instant.toEpochMilli();
+        this.innerID = instant.toEpochMilli() + Math_Family.nameValue(name);
         if (deathDate != null){
             this.vital = Vital.dead; 
         } else {
             this.vital = Vital.alive;
         }
         names = new HashSet<String>();
+        this.famID = -1;
     }
 
     public Human(String name, Gender gender, LocalDate birthDate) {
@@ -108,7 +112,7 @@ public class Human {
                     link = new Link(LinkType.Married, spouse, this);
                 }
                 links.add(link);
-            }
+            }            
         }       
                        
     }         
@@ -131,18 +135,14 @@ public class Human {
 
     @Override 
     public String toString(){
-        return "id=" + ID + ", name=" + name ;
-    }
-
-
-
-    public long getID(){return this.ID;}
+        return "id=" + famID + ", name=" + name ;
+    }    
     public String getName(){return this.name;}
 
     public String getlnfo(){
         StringBuilder sb = new StringBuilder(); 
         sb.append("ld: ");
-        sb.append(ID); 
+        sb.append(famID); 
         sb.append(", имя: "); 
         sb.append(name);
         sb.append(", non: "); 
@@ -206,6 +206,7 @@ public class Human {
     public String showLinks(){
         StringBuilder sb = new StringBuilder();
         sb.append("Связи: ");
+        sb.append("\n");
         for (Link element : links) {
             sb.append(element.toString());
             sb.append("\n");
@@ -229,8 +230,12 @@ public class Human {
         this.names.add(this.name);
         this.name = value;
     }
-    
 
-
-
+    public void setFamilyID( long value){
+        this.famID = value;
+    }
+    public long getFamilyID(){
+        return this.famID;
+    }
+    public long getInnerID(){return this.innerID;}
 }

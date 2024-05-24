@@ -3,6 +3,7 @@ import Family_tree.Humans.Gender;
 import Family_tree.Humans.Human;
 import Family_tree.Humans.Link;
 import Family_tree.Humans.LinkType;
+import Family_tree.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -13,12 +14,14 @@ public class Family_tree {
     private List<Human> list;
     private long id;
     private String family;
+    private long counter;
 
     public Family_tree(String family){
         list = new ArrayList<>(); 
         this.family = family;
         Instant instant = Instant.now();
-        this.id = instant.toEpochMilli();       
+        this.id = instant.toEpochMilli() + Math_Family.nameValue(family) ;  
+        this.counter = 0;     
     }
     public void setid(long value){
         this.id = value;
@@ -34,13 +37,17 @@ public class Family_tree {
     public void add(Human human){
         if (human != null && !this.list.contains(human)){
             human.setInFamilyStatus(true);
+            human.setFamilyID(this.counter);
             list.add(human);
+            this.counter ++;
         }        
     }    
     public void add(String name, Gender gender, LocalDate birthDate){
         Human human = new Human(name, gender, birthDate);
         human.setInFamilyStatus(true);
+        human.setFamilyID(this.counter);
         list.add(human);
+        this.counter ++;
     }
 
     public List<Human> searchByName(String name){
@@ -54,7 +61,7 @@ public class Family_tree {
     }
     public Human search(long id){
         for (Human element : list) {
-            if (element.getID() == id){
+            if (element.getFamilyID() == id){
                 return element;
             }
         }
@@ -81,6 +88,10 @@ public class Family_tree {
         Link newlink = new Link(type, male, female, true, start, null);
         male.getLinks().add(newlink);
         female.getLinks().add(newlink);
+        if(type == LinkType.Married){
+            male.setSpouse(female);
+            female.setSpouse(male);
+        }
     }
 
     public Link searchLink(Human male, Human female, LinkType type){
@@ -117,6 +128,10 @@ public class Family_tree {
             sb.append("\n"); 
         }
         return sb.toString();
+    }
+
+    public long getCount(){
+        return this.counter;
     }
 
 
