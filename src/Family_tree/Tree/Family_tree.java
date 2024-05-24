@@ -82,6 +82,17 @@ public class Family_tree {
         male.getLinks().add(newlink);
         female.getLinks().add(newlink);
     }
+
+    public Link searchLink(Human male, Human female, LinkType type){
+        Set<Link> mSet = male.getLinks();
+        for (Link link : mSet) {
+            if (link.getFemale().equals(female) && link.getType().equals(type)){
+                return link;
+            }
+        }
+        return null;
+    }
+
     public Set<Human> getSiblings(long id){ 
         Human human = this.search(id); 
         if (human == null){
