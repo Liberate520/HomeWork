@@ -1,11 +1,13 @@
 package ru.gb.family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+public class Node implements Serializable {
+    private static final long serialVersionUID = 1L;
     private long id;
     private String name;
     private Gender gender;
