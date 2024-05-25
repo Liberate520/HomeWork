@@ -1,4 +1,3 @@
-import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 
 import family_tree.Tree;
@@ -20,11 +19,11 @@ public class Main {
         Human wmom = new Human("Faith", Gender.Female);
         Human wdad = new Human("Alex", Gender.Male);
         Human wgranny = new Human("Ann", Gender.Female);
-        wmom.setParent(wgranny);
         me.setParents(dad, mom);
-        son.setParents(me, wife);
+        bro.setParents(mom, dad);
         wife.setParents(wmom, wdad);
-        mom.setChildren(bro);
+        son.setParents(me, wife);
+        wmom.setParent(wgranny);
         granny.setChildren(dad);
         mgranny.setChildren(mom);
         granny.setDateOfBirth(LocalDate.of(1929, 8, 20));
@@ -41,7 +40,8 @@ public class Main {
         family.addToTree(mgranny);
         family.addToTree(wgranny);
 
-        // family.showProgenitors(son);
+        family.showProgenitors(son);
+
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(family, "family.out");
         fileHandler.read("family.out");
