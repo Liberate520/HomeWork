@@ -1,10 +1,10 @@
 package familytree.main;
 
-import com.familytree.io.FileHandler;
-import com.familytree.modul.FamilyTree;
-import com.familytree.modul.Gender;
-import com.familytree.modul.Human;
-import com.familytree.utis.Writeable;
+import familytree.io.FileHandler;
+import familytree.modul.FamilyTree;
+import familytree.modul.Gender;
+import familytree.modul.Human;
+import familytree.utis.Writeable;
 
 import java.io.File;
 import java.time.LocalDate;
