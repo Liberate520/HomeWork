@@ -3,12 +3,8 @@ import Family_tree.Humans.Gender;
 import Family_tree.Humans.Human;
 import Family_tree.Humans.Link;
 import Family_tree.Humans.LinkType;
-import Family_tree.*;
-
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
-
 import java.util.*;
 
 public class Family_tree implements Serializable{
@@ -19,11 +15,16 @@ public class Family_tree implements Serializable{
 
     public Family_tree(String family){
         list = new ArrayList<>(); 
-        this.family = family;
-        Instant instant = Instant.now();
-        this.id = instant.toEpochMilli() + Math_Family.nameValue(family) ;  
+        this.family = family;          
         this.counter = 0;     
     }
+    public Family_tree(String family, long id){
+        list = new ArrayList<>(); 
+        this.family = family;          
+        this.counter = 0; 
+        this.id = id;    
+    }
+
     public void setid(long value){
         this.id = value;
     }
