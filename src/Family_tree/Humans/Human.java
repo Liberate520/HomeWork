@@ -1,4 +1,5 @@
 package Family_tree.Humans;
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +8,7 @@ import java.util.*;
 import Family_tree.Math_Family;
 
 
-public class Human {
+public class Human implements Serializable{
     private long innerID;
     private String  name;    
     private Human mother, father;

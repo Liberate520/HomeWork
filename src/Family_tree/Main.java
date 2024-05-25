@@ -3,6 +3,7 @@ package Family_tree;
 import java.time.LocalDate;
 
 import Family_tree.Humans.*;
+import Family_tree.Recorder.Recorder;
 import Family_tree.Tree.Family_tree;
 
 public class Main {
@@ -10,6 +11,7 @@ public class Main {
 
     public static void main(String[] args){
 
+      /*   
         Human man1 = new Human("Иванов Виктор Иванович ", Gender.Male, LocalDate.of(1905, 8, 14), LocalDate.of(1972, 12, 20),null,null);
         Human man2 = new Human("Петров Сергей Харитонович ", Gender.Male, LocalDate.of(1907, 8, 14), LocalDate.of(1980, 7, 24),null,null);
         Human man3 = new Human("Иванов Владимир Викторович ", Gender.Male, LocalDate.of(1941, 1, 22), LocalDate.of(2023, 6, 29), man1,null);
@@ -66,7 +68,16 @@ public class Main {
         System.out.println("_______________________________________________________________________");
         Human X = tree.search(2);
         System.out.println(X.getChildrenlnfo());
-        System.out.println(X.showLinks());
+        System.out.println(X.showLinks()); 
+        */
+
+        String path = "mine.tree";
+
+        Recorder rwr = new Recorder();
+        Family_tree tree = (Family_tree) rwr.read(path);
+
+        System.out.println(rwr.save(tree, path));
+        System.out.println(tree.getMemberList());
         
         
     }

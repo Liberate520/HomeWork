@@ -5,12 +5,13 @@ import Family_tree.Humans.Link;
 import Family_tree.Humans.LinkType;
 import Family_tree.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 
 import java.util.*;
 
-public class Family_tree {
+public class Family_tree implements Serializable{
     private List<Human> list;
     private long id;
     private String family;

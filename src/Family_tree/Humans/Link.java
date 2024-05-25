@@ -1,8 +1,9 @@
 package Family_tree.Humans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Link {
+public class Link implements Serializable{
     private LinkType type;
     private Human male;
     private Human female;
