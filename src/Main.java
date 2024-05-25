@@ -1,57 +1,33 @@
-import java.util.List;
-/**
- * Главный класс приложения, содержащий точку входа для запуска программы.
- * Демонстрирует использование классов FamilyTree и Human для создания генеалогического древа.
- */
 public class Main {
     public static void main(String[] args) {
-        // Создание экземпляра генеалогического древа
-        FamilyTree familyTree = new FamilyTree();
+        // Создаем объекты для представления членов семьи
+        Human ioann = new Human("Иоанн Алексеевич Романов", Gender.MALE, "06.09.1666", "08.02.1696");
+        Human aleksey = new Human("Алексей Михайлович Романов", Gender.MALE, "19.03.1629", "08.02.1676");
+        Human maria = new Human("Мария Ильинична Милославская", Gender.FEMALE, "11.04.1624", "13.03.1669");
+        Human praskovya = new Human("Прасковья Фёдоровна Салтыкова", Gender.FEMALE, "22.10.1664", "24.10.1723");
 
-        // Создание членов древа
-        Human person1 = new Human("Иван", Gender.MALE);
-        Human person2 = new Human("Мария", Gender.FEMALE);
-        Human child1 = new Human("Алексей", Gender.MALE);
-        Human child2 = new Human("Ольга", Gender.FEMALE);
+        // Устанавливаем родительские связи
+        ioann.setMother(maria);
+        ioann.setFather(aleksey);
 
-        // Добавление членов древа
-        familyTree.addMember(person1);
-        familyTree.addMember(person2);
-        familyTree.addMember(child1);
-        familyTree.addMember(child2);
+        // Устанавливаем брачные отношения
+        ioann.setSpouse(praskovya);
 
-        // Установка брачных отношений
-        familyTree.setSpouse(person1, person2);
+        // Создаем детей
+        Human mariaIvanovna = new Human("Мария Ивановна Романова", Gender.FEMALE, "31.03.1689", "23.02.1692");
+        Human feodosiya = new Human("Феодосия Ивановна Романова", Gender.FEMALE, "14.06.1690", "22.05.1691");
+        Human ekaterina = new Human("Екатерина Иоанновна Романова", Gender.FEMALE, "8.11.1691", "25.06.1733");
+        Human anna = new Human("Анна Иоанновна Романова", Gender.FEMALE, "07.02.1693", "28.10.1740");
+        Human praskovyaIovanna = new Human("Прасковья Иоанновна Романова", Gender.FEMALE, "04 .10.1694", "19.10.1731");
 
-        // Установка родителей для детей
-        familyTree.setParents(child1, person1, person2);
-        familyTree.setParents(child2, person1, person2);
+        // Устанавливаем детей для Иоанна и Прасковьи
+        ioann.addChild(mariaIvanovna);
+        ioann.addChild(feodosiya);
+        ioann.addChild(ekaterina);
+        ioann.addChild(anna);
+        ioann.addChild(praskovyaIovanna);
 
-        // Получение детей выбранного человека
-        List<Human> children = familyTree.getChildren(person1);
-        System.out.println("Дети " + person1.getName() + ": ");
-        for (Human child : children) {
-            System.out.println("- " + child.getName());
-        }
-
-        // Поиск родителей, супруга, братьев/сестер выбранного человека
-        Human spouse = familyTree.getSpouse(person1);
-        System.out.println("Супруг(а) " + person1.getName() + ": " + spouse.getName());
-
-        List<Human> parents = familyTree.getParents(child1);
-        System.out.println("Родители " + child1.getName() + ": ");
-        for (Human parent : parents) {
-            System.out.println("- " + parent.getName());
-        }
-
-        List<Human> siblings = familyTree.getSiblings(child1);
-        System.out.println("Братья/Сестры " + child1.getName() + ": ");
-        for (Human sibling : siblings) {
-            System.out.println("- " + sibling.getName());
-        }
-
-        // Сохранение и загрузка древа
-        familyTree.saveToFile("family_tree.txt");
-        FamilyTree loadedTree = FamilyTree.loadFromFile("family_tree.txt");
+        // Выводим информацию о членах семьи
+        System.out.println(ioann.toString());
     }
 }
