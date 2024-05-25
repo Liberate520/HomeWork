@@ -1,4 +1,6 @@
 package Family_tree.Tree;
+import Family_tree.Humans.ComparatorByAge;
+import Family_tree.Humans.ComparatorByName;
 import Family_tree.Humans.Gender;
 import Family_tree.Humans.Human;
 import Family_tree.Humans.Link;
@@ -142,6 +144,17 @@ public class Family_tree implements Serializable, Iterable<Human>{
     @Override
     public Iterator<Human> iterator() {
         return list.iterator();
+    }
+
+    public void sortByName(){
+        this.list.sort(new ComparatorByName());
+        
+    }
+    public void sortByAge(){
+        this.list.sort(new ComparatorByAge());
+    }
+    public void sortByInnerId(){
+        Collections.sort(this.list);
     }
 
    

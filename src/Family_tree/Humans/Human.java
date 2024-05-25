@@ -84,6 +84,9 @@ public class Human implements Serializable, Comparable<Human>{
     }
 
     public int getAge(){
+        if (birthDate == null){
+            return -1;
+        }
         if (deathDate == null){
             return getPeriod(birthDate, LocalDate.now()); 
         } else {

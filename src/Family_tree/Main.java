@@ -11,14 +11,18 @@ public class Main {
 
     public static void main(String[] args){
 
-      /*   
+        Service service = new Service();
+        Family_tree tree = service.createTree("Ивановы");
+        service.createHuman("Сидорова Полина Петровна", Gender.Female, LocalDate.of(1899,1,14), LocalDate.of(1970, 2, 15), null, null, 0);
+        Human mom = service.getHuman(0);
+        
         Human man1 = new Human("Иванов Виктор Иванович ", Gender.Male, LocalDate.of(1905, 8, 14), LocalDate.of(1972, 12, 20),null,null);
         Human man2 = new Human("Петров Сергей Харитонович ", Gender.Male, LocalDate.of(1907, 8, 14), LocalDate.of(1980, 7, 24),null,null);
         Human man3 = new Human("Иванов Владимир Викторович ", Gender.Male, LocalDate.of(1941, 1, 22), LocalDate.of(2023, 6, 29), man1,null);
         Human man4 = new Human("Иванов Виктор Владимирович ", Gender.Male, LocalDate.of(1972, 1, 2), null, man3,null);
 
         Human woman1 = new Human("Иванова Анна Харлампиевна ", Gender.Female, LocalDate.of(1910, 12, 22), LocalDate.of(1999, 10, 2),null,null);
-        Human woman2 = new Human("Петрова Наталия Клементиевна ", Gender.Female, LocalDate.of(1920, 9, 1), LocalDate.of(2001, 3, 12),null,null);
+        Human woman2 = new Human("Петрова Наталия Клементиевна ", Gender.Female, LocalDate.of(1920, 9, 1), LocalDate.of(2001, 3, 12),null,mom);
         Human woman3 = new Human("Иванова Людмила Петровна ", Gender.Female, LocalDate.of(1950, 1, 29), null, man2, woman2);
 
         man3.setMother(woman1);
@@ -47,7 +51,7 @@ public class Main {
         sp2.getLinks().add(link2);
         man4.getLinks().add(link2);
 
-        Family_tree tree = new Family_tree("Ивановы");
+        //Family_tree tree = new Family_tree("Ивановы");
         tree.add(man1);
         tree.add(man3);
         tree.add(man4);
@@ -62,24 +66,30 @@ public class Main {
         man4.addChild(tree.search(8));
         sp3.addChild(tree.search(8));
 
-        System.out.println(tree.getMemberList());
-        System.out.println(man4.getSpouse()); 
-        System.out.println(tree.search(6).getlnfo());
+        //System.out.println(tree.getMemberList());
+        //System.out.println(man4.getSpouse()); 
+        //System.out.println(tree.search(6).getlnfo());
         System.out.println("_______________________________________________________________________");
-        Human X = tree.search(2);
-        System.out.println(X.getChildrenlnfo());
-        System.out.println(X.showLinks()); 
-        */
+        //System.out.println(service.getHuman(0));
+        
 
-        String path = "mine.tree";
+        //String path = "mine.tree";
 
         Recorder rwr = new Recorder();
-        Family_tree tree = (Family_tree) rwr.read(path);
+        //Family_tree tree = (Family_tree) rwr.read(path);
 
-        System.out.println(rwr.save(tree, path));
+        //System.out.println(rwr.save(tree, path));
         System.out.println(tree.getMemberList());
-        
-        
+        tree.sortByInnerId();
+        System.out.println("_______________________________________________________________________");
+        System.out.println(tree.getMemberList());
+        System.out.println("_______________________________________________________________________");
+        tree.sortByAge();
+        System.out.println(tree.getMemberList());
+        System.out.println("_______________________________________________________________________");
+        tree.sortByName() ;
+        System.out.println(tree.getMemberList());
+        System.out.println("_______________________________________________________________________");
     }
 
 
