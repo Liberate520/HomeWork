@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Family_tree implements Serializable{
+public class Family_tree implements Serializable, Iterable<Human>{
     private List<Human> list;
     private long id;
     private String family;
@@ -24,6 +24,8 @@ public class Family_tree implements Serializable{
         this.counter = 0; 
         this.id = id;    
     }
+
+    public String getFamily(){ return this.family; }
 
     public void setid(long value){
         this.id = value;
@@ -120,6 +122,7 @@ public class Family_tree implements Serializable{
         return res;
     }
 
+
     public String getlnfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("B дереве ");
@@ -132,10 +135,15 @@ public class Family_tree implements Serializable{
         return sb.toString();
     }
 
+    
     public long getCount(){
         return this.counter;
     }
+    @Override
+    public Iterator<Human> iterator() {
+        return list.iterator();
+    }
 
-
+   
     
 }

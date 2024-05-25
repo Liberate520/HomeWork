@@ -73,5 +73,16 @@ public class Service implements Serializable{
         this.currentHuman = this.humans.get((int) index);
         return this.currentHuman;
     }
+    public String getHumansInfo(long index){
+        Family_tree currentTree = this.getTree(index);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Список людей в семье " + currentTree.getFamily() + " \n");
+        for (Human human : currentTree) {
+            sb.append(human + "\n");
+        }
+        return sb.toString();
+    }
+
+    
 
 }

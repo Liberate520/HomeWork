@@ -7,7 +7,7 @@ import java.util.*;
 import Family_tree.Service;
 
 
-public class Human implements Serializable{
+public class Human implements Serializable, Comparable<Human>{
     private long innerID;
     private String  name;    
     private Human mother, father;
@@ -240,4 +240,11 @@ public class Human implements Serializable{
     }
     public long getInnerID(){return this.innerID;}
     public void setInnerID(long id){this.innerID = id;}
+
+    @Override
+    public int compareTo(Human o) {
+        return Long.compare(this.innerID, o.getInnerID());
+    }
+
+    
 }
