@@ -31,11 +31,6 @@ public class FileHandler implements Savable {
     }
 
     @Override
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    @Override
     public boolean save(Tree tree) {
         return save(tree, filePath);
     }

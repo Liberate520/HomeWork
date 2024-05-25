@@ -44,6 +44,6 @@ public class Main {
 
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(family);
-        fileHandler.read();
+        // fileHandler.read();
     }
 }
