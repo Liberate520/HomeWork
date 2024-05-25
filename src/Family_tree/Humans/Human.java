@@ -4,8 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
-
-import Family_tree.Math_Family;
+import Family_tree.Service;
 
 
 public class Human implements Serializable{
@@ -35,7 +34,8 @@ public class Human implements Serializable{
         this.deathDate = deathDate;    
         this.links = new HashSet<>() ;
         Instant instant = Instant.now();
-        this.innerID = instant.toEpochMilli() + Math_Family.nameValue(name);
+        Service service = new Service();
+        this.innerID = instant.toEpochMilli() + service.nameValue(name);
         if (deathDate != null){
             this.vital = Vital.dead; 
         } else {
@@ -239,4 +239,5 @@ public class Human implements Serializable{
         return this.famID;
     }
     public long getInnerID(){return this.innerID;}
+    public void setInnerID(long id){this.innerID = id;}
 }
