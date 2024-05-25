@@ -1,11 +1,12 @@
 package human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private Gender gender;
     private LocalDate dateOfBirth;
@@ -15,7 +16,7 @@ public class Human {
     private List<Human> children;
 
     public Human(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human mother, Human father,
-            List<Human> spouse, List<Human> children) {
+           List<Human> children) {
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -26,7 +27,11 @@ public class Human {
     }
 
     public Human(String name, Gender gender) {
-        this(name, gender, null, null, null, null, null, null);
+        this(name, gender, null, null, null, null, null);
+    }
+
+    public Human(String name, Gender gender, LocalDate dateOfBirth) {
+        this(name, gender, dateOfBirth, null, null, null, null);
     }
 
     public int getAge() {

@@ -1,15 +1,14 @@
 package family_tree;
 
-// import java.io.Serializable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import human.Gender;
 import human.Human;
 
-public class Tree {
-    Human human;
-    List<Human> familyTree;
+public class Tree implements Serializable {
+    private List<Human> familyTree;
 
     public Tree() {
         this(new ArrayList<>());
@@ -67,42 +66,48 @@ public class Tree {
 
     public void showProgenitors(Human human) {
         System.out.println("The progenitors of " + human.getName() + " are:");
-        System.out.println(showProgenitor(human));
+        showProgenitor(human, 0, 0);
     }
 
-    private String showProgenitor(Human human) {
-        StringBuilder builder = new StringBuilder();
+    private void showProgenitor(Human human, int depth, int count) {
         if (human.getFather() == null && human.getMother() == null) {
-            return builder.toString();
+            return;
         } else {
-            builder.append("- parents of ");
-            builder.append(human.getName());
-            builder.append(": ");
-            if (human.getFather() == null) {
-                builder.append("");
+            for (int i = 0; i < depth; i++) {
+                System.out.print(" ");
+            }
+            if (count == 0) {
+                System.out.print("parents: ");
+            } else if (count == 1) {
+                System.out.print("greatparents (" + human.getName() + "'s line): ");
             } else {
-                builder.append(human.getFather().getName());
-                builder.append(" ");
+                for (int j = 0; j < count - 1; j++) {
+                    System.out.print("grand-");
+                }
+                System.out.print("greatparents (" + human.getName() + "'s line): ");
+            }
+            if (human.getFather() == null) {
+                System.out.print("");
+            } else {
+                System.out.print(human.getFather().getName() + " ");
             }
             if (human.getMother() == null) {
-                builder.append("");
+                System.out.print("");
             } else {
-                builder.append(human.getMother().getName());
+                System.out.print(human.getMother().getName() + " ");
             }
-            builder.append("\n");
+            System.out.println("");
             if (human.getFather() == null) {
-                builder.append("");
+                System.out.print("");
             } else {
-                builder.append(showProgenitor(human.getFather()));
+                showProgenitor(human.getFather(), depth + 5, count + 1);
             }
-            builder.append("");
             if (human.getMother() == null) {
-                builder.append("");
+                System.out.print("");
             } else {
-                builder.append(showProgenitor(human.getMother()));
+                showProgenitor(human.getMother(), depth + 5, count + 1);
             }
         }
-        return builder.toString();
     }
 
     @Override
