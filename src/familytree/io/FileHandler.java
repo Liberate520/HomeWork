@@ -1,6 +1,7 @@
 package familytree.io;
 
-import com.familytree.utis.Writeable;
+
+import familytree.utis.Writeable;
 
 import java.io.*;
 
