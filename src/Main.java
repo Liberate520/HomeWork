@@ -43,7 +43,7 @@ public class Main {
         family.showProgenitors(son);
 
         FileHandler fileHandler = new FileHandler();
-        fileHandler.save(family, "family.out");
-        fileHandler.read("family.out");
+        fileHandler.save(family);
+        fileHandler.read();
     }
 }

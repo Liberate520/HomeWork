@@ -6,7 +6,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import family_tree.Tree;
+
 public class FileHandler implements Savable {
+    private String filePath = "family.out";
+
     public boolean save(Serializable serializable, String filePath) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(serializable);
@@ -28,5 +32,16 @@ public class FileHandler implements Savable {
 
     @Override
     public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Override
+    public boolean save(Tree tree) {
+        return save(tree, filePath);
+    }
+
+    @Override
+    public Tree read() {
+        return (Tree) read(filePath);
     }
 }
