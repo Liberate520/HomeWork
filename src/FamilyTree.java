@@ -1,5 +1,5 @@
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс для представления генеалогического древа.
@@ -7,112 +7,55 @@ import java.util.*;
  */
 public class FamilyTree {
     private List<Human> members;
-    private RelationshipSearch relationshipSearch;
 
     public FamilyTree() {
-        members = new ArrayList<>();
-        relationshipSearch = new RelationshipSearch();
+        this.members = new ArrayList<>();
     }
 
     /**
      * Добавляет нового члена в генеалогическое древо.
-     *
-     * @param person новый член древа
      */
-    public void addMember(Human person) {
-        members.add(person);
+    public void addMember(Human member) {
+        members.add(member);
     }
 
     /**
-     * Устанавливает брачные отношения между двумя членами древа.
-     *
-     * @param person1 первый член пары
-     * @param person2 второй член пары
+     * Метод для вывода информации о всех членах семьи
      */
-    public void setSpouse(Human person1, Human person2) {
-        person1.setSpouse(person2);
-        person2.setSpouse(person1);
-    }
-
-    /**
-     * Устанавливает родителей для ребенка в древе.
-     *
-     * @param child  ребенок
-     * @param parent1 первый родитель
-     * @param parent2 второй родитель
-     */
-    public void setParents(Human child, Human parent1, Human parent2) {
-        child.setParents(parent1, parent2);
-        parent1.addChild(child);
-        parent2.addChild(child);
-    }
-
-    /**
-     * Возвращает список всех детей указанного человека.
-     *
-     * @param person человек, для которого нужно получить детей
-     * @return список детей
-     */
-    public List<Human> getChildren(Human person) {
-        return person.getChildren();
-    }
-
-    /**
-     * Возвращает супруга указанного человека.
-     *
-     * @param person человек, для которого нужно найти супруга
-     * @return супруг человека
-     */
-    public Human getSpouse(Human person) {
-        return relationshipSearch.getSpouse(person);
-    }
-
-    /**
-     * Возвращает список родителей указанного человека.
-     *
-     * @param person человек, для которого нужно найти родителей
-     * @return список родителей
-     */
-    public List<Human> getParents(Human person) {
-        return relationshipSearch.getParents(person);
-    }
-
-    /**
-     * Возвращает список братьев и сестер указанного человека.
-     *
-     * @param person человек, для которого нужно найти братьев и сестер
-     * @return список братьев и сестер
-     */
-    public List<Human> getSiblings(Human person) {
-        return relationshipSearch.getSiblings(person);
-    }
-
-    /**
-     * Сохраняет генеалогическое древо в файл.
-     *
-     * @param filename имя файла для сохранения
-     */
-    public void saveToFile(String filename) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
-            out.writeObject(members);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void displayFamilyTree() {
+        for (Human member : members) {
+            System.out.println(member.toString());
         }
     }
 
-    /**
-     * Загружает генеалогическое древо из файла.
-     *
-     * @param filename имя файла для загрузки
-     * @return загруженное генеалогическое древо
-     */
-    public static FamilyTree loadFromFile(String filename) {
+    public static void main(String[] args) {
+        // Пример использования класса FamilyTree
         FamilyTree familyTree = new FamilyTree();
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
-            familyTree.members = (List<Human>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return familyTree;
+
+        // Создаем объекты Human для представления членов семьи
+        Human father = new Human("Иван Петров", Gender.MALE, "01.01.1960", "");
+        Human mother = new Human("Мария Петрова", Gender.FEMALE, "01.01.1965", "");
+        Human child1 = new Human("Анна Петрова", Gender.FEMALE, "01.01.1990", "");
+        Human child2 = new Human("Павел Петров", Gender.MALE, "01.01.1995", "");
+
+        // Устанавливаем родительские связи и добавляем детей
+        father.setSpouse(mother);
+        mother.setSpouse(father);
+        father.addChild(child1);
+        father.addChild(child2);
+
+        // Добавляем членов семьи в генеалогическое древо
+        familyTree.addMember(father);
+        familyTree.addMember(mother);
+        familyTree.addMember(child1);
+        familyTree.addMember(child2);
+
+        // Выводим информацию о членах семьи
+        familyTree.displayFamilyTree();
+    }
+
+    public Human[] getMembers() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMembers'");
     }
 }
