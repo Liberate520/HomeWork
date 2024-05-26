@@ -2,12 +2,16 @@ package family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import human.Gender;
 import human.Human;
+import human.comparators.ComparatorByAge;
+import human.comparators.ComparatorByAmountOfChildren;
+import human.comparators.ComparatorByName;
 
-public class Tree implements Serializable {
+public class Tree implements Serializable, Iterable<Human> {
     private List<Human> familyTree;
 
     public Tree() {
@@ -117,12 +121,45 @@ public class Tree implements Serializable {
             return "No info";
         }
         StringBuilder builder = new StringBuilder();
+        builder.append("This family tree contains:\n");
         for (Human human : familyTree) {
+            builder.append(" - ");
             builder.append(human.getName());
-            builder.append(", ");
+            builder.append(" (");
+            if (human.getDateOfDeath() != null) {
+                builder.append("died at the age of ");
+            }
+            if (human.getAge() > 120) {
+                builder.append("unknown age");
+            } else {
+                builder.append(human.getAge());
+                builder.append(" y.o.");
+            }
+            if (human.getDateOfDeath() != null) {
+                builder.append(", had ");
+            } else {
+                builder.append(", has ");
+            }
+            builder.append(human.getChildren().size());
+            builder.append(" child(ren))\n");
         }
-        builder.deleteCharAt(builder.length() - 1);
-        builder.deleteCharAt(builder.length() - 1);
         return builder.toString();
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(familyTree);
+    }
+
+    public void sortByName() {
+        familyTree.sort(new ComparatorByName());
+    }
+
+    public void sortByAge() {
+        familyTree.sort(new ComparatorByAge());
+    }
+
+    public void sortByAmountOfChildren() {
+        familyTree.sort(new ComparatorByAmountOfChildren());
     }
 }

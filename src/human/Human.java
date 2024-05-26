@@ -16,7 +16,7 @@ public class Human implements Serializable {
     private List<Human> children;
 
     public Human(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human mother, Human father,
-           List<Human> children) {
+            List<Human> children) {
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -43,6 +43,9 @@ public class Human implements Serializable {
     }
 
     private int getPeriod(LocalDate dateOfBirth, LocalDate dateOfDeath) {
+        if (dateOfBirth == null) {
+            dateOfBirth = LocalDate.of(1900, 1, 1);
+        }
         Period period = Period.between(dateOfBirth, dateOfDeath);
         return period.getYears();
     }
@@ -109,6 +112,9 @@ public class Human implements Serializable {
     }
 
     public List<Human> getChildren() {
+        if (children == null) {
+            children = new ArrayList<Human>();
+        }
         return children;
     }
 
