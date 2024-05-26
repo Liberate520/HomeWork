@@ -1,9 +1,14 @@
-import java.io.Serializable;
+import familyTree.FamilyTree;
+import human.Gender;
+import human.Human;
+import save.FileHandler;
+import save.Writable;
+
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        String filePath = "src/tree.txt";
+        String filePath = "familyTree/tree.txt";
 //        FamilyTree tree = new FamilyTree();
 //        FamilyTree tree = firstTree();
         FamilyTree tree = load(filePath);
