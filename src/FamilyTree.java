@@ -81,6 +81,7 @@ public class FamilyTree {
         }
         return false;
     }
+    
 
     public boolean setDivorce(long humanId1, long humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
