@@ -1,60 +1,55 @@
 package homeWork;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private Map<Long, Person> persons;
 
-    // Метод для отображения информации о родителях и детях по указанному идентификатору
+    public FamilyTree() {
+        this.persons = new HashMap<>();
+    }
+
+    public void addPerson(Person person) {
+        persons.put(person.getId(), person);
+        for (Long parentId : person.getParentIds()) {
+            Person parent = persons.get(parentId);
+            if (parent != null) {
+                parent.addChildId(person.getId());
+            }
+        }
+        for (Long childId : person.getChildIds()) {
+            Person child = persons.get(childId);
+            if (child != null) {
+                child.addParentId(person.getId());
+            }
+        }
+    }
+
     public void displayFamilyInfo(Long personId, List<Person> allPersons) {
-        // Поиск персоны по указанному идентификатору
-        Person person = findPersonById(personId, allPersons);
-
-        // Если персона с указанным идентификатором не найдена, выводим сообщение об ошибке
-        if (person == null) {
-            System.out.println("Персона с ID " + personId + " не найдена.");
-            return;
+        Person person = findPersonById(personId);
+        if (person != null) {
+            System.out.println("Информация о персоне: " + person.getLastName() + " " + person.getFirstName() + " " + person.getMiddleName());
+            displayParentInfo(person, allPersons, 0);
+            displayChildrenInfo(person, allPersons, 0);
+        } else {
+            System.out.println("Персона с id " + personId + " не найдена.");
         }
-
-        // Вывод информации о персоне
-        System.out.println("Информация о персоне:");
-        displayPersonInfo(person);
-        System.out.println();
-
-        // Вывод информации о родителях и детях
-        displayRelativesInfo("Родители:", person.getParentIds(), allPersons);
-        displayRelativesInfo("Дети:", person.getChildIds(), allPersons);
     }
 
-    // Метод для поиска персоны по идентификатору
-    private Person findPersonById(Long personId, List<Person> allPersons) {
-        return allPersons.stream()
-                .filter(person -> person.getId().equals(personId))
-                .findFirst()
-                .orElse(null);
-    }
-
-    // Метод для отображения информации о персоне
-    private void displayPersonInfo(Person person) {
-        System.out.println("ID: " + person.getId());
-        System.out.println("Фамилия: " + person.getLastName());
-        System.out.println("Имя: " + person.getFirstName());
-        System.out.println("Отчество: " + person.getMiddleName());
-        System.out.println("Дата рождения: " + person.getBirthDate());
-        System.out.println("Пол: " + person.getGender());
-    }
-
-    // Метод для отображения информации о родственниках
-    private void displayRelativesInfo(String relationship, List<Long> relativeIds, List<Person> allPersons) {
-        System.out.println(relationship);
-
-        if (relativeIds.isEmpty()) {
-            System.out.println("Нет информации о родственниках.");
-            return;
+    private void displayParentInfo(Person person, List<Person> allPersons, int level) {
+        for (Long parentId : person.getParentIds()) {
+            Person parent = findPersonById(parentId);
+            if (parent != null && allPersons.contains(parent)) {
+                printIndented("Родитель: " + parent.getLastName() + " " + parent.getFirstName() + " " + parent.getMiddleName(), level);
+                displayParentInfo(parent, allPersons, level + 1);
+            }
         }
-
-        relativeIds.stream()
-                .map(relativeId -> findPersonById(relativeId, allPersons))
-                .filter(relative -> relative != null)
-                .forEach(this::displayPersonInfo);
     }
-}
+
+    private void displayChildrenInfo(Person person, List<Person> allPersons, int level) {
+        for (Long childId : person.getChildIds()) {
+            Person child = findPersonById(childId);
