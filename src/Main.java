@@ -1,4 +1,8 @@
-import family_tree.*;
+import family_tree.humans.Gender;
+import family_tree.humans.Human;
+import family_tree.tree.FamilyTree;
+import family_tree.writer.FileHandler;
+import family_tree.writer.Writable;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -11,7 +15,7 @@ public class Main {
         //Первая промать
         Human commonMother = new Human("Марина",
                 new Date(1812 - 1900, Calendar.APRIL, 10),
-                new Date(1891 - 1900, Calendar.MAY, 12),
+                new Date(1887 - 1900, Calendar.MAY, 12),
                 Gender.Female);
 
         //Первый проотец
@@ -44,5 +48,27 @@ public class Main {
         System.out.println("**********************************************");
         System.out.println("Востановленное древо:");
         System.out.println(familyTreeRead);
+
+        System.out.println("**********************************************");
+        System.out.println("\n-------------Перебор через foreach-----------");
+        for (Human man : familyTree){
+            System.out.println(man);
+        }
+
+        System.out.println("\n-------------Сортировка по имени-----------");
+        familyTree.sortByName();
+        System.out.println(familyTree);
+
+        System.out.println("\n-------------Сортировка по возрасту-----------");
+        familyTree.sortByAge();
+        System.out.println(familyTree);
+
+        System.out.println("\n-------------Сортировка по дате рождения-----------");
+        familyTree.sortByByrthDate();
+        System.out.println(familyTree);
+
+        System.out.println("\n-------------Сортировка по дате смерти-----------");
+        familyTree.sortByDeathDate();
+        System.out.println(familyTree);
     }
 }

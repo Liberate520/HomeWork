@@ -1,4 +1,4 @@
-package family_tree;
+package family_tree.humans;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private Human mother, father;
@@ -155,5 +155,10 @@ public class Human implements Serializable {
         }
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
     }
 }
