@@ -1,13 +1,244 @@
 package lv.homeWork;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util. *;
+import java.time.Period;
 
-public class Human {
+public class Human implements Serializable {
 
-    String name;
-    LocalDate birthdate, deathdate;
-    List<Human> children;
-    Human father, mother;
-    Gender gender;
+    private String name;
+    private Gender gender;
+    private LocalDate dateOfBirth;
+    private LocalDate dateOfDeath;
+    private List<Human> parents;
+    private List<Human> childrens;
+    private Human married;
+    private int passportID;
+    private long personID;
+    private int generation;
+
+
+    public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human mother, Human father) {
+        this.name = name;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfDeath = dateOfDeath;
+        parents = new ArrayList<>();
+        childrens = new ArrayList<>();
+        this.passportID = passportID;
+        this.personID = -1;
+        this.generation = -1;
+        if(father != null){
+            parents.add(father);
+        }
+        if (mother != null){
+            parents.add(mother);
+        }
+        setGeneration();
+
+    }
+
+    public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth){
+        this.name = name;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfDeath = null;
+        parents = new ArrayList<>();
+        childrens = new ArrayList<>();
+        this.married = null;
+        this.passportID = passportID;
+        this.personID = -1;
+        this.generation = -1;
+        setGeneration();
+    }
+
+    public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth, Human mother, Human father ){
+        this.name = name;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfDeath = null;
+        parents = new ArrayList<>();
+        childrens = new ArrayList<>();
+        this.married = null;
+        this.passportID = passportID;
+        this.personID = -1;
+        this.generation = -1;
+        if(father != null){
+            parents.add(father);
+        }
+        if (mother != null){
+            parents.add(mother);
+        }
+        setGeneration();
+    }
+
+    public List<Human> getParents() {
+        return parents;
+    }
+
+    public List<Human> getChildrens() {
+        return childrens;
+    }
+
+
+
+    public void addChild(Human child) {
+        if (child != null) {
+            childrens.add(child);
+            child.addParent(this);
+        }
+    }
+
+    private void addParent(Human parent) {
+        if (parent != null) {
+            parents.add(parent);
+        }
+    }
+
+    public Human getFather() {
+        for (Human parent : parents) {
+            if (parent.getGender() == Gender.Male) {
+                return parent;
+            }
+        }
+        return null;
+    }
+
+    public Human getMother() {
+        for (Human parent : parents) {
+            if (parent.getGender() == Gender.Female) {
+                return parent;
+            }
+        }
+        return null;
+    }
+
+    public int getHumanAge() {
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(dateOfBirth, currentDate);
+        return period.getYears();
+    }
+
+    public void setMarried(Human spouse) {
+        this.married = spouse;
+        if (spouse != null && spouse.getMarried() != this) {
+            spouse.setMarried(this);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void changeGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public LocalDate getDateOfDeath() {
+        return dateOfDeath;
+    }
+
+    public void setDateOfDeath(LocalDate dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
+    }
+
+    public Human getMarried() {
+        return married;
+    }
+
+    public long getPassportID() {
+        return passportID;
+    }
+
+    public void setPassportID(int passportID) {
+        this.passportID = passportID;
+    }
+
+    public long getPersonID() {
+        return personID;
+    }
+
+    public void setPersonID(long personID) {
+        this.personID = personID;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration() {
+        // Если человек не имеет родителей, его поколение устанавливается как 0
+        if (parents.isEmpty()) {
+            this.generation = 0;
+        } else {
+            // Находим максимальное поколение среди всех родителей
+            int maxParentGeneration = Integer.MIN_VALUE; // Изначально устанавливаем минимальное значение
+
+            // Находим максимальное значение поколения среди всех родителей
+            for (Human parent : parents) {
+                int parentGeneration = parent.getGeneration();
+                if (parentGeneration > maxParentGeneration) {
+                    maxParentGeneration = parentGeneration;
+                }
+            }
+
+            // Устанавливаем поколение для текущего человека
+            this.generation = maxParentGeneration + 1;
+
+            // Рекурсивно вызываем setGeneration для всех детей текущего человека, чтобы обновить поколения всех потомков
+            for (Human child : childrens) {
+                child.setGeneration();
+            }
+        }
+    }
+
+
+    @Override
+    public String toString(){
+        return getInfo();
+    }
+
+    public String getInfo(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Generation: ");
+        sb.append(getGeneration());
+        sb.append(" / Passport ID: ");
+        sb.append(passportID);
+        sb.append(" / Name: ");
+        sb.append(name);
+        sb.append(" / Gender: ");
+        sb.append(getGender());
+        sb.append(" / Age ");
+        sb.append(getHumanAge());
+        sb.append(" / Mother: ");
+        Human mother = getMother();
+        sb.append(mother != null ? mother.getName() : "Unknown");
+        sb.append(" / Father: ");
+        Human father = getFather();
+        sb.append(father != null ? father.getName() : "Unknown");
+        return sb.toString();
+    }
+
+
+
 }
