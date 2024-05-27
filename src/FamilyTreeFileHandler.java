@@ -1,26 +1,45 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
+package services;
 
+import models.FamilyTree;
+
+import java.io.*;
+import java.util.Objects;
+
+/**
+ * Класс для сохранения и загрузки генеалогического древа в файл.
+ * Предоставляет методы для сохранения и загрузки древа.
+ */
+@SuppressWarnings("unused")
 public class FamilyTreeFileHandler {
-
-    // Метод для записи генеалогического древа в файл
-    public void writeFamilyTreeToFile(String fileName, List<Human> familyMembers) {
-        try {
-            File file = new File(fileName);
-            FileWriter writer = new FileWriter(file);
-
-            for (Human member : familyMembers) {
-                writer.write(member.toString() + "\n"); // Записываем информацию о каждом члене семьи в файл
-            }
-
-            writer.close();
-            System.out.println("Генеалогическое древо успешно записано в файл " + fileName);
+    /**
+     * Сохраняет генеалогическое древо в файл.
+     *
+     * @param familyTree Генеалогическое древо для сохранения
+     * @param filename   Имя файла, в который будет сохранено древо
+     */
+    public static void saveToFile(FamilyTree familyTree, String filename) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            oos.writeObject(familyTree);
+            System.out.println("Генеалогическое древо успешно сохранено в файл: " + filename);
         } catch (IOException e) {
-            System.out.println("Ошибка при записи генеалогического древа в файл: " + e.getMessage());
+            System.err.println("Ошибка при сохранении генеалогического древа в файл: " + e.getMessage());
         }
     }
 
-    // Дополнительные методы для чтения информации из файла и обработки данных также могут быть добавлены здесь
+    /**
+     * Загружает генеалогическое древо из файла.
+     *
+     * @param filename Имя файла, из которого будет загружено древо
+     * @return Загруженное генеалогическое древо
+     */
+    public static FamilyTree loadFromFile(String filename) {
+        FamilyTree familyTree = null;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            familyTree = (FamilyTree) ois.readObject();
+            System.out.println("Генеалогическое древо успешно загружено из файла: " + filename);
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Ошибка при загрузке генеалогического древа из файла: " + e.getMessage());
+        }
+        return familyTree;
+    }
 }
