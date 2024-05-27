@@ -46,7 +46,7 @@ public class Main {
         Human spouse = familyTree.getSpouse(ivanRomanov);
         List<Human> siblings = familyTree.getSiblings(ivanRomanov);
 
-        // Вывод информации о Иоанне Алексеевиче Романове
+        // Вывод информации об Иоанне Алексеевиче Романове
         System.out.println(ivanRomanov);
         System.out.println("Отец: " + parents.get(0));
         System.out.println("Мать: " + parents.get(1));

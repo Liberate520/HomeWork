@@ -2,6 +2,7 @@ package models;
 
 import enums.Gender;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.Map;
  * - Установка супруга для человека
  * - Получение детей, родителей, супруга и братьев/сестер для человека
  */
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Map<Human, List<Human>> parents;
     private Map<Human, Human> spouses;
 

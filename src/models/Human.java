@@ -2,6 +2,7 @@ package models;
 
 import enums.Gender;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,7 +10,9 @@ import java.time.format.DateTimeFormatter;
  * Класс, представляющий человека в генеалогическом древе.
  * Содержит информацию о человеке, такую как имя, пол, дата рождения и дата смерти.
  */
-public class Human {
+public class Human implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private Gender gender;
     private LocalDate birthDate;
