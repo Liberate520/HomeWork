@@ -3,7 +3,6 @@ package services;
 import models.FamilyTree;
 
 import java.io.*;
-import java.util.Objects;
 
 /**
  * Класс для сохранения и загрузки генеалогического древа в файл.
