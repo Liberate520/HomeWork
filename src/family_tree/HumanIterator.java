@@ -7,7 +7,7 @@ import human.Human;
 
 public class HumanIterator implements Iterator<Human> {
 
-    private int index;
+    private int i;
     private List<Human> familyTree;
 
     public HumanIterator(List<Human> familyTree) {
@@ -16,11 +16,11 @@ public class HumanIterator implements Iterator<Human> {
 
     @Override
     public boolean hasNext() {
-        return familyTree.size() > index;
+        return familyTree.size() > i;
     }
 
     @Override
     public Human next() {
-        return familyTree.get(index++);
+        return familyTree.get(i++);
     }
 }

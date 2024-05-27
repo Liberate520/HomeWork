@@ -39,11 +39,7 @@ public class Main {
         family.addToTree(mgranny);
         family.addToTree(wgranny);
 
-        // family.showProgenitors(son);
         family.sortByAge();
-        
-
-
         System.out.println(family);
 
         // FileHandler fileHandler = new FileHandler();
