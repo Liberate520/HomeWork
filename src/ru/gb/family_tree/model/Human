@@ -1,0 +1,195 @@
+package ru.gb.family_tree.model;
+
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Human implements Serializable {
+    private long id;
+    private String name, lastName;
+    private LocalDate dob, dod, doc;
+    private Gender gender;
+    private Human mother, father;
+    private List<Human> children;
+
+    public Human(String name, String lastName, LocalDate dob, Gender gender) {
+        this.name = name;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.gender = gender;
+        this.children = new ArrayList<>();
+    }
+
+    public Human(String name, String lastName, LocalDate dob, Gender gender, Human mother, Human father) {
+        this.name = name;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.gender = gender;
+        this.mother = mother;
+        this.father = father;
+        this.children = new ArrayList<>();
+    }
+
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDoc() {
+        return doc;
+    }
+    public void setDoc(LocalDate doc) {
+        this.doc = doc;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public LocalDate getDod() {
+        return dod;
+    }
+    public void setDod(LocalDate dod) {
+        this.dod = dod;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Human getMother() {
+        return mother;
+    }
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    public Human getFather() {
+        return father;
+    }
+    public void setFather(Human father) {
+        this.father = father;
+    }
+
+    public List<Human> getChildren() {
+        return children;
+    }
+
+    @Override
+    public String toString() {
+        return getNote().toString();
+    }
+
+    private StringBuilder getNote() {
+        StringBuilder note = new StringBuilder();
+        note.append("Имя: ");
+        note.append(name);
+        note.append(" Фамилия: ");
+        note.append(lastName);
+        note.append(" Пол: ");
+        note.append(getGender());
+        note.append(" Возраст: ");
+        note.append(getAge());
+        note.append(", ");
+        note.append(getMotherInfo());
+        note.append(", ");
+        note.append(getFatherInfo());
+        note.append(", ");
+        note.append(getChildrenInfo());
+        return note;
+    }
+
+    public int getAge() {
+        if (dod == null) return getPeriod(dob, LocalDate.now());
+        else return getPeriod(dob, dod);
+    }
+
+    private int getPeriod(LocalDate dob, LocalDate dod) {
+        Period age = Period.between(dob, dod);
+        return age.getYears();
+    }
+
+    private String getMotherInfo() {
+        Human mother = getMother();
+        if (mother == null) {
+            return "Мать: неизвестна";
+        }
+        return "Мать: " + mother.getName() + " " + mother.getLastName();
+    }
+
+    private String getFatherInfo() {
+        Human father = getFather();
+        if (father == null) {
+            return "Отец: неизвестен";
+        }
+        return "Отец: " + father.getName() + " " + father.getLastName();
+    }
+
+    private String getChildrenInfo() {
+        StringBuilder deti = new StringBuilder();
+        deti.append(" Дети: ");
+        if (!children.isEmpty()) {
+            deti.append(children.get(0).getName());
+            deti.append(" ");
+            deti.append(children.get(0).getLastName());
+            for (int i = 1; i < children.size(); i++) {
+                deti.append(", ");
+                deti.append(children.get(i).getName());
+                deti.append(" ");
+                deti.append(children.get(i).getLastName());
+            }
+            return deti.toString();
+        }
+        return "Детей нет";
+    }
+
+    public void addChild(Human child) {
+        if (!children.contains(child)) {
+            children.add(child);
+            setDoc(LocalDate.now());
+        }
+    }
+
+    public void addParents(Human parent) {
+        if (parent.getGender().equals(Gender.Male)) {
+            setFather(parent);
+        } else if (parent.getGender().equals(Gender.Female)) {
+            setMother(parent);
+        }
+        setDoc(LocalDate.now());
+    }
+
+    public List<Human> getParents() {
+        List<Human> list = new ArrayList<>(2);
+        if (father != null) list.add(father);
+        if (mother != null) list.add(mother);
+
+        return list;
+    }
+}
+
