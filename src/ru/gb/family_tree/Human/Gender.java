@@ -1,5 +1,6 @@
 package ru.gb.family_tree.Human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.stream.Collectors;
 public enum Gender {
     Male, Female;
 
-    public static class Human {
+    public static class Human implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private String lastName;
         private String name;
         private Human mother, father; // ссылка на другой объект, т.е. связи между родственниками

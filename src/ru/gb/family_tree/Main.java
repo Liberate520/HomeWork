@@ -1,8 +1,10 @@
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.FT.FamilyTree;
+import ru.gb.family_tree.FT.FileHandler;
 import ru.gb.family_tree.Human.Gender;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
@@ -39,6 +41,28 @@ public class Main {
         human6.addChild(human2);
         human7.addChild(human2);
 
-        System.out.println(familyTree);
+        // Сохранение FamilyTree в файл
+        FileHandler fileHandler = new FileHandler();
+        String filePath = "familyTree.txt";
+        try {
+            fileHandler.saveFamilyTree(familyTree, "familyTree.txt");
+            System.out.println("FamilyTree сохранено в файл " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Очистка или создание нового FamilyTree
+        FamilyTree loadedFamilyTree = null;
+
+        // Загрузка FamilyTree из файла
+        try {
+            loadedFamilyTree = fileHandler.loadFamilyTree(filePath);
+            System.out.println("Загруженное семейное древо: ");
+            System.out.println(loadedFamilyTree);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }
+

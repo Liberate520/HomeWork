@@ -2,10 +2,13 @@ package ru.gb.family_tree.FT;
 
 import ru.gb.family_tree.Human.Gender;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private List<Gender.Human> humanList;
 
     public FamilyTree(){
@@ -18,6 +21,7 @@ public class FamilyTree {
     public List<Gender.Human> getHumanList() {
         return humanList;
     }
+
     public Gender.Human findHumanByName(String nameHuman){
         for (Gender.Human human : humanList){
             if(human.getName().equalsIgnoreCase(nameHuman)){
@@ -26,6 +30,7 @@ public class FamilyTree {
         }
         return null;
     }
+
 
     @Override
     public String toString() {
