@@ -1,5 +1,11 @@
 package lv.homeWork;
 
+import lv.homeWork.model.interfaces.Writable;
+import lv.homeWork.model.FamilyTree;
+import lv.homeWork.model.FileHandler;
+import lv.homeWork.model.Gender;
+import lv.homeWork.model.Human;
+
 import java.time.LocalDate;
 
 public class Main {
@@ -8,6 +14,7 @@ public class Main {
         String pathToFile = "src/testTree.txt";
         System.out.println(onlyForTesting());
         //save(tree, pathToFile);
+
     }
 
 
@@ -23,7 +30,7 @@ public class Main {
 
     public static FamilyTree onlyForTesting(){
 
-        FamilyTree tree = new FamilyTree();
+        FamilyTree tree = new FamilyTree<>();
 
         Human glory1 = new Human(123321,"Glory Smith", Gender.Female,LocalDate.of(1961,1,23));
 
@@ -61,21 +68,18 @@ public class Main {
         victoria1.addChild(lory1);
         victoria1.addChild(jack1);
 
-        System.out.println("Hint");
+        tree.sortByGen();
 
+        sam1.setDateOfDeath(LocalDate.of(2022,2,26));
 
+        System.out.println(sam1.getDateOfDeath());
 
-        tree.sortByBrith();
-        //tree.sortByGen();
-
+//        tree.sortByBrith();
 
 
             return tree;
 
         }
-
-
-
     }
 
 

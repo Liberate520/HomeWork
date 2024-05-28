@@ -1,11 +1,16 @@
-package lv.homeWork;
+package lv.homeWork.model;
+
+import lv.homeWork.model.comparators_iterators.CompareByBirth;
+import lv.homeWork.model.comparators_iterators.CompareByGen;
+import lv.homeWork.model.comparators_iterators.IteratorForTree;
+import lv.homeWork.model.interfaces.TreeNode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
+public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
 
     private final List<E> humanList;
 
@@ -24,9 +29,9 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
         }
     }
 
-    public List<Human> findByGeneration(int generation) {
-        List<Human> result = new ArrayList<>();
-        for (Human human : humanList) {
+    public List<E> findByGeneration(int generation) {
+        List<E> result = new ArrayList<>();
+        for (E human : humanList) {
             if (human.getGeneration() == generation) {
                 result.add(human);
             }
@@ -39,8 +44,8 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     }
 
 
-    public Human findHumanByName(String name) {
-        for (Human human : humanList) {
+    public E findHumanByName(String name) {
+        for (E human : humanList) {
             if (human.getName().equalsIgnoreCase(name)) {
                 return human;
             }
@@ -72,6 +77,6 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new IteratorForTree(humanList);
+        return new IteratorForTree<>(humanList);
     }
 }

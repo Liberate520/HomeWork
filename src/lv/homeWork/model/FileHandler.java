@@ -1,4 +1,6 @@
-package lv.homeWork;
+package lv.homeWork.model;
+
+import lv.homeWork.model.interfaces.Writable;
 
 import java.io.*;
 

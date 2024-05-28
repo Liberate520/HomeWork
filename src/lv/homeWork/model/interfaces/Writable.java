@@ -1,4 +1,4 @@
-package lv.homeWork;
+package lv.homeWork.model.interfaces;
 
 
 import java.io.Serializable;

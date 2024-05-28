@@ -1,14 +1,14 @@
-package lv.homeWork;
+package lv.homeWork.model;
+
+import lv.homeWork.model.interfaces.TreeNode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
-import java.util. *;
 import java.time.Period;
 
-public class Human implements Serializable {
+public class Human implements Serializable, TreeNode<Human> {
 
     private String name;
     private Gender gender;
@@ -90,6 +90,7 @@ public class Human implements Serializable {
         if (child != null) {
             childrens.add(child);
             child.addParent(this);
+            child.setGeneration();
         }
     }
 
@@ -187,28 +188,19 @@ public class Human implements Serializable {
     }
 
     public void setGeneration() {
-        // Если человек не имеет родителей, его поколение устанавливается как 0
         if (parents.isEmpty()) {
             this.generation = 0;
         } else {
-            // Находим максимальное поколение среди всех родителей
-            int maxParentGeneration = Integer.MIN_VALUE; // Изначально устанавливаем минимальное значение
-
-            // Находим максимальное значение поколения среди всех родителей
+            int maxParentGeneration = 0;
             for (Human parent : parents) {
-                int parentGeneration = parent.getGeneration();
-                if (parentGeneration > maxParentGeneration) {
-                    maxParentGeneration = parentGeneration;
+                if (parent.getGeneration() > maxParentGeneration) {
+                    maxParentGeneration = parent.getGeneration();
                 }
             }
-
-            // Устанавливаем поколение для текущего человека
             this.generation = maxParentGeneration + 1;
-
-            // Рекурсивно вызываем setGeneration для всех детей текущего человека, чтобы обновить поколения всех потомков
-            for (Human child : childrens) {
-                child.setGeneration();
-            }
+        }
+        for (Human child : childrens) {
+            child.setGeneration();
         }
     }
 
