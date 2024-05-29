@@ -1,9 +1,9 @@
 package family_tree.tree;
 
-import family_tree.humans.comparators.ComparatorByAge;
-import family_tree.humans.comparators.ComparatorByBurthDate;
-import family_tree.humans.comparators.ComparatorByDeathDate;
-import family_tree.humans.comparators.ComparatorByName;
+import family_tree.objects.comparators.ComparatorByAge;
+import family_tree.objects.comparators.ComparatorByBurthDate;
+import family_tree.objects.comparators.ComparatorByDeathDate;
+import family_tree.objects.comparators.ComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,5 +1,5 @@
-import family_tree.humans.Gender;
-import family_tree.humans.Human;
+import family_tree.objects.Gender;
+import family_tree.objects.Human;
 import family_tree.tree.FamilyTree;
 import family_tree.writer.FileHandler;
 import family_tree.writer.Writable;
