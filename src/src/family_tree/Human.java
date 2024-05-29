@@ -1,4 +1,4 @@
-package src;
+package src.family_tree;
 
 import java.time.LocalDate;
 import java.time.Period;

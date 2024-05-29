@@ -1,4 +1,4 @@
-package src;
+package src.family_tree;
 
 import java.util.ArrayList;
 import java.util.List;

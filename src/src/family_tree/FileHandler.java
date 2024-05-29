@@ -1,11 +1,11 @@
-package src;
+package src.family_tree;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class FileHandler implements writable {
+public class FileHandler implements Writable {
 
     public boolean save(Serializable serializable, String file){
         try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))){

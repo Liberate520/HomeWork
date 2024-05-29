@@ -1,10 +1,10 @@
-package src;
+package src.family_tree;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        String file = "Familytree/homeWork/src/src/tree.txt";
+        String file = "Familytree/homeWork/src/src.family_tree/tree.txt";
         FamilyTree tree = tree();
      //   FamilyTree tree = load(file);
         System.out.println(tree);
@@ -13,12 +13,12 @@ public class Main {
     }
 
     private static FamilyTree load(String file){
-        writable writable = new FileHandler();
+        Writable writable = new FileHandler();
         return (FamilyTree) writable.read(file);
     }
 
     private static void save(FamilyTree tree, String file){
-        writable writable = new FileHandler();
+        Writable writable = new FileHandler();
         writable.save(tree, file);
     }
 

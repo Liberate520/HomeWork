@@ -1,7 +1,7 @@
-package src;
+package src.family_tree;
 
 
-public interface writable {
+public interface Writable {
     boolean save(Serializable serializable, String file);
     Object read(String file);
 }
