@@ -5,7 +5,9 @@
  * @version v1.0
  */
 
-package family_true;
+package family_true.human;
+
+import family_true.api.IndexId;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,10 +17,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static family_true.Gender.FEMALE;
-import static family_true.Gender.MALE;
+import static family_true.human.Gender.FEMALE;
+import static family_true.human.Gender.MALE;
 
-public class Human implements Serializable {
+public class Human implements Serializable, IndexId {
 
     private static final long serialVersionUID = 1054756843591674776L;
 
@@ -50,7 +52,13 @@ public class Human implements Serializable {
 
     public Human(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay,
                  LocalDate deathDay, Human mother, Human father, List<Human> children) {
-        this.id = -1;
+
+        this(-1, name, patronymic, lastName, gender, birthDay, deathDay, mother, father, new ArrayList<>());
+    }
+
+    public Human(long id, String name, String patronymic, String lastName, Gender gender, LocalDate birthDay,
+                 LocalDate deathDay, Human mother, Human father, List<Human> children) {
+        this.id = id;
         this.name = name;
         this.patronymic = patronymic;
         this.lastName = lastName;
@@ -78,6 +86,11 @@ public class Human implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    @Override
+    public int getIndexId() {
+        return Math.toIntExact(getId());
     }
 
     public void setId(long id) {

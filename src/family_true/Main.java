@@ -1,6 +1,11 @@
 package family_true;
 
 import family_true.api.Externalizable;
+import family_true.family_tree.FamilyTree;
+import family_true.family_tree.Service;
+import family_true.family_tree.defalt_comporator.ComparatorIndexId;
+import family_true.human.Gender;
+import family_true.human.Human;
 import family_true.impl.FileHandler;
 
 import java.time.LocalDate;
@@ -10,8 +15,11 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        long treeId = 1;
-        FamilyTree familyTree = new FamilyTree(treeId++);
+        testData();
+    }
+
+    public static void testData() {
+        Service service = new Service();
 
         Human father0 = new Human("Степан", "Юрьевич", "Степанов", Gender.MALE, LocalDate.of(1956, 1, 1));
         Human mother0 = new Human("Марина", "Ильинична", "Степанова", Gender.FEMALE, LocalDate.of(1958, 5, 5));
@@ -56,36 +64,26 @@ public class Main {
         child8.setMother(mother4);
         child8.setFather(father4);
 
-        familyTree.addHuman(father0);
-        familyTree.addHuman(mother0);
+        List<Human> humans = List.of(father0, mother0,
+                father1, father2, father3, father4,
+                mother1, mother2, mother3, mother4,
+                child1, child2, child3, child4, child5, child6, child7, child8);
 
-        familyTree.addHuman(father1);
-        familyTree.addHuman(father2);
-        familyTree.addHuman(father3);
-        familyTree.addHuman(father4);
-
-        familyTree.addHuman(mother1);
-        familyTree.addHuman(mother2);
-        familyTree.addHuman(mother3);
-        familyTree.addHuman(mother4);
-
-        familyTree.addHuman(child1);
-        familyTree.addHuman(child2);
-        familyTree.addHuman(child3);
-        familyTree.addHuman(child4);
-        familyTree.addHuman(child5);
-        familyTree.addHuman(child6);
-        familyTree.addHuman(child7);
-        familyTree.addHuman(child8);
+        for (Human human : humans) {
+            service.addHumanToLastTree(human);
+        }
 
         Externalizable ext = new FileHandler();
         // Записываем объект List<FamilyTree> в файл
-        ext.writeAllExternal(Collections.singletonList(familyTree));
+        ext.writeAllExternal(service.getFamilyTreeGroup().getFamilyTreeList());
 
         // Получаем объект из файла
         List<FamilyTree> familyTreeList = ext.readExternal();
 
+        System.out.println("=========================SORT BY LAST NAME=============================");
+        service.sortFamilyTreesHumansByLastName(familyTreeList);
         System.out.println(familyTreeList.toString());
+        System.out.println("==================================================================\n");
 
         Human father9 = new Human("Владимир", "Ильич", "Левин", Gender.MALE, LocalDate.of(1953, 10, 11));
         Human mother9 = new Human("Мария", "Вячеславовна", "Левин", Gender.FEMALE, LocalDate.of(1955, 7, 15));
@@ -93,19 +91,33 @@ public class Main {
 
         Human child9 = new Human("Митрофан", "Иванович", "Иванов", Gender.MALE, LocalDate.of(1986, 1, 11), mother9, father9);
         Human child10 = new Human("Петр", "Петрович", "Петров", Gender.MALE, LocalDate.of(1988, 2, 12), mother9, father9);
-        FamilyTree familyTree2 = new FamilyTree(treeId++);
 
-        familyTree2.addHuman(father9);
-        familyTree2.addHuman(mother9);
-        familyTree2.addHuman(child9);
-        familyTree2.addHuman(child10);
+        List<Human> humans2 = List.of(mother9, child9, child10);
+
+        service.addHumanToNewTree(father9);
+        for (Human human : humans2) {
+            service.addHumanToLastTree(human);
+        }
 
         // Обновляем объект List<FamilyTree> и перезаписываем в файл
-        ext.updateExternal(familyTree2);
+        ext.updateExternal(service.addHumanToLastTree(child10));
 
         // Получаем объект из файла
         List<FamilyTree> familyTreeList2 = ext.readExternal();
 
+        System.out.println("=========================SORT BY DATE=============================");
+        service.sortFamilyTreesHumansByBirthDay(familyTreeList2);
         System.out.println(familyTreeList2.toString());
+        System.out.println("==================================================================\n");
+        Collections.reverse(familyTreeList2);
+        System.out.println("=========================SORT FAMILY TREE BY ID=============================");
+        Collections.sort(familyTreeList2, new ComparatorIndexId());
+        System.out.println(familyTreeList2.toString());
+        System.out.println("==================================================================\n");
+
+        System.out.println("=========================SORT HUMANS BY ID=============================");
+        Collections.sort(familyTreeList2.get(0).getHumans(), new ComparatorIndexId());
+        System.out.println(familyTreeList2.toString());
+        System.out.println("==================================================================\n");
     }
 }

@@ -5,7 +5,7 @@
  * @version v1.0
  */
 
-package family_true;
+package family_true.human;
 
 public enum Gender {
 

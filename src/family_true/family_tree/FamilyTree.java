@@ -5,14 +5,19 @@
  * @version v1.0
  */
 
-package family_true;
+package family_true.family_tree;
+
+import family_true.api.IndexId;
+import family_true.family_tree.defalt_comporator.ComparatorIndexId;
+import family_true.human.Human;
+import family_true.human.comparator.HumanComparatorByBirthDay;
+import family_true.human.comparator.HumanComparatorByLastName;
+import family_true.human.iterator.HumanIterator;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human>, Comparable<FamilyTree>, IndexId {
 
     private static final long serialVersionUID = -8509829358230848460L;
 
@@ -26,8 +31,18 @@ public class FamilyTree implements Serializable {
 
     public FamilyTree(long treeId, List<Human> humans) {
         this.treeId = treeId;
-        this.humanId = 1;
+        if (humans == null || humans.size() == 0) {
+            this.humanId = 0;
+        }
         this.humans = humans == null ? new ArrayList<>() : humans;
+    }
+
+    public long getId() {
+        return treeId;
+    }
+
+    public List<Human> getHumans() {
+        return humans;
     }
 
     public boolean addHuman(Human human) {
@@ -75,6 +90,23 @@ public class FamilyTree implements Serializable {
         return findChildrenByParent(child.getMother() != null ? child.getMother() : child.getFather(), child);
     }
 
+    public void sortHumansById() {
+        Collections.sort(humans, new ComparatorIndexId());
+    }
+
+    public void sortHumansByBirthDay() {
+        Collections.sort(humans, new HumanComparatorByBirthDay());
+    }
+
+    public void sortHumansByLastName() {
+        Collections.sort(humans, new HumanComparatorByLastName());
+    }
+
+    @Override
+    public int getIndexId() {
+        return Math.toIntExact(getId());
+    }
+
     @Override
     public String toString() {
         return "FamilyTree{" +
@@ -95,5 +127,15 @@ public class FamilyTree implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(treeId, humanId, humans);
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(humans);
+    }
+
+    @Override
+    public int compareTo(FamilyTree tree) {
+        return Integer.compare(this.getIndexId(), tree.getIndexId());
     }
 }
