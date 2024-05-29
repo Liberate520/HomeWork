@@ -1,6 +1,5 @@
 package family_tree_app.human;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.List;
 
 import family_tree_app.family_tree.FamilyTreeEntry;
 
-public class Human implements Serializable, FamilyTreeEntry {
+public class Human implements FamilyTreeEntry {
     private String name;
     private Gender gender;
     private LocalDate dateOfBirth;

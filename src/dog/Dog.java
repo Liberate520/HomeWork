@@ -1,5 +1,4 @@
 package dog;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.List;
 import family_tree_app.family_tree.FamilyTreeEntry;
 import family_tree_app.human.Gender;
 
-public class Dog implements Serializable, FamilyTreeEntry {
+public class Dog implements FamilyTreeEntry {
 
     private String name;
     private Gender gender;
