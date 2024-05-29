@@ -1,29 +1,65 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-class Human {
+public class Human {
     private String name;
+    private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private final String gender;
-    private Human mother;
-    private Human father;
+    // private Human mother;
+    // private Human father;
     private List<Human> children;
+    private List<Human> parents;
 
-    public Human(String name, LocalDate birthDate, String gender) {
+    public Human(String name, LocalDate birthDate, Gender gender) {
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
         this.children = new ArrayList<>();
     }
 
-    public Human(String name, LocalDate birthDate, LocalDate deathDate, String gender) {
+    public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender) {
         this.name = name;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         this.gender = gender;
         this.children = new ArrayList<>();
+    }
+
+    public Human(String name, LocalDate birthDate, Gender gender, Human mother, Human father) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        parents = new ArrayList<>();
+        if (mother != null) {
+            parents.add(mother);
+        }
+        if (father!= null) {
+            parents.add(father);
+        }
+        this.children = new ArrayList<>();
+    }
+
+    public boolean addChild(Human child) {
+        if (! children.contains(child)){
+            children.add(child);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addParent(Human parent) {
+        if (! parents.contains(parent)){
+            parents.add(parent);
+            return true;
+        }
+        return false;
+    }
+
+    public List<Human> getParents() {
+        return parents;
     }
 
     public String getName() {
@@ -34,42 +70,57 @@ class Human {
         return birthDate;
     }
 
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public LocalDate getDeathDate() {
         return deathDate;
     }
+    
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
     public Human getMother() {
-        return mother;
-    }
-
-    public void setMother(Human mother) {
-        this.mother = mother;
+        for (Human parent : parents) {
+            if (parent.getGender() == Gender.Female) {
+                return parent;
+            }
+        }
+        return null;
     }
 
     public Human getFather() {
-        return father;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
+        for (Human parent : parents) {
+            if (parent.getGender() == Gender.Male) {
+                return parent;
+            }
+        }
+        return null;
     }
 
     public List<Human> getChildren() {
         return children;
     }
 
-    public void addChild(Human child) {
-        this.children.add(child);
-        if (this.gender.equalsIgnoreCase("female")) {
-            child.setMother(this);
-        } else if (this.gender.equalsIgnoreCase("male")) {
-            child.setFather(this);
-        }
+    public int getAge() {
+        if (deathDate == null) {
+            return getPeriod(birthDate, LocalDate.now());
+            } else {
+                return getPeriod(birthDate, deathDate);
+            }
     }
+
+    private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
+        Period diff = Period.between(birthDate, deathDate);
+        return diff.getYears();
+    }
+
 
     @Override
     public String toString() {
