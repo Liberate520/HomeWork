@@ -5,11 +5,11 @@ import java.io.Serializable;
 import family_tree_app.family_tree.FamilyTreeEntry;
 import family_tree_app.family_tree.Tree;
 
-public interface Savable<T extends FamilyTreeEntry> {
+public interface Savable<T extends FamilyTreeEntry<T>> {
 
     boolean save(Serializable serializable, String filePath);
     boolean save(Tree<T> tree);
     Object read(String filePath);
-    Tree<FamilyTreeEntry> read();
+    Tree<T> read();
 }
 

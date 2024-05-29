@@ -7,7 +7,7 @@ import java.util.List;
 import family_tree_app.family_tree.FamilyTreeEntry;
 import family_tree_app.human.Gender;
 
-public class Dog implements FamilyTreeEntry {
+public class Dog implements FamilyTreeEntry<Dog> {
 
     private String name;
     private Gender gender;
@@ -15,10 +15,10 @@ public class Dog implements FamilyTreeEntry {
     private LocalDate dateOfDeath;
     private Dog mother;
     private Dog father;
-    private List<FamilyTreeEntry> children;
+    private List<Dog> children;
 
     public Dog(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Dog mother, Dog father,
-            List<FamilyTreeEntry> children) {
+            List<Dog> children) {
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -97,16 +97,16 @@ public class Dog implements FamilyTreeEntry {
         parent.setChildren(this);
     }
 
-    public List<FamilyTreeEntry> getChildren() {
+    public List<Dog> getChildren() {
         if (children == null) {
-            children = new ArrayList<FamilyTreeEntry>();
+            children = new ArrayList<Dog>();
         }
         return children;
     }
 
     public void setChildren(Dog dog) {
         if (children == null) {
-            children = new ArrayList<FamilyTreeEntry>();
+            children = new ArrayList<Dog>();
             this.children.add(dog);
         } else {
             if (children.contains(dog)) {

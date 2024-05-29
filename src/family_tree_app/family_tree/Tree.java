@@ -10,7 +10,7 @@ import family_tree_app.human.comparators.ComparatorByAge;
 import family_tree_app.human.comparators.ComparatorByAmountOfChildren;
 import family_tree_app.human.comparators.ComparatorByName;
 
-public class Tree<T extends FamilyTreeEntry> implements Serializable, Iterable<T> {
+public class Tree<T extends FamilyTreeEntry<T>> implements Serializable, Iterable<T> {
     private List<T> familyTree;
 
     public Tree() {

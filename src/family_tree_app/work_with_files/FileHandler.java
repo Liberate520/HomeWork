@@ -9,7 +9,7 @@ import java.io.Serializable;
 import family_tree_app.family_tree.FamilyTreeEntry;
 import family_tree_app.family_tree.Tree;
 
-public class FileHandler<T extends FamilyTreeEntry> implements Savable<T> {
+public class FileHandler<T extends FamilyTreeEntry<T>> implements Savable<T> {
     private String filePath = "family.out";
 
     @Override
@@ -39,7 +39,7 @@ public class FileHandler<T extends FamilyTreeEntry> implements Savable<T> {
     }
 
     @Override
-    public Tree<FamilyTreeEntry> read() {
-        return (Tree<FamilyTreeEntry>) read(filePath);
+    public Tree<T> read() {
+        return (Tree<T>) read(filePath);
     }
 }

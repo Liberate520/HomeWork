@@ -7,7 +7,7 @@ import java.util.List;
 
 import family_tree_app.family_tree.FamilyTreeEntry;
 
-public class Human implements FamilyTreeEntry {
+public class Human implements FamilyTreeEntry<Human> {
     private String name;
     private Gender gender;
     private LocalDate dateOfBirth;
@@ -138,7 +138,7 @@ public class Human implements FamilyTreeEntry {
             return "No info";
         }
         StringBuilder builder = new StringBuilder();
-        for (FamilyTreeEntry human : children) {
+        for (Human human : children) {
             builder.append(human.getName());
             builder.append(", ");
         }

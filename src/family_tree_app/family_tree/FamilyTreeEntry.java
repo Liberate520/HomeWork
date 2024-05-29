@@ -6,12 +6,12 @@ import java.util.List;
 
 import family_tree_app.human.Gender;
 
-public interface FamilyTreeEntry extends Serializable {
+public interface FamilyTreeEntry<T> extends Serializable {
     int getAge();
     String getName();
     Gender getGender();
-    List<?> getChildren();
-    FamilyTreeEntry getFather();
-    FamilyTreeEntry getMother();
+    List<T> getChildren();
+    T getFather();
+    T getMother();
     LocalDate getDateOfDeath();
 }
