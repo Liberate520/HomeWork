@@ -2,9 +2,10 @@ package PersonsTree;
 
 import Persons.Person;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private String familyName;
     private ArrayList<Person> tree;
     //конструкторы

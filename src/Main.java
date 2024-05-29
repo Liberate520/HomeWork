@@ -1,3 +1,5 @@
+import FileHandlerFilse.FileHandler;
+import FileHandlerFilse.Writable;
 import Persons.Gender;
 import Persons.Person;
 import PersonsTree.FamilyTree;
@@ -5,7 +7,16 @@ import PersonsTree.FamilyTree;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-        FamilyTree familyTree = new FamilyTree("Михайловы");
+        //место хранения данных
+        String place = "../Sava.txt";
+        FamilyTree familyTree;
+
+        //загружаем из файла дерево
+        FileHandler fileHandler = new FileHandler();
+        familyTree = (FamilyTree) fileHandler.load(place);
+        if (familyTree == null)
+            familyTree = new FamilyTree("Михайловы");
+
         //семья из 5ти человек
         Person person1 = new Person("Михайлова Полина Мирона", Gender.female, "2000-01-03");
         Person person2 = new Person("Михайлов Мирон Игоревич", Gender.male, "1970-05-28");
@@ -31,12 +42,13 @@ public class Main {
         familyTree.addPers(person4);
         familyTree.addPers(person5);
 
-        //сохраним резульат
-        //FileHandler.save();
         //смотрим итог
         System.out.println(familyTree.getAllFamily());
         System.out.println("\n\nПоиск точечных совпадений: " + familyTree.getFullPerson("Петровский Егор Павлович"));
         System.out.println("\n\nПоиск по фамилии: " + familyTree.getPersonOnSurname("Михайлов"));
 
+
+        //сохраняем в файл дерево
+        fileHandler.save(familyTree, place);
     }
 }

@@ -1,11 +1,12 @@
 package Persons;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Person {
+public class Person implements Serializable {
     private String name;
     private LocalDate birthday, deathDate;
     private List<Person> children;
