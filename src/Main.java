@@ -1,9 +1,28 @@
+import java.io.Serializable;
 import java.time.LocalDate;
-
-
 
 public class Main {
     public static void main(String[] args) {
+        String filePath = "D:\\Users\\User\\Desktop\\GB\\3_Course_OOP\\OOP_Seminars\\homework_1\\homeWork\\src\\tree.txt";
+//        FamilyTree tree = testTree();
+        FamilyTree tree = load(filePath);
+        System.out.println(tree);
+
+        save(tree, filePath);
+    }
+
+    private static FamilyTree load(String filePath) {
+        Writable writable = new FileHandler();
+        return (FamilyTree) writable.read(filePath);
+    }
+
+    private static void save(FamilyTree tree, String filePath) {
+        Writable writable = new FileHandler();
+        writable.save(tree, filePath);
+    }
+
+
+    private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
         Human ivan = new Human("Иван", Gender.Male, LocalDate.of(1960, 5, 13));
@@ -25,7 +44,7 @@ public class Main {
 
         tree.add(grandMother);
 
-        System.out.println(tree);
-
+//        System.out.println(tree);
+        return tree;
     }
 }
