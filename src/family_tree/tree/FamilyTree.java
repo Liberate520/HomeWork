@@ -1,65 +1,59 @@
 package family_tree.tree;
 
-import family_tree.humans.Human;
-import family_tree.humans.comparators.HumanComparatorByAge;
-import family_tree.humans.comparators.HumanComparatorByBurthDate;
-import family_tree.humans.comparators.HumanComparatorByDeathDate;
-import family_tree.humans.comparators.HumanComparatorByName;
+import family_tree.humans.comparators.ComparatorByAge;
+import family_tree.humans.comparators.ComparatorByBurthDate;
+import family_tree.humans.comparators.ComparatorByDeathDate;
+import family_tree.humans.comparators.ComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> humans;
+public class FamilyTree<T extends TreeItem<T>> implements Serializable, Iterable<T>, ITree<T> {
+    private List<T> objects;
 
     public FamilyTree() {
-        this.humans = new ArrayList<>();
+        this.objects = new ArrayList<>();
     }
 
-    /**
-     * Добавление человека в древо (если человек уже присутствует, то он не добавляется)
-     * @param human Человек
-     */
-    public boolean addHuman(Human human){
-        if(human == null){
+    @Override
+    public boolean addToTree(T obj) {
+        if(obj == null){
             return false;
         }
-        if(!humans.contains(human)){
-            humans.add(human);
+        if(!objects.contains(obj)){
+            objects.add(obj);
             return true;
         }
         return false;
     }
 
-    /**
-     * Сортировка по возрасту
-     */
-    public void sortByAge(){
-        humans.sort(new HumanComparatorByAge());
+    @Override
+    public void sortByAge() {
+        objects.sort(new ComparatorByAge());
     }
 
-    /**
-     * Сортировка по имени
-     */
-    public void sortByName(){
-        humans.sort(new HumanComparatorByName());
+    @Override
+    public void sortByName() {
+        objects.sort(new ComparatorByName());
     }
 
-    /**
-     * Сортировка по возрасту
-     */
-    public void sortByByrthDate(){
-        humans.sort(new HumanComparatorByBurthDate());
+    @Override
+    public void sortByBirthDate() {
+        objects.sort(new ComparatorByBurthDate());
     }
 
-    /**
-     * Сортировка по дате смерти
-     */
-    public void sortByDeathDate(){
-        humans.sort(new HumanComparatorByDeathDate());
+    @Override
+    public void sortByDeathDate() {
+        objects.sort(new ComparatorByDeathDate());
     }
+
+    @Override
+    public Iterator<T> iterator() {
+        return objects.iterator();
+    }
+
 
     @Override
     public String toString() {
@@ -68,16 +62,11 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         stringBuilder.append("Фамильное древо:\n");
 
         stringBuilder.append("-----------------\n");
-        for (Human human : humans) {
-            stringBuilder.append("\t" + human);
+        for (T obj : objects) {
+            stringBuilder.append("\t" + obj);
             stringBuilder.append("\n");
         }
 
         return stringBuilder.toString();
-    }
-
-    @Override
-    public Iterator<Human> iterator() {
-        return humans.iterator();
     }
 }

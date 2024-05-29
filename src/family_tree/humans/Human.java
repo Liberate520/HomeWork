@@ -1,5 +1,7 @@
 package family_tree.humans;
 
+import family_tree.tree.TreeItem;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, TreeItem<Human> {
     private long id;
     private String name;
     private Human mother, father;

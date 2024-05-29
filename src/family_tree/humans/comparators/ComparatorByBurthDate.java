@@ -1,13 +1,13 @@
 package family_tree.humans.comparators;
 
 import family_tree.humans.Human;
+import family_tree.tree.TreeItem;
 
-import javax.xml.crypto.Data;
 import java.util.Comparator;
 
-public class HumanComparatorByBurthDate implements Comparator<Human> {
+public class ComparatorByBurthDate<T extends TreeItem<T>> implements Comparator<T> {
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(T o1, T o2) {
         return o1.getBirthDate().compareTo(o2.getBirthDate());
     }
 }

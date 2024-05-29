@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        FamilyTree familyTree = new FamilyTree(); //Создаем дерево
+        FamilyTree<Human> familyTree = new FamilyTree<>(); //Создаем дерево ледей
 
         //Первая промать
         Human commonMother = new Human("Марина",
@@ -34,16 +34,16 @@ public class Main {
         commonMother.addChild(human1);
         commonFather.addChild(human1);
 
-        familyTree.addHuman(commonMother);
-        familyTree.addHuman(commonFather);
-        familyTree.addHuman(human1);
+        familyTree.addToTree(commonMother);
+        familyTree.addToTree(commonFather);
+        familyTree.addToTree(human1);
 
         System.out.println(familyTree);
 
         Writable writable = new FileHandler();
         writable.writeToFamilyTree(familyTree, "savesFamilyTree.ftr");
 
-        FamilyTree familyTreeRead = writable.readFromFamilyTree("savesFamilyTree.ftr");
+        FamilyTree<Human> familyTreeRead = writable.readFromFamilyTree("savesFamilyTree.ftr");
 
         System.out.println("**********************************************");
         System.out.println("Востановленное древо:");
@@ -64,7 +64,7 @@ public class Main {
         System.out.println(familyTree);
 
         System.out.println("\n-------------Сортировка по дате рождения-----------");
-        familyTree.sortByByrthDate();
+        familyTree.sortByBirthDate();
         System.out.println(familyTree);
 
         System.out.println("\n-------------Сортировка по дате смерти-----------");
