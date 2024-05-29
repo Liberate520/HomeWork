@@ -1,4 +1,4 @@
-package human;
+package family_tree_app.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,17 +6,19 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+import family_tree_app.family_tree.FamilyTreeEntry;
+
+public class Human implements Serializable, FamilyTreeEntry {
     private String name;
     private Gender gender;
     private LocalDate dateOfBirth;
     private LocalDate dateOfDeath;
     private Human mother;
     private Human father;
-    private List<Human> children;
+    private List<FamilyTreeEntry> children;
 
     public Human(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human mother, Human father,
-            List<Human> children) {
+            List<FamilyTreeEntry> children) {
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -111,16 +113,16 @@ public class Human implements Serializable {
         parent2.setChildren(this);
     }
 
-    public List<Human> getChildren() {
+    public List<FamilyTreeEntry> getChildren() {
         if (children == null) {
-            children = new ArrayList<Human>();
+            children = new ArrayList<FamilyTreeEntry>();
         }
         return children;
     }
 
     public void setChildren(Human human) {
         if (children == null) {
-            children = new ArrayList<Human>();
+            children = new ArrayList<FamilyTreeEntry>();
             this.children.add(human);
         } else {
             if (children.contains(human)) {
@@ -137,7 +139,7 @@ public class Human implements Serializable {
             return "No info";
         }
         StringBuilder builder = new StringBuilder();
-        for (Human human : children) {
+        for (FamilyTreeEntry human : children) {
             builder.append(human.getName());
             builder.append(", ");
         }

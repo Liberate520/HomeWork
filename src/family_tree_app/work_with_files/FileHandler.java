@@ -1,4 +1,4 @@
-package work_with_files;
+package family_tree_app.work_with_files;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,7 +6,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import family_tree.Tree;
+import family_tree_app.family_tree.FamilyTreeEntry;
+import family_tree_app.family_tree.Tree;
 
 public class FileHandler implements Savable {
     private String filePath = "family.out";
@@ -33,12 +34,12 @@ public class FileHandler implements Savable {
     }
 
     @Override
-    public boolean save(Tree tree) {
+    public boolean save(Tree<FamilyTreeEntry> tree) {
         return save(tree, filePath);
     }
 
     @Override
-    public Tree read() {
-        return (Tree) read(filePath);
+    public Tree<FamilyTreeEntry> read() {
+        return (Tree<FamilyTreeEntry>) read(filePath);
     }
 }

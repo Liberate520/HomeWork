@@ -1,13 +1,14 @@
+package family_tree_app;
 import java.time.LocalDate;
 
-import family_tree.Tree;
-import human.Gender;
-import human.Human;
-import work_with_files.FileHandler;
+import dog.Dog;
+import family_tree_app.family_tree.Tree;
+import family_tree_app.human.Gender;
+import family_tree_app.human.Human;
 
 public class Main {
     public static void main(String[] args) {
-        Tree family = new Tree();
+        Tree<Human> family = new Tree<>();
         Human me = new Human("Roman", Gender.Male, LocalDate.of(1991, 12, 28));
         Human wife = new Human("Stacy", Gender.Female, LocalDate.of(1992, 1, 6));
         Human mom = new Human("Helen", Gender.Female, LocalDate.of(1971, 10, 23));
@@ -39,12 +40,32 @@ public class Main {
         family.addToTree(mgranny);
         family.addToTree(wgranny);
 
-        family.sortByAge();
-        System.out.println(family);
+        // family.sortByAge();
+        // System.out.println(family);
+
+        // System.out.println(family.showProgenitors(son));
+       
+        // for (Human human : family) {
+        //     if(human.getGender() == Gender.Female){
+        //         System.out.println(human);
+        //     }
+        // }
+
+        // System.out.println(family.showMen());
 
         // FileHandler fileHandler = new FileHandler();
         // fileHandler.save(family);
         // fileHandler.read();
+
+        Tree<Dog> dogs = new Tree<>();
+        Dog bobick = new Dog("Bobick", Gender.Male);
+        Dog sharick = new Dog("Sharick", Gender.Male);
+        dogs.addToTree(sharick);
+        dogs.addToTree(bobick);
+        bobick.setParent(sharick);
+        dogs.sortByAmountOfChildren();
+        System.out.println(dogs);
+        // System.out.println(bobick);
 
     }
 }
