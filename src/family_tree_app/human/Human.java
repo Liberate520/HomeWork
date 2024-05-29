@@ -14,10 +14,10 @@ public class Human implements FamilyTreeEntry {
     private LocalDate dateOfDeath;
     private Human mother;
     private Human father;
-    private List<FamilyTreeEntry> children;
+    private List<Human> children;
 
     public Human(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human mother, Human father,
-            List<FamilyTreeEntry> children) {
+            List<Human> children) {
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -112,16 +112,16 @@ public class Human implements FamilyTreeEntry {
         parent2.setChildren(this);
     }
 
-    public List<FamilyTreeEntry> getChildren() {
+    public List<Human> getChildren() {
         if (children == null) {
-            children = new ArrayList<FamilyTreeEntry>();
+            children = new ArrayList<Human>();
         }
         return children;
     }
 
     public void setChildren(Human human) {
         if (children == null) {
-            children = new ArrayList<FamilyTreeEntry>();
+            children = new ArrayList<Human>();
             this.children.add(human);
         } else {
             if (children.contains(human)) {
@@ -190,6 +190,43 @@ public class Human implements FamilyTreeEntry {
         builder.append("children: ");
         builder.append(getChildenNames());
         builder.append("]");
+        return builder.toString();
+    }
+
+    public String showProgenitors() {
+        return "The progenitors of " + this.getName() + " are: " + showProgenitor(this);
+    }
+
+    private String showProgenitor(Human human) {
+        StringBuilder builder = new StringBuilder();
+        if (human.getFather() == null) {
+            builder.append("");
+        } else {
+            builder.append("\n- ");
+            builder.append(human.getFather().getName());
+            builder.append(" (");
+            builder.append(human.getName());
+            builder.append("'s dad)");
+        }
+        if (human.getMother() == null) {
+            builder.append("");
+        } else {
+            builder.append("\n- ");
+            builder.append(human.getMother().getName());
+            builder.append(" (");
+            builder.append(human.getName());
+            builder.append("'s mom)");
+        }
+        if (human.getFather() == null) {
+            builder.append("");
+        } else {
+            builder.append(showProgenitor(human.getFather()));
+        }
+        if (human.getMother() == null) {
+            builder.append("");
+        } else {
+            builder.append(showProgenitor(human.getMother()));
+        }
         return builder.toString();
     }
 }

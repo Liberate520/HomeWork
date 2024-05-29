@@ -10,7 +10,7 @@ public interface FamilyTreeEntry extends Serializable {
     int getAge();
     String getName();
     Gender getGender();
-    List<FamilyTreeEntry> getChildren();
+    List<?> getChildren();
     FamilyTreeEntry getFather();
     FamilyTreeEntry getMother();
     LocalDate getDateOfDeath();

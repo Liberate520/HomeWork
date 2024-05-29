@@ -113,43 +113,6 @@ public class Tree<T extends FamilyTreeEntry> implements Serializable, Iterable<T
     //     }
     // }
 
-    public String showProgenitors(T human) {
-        return "The progenitors of " + human.getName() + " are: " + showProgenitor(human);
-    }
-
-    private String showProgenitor(FamilyTreeEntry human) {
-        StringBuilder builder = new StringBuilder();
-        if (human.getFather() == null) {
-            builder.append("");
-        } else {
-            builder.append("\n- ");
-            builder.append(human.getFather().getName());
-            builder.append(" (");
-            builder.append(human.getName());
-            builder.append("'s dad)");
-        }
-        if (human.getMother() == null) {
-            builder.append("");
-        } else {
-            builder.append("\n- ");
-            builder.append(human.getMother().getName());
-            builder.append(" (");
-            builder.append(human.getName());
-            builder.append("'s mom)");
-        }
-        if (human.getFather() == null) {
-            builder.append("");
-        } else {
-            builder.append(showProgenitor(human.getFather()));
-        }
-        if (human.getMother() == null) {
-            builder.append("");
-        } else {
-            builder.append(showProgenitor(human.getMother()));
-        }
-        return builder.toString();
-    }
-
     @Override
     public String toString() {
 
