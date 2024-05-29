@@ -1,9 +1,10 @@
 package ru.gb.family_tree;
 
 
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         FamilyTree familyTree = new FamilyTree();
 
@@ -23,13 +24,17 @@ public class Main {
         anna.addChildren(ivan);
         dima.addSpouse(anna);
 
-        //System.out.println(dima.getChildren());
-        //System.out.println(katya.getParents());
-        //System.out.println(ivan.getParents());
-        //System.out.println(anna);
-        //System.out.println(dima);
+
         System.out.println(familyTree);
 
+        FileHandler fileHandler = new FileHandler();
 
+        fileHandler.saveFileByte(familyTree);
+
+        FamilyTree familyTree1 = fileHandler.loadFileByte();
+
+        System.out.println("--------------------------");
+
+        System.out.println(familyTree1);
     }
 }

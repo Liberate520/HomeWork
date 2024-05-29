@@ -1,12 +1,13 @@
 package ru.gb.family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private List<Human> parents;
     private Human spouse;
