@@ -2,6 +2,7 @@ import Persons.Gender;
 import Persons.Person;
 import PersonsTree.FamilyTree;
 
+
 public class Main {
     public static void main(String[] args) throws Exception{
         FamilyTree familyTree = new FamilyTree("Михайловы");
@@ -30,6 +31,8 @@ public class Main {
         familyTree.addPers(person4);
         familyTree.addPers(person5);
 
+        //сохраним резульат
+        //FileHandler.save();
         //смотрим итог
         System.out.println(familyTree.getAllFamily());
         System.out.println("\n\nПоиск точечных совпадений: " + familyTree.getFullPerson("Петровский Егор Павлович"));
