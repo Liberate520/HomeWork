@@ -7,40 +7,41 @@
 
 package family_true.builder;
 
+import family_true.api.BuildId;
 import family_true.family_tree.FamilyTree;
-import family_true.human.Human;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTreeBuilder {
+public class FamilyTreeBuilder<T extends BuildId> {
 
     private long treeId;
-    private HumanBuilder humanBuilder;
+    private EntityBuilder entityBuilder;
 
     public FamilyTreeBuilder() {
-        this.humanBuilder = new HumanBuilder();
+        this.entityBuilder = new EntityBuilder();
     }
 
-    public FamilyTreeBuilder(HumanBuilder humanBuilder) {
-        this.humanBuilder = humanBuilder;
+    public FamilyTreeBuilder(EntityBuilder humanBuilder) {
+        this.entityBuilder = humanBuilder;
     }
 
     public FamilyTree build() {
         return new FamilyTree(treeId++);
     }
 
-    public FamilyTree build(Human human) {
-        List<Human> humans = new ArrayList<>();
-        humans.add(humanBuilder.build(human));
-        return new FamilyTree(treeId++, humans);
+    public FamilyTree build(T entity) {
+        List<T> entities = new ArrayList<>();
+        entityBuilder.build(entity);
+        entities.add(entity);
+        return new FamilyTree(treeId++, entities);
     }
 
-    public FamilyTree build(List<Human> humans) {
-        return new FamilyTree(treeId++, humans);
+    public FamilyTree build(List<T> entities) {
+        return new FamilyTree(treeId++, entities);
     }
 
-    public HumanBuilder getHumanBuilder() {
-        return humanBuilder;
+    public EntityBuilder getEntityBuilder() {
+        return entityBuilder;
     }
 }

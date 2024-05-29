@@ -7,10 +7,12 @@
 
 package family_true.family_tree;
 
+import family_true.api.Entity;
 import family_true.family_tree.defalt_comporator.ComparatorIndexId;
 import family_true.family_tree.iterator.FamilyTreeIterator;
-import family_true.human.comparator.HumanComparatorByBirthDay;
-import family_true.human.comparator.HumanComparatorByLastName;
+import family_true.human.Human;
+import family_true.human.comparator.ComparatorByBirthDay;
+import family_true.human.comparator.ComparatorByLastName;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,7 +39,7 @@ public class FamilyTreeGroup implements Iterable<FamilyTree>{
     }
 
     public void sortFamilyTreeById(List<FamilyTree> familyTrees) {
-        familyTrees.sort(new ComparatorIndexId());
+        familyTrees.sort(new ComparatorIndexId<>());
     }
 
     public void sortFamilyTreesHumansById() {
@@ -46,7 +48,7 @@ public class FamilyTreeGroup implements Iterable<FamilyTree>{
 
     public void sortFamilyTreesHumansById(List<FamilyTree> familyTrees) {
         for (FamilyTree familyTree : familyTrees) {
-            familyTree.getHumans().sort(new ComparatorIndexId());
+            familyTree.getEntities().sort(new ComparatorIndexId<>());
         }
     }
 
@@ -56,7 +58,7 @@ public class FamilyTreeGroup implements Iterable<FamilyTree>{
 
     public void sortFamilyTreesHumansByBirthDay(List<FamilyTree> familyTrees) {
         for (FamilyTree familyTree : familyTrees) {
-            familyTree.getHumans().sort(new HumanComparatorByBirthDay());
+            familyTree.getEntities().sort(new ComparatorByBirthDay<Human>());
         }
     }
 
@@ -67,7 +69,7 @@ public class FamilyTreeGroup implements Iterable<FamilyTree>{
 
     public void sortFamilyTreesHumansByLastName(List<FamilyTree> familyTrees) {
         for (FamilyTree familyTree : familyTrees) {
-            familyTree.getHumans().sort(new HumanComparatorByLastName());
+            familyTree.getEntities().sort(new ComparatorByLastName<Human>());
         }
     }
 

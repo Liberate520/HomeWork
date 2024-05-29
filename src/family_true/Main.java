@@ -1,5 +1,6 @@
 package family_true;
 
+import family_true.api.Entity;
 import family_true.api.Externalizable;
 import family_true.family_tree.FamilyTree;
 import family_true.family_tree.Service;
@@ -111,12 +112,12 @@ public class Main {
         System.out.println("==================================================================\n");
         Collections.reverse(familyTreeList2);
         System.out.println("=========================SORT FAMILY TREE BY ID=============================");
-        Collections.sort(familyTreeList2, new ComparatorIndexId());
+        Collections.sort(familyTreeList2, new ComparatorIndexId<Entity>());
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
 
         System.out.println("=========================SORT HUMANS BY ID=============================");
-        Collections.sort(familyTreeList2.get(0).getHumans(), new ComparatorIndexId());
+        Collections.sort(familyTreeList2.get(0).getEntities(), new ComparatorIndexId<Entity>());
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
     }

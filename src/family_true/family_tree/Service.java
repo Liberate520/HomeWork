@@ -7,11 +7,11 @@
 
 package family_true.family_tree;
 
+import family_true.api.Entity;
 import family_true.builder.FamilyTreeBuilder;
-import family_true.human.Human;
 import java.util.List;
 
-public class Service {
+public class Service<T extends Entity> {
 
     private FamilyTreeGroup familyTreeGroup;
 
@@ -26,23 +26,24 @@ public class Service {
         return familyTreeGroup;
     }
 
-    public FamilyTree addHumanToNewTree(Human human) {
-        return addHumanByTree(human, true);
+    public FamilyTree addHumanToNewTree(T entity) {
+        return addHumanByTree(entity, true);
     }
 
-    public FamilyTree addHumanToLastTree(Human human) {
-        return addHumanByTree(human, familyTreeGroup.getFamilyTreeList().size() == 0);
+    public FamilyTree addHumanToLastTree(T entity) {
+        return addHumanByTree(entity, familyTreeGroup.getFamilyTreeList().size() == 0);
     }
 
-    public FamilyTree addHumanByTree(Human human, boolean isNewTree) {
+    public FamilyTree addHumanByTree(T entity, boolean isNewTree) {
         List<FamilyTree> familyTreeList = familyTreeGroup.getFamilyTreeList();
         FamilyTree tree;
         if (isNewTree) {
-            tree = familyTreeBuilder.build(human);
+            tree = familyTreeBuilder.build(entity);
             familyTreeList.add(tree);
         } else {
             tree = familyTreeList.get(familyTreeList.size() - 1);
-            familyTreeList.get(tree.getIndexId()).addHuman(familyTreeBuilder.getHumanBuilder().build(human));
+            familyTreeBuilder.getEntityBuilder().build(entity);
+            familyTreeList.get(tree.getIndexId()).addEntity(entity);
         }
         return tree;
     }

@@ -7,6 +7,8 @@
 
 package family_true.human;
 
+import family_true.api.BuildId;
+import family_true.api.Entity;
 import family_true.api.IndexId;
 
 import java.io.Serializable;
@@ -20,7 +22,7 @@ import java.util.Objects;
 import static family_true.human.Gender.FEMALE;
 import static family_true.human.Gender.MALE;
 
-public class Human implements Serializable, IndexId {
+public class Human implements Serializable, IndexId, BuildId, Entity<Human> {
 
     private static final long serialVersionUID = 1054756843591674776L;
 
@@ -53,7 +55,7 @@ public class Human implements Serializable, IndexId {
     public Human(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay,
                  LocalDate deathDay, Human mother, Human father, List<Human> children) {
 
-        this(-1, name, patronymic, lastName, gender, birthDay, deathDay, mother, father, new ArrayList<>());
+        this(-1, name, patronymic, lastName, gender, birthDay, deathDay, mother, father, children);
     }
 
     public Human(long id, String name, String patronymic, String lastName, Gender gender, LocalDate birthDay,
@@ -84,6 +86,7 @@ public class Human implements Serializable, IndexId {
         this.children = children;
     }
 
+    @Override
     public long getId() {
         return id;
     }
@@ -93,10 +96,12 @@ public class Human implements Serializable, IndexId {
         return Math.toIntExact(getId());
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -113,6 +118,7 @@ public class Human implements Serializable, IndexId {
         this.patronymic = patronymic;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -121,6 +127,7 @@ public class Human implements Serializable, IndexId {
         this.lastName = lastName;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
@@ -138,6 +145,7 @@ public class Human implements Serializable, IndexId {
         }
     }
 
+    @Override
     public LocalDate getBirthDay() {
         return birthDay;
     }
@@ -146,6 +154,7 @@ public class Human implements Serializable, IndexId {
         this.birthDay = birthDay;
     }
 
+    @Override
     public LocalDate getDeathDay() {
         return deathDay;
     }
@@ -154,6 +163,7 @@ public class Human implements Serializable, IndexId {
         this.deathDay = deathDay;
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }
@@ -162,6 +172,7 @@ public class Human implements Serializable, IndexId {
         this.children = children;
     }
 
+    @Override
     public Human getMother() {
         return mother;
     }
@@ -179,6 +190,7 @@ public class Human implements Serializable, IndexId {
         this.mother = mother;
     }
 
+    @Override
     public Human getFather() {
         return father;
     }
@@ -223,6 +235,7 @@ public class Human implements Serializable, IndexId {
         return this.getChildren().size() > size;
     }
 
+    @Override
     public boolean isParent(Human human) {
         return this.getMother().equals(human) || this.getFather().equals(human);
     }
