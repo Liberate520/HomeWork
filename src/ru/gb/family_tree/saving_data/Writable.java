@@ -2,7 +2,6 @@ package ru.gb.family_tree.saving_data;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import ru.gb.family_tree.tree.FamilyTree;
 
 public interface Writable {

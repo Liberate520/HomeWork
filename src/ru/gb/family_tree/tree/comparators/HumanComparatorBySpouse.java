@@ -1,7 +1,6 @@
 package ru.gb.family_tree.tree.comparators;
 
 import java.util.Comparator;
-
 import ru.gb.family_tree.human.Human;
 
 public class HumanComparatorBySpouse implements Comparator<Human> {

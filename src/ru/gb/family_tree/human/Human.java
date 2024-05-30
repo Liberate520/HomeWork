@@ -10,13 +10,13 @@ public class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     // private Human mother, father;
-    private List<Human> parents;    /// ТУТ МОЖЕТ БЫТЬ БОЛЕЕ 2 ЧЕЛОВЕК!!! Исправить!!!
+    private List<Human> parents; /// ТУТ МОЖЕТ БЫТЬ БОЛЕЕ 2 ЧЕЛОВЕК!!! Исправить!!!
     private List<Human> children;
     private LocalDate birthDate, deathDate;
     private Gender gender;
     private Human spouse;
     private Human father;
-    private Human mother;        
+    private Human mother;
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
 
@@ -35,15 +35,13 @@ public class Human implements Serializable, Comparable<Human> {
         }
         children = new ArrayList<>();
     }
-        
+
     public Human(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate, null, null, null);
-
     }
 
     public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
         this(name, gender, birthDate, null, father, mother);
-        
     }
 
     public boolean addChild(Human child) {
@@ -55,7 +53,7 @@ public class Human implements Serializable, Comparable<Human> {
     }
 
     public boolean addParent(Human parent) {
-        if (!parents.contains(parent) && parents.size() < 2) {  ///  && parents.size() < 2 ДОБАВИЛ Я
+        if (!parents.contains(parent) && parents.size() < 2) { /// && parents.size() < 2 ДОБАВИЛ Я
             parents.add(parent);
             return true;
         }
@@ -68,7 +66,7 @@ public class Human implements Serializable, Comparable<Human> {
                 return parent;
             }
         }
-        return null;        
+        return null;
     }
 
     public Human getFather() {
@@ -78,8 +76,8 @@ public class Human implements Serializable, Comparable<Human> {
             }
         }
         return null;
-    } 
-    
+    }
+
     public int getAge() {
         if (deathDate == null) {
             return getPeriod(birthDate, LocalDate.now());
@@ -87,7 +85,7 @@ public class Human implements Serializable, Comparable<Human> {
             return getPeriod(birthDate, deathDate);
         }
     }
-    
+
     private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
         Period diff = Period.between(birthDate, deathDate);
         return diff.getYears();
@@ -111,8 +109,8 @@ public class Human implements Serializable, Comparable<Human> {
             res += mother.getName();
         }
         return res;
-    }    
-    
+    }
+
     public String getFatherInfo() {
         String res = "отец: ";
         if (father == null) {
@@ -121,15 +119,15 @@ public class Human implements Serializable, Comparable<Human> {
             res += father.getName();
         }
         return res;
-    } 
-    
+    }
+
     public String getChildrenInfo() {
         StringBuilder res = new StringBuilder();
         res.append("дети: ");
         if (children.size() != 0) {
-            res.append(children.get(0).getName());  ///  ОТ ЭТОГО МОЖНО ИЗБАВИТЬСЯ, НАВЕРНО???
+            res.append(children.get(0).getName()); /// ОТ ЭТОГО МОЖНО ИЗБАВИТЬСЯ, НАВЕРНО???
             for (int i = 1; i < children.size(); i++) {
-                res.append(", ");                       /// ВОТ ТУТ БУДЕТ НЕМНОГО НЕКРАСИВО
+                res.append(", "); /// ВОТ ТУТ БУДЕТ НЕМНОГО НЕКРАСИВО
                 res.append(children.get(i).getName());
 
             }
@@ -137,32 +135,55 @@ public class Human implements Serializable, Comparable<Human> {
             res.append("отсутствуют");
         }
         return res.toString();
-
     }
 
-    public void setSpouse(Human spouse) {this.spouse = spouse;}
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
 
-    public Human getSpouse() {return spouse;}
-    
-    public String getName() {return name;}
+    public Human getSpouse() {
+        return spouse;
+    }
 
-    public long getId() {return id;}
+    public String getName() {
+        return name;
+    }
 
-    public void setId(long id) {this.id = id;}
+    public long getId() {
+        return id;
+    }
 
-    public LocalDate getBirthDate() {return birthDate;}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public LocalDate getDeathDate() {return deathDate;}
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 
-    public List<Human> getParents() {return parents;}
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
 
-    public List<Human> getChildren() {return children;} 
-    
-    public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate;}
+    public List<Human> getParents() {
+        return parents;
+    }
 
-    public void setDeathDate(LocalDate deathDate) {this.deathDate = deathDate;}
+    public List<Human> getChildren() {
+        return children;
+    }
 
-    public Gender getGender() {return gender;}
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
 
     @Override
     public String toString() {
@@ -199,12 +220,11 @@ public class Human implements Serializable, Comparable<Human> {
             return false;
         }
         Human human = (Human) obj;
-        return human.getId() == getId();   /// ТУТ ОПАСНО!!! Если id == -1, то ...
+        return human.getId() == getId(); /// ТУТ ОПАСНО!!! Если id == -1, то ...
     }
 
     @Override
     public int compareTo(Human o) {
         return this.name.compareTo(o.name);
     }
-
-} 
+}

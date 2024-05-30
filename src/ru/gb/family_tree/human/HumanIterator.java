@@ -21,4 +21,3 @@ public class HumanIterator implements Iterator<Human> {
         return humanList.get(index++);
     }
 }
-
