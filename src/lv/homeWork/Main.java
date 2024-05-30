@@ -6,11 +6,15 @@ import lv.homeWork.model.FileHandler;
 import lv.homeWork.model.Gender;
 import lv.homeWork.model.objects.Human;
 import lv.homeWork.view.ConsoleUI;
+import lv.homeWork.view.View;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        View view = new ConsoleUI();
+        view.start();
+
 
 
 

@@ -6,7 +6,7 @@ public class FindHumanByName extends Option{
 
     public FindHumanByName(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Find Human by his Full name";
+        description = "Find Human by his Full Name";
     }
 
     @Override

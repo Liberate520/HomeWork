@@ -13,10 +13,10 @@ public class MainMenu {
         optionList = new ArrayList<>();
         optionList.add(new AddHuman(consoleUI));
         optionList.add(new FindHumanByName(consoleUI));
-        optionList.add(new FinishHIm(consoleUI));
         optionList.add(new ShowList(consoleUI));
         optionList.add(new SortByAge(consoleUI));
         optionList.add(new SortByGen(consoleUI));
+        optionList.add(new FinishHIm(consoleUI));
     }
 
     public String menu(){
