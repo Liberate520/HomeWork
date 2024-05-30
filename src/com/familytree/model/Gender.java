@@ -1,4 +1,4 @@
-package familytree.modul;
+package com.familytree.model;
 
 public enum Gender {
     Male, Female
