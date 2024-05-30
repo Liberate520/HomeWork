@@ -7,11 +7,10 @@
 
 package family_true.family_tree;
 
-import family_true.api.Entity;
 import family_true.builder.FamilyTreeBuilder;
 import java.util.List;
 
-public class Service<T extends Entity> {
+public class Service<T extends Entity<T>> {
 
     private FamilyTreeGroup familyTreeGroup;
 
@@ -56,27 +55,27 @@ public class Service<T extends Entity> {
         familyTreeGroup.sortFamilyTreeById(familyTrees);
     }
 
-    public void sortFamilyTreesHumansById() {
-        familyTreeGroup.sortFamilyTreesHumansById();
+    public void sortFamilyTreesEntitiesById() {
+        familyTreeGroup.sortFamilyTreesEntitiesById();
     }
 
-    public void sortFamilyTreesHumansById(List<FamilyTree> familyTrees) {
-        familyTreeGroup.sortFamilyTreesHumansById(familyTrees);
+    public void sortFamilyTreesEntitiesById(List<FamilyTree> familyTrees) {
+        familyTreeGroup.sortFamilyTreesEntitiesById(familyTrees);
     }
 
-    public void sortFamilyTreesHumansByBirthDay() {
-        familyTreeGroup.sortFamilyTreesHumansByBirthDay();
+    public void sortFamilyTreesEntitiesByBirthDay() {
+        familyTreeGroup.sortFamilyTreesEntitiesByBirthDay();
     }
 
-    public void sortFamilyTreesHumansByBirthDay(List<FamilyTree> familyTrees) {
-        familyTreeGroup.sortFamilyTreesHumansByBirthDay(familyTrees);
+    public void sortFamilyTreesEntitiesByBirthDay(List<FamilyTree> familyTrees) {
+        familyTreeGroup.sortFamilyTreesEntitiesByBirthDay(familyTrees);
     }
 
-    public void sortFamilyTreesHumansByLastName() {
-        familyTreeGroup.sortFamilyTreesHumansByLastName();
+    public void sortFamilyTreesEntitiesByLastName() {
+        familyTreeGroup.sortFamilyTreesEntitiesByLastName();
     }
 
-    public void sortFamilyTreesHumansByLastName(List<FamilyTree> familyTrees) {
-        familyTreeGroup.sortFamilyTreesHumansByLastName(familyTrees);
+    public void sortFamilyTreesEntitiesByLastName(List<FamilyTree> familyTrees) {
+        familyTreeGroup.sortFamilyTreesEntitiesByLastName(familyTrees);
     }
 }

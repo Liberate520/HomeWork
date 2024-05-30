@@ -8,7 +8,7 @@
 package family_true.human;
 
 import family_true.api.BuildId;
-import family_true.api.Entity;
+import family_true.family_tree.Entity;
 import family_true.api.IndexId;
 
 import java.io.Serializable;

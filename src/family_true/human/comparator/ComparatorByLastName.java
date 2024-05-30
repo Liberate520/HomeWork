@@ -7,7 +7,7 @@
 
 package family_true.human.comparator;
 
-import family_true.api.Entity;
+import family_true.family_tree.Entity;
 
 import java.util.Comparator;
 

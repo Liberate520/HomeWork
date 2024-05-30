@@ -7,7 +7,6 @@
 
 package family_true.family_tree;
 
-import family_true.api.Entity;
 import family_true.api.IndexId;
 import family_true.family_tree.defalt_comporator.ComparatorIndexId;
 import family_true.human.comparator.ComparatorByBirthDay;
@@ -17,7 +16,7 @@ import family_true.human.iterator.EntityIterator;
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree<T extends Entity> implements Serializable, Iterable<T>, Comparable<FamilyTree>, IndexId {
+public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T>, Comparable<FamilyTree>, IndexId {
 
     private static final long serialVersionUID = -8509829358230848460L;
 
@@ -91,15 +90,15 @@ public class FamilyTree<T extends Entity> implements Serializable, Iterable<T>, 
         return findChildrenByParent(parent, child);
     }
 
-    public void sortHumansById() {
+    public void sortEntitiesById() {
         Collections.sort(entities, new ComparatorIndexId());
     }
 
-    public void sortHumansByBirthDay() {
+    public void sortEntitiesByBirthDay() {
         Collections.sort(entities, new ComparatorByBirthDay<T>());
     }
 
-    public void sortHumansByLastName() {
+    public void sortEntitiesByLastName() {
         Collections.sort(entities, new ComparatorByLastName<T>());
     }
 

@@ -1,6 +1,6 @@
 package family_true;
 
-import family_true.api.Entity;
+import family_true.family_tree.Entity;
 import family_true.api.Externalizable;
 import family_true.family_tree.FamilyTree;
 import family_true.family_tree.Service;
@@ -82,7 +82,7 @@ public class Main {
         List<FamilyTree> familyTreeList = ext.readExternal();
 
         System.out.println("=========================SORT BY LAST NAME=============================");
-        service.sortFamilyTreesHumansByLastName(familyTreeList);
+        service.sortFamilyTreesEntitiesByLastName(familyTreeList);
         System.out.println(familyTreeList.toString());
         System.out.println("==================================================================\n");
 
@@ -107,7 +107,7 @@ public class Main {
         List<FamilyTree> familyTreeList2 = ext.readExternal();
 
         System.out.println("=========================SORT BY DATE=============================");
-        service.sortFamilyTreesHumansByBirthDay(familyTreeList2);
+        service.sortFamilyTreesEntitiesByBirthDay(familyTreeList2);
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
         Collections.reverse(familyTreeList2);
@@ -116,8 +116,12 @@ public class Main {
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
 
+        for (FamilyTree familyTree : familyTreeList2) {
+            Collections.reverse(familyTree.getEntities());
+        }
+        System.out.println(familyTreeList2.toString());
         System.out.println("=========================SORT HUMANS BY ID=============================");
-        Collections.sort(familyTreeList2.get(0).getEntities(), new ComparatorIndexId<Entity>());
+        service.sortFamilyTreesEntitiesById(familyTreeList2);
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
     }

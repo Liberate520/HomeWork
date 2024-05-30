@@ -7,12 +7,8 @@
 
 package family_true.family_tree;
 
-import family_true.api.Entity;
 import family_true.family_tree.defalt_comporator.ComparatorIndexId;
 import family_true.family_tree.iterator.FamilyTreeIterator;
-import family_true.human.Human;
-import family_true.human.comparator.ComparatorByBirthDay;
-import family_true.human.comparator.ComparatorByLastName;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,34 +38,34 @@ public class FamilyTreeGroup implements Iterable<FamilyTree>{
         familyTrees.sort(new ComparatorIndexId<>());
     }
 
-    public void sortFamilyTreesHumansById() {
-        sortFamilyTreesHumansById(familyTreeList);
+    public void sortFamilyTreesEntitiesById() {
+        sortFamilyTreesEntitiesById(familyTreeList);
     }
 
-    public void sortFamilyTreesHumansById(List<FamilyTree> familyTrees) {
+    public void sortFamilyTreesEntitiesById(List<FamilyTree> familyTrees) {
         for (FamilyTree familyTree : familyTrees) {
-            familyTree.getEntities().sort(new ComparatorIndexId<>());
+            familyTree.sortEntitiesById();
         }
     }
 
-    public void sortFamilyTreesHumansByBirthDay() {
-        sortFamilyTreesHumansByBirthDay(familyTreeList);
+    public void sortFamilyTreesEntitiesByBirthDay() {
+        sortFamilyTreesEntitiesByBirthDay(familyTreeList);
     }
 
-    public void sortFamilyTreesHumansByBirthDay(List<FamilyTree> familyTrees) {
+    public void sortFamilyTreesEntitiesByBirthDay(List<FamilyTree> familyTrees) {
         for (FamilyTree familyTree : familyTrees) {
-            familyTree.getEntities().sort(new ComparatorByBirthDay<Human>());
+            familyTree.sortEntitiesByBirthDay();
         }
     }
 
-    public void sortFamilyTreesHumansByLastName() {
-        sortFamilyTreesHumansByLastName(familyTreeList);
+    public void sortFamilyTreesEntitiesByLastName() {
+        sortFamilyTreesEntitiesByLastName(familyTreeList);
 
     }
 
-    public void sortFamilyTreesHumansByLastName(List<FamilyTree> familyTrees) {
+    public void sortFamilyTreesEntitiesByLastName(List<FamilyTree> familyTrees) {
         for (FamilyTree familyTree : familyTrees) {
-            familyTree.getEntities().sort(new ComparatorByLastName<Human>());
+            familyTree.sortEntitiesByLastName();
         }
     }
 

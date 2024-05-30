@@ -7,7 +7,7 @@
 
 package family_true.family_tree.defalt_comporator;
 
-import family_true.api.Entity;
+import family_true.family_tree.Entity;
 import family_true.api.IndexId;
 
 import java.util.Comparator;
