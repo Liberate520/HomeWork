@@ -1,5 +1,6 @@
 package FamilyThreeOOP;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Main {
@@ -11,8 +12,23 @@ public class Main {
         tree.add(oxana);
         tree.add(alexey);
         tree.setWedding(oxana.getId(), alexey.getId());
-        System.out.println("");
 
+
+        Human ivan = new Human("Иван", Gender.Male, LocalDate.of(1998, 9, 9), oxana, alexey);
+        Human sofie = new Human("София", Gender.Female, LocalDate.of(2009, 7, 20));
+        tree.add(ivan);
+        tree.add(sofie);
+        System.out.println(tree);
+    }
+
+    private static void save(FamilyTree tree, String fileName){
+        Rewritable rewritable = new FileHandler();
+        rewritable.saveToFile((Serializable) tree, fileName);
+    }
+
+    private static FamilyTree load(String fileName){
+        Rewritable rewritable = new FileHandler();
+        return (FamilyTree) rewritable.loadFromFile(fileName);
     }
 }
 
