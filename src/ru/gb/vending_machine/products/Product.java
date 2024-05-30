@@ -1,4 +1,4 @@
-package gb.vending_machine.products;
+package ru.gb.vending_machine.products;
 
 public class Product {
     private int id;

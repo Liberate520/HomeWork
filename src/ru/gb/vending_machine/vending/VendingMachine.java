@@ -1,4 +1,4 @@
-package gb.vending_machine.vending;
+package ru.gb.vending_machine.vending;
 
 import ru.gb.vending_machine.products.Product;
 
