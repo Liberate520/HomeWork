@@ -19,14 +19,9 @@ public class Human implements Serializable {
 
 
     public Human(String name, String birth, String death, Gender gender){
+        this(name, birth, gender);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        this.name = name;;
-        this.birthDate = LocalDate.parse(birth, dtf);
         this.deathDate = LocalDate.parse(death, dtf);
-        this.gender = gender;
-        this.children = new ArrayList<>();
-        this.parents = new ArrayList<>();
-
     }
 
     public Human(String name, String birth, Gender gender){
@@ -37,7 +32,6 @@ public class Human implements Serializable {
         this.gender = gender;
         this.children = new ArrayList<>();
         this.parents = new ArrayList<>();
-
     }
 
     public void addChildren(Human child){
@@ -72,7 +66,7 @@ public class Human implements Serializable {
         if (spouse != null) {
             return spouse.name;
         }else {
-            return "";
+            return "Single";
         }
     }
 

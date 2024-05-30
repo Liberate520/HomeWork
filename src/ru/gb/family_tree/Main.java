@@ -27,14 +27,14 @@ public class Main {
 
         System.out.println(familyTree);
 
-        FileHandler fileHandler = new FileHandler();
-
-        fileHandler.saveFileByte(familyTree);
-
-        FamilyTree familyTree1 = fileHandler.loadFileByte();
-
-        System.out.println("--------------------------");
-
-        System.out.println(familyTree1);
-    }
+        //FileHandler fileHandler = new FileHandler();
+//
+        //fileHandler.saveFileByte(familyTree);
+//
+        //FamilyTree familyTree1 = fileHandler.loadFileByte();
+//
+        //System.out.println("--------------------------");
+//
+        //System.out.println(familyTree1);
+    }//
 }
