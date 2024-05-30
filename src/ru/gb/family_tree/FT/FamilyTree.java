@@ -1,6 +1,6 @@
 package ru.gb.family_tree.FT;
 
-import ru.gb.family_tree.Human.Gender;
+import ru.gb.family_tree.Human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,21 +9,22 @@ import java.util.List;
 public class FamilyTree implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private List<Gender.Human> humanList;
+    private List<Human> humanList;
 
     public FamilyTree(){
         humanList = new ArrayList<>();
     }
-    public void addHuman(Gender.Human human){
+    public void addHuman(Human human){
         humanList.add(human);
     }
 
-    public List<Gender.Human> getHumanList() {
+
+    public List<Human> getHumanList() {
         return humanList;
     }
 
-    public Gender.Human findHumanByName(String nameHuman){
-        for (Gender.Human human : humanList){
+    public Human findHumanByName(String nameHuman){
+        for (Human human : humanList){
             if(human.getName().equalsIgnoreCase(nameHuman)){
                 return human;
             }
