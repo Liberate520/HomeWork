@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Human {
-    private String id;
+    private int id;
     private String name;
     private String surName;
     private LocalDate dateOfBirth;
@@ -18,7 +18,7 @@ public class Human {
 
     public Human(String name, String surName, LocalDate dateOfBirth, LocalDate dateOfDead, Sex sex,
                  Human father, Human mother) {
-        String id = name + surName + dateOfBirth;
+        int id = -1;
         this.name = name;
         this.surName = surName;
         this.dateOfBirth = dateOfBirth;
@@ -63,8 +63,12 @@ public class Human {
         return result.getYears();
     }
 
-    public String getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -155,6 +159,6 @@ public class Human {
         if (!(o instanceof Human human)) {
             return false;
         }
-        return human.getId().equals(getId());
+        return human.getId() == (getId());
     }
 }

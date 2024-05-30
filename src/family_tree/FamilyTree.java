@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree {
-    private String HumanId;
+    private int humanId;
     private List<Human> humanList;
 
     public FamilyTree() {
@@ -18,6 +18,7 @@ public class FamilyTree {
     public boolean add(Human human) {
         if (!humanList.contains(human)) {
             humanList.add(human);
+            human.setId(humanId++);
 
             addToParents(human);
             addToChildren(human);
@@ -37,4 +38,23 @@ public class FamilyTree {
             child.addChild(human);
         }
     }
+
+    @Override
+    public String toString() {
+        return getInfo();
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("В семейном древе ");
+        sb.append(humanList.size());
+        sb.append(" членов семьи: \n");
+        for (Human human: humanList) {
+            sb.append(human);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }
+
+
