@@ -1,5 +1,6 @@
-package lv.homeWork.model;
+package lv.homeWork.model.objects;
 
+import lv.homeWork.model.Gender;
 import lv.homeWork.model.interfaces.TreeNode;
 
 import java.io.Serializable;

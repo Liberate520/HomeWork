@@ -4,8 +4,10 @@ import lv.homeWork.model.comparators_iterators.CompareByBirth;
 import lv.homeWork.model.comparators_iterators.CompareByGen;
 import lv.homeWork.model.comparators_iterators.IteratorForTree;
 import lv.homeWork.model.interfaces.TreeNode;
+import lv.homeWork.model.objects.Human;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +29,21 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
             humanList.add(human);
             human.setGeneration();
         }
+    }
+
+    public void addHuman(Integer passportID, String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human mother, Human father) {
+        Human newHuman = new Human(passportID, name, gender, dateOfBirth, dateOfDeath, mother, father);
+        addHuman((E) newHuman);
+    }
+
+    public void addHuman(Integer passportID, String name, Gender gender, LocalDate dateOfBirth, Human mother, Human father) {
+        Human newHuman = new Human(passportID, name, gender, dateOfBirth, mother, father);
+        addHuman((E) newHuman);
+    }
+
+    public void addHuman(Integer passportID, String name, Gender gender, LocalDate dateOfBirth) {
+        Human newHuman = new Human(passportID, name, gender, dateOfBirth);
+        addHuman((E) newHuman);
     }
 
     public List<E> findByGeneration(int generation) {
