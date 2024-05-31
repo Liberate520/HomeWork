@@ -1,4 +1,4 @@
-package OOP.SemDZ.homeWork;
+package OOP.SemDZ.homeWork.write;
 
 import java.io.Serializable;
 

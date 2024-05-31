@@ -1,10 +1,11 @@
-package OOP.SemDZ.homeWork;
+package OOP.SemDZ.homeWork.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private String name;
     private int id = 0;
     private Gender gender;
@@ -13,6 +14,7 @@ public class Human implements Serializable {
     private Human father = null;
     private Human mather = null;
     private Human spouse = null;
+    private List<Human> child;
 
     public Human (String name, Gender gender, LocalDate birthDay, LocalDate death, Human father, Human mather){
         this.name = name;
@@ -62,5 +64,45 @@ public class Human implements Serializable {
     public void setSpouse(Human spouse){this.spouse = spouse;}
     public int getId(){return id;}
     public void setId(int id){this.id = id;}
+    public List<Human> getChildren(){ return child;}
+    public void setChildren(List<Human> children){this.child = children;}
+    public void addChildren( Human human){
+        child.addLast(human);
+     }
+
+    @Override
+    public String toString(){
+        return getInfo();
+    }
+
+    public String getInfo(){
+        StringBuilder hl = new StringBuilder();
+        hl.append("name ");
+        hl.append(name);
+        hl.append(", id ");
+        hl.append(id);
+        hl.append(", gender ");
+        hl.append(getGender());
+        hl.append(", birthaday ");
+        hl.append(getBirthDay());
+        hl.append(", death ");
+        hl.append(getDeath());
+        hl.append(", father ");
+        hl.append(getFather());
+        hl.append(", mather ");
+        hl.append(getMather());
+        hl.append(", spouse ");
+        hl.append(getSpouse());
+        hl.append(", children ");
+        hl.append(getChildren());
+
+        return hl.toString();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+                
+        return name.compareTo(o.name);
+    }
 
 }
