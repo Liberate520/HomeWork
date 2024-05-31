@@ -1,11 +1,11 @@
 package ru.gb.family;
 
-import ru.gb.vending.product.Product;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<Human> familyTree;
 
 
@@ -17,28 +17,33 @@ public class FamilyTree {
         this.familyTree.add(newHuman);
     }
 
-    public void findHuman (Human searchHuman){
+    public StringBuilder findHuman (Human searchHuman){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("-----У человека ["+searchHuman.getName()+"]  из семейного дерева-------------");
+        stringBuilder.append("\n");
         for (Human fd : this.familyTree ){
            if (fd.equals(searchHuman)){
-               System.out.println("-----У человека ["+fd.getName()+"]  из семейного дерева-------------");
                if (fd.getChildren() != null){
-                   System.out.println("Есть дети:");
-                   StringBuilder stringBuilder = new StringBuilder();
+                   stringBuilder.append("Есть дети:\n");
+
                    // список детей
                    for (Human human : fd.getChildren()){
-                       stringBuilder.append(human.getName());
-                       stringBuilder.append(",\t");
+                       stringBuilder.append(human.getName()+"("+human.getAge()+" лет.))");
+                       stringBuilder.append("\t\n");
+
                    }
-                   System.out.println(stringBuilder);
+
                }
                else{
-                   System.out.println("Нет детей!");
+                   stringBuilder.append("\nНет детей! ");
                }
-               System.out.println("------------------------");
+               stringBuilder.append("----------------------------------------------");
+
             }
         }
-
+        return stringBuilder;
     }
+
 
     @Override
     public String toString() {

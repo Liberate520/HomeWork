@@ -1,12 +1,14 @@
 package ru.gb.family;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human {
-    private Integer id;
+public class Human implements Serializable {
+    private Integer id,age;
     private String name;
     private Gender gender;
     private LocalDate birthday,dateOfDeath;
@@ -17,6 +19,7 @@ public class Human {
 
     public Human(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
         id = +1;
+        age = null;
         this.name = name;
         this.birthday = birthday;
         this.dateOfDeath = dateOfDeath;
@@ -46,16 +49,30 @@ public class Human {
         }
     }
 
+    public  int getAge(){
+        if (dateOfDeath == null){
+            return getPeriod(birthday,LocalDate.now());
+        }
+        else{
+            return getPeriod(birthday,dateOfDeath);
+        }
+    }
+
+    private int getPeriod(LocalDate birthday, LocalDate dateOfDeath){
+        Period diff = Period.between(birthday,dateOfDeath);
+        return diff.getYears();
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         // список детей
         for (Human human : children){
-            stringBuilder.append(human.name);
+            stringBuilder.append(human.name+" ("+human.getAge() +" лет.)");
             stringBuilder.append(",\t");
         }
         return "\n id=" + id + '\t' +
-                "name=" + name +
+                "name=" + name +" ("+getAge()+" лет.))"+
                 "\t birthday(" + birthday +
                 ")\t dateOfDeath(" + dateOfDeath +
                 ")\t gender=" + gender +
