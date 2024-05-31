@@ -1,6 +1,6 @@
 import family_tree.FamilyTree;
-import human.Gender;
-import human.Human;
+import Creatures.Gender;
+import Creatures.Human;
 import save.FileHandler;
 import save.Writable;
 
@@ -11,13 +11,13 @@ public class Main {
         // указываем путь к файлу
         String filePatch = "src/familyTree.txt";
         // Создаем и наполняем семейное дерево
-//        FamilyTree dyatchini = createsFamilyTree();
+        FamilyTree dyatchini = createsFamilyTree();
         // Наполняем семейное дерево
-        FamilyTree dyatchini = load(filePatch);
+//        FamilyTree dyatchini = load(filePatch);
         // Демонстраци работы дерева
         demonstratesfamilyTree(dyatchini);
         // Сохранение дерева в файл
-//        save(dyatchini, filePatch);
+        save(dyatchini, filePatch);
     }
 
     /**
@@ -61,7 +61,7 @@ public class Main {
     }
 
     /**
-     *   Создает и наполняет экземпляр класса family_tree.FamilyTree  экзеплярами класса human.Human с заданными данными.
+     *   Создает и наполняет экземпляр класса family_tree.FamilyTree  экзеплярами класса Creatures.Human с заданными данными.
      *   Устанавливает родственные связи.
      * @return FamilyTree
      */
@@ -78,14 +78,14 @@ public class Main {
         Human shadrinVK = new Human("Шадрин Владимир Кузмич", Gender.Male,"1954-04-30");
         Human shadrinaOI = new Human("Шадрина Ольга Ивановна", Gender.Female,"1954-04-29");
         // Добаляем членов семьи
-        familyTree.addHuman(dyatchinYS);
-        familyTree.addHuman(dyatchinaAS);
-        familyTree.addHuman(dyatchinSA);
-        familyTree.addHuman(dyatchinaNV);
-        familyTree.addHuman(dyatchinAA);
-        familyTree.addHuman(dyatchinaTV);
-        familyTree.addHuman(shadrinVK);
-        familyTree.addHuman(shadrinaOI);
+        familyTree.addCreature(dyatchinYS);
+        familyTree.addCreature(dyatchinaAS);
+        familyTree.addCreature(dyatchinSA);
+        familyTree.addCreature(dyatchinaNV);
+        familyTree.addCreature(dyatchinAA);
+        familyTree.addCreature(dyatchinaTV);
+        familyTree.addCreature(shadrinVK);
+        familyTree.addCreature(shadrinaOI);
         // Устанавливаем связи  родителей (дети добавляются автоматически приватным методом)
         dyatchinYS.setParents(dyatchinaNV, dyatchinSA);
         dyatchinaAS.setParents(dyatchinaNV, dyatchinSA);

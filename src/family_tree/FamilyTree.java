@@ -1,57 +1,58 @@
 package family_tree;
 
-import human.Human;
+import Creatures.Creature;
+import Creatures.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> familyList;
+public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable<T> {
+    private List<T> familyList;
 
     /**
      * Основной консруктор класса
-     * @param familyList Arraylist<human.Human>
+     * @param familyList Arraylist<T>
      */
-    public FamilyTree(List<Human> familyList) {
+    public FamilyTree(List<T> familyList) {
         this.familyList = familyList;
     }
 
     /**
-     * Добавляет human.Human в familyList
-     * @param human
+     * Добавляет creature в familyList
+     * @param creature
      */
-    public void addHuman(Human human) {
-        this.familyList.add(human);
+    public void addCreature(T creature) {
+        this.familyList.add(creature);
     }
 
     /**
-     * возвращает первого human.Human в котором в имени встретилась искома строка
+     * возвращает существо Creature в котором в имени встретилась искома строка
      * без учета регистра
      * @param text String
-     * @return human.Human
+     * @return T
      */
-    public Human findFirsIn(String text) {
-        for (Human human: familyList) {
-            if (human.getName().contains(text)){
-                return human;
+    public T findFirsIn(String text) {
+        for (T creature: familyList) {
+            if (creature.getName().contains(text)){
+                return creature;
             }
         }
         return null;
     }
 
     /**
-     * возвращает ArrayList<human.Human> в которых в имени встретилась искома строка
+     * возвращает ArrayList<T> в которых в имени встретилась искома строка
      * без учета регистра
      * @param text
-     * @return ArrayList<human.Human>
+     * @return ArrayList<T>
      */
-    public List<Human> findFirsAll(String text) {
-        List<Human> result = new ArrayList<>();
-        for (Human human: familyList) {
-            if (human.getName().contains(text)){
-                result.add(human);
+    public List<T> findFirsAll(String text) {
+        List<T> result = new ArrayList<>();
+        for (T creature: familyList) {
+            if (creature.getName().contains(text)){
+                result.add(creature);
             }
         }
         return result;
@@ -60,14 +61,14 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     @Override
     public String toString() {
         StringBuilder txt = new StringBuilder();
-        for (Human human: familyList) {
-        txt.append(human.getName()).append("\n");
+        for (T creature: familyList) {
+        txt.append(creature.getName()).append("\n");
         }
         return txt.toString();
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<T> iterator() {
         return new FamilyTreeIterator(familyList);
     }
 

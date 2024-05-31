@@ -1,13 +1,12 @@
-package human;
+package Creatures;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Creature<Human> {
     private final String name;
     private final LocalDate dob;
     private LocalDate dod;
@@ -111,7 +110,7 @@ public class Human implements Serializable {
      * Возвращает true если dod = null
      * @return
      */
-     private boolean alive() {
+    public boolean alive() {
         if (dod == null) {
             return true;
         }
@@ -168,7 +167,7 @@ public class Human implements Serializable {
      * добавляет в список ребенка если его там не было
      * @param child
      */
-    private void setChildren(Human child) {
+    public void setChildren(Human child) {
         if (!this.children.contains(child)) {
             this.children.add(child);
         }
