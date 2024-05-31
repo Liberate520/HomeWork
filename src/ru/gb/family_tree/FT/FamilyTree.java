@@ -1,12 +1,14 @@
 package ru.gb.family_tree.FT;
 
 import ru.gb.family_tree.Human.Human;
+import ru.gb.family_tree.Human.HumanIterator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private static final long serialVersionUID = 1L;
 
     private List<Human> humanList;
@@ -17,7 +19,6 @@ public class FamilyTree implements Serializable {
     public void addHuman(Human human){
         humanList.add(human);
     }
-
 
     public List<Human> getHumanList() {
         return humanList;
@@ -39,5 +40,12 @@ public class FamilyTree implements Serializable {
                 "humanList=" + humanList +
                 '}';
     }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator();
+    }
+
+
 
 }
