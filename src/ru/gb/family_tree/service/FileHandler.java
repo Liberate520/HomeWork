@@ -1,4 +1,6 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.service;
+
+import ru.gb.family_tree.family_tree.FamilyTree;
 
 import java.io.*;
 

@@ -1,4 +1,4 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -46,6 +46,10 @@ public class Human implements Serializable {
             stringBuilder.append(child.name + "\n");
         }
         return stringBuilder.toString();
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public String getParents(){

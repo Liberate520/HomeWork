@@ -1,6 +1,10 @@
 package ru.gb.family_tree;
 
 
+import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.human.Human;
+
 import java.io.IOException;
 
 public class Main {
@@ -24,6 +28,18 @@ public class Main {
         anna.addChildren(ivan);
         dima.addSpouse(anna);
 
+
+        System.out.println(familyTree);
+
+        familyTree.sortByName();
+
+        System.out.println("-----------------");
+
+        System.out.println(familyTree);
+
+        familyTree.sortByAge();
+
+        System.out.println("-----------------");
 
         System.out.println(familyTree);
 
