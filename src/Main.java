@@ -1,5 +1,5 @@
-public class Test {
-    public static void test(String[] args) {
+public class Main {
+    public static void main(String[] args) {
         // Создание экземпляра генеалогического древа
         FamilyTree familyTree = new FamilyTree();
 
