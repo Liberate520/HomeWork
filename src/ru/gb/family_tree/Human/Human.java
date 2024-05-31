@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private static final long serialVersionUID = 1L;
 
     private String lastName;
@@ -65,23 +65,31 @@ public class Human implements Serializable {
         return age;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
     public List<Human> getChildren() {
         return children;
     }
 
     @Override
     public String toString() {
-        return "Human{" +
+        return "Член семьи {" +
                 "Фамилия: " + lastName  +
                 " Имя: " + name +
                 " возраст: " + age +
                 ", мать: " + (mother != null ? mother.getName() : "Неизвестна") +
                 ", отец: " + (father != null ? father.getName() : "Неизвестен") +
-                ", дети: " + children.stream().map(Human::getName).collect(Collectors.toList()) +
+                ", дети: " + children.stream().map(Human::getName).toList()  +
                 ", дата рождения: " + birthDate +
                 ", дата смерти: " + (deathDate != null ? deathDate : "Нет") +
                 ", пол: " + gender +
                 "\n}";
     }
 
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }
 }

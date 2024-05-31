@@ -4,6 +4,7 @@ import ru.gb.family_tree.FT.FamilyTree;
 import ru.gb.family_tree.FT.FileHandler;
 import ru.gb.family_tree.Human.Gender;
 import ru.gb.family_tree.Human.Human;
+import ru.gb.family_tree.service.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -11,6 +12,8 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
+        Service service = new Service(familyTree);
+
 
         //String name, Gender gender, LocalDate birthDate
 
@@ -49,6 +52,12 @@ public class Main {
         human5.getAge();
         human6.getAge();
         human7.getAge();
+
+
+        service.sortByName();
+        System.out.println(familyTree);
+        service.sortByBirthDate();
+        System.out.println(familyTree);
 
 
         // Сохранение FamilyTree в файл
