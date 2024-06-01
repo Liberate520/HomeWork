@@ -11,21 +11,21 @@ import OOP.SemDZ.homeWork.human.HumanIterator;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
     private int idCount=0;
-    private List<Human> humanTreeList;
+    private List<T> humanTreeList;
 
     public FamilyTree() {
-        humanTreeList = new ArrayList<>();
+        humanTreeList = new ArrayList<T>();
     }
 
-    public void addHuman (Human human){
+    public void addHuman (T human){
         idCount++;
         human.setId(idCount);
         humanTreeList.add(human);
     }
 
-    public void wedding (Human groom, Human bride){
+    public void wedding (T groom, T bride){
         groom.setSpouse(bride);
         bride.setSpouse(groom);
     }
@@ -47,7 +47,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         ft.append("В дереве ");
         ft.append(humanTreeList.size());
         ft.append(" членов семьи: \n");
-        for (Human human: humanTreeList){
+        for (T human: humanTreeList){
             ft.append(human.getName());
             ft.append(", id ");
             ft.append(human.getId());
@@ -62,7 +62,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<T> iterator() {
         return new HumanIterator(humanTreeList);
     }
 
