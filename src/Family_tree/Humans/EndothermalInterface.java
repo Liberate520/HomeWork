@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 public interface EndothermalInterface<T> extends Comparable<T>{
-
+   
     boolean addChild(T child);
     T getMother();
     void setMother(T value);
@@ -27,5 +27,5 @@ public interface EndothermalInterface<T> extends Comparable<T>{
     void setInFamilyStatus(boolean value);
     void setFamilyID( long value);
     long getFamilyID();
-
+    
 }

@@ -1,37 +1,36 @@
 package Family_tree;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.*;
 
-import Family_tree.Humans.Gender;
-import Family_tree.Humans.Human;
+import Family_tree.Humans.EndothermalInterface;
+
 import Family_tree.Tree.Family_tree;
 
-public class Service implements Serializable{
+public class Service<T extends EndothermalInterface<T>> implements Serializable{
 
-    private Family_tree tree;
-    private List<Family_tree> trees;
+    private Family_tree<T> tree;
+    private List<Family_tree<T>> trees;
     private long counter;
-    private List<Human> humans;
-    private long humancounter;
-    private Human currentHuman;
+    private List<T> valuesList;
+    private long counterOfT;
+    private T currentItem;
 
     public Service() {
         trees = new ArrayList<>();
-        humans = new ArrayList<>();
+        valuesList = new ArrayList<>();
         this.counter = 0;
-        this.humancounter = 0;
+        this.counterOfT = 0;
     }
 
-    public Family_tree createTree(String family) {
-        Family_tree newTree = new Family_tree(family, counter);
+    public Family_tree<T> createTree(String family) {
+        Family_tree<T> newTree = new Family_tree<>(family, counter);
         counter++;
         trees.add(newTree);
         return newTree;
     }
 
-    public boolean add(Family_tree family_tree) {
+    public boolean add(Family_tree<T> family_tree) {
         try {
             family_tree.setid(counter);
             counter++;
@@ -52,7 +51,7 @@ public class Service implements Serializable{
         return vals;
     }
 
-    public Family_tree getTree(long index){
+    public Family_tree<T> getTree(long index){
         if (this.trees.size() == 0){
             return null;
         }
@@ -60,25 +59,24 @@ public class Service implements Serializable{
         return this.tree;
     }
 
-    public void createHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother, long id){
-        Human human = new Human(name, gender, birthDate, deathDate, father, mother);
-        human.setInnerID(humancounter);
-        humancounter++;
-        humans.add(human);        
+    public void addItem(T value){        
+        value.setFamilyID(counterOfT);
+        counterOfT++;
+        valuesList.add(value);        
     }
-    public Human getHuman(long index){
-        if (this.humans.size() == 0){
+    public T getHuman(long index){
+        if (this.valuesList.size() == 0){
             return null;
         }
-        this.currentHuman = this.humans.get((int) index);
-        return this.currentHuman;
+        this.currentItem = this.valuesList.get((int) index);
+        return this.currentItem;
     }
-    public String getHumansInfo(long index){
-        Family_tree currentTree = this.getTree(index);
+    public String getItemsInfo(long index){
+        Family_tree<T> currentTree = this.getTree(index);
         StringBuilder sb = new StringBuilder();
-        sb.append("Список людей в семье " + currentTree.getFamily() + " \n");
-        for (Human human : currentTree) {
-            sb.append(human + "\n");
+        sb.append("Список членов семьи " + currentTree.getFamily() + " \n");
+        for (T value : currentTree) {
+            sb.append(value + "\n");
         }
         return sb.toString();
     }

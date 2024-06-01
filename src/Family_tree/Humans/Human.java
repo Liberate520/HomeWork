@@ -21,20 +21,24 @@ public class Human implements Serializable,  EndothermalInterface<Human>{
     private Set<String> names;
     private long famID;
     
-    
-
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
+   
+    public Human (String name, Gender gender, LocalDate birthDate, Human father, Human mother){
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
         this.mother = mother;
-        this.father = father;
+        this.father = father;        
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {        
+        this(name, gender, birthDate,  father, mother);
+       
         this.children = new HashSet<>() ;
         this.birthDate = birthDate;
         this.deathDate = deathDate;    
         this.links = new HashSet<>() ;
         Instant instant = Instant.now();
-        Service service = new Service();
+        Service<Human> service = new Service<>();
         this.innerID = instant.toEpochMilli() + service.nameValue(name);
         if (deathDate != null){
             this.vital = Vital.dead; 
@@ -49,9 +53,7 @@ public class Human implements Serializable,  EndothermalInterface<Human>{
         this(name, gender, birthDate,  null,  null,  null); 
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother){
-        this(name, gender, birthDate,  null, father, mother);
-    }
+    
 
     public boolean addChild(Human child){ 
         if (!children.contains(child)){ 
@@ -248,6 +250,9 @@ public class Human implements Serializable,  EndothermalInterface<Human>{
     public int compareTo(Human o) {
         return Long.compare(this.innerID, o.getInnerID());
     }
+
+    
+   
 
     
 }
