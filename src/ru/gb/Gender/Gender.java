@@ -1,5 +1,5 @@
 package ru.gb.Gender;
 
 public enum Gender {
-    male, female
+    Male, Female
 }
