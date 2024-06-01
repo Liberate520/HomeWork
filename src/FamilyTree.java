@@ -51,4 +51,12 @@ class FamilyTree {
     public List<Human> getChildrenOf(Human human) {
         return human.getChildren();
     }
+
+    public void setPeople(List<Human> peopleFromFile) {
+        this.humanList = peopleFromFile;
+    }
+
+    public List<Human> getPeople() {
+        return humanList;
+    }
 }

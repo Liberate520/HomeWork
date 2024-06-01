@@ -1,15 +1,17 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
+
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    // private Human mother;
-    // private Human father;
+    private Human mother;
+    private Human father;
     private List<Human> children;
     private List<Human> parents;
 
@@ -43,7 +45,7 @@ public class Human {
     }
 
     public boolean addChild(Human child) {
-        if (! children.contains(child)){
+        if (child != null && !children.contains(child)){
             children.add(child);
             return true;
         }
@@ -51,7 +53,7 @@ public class Human {
     }
 
     public boolean addParent(Human parent) {
-        if (! parents.contains(parent)){
+        if (parents != null && !parents.contains(parent)){
             parents.add(parent);
             return true;
         }
@@ -59,6 +61,13 @@ public class Human {
     }
 
     public List<Human> getParents() {
+        List<Human> parents = new ArrayList<>();
+        if (mother != null) {
+            parents.add(mother);
+        }
+        if (father != null) {
+            parents.add(father);
+        }
         return parents;
     }
 
@@ -77,7 +86,7 @@ public class Human {
     public LocalDate getDeathDate() {
         return deathDate;
     }
-    
+
     public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }
