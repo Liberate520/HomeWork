@@ -1,9 +1,10 @@
 package Family_tree.Humans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
-public interface EndothermalInterface<T> extends Comparable<T>{
+public interface EndothermalInterface<T> extends Serializable, Comparable<T>{
    
     boolean addChild(T child);
     T getMother();

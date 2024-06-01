@@ -1,5 +1,4 @@
 package Family_tree.Humans;
-import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +6,7 @@ import java.util.*;
 import Family_tree.Service;
 
 
-public class Human implements Serializable,  EndothermalInterface<Human>{
+public class Human implements EndothermalInterface<Human>{
     private long innerID;
     private String  name;    
     private Human mother, father;

@@ -74,9 +74,9 @@ public class Family_tree<T extends EndothermalInterface<T>> implements Serializa
 
     public String getlnfo(){
         StringBuilder sb = new StringBuilder();
-        sb.append("B дереве ");
+        sb.append("B дереве объектов: ");
         sb.append(list.size()); 
-        sb.append(" объектов: \n"); 
+        sb.append("\n"); 
         for (T value: list){ 
             sb.append(value);            
             sb.append("\n"); 
