@@ -141,7 +141,7 @@ public class Human implements Serializable,  EndothermalInterface<Human>{
 
     @Override 
     public String toString(){
-        return "id=" + famID + ", name=" + name ;
+        return "name = " + name ;
     }    
     public String getName(){return this.name;}
 

@@ -16,8 +16,18 @@ public class Main {
         Human Peter = new Human("Peter", Gender.Male, LocalDate.of(2003, 12, 12));
         tree.add(Peter);
         tree.add(Di);
-        System.out.println(tree.search(0));
+        Di.setSpouse(Peter);
+        Peter.setSpouse(Di);  
+        Human Bobbi = new Human("Bobby", Gender.Male, LocalDate.of(2024,3,8));
+        Di.addChild(Bobbi);
+        Peter.addChild(Bobbi);
+        Bobbi.setFather(Peter);
+        Bobbi.setMother(Di);  
+        tree.add(Bobbi);    
         System.out.println(tree.getlnfo());
+        System.out.println("___________________________________________________________________");
+        Human x = tree.search(2);
+        System.out.println(x.getlnfo());
         
     }
 
