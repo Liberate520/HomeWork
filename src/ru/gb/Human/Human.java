@@ -51,11 +51,11 @@ public class Human {
     }
 
     public boolean addParent(Human parent) {
-        if (parent.getGender().equals(Gender.Male)) {
+        if (parent.getGender().equals(Gender.Male))
             setFather(parent);
-        } else if (parent.getGender().equals(Gender.Female)) {
+         else if (!parent.getGender().equals(Gender.Female))
             setMother(parent);
-        }
+
         return true;
     }
 
@@ -96,7 +96,7 @@ public class Human {
 
     public int getAge() {
         if (deathDate == null) {
-            return getPeriod(birthDate, LocaleDate.now());
+            return getPeriod(birthDate, LocalDate.now());
         } else {
             return getPeriod(birthDate, deathDate);
         }

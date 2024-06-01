@@ -5,18 +5,18 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree newTree = new FamilyTree();
 
-        Human Vasiliy = new Human("Василий", "Кройтор",
-                LocalDate.of(1955, 8, 5), Gender.male);
-        Human Tamara = new Human("Тамара", "Кройтор",
-                LocalDate.of(1957, 1, 6), Gender.female);
+        Human vasiliy = new Human("Василий", "Кройтор",
+                LocalDate.of(1955, 8, 5), Gender.Male);
+        Human tamara = new Human("Тамара", "Кройтор",
+                LocalDate.of(1957, 1, 6), Gender.Female);
 
-        newTree.add(Vasiliy);
-        newTree.add(Tamara);
+        newTree.add(vasiliy);
+        newTree.add(tamara);
 
-        Human Andrej = new Human("Андрей", "Кройтор",
-                LocalDate.of(1984, 5, 5), Gender.male);
+        Human andrej = new Human("Андрей", "Кройтор",
+                LocalDate.of(1984, 5, 5), Gender.Male);
 
-        newTree.add(Andrej);
+        newTree.add(andrej);
 
         System.out.println(newTree);
     }
