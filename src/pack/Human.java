@@ -176,6 +176,48 @@ public class Human {
     }
 
 
+    public void getBrothers() {
+        String info = "";
+        if (this.mother != null) {
+            for (Human human : this.mother.children) {
+                if (human.gender == Gender.Male && this != human) {
+                    info += human.name + "\n";
+                }
+            }
+        } else if (this.father != null) {
+            for (Human human : this.father.children) {
+                if (human.gender == Gender.Male && this != human) {
+                    info += human.name + "\n";
+                }
+            }
+
+        }
+        info += "\n-----------------------";
+        System.out.println("Братья " + this.name + ": \n" + info);
+    }
+
+
+    public void getSisters() {
+        String info = "";
+        if (this.mother != null) {
+            for (Human human : this.mother.children) {
+                if (human.gender == Gender.Female && this != human) {
+                    info += human.name + "\n";
+                }
+            }
+        } else if (this.father != null) {
+            for (Human human : this.father.children) {
+                if (human.gender == Gender.Female && this != human) {
+                    info += human.name + "\n";
+                }
+            }
+
+        }
+        info += "\n-----------------------";
+        System.out.println("Сёстры " + this.name + ": \n" + info);
+    }
+
+
 
 }
 
