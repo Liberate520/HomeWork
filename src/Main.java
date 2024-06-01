@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         // Создание экземпляра генеалогического древа
@@ -18,6 +21,26 @@ public class Main {
         familyTree.addMember(jane);
         familyTree.addMember(mike);
         familyTree.addMember(anna);
+
+        // Запись данных в файл
+        DataStorage storage = new FileDataStorage();
+        try {
+            storage.saveToFile("family_tree.dat", familyTree.getMembers());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Чтение данных из файла
+        List<Person> loadedMembers;
+        try {
+            loadedMembers = storage.loadFromFile("family_tree.dat");
+            System.out.println("Loaded members from file:");
+            for (Person person : loadedMembers) {
+                System.out.println(person);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Проведение исследования: получение всех детей Джона
         Person parent = familyTree.findPersonByName("John");
