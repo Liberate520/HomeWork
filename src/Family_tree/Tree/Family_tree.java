@@ -1,6 +1,7 @@
 package Family_tree.Tree;
 import Family_tree.Humans.ComparatorByAge;
 import Family_tree.Humans.ComparatorByName;
+import Family_tree.Humans.EndothermalInterface;
 import Family_tree.Humans.Gender;
 import Family_tree.Humans.Human;
 import Family_tree.Humans.Link;
@@ -9,8 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Family_tree implements Serializable, Iterable<Human>{
-    private List<Human> list;
+public class Family_tree<T extends EndothermalInterface<T>> implements Serializable, Iterable<T>{
+    private List<T> list;
     private long id;
     private String family;
     private long counter;
@@ -40,21 +41,12 @@ public class Family_tree implements Serializable, Iterable<Human>{
         return this.family;
     }
 
-    public void add(Human human){
-        if (human != null && !this.list.contains(human)){
-            human.setInFamilyStatus(true);
-            human.setFamilyID(this.counter);
-            list.add(human);
+    public void add(T value){
+        if (value != null && !this.list.contains(value)){            
+            list.add(value);
             this.counter ++;
         }        
-    }    
-    public void add(String name, Gender gender, LocalDate birthDate){
-        Human human = new Human(name, gender, birthDate);
-        human.setInFamilyStatus(true);
-        human.setFamilyID(this.counter);
-        list.add(human);
-        this.counter ++;
-    }
+    }      
 
     public List<Human> searchByName(String name){
         List<Human> result = new ArrayList<>();

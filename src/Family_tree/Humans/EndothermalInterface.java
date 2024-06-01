@@ -23,7 +23,9 @@ public interface EndothermalInterface<T> extends Comparable<T>{
     String getChildrenlnfo();
     long getInnerID();
     void setInnerID(long id);
-
-
+    boolean inFamily();
+    void setInFamilyStatus(boolean value);
+    void setFamilyID( long value);
+    long getFamilyID();
 
 }
