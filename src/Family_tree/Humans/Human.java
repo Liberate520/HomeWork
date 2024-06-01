@@ -7,7 +7,7 @@ import java.util.*;
 import Family_tree.Service;
 
 
-public class Human implements Serializable, Comparable<Human>{
+public class Human implements Serializable,  EndothermalInterface<Human>{
     private long innerID;
     private String  name;    
     private Human mother, father;
