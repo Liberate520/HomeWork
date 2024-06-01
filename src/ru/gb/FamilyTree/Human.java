@@ -1,4 +1,4 @@
-package ru.gb.Human;
+package ru.gb.FamilyTree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +7,6 @@ import java.util.List;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class Human {
     private long  id;
@@ -34,13 +30,13 @@ public class Human {
         children = new ArrayList<>();
     }
 
-    public Human(String name, LocalDate birthDate, Gender gender) {
-        this(name, birthDate, gender);
-    }
-
-    public Human(String name, LocalDate birthDate, Gender gender, Human mother, Human father) {
-        this(name, birthDate, gender, mother, father);
-    }
+//    public Human(String name, LocalDate birthDate, Gender gender) {
+//        this(name, birthDate, gender);
+//    }
+//
+//    public Human(String name, LocalDate birthDate, Gender gender, Human mother, Human father) {
+//        this(name, birthDate, gender, mother, father);
+//    }
 
     public boolean addChild(Human child) {
         if (!children.contains(child)) {
@@ -53,7 +49,7 @@ public class Human {
     public boolean addParent(Human parent) {
         if (parent.getGender().equals(Gender.Male))
             setFather(parent);
-         else if (!parent.getGender().equals(Gender.Female))
+         else if (parent.getGender().equals(Gender.Female))
             setMother(parent);
 
         return true;
