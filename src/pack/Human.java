@@ -1,12 +1,13 @@
 package pack;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private LocalDate birthDate, deathDate;
     private Gender gender;
@@ -162,6 +163,16 @@ public class Human {
         }
         for (Human child : spouse.children){
             this.addChild(child);
+        }
+    }
+
+
+    public void setDivorce(){
+        if(this.spouse != null){
+            for (Human human : this.spouse.children){
+                this.removeChild(human);
+            }
+                    this.spouse = null;
         }
     }
 
