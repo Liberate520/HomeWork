@@ -24,4 +24,12 @@ public class FamilyTree {
         }
         return null;
     }
+    public List<Person> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Person> members) {
+        this.members = members;
+    }
 }
+
