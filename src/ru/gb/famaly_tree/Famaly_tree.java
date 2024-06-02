@@ -1,9 +1,11 @@
 package ru.gb.famaly_tree;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Famaly_tree {
-    private String a;
+public class Famaly_tree implements Serializable {
+    private String childStringOutput;       // надо переименовать +
+    public Human founder;
 
     public void addThisInThis(Human child, Human parent){
         parent.children.add(child);
@@ -27,6 +29,10 @@ public class Famaly_tree {
         }
     }
 
+    public void Founder(Human founderOfFamalyTree){
+        founder = founderOfFamalyTree;
+
+    }
 
 
     public void printPersona(Human persona){
@@ -37,16 +43,16 @@ public class Famaly_tree {
         System.out.println("дата смерти: "+persona.getDeathDate());
         System.out.println("имя отца: "+persona.getFather());
         System.out.println("имя матери: "+persona.getMother());
-        a="";
+        childStringOutput ="";
         if (!persona.getChildren().isEmpty()){
             for (Human child : persona.children){
-                a += child.getName()+", ";
+                childStringOutput += child.getName()+", ";
             }
         }
         else{
-            a+="нет";
+            childStringOutput +="нет";
         }
-        System.out.println("дети: "+a);
+        System.out.println("дети: "+ childStringOutput);
     }
 
     public void coupl(Human man, Human woman){

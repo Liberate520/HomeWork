@@ -1,9 +1,11 @@
 package ru.gb.famaly_tree;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        Writable writable = new FileHandler();
         /*
         Визуализация тестового дерева
                 ?       ?
@@ -22,6 +24,7 @@ public class Main {
 
 
         //создание экземпляров класса human
+        /*
         Human h1 = new Human("имя1",Gender.male,LocalDate.of(1940,3,5),LocalDate.of(2010,1,4));
         Human h2 = new Human("имя2",Gender.female,LocalDate.of(1940,7,23),LocalDate.of(2009,10,8));
 
@@ -43,6 +46,7 @@ public class Main {
 
         //создание дерева
         Famaly_tree famaly1 = new Famaly_tree();
+        famaly1.Founder(h1);
 
         //добавление детей h3 и h31 к матери h2
         famaly1.addThisInThis(h3,h2);
@@ -89,9 +93,17 @@ public class Main {
         System.out.println("__________________");
         famaly1.printPersona(h311);
         System.out.println("__________________");
-
-
-        //вывод всех детей и их детей и тп
         famaly1.printFamalyTree(h1);
+        writable.saved(famaly1);
+
+        */
+        //вывод всех детей и их детей и тп
+        Famaly_tree famaly1 = writable.download();
+        famaly1.printPersona(famaly1.founder);
+        famaly1.printFamalyTree(famaly1.founder);
+
+
+
+
     }
 }
