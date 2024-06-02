@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,31 +24,37 @@ public class Main {
         familyTree.addHuman(mary);
         familyTree.addHuman(anna);
 
-        // Запись в файл
-        try {
-            fileHandler.writeToFile(filename, familyTree.getPeople());
-            System.out.println("Данные успешно записаны в файл " + filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       // Запись в файл
+       try {
+           fileHandler.writeToFile(filename, familyTree.getPeople());
+           System.out.println("Данные успешно записаны в файл " + filename);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
 
-        // Чтение из файла
-        try {
-            List<Human> peopleFromFile = fileHandler.readFromFile(filename);
-            familyTree.setPeople(peopleFromFile);
-            System.out.println("Данные успешно считаны из файла " + filename);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+       // Чтение из файла
+       try {
+           List<Human> peopleFromFile = fileHandler.readFromFile(filename);
+           familyTree.setPeople(peopleFromFile);
+           System.out.println("Данные успешно считаны из файла " + filename);
+       } catch (IOException | ClassNotFoundException e) {
+           e.printStackTrace();
+       }
 
-        // Проводим исследование: находим детей Anna
-        Human targetHuman = familyTree.getHumanByName("Anna");
-        if (targetHuman != null) {
-            List<Human> children = familyTree.getChildrenOf(targetHuman);
-            System.out.println("Дети " + targetHuman.getName() + ": " + children);
-        } else {
-            System.out.println("Человек не найден");
-        }
+       // Проводим исследование: находим детей Anna
+       Human targetHuman = familyTree.getHumanByName("Anna");
+       if (targetHuman != null) {
+           List<Human> children = familyTree.getChildrenOf(targetHuman);
+           System.out.println("Дети " + targetHuman.getName() + ": " + children);
+       } else {
+           System.out.println("Человек не найден");
+       }
+
+        // Сортировка по имени
+        familyTree.sortByName();
+
+        // Сортировка по дате рождения
+        familyTree.sortByBirthDate();
 
         
     }

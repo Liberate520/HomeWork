@@ -1,7 +1,11 @@
+
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-class FamilyTree {
+class FamilyTree implements Iterable<Human>{
     private List<Human> humanList;
 
     public FamilyTree() {
@@ -58,5 +62,26 @@ class FamilyTree {
 
     public List<Human> getPeople() {
         return humanList;
+    }
+
+    public void sortByName() {
+        Collections.sort(humanList, (h1, h2) -> h1.getName().compareTo(h2.getName()));
+        printHuman();
+    }
+
+    public void sortByBirthDate() {
+        Collections.sort(humanList, (h1, h2) -> h1.getBirthDate().compareTo(h2.getBirthDate()));
+        printHuman();
+    }
+
+    public void printHuman() {
+        for (Human human : this) {
+            System.out.println(human);
+        }
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return humanList.iterator();
     }
 }

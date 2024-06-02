@@ -1,3 +1,5 @@
+
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -6,8 +8,8 @@ import java.util.List;
 
 public class Human implements Serializable {
 
-    private String name;
-    private Gender gender;
+    private final String name;
+    private final Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
     private Human mother;
