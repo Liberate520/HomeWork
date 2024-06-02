@@ -1,11 +1,11 @@
 package Family_tree.Tree;
 import Family_tree.Humans.ComparatorByAge;
+import Family_tree.Humans.ComparatorByID;
 import Family_tree.Humans.ComparatorByName;
-import Family_tree.Humans.EndothermalInterface;
-import java.io.Serializable;
+import Family_tree.Humans.Endothermal;
 import java.util.*;
 
-public class Family_tree<T extends EndothermalInterface<T>> implements Serializable, Iterable<T>{
+public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
     private List<T> list;
     private long id;
     private String family;
@@ -52,25 +52,16 @@ public class Family_tree<T extends EndothermalInterface<T>> implements Serializa
         }
         return result;
     }
-    public T search(int id){        
+    public T getItem(int id){        
         return this.list.get(id);
     }
 
     public void excludeMember(T value){
         value.setInFamilyStatus(false);
     }
-    public List<T> getFullList(){
-        return this.list;
-    } 
     public List<T> getMemberList(){
-        List<T> memList = new ArrayList<>();
-        for (T value : this.list) {
-            if (value.inFamily() == true){
-                memList.add(value);
-            }
-        }
-        return memList;
-    }  
+        return this.list;
+    }     
 
     public String getlnfo(){
         StringBuilder sb = new StringBuilder();
@@ -101,8 +92,10 @@ public class Family_tree<T extends EndothermalInterface<T>> implements Serializa
         this.list.sort(new ComparatorByAge<T>());
     }
     public void sortByInnerId(){
-        Collections.sort(this.list);
+        this.list.sort(new ComparatorByID<T>());
     }
+    
+   
 
    
     

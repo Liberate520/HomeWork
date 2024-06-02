@@ -2,7 +2,7 @@ package Family_tree.Humans;
 
 import java.util.Comparator;
 
-public class ComparatorByAge<T extends EndothermalInterface<T>> implements Comparator<T>{
+public class ComparatorByAge<T extends Endothermal> implements Comparator<T>{
 
     @Override
     public int compare(T o1, T o2) {        

@@ -3,10 +3,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
-import Family_tree.Service;
 
 
-public class Human implements EndothermalInterface<Human>{
+
+public class Human implements Endothermal{
     private long innerID;
     private String  name;    
     private Human mother, father;
@@ -18,27 +18,31 @@ public class Human implements EndothermalInterface<Human>{
     private Human spouse;
     private boolean isInFamily;
     private Set<String> names;
-    private long famID;
+    private int famID;
+    private long nameValue;
     
    
     public Human (String name, Gender gender, LocalDate birthDate, Human father, Human mother){
+        Instant instant = Instant.now();       
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
         this.mother = mother;
-        this.father = father;        
+        this.father = father; 
+        nameValue = 0;
+        char[] chars = name.toCharArray();
+        for (char iterable_element : chars) {
+            nameValue = nameValue + (long) iterable_element;
+        }
+        this.innerID = instant.toEpochMilli() + nameValue;
     }
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {        
-        this(name, gender, birthDate,  father, mother);
-       
+        this(name, gender, birthDate,  father, mother);       
         this.children = new HashSet<>() ;
         this.birthDate = birthDate;
         this.deathDate = deathDate;    
-        this.links = new HashSet<>() ;
-        Instant instant = Instant.now();
-        Service<Human> service = new Service<>();
-        this.innerID = instant.toEpochMilli() + service.nameValue(name);
+        this.links = new HashSet<>() ;        
         if (deathDate != null){
             this.vital = Vital.dead; 
         } else {
@@ -51,22 +55,6 @@ public class Human implements EndothermalInterface<Human>{
     public Human(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate,  null,  null,  null); 
     }
-
-    
-
-    public boolean addChild(Human child){ 
-        if (!children.contains(child)){ 
-            children.add(child);
-            if (this.gender == Gender.Female){
-                child.setMother(this);
-            } else {
-                child.setFather(this);
-            }
-            return true;
-        }
-        return false;
-    }
-
     public Human getMother(){
         return this.mother;
     }
@@ -236,22 +224,28 @@ public class Human implements EndothermalInterface<Human>{
         this.name = value;
     }
 
-    public void setFamilyID( long value){
+    public void setFamilyID( int value){
         this.famID = value;
     }
-    public long getFamilyID(){
+    public int getFamilyID(){
         return this.famID;
     }
     public long getInnerID(){return this.innerID;}
-    public void setInnerID(long id){this.innerID = id;}
-
-    @Override
-    public int compareTo(Human o) {
-        return Long.compare(this.innerID, o.getInnerID());
+    public void setInnerID(long id){this.innerID = id;} 
+       
+    public boolean addChild(Human child) {
+        if (children.contains(child)){
+            return false;
+        } else {
+            children.add(child);
+            return true;
+        }
     }
 
-    
+    @Override
+    public int compareTo(Endothermal o) {
+        return Long.compare(this.innerID, o.getInnerID());
+       
+    }
    
-
-    
 }

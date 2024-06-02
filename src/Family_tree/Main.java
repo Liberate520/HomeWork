@@ -11,29 +11,25 @@ public class Main {
     
 
     public static void main(String[] args){
-        Family_tree<Human> tree = new Family_tree<>("Smith");
-        Human Di = new Human("Di", Gender.Female, LocalDate.of(2005, 5,1));
-        Human Peter = new Human("Peter", Gender.Male, LocalDate.of(2003, 12, 12));
-        tree.add(Peter);
-        tree.add(Di);
-        Di.setSpouse(Peter);
-        Peter.setSpouse(Di);  
-        Human Bobbi = new Human("Simona", Gender.Female, LocalDate.of(2024,3,8));
-        Di.addChild(Bobbi);
-        Peter.addChild(Bobbi);
-        Bobbi.setFather(Peter);
-        Bobbi.setMother(Di);  
-        tree.add(Bobbi);    
+        Service<Human> ser =new Service<>("Smith");      
+
+        ser.addItem(new Human("Rikki", Gender.Male, LocalDate.of(2000,7,6)));
+        ser.addItem(new Human("Dana", Gender.Female, LocalDate.of(2005,2,6)));
+        ser.addItem(new Human("Suzy", Gender.Female, LocalDate.of(2024,1,6)));
+
+        Family_tree<Human> tree = ser.getTree();
+
+       
+        System.out.println("__________________________________________________________________________________________________________");
+        ser.SortByAge();
         System.out.println(tree.getlnfo());
-        System.out.println("___________________________________________________________________");
-        Human x = tree.search(2);
-        System.out.println(x.getlnfo());
-        tree.sortByAge();
-        System.out.println("___________________________________________________________________");
+        System.out.println("__________________________________________________________________________________________________________");
+        ser.SortByID();
         System.out.println(tree.getlnfo());
-        tree.sortByName();
-        System.out.println("___________________________________________________________________");
+        System.out.println("__________________________________________________________________________________________________________");
+        ser.SortByName();
         System.out.println(tree.getlnfo());
+        System.out.println("__________________________________________________________________________________________________________");
     }
 
 
