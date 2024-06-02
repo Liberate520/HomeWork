@@ -6,18 +6,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.io.IOException;
 
-public class FamilyTree implements Iterable<Node> {
-    private List<Node> nodeList;
-    private IOOperations ioOperations;
+public class FamilyTree<T extends Node> implements Iterable<T> {
+    private List<T> nodeList;
+    private IOOperations<T> ioOperations;
 
     public FamilyTree() {
         this.nodeList = new ArrayList<>();
-        this.ioOperations = new FileIO();
+        this.ioOperations = new FileIO<>();
     }
 
-    public void addNode(Node node) {
+    public void addNode(T node) {
         node.setId(nodeList.size());
         nodeList.add(node);
+    }
+
+    public boolean removeNode(String name) {
+        Iterator<T> iterator = nodeList.iterator();
+        while (iterator.hasNext()) {
+            T node = iterator.next();
+            if (node.getName().equals(name)) {
+                iterator.remove();
+                return true;
+            }
+        }
+        return false;
     }
 
     public void saveTreeToFile(String filename) throws IOException {
@@ -29,22 +41,20 @@ public class FamilyTree implements Iterable<Node> {
     }
 
     public void printTree() {
-        for (Node node : nodeList) {
+        for (T node : nodeList) {
             System.out.println(node);
         }
     }
 
     @Override
-    public Iterator<Node> iterator() {
+    public Iterator<T> iterator() {
         return nodeList.iterator();
     }
 
-    // Метод для сортировки списка узлов по имени
     public void sortByName() {
         Collections.sort(nodeList, (node1, node2) -> node1.getName().compareTo(node2.getName()));
     }
 
-    // Метод для сортировки списка узлов по дате рождения
     public void sortByBirthDate() {
         Collections.sort(nodeList, (node1, node2) -> node1.getBirthDate().compareTo(node2.getBirthDate()));
     }
