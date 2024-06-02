@@ -4,7 +4,7 @@ import human.Human;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator<T extends Human> implements Iterator<T> {
+public class FamilyTreeIterator<T extends TreeNode<T>> implements Iterator<T> {
     private List<T> list;
     private int index;
 

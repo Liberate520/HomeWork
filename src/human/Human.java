@@ -1,5 +1,7 @@
 package human;
 
+import familyTree.TreeNode;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,18 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human<T extends Human> implements Serializable {
+public class Human<T extends TreeNode<T>> implements Serializable {
     private long id;
     private final String name;
     private final Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private final List<T> parents;
-    private final List<T> children;
-    private T spouse;
+    private final List<Human> parents;
+    private final List<Human> children;
+    private Human spouse;
 
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, T father, T mother) {
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         id = -1;
         this.name = name;
         this.gender = gender;
@@ -34,7 +36,7 @@ public class Human<T extends Human> implements Serializable {
         children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate, T father, T mother) {
+    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
         this(name, gender, birthDate, null, father, mother);
     }
 
@@ -42,7 +44,7 @@ public class Human<T extends Human> implements Serializable {
         this(name, gender, birthDate, null, null, null);
     }
 
-    public boolean addChild(T child) {
+    public boolean addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
             return true;
@@ -50,14 +52,14 @@ public class Human<T extends Human> implements Serializable {
         return false;
     }
 
-    public void addParents(T parent) {
+    public void addParents(Human parent) {
         if (!parents.contains(parent)) {
             parents.add(parent);
         }
     }
 
-    public T getFather() {
-        for (T parent : parents) {
+    public Human getFather() {
+        for (Human parent : parents) {
             {
                 return parent;
             }
@@ -65,8 +67,8 @@ public class Human<T extends Human> implements Serializable {
         return null;
     }
 
-    public T getMother() {
-        for (T parent : parents) {
+    public Human getMother() {
+        for (Human parent : parents) {
             {
                 return parent;
             }
@@ -83,11 +85,11 @@ public class Human<T extends Human> implements Serializable {
         return diff.getYears();
     }
 
-    public void setSpouse(T spouse) {
+    public void setSpouse(Human spouse) {
         this.spouse = spouse;
     }
 
-    public T getSpouse() {
+    public Human getSpouse() {
         return spouse;
     }
 
@@ -111,11 +113,11 @@ public class Human<T extends Human> implements Serializable {
         return deathDate;
     }
 
-    public List<T> getParents() {
+    public List<Human> getParents() {
         return parents;
     }
 
-    public List<T> getChildren() {
+    public List<Human> getChildren() {
         return children;
     }
 
@@ -167,7 +169,7 @@ public class Human<T extends Human> implements Serializable {
 
     public String getMotherInfo() {
         String res = "мать: ";
-        T mother = getMother();
+        Human mother = getMother();
         if (mother != null) {
             res += mother.getName();
         } else {
@@ -178,7 +180,7 @@ public class Human<T extends Human> implements Serializable {
 
     public String getFatherInfo() {
         String res = "отец: ";
-        T father = getFather();
+        Human father = getFather();
         if (father != null) {
             res += father.getName();
         } else {

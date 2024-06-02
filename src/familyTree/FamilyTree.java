@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends Human<E>> implements Serializable, Iterable<E> {
-    private long humansId;
-    private final List<E> humanList;
+public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
+    public long humansId;
+    public List<E> humanList;
 
     public FamilyTree() {
         this(new ArrayList<>());
@@ -152,15 +152,15 @@ public class FamilyTree<E extends Human<E>> implements Serializable, Iterable<E>
     }
 
     public void sortByName(){
-        humanList.sort(new HumanComparatorByName());
+        humanList.sort(new HumanComparatorByName<>());
     }
 
     public void sortByBirthDate(){
-        humanList.sort(new HumanComparatorByBirthDate());
+        humanList.sort(new HumanComparatorByBirthDate<>());
     }
 
     public void sortByGender(){
-        humanList.sort(new HumanComparatorByGender());
+        humanList.sort(new HumanComparatorByGender<>());
     }
 
     @Override
