@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        UserInterface ui = new UserInterface();
+        ui.start();
+        FamilyTree<Node> familyTree = new FamilyTree<>();
 
         // Создаем узлы для семейного дерева
         Node father = new Node("Василий", Gender.Male, LocalDate.of(1963, 12, 10));
@@ -25,6 +27,21 @@ public class Main {
         // Устанавливаем Екатерину как мать Василия
         father.setMother(grandmother);
 
+        // Создаем объекты DogNode
+        DogNode dog1 = new DogNode("Барон", Gender.Male, LocalDate.of(2018, 5, 10));
+        DogNode dog2 = new DogNode("Лайка", Gender.Female, LocalDate.of(2019, 7, 15));
+
+        // Добавляем собак в дерево
+        familyTree.addNode(dog1);
+        familyTree.addNode(dog2);
+
+        // Добавляем новую собаку
+        DogNode newDog = new DogNode("Рекс", Gender.Male, LocalDate.of(2018, 5, 20));
+        familyTree.addNode(newDog);
+
+        // Удаляем собаку по имени
+        familyTree.removeNode("Рекс");
+
         // Сохраняем дерево в файл
         try {
             familyTree.saveTreeToFile("family_tree.dat");
@@ -33,7 +50,7 @@ public class Main {
         }
 
         // Загружаем дерево из файла и выводим его
-        FamilyTree loadedFamilyTree = new FamilyTree();
+        FamilyTree<Node> loadedFamilyTree = new FamilyTree<>();
         try {
             loadedFamilyTree.loadTreeFromFile("family_tree.dat");
         } catch (IOException | ClassNotFoundException e) {
