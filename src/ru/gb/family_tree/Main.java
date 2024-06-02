@@ -1,4 +1,4 @@
-//Lyalin
+//Lyalin Ilya
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.humans.Human;
