@@ -48,7 +48,7 @@ public class Main {
         Famaly_tree famaly1 = new Famaly_tree();
         famaly1.AddFounder(h1);
 
-        //добавление детей h3 и h31 к матери h2
+        //добавление детей h3 и h31 к рродителю h2
         famaly1.addThisInThis(h3,h2);
         famaly1.addThisInThis(h31,h2);
 
@@ -97,7 +97,7 @@ public class Main {
         famaly1.printFamalyTree(h1);
 
         //*/
-        //вывод всех детей и их детей и тп
+        //закомментровать все что выше и раскомментировать ниже. Далее проиходит загрузка и вывод информации о персоне h1 и его семейного дерева
         //Famaly_tree famaly1 = writable.download();
         //famaly1.printPersona(famaly1.GetFounder());
         //famaly1.printFamalyTree(famaly1.GetFounder());

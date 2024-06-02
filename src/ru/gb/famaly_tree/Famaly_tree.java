@@ -6,6 +6,7 @@ import java.util.*;
 public class Famaly_tree implements Serializable {
     private Human founder;
 
+    //добваление ребенка к родителю
     public void addThisInThis(Human child, Human parent){
         parent.addChild(child);
         if (parent.getGender() == Gender.male){
@@ -16,6 +17,7 @@ public class Famaly_tree implements Serializable {
         }
     }
 
+    //вывод дерева
     public void printFamalyTree(Human persona){
         Queue<Human> childrenList = new LinkedList<>();
         childrenList.add(persona);
@@ -32,14 +34,15 @@ public class Famaly_tree implements Serializable {
             }
         }
     }
-
+    //добваление ключегого члена дерева
     public void AddFounder(Human founderOfFamalyTree){
         founder = founderOfFamalyTree;
     }
+    //возварат ключегого члена дерева
     public Human GetFounder(){
         return founder;
     }
-
+    //создание пар
     public void coupl(Human man, Human woman){
         man.addChildren(woman.getChildren());
         for(Human child : woman.getChildren()){
