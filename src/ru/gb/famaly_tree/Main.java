@@ -48,7 +48,7 @@ public class Main {
         Famaly_tree famaly1 = new Famaly_tree();
         famaly1.AddFounder(h1);
 
-        //добавление детей h3 и h31 к рродителю h2
+        //добавление детей h3 и h31 к родителю h2
         famaly1.addThisInThis(h3,h2);
         famaly1.addThisInThis(h31,h2);
 
