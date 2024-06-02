@@ -13,8 +13,17 @@ import static ru.gb.family_tree.humans.Gender.Male;
 public class Main {
     public static void main(String[] args) {
         String filePath = "src/ru/gb/family_tree/tree.txt";
-//        FamilyTree tree = testTree();
-        FamilyTree tree = load(filePath);
+        FamilyTree tree = testTree();
+//        FamilyTree tree = load(filePath);
+        System.out.println(tree);
+        System.out.println("============sortByName===========");
+        tree.sortByName();
+        System.out.println(tree);
+        System.out.println("===========sortByBirthDate============");
+        tree.sortByBirthDate();
+        System.out.println(tree);
+        System.out.println("===========sortByGender============");
+        tree.sortByGender();
         System.out.println(tree);
 
         save(tree, filePath);
@@ -40,7 +49,7 @@ public class Main {
         tree.setWedding(hum1.getId(), hum2.getId());
 
         Human hum3 = new Human("Nastya", Female, LocalDate.of(2000, 8, 5), hum1, hum2);
-        Human hum4 = new Human("Gleb", Female, LocalDate.of(1998, 3, 15), hum1, hum2);
+        Human hum4 = new Human("Gleb", Male, LocalDate.of(1998, 3, 15), hum1, hum2);
 
         tree.add(hum3);
         tree.add(hum4);
