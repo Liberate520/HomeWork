@@ -5,10 +5,10 @@
  * @version v1.0
  */
 
-package family_true.family_tree.defalt_comporator;
+package family_true.model.family_tree.defalt_comporator;
 
-import family_true.family_tree.Entity;
-import family_true.api.IndexId;
+import family_true.model.family_tree.Entity;
+import family_true.model.api.IndexId;
 
 import java.util.Comparator;
 

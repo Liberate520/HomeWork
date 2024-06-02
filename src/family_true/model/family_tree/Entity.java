@@ -5,10 +5,10 @@
  * @version v1.0
  */
 
-package family_true.family_tree;
+package family_true.model.family_tree;
 
-import family_true.api.BuildId;
-import family_true.human.Gender;
+import family_true.model.api.BuildId;
+import family_true.model.human.Gender;
 
 import java.time.LocalDate;
 import java.util.List;

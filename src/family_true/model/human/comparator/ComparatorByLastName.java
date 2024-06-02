@@ -5,9 +5,9 @@
  * @version v1.0
  */
 
-package family_true.human.comparator;
+package family_true.model.human.comparator;
 
-import family_true.family_tree.Entity;
+import family_true.model.family_tree.Entity;
 
 import java.util.Comparator;
 

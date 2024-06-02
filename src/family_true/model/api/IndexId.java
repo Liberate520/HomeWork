@@ -5,7 +5,7 @@
  * @version v1.0
  */
 
-package family_true.api;
+package family_true.model.api;
 
 public interface IndexId {
 

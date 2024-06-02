@@ -5,10 +5,10 @@
  * @version v1.0
  */
 
-package family_true.builder;
+package family_true.model.builder;
 
-import family_true.api.BuildId;
-import family_true.family_tree.FamilyTree;
+import family_true.model.api.BuildId;
+import family_true.model.family_tree.FamilyTree;
 
 import java.util.ArrayList;
 import java.util.List;

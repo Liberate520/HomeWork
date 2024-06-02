@@ -5,11 +5,11 @@
  * @version v1.0
  */
 
-package family_true.human;
+package family_true.model.human;
 
 public enum Gender {
 
-    MALE("муж."), FEMALE("жен.");
+    MALE("муж"), FEMALE("жен");
 
     private String gender;
 
@@ -26,5 +26,14 @@ public enum Gender {
         return "Gender{" +
                 "gender='" + gender + '\'' +
                 '}';
+    }
+
+    public static Gender getGenderByValue(String val) {
+        for (Gender value : Gender.values()) {
+            if (value.getGenderValue().equals(val)) {
+                return value;
+            }
+        }
+        return null;
     }
 }

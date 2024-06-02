@@ -5,13 +5,13 @@
  * @version v1.0
  */
 
-package family_true.family_tree;
+package family_true.model.family_tree;
 
-import family_true.api.IndexId;
-import family_true.family_tree.defalt_comporator.ComparatorIndexId;
-import family_true.human.comparator.ComparatorByBirthDay;
-import family_true.human.comparator.ComparatorByLastName;
-import family_true.human.iterator.EntityIterator;
+import family_true.model.api.IndexId;
+import family_true.model.family_tree.defalt_comporator.ComparatorIndexId;
+import family_true.model.human.comparator.ComparatorByBirthDay;
+import family_true.model.human.comparator.ComparatorByLastName;
+import family_true.model.human.iterator.EntityIterator;
 
 import java.io.Serializable;
 import java.util.*;
@@ -33,7 +33,10 @@ public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T
         if (this.entities == null || this.entities.size() == 0) {
             this.entityId = 0;
         }
-        this.entities = this.entities == null ? new ArrayList<>() : this.entities;
+        if (this.entities == null) {
+            this.entities = new ArrayList<>();
+        }
+        this.entities.addAll(entities);
     }
 
     public long getId() {
@@ -61,7 +64,7 @@ public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T
         return this;
     }
 
-    public T getHumanById(long id) {
+    public T getEntityById(long id) {
         for (T entity : entities) {
             if (entity.getId() == id) {
                 return entity;
@@ -81,11 +84,11 @@ public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T
     }
 
     public List<T> findChildrenByParentId(long parentId) {
-        return findChildrenByParent(getHumanById(parentId), null);
+        return findChildrenByParent(getEntityById(parentId), null);
     }
 
     public List<T> findSiblingsById(long humanId) {
-        T child = getHumanById(humanId);
+        T child = getEntityById(humanId);
         T parent = (T) (child.getMother() != null ? child.getMother() : child.getFather());
         return findChildrenByParent(parent, child);
     }

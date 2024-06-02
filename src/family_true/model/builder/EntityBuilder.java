@@ -5,9 +5,9 @@
  * @version v1.0
  */
 
-package family_true.builder;
+package family_true.model.builder;
 
-import family_true.api.BuildId;
+import family_true.model.api.BuildId;
 
 public class EntityBuilder {
 

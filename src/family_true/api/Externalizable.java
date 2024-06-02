@@ -7,7 +7,7 @@
 
 package family_true.api;
 
-import family_true.family_tree.FamilyTree;
+import family_true.model.family_tree.FamilyTree;
 
 import java.io.Serializable;
 import java.util.List;

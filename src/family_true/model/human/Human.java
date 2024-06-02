@@ -5,11 +5,11 @@
  * @version v1.0
  */
 
-package family_true.human;
+package family_true.model.human;
 
-import family_true.api.BuildId;
-import family_true.family_tree.Entity;
-import family_true.api.IndexId;
+import family_true.model.api.BuildId;
+import family_true.model.family_tree.Entity;
+import family_true.model.api.IndexId;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,8 +19,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static family_true.human.Gender.FEMALE;
-import static family_true.human.Gender.MALE;
+import static family_true.model.api.Constants.DD_MM_YYYY_FORMATTER;
+import static family_true.model.human.Gender.FEMALE;
+import static family_true.model.human.Gender.MALE;
 
 public class Human implements Serializable, IndexId, BuildId, Entity<Human> {
 
@@ -46,6 +47,10 @@ public class Human implements Serializable, IndexId, BuildId, Entity<Human> {
 
     public Human(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay, Human mother, Human father) {
         this(name, patronymic, lastName, gender, birthDay, null, mother, father, new ArrayList<>());
+    }
+
+    public Human(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay, LocalDate deathDay) {
+        this(name, patronymic, lastName, gender, birthDay, deathDay, null, null, new ArrayList<>());
     }
 
     public Human(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay, LocalDate deathDay, Human mother, Human father) {
@@ -290,10 +295,10 @@ public class Human implements Serializable, IndexId, BuildId, Entity<Human> {
         sb.append(", gender: ");
         sb.append(human.getGender().getGenderValue());
         sb.append(", birthDay: ");
-        sb.append(human.getBirthDay().toString());
+        sb.append(human.getBirthDay().format(DD_MM_YYYY_FORMATTER));
         if (human.getDeathDay() != null) {
             sb.append(", deathDay: ");
-            sb.append(human.getDeathDay().toString());
+            sb.append(human.getDeathDay().format(DD_MM_YYYY_FORMATTER));
         }
         return sb;
     }

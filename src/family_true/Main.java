@@ -1,13 +1,15 @@
 package family_true;
 
-import family_true.family_tree.Entity;
+import family_true.model.family_tree.Entity;
 import family_true.api.Externalizable;
-import family_true.family_tree.FamilyTree;
-import family_true.family_tree.Service;
-import family_true.family_tree.defalt_comporator.ComparatorIndexId;
-import family_true.human.Gender;
-import family_true.human.Human;
+import family_true.model.family_tree.FamilyTree;
+import family_true.model.family_tree.Service;
+import family_true.model.family_tree.defalt_comporator.ComparatorIndexId;
+import family_true.model.human.Gender;
+import family_true.model.human.Human;
 import family_true.impl.FileHandler;
+import family_true.view.ConsoleUI;
+import family_true.view.View;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -16,7 +18,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        testData();
+        View view = new ConsoleUI();
+        view.start();
+    //testData();
     }
 
     public static void testData() {

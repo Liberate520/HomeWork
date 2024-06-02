@@ -5,20 +5,23 @@
  * @version v1.0
  */
 
-package family_true.family_tree;
+package family_true.model.family_tree;
 
-import family_true.builder.FamilyTreeBuilder;
+import family_true.api.Externalizable;
+import family_true.impl.FileHandler;
+import family_true.model.builder.FamilyTreeBuilder;
 import java.util.List;
 
 public class Service<T extends Entity<T>> {
 
-    private FamilyTreeGroup familyTreeGroup;
-
+    private FamilyTreeGroup<T> familyTreeGroup;
     private FamilyTreeBuilder familyTreeBuilder;
+    private Externalizable external;
 
     public Service() {
         this.familyTreeGroup = new FamilyTreeGroup();
         this.familyTreeBuilder = new FamilyTreeBuilder();
+        this.external = new FileHandler();
     }
 
     public FamilyTreeGroup getFamilyTreeGroup() {
@@ -34,7 +37,7 @@ public class Service<T extends Entity<T>> {
     }
 
     public FamilyTree addHumanByTree(T entity, boolean isNewTree) {
-        List<FamilyTree> familyTreeList = familyTreeGroup.getFamilyTreeList();
+        List<FamilyTree<T>> familyTreeList = familyTreeGroup.getFamilyTreeList();
         FamilyTree tree;
         if (isNewTree) {
             tree = familyTreeBuilder.build(entity);
@@ -47,11 +50,15 @@ public class Service<T extends Entity<T>> {
         return tree;
     }
 
+    public Entity findEntityById(long id) {
+        return familyTreeGroup.findEntityById(id);
+    }
+
     public void sortFamilyTreeById() {
         familyTreeGroup.sortFamilyTreeById();
     }
 
-    public void sortFamilyTreeById(List<FamilyTree> familyTrees) {
+    public void sortFamilyTreeById(List<FamilyTree<T>> familyTrees) {
         familyTreeGroup.sortFamilyTreeById(familyTrees);
     }
 
@@ -59,7 +66,7 @@ public class Service<T extends Entity<T>> {
         familyTreeGroup.sortFamilyTreesEntitiesById();
     }
 
-    public void sortFamilyTreesEntitiesById(List<FamilyTree> familyTrees) {
+    public void sortFamilyTreesEntitiesById(List<FamilyTree<T>> familyTrees) {
         familyTreeGroup.sortFamilyTreesEntitiesById(familyTrees);
     }
 
@@ -67,7 +74,7 @@ public class Service<T extends Entity<T>> {
         familyTreeGroup.sortFamilyTreesEntitiesByBirthDay();
     }
 
-    public void sortFamilyTreesEntitiesByBirthDay(List<FamilyTree> familyTrees) {
+    public void sortFamilyTreesEntitiesByBirthDay(List<FamilyTree<T>> familyTrees) {
         familyTreeGroup.sortFamilyTreesEntitiesByBirthDay(familyTrees);
     }
 
@@ -75,7 +82,17 @@ public class Service<T extends Entity<T>> {
         familyTreeGroup.sortFamilyTreesEntitiesByLastName();
     }
 
-    public void sortFamilyTreesEntitiesByLastName(List<FamilyTree> familyTrees) {
+    public void sortFamilyTreesEntitiesByLastName(List<FamilyTree<T>> familyTrees) {
         familyTreeGroup.sortFamilyTreesEntitiesByLastName(familyTrees);
+    }
+
+    public void exportList() {
+        external.writeAllExternal(getFamilyTreeGroup().getFamilyTreeList());
+    }
+
+    public void importList() {
+        List<FamilyTree> familyTreeList = external.readExternal();
+        System.out.println(familyTreeList.toString());
+        getFamilyTreeGroup().getFamilyTreeList().addAll(familyTreeList);
     }
 }

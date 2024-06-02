@@ -7,7 +7,7 @@
 
 package family_true.impl;
 
-import family_true.family_tree.FamilyTree;
+import family_true.model.family_tree.FamilyTree;
 import family_true.api.Externalizable;
 
 import java.io.*;

@@ -5,7 +5,7 @@
  * @version v1.0
  */
 
-package family_true.human.iterator;
+package family_true.model.human.iterator;
 
 import java.util.Iterator;
 import java.util.List;

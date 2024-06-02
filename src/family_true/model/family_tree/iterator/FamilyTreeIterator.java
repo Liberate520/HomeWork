@@ -5,19 +5,20 @@
  * @version v1.0
  */
 
-package family_true.family_tree.iterator;
+package family_true.model.family_tree.iterator;
 
-import family_true.family_tree.FamilyTree;
+import family_true.model.family_tree.Entity;
+import family_true.model.family_tree.FamilyTree;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator implements Iterator<FamilyTree> {
+public class FamilyTreeIterator<T extends Entity<T>> implements Iterator<FamilyTree<T>> {
 
     private int index;
-    private List<FamilyTree> familyTreeList;
+    private List<FamilyTree<T>> familyTreeList;
 
-    public FamilyTreeIterator(List<FamilyTree> familyTreeList) {
+    public FamilyTreeIterator(List<FamilyTree<T>> familyTreeList) {
         this.familyTreeList = familyTreeList;
     }
 
@@ -27,7 +28,7 @@ public class FamilyTreeIterator implements Iterator<FamilyTree> {
     }
 
     @Override
-    public FamilyTree next() {
+    public FamilyTree<T> next() {
         return familyTreeList.get(index++);
     }
 }
