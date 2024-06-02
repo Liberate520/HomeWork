@@ -11,10 +11,27 @@ public class Human implements Serializable {
         private String name;
         private LocalDate birthDate;
         private LocalDate deathDate;
-        Human mother, father;
-        List<Human> children = new ArrayList<>();
+        private Human mother, father;
+        private List<Human> children = new ArrayList<>();
         private Gender gender;
-        boolean isHeLive = false;
+        private boolean isHeLive = false;
+        private String childStringOutput;
+
+        public void addMother(Human mother){
+                this.mother = mother;
+        }
+
+        public void addChild(Human child){
+                this.children.add(child);
+        }
+
+        public void addFather(Human father){
+                this.father = father;
+        }
+
+        public void addChildren(List<Human> children){
+                this.children = children;
+        }
 
 
         public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate){
@@ -22,7 +39,7 @@ public class Human implements Serializable {
                 this.gender = gender;
                 this.birthDate = birthDate;
                 if (deathDate == null){
-                        isHeLive = true;
+                        this.isHeLive = true;
                         this.deathDate = LocalDate.now();
                 }
                 else{
@@ -35,7 +52,7 @@ public class Human implements Serializable {
                 this.gender = gender;
                 this.birthDate = birthDate;
                 if (deathDate == null){
-                        isHeLive = true;
+                        this.isHeLive = true;
                         this.deathDate = LocalDate.now();
                 }
                 else{
@@ -57,46 +74,81 @@ public class Human implements Serializable {
                         this.children = children;
                 }
         }
+
         public String  getName(){
                 return name;
         }
-        public String getBirthDate(){
-                return "" + birthDate;
-        }
-        public String getDeathDate(){
-                if (isHeLive == true){
-                        return "жив на данный момент";
-                }
-                else{
-                        return "" + deathDate;
-                }
-        }
-        public String getGender(){
-                return gender.toString();
-        }
-        public String getFather(){
-                if (this.father != null) {
-                        return father.name;
-                }
-                else{
-                        return "нет";
-                }
-        }
-        public String getMother(){
-                if (this.mother != null) {
-                        return mother.name;
-                }
-                else{
-                        return "нет";
-                }
-        }
-        public List<Human> getChildren(){
 
+        public LocalDate getBirthDate(){
+                return birthDate;
+        }
+
+        public LocalDate getDeathDate(){
+                return deathDate;
+        }
+
+        public boolean deadOrAlive(){
+                return isHeLive;
+        }
+
+        public Gender getGender(){
+                return gender;
+        }
+
+        public Human getFather(){
+                return father;
+        }
+
+        public Human getMother(){
+                return mother;
+        }
+
+        public List<Human> getChildren(){
                 return children;
         }
+
         public String Age(){
                 Period period = Period.between(birthDate, deathDate);
                 return "" + period.getYears();
+        }
 
+        public String ToString(){
+                String outputPersonInfo = "имя: "+ getName()+"\n"+"возраст: "+ Age()+"\n"+"пол: "+getGender()+"\n"+"дата рождения: "+getBirthDate();
+                String temporary = "";
+                if (deadOrAlive() == true){
+                        temporary = "жив на данный момент";
+                }
+                else{
+                        temporary = "дата смерти: "+ getDeathDate();
+                }
+                outputPersonInfo = outputPersonInfo + "\n" + temporary;
+                temporary = "";
+                if (getFather() != null){
+                        temporary = "имя отца: "+getFather().getName();
+                }
+                else{
+                        temporary = "имя отца: неизвестно";
+                }
+                outputPersonInfo = outputPersonInfo + "\n" + temporary;
+                temporary = "";
+                if (getMother() != null){
+                        temporary = "имя матери: "+getMother().getName();
+                }
+                else{
+                        temporary = "имя матери: неизвестно";
+                }
+                outputPersonInfo = outputPersonInfo + "\n" + temporary;
+                temporary = "";
+                if (!getChildren().isEmpty()){
+                        for (Human child : getChildren()){
+                                temporary += child.getName()+", ";
+                        }
+                }
+                else{
+                        temporary +="нет";
+                }
+                outputPersonInfo = outputPersonInfo + "\n" + "дети: "+ temporary;
+                //System.out.println(outputPersonInfo);
+                return outputPersonInfo;
         }
 }

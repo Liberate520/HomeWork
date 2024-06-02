@@ -24,7 +24,7 @@ public class Main {
 
 
         //создание экземпляров класса human
-        /*
+        ///*
         Human h1 = new Human("имя1",Gender.male,LocalDate.of(1940,3,5),LocalDate.of(2010,1,4));
         Human h2 = new Human("имя2",Gender.female,LocalDate.of(1940,7,23),LocalDate.of(2009,10,8));
 
@@ -46,7 +46,7 @@ public class Main {
 
         //создание дерева
         Famaly_tree famaly1 = new Famaly_tree();
-        famaly1.Founder(h1);
+        famaly1.AddFounder(h1);
 
         //добавление детей h3 и h31 к матери h2
         famaly1.addThisInThis(h3,h2);
@@ -69,41 +69,37 @@ public class Main {
         famaly1.coupl(h31,h32);
 
         //вывод информации о персоне
-        famaly1.printPersona(h1);
+        System.out.println(h1.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h2);
+        System.out.println(h2.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h3);
+        System.out.println(h3.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h31);
+        System.out.println(h31.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h4);
+        System.out.println(h4.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h5);
+        System.out.println(h5.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h6);
+        System.out.println(h6.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h7);
+        System.out.println(h7.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h8);
+        System.out.println(h8.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h9);
+        System.out.println(h9.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h32);
+        System.out.println(h32.ToString());
         System.out.println("__________________");
-        famaly1.printPersona(h311);
+        System.out.println(h311.ToString());
         System.out.println("__________________");
-        famaly1.printFamalyTree(h1);
         writable.saved(famaly1);
+        famaly1.printFamalyTree(h1);
 
-        */
+        //*/
         //вывод всех детей и их детей и тп
-        Famaly_tree famaly1 = writable.download();
-        famaly1.printPersona(famaly1.founder);
-        famaly1.printFamalyTree(famaly1.founder);
-
-
-
-
+        //Famaly_tree famaly1 = writable.download();
+        //famaly1.printPersona(famaly1.GetFounder());
+        //famaly1.printFamalyTree(famaly1.GetFounder());
     }
 }

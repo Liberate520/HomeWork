@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Famaly_tree implements Serializable {
-    private String childStringOutput;       // надо переименовать +
-    public Human founder;
+    private Human founder;
 
     public void addThisInThis(Human child, Human parent){
-        parent.children.add(child);
-        child.mother = parent;
+        parent.addChild(child);
+        if (parent.getGender() == Gender.male){
+            child.addFather(parent);
+        }
+        else{
+            child.addMother(parent);
+        }
     }
 
     public void printFamalyTree(Human persona){
@@ -19,9 +23,9 @@ public class Famaly_tree implements Serializable {
             Human child = childrenList.remove();
             System.out.println();
             System.out.print("У "+child.getName());
-            if (!persona.children.isEmpty()){
+            if (!persona.getChildren().isEmpty()){
                 System.out.print(" дети: ");
-                for (Human childchild : child.children){
+                for (Human childchild : child.getChildren()){
                     System.out.print(childchild.getName()+ " ");
                     childrenList.add(childchild);
                 }
@@ -29,36 +33,17 @@ public class Famaly_tree implements Serializable {
         }
     }
 
-    public void Founder(Human founderOfFamalyTree){
+    public void AddFounder(Human founderOfFamalyTree){
         founder = founderOfFamalyTree;
-
     }
-
-
-    public void printPersona(Human persona){
-        System.out.println("имя: "+persona.getName());
-        System.out.println("возраст: "+persona.Age());
-        System.out.println("пол: "+persona.getGender());
-        System.out.println("дата рождения: "+persona.getBirthDate());
-        System.out.println("дата смерти: "+persona.getDeathDate());
-        System.out.println("имя отца: "+persona.getFather());
-        System.out.println("имя матери: "+persona.getMother());
-        childStringOutput ="";
-        if (!persona.getChildren().isEmpty()){
-            for (Human child : persona.children){
-                childStringOutput += child.getName()+", ";
-            }
-        }
-        else{
-            childStringOutput +="нет";
-        }
-        System.out.println("дети: "+ childStringOutput);
+    public Human GetFounder(){
+        return founder;
     }
 
     public void coupl(Human man, Human woman){
-        man.children = woman.children;
-        for(Human child : woman.children){
-            child.father = man;
+        man.addChildren(woman.getChildren());
+        for(Human child : woman.getChildren()){
+            child.addFather(man);
         }
     }
 }
