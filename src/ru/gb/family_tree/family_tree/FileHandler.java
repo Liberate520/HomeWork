@@ -1,10 +1,8 @@
-package ru.gb.family_tree.service;
-
-import ru.gb.family_tree.family_tree.FamilyTree;
+package ru.gb.family_tree.family_tree;
 
 import java.io.*;
 
-public class FileHandler implements Writable{
+public class FileHandler implements Writable {
 
     @Override
     public void saveFileByte(FamilyTree familyTree) throws IOException {

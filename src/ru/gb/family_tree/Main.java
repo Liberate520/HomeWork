@@ -1,6 +1,7 @@
 package ru.gb.family_tree;
 
 
+import ru.gb.family_tree.family_tree.FamilyItem;
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
@@ -10,7 +11,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree familyTree = new FamilyTree<>();
 
         Human dima = new Human("Dima", "11.11.1950", Gender.Male);
         Human anna = new Human("Anna", "03.06.1954", Gender.Female);

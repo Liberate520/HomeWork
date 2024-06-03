@@ -1,47 +1,47 @@
 package ru.gb.family_tree.family_tree;
 
 import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.service.HumanComparatorByAge;
-import ru.gb.family_tree.service.HumanComparatorByName;
-import ru.gb.family_tree.service.HumanIterator;
+import ru.gb.family_tree.human.HumanComparatorByAge;
+import ru.gb.family_tree.human.HumanComparatorByName;
+import ru.gb.family_tree.human.HumanIterator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<E extends FamilyItem> implements Serializable, Iterable<E> {
 
-    private List<Human> familyTree;
+    private List<E> familyTree;
 
     public FamilyTree(){
        familyTree = new ArrayList<>();
     }
 
-    public void addHuman(Human human){
+    public void addHuman(E human){
         familyTree.add(human);
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(familyTree);
+    public Iterator<E> iterator() {
+        return new HumanIterator<>(familyTree);
     }
 
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        for (Human human: familyTree ){
-           stringBuilder.append(human);
+        for (E e: familyTree ){
+           stringBuilder.append(e);
         }
         return stringBuilder.toString();
     }
 
     public void sortByName(){
-        familyTree.sort(new HumanComparatorByName());
+        familyTree.sort(new HumanComparatorByName<>());
     }
 
     public void sortByAge(){
-        familyTree.sort(new HumanComparatorByAge());
+        familyTree.sort(new HumanComparatorByAge<>());
     }
 
 
