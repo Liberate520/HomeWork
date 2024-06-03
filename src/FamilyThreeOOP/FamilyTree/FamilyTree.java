@@ -1,9 +1,14 @@
-package FamilyThreeOOP;
+package FamilyThreeOOP.FamilyTree;
 
+import FamilyThreeOOP.Human;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree {
+
+public class FamilyTree implements Serializable, Iterable<Human>{
     private long humansId;
     private List<Human> humanList;
 
@@ -129,5 +134,18 @@ public class FamilyTree {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public void sortByName(){
+        humanList.sort(new HumanComporatorByName());
+    }
+
+    public void sortByBirtDate(){
+        humanList.sort(new HumanComporatorByBirthDate());
+    }
+
+    @Override
+    public Iterator<Human> iterator(){
+        return new FamilyTreeIterator(humanList);
     }
 }

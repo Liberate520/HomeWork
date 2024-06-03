@@ -1,5 +1,7 @@
 package FamilyThreeOOP;
 
+import FamilyThreeOOP.FamilyTree.FamilyTree;
+
 import java.io.*;
 
 public class FileHandler implements Rewritable{
