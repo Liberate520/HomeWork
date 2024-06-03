@@ -6,8 +6,7 @@ import Family_tree.Humans.Endothermal;
 import java.util.*;
 
 public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
-    private List<T> list;
-    private long id;
+    private List<T> list;    
     private String family;
     private long counter;
 
@@ -15,22 +14,10 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
         list = new ArrayList<>(); 
         this.family = family;          
         this.counter = 0;     
-    }
-    public Family_tree(String family, long id){
-        list = new ArrayList<>(); 
-        this.family = family;          
-        this.counter = 0; 
-        this.id = id;    
-    }
+    } 
 
-    public String getFamily(){ return this.family; }
-
-    public void setid(long value){
-        this.id = value;
-    }
-    public long getid(){
-        return this.id;
-    }
+    public String getFamily(){ return this.family; }    
+    
     @Override
     public String toString(){
         return this.family;
@@ -93,10 +80,6 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
     }
     public void sortByInnerId(){
         this.list.sort(new ComparatorByID<T>());
-    }
-    
-   
-
-   
+    }   
     
 }
