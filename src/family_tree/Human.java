@@ -18,7 +18,7 @@ public class Human {
 
     public Human(String name, String surName, LocalDate dateOfBirth, LocalDate dateOfDead, Sex sex,
                  Human father, Human mother) {
-        int id = -1;
+        id = -1;
         this.name = name;
         this.surName = surName;
         this.dateOfBirth = dateOfBirth;
@@ -145,10 +145,36 @@ public class Human {
         sb.append(", возраст: ");
         sb.append(getAge());
         sb.append(", родители: ");
-        sb.append(parents.toString());
+        sb.append(getParentsInfo());
         sb.append(", дети: ");
-        sb.append(children.toString());
+        sb.append(getChildrenInfo());
         return sb.toString();
+    }
+
+    public String getParentsInfo() {
+        StringBuilder result = new StringBuilder();
+        if (!parents.isEmpty()) {
+            for (Human parent : parents) {
+                result.append(parent.getName());
+                result.append(" ");
+            }
+        } else {
+            result.append("нет информации");
+        }
+        return result.toString();
+    }
+
+    public String getChildrenInfo() {
+        StringBuilder result = new StringBuilder();
+        if (!children.isEmpty()) {
+            for (Human child : children) {
+                result.append(child.getName());
+                result.append(" ");
+            }
+        } else {
+            result.append("нет");
+        }
+        return result.toString();
     }
 
     @Override
