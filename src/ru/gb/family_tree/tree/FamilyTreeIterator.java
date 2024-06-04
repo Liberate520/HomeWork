@@ -5,22 +5,24 @@ import ru.gb.family_tree.humans.Human;
 import java.util.Iterator;
 import java.util.List;
 
-public class HumanIterator implements Iterator<Human> {
+public class FamilyTreeIterator<T extends TreeNode<T>> implements Iterator<T> {
 
     private int curId;
-    private List<Human> humanList;
+    private List<T> humanList;
 
-    public HumanIterator(List<Human> humanList) {
+    public FamilyTreeIterator(List<T> humanList) {
         this.humanList = humanList;
+        curId = 0;
     }
 
     @Override
     public boolean hasNext() {
-        return humanList.size() > curId;
+//        return humanList.size() > curId;
+        return curId < humanList.size();
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return humanList.get(curId++);
     }
 }
