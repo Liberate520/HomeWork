@@ -5,32 +5,44 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class Human implements Serializable {
+    private static List<HumanObserver> observers = new ArrayList<>();
+    private static short idCounter = 0; // Статический счетчик для ID
+
+    public static void addObserver(HumanObserver observer) {
+        observers.add(observer);
+    }
+
+    public static void removeObserver(HumanObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (HumanObserver observer : observers) {
+            observer.onHumanCreated(this);
+        }
+    }
+
+    private short id;
     private String name;
     private LocalDate birthDate, deathDate;
     private Gender gender;
     private List<Human> children = new ArrayList<>();
     private Human mother, father;
-    private short age;
-    private static final LocalDate currentDate = LocalDate.now();
-    private static Family_Tree familyTree = new Family_Tree();
     private Human spouse;
 
-
-    public Human(){}
-
+    public Human() {}
 
     public Human(String name, LocalDate birthDate, Gender gender) {
+        this.id = ++idCounter; // Присвоение уникального ID
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
-        this.age = calculateAge(birthDate, currentDate);
-        familyTree.addHumanToFamilyTree(this);
+        notifyObservers();
     }
 
     public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender) {
+        this.id = ++idCounter; // Присвоение уникального ID
         this.name = name;
         if (isValidBirthDate(birthDate)) {
             this.birthDate = birthDate;
@@ -40,36 +52,35 @@ public class Human implements Serializable {
         this.gender = gender;
         if (isValidDeathDate(deathDate, birthDate)) {
             this.deathDate = deathDate;
-            this.age = calculateAge(birthDate, deathDate);
         } else {
             System.out.println("Некорректная дата смерти");
-            this.age = calculateAge(birthDate, currentDate);
-            familyTree.addHumanToFamilyTree(this);
         }
+        notifyObservers();
     }
 
     private boolean isValidBirthDate(LocalDate birthDate) {
-        return birthDate != null && birthDate.getYear() <= currentDate.getYear();
+        return birthDate != null && birthDate.getYear() <= LocalDate.now().getYear();
     }
 
     private boolean isValidDeathDate(LocalDate deathDate, LocalDate birthDate) {
-        return deathDate != null && deathDate.getYear() <= currentDate.getYear() && deathDate.getYear() > birthDate.getYear();
+        return deathDate != null && deathDate.getYear() <= LocalDate.now().getYear() && deathDate.getYear() > birthDate.getYear();
     }
 
-    private short calculateAge(LocalDate birthDate, LocalDate endDate) {
-        return (short) (endDate.getYear() - birthDate.getYear());
+    private double calculateAge() {
+        if (this.deathDate != null)
+            return deathDate.getYear() - birthDate.getYear();
+        else
+            return LocalDate.now().getYear() - birthDate.getYear();
     }
 
-    public short getAge() {
-        System.out.println("Возраст человека: " + this.age);
-        return this.age;
+    public double getAge() {
+        return this.calculateAge();
     }
 
     public void setDeathDate(LocalDate deathDate) {
         if (isValidDeathDate(deathDate, this.birthDate)) {
             this.deathDate = deathDate;
-            this.age = calculateAge(this.birthDate, deathDate);
-            System.out.println("Человек умер и его возраст: " + this.age);
+            System.out.println("Человек умер и его возраст: " + this.calculateAge());
         } else {
             System.out.println("Некорректная дата смерти");
         }
@@ -123,21 +134,25 @@ public class Human implements Serializable {
         this.children.remove(child);
     }
 
-    public void getInfo() {
+    public String getInfo() {
         String motherName = (this.mother != null) ? this.mother.name : "Неизвестно";
         String fatherName = (this.father != null) ? this.father.name : "Неизвестно";
-        String info = "Id - " + familyTree.getId(this) + "\nИмя - " + this.name + "\nПол - " + this.gender + "\nДети: \n";
+        String info = "Id - " + this.id + "\nИмя - " + this.name + "\nПол - " + this.gender + "\nДети: \n";
         for (Human child : children) {
             info += child.name + "\n";
         }
-        info += "Мать - " + motherName + "\nОтец - " + fatherName + "\nВозраст - " + this.age + "\n----------------------------------";
-        System.out.println(info);
+        info += "Братья: \n";
+        for (Human human : this.getBrothers())
+            info += human.name + "\n";
+        info += "Сёстры: \n";
+        for (Human human : this.getSisters())
+            info += human.name + "\n";
+        info += "Мать - " + motherName + "\nОтец - " + fatherName + "\nВозраст - " + this.calculateAge() + "\n----------------------------------";
+        return info;
     }
 
-    public void  getChildren() {
-        for (Human child : children) {
-            System.out.println(child.name);
-        }
+    public List<Human> getChildren() {
+        return this.children;
     }
 
     public Human getFather() {
@@ -161,76 +176,58 @@ public class Human implements Serializable {
         for (Human child : this.children) {
             spouse.addChild(child);
         }
-        for (Human child : spouse.children){
+        for (Human child : spouse.children) {
             this.addChild(child);
         }
     }
 
-
-    public void setDivorce(){
-        if(this.spouse != null){
-            for (Human human : this.spouse.children){
+    public void setDivorce() {
+        if (this.spouse != null) {
+            for (Human human : this.spouse.children) {
                 this.removeChild(human);
             }
-                    this.spouse = null;
+            this.spouse = null;
         }
     }
 
-    public short getId(){
-        return (short) familyTree.getId(this);
+    public double getId() {
+        return this.id;
     }
 
-    public void printFamilyTree() {
-        for (Human human : familyTree.getFamilyTree()) {
-            human.getInfo();
-        }
-    }
-
-
-    public void getBrothers() {
-        String info = "";
+    public List<Human> getBrothers() {
+        List<Human> brothers = new ArrayList<>();
         if (this.mother != null) {
             for (Human human : this.mother.children) {
                 if (human.gender == Gender.Male && this != human) {
-                    info += human.name + "\n";
+                    brothers.add(human);
                 }
             }
         } else if (this.father != null) {
             for (Human human : this.father.children) {
                 if (human.gender == Gender.Male && this != human) {
-                    info += human.name + "\n";
+                    brothers.add(human);
                 }
             }
 
         }
-        info += "\n-----------------------";
-        System.out.println("Братья " + this.name + ": \n" + info);
+        return brothers;
     }
 
-
-    public void getSisters() {
-        String info = "";
+    public List<Human> getSisters() {
+        List<Human> sisters = new ArrayList<>();
         if (this.mother != null) {
             for (Human human : this.mother.children) {
                 if (human.gender == Gender.Female && this != human) {
-                    info += human.name + "\n";
+                    sisters.add(human);
                 }
             }
         } else if (this.father != null) {
             for (Human human : this.father.children) {
                 if (human.gender == Gender.Female && this != human) {
-                    info += human.name + "\n";
+                    sisters.add(human);
                 }
             }
-
         }
-        info += "\n-----------------------";
-        System.out.println("Сёстры " + this.name + ": \n" + info);
+        return sisters;
     }
-
-
-
 }
-
-
-
