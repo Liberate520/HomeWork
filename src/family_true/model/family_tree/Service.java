@@ -10,11 +10,18 @@ package family_true.model.family_tree;
 import family_true.api.Externalizable;
 import family_true.impl.FileHandler;
 import family_true.model.builder.FamilyTreeBuilder;
+import family_true.model.human.Gender;
+import family_true.model.human.Human;
+
+import java.time.LocalDate;
 import java.util.List;
 
-public class Service<T extends Entity<T>> {
+import static family_true.model.human.Gender.FEMALE;
+import static family_true.model.human.Gender.MALE;
 
-    private FamilyTreeGroup<T> familyTreeGroup;
+public class Service {
+
+    private FamilyTreeGroup<Human> familyTreeGroup;
     private FamilyTreeBuilder familyTreeBuilder;
     private Externalizable external;
 
@@ -28,16 +35,21 @@ public class Service<T extends Entity<T>> {
         return familyTreeGroup;
     }
 
-    public FamilyTree addHumanToNewTree(T entity) {
-        return addHumanByTree(entity, true);
+    public FamilyTree addHumanToNewTree(Human human) {
+        return addHumanByTree(human, true);
     }
 
-    public FamilyTree addHumanToLastTree(T entity) {
-        return addHumanByTree(entity, familyTreeGroup.getFamilyTreeList().size() == 0);
+    public FamilyTree addHumanToLastTree(Human human) {
+        return addHumanByTree(human, familyTreeGroup.getFamilyTreeList().size() == 0);
     }
 
-    public FamilyTree addHumanByTree(T entity, boolean isNewTree) {
-        List<FamilyTree<T>> familyTreeList = familyTreeGroup.getFamilyTreeList();
+    public FamilyTree addHumanToLastTree(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay, LocalDate deathDay) {
+        Human human = new Human(name, patronymic, lastName, gender, birthDay, deathDay);
+        return addHumanByTree(human, familyTreeGroup.getFamilyTreeList().size() == 0);
+    }
+
+    public FamilyTree addHumanByTree(Human entity, boolean isNewTree) {
+        List<FamilyTree<Human>> familyTreeList = familyTreeGroup.getFamilyTreeList();
         FamilyTree tree;
         if (isNewTree) {
             tree = familyTreeBuilder.build(entity);
@@ -50,6 +62,17 @@ public class Service<T extends Entity<T>> {
         return tree;
     }
 
+    public void addParent(long idChild, long idParent) {
+        Human child = (Human) findEntityById(idChild);
+        Human parent = (Human) findEntityById(idParent);
+
+        if (MALE.equals(parent.getGender())) {
+            child.setFather(parent);
+        } else if (FEMALE.equals(parent.getGender())){
+            child.setMother(parent);
+        }
+    }
+
     public Entity findEntityById(long id) {
         return familyTreeGroup.findEntityById(id);
     }
@@ -58,7 +81,7 @@ public class Service<T extends Entity<T>> {
         familyTreeGroup.sortFamilyTreeById();
     }
 
-    public void sortFamilyTreeById(List<FamilyTree<T>> familyTrees) {
+    public void sortFamilyTreeById(List<FamilyTree<Human>> familyTrees) {
         familyTreeGroup.sortFamilyTreeById(familyTrees);
     }
 
@@ -66,7 +89,7 @@ public class Service<T extends Entity<T>> {
         familyTreeGroup.sortFamilyTreesEntitiesById();
     }
 
-    public void sortFamilyTreesEntitiesById(List<FamilyTree<T>> familyTrees) {
+    public void sortFamilyTreesEntitiesById(List<FamilyTree<Human>> familyTrees) {
         familyTreeGroup.sortFamilyTreesEntitiesById(familyTrees);
     }
 
@@ -74,7 +97,7 @@ public class Service<T extends Entity<T>> {
         familyTreeGroup.sortFamilyTreesEntitiesByBirthDay();
     }
 
-    public void sortFamilyTreesEntitiesByBirthDay(List<FamilyTree<T>> familyTrees) {
+    public void sortFamilyTreesEntitiesByBirthDay(List<FamilyTree<Human>> familyTrees) {
         familyTreeGroup.sortFamilyTreesEntitiesByBirthDay(familyTrees);
     }
 
@@ -82,7 +105,7 @@ public class Service<T extends Entity<T>> {
         familyTreeGroup.sortFamilyTreesEntitiesByLastName();
     }
 
-    public void sortFamilyTreesEntitiesByLastName(List<FamilyTree<T>> familyTrees) {
+    public void sortFamilyTreesEntitiesByLastName(List<FamilyTree<Human>> familyTrees) {
         familyTreeGroup.sortFamilyTreesEntitiesByLastName(familyTrees);
     }
 
@@ -91,8 +114,7 @@ public class Service<T extends Entity<T>> {
     }
 
     public void importList() {
-        List<FamilyTree> familyTreeList = external.readExternal();
-        System.out.println(familyTreeList.toString());
+        List<FamilyTree<Human>> familyTreeList = external.readExternal();
         getFamilyTreeGroup().getFamilyTreeList().addAll(familyTreeList);
     }
 }

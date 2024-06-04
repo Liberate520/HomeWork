@@ -5,7 +5,7 @@
  * @version v1.0
  */
 
-package family_true.model.commands;
+package family_true.view.commands;
 
 import family_true.view.ConsoleUI;
 

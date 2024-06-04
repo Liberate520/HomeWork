@@ -5,16 +5,19 @@
  * @version v1.0
  */
 
-package family_true.model.commands;
+package family_true.view.commands;
 
 import family_true.view.ConsoleUI;
 
 /**
- * addEntity
  * getEntityList
- * sortByLastName
- * sortByDate
+ * addEntity
+ * addParent
  * sortById
+ * sortByLastName
+ * sortByBirthDay
+ * export
+ * import
  * exit
  */
 public abstract class Command {

@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         View view = new ConsoleUI();
         view.start();
-    //testData();
+        //testData();
     }
 
     public static void testData() {
@@ -83,7 +83,7 @@ public class Main {
         ext.writeAllExternal(service.getFamilyTreeGroup().getFamilyTreeList());
 
         // Получаем объект из файла
-        List<FamilyTree> familyTreeList = ext.readExternal();
+        List<FamilyTree<Human>> familyTreeList = ext.readExternal();
 
         System.out.println("=========================SORT BY LAST NAME=============================");
         service.sortFamilyTreesEntitiesByLastName(familyTreeList);
@@ -108,7 +108,7 @@ public class Main {
         ext.updateExternal(service.addHumanToLastTree(child10));
 
         // Получаем объект из файла
-        List<FamilyTree> familyTreeList2 = ext.readExternal();
+        List<FamilyTree<Human>> familyTreeList2 = ext.readExternal();
 
         System.out.println("=========================SORT BY DATE=============================");
         service.sortFamilyTreesEntitiesByBirthDay(familyTreeList2);

@@ -9,7 +9,6 @@ package family_true.model.family_tree;
 
 import family_true.model.family_tree.defalt_comporator.ComparatorIndexId;
 import family_true.model.family_tree.iterator.FamilyTreeIterator;
-import family_true.model.human.Human;
 
 import java.util.ArrayList;
 import java.util.Iterator;

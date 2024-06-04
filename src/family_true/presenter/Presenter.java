@@ -7,10 +7,12 @@
 
 package family_true.presenter;
 
-import family_true.model.family_tree.Entity;
 import family_true.model.family_tree.Service;
+import family_true.model.human.Gender;
 import family_true.model.human.Human;
 import family_true.view.View;
+
+import java.time.LocalDate;
 
 public class Presenter {
 
@@ -19,11 +21,15 @@ public class Presenter {
 
     public Presenter (View view) {
         this.view = view;
-        this.service = new Service<Human>();
+        this.service = new Service();
     }
 
-    public void addEntity(Entity entity) {
-        service.addHumanToLastTree(entity);
+    public void addEntity(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay, LocalDate deathDay) {
+        service.addHumanToLastTree(name, patronymic, lastName, gender, birthDay, deathDay);
+    }
+
+    public void addParent(long idChild, long idParent) {
+        service.addParent(idChild, idParent);
     }
 
     public Human findHumanById(long id) {

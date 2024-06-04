@@ -16,7 +16,7 @@ import family_true.model.human.iterator.EntityIterator;
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T>, Comparable<FamilyTree>, IndexId {
+public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T>, Comparable<FamilyTree<T>>, IndexId {
 
     private static final long serialVersionUID = -8509829358230848460L;
 

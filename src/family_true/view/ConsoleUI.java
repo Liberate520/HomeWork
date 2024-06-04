@@ -7,17 +7,14 @@
 
 package family_true.view;
 
-import family_true.model.commands.CommandMenu;
+import family_true.view.commands.CommandMenu;
 import family_true.model.human.Gender;
-import family_true.model.human.Human;
 import family_true.presenter.Presenter;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 import static family_true.model.api.Constants.*;
-import static family_true.model.human.Gender.FEMALE;
-import static family_true.model.human.Gender.MALE;
 
 public class ConsoleUI implements View {
 
@@ -59,29 +56,19 @@ public class ConsoleUI implements View {
         }
         LocalDate birthDay = getLocalDate("Укажите дату рождения (в формате ДД.ММ.ГГГГ):", false);
         LocalDate deathDay = getLocalDate("Укажите дату смерти (в формате ДД.ММ.ГГГГ, если нет - пробел):", true);
-        Human human = new Human(name, patronymic, lastName, gender, birthDay, deathDay);
-        presenter.addEntity(human);
+        presenter.addEntity(name, patronymic, lastName, gender, birthDay, deathDay);
     }
 
     public void addParent() {
         long idChild = getCheckId("Укажите id человека которому нужно добавить родителя. Отмена действия - r");
-
         if (idChild == -1) {
             return;
         }
-        Human child = presenter.findHumanById(idChild);
         long idParent = getCheckId("Укажите id родителя. Отмена действия - r");
-
         if (idParent == -1) {
             return;
         }
-        Human parent = presenter.findHumanById(idParent);
-
-        if (MALE.equals(parent.getGender())) {
-            child.setFather(parent);
-        } else if (FEMALE.equals(parent.getGender())){
-            child.setMother(parent);
-        }
+        presenter.addParent(idChild, idParent);
     }
 
     public long getCheckId(String text) {
