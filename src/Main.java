@@ -2,15 +2,17 @@ import pack.Family_Tree;
 import pack.Gender;
 import pack.Human;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-//        try {
-//
-//            Writable fileHandler = new FileHandler();
+        try {
+
+            Writable fileHandler = new FileHandler();
             Family_Tree familyTree = new Family_Tree();
             Human human = new Human();
+            String filePath = "src/test.txt";
 
             Human human1 = new Human("Jack", LocalDate.of(2000, 10, 3), Gender.Male);
             Human human2 = new Human("Alisa", LocalDate.of(1998, 5, 20), Gender.Female);
@@ -41,7 +43,7 @@ public class Main {
 //        System.out.println(human5.getInfo());
 
 
-        familyTree.printFamilyTree();
+//        familyTree.printFamilyTree();
 
 
 
@@ -53,18 +55,18 @@ public class Main {
 //            Human deserializedHuman1 = (Human) fileHandler.recoverObjectFromFile();
 //            System.out.println("Объект десериализован из файла: ");
 //            deserializedHuman1.getInfo();
-//
-//            fileHandler.serializeObjectToByteArray(human2);
-//            System.out.println("Объект " + human2.getName() + " сериализован в байтовый массив");
-//
-//
-//            Human deserializedHuman2 = (Human) fileHandler.recoverObjectFromByteArray();
-//            System.out.println("Объект десериализован из байтового массива: ");
-//            deserializedHuman2.getInfo();
-//
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+
+            fileHandler.writeObjectToFile(familyTree, "src/test.txt");
+            Family_Tree deserializedFamilyTree = (Family_Tree) fileHandler.recoverObjectFromFile(filePath);
+            deserializedFamilyTree.printFamilyTree();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
