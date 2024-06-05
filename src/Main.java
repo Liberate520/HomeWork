@@ -4,8 +4,9 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         String filePath = "D:\\Users\\User\\Desktop\\GB\\3_Course_OOP\\OOP_Seminars\\homework_1\\homeWork\\src\\tree.txt";
-//        FamilyTree tree = testTree();
-        FamilyTree tree = load(filePath);
+
+        FamilyTree tree = testTree();
+//        FamilyTree tree = load(filePath);
         System.out.println(tree);
 
         save(tree, filePath);
@@ -45,6 +46,9 @@ public class Main {
         tree.add(grandMother);
 
 //        System.out.println(tree);
+
+        tree.sortByBirthDate();
+//        tree.sortByName();
         return tree;
     }
 }
