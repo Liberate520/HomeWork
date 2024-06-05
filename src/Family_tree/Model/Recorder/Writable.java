@@ -1,4 +1,4 @@
-package Family_tree.Recorder;
+package Family_tree.Model.Recorder;
 
 import java.io.*;
 

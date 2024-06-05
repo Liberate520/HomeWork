@@ -1,4 +1,4 @@
-package Family_tree.Humans;
+package Family_tree.Model.Humans;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;

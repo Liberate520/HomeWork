@@ -1,9 +1,9 @@
-package Family_tree;
+package Family_tree.Model;
 
 import java.io.Serializable;
 
-import Family_tree.Humans.Endothermal;
-import Family_tree.Tree.Family_tree;
+import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Model.Tree.Family_tree;
 
 public class Service<T extends Endothermal> implements Serializable{
 

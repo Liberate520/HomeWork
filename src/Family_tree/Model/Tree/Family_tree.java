@@ -1,9 +1,10 @@
-package Family_tree.Tree;
-import Family_tree.Humans.ComparatorByAge;
-import Family_tree.Humans.ComparatorByID;
-import Family_tree.Humans.ComparatorByName;
-import Family_tree.Humans.Endothermal;
+package Family_tree.Model.Tree;
 import java.util.*;
+
+import Family_tree.Model.Humans.ComparatorByAge;
+import Family_tree.Model.Humans.ComparatorByID;
+import Family_tree.Model.Humans.ComparatorByName;
+import Family_tree.Model.Humans.Endothermal;
 
 public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
     private List<T> list;    
