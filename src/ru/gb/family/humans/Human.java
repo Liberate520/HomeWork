@@ -1,4 +1,7 @@
-package ru.gb.family;
+package ru.gb.family.humans;
+
+import ru.gb.family.humans.enums.DegreeOfKinship;
+import ru.gb.family.humans.enums.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +11,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Human implements Serializable {
-    private Integer id,age;
+    private Integer age;
+    private long id;
     private String name;
     private Gender gender;
     private LocalDate birthday,dateOfDeath;
@@ -18,8 +22,17 @@ public class Human implements Serializable {
 
 
     public Human(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
-        id = +1;
-        age = null;
+        id = -1;
+        if (dateOfDeath == null){
+           this.age = getPeriod(birthday,LocalDate.now());
+        }
+        else{
+            this.age = getPeriod(birthday,dateOfDeath);
+        }
+
+        spouse = null;
+        father = null;
+        mother = null;
         this.name = name;
         this.birthday = birthday;
         this.dateOfDeath = dateOfDeath;
@@ -28,7 +41,7 @@ public class Human implements Serializable {
 
     }
 
-    public void addCParent(Human parent){
+    public void addParent(Human parent){
         if (parent.gender == Gender.Male){
             this.father = parent;
         }
@@ -38,9 +51,32 @@ public class Human implements Serializable {
 
     }
 
+    public void editHuman(Human addHuman, DegreeOfKinship degreeOfKinship){
+        switch(degreeOfKinship) {
+            case Father, Mother :
+                this.addParent(addHuman);
+                addHuman.addChildren(this);
+                break;
+            case Spouse:
+                this.addSpouse(addHuman);
+                addHuman.addSpouse(this);
+                break;
+            case Children:
+                this.addChildren(addHuman);
+                addHuman.addParent(this);
+                break;
+        }
+    }
+
+    private void addSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+
     public void addChildren(Human child) {
         if (child != null) {
-            children.add(child);
+            if (children.indexOf(child) == -1) {
+                children.add(child);
+            }
         }
     }
     public void changedateOfDeath(LocalDate dateDeath){
@@ -68,14 +104,15 @@ public class Human implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
         // список детей
         for (Human human : children){
-            stringBuilder.append(human.name+" ("+human.getAge() +" лет.)");
+            stringBuilder.append(human.name+" ("+age +" лет.)");
             stringBuilder.append(",\t");
         }
         return "\n id=" + id + '\t' +
-                "name=" + name +" ("+getAge()+" лет.))"+
+                "name=" + name +" ("+age+" лет.))"+
                 "\t birthday(" + birthday +
                 ")\t dateOfDeath(" + dateOfDeath +
                 ")\t gender=" + gender +
+                "\n\t супруг(а):" + ((!(spouse == null)) ? spouse.name : "") +
                 "\n\t Отец:" + ((!(father == null)) ? father.name : "") +
                 "\n\t Мать:" + ((!(mother == null)) ? mother.name : "") +
                 "\n\t дети:" + stringBuilder + "\n";
@@ -95,7 +132,7 @@ public class Human implements Serializable {
         return Objects.hash(name, birthday);
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 

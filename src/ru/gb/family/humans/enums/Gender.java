@@ -1,4 +1,4 @@
-package ru.gb.family;
+package ru.gb.family.humans.enums;
 
 public enum Gender {
     Male, Female
