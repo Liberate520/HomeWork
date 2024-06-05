@@ -1,144 +1,95 @@
-package homeWork.Person;
+package homeWork.FamilyTree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
-public class Person implements Serializable {
-    private static final long serialVersionUID = 1L;
+import homeWork.Person.Person;
 
-    private static final AtomicLong idGenerator = new AtomicLong(0);
-    private final Long id;
-    private String lastName;
-    private String firstName;
-    private String middleName;
-    private Gender gender;
-    private Date birthDate;
-    private Date deathDate;
-    private List<Person> parents;
-    private List<Person> children;
-    private Person spouse;
+public class FamilyTree implements Serializable, Iterable<Person> {
+    private List<Person> persons;
 
-    public Person(String lastName, String firstName, String middleName, Date birthDate) {
-        this(lastName, firstName, middleName, null, birthDate, null, null, null, null);
+    public FamilyTree() {
+        this.persons = new ArrayList<>();
     }
 
-    public Person(String lastName, String firstName, String middleName, Gender gender, Date birthDate, 
-                  Date deathDate, List<Person> parents, List<Person> children, Person spouse) {
-        this.id = idGenerator.incrementAndGet();
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
-        this.parents = parents != null ? new ArrayList<>(parents) : new ArrayList<>();
-        this.children = children != null ? new ArrayList<>(children) : new ArrayList<>();
-        this.spouse = spouse;
+    public void addPerson(Person person) {
+        persons.add(person);
     }
 
-    public Long getId() {
-        return id;
+    public List<Person> getAllPersons() {
+        return new ArrayList<>(persons);
     }
 
-    public String getLastName() {
-        return lastName;
-    }
+    // Метод для отображения информации о родителях и детях по указанному идентификатору
+    public String displayFamilyInfo(Long personId) {
+        Person person = findPersonById(personId);
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Date getDeathDate() {
-        return deathDate;
-    }
-
-    public void setDeathDate(Date deathDate) {
-        this.deathDate = deathDate;
-    }
-
-    public List<Person> getParents() {
-        return parents;
-    }
-
-    public void setParents(List<Person> parents) {
-        this.parents = parents;
-    }
-
-    public List<Person> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Person> children) {
-        this.children = children;
-    }
-
-    public Person getSpouse() {
-        return spouse;
-    }
-
-    public void setSpouse(Person spouse) {
-        this.spouse = spouse;
-    }
-
-    public boolean addChild(Person child) {
-        if (children.contains(child)) {
-            return false;
-        } else {
-            children.add(child);
-            return true;
+        if (person == null) {
+            return "Персона с ID " + personId + " не найдена.";
         }
+
+        StringBuilder info = new StringBuilder();
+        info.append("Информация о персоне:\n");
+        info.append(displayPersonInfo(person));
+        info.append("\n");
+
+        info.append(displayRelativesInfo("Родители:", person.getParents()));
+        info.append(displayRelativesInfo("Дети:", person.getChildren()));
+
+        return info.toString();
     }
 
-    public boolean addParent(Person parent) {
-        if (parents.contains(parent)) {
-            return false;
-        } else {
-            parents.add(parent);
-            return true;
-        }
+    // Метод для поиска персоны по идентификатору
+    private Person findPersonById(Long personId) {
+        return persons.stream()
+                .filter(person -> person.getId().equals(personId))
+                .findFirst()
+                .orElse(null);
     }
 
-    public boolean addSpouse(Person spouse) {
-        if (this.spouse != null) {
-            return false;
+    // Метод для отображения информации о персоне
+    private String displayPersonInfo(Person person) {
+        return "ID: " + person.getId() + "\n" +
+                "Фамилия: " + person.getLastName() + "\n" +
+                "Имя: " + person.getFirstName() + "\n" +
+                "Отчество: " + person.getMiddleName() + "\n" +
+                "Дата рождения: " + person.getBirthDate() + "\n" +
+                "Пол: " + person.getGender() + "\n";
+    }
+
+    // Метод для отображения информации о родственниках
+    private String displayRelativesInfo(String relationship, List<Person> relatives) {
+        StringBuilder info = new StringBuilder();
+        info.append(relationship).append("\n");
+
+        if (relatives.isEmpty()) {
+            info.append("Нет информации о родственниках.\n");
         } else {
-            this.spouse = spouse;
-            return true;
+            for (Person relative : relatives) {
+                info.append(displayPersonInfo(relative)).append("\n");
+            }
         }
+
+        return info.toString();
+    }
+
+    // Реализация метода iterator() для интерфейса Iterable
+    @Override
+    public Iterator<Person> iterator() {
+        return persons.iterator();
+    }
+
+    // Метод для сортировки по имени
+    public void sortByName() {
+        Collections.sort(persons, Comparator.comparing(Person::getFirstName).thenComparing(Person::getLastName));
+    }
+
+    // Метод для сортировки по дате рождения
+    public void sortByBirthDate() {
+        Collections.sort(persons, Comparator.comparing(Person::getBirthDate));
     }
 }
