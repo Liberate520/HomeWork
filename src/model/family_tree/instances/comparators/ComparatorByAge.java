@@ -1,8 +1,8 @@
-package family_tree.objects.comparators;
+package model.family_tree.instances.comparators;
 
 import java.util.Comparator;
 
-import family_tree.tree.TreeItem;
+import model.family_tree.tree.TreeItem;
 
 public class ComparatorByAge<T extends TreeItem<T>> implements Comparator<T> {
     @Override

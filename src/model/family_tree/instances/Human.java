@@ -1,6 +1,6 @@
-package family_tree.objects;
+package model.family_tree.instances;
 
-import family_tree.tree.TreeItem;
+import model.family_tree.tree.TreeItem;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -61,6 +61,16 @@ public class Human implements Serializable, Comparable<Human>, TreeItem<Human> {
         this(name, null, null, birthDate, deathDate, gender);
     }
 
+    /**
+     * Человек живущий но без связей
+     * @param name Имя
+     * @param birthDate Дата рождения
+     * @param gender Пол
+     */
+    public Human(String name, Date birthDate, Gender gender){
+        this(name, birthDate, null, gender);
+    }
+
     /*--------------Геттеы----------------*/
     public String getName() {
         return name;
@@ -93,11 +103,13 @@ public class Human implements Serializable, Comparable<Human>, TreeItem<Human> {
     }
 
     /*--------------Сеттеры----------------*/
+    @Override
     public void setMother(Human mother) {
         if(this.mother == null){
             this.mother = mother;
         }
     }
+    @Override
     public void setFather(Human father) {
         if(this.father == null){
             this.father = father;
@@ -114,6 +126,7 @@ public class Human implements Serializable, Comparable<Human>, TreeItem<Human> {
      * Добавление ребенка
      * @param child Ребенок
      */
+    @Override
     public boolean addChild(Human child){
         if(!children.contains(child)){
             children.add(child);

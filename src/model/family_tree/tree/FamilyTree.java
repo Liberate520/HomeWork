@@ -1,9 +1,9 @@
-package family_tree.tree;
+package model.family_tree.tree;
 
-import family_tree.objects.comparators.ComparatorByAge;
-import family_tree.objects.comparators.ComparatorByBurthDate;
-import family_tree.objects.comparators.ComparatorByDeathDate;
-import family_tree.objects.comparators.ComparatorByName;
+import model.family_tree.instances.comparators.ComparatorByAge;
+import model.family_tree.instances.comparators.ComparatorByBurthDate;
+import model.family_tree.instances.comparators.ComparatorByDeathDate;
+import model.family_tree.instances.comparators.ComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,6 +49,38 @@ public class FamilyTree<T extends TreeItem<T>> implements Serializable, Iterable
         objects.sort(new ComparatorByDeathDate());
     }
 
+    public boolean setMother(T objForSet, T mother) {
+        if(objects.contains(objForSet) && objects.contains(mother)){
+            objForSet.setMother(mother);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean setFather(T objForSet, T father){
+        if(objects.contains(objForSet) && objects.contains(father)){
+            objForSet.setFather(father);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public int getNumInFamily() {
+        return objects.size();
+    }
+
+    @Override
+    public T getFamilyMenber(int index) {
+        if(index < objects.size()){
+            return objects.get(index);
+        }else {
+            return null;
+        }
+    }
+
     @Override
     public Iterator<T> iterator() {
         return objects.iterator();
@@ -62,9 +94,12 @@ public class FamilyTree<T extends TreeItem<T>> implements Serializable, Iterable
         stringBuilder.append("Фамильное древо:\n");
 
         stringBuilder.append("-----------------\n");
+        int i = 1;
         for (T obj : objects) {
+            stringBuilder.append(i + ": ");
             stringBuilder.append("\t" + obj);
             stringBuilder.append("\n");
+            i++;
         }
 
         return stringBuilder.toString();
