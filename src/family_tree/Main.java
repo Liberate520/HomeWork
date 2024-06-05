@@ -5,6 +5,24 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        String pathName = "src/family_tree/new_tree.txt";
+        FamilyTree newTree = tryTree();
+        // FamilyTree newTree = read(pathName);
+        System.out.println(newTree);
+        save(newTree, pathName);
+    }
+
+    private static FamilyTree read(String pathName) {
+        WriteRead writeRead = new FileHandler();
+        return (FamilyTree) writeRead.read(pathName);
+    }
+
+    private static void save(FamilyTree newTree, String pathName) {
+        WriteRead writeRead = new FileHandler();
+        writeRead.save(newTree, pathName);
+    }
+
+    private static FamilyTree tryTree() {
         FamilyTree newTree = new FamilyTree();
 
         Human sergey = new Human("Сергей", "Попов",
@@ -20,6 +38,6 @@ public class Main {
 
         newTree.add(liza);
 
-        System.out.println(newTree);
+        return newTree;
     }
 }
