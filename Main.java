@@ -1,6 +1,13 @@
 package homeWork;
 
 import javax.swing.*;
+
+import homeWork.FamilyTree.FamilyTree;
+import homeWork.FamilyTree.FamilyTreeFileManager;
+import homeWork.Person.Person;
+import homeWork.Person.Gender;
+import homeWork.Service.FileManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +26,9 @@ public class Main {
         for (Person person : allPersons) {
             familyTree.addPerson(person);
         }
+
+        // Создание экземпляра FamilyTreeFileManager
+        FileManager fileManager = new FamilyTreeFileManager();
 
         JFrame frame = new JFrame("Family Tree");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +67,7 @@ public class Main {
                 if (fileName != null && !fileName.trim().isEmpty()) {
                     File file = new File(fileName);
                     try {
-                        FamilyTreeFileManager.saveFamilyTreeToFile(familyTree, file);
+                        fileManager.saveFamilyTreeToFile(familyTree, file);
                         JOptionPane.showMessageDialog(frame, "Family tree saved successfully.");
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(frame, "Error saving family tree: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -75,7 +85,7 @@ public class Main {
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     try {
-                        FamilyTree loadedFamilyTree = FamilyTreeFileManager.loadFamilyTreeFromFile(selectedFile);
+                        FamilyTree loadedFamilyTree = fileManager.loadFamilyTreeFromFile(selectedFile);
                         List<Person> loadedPersons = loadedFamilyTree.getAllPersons();
                         allPersons.clear();
                         allPersons.addAll(loadedPersons);
@@ -91,11 +101,31 @@ public class Main {
             }
         });
 
+        JButton sortByNameButton = new JButton("Sort by Name");
+        sortByNameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                familyTree.sortByName();
+                updateComboBox(personComboBox, familyTree);
+            }
+        });
+
+        JButton sortByBirthDateButton = new JButton("Sort by Birth Date");
+        sortByBirthDateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                familyTree.sortByBirthDate();
+                updateComboBox(personComboBox, familyTree);
+            }
+        });
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(showInfoButton);
         buttonPanel.add(saveButton);
         buttonPanel.add(loadButton);
+        buttonPanel.add(sortByNameButton);
+        buttonPanel.add(sortByBirthDateButton);
 
         panel.add(personComboBox, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -103,6 +133,13 @@ public class Main {
 
         frame.add(panel);
         frame.setVisible(true);
+    }
+
+    private static void updateComboBox(JComboBox<String> comboBox, FamilyTree familyTree) {
+        comboBox.removeAllItems();
+        for (Person person : familyTree) {
+            comboBox.addItem(person.getId() + ": " + person.getFirstName() + " " + person.getLastName());
+        }
     }
 
     private static List<Person> createPersonList() {
