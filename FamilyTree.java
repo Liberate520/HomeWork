@@ -1,10 +1,15 @@
-package homeWork;
+package homeWork.FamilyTree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+import homeWork.Person.Person;
+
+public class FamilyTree implements Serializable, Iterable<Person> {
     private List<Person> persons;
 
     public FamilyTree() {
@@ -70,5 +75,21 @@ public class FamilyTree implements Serializable {
         }
 
         return info.toString();
+    }
+
+    // Реализация метода iterator() для интерфейса Iterable
+    @Override
+    public Iterator<Person> iterator() {
+        return persons.iterator();
+    }
+
+    // Метод для сортировки по имени
+    public void sortByName() {
+        Collections.sort(persons, Comparator.comparing(Person::getFirstName).thenComparing(Person::getLastName));
+    }
+
+    // Метод для сортировки по дате рождения
+    public void sortByBirthDate() {
+        Collections.sort(persons, Comparator.comparing(Person::getBirthDate));
     }
 }
