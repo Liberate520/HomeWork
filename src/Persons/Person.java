@@ -1,17 +1,19 @@
 package Persons;
 
+import Persons.Enums.Gender;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public class Person implements Serializable {
+public class Person implements Serializable, Iterator<String>{
     private String name;
     private LocalDate birthday, deathDate;
     private List<Person> children;
     private Person mother, father;
     private Gender gender;
+    // для итератора
+    int index;
 
     //конструкторы
     public Person(String name, Gender gender, String birthDate, String deathDate)  {
@@ -27,6 +29,8 @@ public class Person implements Serializable {
     public Person(String name, Gender gender) {
         this(name, gender,"9999-01-01","9999-01-01");
     }
+
+
     //методы
     public void addChildren(Person child) {
         this.children.add(child);
@@ -40,7 +44,7 @@ public class Person implements Serializable {
     public String getParent() {
         return  "Father: " + father + "\nMother: " + mother;
     }
-    public String  getChildren() {
+    public String getChildren() {
         String out = "";
         for (Person somePers : children) {
             out += somePers;
@@ -49,6 +53,15 @@ public class Person implements Serializable {
     }
     public String getName() {
         return this.name;
+    }
+    public String getDates() {
+        String out = "Birthday: " + birthday;
+        if (deathDate.getYear() != 9999)
+            return out += "\nDeath Date: " + deathDate;
+        return out;
+    }
+    public LocalDate getBirthday() {
+        return this.birthday;
     }
 
     @Override
@@ -62,6 +75,7 @@ public class Person implements Serializable {
         out += getCloseRelations();
         return out;
     }
+
     private String getCloseRelations() {
         String out = "";
         if(this.father != null)
@@ -80,4 +94,23 @@ public class Person implements Serializable {
         return out;
     }
 
+    @Override
+    public boolean hasNext() {
+        return index++ < 5;
+    }
+    @Override
+    public String next() {
+        switch (index) {
+            case 0:
+                return getName();
+            case 1:
+                return getDates();
+            case 2:
+                return getChildren();
+            case 3:
+                return getParent();
+            default:
+                return String.valueOf(gender);
+        }
+    }
 }

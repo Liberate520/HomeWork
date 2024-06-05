@@ -1,6 +1,5 @@
 import FileHandlerFilse.FileHandler;
-import FileHandlerFilse.Writable;
-import Persons.Gender;
+import Persons.Enums.Gender;
 import Persons.Person;
 import PersonsTree.FamilyTree;
 
@@ -8,47 +7,36 @@ import PersonsTree.FamilyTree;
 public class Main {
     public static void main(String[] args) throws Exception{
         //место хранения данных
-        String place = "../Sava.txt";
-        FamilyTree familyTree;
 
-        //загружаем из файла дерево
-        FileHandler fileHandler = new FileHandler();
-        familyTree = (FamilyTree) fileHandler.load(place);
-        if (familyTree == null)
-            familyTree = new FamilyTree("Михайловы");
+        Service service = new Service();
 
-        //семья из 5ти человек
-        Person person1 = new Person("Михайлова Полина Мирона", Gender.female, "2000-01-03");
-        Person person2 = new Person("Михайлов Мирон Игоревич", Gender.male, "1970-05-28");
-        Person person3 = new Person("Петровская Ксения Егоровна", Gender.female, "1976-11-11");
-        Person person4 = new Person("Куприянова Варвара Кирилловна", Gender.female, "1950-12-30", "2001-05-09");
-        Person person5 = new Person("Петровский Егор Павлович", Gender.male, "1958-08-21","1999-01-05");
+        ////семья из 5ти человек
+        service.addPerson("Михайлова Полина Мирона", Gender.female, "2000-01-03");
+        service.addPerson("Михайлов Мирон Игоревич", Gender.male, "1970-05-28");
+        service.addPerson("Петровская Ксения Егоровна", Gender.female, "1976-11-11");
+        service.addPerson("Куприянова Варвара Кирилловна", Gender.female, "1950-12-30", "2001-05-09");
+        service.addPerson("Петровский Егор Павлович", Gender.male, "1958-08-21","1999-01-05");
+        ////добавляем связи
+        service.addParent("Михайлова Полина Мирона","Михайлов Мирон Игоревич");
+        service.addParent("Михайлова Полина Мирона","Петровская Ксения Егоровна");
+        service.addParent("Петровская Ксения Егоровна","Куприянова Варвара Кирилловна");
+        service.addParent("Петровская Ксения Егоровна","Петровский Егор Павлович");
 
-        //добавляем связи
-        person1.addParent(person2);
-        person1.addParent(person3);
-        person3.addParent(person4);
-        person3.addParent(person5);
-
-        person5.addChildren(person3);
-        person4.addChildren(person3);
-        person3.addChildren(person1);
-        person2.addChildren(person1);
-
-        //добавляем в генелогическое дерево
-        familyTree.addPers(person1);
-        familyTree.addPers(person2);
-        familyTree.addPers(person3);
-        familyTree.addPers(person4);
-        familyTree.addPers(person5);
-
-        //смотрим итог
-        System.out.println(familyTree.getAllFamily());
-        System.out.println("\n\nПоиск точечных совпадений: " + familyTree.getFullPerson("Петровский Егор Павлович"));
-        System.out.println("\n\nПоиск по фамилии: " + familyTree.getPersonOnSurname("Михайлов"));
+        service.addChield("Петровский Егор Павлович", "Петровская Ксения Егоровна");
+        service.addChield("Куприянова Варвара Кирилловна", "Петровская Ксения Егоровна");
+        service.addChield("Петровская Ксения Егоровна", "Михайлова Полина Мирона");
+        service.addChield("Михайлов Мирон Игоревич", "Михайлова Полина Мирона");
 
 
-        //сохраняем в файл дерево
-        fileHandler.save(familyTree, place);
+        ////смотрим итог
+        service.getAllFamily();
+        service.getFullPerson("Михайлов");
+        service.getPersonOnSurname("Петровский Егор Павлович");
+        //вывод при помощи Итератора
+        service.getFullFamily();
+        //вывод после сортировок
+        service.sortedByName();
+        service.sortByBirthday();
+        System.out.println("ок");
     }
 }

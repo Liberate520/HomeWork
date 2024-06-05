@@ -1,13 +1,16 @@
 package PersonsTree;
 
+import Persons.Comporators.PersonComporatorByName;
 import Persons.Person;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable {
     private String familyName;
     private ArrayList<Person> tree;
+
+
     //конструкторы
     public FamilyTree (String familyName) {
         this.familyName = familyName;
@@ -16,6 +19,8 @@ public class FamilyTree implements Serializable {
     public FamilyTree() {
         this("default");
     }
+
+
     //методы
     public String getAllFamily() {
         String out = "";
@@ -23,6 +28,13 @@ public class FamilyTree implements Serializable {
             out += somePers;
         }
         return out;
+    }
+    public String getFullFamily() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Person person : tree) {
+            stringBuilder.append(person + "\n");
+        }
+        return stringBuilder.toString();
     }
     public String getFullPerson (String name) {
         for (Person somePers : tree) {
@@ -40,8 +52,21 @@ public class FamilyTree implements Serializable {
         }
         return out;
     }
-
     public void addPers(Person somePers) {
         this.tree.add(somePers);
+    }
+
+    @Override
+    public Iterator iterator() {
+        return tree.iterator();
+    }
+
+    public void sortByName() {
+        Collections.sort(tree, new PersonComporatorByName());
+    }
+    public void sortByBirthday() {
+        Collections.sort(tree,
+                Comparator.comparing(Person::getBirthday));
+                //(o1, o2) -> o1.getBirthday().compareTo(o2.getBirthday());
     }
 }
