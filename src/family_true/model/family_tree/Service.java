@@ -28,7 +28,7 @@ public class Service {
     public Service() {
         this.familyTreeGroup = new FamilyTreeGroup();
         this.familyTreeBuilder = new FamilyTreeBuilder();
-        this.external = new FileHandler();
+        this.external = new FileHandler(this);
     }
 
     public FamilyTreeGroup getFamilyTreeGroup() {
@@ -114,7 +114,6 @@ public class Service {
     }
 
     public void importList() {
-        List<FamilyTree<Human>> familyTreeList = external.readExternal();
-        getFamilyTreeGroup().getFamilyTreeList().addAll(familyTreeList);
+        external.readExternal();
     }
 }

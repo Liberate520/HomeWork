@@ -78,7 +78,7 @@ public class Main {
             service.addHumanToLastTree(human);
         }
 
-        Externalizable ext = new FileHandler();
+        Externalizable ext = new FileHandler(service);
         // Записываем объект List<FamilyTree> в файл
         ext.writeAllExternal(service.getFamilyTreeGroup().getFamilyTreeList());
 

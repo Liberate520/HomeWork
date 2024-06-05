@@ -12,7 +12,7 @@ import family_true.view.ConsoleUI;
 public class EntitySortByBirthDay extends Command{
 
     public EntitySortByBirthDay(ConsoleUI consoleUI) {
-        super("Сортировка по дате", consoleUI);
+        super("Сортировка по дате рождения", consoleUI);
     }
 
     @Override

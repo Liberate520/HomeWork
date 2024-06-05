@@ -21,12 +21,14 @@ public class ConsoleUI implements View {
     private Scanner scanner;
     private Presenter presenter;
     private CommandMenu commandMenu;
+    private Validator validator;
     private boolean isWork;
 
     public ConsoleUI() {
         this.scanner = new Scanner(System.in);
         this.presenter = new Presenter(this);
         this.commandMenu = new CommandMenu(this);
+        this.validator = new Validator();
         isWork = true;
     }
 
@@ -36,17 +38,13 @@ public class ConsoleUI implements View {
 
     public void addEntity() {
         System.out.println("Укажите данные для нового человека.");
-        System.out.println("Укажите имя:");
-        String name = scanner.nextLine();
-        System.out.println("Укажите фамилию:");
-        String lastName = scanner.nextLine();
-        System.out.println("Укажите отчество:");
-        String patronymic = scanner.nextLine();
+        String lastName = getValueFromConsole("Укажите фамилию:");
+        String name = getValueFromConsole("Укажите имя:");
+        String patronymic = getValueFromConsole("Укажите отчество:");
         boolean isGender = true;
         Gender gender = null;
         while (isGender) {
-            System.out.println("Укажите пол (муж/жен):");
-            String genderStr = scanner.nextLine();
+            String genderStr = getValueFromConsole("Укажите пол (муж/жен):");
             gender = Gender.getGenderByValue(genderStr);
             if (gender == null) {
                 alertValue();
@@ -75,12 +73,11 @@ public class ConsoleUI implements View {
         String idStr;
         while (true) {
             getEntityListInfo();
-            System.out.println(text);
-            idStr = scanner.nextLine();
+            idStr = getValueFromConsole(text);
             if (idStr.trim().equals("r")) {
                 return -1;
             }
-            if (idStr == null || idStr.isBlank() || !idStr.matches(D_MATCHER)) {
+            if (validator.isNotValidDigit(idStr)) {
                 alertValue();
                 continue;
             }
@@ -91,18 +88,22 @@ public class ConsoleUI implements View {
     public LocalDate getLocalDate(String text, boolean isEsc) {
         boolean isRepeat = true;
         while (isRepeat) {
-            System.out.println(text);
-            String dateStr = scanner.nextLine();
+            String dateStr = getValueFromConsole(text);
             if (isEsc && (dateStr == null || dateStr.isEmpty())) {
                 return null;
             }
-            if (dateStr.matches(DD_MM_YYYY_MATCHER)) {
+            if (validator.isValidLocalData(dateStr)) {
                 return LocalDate.parse(dateStr, DD_MM_YYYY_FORMATTER);
             } else {
                 alertValue();
             }
         }
-       return null;
+        return null;
+    }
+
+    public String getValueFromConsole(String text) {
+        System.out.println(text);
+        return scanner.nextLine();
     }
 
     public void sortByLastName() {
@@ -134,9 +135,8 @@ public class ConsoleUI implements View {
     }
 
     private void alertValue() {
-        System.out.println("Не верно указанно значение! Для завершения работы нажмите q иначе enter");
-        String exit = scanner.nextLine();
-        if (exit.equals("q")) {
+        String exit = getValueFromConsole("Не верно указанно значение! Для завершения работы нажмите q иначе enter");
+        if (exit.trim().equals("q")) {
             System.exit(1);
         }
     }
@@ -145,23 +145,23 @@ public class ConsoleUI implements View {
     public void start() {
         while (isWork) {
             System.out.println(commandMenu.getCommands());
-            String checkStr = scanner.nextLine();
-            if (checkStr == null || checkStr.isBlank() || !checkStr.matches(D_MATCHER)) {
+            String checkIndexStr = scanner.nextLine();
+
+            if (validator.isNotValidDigit(checkIndexStr)) {
                 alertValue();
                 continue;
             }
-            int check = Integer.parseInt(checkStr);
-            if (check < 1 || check > commandMenu.getSize()) {
+            int checkIndex = Integer.parseInt(checkIndexStr);
+            if (validator.isNotValidIndex(checkIndex, commandMenu.getSize())) {
                 alertValue();
                 continue;
             }
-            commandMenu.execute(check);
+            commandMenu.execute(checkIndex);
         }
     }
 
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
-
     }
 }
