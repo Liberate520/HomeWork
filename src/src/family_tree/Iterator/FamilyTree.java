@@ -1,9 +1,13 @@
-package src.family_tree;
+package src.family_tree.Iterator;
+
+import src.family_tree.Human;
+import src.family_tree.Serializable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human>{
     private long humansId;
     private List<Human> humanList;
 
@@ -53,5 +57,11 @@ public class FamilyTree implements Serializable {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humanList);
     }
 }

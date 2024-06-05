@@ -156,11 +156,12 @@ public class Human {
         sb.append(gender);
         sb.append(", возраст: ");
         sb.append(getAge());
-        sb.append(getMother());
         sb.append(", ");
-        sb.append(getFather());
+        sb.append(getMotherInfo());
         sb.append(", ");
-        sb.append(getChildren());
+        sb.append(getFatherInfo());
+        sb.append(", ");
+        sb.append(getChildrenInfo());
         return sb.toString();
     }
 

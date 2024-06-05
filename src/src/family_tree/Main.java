@@ -1,12 +1,14 @@
 package src.family_tree;
 
+import src.family_tree.Iterator.FamilyTree;
+
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        String file = "Familytree/homeWork/src/src.family_tree/tree.txt";
+        String file = "C:/Users/Кирилка/Desktop/Familytree/homeWork/src/src/family_tree/tree.txt";
         FamilyTree tree = tree();
-     //   FamilyTree tree = load(file);
+        //FamilyTree tree = load(file);
         System.out.println(tree);
 
         save(tree, file);
@@ -25,8 +27,9 @@ public class Main {
     private static FamilyTree tree() {
         FamilyTree tree = new FamilyTree();
 
-        Human maria = new Human("Мария", Gender.Female, LocalDate.of(1995, 1, 1));
+
         Human sergej = new Human("Сергей", Gender.Male, LocalDate.of(1993, 5, 5));
+        Human maria = new Human("Мария", Gender.Female, LocalDate.of(1995, 1, 1));
 
 
         tree.add(maria);
