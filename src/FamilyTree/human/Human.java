@@ -1,5 +1,7 @@
 package FamilyTree.human;
 
+import FamilyTree.familyTree.ElementFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, ElementFamilyTree<Human> {
     private long id;
-    private String name;
-    private Gender gender;
-    private LocalDate birthDate;
-    private LocalDate deathDate;
-    private List<Human> parents;
+    private final String name;
+    private final Gender gender;
+    private final LocalDate birthDate;
+    private final LocalDate deathDate;
+    private final List<Human> parents;
 
     public void setChildren(List<Human> children) {
         this.children = children;
@@ -40,7 +42,7 @@ public class Human implements Serializable, Comparable<Human> {
         this.spouse = spouse;
     }
 
-    public boolean addChild(Human child){
+    public void addChild(Human child){
         if(children == null){
             List<Human> children = new ArrayList<>();
             children.add(child);
@@ -48,17 +50,13 @@ public class Human implements Serializable, Comparable<Human> {
         }
         if (!children.contains(child)) {
             children.add(child);
-            return true;
         }
-        return false;
     }
 
-    public boolean addParents(Human parent){
+    public void addParents(Human parent){
         if(!parents.contains(parent)) {
             parents.add(parent);
-            return true;
         }
-        return false;
     }
 
     public LocalDate getBirthDate() {
@@ -183,10 +181,9 @@ public class Human implements Serializable, Comparable<Human> {
         if(this == obj){
             return true;
         }
-        if(!(obj instanceof Human)){
+        if(!(obj instanceof Human human)){
             return false;
         }
-        Human human = (Human) obj;
         return human.getId() == getId();
     }
 

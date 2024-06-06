@@ -1,8 +1,5 @@
 package FamilyTree.familyTree;
 
-import FamilyTree.familyTree.FamilyTree;
-import FamilyTree.familyTree.Writable;
-
 import java.io.*;
 
 public class FileHandler implements Writable {

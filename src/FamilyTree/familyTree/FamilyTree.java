@@ -1,106 +1,116 @@
 package FamilyTree.familyTree;
 
-import FamilyTree.human.Human;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human>{
-    private long humansId = 1;
+public class FamilyTree<E extends ElementFamilyTree<E>> implements Serializable, Iterable<E> {
 
-    public List<Human> getHumanList() {
-        return humanList;
+    private long itemId = 1;
+    private final List<E> itemList;
+    private String name;
+
+    public List<E> getHumanList() {
+        return itemList;
     }
 
-    private final List<Human> humanList;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public FamilyTree(){
         this(new ArrayList<>());
     }
 
-    public FamilyTree(List<Human> humanList){
-        this.humanList = humanList;
+    public FamilyTree(List<E> itemList){
+        this.itemList = itemList;
     }
 
-    public boolean add(Human human){
-        if(human == null){
-            return false;
+    public void add(E item){
+        if(item == null){
+            return;
         }
-        if(!humanList.contains(human)){
-            humanList.add(human);
-            human.setId(humansId++);
+        if(!itemList.contains(item)){
+            itemList.add(item);
+            item.setId(itemId++);
 
-            addParents(human);
-            addChild(human);
-
-            return true;
+            addParents(item);
+            addChild(item);
         }
-        return false;
     }
 
-    private void addParents(Human human){
-        if(human.getParents() != null) {
-            for (Human parent : human.getParents()) {
-                parent.addChild(human);
+    private void addParents(E item){
+        if(item.getParents() != null) {
+            for (E parent : item.getParents()) {
+                parent.addChild(item);
             }
         }
     }
 
 
-    private void addChild(Human human){
-        if(human.getChildren() != null) {
-            for (Human child : human.getChildren()) {
-                child.addParents(human);
+    private void addChild(E item){
+        if(item.getChildren() != null) {
+            for (E child : item.getChildren()) {
+                child.addParents(item);
             }
         }
     }
 
-    public List<Human> searchByName(String name){
-        List<Human> answer = new ArrayList<>();
-        for (Human human : humanList){
-            if(human.getName().equals(name)){
-                answer.add(human);
+    public List<E> searchByName(String name){
+        List<E> answer = new ArrayList<>();
+        for (E item : itemList){
+            if(item.getName().equals(name)){
+                answer.add(item);
             }
         }
         return answer;
     }
 
-    public boolean setWadding(long humansId1, long humansId2){
-        if(checkId(humansId1) && checkId(humansId2)){
-            Human human1 = searchById(humansId1);
-            Human human2 = searchById(humansId2);
-            if(human1.getSpouse() == null && human2.getSpouse() == null){
-                human1.setSpouse(human2);
-                human2.setSpouse(human1);
-            } else {
-                return false;
+    public void setWadding(long itemId1, long itemId2){
+        if(checkId(itemId1) && checkId(itemId2)){
+            E item1 = searchById(itemId1);
+            E item2 = searchById(itemId2);
+            if(item1.getSpouse() == null && item2.getSpouse() == null){
+                item1.setSpouse(item2);
+                item2.setSpouse(item1);
             }
         }
-        return false;
     }
 
     private boolean checkId(long id){
-        return id < humansId && id > 0;
+        return id < itemId && id > 0;
     }
 
-    public Human searchById(long id){
-        for (Human human : humanList){
-            if(human.getId() == id){
-                return human;
+    public E searchById(long id){
+        for (E item : itemList){
+            if(item.getId() == id){
+                return item;
             }
         }
         return null;
     }
 
     public void sortByName(){
-        Collections.sort(humanList);
+        Collections.sort(itemList);
     }
 
     public void sortByAge(){
-        humanList.sort(new HumanComparatorByAge());
+        itemList.sort(new ItemComparatorByAge<>());
+    }
+
+    public String getInfo(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("В древе ").append(getName()).append(" ").append(getHumanList().size()).append(" объектов.");
+        for (E item : itemList){
+            sb.append("\n" + "[id ").append(item.getId()).append(", имя: ").append(item.getName()).append(", пол: ").append(item.getGender()).append(", возраст: ").append(item.getAge()).append(", супруг(а): ").append(item.getSpouseInfo()).append(", мать: ").append(item.getMotherInfo()).append(", отец: ").append(item.getFatherInfo()).append(", дети: ").append(item.getChildrenInfo()).append("]");
+        }
+        return sb.toString();
     }
 
     @Override
@@ -108,17 +118,8 @@ public class FamilyTree implements Serializable, Iterable<Human>{
         return getInfo();
     }
 
-    public String getInfo(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("В древе ").append(getHumanList().size()).append(" объектов.");
-        for (Human human : humanList){
-            sb.append("\n" + "[id ").append(human.getId()).append(", имя: ").append(human.getName()).append(", пол: ").append(human.getGender()).append(", возраст: ").append(human.getAge()).append(", супруг(а): ").append(human.getSpouseInfo()).append(", мать: ").append(human.getMotherInfo()).append(", отец: ").append(human.getFatherInfo()).append(", дети: ").append(human.getChildrenInfo()).append("]");
-        }
-        return sb.toString();
-    }
-
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(humanList);
+    public Iterator<E> iterator() {
+        return new ItemIterator<>(itemList);
     }
 }

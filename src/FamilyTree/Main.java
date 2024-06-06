@@ -4,6 +4,7 @@ import FamilyTree.familyTree.FamilyTree;
 import FamilyTree.familyTree.FileHandler;
 import FamilyTree.human.Gender;
 import FamilyTree.human.Human;
+import FamilyTree.view.ConsoleUI;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -32,8 +33,16 @@ public class Main {
         System.out.println(familyTree2);
 
         familyTree2.sortByName();
-        for(Human human : familyTree2){
+        for(Object human : familyTree2){
             System.out.println(human);
         }
+
+        familyTree2.sortByAge();
+        for(Object human : familyTree2){
+            System.out.println(human);
+        }
+
+        ConsoleUI consoleUI = new ConsoleUI();
+        consoleUI.start();
     }
 }
