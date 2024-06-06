@@ -1,3 +1,7 @@
+package FamilyTree.familyTree;
+
+import FamilyTree.familyTree.FamilyTree;
+
 import java.io.*;
 
 public interface Writable {
