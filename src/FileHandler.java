@@ -5,21 +5,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
+import java.io.Serializable;
 
 public class FileHandler implements Writable {
     @Override
-    public void writeToFile(String filename, List<Human> people) throws IOException {
+    public void writeToFile(String filename, Serializable member) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(people);
+            oos.writeObject(member);
         }
     }
 
-    @SuppressWarnings("unchecked")
+    
     @Override
-    public List<Human> readFromFile(String filename) throws IOException, ClassNotFoundException {
+    public Serializable readFromFile(String filename) throws IOException, ClassNotFoundException {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            return (List<Human>) ois.readObject();
+            return (Serializable) ois.readObject();
         }
     }
 }

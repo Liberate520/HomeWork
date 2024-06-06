@@ -1,87 +1,86 @@
-
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-class FamilyTree implements Iterable<Human>{
-    private List<Human> humanList;
+class FamilyTree<T extends Human> implements Serializable, Iterable<T>{
+    private List<T> memberList;
 
     public FamilyTree() {
-        this.humanList = new ArrayList<>();
+        this.memberList = new ArrayList<>();
     }
 
-    public FamilyTree(List<Human> humanList) {
-        this.humanList = humanList;
+    public FamilyTree(List<T> memberList) {
+        this.memberList = memberList;
     }
 
-    public boolean addHuman(Human human) {
-        if (human == null) {
+    public boolean addMember(T member) {
+        if (member == null) {
             return false;
         }
-        if (!humanList.contains(human)){
-            humanList.add(human);
+        if (!memberList.contains(member)){
+            memberList.add(member);
 
-            addToParents(human);
-            addToChildren(human);
+            addToParents(member);
+            addToChildren(member);
 
             return true;
         }
         return false;
     }
 
-    private void addToParents(Human human) {
-        for (Human parent: human.getParents()) {
-            parent.addChild(human);
+    private void addToParents(T member) {
+        for (Human parent: member.getParents()) {
+            parent.addChild(member);
         }
     }
 
-    private void addToChildren(Human human) {
-        for (Human child: human.getChildren()) {
-            child.addParent(human);
+    private void addToChildren(T member) {
+        for (Human child: member.getChildren()) {
+            child.addParent(member);
         }
     }
 
     public Human getHumanByName(String name) {
-        for (Human human : humanList) {
-            if (human.getName().equals(name)) {
-                return human;
+        for (T member : memberList) {
+            if (member.getName().equals(name)) {
+                return member;
             }
         }
         return null;
     }
 
-    public List<Human> getChildrenOf(Human human) {
-        return human.getChildren();
+    public List<Human> getChildrenOf(T member) {
+        return member.getChildren();
     }
 
-    public void setPeople(List<Human> peopleFromFile) {
-        this.humanList = peopleFromFile;
+    public void setPeople(List<T> peopleFromFile) {
+        this.memberList = peopleFromFile;
     }
 
-    public List<Human> getPeople() {
-        return humanList;
+    public List<T> getPeople() {
+        return memberList;
     }
 
     public void sortByName() {
-        Collections.sort(humanList, (h1, h2) -> h1.getName().compareTo(h2.getName()));
-        printHuman();
+        Collections.sort(memberList, (h1, h2) -> h1.getName().compareTo(h2.getName()));
     }
 
     public void sortByBirthDate() {
-        Collections.sort(humanList, (h1, h2) -> h1.getBirthDate().compareTo(h2.getBirthDate()));
-        printHuman();
+        Collections.sort(memberList, (h1, h2) -> h1.getBirthDate().compareTo(h2.getBirthDate()));
     }
 
-    public void printHuman() {
-        for (Human human : this) {
-            System.out.println(human);
+    public List<String> getMemberDescriptions() {
+        List<String> descriptions = new ArrayList<>();
+        for (T member : this) {
+            descriptions.add(member.toString());
         }
+        return descriptions;
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return humanList.iterator();
+    public Iterator<T> iterator() {
+        return memberList.iterator();
     }
 }

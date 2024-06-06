@@ -1,9 +1,9 @@
 
 
 import java.io.IOException;
-import java.util.List;
+import java.io.Serializable;
 
 public interface Writable {
-     void writeToFile(String filename, List<Human> people) throws IOException;
-    List<Human> readFromFile(String filename) throws IOException, ClassNotFoundException;
+    void writeToFile(String filename, Serializable member) throws IOException;
+    Serializable readFromFile(String filename) throws IOException, ClassNotFoundException;
 }

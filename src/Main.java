@@ -1,12 +1,13 @@
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args){
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
         FileHandler fileHandler = new FileHandler();
         String filename = "familyTree.dat";
 
@@ -19,14 +20,15 @@ public class Main {
         jane.addChild(mary);
         anna.addChild(john);
 
-        familyTree.addHuman(john);
-        familyTree.addHuman(jane);
-        familyTree.addHuman(mary);
-        familyTree.addHuman(anna);
+        familyTree.addMember(john);
+        familyTree.addMember(jane);
+        familyTree.addMember(mary);
+        familyTree.addMember(anna);
 
-       // Запись в файл
+       // Запись в файл объекта Annа
        try {
-           fileHandler.writeToFile(filename, familyTree.getPeople());
+           //fileHandler.writeToFile(filename, (Serializable) familyTree.getPeople());
+           fileHandler.writeToFile(filename, familyTree);
            System.out.println("Данные успешно записаны в файл " + filename);
        } catch (IOException e) {
            e.printStackTrace();
@@ -34,9 +36,13 @@ public class Main {
 
        // Чтение из файла
        try {
-           List<Human> peopleFromFile = fileHandler.readFromFile(filename);
-           familyTree.setPeople(peopleFromFile);
+           @SuppressWarnings("unchecked")
+           FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.readFromFile(filename);
            System.out.println("Данные успешно считаны из файла " + filename);
+           List<String> memberDescriptions = loadedTree.getMemberDescriptions();
+           for (String description : memberDescriptions) {
+               System.out.println(description);
+           }
        } catch (IOException | ClassNotFoundException e) {
            e.printStackTrace();
        }
@@ -53,8 +59,20 @@ public class Main {
         // Сортировка по имени
         familyTree.sortByName();
 
+        List<String> sortedByNameDescriptions = familyTree.getMemberDescriptions();
+        System.out.println("Семья, отсортированная по имени:");
+        for (String description : sortedByNameDescriptions) {
+            System.out.println(description);
+        }
+
         // Сортировка по дате рождения
         familyTree.sortByBirthDate();
+
+        List<String> sortedByBirthDateDescriptions = familyTree.getMemberDescriptions();
+        System.out.println("Семья, отсортированная по дате рождения:");
+        for (String description : sortedByBirthDateDescriptions) {
+            System.out.println(description);
+        }
 
         
     }
