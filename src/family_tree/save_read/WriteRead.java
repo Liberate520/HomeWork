@@ -1,4 +1,4 @@
-package family_tree;
+package family_tree.save_read;
 
 import java.io.Serializable;
 

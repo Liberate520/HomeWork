@@ -1,7 +1,12 @@
 package family_tree;
 
+import family_tree.family_tree.FamilyTree;
+import family_tree.human.Human;
+import family_tree.human.Sex;
+import family_tree.save_read.FileHandler;
+import family_tree.save_read.WriteRead;
+
 import java.time.LocalDate;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
