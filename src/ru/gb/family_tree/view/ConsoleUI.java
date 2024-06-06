@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class ConsoleUI implements View{
 
     private static final String INPUT_ERROR = "Вы ввели неверное значение";
@@ -52,6 +53,14 @@ public class ConsoleUI implements View{
         String parent = scanner.nextLine();
         System.out.println("Введите имя ребенка:");
         String child = scanner.nextLine();
-        for (Human human: presenter.getFamilyTree())
+        presenter.addChildren(parent, child);
+    }
+
+    public void addSpouse() {
+        System.out.println("Введите имя первого супруга:");
+        String spouseFirst= scanner.nextLine();
+        System.out.println("Введите имя второго супруга:");
+        String spouseSecond = scanner.nextLine();
+        presenter.addSpouse(spouseFirst, spouseSecond);
     }
 }

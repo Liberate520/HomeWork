@@ -20,16 +20,40 @@ public class Service {
         familyTree.addHuman(human);
     }
 
-    public void addChildren(Human parent, Human child){
+    public void addChildren(String parentString, String childString){
+        Human parent = null;
+        Human child = null;
+        for(Human human: familyTree){
+            if(human.getName().equals(parentString)){
+                parent = human;
+            }
+        }
+        for(Human human: familyTree){
+            if(human.getName().equals(childString)){
+                child = human;
+            }
+        }
         parent.getChildren().add(child);
         child.getParents().add(parent);
     }
 
-    public void addSpouse(Human spouse1, Human spouse2){
-        Human sp1 = spouse1.getSpouse();
-        sp1 = spouse2;
-        Human sp2 = spouse2.getSpouse();
-        sp2 = spouse1;
+    public void addSpouse(String spouseFirstString, String spouseSecondString){
+        Human spouseFirst = null;
+        Human spouseSecond = null;
+        for(Human human: familyTree){
+            if(human.getName().equals(spouseFirstString)){
+                spouseFirst = human;
+            }
+        }
+        for(Human human: familyTree){
+            if(human.getName().equals(spouseSecondString)){
+                spouseSecond = human;
+            }
+        }
+        Human spouseTempFirst = spouseFirst.getSpouse();
+        spouseTempFirst = spouseSecond;
+        Human spouseTempSecond = spouseSecond.getSpouse();
+        spouseTempSecond = spouseFirst;
     }
 
     public void saveFileByte(FamilyTree familyTree) throws IOException {

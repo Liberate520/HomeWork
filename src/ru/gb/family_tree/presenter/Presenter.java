@@ -28,15 +28,15 @@ public class Presenter {
         view.printAnswer(info);
     }
 
-    public void getFamilyTree(){
-        service.getFamilyTree();
+    public FamilyTree getFamilyTree(){
+        return service.getFamilyTree();
     }
 
-    public void addChildren(Human parent, Human child){
+    public void addChildren(String parent, String child){
         service.addChildren(parent, child);
     }
 
-    public void addSpouse(Human spouse1, Human spouse2){
+    public void addSpouse(String spouse1, String spouse2){
         service.addSpouse(spouse1, spouse2);
     }
 
