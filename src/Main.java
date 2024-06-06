@@ -2,6 +2,25 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        String filePath = "/Users/North/Documents/GB/OOP/Lessons/homeWork/src/tree.txt";
+        FamilyTree tree = testTree();
+        //FamilyTree tree = load(filePath);
+        System.out.println(tree);
+
+        save(tree, filePath);
+    }
+
+    private static FamilyTree load(String filePath) {
+        Writable writable = new FileHandler();
+        return (FamilyTree) writable.read(filePath);
+    }
+
+    private static void save(FamilyTree tree, String filePath) {
+        Writable writable = new FileHandler();
+        writable.save(tree, filePath);
+    }
+
+    private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
         Human oleg = new Human("Олег", Gender.Male, LocalDate.of(1955, 1, 1));
@@ -24,6 +43,6 @@ public class Main {
         tree.add(grandMother);
         tree.setWedding(grandFather.getId(), grandMother.getId());
 
-        System.out.println(tree);
+        return tree;
     }
 }
