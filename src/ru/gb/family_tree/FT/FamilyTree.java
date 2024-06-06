@@ -10,24 +10,24 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
 
-    private List<Human> humanList;
+    private List<T> humanList;
 
     public FamilyTree(){
         humanList = new ArrayList<>();
     }
-    public void addHuman(Human human){
+    public void addHuman(T human){
         humanList.add(human);
     }
 
-    public List<Human> getHumanList() {
+    public List<T> getHumanList() {
         return humanList;
     }
 
-    public Human findHumanByName(String nameHuman){
-        for (Human human : humanList){
+    public T findHumanByName(String nameHuman){
+        for (T human : humanList){
             if(human.getName().equalsIgnoreCase(nameHuman)){
                 return human;
             }
@@ -44,7 +44,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<T> iterator() {
         return new HumanIterator(humanList);
     }
 

@@ -1,5 +1,7 @@
 package ru.gb.family_tree.Human;
 
+import ru.gb.family_tree.FT.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -9,7 +11,7 @@ import java.util.stream.Collectors;
 
 
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, FamilyTreeItem<Human> {
     private static final long serialVersionUID = 1L;
 
     private String lastName;
@@ -43,11 +45,11 @@ public class Human implements Serializable, Comparable<Human> {
         }
     }
 
-    private void setMother(Human mother) {
+    public void setMother(Human mother) {
         this.mother = mother;
     }
 
-    private void setFather(Human father) {
+    public void setFather(Human father) {
         this.father = father;
     }
 

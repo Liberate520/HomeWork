@@ -1,6 +1,7 @@
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.FT.FamilyTree;
+import ru.gb.family_tree.FT.FamilyTreeItem;
 import ru.gb.family_tree.FT.FileHandler;
 import ru.gb.family_tree.Human.Gender;
 import ru.gb.family_tree.Human.Human;
@@ -10,8 +11,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+    public static <T extends FamilyTreeItem<T>> void main(String[] args) {
+        FamilyTree<T> familyTree = new FamilyTree<T>();
         Service service = new Service(familyTree);
 
 
@@ -26,13 +27,13 @@ public class Main {
         Human human7 = new Human("Похабов","Дмитрий", Gender.Male, LocalDate.of(1972, 8, 5));
 
 
-        familyTree.addHuman(human1);
-        familyTree.addHuman(human2);
-        familyTree.addHuman(human3);
-        familyTree.addHuman(human4);
-        familyTree.addHuman(human5);
-        familyTree.addHuman(human6);
-        familyTree.addHuman(human7);
+        familyTree.addHuman((T) human1);
+        familyTree.addHuman((T) human2);
+        familyTree.addHuman((T) human3);
+        familyTree.addHuman((T) human4);
+        familyTree.addHuman((T) human5);
+        familyTree.addHuman((T) human6);
+        familyTree.addHuman((T) human7);
 
         human3.setParents(human1, human2);
         human2.setParents(human6, human7);
@@ -54,10 +55,10 @@ public class Main {
         human7.getAge();
 
 
-        service.sortByName();
-        System.out.println(familyTree);
-        service.sortByBirthDate();
-        System.out.println(familyTree);
+//        service.sortByName();
+//        System.out.println(familyTree);
+//        service.sortByBirthDate();
+//        System.out.println(familyTree);
 
 
         // Сохранение FamilyTree в файл

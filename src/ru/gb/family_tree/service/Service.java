@@ -1,9 +1,10 @@
 package ru.gb.family_tree.service;
 
 import ru.gb.family_tree.FT.*;
+import ru.gb.family_tree.Human.Human;
 
 public class Service {
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
 
     public Service(FamilyTree familyTree) {
         this.familyTree = familyTree;
