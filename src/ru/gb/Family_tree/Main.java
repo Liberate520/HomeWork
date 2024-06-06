@@ -1,3 +1,5 @@
+package ru.gb.Family_tree;
+
 import java.time.LocalDate;
 
 public class Main {
