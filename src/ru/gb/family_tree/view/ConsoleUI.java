@@ -1,8 +1,11 @@
 package ru.gb.family_tree.view;
 
 import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.presenter.Presenter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI implements View{
@@ -13,6 +16,12 @@ public class ConsoleUI implements View{
     private boolean work;
     private MainMenu menu;
 
+    public ConsoleUI() {
+        scanner = new Scanner(System.in);
+        presenter = new Presenter(this);
+        work = true;
+        menu = new MainMenu(this);
+    }
 
     @Override
     public void printAnswer(String text){
@@ -36,5 +45,13 @@ public class ConsoleUI implements View{
             gender = Gender.Male;
         }
         presenter.addHuman(name, birth, gender);
+    }
+
+    public void addChildren() {
+        System.out.println("Введите имя родителя:");
+        String parent = scanner.nextLine();
+        System.out.println("Введите имя ребенка:");
+        String child = scanner.nextLine();
+        for (Human human: presenter.getFamilyTree())
     }
 }

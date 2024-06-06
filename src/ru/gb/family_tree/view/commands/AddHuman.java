@@ -9,10 +9,7 @@ public class AddHuman extends Command{
         description = "Добавить человека";
     }
 
-
     public void execute() {
         consoleUI.addHuman();
     }
-
-
 }

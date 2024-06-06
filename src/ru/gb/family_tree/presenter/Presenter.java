@@ -28,6 +28,10 @@ public class Presenter {
         view.printAnswer(info);
     }
 
+    public void getFamilyTree(){
+        service.getFamilyTree();
+    }
+
     public void addChildren(Human parent, Human child){
         service.addChildren(parent, child);
     }
