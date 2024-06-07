@@ -1,3 +1,10 @@
+package main;
+
+import model.FamilyTree;
+import model.Person;
+import storage.DataStorage;
+import storage.FileDataStorage;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -38,6 +45,8 @@ public class Main {
             for (Person person : loadedMembers) {
                 System.out.println(person);
             }
+            // Обновление генеалогического древа загруженными данными
+            familyTree.setMembers(loadedMembers);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,6 +60,20 @@ public class Main {
             }
         } else {
             System.out.println("Person not found");
+        }
+
+        // Сортировка по имени и вывод
+        familyTree.sortByName();
+        System.out.println("Sorted by name:");
+        for (Person person : familyTree) {
+            System.out.println(person);
+        }
+
+        // Сортировка по возрасту и вывод
+        familyTree.sortByAge();
+        System.out.println("Sorted by age:");
+        for (Person person : familyTree) {
+            System.out.println(person);
         }
     }
 }

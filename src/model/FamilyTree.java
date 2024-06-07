@@ -1,7 +1,12 @@
+package model;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Iterable<Person> {
     private List<Person> members;
 
     public FamilyTree() {
@@ -24,12 +29,26 @@ public class FamilyTree {
         }
         return null;
     }
+
     public List<Person> getMembers() {
         return members;
     }
 
     public void setMembers(List<Person> members) {
         this.members = members;
+    }
+
+    public void sortByName() {
+        Collections.sort(members, Comparator.comparing(Person::getName));
+    }
+
+    public void sortByAge() {
+        Collections.sort(members, Comparator.comparingInt(Person::getAge));
+    }
+
+    @Override
+    public Iterator<Person> iterator() {
+        return members.iterator();
     }
 }
 

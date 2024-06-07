@@ -1,3 +1,7 @@
+package storage;
+
+import model.Person;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
