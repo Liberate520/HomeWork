@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human>, TreeItem<Human> {
+public class Human implements Serializable, Comparable<Human>, TreeItem<Human>, IFamily {
     private long id;
     private String name;
     private Human mother, father;
-    private List<Human> children;
+    private List<IFamily> children;
     private Date birthDate, deathDate;
     private int age;
     private Gender gender;
@@ -81,7 +81,7 @@ public class Human implements Serializable, Comparable<Human>, TreeItem<Human> {
     public Human getFather() {
         return father;
     }
-    public List<Human> getChildren() {
+    public List<IFamily> getChildren() {
         return children;
     }
     public Date getBirthDate() {
@@ -164,7 +164,7 @@ public class Human implements Serializable, Comparable<Human>, TreeItem<Human> {
         }
 
         if(children != null){
-            for (Human child : children) {
+            for (IFamily child : children) {
                 stringBuilder.append("Имя ребенка: " + child.getName() + "; ");
             }
         }

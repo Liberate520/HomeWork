@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends TreeItem<T>> implements Serializable, Iterable<T>, ITree<T> {
+public class FamilyTree<T extends TreeItem<T>> implements Serializable, Iterable<T>, ITree<T>, ITreeSort<T> {
     private List<T> objects;
 
     public FamilyTree() {
@@ -31,22 +31,22 @@ public class FamilyTree<T extends TreeItem<T>> implements Serializable, Iterable
 
     @Override
     public void sortByAge() {
-        objects.sort(new ComparatorByAge());
+        objects.sort(new ComparatorByAge<>());
     }
 
     @Override
     public void sortByName() {
-        objects.sort(new ComparatorByName());
+        objects.sort(new ComparatorByName<>());
     }
 
     @Override
     public void sortByBirthDate() {
-        objects.sort(new ComparatorByBurthDate());
+        objects.sort(new ComparatorByBurthDate<>());
     }
 
     @Override
     public void sortByDeathDate() {
-        objects.sort(new ComparatorByDeathDate());
+        objects.sort(new ComparatorByDeathDate<>());
     }
 
     public boolean setMother(T objForSet, T mother) {
@@ -73,7 +73,7 @@ public class FamilyTree<T extends TreeItem<T>> implements Serializable, Iterable
     }
 
     @Override
-    public T getFamilyMenber(int index) {
+    public T getFamilyMember(int index) {
         if(index < objects.size()){
             return objects.get(index);
         }else {
