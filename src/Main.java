@@ -1,7 +1,4 @@
-import FileHandlerFilse.FileHandler;
-import Persons.Enums.Gender;
-import Persons.Person;
-import PersonsTree.FamilyTree;
+import Organisms.Mammals.Persons.Enums.Gender;
 
 
 public class Main {
@@ -29,14 +26,19 @@ public class Main {
 
 
         ////смотрим итог
+        System.out.println("\n\n -----------------Работает-----getAllFamily---------- \n\n\n");
         service.getAllFamily();
+        System.out.println("\n\n -----------------Работает-----getFullPerson---------- \n\n\n");
         service.getFullPerson("Михайлов");
+        System.out.println("\n\n -----------------Работает-----getPersonOnSurname---------- \n\n\n");
         service.getPersonOnSurname("Петровский Егор Павлович");
         //вывод при помощи Итератора
+        System.out.println("\n\n -----------------Работает-----getFullFamily---------- \n\n\n");
         service.getFullFamily();
         //вывод после сортировок
+        System.out.println("\n\n -----------------Работает-----sortedByName---------- \n\n\n");
         service.sortedByName();
+        System.out.println("\n\n -----------------Работает-----sortByBirthday---------- \n\n\n");
         service.sortByBirthday();
-        System.out.println("ок");
     }
 }

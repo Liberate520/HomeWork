@@ -1,12 +1,12 @@
 package PersonsTree;
 
-import Persons.Comporators.PersonComporatorByName;
-import Persons.Person;
+import Organisms.Mammals.Persons.Comporators.ComporatorByName;
+import Organisms.Mammals.Persons.Person;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable, Iterable {
+public class FamilyTree implements Serializable, Iterable<Person> {
     private String familyName;
     private ArrayList<Person> tree;
 
@@ -20,21 +20,16 @@ public class FamilyTree implements Serializable, Iterable {
         this("default");
     }
 
-
     //методы
+    public void addPers(Person somePers) {
+        this.tree.add(somePers);
+    }
     public String getAllFamily() {
         String out = "";
         for (Person somePers : tree) {
             out += somePers;
         }
         return out;
-    }
-    public String getFullFamily() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Person person : tree) {
-            stringBuilder.append(person + "\n");
-        }
-        return stringBuilder.toString();
     }
     public String getFullPerson (String name) {
         for (Person somePers : tree) {
@@ -44,25 +39,19 @@ public class FamilyTree implements Serializable, Iterable {
         return "";
     }
     public String getPersonOnSurname (String name) {
-        String out = "";
         for (Person somePers : tree) {
-            //System.out.println(somePers.getName().split(" ")[0]);
             if (somePers.getName().split(" ")[0].equals(name))
-                out += somePers;
+                return somePers.toString();
         }
-        return out;
+        return "";
     }
-    public void addPers(Person somePers) {
-        this.tree.add(somePers);
-    }
-
     @Override
     public Iterator iterator() {
         return tree.iterator();
     }
 
     public void sortByName() {
-        Collections.sort(tree, new PersonComporatorByName());
+        Collections.sort(tree, new ComporatorByName());
     }
     public void sortByBirthday() {
         Collections.sort(tree,

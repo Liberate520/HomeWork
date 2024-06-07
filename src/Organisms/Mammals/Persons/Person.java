@@ -1,17 +1,16 @@
-package Persons;
+package Organisms.Mammals.Persons;
 
-import Persons.Enums.Gender;
+import Organisms.Mammals.Mammals;
+import Organisms.Mammals.Persons.Enums.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Person implements Serializable, Iterator<String>{
-    private String name;
-    private LocalDate birthday, deathDate;
-    private List<Person> children;
-    private Person mother, father;
-    private Gender gender;
+/**
+ * Класс человека
+ */
+public class Person extends Mammals<Person> implements Serializable, Iterator<String>{
     // для итератора
     int index;
 
@@ -21,7 +20,7 @@ public class Person implements Serializable, Iterator<String>{
         this.gender = gender;
         this.birthday = LocalDate.parse(birthDate);
         this.deathDate = LocalDate.parse(deathDate);
-        this.children = new ArrayList<>();
+        this.children = new ArrayList<Person>();
     }
     public Person(String name, Gender gender, String birthDate)  {
         this(name, gender, birthDate, "9999-01-01");
@@ -32,38 +31,6 @@ public class Person implements Serializable, Iterator<String>{
 
 
     //методы
-    public void addChildren(Person child) {
-        this.children.add(child);
-    }
-    public void addParent(Person parent) {
-        if (parent.gender == Gender.male)
-            this.father = parent;
-        else
-            this.mother = parent;
-    }
-    public String getParent() {
-        return  "Father: " + father + "\nMother: " + mother;
-    }
-    public String getChildren() {
-        String out = "";
-        for (Person somePers : children) {
-            out += somePers;
-        }
-        return out;
-    }
-    public String getName() {
-        return this.name;
-    }
-    public String getDates() {
-        String out = "Birthday: " + birthday;
-        if (deathDate.getYear() != 9999)
-            return out += "\nDeath Date: " + deathDate;
-        return out;
-    }
-    public LocalDate getBirthday() {
-        return this.birthday;
-    }
-
     @Override
     public String toString() {
         String out = "\n\nname: " + name +
@@ -76,14 +43,25 @@ public class Person implements Serializable, Iterator<String>{
         return out;
     }
 
+    /**
+     * @return Взозвращает отформатированую строку с перечислением: Отца, Матери и детей с датами.
+     */
     private String getCloseRelations() {
         String out = "";
-        if(this.father != null)
-            out = "\nFather: \nname: " + father.name +
-                "\ngender: "+ father.gender;
-        if (mother != null)
-            out += "\nMother: \nname: " + mother.name +
-                "\ngender: " + mother.gender;
+        if(this.father != null) {
+            out = "\nFather: \nname: " + father.getName() +
+                    "\ngender: " + father.getGender() +
+                    "\ndate of birthday: " + father.getBirthday();
+            if (father.getDeathDate().getYear() != 9999)
+                out += "\ndate of death: " + father.getDeathDate();
+        }
+        if (mother != null) {
+            out += "\nMother: \nname: " + mother.getName() +
+                    "\ngender: " + mother.getGender() +
+                    "\nbirthday: " + mother.getBirthday();
+            if (mother.getDeathDate().getYear() != 9999)
+                out += "\ndate of date of death: " + mother.getDeathDate();
+        }
         for (Person child : children) {
             out += "\nChild: \nname: " + child.name +
                 "\ngender: " + child.gender +
@@ -96,7 +74,7 @@ public class Person implements Serializable, Iterator<String>{
 
     @Override
     public boolean hasNext() {
-        return index++ < 5;
+        return index++ < 7;
     }
     @Override
     public String next() {
@@ -104,13 +82,26 @@ public class Person implements Serializable, Iterator<String>{
             case 0:
                 return getName();
             case 1:
-                return getDates();
+                if(getBirthday().getYear() != 9999)
+                    return getBirthday().toString();
+                return "";
             case 2:
-                return getChildren();
+                if(getBirthday().getYear() != 9999)
+                    return getDeathDate().toString();
+                return "";
             case 3:
-                return getParent();
+                return getChildren();
+            case 4:
+                return getFather();
+            case 5:
+                return getMother();
             default:
                 return String.valueOf(gender);
         }
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return this.name.compareTo(o.name);
     }
 }

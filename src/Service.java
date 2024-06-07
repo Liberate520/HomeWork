@@ -1,27 +1,25 @@
-import Persons.Enums.Gender;
-import Persons.Person;
-import Persons.PersonBuilder;
+import Organisms.Mammals.Persons.Enums.Gender;
+import Organisms.Mammals.Persons.Person;
 import PersonsTree.FamilyTree;
 
 public class Service {
-    private FamilyTree familyTree;
-    private PersonBuilder personBuild;
+    private final FamilyTree familyTree;
 
+    //конструктор
     public Service() {
         familyTree = new FamilyTree();
-        personBuild = new PersonBuilder();
     }
 
     public void addPerson(String name, Gender gender, String birthDate, String deathDate) {
-        Person person = personBuild.build(name, gender, birthDate, deathDate);
+        Person person = new Person(name, gender, birthDate, deathDate);
         familyTree.addPers(person);
     }
     public void addPerson(String name, Gender gender, String birthDate) {
-        Person person = personBuild.build(name, gender, birthDate);
+        Person person = new Person(name, gender, birthDate);
         familyTree.addPers(person);
     }
     public void addPerson(String name, Gender gender) {
-        Person person = personBuild.build(name, gender);
+        Person person = new Person(name, gender);
         familyTree.addPers(person);
     }
 
@@ -36,6 +34,7 @@ public class Service {
             if(chield != null && parent != null)
                 chield.addParent(parent);
         }
+
     }
     public void addChield(String name, String nameChield) {
         Person parent = null,
@@ -50,24 +49,25 @@ public class Service {
         }
     }
     public void getAllFamily() {
-        familyTree.getAllFamily();
+        System.out.println(familyTree.getAllFamily());
     }
     public void getFullPerson(String name) {
-        familyTree.getFullPerson(name);
+        System.out.println(familyTree.getFullPerson(name).toString());
     }
     public void getPersonOnSurname(String name) {
-        familyTree.getPersonOnSurname(name);
-    }
-    public void getFullFamily() {
-        familyTree.getFullFamily();
+        System.out.println(familyTree.getPersonOnSurname(name).toString());
     }
     public void sortedByName() {
         familyTree.sortByName();
-        familyTree.getFullFamily();
     }
     public void sortByBirthday() {
         familyTree.sortByBirthday();
-        familyTree.getFullFamily();
     }
 
+    public void getFullFamily() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Person person: familyTree)
+            stringBuilder.append(person);
+        System.out.println(stringBuilder);
+    }
 }
