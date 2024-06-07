@@ -1,3 +1,5 @@
+package human;
+
 import writer.Writable;
 
 import java.io.*;
