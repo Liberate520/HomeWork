@@ -4,6 +4,7 @@ import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.presenter.Presenter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,8 +31,12 @@ public class ConsoleUI implements View{
     }
 
     @Override
-    public void start(){
-
+    public void start() throws IOException, ClassNotFoundException {
+        hello();
+        while (work){
+            printMenu();
+            execute();
+        }
     }
 
     public void addHuman(){
@@ -63,4 +68,66 @@ public class ConsoleUI implements View{
         String spouseSecond = scanner.nextLine();
         presenter.addSpouse(spouseFirst, spouseSecond);
     }
+
+    public void sortByName() {
+        presenter.sortByName();
+    }
+
+    public void sortByAge() {
+        presenter.sortByAge();
+    }
+
+    public void saveToFile() throws IOException {
+        presenter.saveFileByte();
+    }
+
+    public void loadFile() throws IOException, ClassNotFoundException {
+        presenter.loadFileByte();
+    }
+
+    private void hello(){
+        System.out.println("Доброго времени суток!");
+    }
+
+    private void printMenu(){
+        System.out.println(menu.menu());
+    }
+
+    private void inputError(){
+        System.out.println(INPUT_ERROR);
+    }
+
+    public void finish() {
+        System.out.println("Приятно было пообщаться");
+        work = false;
+    }
+
+    private void execute() throws IOException, ClassNotFoundException {
+        String line = scanner.nextLine();
+        if (checkTextForInt(line)){
+            int numCommand = Integer.parseInt(line);
+            if (checkCommand(numCommand)){
+                menu.execute(numCommand);
+            }
+        }
+    }
+
+    private boolean checkTextForInt(String text){
+        if (text.matches("[0-9]+")){
+            return true;
+        } else {
+            inputError();
+            return false;
+        }
+    }
+
+    private boolean checkCommand(int numCommand){
+        if (numCommand <= menu.getSize()){
+            return true;
+        } else {
+            inputError();
+            return false;
+        }
+    }
 }
+
