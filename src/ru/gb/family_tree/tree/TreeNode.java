@@ -1,6 +1,7 @@
 package ru.gb.family_tree.tree;
 
 import ru.gb.family_tree.humans.Gender;
+import ru.gb.family_tree.humans.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -21,4 +22,6 @@ public interface TreeNode<T> extends Serializable {
     Gender getGender();
     T getSpouse();
     void setSpouse(T human);
+
+    int compareTo(Human o);
 }
