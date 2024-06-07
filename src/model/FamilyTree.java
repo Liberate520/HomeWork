@@ -1,54 +1,41 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Person> {
-    private List<Person> members;
+public class FamilyTree<T> {
+    private List<T> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
-    public void addMember(Person person) {
+    public void addMember(T person) {
         this.members.add(person);
     }
 
     public List<Person> getChildrenOf(Person parent) {
-        return parent.getChildren();
+        if (parent instanceof Person) {
+            return ((Person) parent).getChildren();
+        }
+        return new ArrayList<>();
     }
 
-    public Person findPersonByName(String name) {
-        for (Person person : members) {
-            if (person.getName().equals(name)) {
+    public T findPersonByName(String name) {
+        for (T person : members) {
+            if (person instanceof Person && ((Person) person).getName().equals(name)) {
                 return person;
             }
         }
         return null;
     }
 
-    public List<Person> getMembers() {
+    public List<T> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Person> members) {
+    public void setMembers(List<T> members) {
         this.members = members;
-    }
-
-    public void sortByName() {
-        Collections.sort(members, Comparator.comparing(Person::getName));
-    }
-
-    public void sortByAge() {
-        Collections.sort(members, Comparator.comparingInt(Person::getAge));
-    }
-
-    @Override
-    public Iterator<Person> iterator() {
-        return members.iterator();
     }
 }
 
