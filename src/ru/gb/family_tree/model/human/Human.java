@@ -54,8 +54,12 @@ public class Human implements Serializable, FamilyItem {
     }
 
 
-    public Human getSpouse(){
-        return this.spouse;
+    public String getSpouse(){
+        if(this.spouse.getName() != null){
+        return this.spouse.getName();}
+        else{
+            return "Нет супруга";
+        }
     }
 
     public int getAge(){
@@ -64,10 +68,10 @@ public class Human implements Serializable, FamilyItem {
 
     @Override
             public String toString(){
-            return "Name: " + name + "\n" +
-                    "Age: " + getAge() + "\n" +
-                    "Spouse: " + getSpouse() + "\n" +
-                    getParents() +
-                    getChildren() + "\n";
+            return "Имя: " + name + "\n" +
+                    "Возраст: " + getAge() + "\n" +
+                    "Супруг: " + getSpouse() + "\n" +
+                    "Родители: " + getParents() +
+                    "Дети: " + getChildren() + "\n";
         }
 }

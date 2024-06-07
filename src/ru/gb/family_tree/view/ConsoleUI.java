@@ -69,6 +69,10 @@ public class ConsoleUI implements View{
         presenter.addSpouse(spouseFirst, spouseSecond);
     }
 
+    public void getFamilyTreeInfo(){
+        presenter.getFamilyTreeInfo();
+    }
+
     public void sortByName() {
         presenter.sortByName();
     }

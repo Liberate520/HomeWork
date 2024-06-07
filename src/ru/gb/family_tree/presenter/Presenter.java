@@ -34,13 +34,13 @@ public class Presenter {
 
     public void addChildren(String parent, String child){
         service.addChildren(parent, child);
-        System.out.println(parent + "добавлен ребенок" + child);
+        System.out.println(parent + " добавлен ребенок " + child);
         getFamilyTreeInfo();
     }
 
     public void addSpouse(String spouse1, String spouse2){
         service.addSpouse(spouse1, spouse2);
-        System.out.println(spouse1 + "добавлен супруг" + spouse2);
+        System.out.println(spouse1 + " добавлен супруг " + spouse2);
         getFamilyTreeInfo();
     }
 
