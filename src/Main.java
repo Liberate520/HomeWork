@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         String filePath = "/Users/North/Documents/GB/OOP/Lessons/homeWork/src/tree.txt";
         FamilyTree tree = testTree();
-        //FamilyTree tree = load(filePath);
+//        FamilyTree tree = load(filePath);
         System.out.println(tree);
 
         save(tree, filePath);
