@@ -1,6 +1,7 @@
 package FamTree.human;
 
 import FamTree.Gender;
+import FamTree.ft.LifeFormGroup;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, LifeFormGroup<Human> {
     private long  id;
     private String name;
     private Gender gender;
@@ -50,12 +51,37 @@ public class Human implements Serializable, Comparable<Human> {
         return false;
     }
 
+    @Override
+    public boolean removeChild(Human child) {
+        return false;
+    }
+
     public boolean addParent(Human parent) {
         if (!parents.contains(parent)) {
             parents.add(parent);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean removeParent(Human parent) {
+        return false;
+    }
+
+    @Override
+    public int getNumChildren() {
+        return 0;
+    }
+
+    @Override
+    public int getNumSiblings() {
+        return 0;
+    }
+
+    @Override
+    public int getNumParents() {
+        return 0;
     }
 
     public Human getFather(){
@@ -95,6 +121,11 @@ public class Human implements Serializable, Comparable<Human> {
         return spouse;
     }
 
+    @Override
+    public void setSpouse(Object o) {
+
+    }
+
     public String getName() {return name;}
 
     public long getId() {return id;}
@@ -110,6 +141,11 @@ public class Human implements Serializable, Comparable<Human> {
     }
 
     public List<Human> getParents() {return parents;}
+
+    @Override
+    public List<Human> getSiblings() {
+        return List.of();
+    }
 
     public List<Human> getChildren() {return children;}
 

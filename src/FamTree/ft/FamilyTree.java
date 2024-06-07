@@ -7,45 +7,45 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<T extends LifeFormGroup<T>> implements Serializable, Iterable<T> {
     private long humansId;
-    private List<Human> humanList;
+    private List<T> humanList;
 
     public FamilyTree() { this(new ArrayList<>()); }
-    public FamilyTree(List<Human> humanList) { this.humanList = humanList; }
+    public FamilyTree(List<T> humanList) { this.humanList = humanList; }
 
-    public boolean add(Human human) {
+    public boolean add(T human) {
         if ( human == null ) return false;
         if (!humanList.contains(human)){
             humanList.add(human);
             human.setId(humansId ++);
 
-            addToParents(human);
-            addToChildren(human);
+            addToParents((T) human);
+            addToChildren((T) human);
 
             return true;
         }
         return false;
     }
 
-    private void addToParents(Human human) {
-        for (Human parentL : human.getParents()) {
+    private void addToParents(T human) {
+        for (T parentL : human.getParents()) {
             parentL.addChild(human);
         }
     }
 
-    private void addToChildren(Human human) {
-        for (Human childL : human.getChildren()) {
+    private void addToChildren(T human) {
+        for (T childL : human.getChildren()) {
             childL.addParent(human);
         }
     }
 
-    public List<Human> getSiblings(long id) {
-        Human human = getById(id);
+    public List<T> getSiblings(long id) {
+        T human = (T) getById(id);
         if (human == null) return null;
-        List<Human> siblings = new ArrayList<>();
-        for (Human parentL : human.getParents()) {
-            for (Human child : parentL.getChildren()) {
+        List<T> siblings = new ArrayList<>();
+        for (T parentL : human.getParents()) {
+            for (T child : parentL.getChildren()) {
                 if (!child.equals(human)) {
                     siblings.add(child);
                 }
@@ -54,9 +54,9 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return siblings;
     }
 
-    public List<Human> getByName(String name) {
-        List<Human> result = new ArrayList<>();
-        for (Human human : humanList) {
+    public List<T> getByName(String name) {
+        List<T> result = new ArrayList<>();
+        for (T human : humanList) {
             if (human.getName().equals(name)) {
                 result.add(human);
             }
@@ -66,8 +66,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     public boolean setWedding(long humanId1, long humanId2){
         if (checkId(humanId1) && checkId(humanId2)){
-            Human human1 = getById(humanId1);
-            Human human2 = getById(humanId2);
+            T human1 = getById(humanId1);
+            T human2 = getById(humanId2);
             if (human1.getSpouse() == null && human2.getSpouse() == null){
                 human1.setSpouse(human2);
                 human2.setSpouse(human1);
@@ -80,8 +80,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     public boolean setDivorce(long humanId1, long humanId2){
         if (checkId(humanId1) && checkId(humanId2)){
-            Human human1 = getById(humanId1);
-            Human human2 = getById(humanId2);
+            T human1 = getById(humanId1);
+            T human2 = getById(humanId2);
             if (human1.getSpouse() != null && human2.getSpouse() != null){
                 human1.setSpouse(null);
                 human2.setSpouse(null);
@@ -94,7 +94,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     public boolean remove(long humanId){
         if (checkId(humanId)){
-            Human human = getById(humanId);
+            T human = getById(humanId);
             return humanList.remove(human);
         }
         return false;
@@ -104,8 +104,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return id < humansId  &&  id >= 0;
     }
 
-    public Human getById(long id) {
-        for (Human human : humanList) {
+    public T getById(long id) {
+        for (T human : humanList) {
             if (human.getId() == id) return human;
         }
         return null;
@@ -119,7 +119,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         sb.append("В Дереве ");
         sb.append(humanList.size());
         sb.append(" объектов: \n");
-        for (Human human : humanList) {
+        for (T human : humanList) {
             sb.append(human);
             sb.append("\n");
         }
@@ -127,15 +127,15 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humanList);
+    public Iterator<T> iterator() {
+        return new FamilyTreeIterator<>(humanList);
     }
 
     public void sortByName(){
-        humanList.sort(new FamilyTreeComparatorByName());
+        humanList.sort(new FamilyTreeComparatorByName<>());
     }
 
     public void sortByBirthDate(){
-        humanList.sort(new FamilyTreeComparatorByBirthDate());
+        humanList.sort(new FamilyTreeComparatorByBirthDate<>());
     }
 }
