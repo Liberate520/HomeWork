@@ -1,45 +1,42 @@
-package PersonsTree;
+package OrganismTree.PersonsTree;
 
+import OrganismTree.OrganismeTree;
 import Organisms.Mammals.Persons.Comporators.ComporatorByName;
 import Organisms.Mammals.Persons.Person;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
-    private String familyName;
-    private ArrayList<Person> tree;
+public class FamilyTree<T extends Person> extends OrganismeTree<T> {
 
 
     //конструкторы
     public FamilyTree (String familyName) {
         this.familyName = familyName;
-        tree = new ArrayList<Person>();
+        tree = new ArrayList<T>();
     }
     public FamilyTree() {
         this("default");
     }
 
     //методы
-    public void addPers(Person somePers) {
-        this.tree.add(somePers);
-    }
+
     public String getAllFamily() {
         String out = "";
-        for (Person somePers : tree) {
+        for (T somePers : tree) {
             out += somePers;
         }
         return out;
     }
     public String getFullPerson (String name) {
-        for (Person somePers : tree) {
+        for (T somePers : tree) {
             if (somePers.getName() == name)
                 return somePers.toString();
         }
         return "";
     }
     public String getPersonOnSurname (String name) {
-        for (Person somePers : tree) {
+        for (T somePers : tree) {
             if (somePers.getName().split(" ")[0].equals(name))
                 return somePers.toString();
         }
@@ -55,7 +52,7 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     }
     public void sortByBirthday() {
         Collections.sort(tree,
-                Comparator.comparing(Person::getBirthday));
+                Comparator.comparing(T::getBirthday));
                 //(o1, o2) -> o1.getBirthday().compareTo(o2.getBirthday());
     }
 }

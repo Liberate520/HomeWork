@@ -1,9 +1,9 @@
 import Organisms.Mammals.Persons.Enums.Gender;
 import Organisms.Mammals.Persons.Person;
-import PersonsTree.FamilyTree;
+import OrganismTree.PersonsTree.FamilyTree;
 
 public class Service {
-    private final FamilyTree familyTree;
+    private final FamilyTree<Person> familyTree;
 
     //конструктор
     public Service() {

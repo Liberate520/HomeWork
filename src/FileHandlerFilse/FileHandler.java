@@ -1,7 +1,5 @@
 package FileHandlerFilse;
 
-import PersonsTree.FamilyTree;
-
 import java.io.*;
 
 public class FileHandler implements Writable {
