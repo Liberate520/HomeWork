@@ -1,8 +1,8 @@
-package FamTree;
+package FamTree.writer;
 
 import java.io.*;
 
-public class FileHandler implements Writable{
+public class FileHandler implements Writable {
 
     //    Сериализация в файл с помощью класса ObjectOutputStream
 

@@ -1,12 +1,13 @@
-package FamTree;
+package FamTree.ft;
 
-import com.sun.source.tree.Tree;
+import FamTree.human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long humansId;
     private List<Human> humanList;
 
@@ -77,7 +78,6 @@ public class FamilyTree implements Serializable {
         return false;
     }
 
-
     public boolean setDivorce(long humanId1, long humanId2){
         if (checkId(humanId1) && checkId(humanId2)){
             Human human1 = getById(humanId1);
@@ -124,5 +124,18 @@ public class FamilyTree implements Serializable {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humanList);
+    }
+
+    public void sortByName(){
+        humanList.sort(new FamilyTreeComparatorByName());
+    }
+
+    public void sortByBirthDate(){
+        humanList.sort(new FamilyTreeComparatorByBirthDate());
     }
 }

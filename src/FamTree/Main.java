@@ -1,7 +1,10 @@
 package FamTree;
 
 import java.time.LocalDate;
-import FamTree.FileHandler;
+
+import FamTree.ft.FamilyTree;
+import FamTree.human.Human;
+import FamTree.writer.FileHandler;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,7 +19,7 @@ public class Main {
     }
 
     static FamilyTree read(String filePath) {
-        FileHandler  fileHandler = new FileHandler();
+        FileHandler fileHandler = new FileHandler();
         return (FamilyTree) fileHandler.read(filePath);
     }
 

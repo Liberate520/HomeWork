@@ -1,4 +1,6 @@
-package FamTree;
+package FamTree.human;
+
+import FamTree.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +8,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private long  id;
     private String name;
     private Gender gender;
@@ -180,7 +182,7 @@ public class Human implements Serializable {
     public String getChildrenInfo(){
         StringBuilder response =  new StringBuilder();
         response.append("дети: ");
-        if (children.size() !=0) {
+        if (!children.isEmpty()) {
             response.append(children.get(0).getName());
             for (int i =1; i < children.size(); i++){
                 response.append(", ");
@@ -201,5 +203,10 @@ public class Human implements Serializable {
         }
         Human human = (Human) obj;
         return human.getId() == getId();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
     }
 }
