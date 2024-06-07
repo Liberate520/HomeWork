@@ -1,12 +1,14 @@
 package ru.gb.family_tree.humans;
 
+import ru.gb.family_tree.tree.TreeNode;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human<E extends TreeNode<E>> implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private Gender gender;
