@@ -1,1 +1,17 @@
-.idea
+# Ignore class files
+*.class
+
+# Ignore output directories
+out/
+build/
+target/
+
+# Ignore IDE-specific files
+*.iml
+.idea/
+*.vscode/
+*.swp
+
+# Ignore logs and temporary files
+*.log
+*.tmp
