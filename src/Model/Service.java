@@ -1,6 +1,7 @@
-import Organisms.Mammals.Persons.Enums.Gender;
-import Organisms.Mammals.Persons.Person;
-import OrganismTree.PersonsTree.FamilyTree;
+package Model;
+
+import Model.Organisms.Mammals.Persons.Person;
+import
 
 public class Service {
     private final FamilyTree<Person> familyTree;

@@ -1,4 +1,4 @@
-package FileHandlerFilse;
+package Model.FileHandlerFilse;
 
 import java.io.*;
 

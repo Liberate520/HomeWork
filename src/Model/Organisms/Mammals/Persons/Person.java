@@ -1,4 +1,4 @@
-package Organisms.Mammals.Persons;
+package Model.Organisms.Mammals.Persons;
 
 import Organisms.Mammals.Mammals;
 import Organisms.Mammals.Persons.Enums.Gender;

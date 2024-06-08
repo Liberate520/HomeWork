@@ -1,0 +1,5 @@
+package View;
+
+interface View {
+    ;
+}
