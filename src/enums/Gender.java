@@ -1,16 +1,40 @@
 package enums;
 
 /**
- * Перечисление, представляющее пол человека.
- * Используется в классе Human для определения пола.
+ * Перечисление для представления пола человека.
  */
 public enum Gender {
+
     /**
      * Мужской пол.
      */
-    MALE,
+    MALE("Мужской"),
+
     /**
      * Женский пол.
      */
-    FEMALE
+    FEMALE("Женский");
+
+    /**
+     * Описание пола.
+     */
+    private String description;
+
+    /**
+     * Конструктор перечисления Gender.
+     *
+     * @param description Описание пола.
+     */
+    Gender(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Возвращает описание пола.
+     *
+     * @return Описание пола.
+     */
+    public String getDescription() {
+        return description;
+    }
 }
