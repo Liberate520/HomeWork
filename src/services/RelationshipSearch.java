@@ -1,53 +1,65 @@
 package services;
 
-import models.FamilyTree;
 import models.Human;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Класс для поиска родственных связей в генеалогическом древе.
- * Предоставляет методы для поиска родителей, супруга, братьев/сестер выбранного человека.
+ * Класс для поиска родственных связей между людьми в генеалогическом древе.
  */
 public class RelationshipSearch {
-    private FamilyTree familyTree;
 
     /**
-     * Конструктор класса RelationshipSearch.
+     * Возвращает список братьев и сестер человека.
      *
-     * @param familyTree Генеалогическое древо, в котором производится поиск
+     * @param human Человек, для которого нужно найти братьев и сестер.
+     * @return Список братьев и сестер.
      */
-    public RelationshipSearch(FamilyTree familyTree) {
-        this.familyTree = familyTree;
+    public static List<Human> findSiblings(Human human) {
+        List<Human> siblings = new ArrayList<>();
+        for (Human mother : human.getMothers()) {
+            siblings.addAll(mother.getChildren());
+        }
+        for (Human father : human.getFathers()) {
+            siblings.addAll(father.getChildren());
+        }
+        siblings.remove(human);
+        return siblings;
     }
 
     /**
-     * Возвращает список родителей для указанного человека.
+     * Возвращает список дядей и тетей человека.
      *
-     * @param person Человек, для которого ищутся родители
-     * @return Список родителей
+     * @param human Человек, для которого нужно найти дядей и тетей.
+     * @return Список дядей и тетей.
      */
-    public List<Human> findParents(Human person) {
-        return familyTree.getParents(person);
+    public static List<Human> findAuntsAndUncles(Human human) {
+        List<Human> auntsAndUncles = new ArrayList<>();
+        for (Human mother : human.getMothers()) {
+            auntsAndUncles.addAll(findSiblings(mother));
+        }
+        for (Human father : human.getFathers()) {
+            auntsAndUncles.addAll(findSiblings(father));
+        }
+        return auntsAndUncles;
     }
 
     /**
-     * Возвращает супруга для указанного человека.
+     * Возвращает список двоюродных братьев и сестер человека.
      *
-     * @param person Человек, для которого ищется супруг
-     * @return Супруг
+     * @param human Человек, для которого нужно найти двоюродных братьев и сестер.
+     * @return Список двоюродных братьев и сестер.
      */
-    public Human findSpouse(Human person) {
-        return familyTree.getSpouse(person);
-    }
-
-    /**
-     * Возвращает список братьев и сестер для указанного человека.
-     *
-     * @param person Человек, для которого ищутся братья и сестры
-     * @return Список братьев и сестер
-     */
-    public List<Human> findSiblings(Human person) {
-        return familyTree.getSiblings(person);
+    public static List<Human> findCousinsSiblings(Human human) {
+        List<Human> cousins = new ArrayList<>();
+        for (Human aunt : findAuntsAndUncles(human)) {
+            cousins.addAll(aunt.getChildren());
+        }
+        for (Human uncle : findAuntsAndUncles(human)) {
+            cousins.addAll(uncle.getChildren());
+        }
+        cousins.removeAll(findSiblings(human));
+        return cousins;
     }
 }
