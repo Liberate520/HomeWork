@@ -98,19 +98,15 @@ public class Human implements Serializable {
             sb.append(mother.getName()).append(" ");
         }
         sb.append("\nБратья/Сестры: ");
-        for (Human sibling : getOtherChildren()) {
-            sb.append(sibling.getName()).append(" ");
+        for (Human child : children) {
+            sb.append(child.getName()).append(" ");
         }
         sb.append("\nСупруг(а): ");
         if (spouse != null) {
             sb.append(spouse.getName());
+        } else {
+            sb.append("жив");
         }
         return sb.toString();
-    }
-
-    private List<Human> getOtherChildren() {
-        List<Human> otherChildren = new ArrayList<>(children);
-        otherChildren.remove(this);
-        return otherChildren;
     }
 }
