@@ -16,7 +16,6 @@ public class Main {
 
         familyTree.sortByAge();
         System.out.println(familyTree);
-
 //        Human.Human sergey = new Human.Human("Sergey", null, null, Gender.Male, LocalDate.of(1981, 7, 17), null);
 //        System.out.println(sergey.getAge());
 //        System.out.println(sergey);
@@ -56,9 +55,6 @@ public class Main {
 //
 //
 //        save(familyTree, "/Users/ksyul/Desktop/homeWork/src/familytree.txt");
-
-
-
 
     }
 
