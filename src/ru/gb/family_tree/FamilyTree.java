@@ -6,12 +6,38 @@ import java.util.List;
 
 public class FamilyTree implements Serializable {
     private List<Human> familyTreeList = new ArrayList<>();
+    private List<Long> emptyIds = new ArrayList<>();
+
+
+    private void letHumanId(Human human) {
+        human.setId(human.getCurrentId());
+        human.setCurrentId();
+    }
 
     public void addHumansInFamTree(Human... human) {
         for (Human fam: human) {
             familyTreeList.add(fam);
+            if (emptyIds.isEmpty()) {
+                letHumanId(fam);
+            }
+            else {
+                fam.setId(emptyIds.get(0));
+            }
         }
+    }
 
+    public void removeHumansFromFamTree(Human... human) {
+        for (Human fam: human) {
+            familyTreeList.remove(fam);
+            emptyIds.add(fam.getId());
+        }
+    }
+
+
+    public void removeHumanFromFamTree(Human... human){
+        for (Human fam: human) {
+            familyTreeList.remove(fam);
+        }
     }
 
     public Human findHuman(String firstName){

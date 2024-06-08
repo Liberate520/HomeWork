@@ -30,12 +30,22 @@ public class Main {
 
         familyTree.addHumansInFamTree(human1, human2, human3, human4
                 , human5, human6, human7, human8, human9);
+        familyTree.removeHumansFromFamTree(human8); // Удаляю одного человека, его id остаётся свободным, чтобы следующий добавленный человек получил его id.
+        // Так удобно редактировать любого человека с нуля и не допускать пустых id после удаления. В данном случае освободится id 7.
+
+        //Теперь следующий человек займёт освободившийся id 7, а все остальные останутся на своих местах.
+        // Можно делать сколько угодно пустых id, новые люди будут их всех занимать, только потом будут генрироваться новые id.
+        Human human10 = new Human("Diara", "Pushkin", LocalDate.of(1766, 6, 19), LocalDate.of(1829, 10, 5), Female, human4, human6);
+        human4.addChilds(human10);
+        human6.addChilds(human10);
+
+        familyTree.addHumansInFamTree(human10);
 
 //        familyTree = load(filePath);
 
         System.out.println(familyTree);
 
-        save(familyTree, filePath);
+//        save(familyTree, filePath);
     }
 
 

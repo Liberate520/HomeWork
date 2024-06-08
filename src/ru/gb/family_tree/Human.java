@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Human implements Serializable {
+    private static long currentId;
+    private long id;
     private String firstName;
     private String lastName;
     private Gender gender;
@@ -13,7 +15,9 @@ public class Human implements Serializable {
     private List<Human> childsArray;
     private List<Human> parentsArray;
 
+
     public Human(String firstName, String lastName, LocalDate dob, LocalDate dod, Gender gender) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -45,6 +49,21 @@ public class Human implements Serializable {
         }
     }
 
+    public void setCurrentId(){
+        this.currentId++;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getCurrentId() {
+        return currentId;
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -70,7 +89,7 @@ public class Human implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder("\n" + firstName + " " + lastName + ", " + gender + ", " + " (" + dob + " - " + dod + ")");
+        StringBuilder str = new StringBuilder("\n" + id + " " + firstName + " " + lastName + ", " + gender + ", " + " (" + dob + " - " + dod + ")");
         if (parentsArray.isEmpty()!=true){
             str.append("\nParents: \n");
             for (int i = 0; i < parentsArray.size(); i++) {
