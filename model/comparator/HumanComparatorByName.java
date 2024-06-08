@@ -1,8 +1,8 @@
-package OOP.SemDZ.homeWork.comparator;
+package OOP.SemDZ.homeWork.model.comparator;
 
 import java.util.Comparator;
 
-import OOP.SemDZ.homeWork.human.Human;
+import OOP.SemDZ.homeWork.model.human.Human;
 
 public class HumanComparatorByName<T extends Human> implements Comparator<T> {
     @Override

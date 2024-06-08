@@ -1,11 +1,11 @@
-package OOP.SemDZ.homeWork.human;
+package OOP.SemDZ.homeWork.model.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, Creature {
     private String name;
     private int id = 0;
     private Gender gender;
@@ -61,7 +61,7 @@ public class Human implements Serializable, Comparable<Human> {
     public LocalDate getDeath(){return death;}
     public void setDeath(LocalDate death){this.death = death;}
     public Human getSpouse(){return spouse;}
-    public void setSpouse(Human spouse){this.spouse = spouse;}
+    public <Human>void setSpouse(Human spouse){this.spouse = (OOP.SemDZ.homeWork.model.human.Human) spouse;}
     public int getId(){return id;}
     public void setId(int id){this.id = id;}
     public List<Human> getChildren(){ return child;}
@@ -104,5 +104,7 @@ public class Human implements Serializable, Comparable<Human> {
                 
         return name.compareTo(o.name);
     }
+
+    
 
 }

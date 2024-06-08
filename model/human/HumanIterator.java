@@ -1,4 +1,4 @@
-package OOP.SemDZ.homeWork.human;
+package OOP.SemDZ.homeWork.model.human;
 
 import java.util.Iterator;
 import java.util.List;

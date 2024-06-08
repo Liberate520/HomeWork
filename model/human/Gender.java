@@ -1,4 +1,4 @@
-package OOP.SemDZ.homeWork.human;
+package OOP.SemDZ.homeWork.model.human;
 
 public enum Gender {
     Male, Female

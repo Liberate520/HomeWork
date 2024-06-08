@@ -1,4 +1,4 @@
-package OOP.SemDZ.homeWork.write;
+package OOP.SemDZ.homeWork.model.write;
 
 import java.io.*;
 

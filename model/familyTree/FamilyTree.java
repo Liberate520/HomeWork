@@ -1,22 +1,22 @@
-package OOP.SemDZ.homeWork.familyTree;
+package OOP.SemDZ.homeWork.model.familyTree;
 
 import java.io.Serializable;
 import java.util.List;
 
-import OOP.SemDZ.homeWork.comparator.HumanComparatorByAge;
-import OOP.SemDZ.homeWork.comparator.HumanComparatorByName;
-import OOP.SemDZ.homeWork.human.Human;
-import OOP.SemDZ.homeWork.human.HumanIterator;
+import OOP.SemDZ.homeWork.model.comparator.HumanComparatorByAge;
+import OOP.SemDZ.homeWork.model.comparator.HumanComparatorByName;
+import OOP.SemDZ.homeWork.model.human.Creature;
+import OOP.SemDZ.homeWork.model.human.HumanIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends Creature> implements Serializable, Iterable<T> {
     private int idCount=0;
     private List<T> humanTreeList;
 
     public FamilyTree() {
-        humanTreeList = new ArrayList<T>();
+        humanTreeList = new ArrayList<>();
     }
 
     public void addHuman (T human){
