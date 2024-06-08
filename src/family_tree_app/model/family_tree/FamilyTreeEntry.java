@@ -1,10 +1,10 @@
-package family_tree_app.family_tree;
+package family_tree_app.model.family_tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import family_tree_app.human.Gender;
+import family_tree_app.model.human.Gender;
 
 public interface FamilyTreeEntry<T> extends Serializable {
     int getAge();

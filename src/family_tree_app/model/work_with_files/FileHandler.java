@@ -1,4 +1,4 @@
-package family_tree_app.work_with_files;
+package family_tree_app.model.work_with_files;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,8 +6,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import family_tree_app.family_tree.FamilyTreeEntry;
-import family_tree_app.family_tree.Tree;
+import family_tree_app.model.family_tree.FamilyTreeEntry;
+import family_tree_app.model.family_tree.Tree;
 
 public class FileHandler<T extends FamilyTreeEntry<T>> implements Savable<T> {
     private String filePath = "family.out";
@@ -38,6 +38,7 @@ public class FileHandler<T extends FamilyTreeEntry<T>> implements Savable<T> {
         return save(tree, filePath);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Tree<T> read() {
         return (Tree<T>) read(filePath);

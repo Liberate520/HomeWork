@@ -1,14 +1,14 @@
-package family_tree_app.family_tree;
+package family_tree_app.model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import family_tree_app.human.Gender;
-import family_tree_app.human.comparators.ComparatorByAge;
-import family_tree_app.human.comparators.ComparatorByAmountOfChildren;
-import family_tree_app.human.comparators.ComparatorByName;
+import family_tree_app.model.human.Gender;
+import family_tree_app.model.human.comparators.ComparatorByAge;
+import family_tree_app.model.human.comparators.ComparatorByAmountOfChildren;
+import family_tree_app.model.human.comparators.ComparatorByName;
 
 public class Tree<T extends FamilyTreeEntry<T>> implements Serializable, Iterable<T> {
     private List<T> familyTree;
@@ -67,61 +67,17 @@ public class Tree<T extends FamilyTreeEntry<T>> implements Serializable, Iterabl
         }
     }
 
-    // public void showProgenitors(Human human) {
-    //     System.out.println("The progenitors of " + human.getName() + " are:");
-    //     showProgenitor(human, 0, 0);
-    // }
-
-    // private void showProgenitor(Human human, int depth, int count) {
-    //     if (human.getFather() == null && human.getMother() == null) {
-    //         return;
-    //     } else {
-    //         for (int i = 0; i < depth; i++) {
-    //             System.out.print(" ");
-    //         }
-    //         if (count == 0) {
-    //             System.out.print("parents: ");
-    //         } else if (count == 1) {
-    //             System.out.print("greatparents (" + human.getName() + "'s line): ");
-    //         } else {
-    //             for (int j = 0; j < count - 1; j++) {
-    //                 System.out.print("grand-");
-    //             }
-    //             System.out.print("greatparents (" + human.getName() + "'s line): ");
-    //         }
-    //         if (human.getFather() == null) {
-    //             System.out.print("");
-    //         } else {
-    //             System.out.print(human.getFather().getName() + " ");
-    //         }
-    //         if (human.getMother() == null) {
-    //             System.out.print("");
-    //         } else {
-    //             System.out.print(human.getMother().getName() + " ");
-    //         }
-    //         System.out.println("");
-    //         if (human.getFather() == null) {
-    //             System.out.print("");
-    //         } else {
-    //             showProgenitor(human.getFather(), depth + 5, count + 1);
-    //         }
-    //         if (human.getMother() == null) {
-    //             System.out.print("");
-    //         } else {
-    //             showProgenitor(human.getMother(), depth + 5, count + 1);
-    //         }
-    //     }
-    // }
-
     @Override
     public String toString() {
 
         if (familyTree == null) {
             return "No info";
         }
+        int position = 1;
         StringBuilder builder = new StringBuilder();
         builder.append("This family tree contains:\n");
         for (T human : familyTree) {
+            builder.append(position);
             builder.append(" - ");
             builder.append(human.getName());
             builder.append(" (");
@@ -141,6 +97,7 @@ public class Tree<T extends FamilyTreeEntry<T>> implements Serializable, Iterabl
             }
             builder.append(human.getChildren().size());
             builder.append(" child(ren))\n");
+            position++;
         }
         return builder.toString();
     }
@@ -160,5 +117,9 @@ public class Tree<T extends FamilyTreeEntry<T>> implements Serializable, Iterabl
 
     public void sortByAmountOfChildren() {
         familyTree.sort(new ComparatorByAmountOfChildren<>());
+    }
+
+    public List<T> getFamilyTree() {
+        return familyTree;
     }
 }

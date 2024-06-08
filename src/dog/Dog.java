@@ -4,8 +4,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-import family_tree_app.family_tree.FamilyTreeEntry;
-import family_tree_app.human.Gender;
+import family_tree_app.model.family_tree.FamilyTreeEntry;
+import family_tree_app.model.human.Gender;
 
 public class Dog implements FamilyTreeEntry<Dog> {
 

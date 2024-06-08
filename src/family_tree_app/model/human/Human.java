@@ -1,11 +1,11 @@
-package family_tree_app.human;
+package family_tree_app.model.human;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-import family_tree_app.family_tree.FamilyTreeEntry;
+import family_tree_app.model.family_tree.FamilyTreeEntry;
 
 public class Human implements FamilyTreeEntry<Human> {
     private String name;
@@ -119,18 +119,18 @@ public class Human implements FamilyTreeEntry<Human> {
         return children;
     }
 
-    public void setChildren(Human human) {
+    public void setChildren(Human child) {
         if (children == null) {
             children = new ArrayList<Human>();
-            this.children.add(human);
+            this.children.add(child);
         } else {
-            if (children.contains(human)) {
+            if (children.contains(child)) {
                 return;
             } else {
-                this.children.add(human);
+                this.children.add(child);
             }
         }
-        human.setParent(this);
+        child.setParent(this);
     }
 
     public String getChildenNames() {
