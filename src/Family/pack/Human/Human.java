@@ -1,19 +1,21 @@
-package pack;
+package Family.pack.Human;
+
+import Family.pack.Family_Tree.FamilyTreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyTreeItem<Human> {
     private static List<HumanObserver> observers = new ArrayList<>();
     private static short idCounter = 0; // Статический счетчик для ID
 
-    public static void addObserver(HumanObserver observer) {
+    public static void addObserver(HumanObserver<Human> observer) {
         observers.add(observer);
     }
 
-    public static void removeObserver(HumanObserver observer) {
+    public static void removeObserver(HumanObserver<Human> observer) {
         observers.remove(observer);
     }
 
@@ -147,7 +149,11 @@ public class Human implements Serializable {
         info += "Сёстры: \n";
         for (Human human : this.getSisters())
             info += human.name + "\n";
-        info += "Мать - " + motherName + "\nОтец - " + fatherName + "\nВозраст - " + this.calculateAge() + "\n----------------------------------";
+        info += "Мать - " + motherName + "\nОтец - " + fatherName + "\nВозраст - " + this.calculateAge();
+        if (this.spouse != null)
+            info += "Супруг: \n" + this.spouse;
+        info += "\n-------------------------------------";
+
         return info;
     }
 
@@ -229,5 +235,10 @@ public class Human implements Serializable {
             }
         }
         return sisters;
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.getName());
     }
 }
