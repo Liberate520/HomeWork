@@ -1,4 +1,4 @@
-package FamilyTree.familyTree;
+package FamilyTree.model.familyTree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -107,8 +107,12 @@ public class FamilyTree<E extends ElementFamilyTree<E>> implements Serializable,
     public String getInfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("В древе ").append(getName()).append(" ").append(getHumanList().size()).append(" объектов.");
-        for (E item : itemList){
-            sb.append("\n" + "[id ").append(item.getId()).append(", имя: ").append(item.getName()).append(", пол: ").append(item.getGender()).append(", возраст: ").append(item.getAge()).append(", супруг(а): ").append(item.getSpouseInfo()).append(", мать: ").append(item.getMotherInfo()).append(", отец: ").append(item.getFatherInfo()).append(", дети: ").append(item.getChildrenInfo()).append("]");
+        try {
+            for (E item : itemList){
+                sb.append("\n" + "[id ").append(item.getId()).append(", имя: ").append(item.getName()).append(", пол: ").append(item.getGender()).append(", возраст: ").append(item.getAge()).append(", супруг(а): ").append(item.getSpouseInfo()).append(", мать: ").append(item.getMotherInfo()).append(", отец: ").append(item.getFatherInfo()).append(", дети: ").append(item.getChildrenInfo()).append("]");
+            }
+        } catch (Exception ignored){
+
         }
         return sb.toString();
     }

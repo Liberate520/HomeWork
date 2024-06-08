@@ -1,6 +1,6 @@
-package FamilyTree.human;
+package FamilyTree.model.human;
 
-import FamilyTree.familyTree.ElementFamilyTree;
+import FamilyTree.model.familyTree.ElementFamilyTree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ public class Human implements Serializable, ElementFamilyTree<Human> {
     private final Gender gender;
     private final LocalDate birthDate;
     private final LocalDate deathDate;
-    private final List<Human> parents;
+    private List<Human> parents;
 
     public void setChildren(List<Human> children) {
         this.children = children;
@@ -40,6 +40,22 @@ public class Human implements Serializable, ElementFamilyTree<Human> {
         }
         this.children = children;
         this.spouse = spouse;
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate){
+        id = -1;
+        this.name = name;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.deathDate = null;
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate){
+        id = -1;
+        this.name = name;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.deathDate = deathDate;
     }
 
     public void addChild(Human child){
@@ -104,19 +120,27 @@ public class Human implements Serializable, ElementFamilyTree<Human> {
     }
 
     public String getMotherInfo(){
-        for (Human human : parents){
-            if (human.getGender() == Gender.Female){
-                return human.getName();
+        if(parents != null) {
+            for (Human human : parents) {
+                if (human.getGender() == Gender.Female) {
+                    return human.getName();
+                }
             }
+        } else {
+            return "Неизвестно.";
         }
         return null;
     }
 
     public String getFatherInfo(){
-        for (Human human : parents){
-            if (human.getGender() == Gender.Male){
-                return human.getName();
+        if(parents != null) {
+            for (Human human : parents) {
+                if (human.getGender() == Gender.Male) {
+                    return human.getName();
+                }
             }
+        } else {
+            return "Неизвестно";
         }
         return null;
     }

@@ -1,7 +1,7 @@
-package FamilyTree.familyTree;
+package FamilyTree.model.familyTree;
 
-import FamilyTree.human.Gender;
-import FamilyTree.human.Human;
+import FamilyTree.model.human.Gender;
+import FamilyTree.model.human.Human;
 
 import java.time.LocalDate;
 import java.util.List;

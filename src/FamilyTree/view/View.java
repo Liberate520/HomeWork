@@ -5,4 +5,7 @@ import FamilyTree.presenter.Presenter;
 public interface View {
     void start();
     void printAnswer(String text);
+    void createFamilyTree(String name);
+    void addElement();
+    String help();
 }
