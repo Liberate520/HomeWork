@@ -43,6 +43,7 @@ public class MainMenu {
             builder.append(commands.get(i).getDesc());
             builder.append("\n");
         }
+        builder.append("-------");
         return builder.toString();
     }
 

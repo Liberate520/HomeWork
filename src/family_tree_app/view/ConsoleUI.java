@@ -93,7 +93,7 @@ public class ConsoleUI implements View {
     }
 
     public void showProgenitors() {
-        System.out.println("Let's see progenitors of the person:\n");
+        System.out.println("Let's see progenitors of the person:");
         presenter.showProgenitors(chooseHuman());
     }
 
@@ -123,23 +123,27 @@ public class ConsoleUI implements View {
     }
 
     private LocalDate enterDate() {
-        System.out.println("Enter date as YYYY-MM-DD");
-        String dateString = scanner.nextLine();
-        String[] dateArr = dateString.split("-");
-        int year = 1900;
-        int month = 1;
-        int day = 1;
-        if (checkForInt(dateArr[0])) {
-            year = Integer.parseInt(dateArr[0]);
+        try {
+            System.out.println("Enter date as YYYY-MM-DD");
+            String dateString = scanner.nextLine();
+            String[] dateArr = dateString.split("-");
+            int year = 1900;
+            int month = 1;
+            int day = 1;
+            if (checkForInt(dateArr[0])) {
+                year = Integer.parseInt(dateArr[0]);
+            }
+            if (checkForInt(dateArr[1])) {
+                month = Integer.parseInt(dateArr[1]);
+            }
+            if (checkForInt(dateArr[2])) {
+                day = Integer.parseInt(dateArr[2]);
+            }
+            LocalDate date_to_send = LocalDate.of(year, month, day);
+            return date_to_send;
+        } catch (Exception e) {
+            return null;
         }
-        if (checkForInt(dateArr[1])) {
-            month = Integer.parseInt(dateArr[1]);
-        }
-        if (checkForInt(dateArr[2])) {
-            day = Integer.parseInt(dateArr[2]);
-        }
-        LocalDate date_to_send = LocalDate.of(year, month, day);
-        return date_to_send;
     }
 
     public void addPerson() {
@@ -177,11 +181,11 @@ public class ConsoleUI implements View {
     }
 
     // public void setChildren() {
-    //     System.out.println("Who is a parent?");
-    //     Human parent = chooseHuman();
-    //     System.out.println("Who is a child?");
-    //     Human child = chooseHuman();
-    //     presenter.setChildren(parent, child);
+    // System.out.println("Who is a parent?");
+    // Human parent = chooseHuman();
+    // System.out.println("Who is a child?");
+    // Human child = chooseHuman();
+    // presenter.setChildren(parent, child);
     // }
 
     public void setPeriodOfLife() {

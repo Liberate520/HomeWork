@@ -9,6 +9,6 @@ public class ShowWomen extends Command {
 
     @Override
     public void execute() {
-        getConsoleUI().showMen();
+        getConsoleUI().showWomen();
     }
 }
