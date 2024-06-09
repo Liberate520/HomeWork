@@ -3,6 +3,8 @@ package FamilyTree.view;
 import FamilyTree.model.human.Gender;
 import FamilyTree.presenter.Presenter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -14,27 +16,22 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private Scanner scanner;
     private int work = 1;
+    HelpListCommand helpListCommand = new HelpListCommand();
 
     public ConsoleUI(){
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
     }
 
-    public String help(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Комманды для работы с семейным древом (Хотел спать, времени реализовать больше - не было): ");
-        sb.append("\n- /help - вывести список всех комманд.");
-        sb.append("\n- /createFamilyTree [Имя] - создать семейное древо.");
-        sb.append("\n- /addElement - добавить элемент в древо");
-        sb.append("\n- /viewFamilyTree - посмотреть таблицу");
-        sb.append("\n- /setWedding - сыграть свадьбу!");
-        sb.append("\n- /stop - остановить выполнение программы (ВСЕ УДАЛИТСЯ, БД не подключено)");
-        return sb.toString();
+    public void printHelp() {
+        String answer = helpListCommand.help();
+        printAnswer(answer);
     }
 
-    public void createFamilyTree(String name){
-            presenter.createFamilyTree(name);
-            printAnswer("Древо создано!");
+    public void createFamilyTree(){
+        System.out.println("Введите название нового древа: ");
+        presenter.createFamilyTree(scanner.nextLine());
+        printAnswer("Древо создано!");
     }
 
     public void addElement(){
@@ -46,17 +43,22 @@ public class ConsoleUI implements View {
         LocalDate birthDate = null;
         LocalDate deathDate = null;
         while (checkCorrectGender == 1) {
-            System.out.println("Укажите гендер (1 - мужчина, 2 - женщина): ");
-            int choose = Integer.parseInt(scanner.nextLine());
-            if (choose == 1) {
-                gender = Gender.Male;
-                checkCorrectGender = 0;
-            } else if (choose == 2) {
-                gender = Gender.Female;
-                checkCorrectGender = 0;
-            } else {
+            try {
+                System.out.println("Укажите гендер (1 - мужчина, 2 - женщина): ");
+                int choose = Integer.parseInt(scanner.nextLine());
+                if (choose == 1) {
+                    gender = Gender.Male;
+                    checkCorrectGender = 0;
+                } else if (choose == 2) {
+                    gender = Gender.Female;
+                    checkCorrectGender = 0;
+                } else {
+                    System.out.println("Гендер указан неверно.");
+                }
+            } catch (Exception exception){
                 System.out.println("Гендер указан неверно.");
             }
+
         }
         while (checkCorrectDate == 1) {
             try {
@@ -68,7 +70,7 @@ public class ConsoleUI implements View {
                 int day = Integer.parseInt(birthDateMassive[2]);
                 birthDate = LocalDate.of(year, month, day);
                 checkCorrectDate = 0;
-            } catch (DateTimeParseException exception){
+            } catch (DateTimeException | ArrayIndexOutOfBoundsException | NumberFormatException exception){
                 System.out.println("Введен неправильный формат даты.");
             }
         }
@@ -106,8 +108,37 @@ public class ConsoleUI implements View {
         presenter.setWedding(id1, id2);
     }
 
+    public void load() throws IOException, ClassNotFoundException {
+        System.out.println("Введите название древа, которое вы хотите загрузить: ");
+        try {
+            presenter.load(scanner.nextLine());
+            System.out.println("Древо загружено!");
+        } catch (FileNotFoundException exception){
+            System.out.println("Такого древа не сохранено.");
+        }
+    }
+
+    public void save() throws IOException {
+        presenter.save();
+        System.out.println("Текущее древо сохранено!");
+    }
+
+    public void viewFamilyTree(){
+        System.out.println(presenter.viewFamilyTree());
+    }
+
+    public void sortedByAge(){
+        System.out.println("Элементы древа успешно отсортированы по возрасту.");
+        presenter.sortedByAge();
+    }
+
+    public void sortedByName(){
+        System.out.println("Элементы древа успешно отсортированы по имени.");
+        presenter.sortedByName();
+    }
+
     @Override
-    public void start() {
+    public void start() throws IOException, ClassNotFoundException {
         printAnswer("Приветствуем в программе создания древа! Это начальный вариант реализации консольного приложения. \n" +
                 "Если хоите узнать список команд - напишите /help");
         while (work == 1){
@@ -118,23 +149,31 @@ public class ConsoleUI implements View {
             }
             switch (parts[0]) {
                 case "/help":
-                    printAnswer(help());
+                    printHelp();
                     break;
                 case "/createFamilyTree":
-                    try {
-                        createFamilyTree(parts[1]);
-                    } catch (ArrayIndexOutOfBoundsException exception){
-                        System.out.println("Вы не указали имя древа.");
-                    }
+                    createFamilyTree();
                     break;
                 case "/addElement":
                     addElement();
                     break;
                 case "/viewFamilyTree":
-                    presenter.viewFamilyTree();
+                    viewFamilyTree();
                     break;
                 case "/setWedding":
                     setWedding();
+                    break;
+                case "/save":
+                    save();
+                    break;
+                case "/load":
+                    load();
+                    break;
+                case "/sortedByName":
+                    sortedByName();
+                    break;
+                case "/sortedByAge":
+                    sortedByAge();
                     break;
                 case "/stop":
                     work = 0;
