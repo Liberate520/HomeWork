@@ -37,7 +37,7 @@ public class FamilyTree<T extends Creature> implements Serializable, Iterable<T>
     public void sortByAge(){
         humanTreeList.sort(new HumanComparatorByAge());
     }
-
+    
     @Override
     public String toString() {       
         return getInfo();

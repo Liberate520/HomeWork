@@ -42,10 +42,12 @@ public class Human implements Serializable, Comparable<Human>, Creature {
     public Human getFather(){
         return this.father;
     }
+    public <Human> void setFather(Human father){this.father = (OOP.SemDZ.homeWork.model.human.Human) father;}
 
     public Human getMather(){
         return this.mather;
     }
+    public <Human> void setMather(Human mather){this.mather = (OOP.SemDZ.homeWork.model.human.Human) mather;}
 
     public int getAge(){
         if (death != null){

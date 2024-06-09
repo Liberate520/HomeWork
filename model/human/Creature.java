@@ -8,6 +8,8 @@ public interface Creature {
     public LocalDate getBirthDay();
     public int getId();
     public void setId(int id);
-    public <T> void setSpouse(T spouse);   
+    public <T> void setSpouse(T spouse);
+    public <T> void setFather(T father);
+    public <T> void setMather(T mather);   
 }
 

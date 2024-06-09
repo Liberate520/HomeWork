@@ -15,6 +15,22 @@ public class Presenter {
         service = new Service();
     }
 
+    public void birthChildren(String name, Gender gender, LocalDate birthday, String IdFather, String IdMather){
+        service.birthChildren(name, gender, birthday, IdFather, IdMather);
+    }
+
+    public void wedding(String IdMale, String IdFemale){
+        service.wedding(IdMale, IdFemale);
+    }
+
+    public void loadOfFile(){
+        service.loadOfFile();
+    }
+
+    public void saveToFile(){
+        service.saveToFile();
+    }
+
     public void addHuman (String name, Gender gender, LocalDate birthday){
         service.addHuman(name, gender, birthday);
     }
