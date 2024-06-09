@@ -1,10 +1,13 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.tree;
+
+import ru.gb.family_tree.human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Iterable<Human>, Serializable {
     private List<Human> familyTreeList = new ArrayList<>();
     private List<Long> emptyIds = new ArrayList<>();
 
@@ -49,6 +52,26 @@ public class FamilyTree implements Serializable {
         return null;
     }
 
+    public void sortByFirstName(){
+        familyTreeList.sort((a1, a2) -> a1.getFirstName().compareTo(a2.getFirstName()));
+    }
+
+    public void sortById(){
+        familyTreeList.sort((a1, a2) -> (int) (a1.getId() - a2.getId()));
+    }
+
+    public void sortByGender(){
+        familyTreeList.sort((a1, a2) -> (a1.getGender().compareTo(a2.getGender())));
+    }
+
+    public void sortByDob(){
+        familyTreeList.sort((a1, a2) -> (a1.getDob().compareTo(a2.getDob())));
+    }
+
+    public void sortByDod(){
+        familyTreeList.sort((a1, a2) -> (a1.getDod().compareTo(a2.getDod())));
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -58,4 +81,10 @@ public class FamilyTree implements Serializable {
         String res = String.valueOf(str);
         return res;
     }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(familyTreeList);
+    }
+
 }

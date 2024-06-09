@@ -1,4 +1,4 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -63,6 +63,18 @@ public class Human implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public LocalDate getDod() {
+        return dod;
     }
 
     public String getFirstName() {
