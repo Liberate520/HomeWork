@@ -2,22 +2,21 @@ package Model.FileHandlerFilse;
 
 import java.io.*;
 
-public class FileHandler implements Writable {
-    public void save(Object familyTree, String filePath) {
+public class FileHandler<T> implements Writable<T> {
+    public void save(T t, String filePath) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){
-            objectOutputStream.writeObject(familyTree);
+            objectOutputStream.writeObject(t);
         }
         catch (Exception e) {
             System.out.println(e);
         }
     }
-    public Object load(String Path) {
+    public void load(String Path) {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(Path))){
-            return objectInputStream.readObject();
+            objectInputStream.readObject();
         }
         catch (Exception e) {
             System.out.println(e);
-            return null;
         }
     }
 }

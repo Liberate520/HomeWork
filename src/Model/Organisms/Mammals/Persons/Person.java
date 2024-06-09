@@ -1,7 +1,8 @@
 package Model.Organisms.Mammals.Persons;
 
-import Organisms.Mammals.Mammals;
-import Organisms.Mammals.Persons.Enums.Gender;
+
+import Model.Organisms.Mammals.Mammals;
+import Model.Organisms.Mammals.Persons.Enums.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -1,10 +1,11 @@
-package Organisms;
+package Model.Organisms;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Organism<T extends Organism> implements Comparable<T> {
+    protected int id;
     protected String name;
     protected LocalDate birthday, deathDate;
     protected List<T> children;
@@ -43,4 +44,8 @@ public abstract class Organism<T extends Organism> implements Comparable<T> {
             personDate.add(deathDate);
         return personDate;
     }
+    public int getId() {
+        return this.id;
+    }
 }
+

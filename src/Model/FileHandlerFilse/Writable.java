@@ -1,6 +1,6 @@
 package Model.FileHandlerFilse;
 
-public interface Writable {
-    void save(Object familyTree, String filePath);
-    Object load(String Path);
+public interface Writable<T> {
+    void save(T t, String filePath);
+    void load(String Path);
 }

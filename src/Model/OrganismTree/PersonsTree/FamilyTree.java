@@ -1,14 +1,11 @@
-package OrganismTree.PersonsTree;
+package Model.OrganismTree.PersonsTree;
+import Model.OrganismTree.OrganismeTree;
+import Model.Organisms.Mammals.Persons.Comporators.ComporatorByName;
+import Model.Organisms.Mammals.Persons.Person;
 
-import OrganismTree.OrganismeTree;
-import Organisms.Mammals.Persons.Comporators.ComporatorByName;
-import Organisms.Mammals.Persons.Person;
-
-import java.io.Serializable;
 import java.util.*;
 
 public class FamilyTree<T extends Person> extends OrganismeTree<T> {
-
 
     //конструкторы
     public FamilyTree (String familyName) {
@@ -28,25 +25,23 @@ public class FamilyTree<T extends Person> extends OrganismeTree<T> {
         }
         return out;
     }
-    public String getFullPerson (String name) {
-        for (T somePers : tree) {
-            if (somePers.getName() == name)
-                return somePers.toString();
-        }
-        return "";
+    public Person getFullPerson (int index) {
+        if (index < tree.size())
+                return tree.get(index);
+        return null;
     }
-    public String getPersonOnSurname (String name) {
+    public HashMap<Integer, T> getPersonOnSurname (String name) {
+        HashMap<Integer, T> coincidences = new HashMap<Integer, T>();
         for (T somePers : tree) {
-            if (somePers.getName().split(" ")[0].equals(name))
-                return somePers.toString();
+            if (somePers.getName().split(" ").equals(name))
+                coincidences.put(somePers.getId(), somePers);
         }
-        return "";
+        return coincidences;
     }
     @Override
     public Iterator iterator() {
         return tree.iterator();
     }
-
     public void sortByName() {
         Collections.sort(tree, new ComporatorByName());
     }
@@ -54,5 +49,12 @@ public class FamilyTree<T extends Person> extends OrganismeTree<T> {
         Collections.sort(tree,
                 Comparator.comparing(T::getBirthday));
                 //(o1, o2) -> o1.getBirthday().compareTo(o2.getBirthday());
+    }
+
+    public int size() {
+        return tree.size();
+    }
+    public T get(int index) {
+        return tree.get(index);
     }
 }

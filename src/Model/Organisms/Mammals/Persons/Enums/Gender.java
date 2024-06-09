@@ -1,4 +1,4 @@
-package Organisms.Mammals.Persons.Enums;
+package Model.Organisms.Mammals.Persons.Enums;
 
 public enum Gender {
     male, female

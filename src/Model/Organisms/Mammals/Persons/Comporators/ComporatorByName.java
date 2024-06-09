@@ -1,6 +1,5 @@
 package Model.Organisms.Mammals.Persons.Comporators;
-
-import Organisms.Organism;
+import Model.Organisms.Organism;
 
 import java.util.Comparator;
 

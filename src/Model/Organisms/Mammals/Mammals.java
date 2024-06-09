@@ -1,7 +1,6 @@
-package Organisms.Mammals;
-
-import Organisms.Mammals.Persons.Enums.Gender;
-import Organisms.Organism;
+package Model.Organisms.Mammals;
+import Model.Organisms.Mammals.Persons.Enums.Gender;
+import Model.Organisms.Organism;
 
 public abstract class Mammals<T extends Mammals> extends Organism<T> {
     protected T mother, father;
