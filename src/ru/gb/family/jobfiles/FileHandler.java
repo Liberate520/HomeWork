@@ -1,6 +1,6 @@
 package ru.gb.family.jobfiles;
 
-import ru.gb.family.familyTree.FamilyTree;
+
 import ru.gb.family.service.Service;
 
 import java.io.*;

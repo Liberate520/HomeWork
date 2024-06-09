@@ -1,7 +1,9 @@
-package ru.gb.family.humans;
+package ru.gb.family.ItemFamilyTrees;
 
-import ru.gb.family.humans.enums.DegreeOfKinship;
-import ru.gb.family.humans.enums.Gender;
+import ru.gb.family.ItemFamilyTrees.enums.*;
+import ru.gb.family.familyTree.FamilyTree;
+import ru.gb.family.service.Service;
+
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,18 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements Serializable {
     private Integer age;
     private long id;
     private String name;
     private Gender gender;
     private LocalDate birthday,dateOfDeath;
-    private Human father,mother;
-    private List<Human> children;
-    private Human spouse;
+    private ItemFamilyTree<T> father;
+    private ItemFamilyTree<T> mother;
+    private List<ItemFamilyTree<T>> children;
+    private ItemFamilyTree<T> spouse;
 
 
-    public Human(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
+    public ItemFamilyTree(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
         id = -1;
         if (dateOfDeath == null){
            this.age = getPeriod(birthday,LocalDate.now());
@@ -37,11 +40,11 @@ public class Human implements Serializable {
         this.birthday = birthday;
         this.dateOfDeath = dateOfDeath;
         this.gender = gender;
-        this.children =new ArrayList<>();
+        this.children = new ArrayList<>();
 
     }
 
-    public void addParent(Human parent){
+    public void addParent(ItemFamilyTree<T> parent){
         if (parent.gender == Gender.Male){
             this.father = parent;
         }
@@ -51,28 +54,28 @@ public class Human implements Serializable {
 
     }
 
-    public void editHuman(Human addHuman, DegreeOfKinship degreeOfKinship){
+    public void editItemFamilyTree(ItemFamilyTree<T> addItemFamilyTree, DegreeOfKinship degreeOfKinship){
         switch(degreeOfKinship) {
             case Father, Mother :
-                this.addParent(addHuman);
-                addHuman.addChildren(this);
+                this.addParent(addItemFamilyTree);
+                addItemFamilyTree.children.add(this);
                 break;
             case Spouse:
-                this.addSpouse(addHuman);
-                addHuman.addSpouse(this);
+                this.addSpouse(addItemFamilyTree);
+                addItemFamilyTree.addSpouse(this);
                 break;
             case Children:
-                this.addChildren(addHuman);
-                addHuman.addParent(this);
+                this.addChildren(addItemFamilyTree);
+                addItemFamilyTree.addParent(this);
                 break;
         }
     }
 
-    private void addSpouse(Human spouse) {
+    private void addSpouse(ItemFamilyTree<T> spouse) {
         this.spouse = spouse;
     }
 
-    public void addChildren(Human child) {
+    public void addChildren(ItemFamilyTree<T> child) {
         if (child != null) {
             if (children.indexOf(child) == -1) {
                 children.add(child);
@@ -103,8 +106,8 @@ public class Human implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         // список детей
-        for (Human human : children){
-            stringBuilder.append(human.name+" ("+age +" лет.)");
+        for (ItemFamilyTree<T> itemFamilyTree : children){
+            stringBuilder.append(itemFamilyTree.name+" ("+age +" лет.)");
             stringBuilder.append(",\t");
         }
         return "\n id=" + id + '\t' +
@@ -123,8 +126,8 @@ public class Human implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Human human = (Human) o;
-        return Objects.equals(name, human.name) && Objects.equals(birthday, human.birthday);
+        ItemFamilyTree<T> ItemFamily = (ItemFamilyTree<T>) o;
+        return Objects.equals(name, ItemFamily.name) && Objects.equals(birthday, ItemFamily.birthday);
     }
 
     @Override
@@ -172,35 +175,35 @@ public class Human implements Serializable {
         this.dateOfDeath = dateOfDeath;
     }
 
-    public Human getFather() {
+    public ItemFamilyTree<T> getFather() {
         return father;
     }
 
-    public void setFather(Human father) {
+    public void setFather(ItemFamilyTree<T> father) {
         this.father = father;
     }
 
-    public Human getMother() {
+    public ItemFamilyTree<T> getMother() {
         return mother;
     }
 
-    public void setMother(Human mother) {
+    public void setMother(ItemFamilyTree<T> mother) {
         this.mother = mother;
     }
 
-    public List<Human> getChildren() {
+    public List<ItemFamilyTree<T>> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Human> children) {
+    public void setChildren(List<ItemFamilyTree<T>> children) {
         this.children = children;
     }
 
-    public Human getSpouse() {
+    public ItemFamilyTree<T> getSpouse() {
         return spouse;
     }
 
-    public void setSpouse(Human spouse) {
+    public void setSpouse(ItemFamilyTree<T> spouse) {
         this.spouse = spouse;
     }
 }

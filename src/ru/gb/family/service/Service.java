@@ -7,7 +7,7 @@ import ru.gb.family.jobfiles.Writable;
 
 import java.io.Serializable;
 
-public class Service implements Serializable {
+public class Service<E extends FamilyTree> implements Serializable {
 
     public Service() {
     }

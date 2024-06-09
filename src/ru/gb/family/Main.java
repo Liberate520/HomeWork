@@ -1,11 +1,15 @@
 package ru.gb.family;
 
+import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.ItemFamilyTrees.cat.Cat;
+import ru.gb.family.ItemFamilyTrees.humans.Human;
 import ru.gb.family.familyTree.FamilyTree;
-import ru.gb.family.humans.enums.DegreeOfKinship;
-import ru.gb.family.humans.enums.Gender;
-import ru.gb.family.humans.Human;
+import ru.gb.family.ItemFamilyTrees.enums.DegreeOfKinship;
+import ru.gb.family.ItemFamilyTrees.enums.Gender;
+
 import ru.gb.family.service.Service;
 
+import javax.print.Doc;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -17,7 +21,8 @@ public class Main implements Serializable {
         Service service = new Service();
         FamilyTree familyTree = Service.start(saveFilePath);
 
-        Human humanSearch = new Human("Васильев Николай Михайлович", LocalDate.of(1954, 1, 15), LocalDate.of(2010, 5, 1), Gender.Male);
+        ItemFamilyTree<Human> humanSearch = new ItemFamilyTree<>("Васильев Николай Михайлович", LocalDate.of(1954, 1, 15), LocalDate.of(2010, 5, 1), Gender.Male);
+        ItemFamilyTree<Cat> catSearch = new ItemFamilyTree<>("Васильев Николай Михайлович", LocalDate.of(1954, 1, 15), LocalDate.of(2010, 5, 1), Gender.Male);
         //Разные виды сортировки списка древа семьи
         //familyTree.sortByAge();
         //familyTree.sortByBirthday();
@@ -40,11 +45,11 @@ public class Main implements Serializable {
 
         System.out.println("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Проверяем есть ли человек в семейном древе");
-        System.out.println(familyTree.printResult(familyTree.searchByHuman(humanSearch)));
+        System.out.println(familyTree.printResult(familyTree.searchByItemFamilyTree(humanSearch)));
 
         System.out.println("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("Покациваем список детей человека из семейного древа");
-        System.out.println(familyTree.findChildrenHuman(humanSearch));
+        System.out.println("Показываем список детей человека из семейного древа");
+        System.out.println(familyTree.findChildrenItemFamilyTree(humanSearch));
 
         Service.save(familyTree, saveFilePath);
     }

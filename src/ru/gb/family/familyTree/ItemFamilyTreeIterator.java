@@ -1,13 +1,13 @@
 package ru.gb.family.familyTree;
 
-import ru.gb.family.humans.Human;
+import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class HumanIterator implements Iterator<Human> {
+public class ItemFamilyTreeIterator<T extends ItemFamilyTree<T>> implements Iterator<T> {
     private int curID;
-    private List<Human> familyTree;
+    private List<T> familyTree;
 
 
     @Override
@@ -17,7 +17,7 @@ public class HumanIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return familyTree.get(curID++);
     }
 }
