@@ -54,11 +54,43 @@ public class Human implements Serializable, FamilyItem {
     }
 
 
-    public String getSpouse(){
-        if(this.spouse.getName() != null){
+    public String getSpouseString(){
+        if(this.spouse != null){
         return this.spouse.getName();}
         else{
             return "Нет супруга";
+        }
+    }
+
+    public Human getSpouse(){
+        return spouse;
+    }
+
+    public void setSpouse(Human human){
+        this.spouse = human;
+    }
+
+    public String getChildrenString(){
+        if(!this.children.isEmpty()){
+            StringBuilder stringBuilder = new StringBuilder();
+            for(Human child: children){
+                stringBuilder.append(child.getName());
+            }
+            return stringBuilder.toString();}
+        else{
+            return "Нет детей";
+        }
+    }
+
+    public String getParentsString(){
+        if(!this.parents.isEmpty()){
+            StringBuilder stringBuilder = new StringBuilder();
+            for(Human parent: parents){
+                stringBuilder.append(parent.getName());
+            }
+            return stringBuilder.toString();}
+        else{
+            return "Нет родителей";
         }
     }
 
@@ -68,10 +100,10 @@ public class Human implements Serializable, FamilyItem {
 
     @Override
             public String toString(){
-            return "Имя: " + name + "\n" +
-                    "Возраст: " + getAge() + "\n" +
-                    "Супруг: " + getSpouse() + "\n" +
-                    "Родители: " + getParents() +
-                    "Дети: " + getChildren() + "\n";
+            return "Имя: " + name + ", " +
+                    "Возраст: " + getAge() + ", " +
+                    "Супруг: " + getSpouseString() + ", " +
+                    "Родители: " + getParentsString() + ", " +
+                    "Дети: " + getChildrenString() + "\n";
         }
 }

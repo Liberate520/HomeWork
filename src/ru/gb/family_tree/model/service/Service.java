@@ -50,10 +50,8 @@ public class Service {
                 spouseSecond = human;
             }
         }
-        Human spouseTempFirst = spouseFirst.getSpouse();
-        spouseTempFirst = spouseSecond;
-        Human spouseTempSecond = spouseSecond.getSpouse();
-        spouseTempSecond = spouseFirst;
+        spouseFirst.setSpouse(spouseSecond);
+        spouseSecond.setSpouse(spouseFirst);
     }
 
     public void saveFileByte(FamilyTree familyTree) throws IOException {
@@ -63,7 +61,7 @@ public class Service {
 
     public void loadFileByte() throws IOException, ClassNotFoundException {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.loadFileByte();
+        familyTree = fileHandler.loadFileByte();
     }
 
     public String getFamilyTreeInfo(){
