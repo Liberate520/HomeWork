@@ -20,6 +20,7 @@ public class FileHandler implements Writable {
         objectOutputStream.close();
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public FamilyTree read_object(String target) throws FileNotFoundException, IOException, ClassNotFoundException {
         Object obj;

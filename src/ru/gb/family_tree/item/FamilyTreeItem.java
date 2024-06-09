@@ -1,27 +1,32 @@
-package ru.gb.family_tree.human;
+package ru.gb.family_tree.item;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
-    private long id;
-    private String name;
-    // private Human mother, father;
-    private List<Human> parents; /// ТУТ МОЖЕТ БЫТЬ БОЛЕЕ 2 ЧЕЛОВЕК!!! Исправить!!!
-    private List<Human> children;
-    private LocalDate birthDate, deathDate;
-    private Gender gender;
-    private Human spouse;
-    private Human father;
-    private Human mother;
+public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeItem<E>> {
+    protected long id;
+    protected String name;
+    protected List<FamilyTreeItem<E>> parents;
+    protected List<FamilyTreeItem<E>> children;
+    protected LocalDate birthDate, deathDate;
+    protected Gender gender;
+    protected FamilyTreeItem<E> spouse;
+    protected FamilyTreeItem<E> father;
+    protected FamilyTreeItem<E> mother;
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
+    public FamilyTreeItem(long id,
+            String name,
+            Gender gender,
+            LocalDate birthDate,
+            LocalDate deathDate,
+            FamilyTreeItem<E> father,
+            FamilyTreeItem<E> mother) {
 
-        id = -1; // ПОдумать, как улучшить!!!
-
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
@@ -36,15 +41,25 @@ public class Human implements Serializable, Comparable<Human> {
         children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate) {
-        this(name, gender, birthDate, null, null, null);
+    public FamilyTreeItem(long id,
+            String name,
+            Gender gender,
+            LocalDate birthDate) {
+
+        this(id, name, gender, birthDate, null, null, null);
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
-        this(name, gender, birthDate, null, father, mother);
+    public FamilyTreeItem(long id,
+            String name,
+            Gender gender,
+            LocalDate birthDate,
+            FamilyTreeItem<E> father,
+            FamilyTreeItem<E> mother) {
+
+        this(id, name, gender, birthDate, null, father, mother);
     }
 
-    public boolean addChild(Human child) {
+    public boolean addChild(FamilyTreeItem<E> child) {
         if (!children.contains(child)) {
             children.add(child);
             return true;
@@ -52,7 +67,7 @@ public class Human implements Serializable, Comparable<Human> {
         return false;
     }
 
-    public boolean addParent(Human parent) {
+    public boolean addParent(FamilyTreeItem<E> parent) {
         if (!parents.contains(parent) && parents.size() < 2) { /// && parents.size() < 2 ДОБАВИЛ Я
             parents.add(parent);
             return true;
@@ -60,8 +75,8 @@ public class Human implements Serializable, Comparable<Human> {
         return false;
     }
 
-    public Human getMother() {
-        for (Human parent : parents) {
+    public FamilyTreeItem<E> getMother() {
+        for (FamilyTreeItem<E> parent : parents) {
             if (parent.getGender() == Gender.Female) {
                 return parent;
             }
@@ -69,8 +84,8 @@ public class Human implements Serializable, Comparable<Human> {
         return null;
     }
 
-    public Human getFather() {
-        for (Human parent : parents) {
+    public FamilyTreeItem<E> getFather() {
+        for (FamilyTreeItem<E> parent : parents) {
             if (parent.getGender() == Gender.Male) {
                 return parent;
             }
@@ -129,7 +144,6 @@ public class Human implements Serializable, Comparable<Human> {
             for (int i = 1; i < children.size(); i++) {
                 res.append(", "); /// ВОТ ТУТ БУДЕТ НЕМНОГО НЕКРАСИВО
                 res.append(children.get(i).getName());
-
             }
         } else {
             res.append("отсутствуют");
@@ -137,11 +151,11 @@ public class Human implements Serializable, Comparable<Human> {
         return res.toString();
     }
 
-    public void setSpouse(Human spouse) {
+    public void setSpouse(FamilyTreeItem<E> spouse) {
         this.spouse = spouse;
     }
 
-    public Human getSpouse() {
+    public FamilyTreeItem<E> getSpouse() {
         return spouse;
     }
 
@@ -165,11 +179,11 @@ public class Human implements Serializable, Comparable<Human> {
         return deathDate;
     }
 
-    public List<Human> getParents() {
+    public List<FamilyTreeItem<E>> getParents() {
         return parents;
     }
 
-    public List<Human> getChildren() {
+    public List<FamilyTreeItem<E>> getChildren() {
         return children;
     }
 
@@ -211,20 +225,21 @@ public class Human implements Serializable, Comparable<Human> {
         return sb.toString();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Human)) {
+        if (!(obj instanceof FamilyTreeItem)) {
             return false;
         }
-        Human human = (Human) obj;
-        return human.getId() == getId(); /// ТУТ ОПАСНО!!! Если id == -1, то ...
+        FamilyTreeItem<E> item = (FamilyTreeItem<E>) obj;
+        return item.getId() == getId();
     }
 
     @Override
-    public int compareTo(Human o) {
-        return this.name.compareTo(o.name);
+    public int compare(FamilyTreeItem<E> o1, FamilyTreeItem<E> o2) {
+        return o1.getName().compareTo(o2.getName());
     }
 }
