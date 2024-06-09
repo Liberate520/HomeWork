@@ -96,18 +96,6 @@ public class FamilyTree<T extends TreeNode> implements Serializable, Iterable<T>
         return sb.toString();
     }
 
-//    public void display() {
-//        System.out.println("FamilyTree:");
-//        for (Human human : humans) {
-//            System.out.println(human.toString());
-//            System.out.println();
-//        }
-//    }
-//
-//    public void updateView() {
-//        System.out.println("Family Tree обновлено!");
-//
-//    }
 }
 
 
