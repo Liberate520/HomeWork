@@ -1,5 +1,5 @@
-package ru.gb.family_tree;
-
+package model;
+import Presenter.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;

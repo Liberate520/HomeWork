@@ -1,5 +1,5 @@
-package ru.gb.family_tree;
-
+package model;
+import Presenter.*;
 import java.io.IOException;
 import java.util.List;
 

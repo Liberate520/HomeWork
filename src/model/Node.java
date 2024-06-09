@@ -1,5 +1,5 @@
-package ru.gb.family_tree;
-
+package model;
+import Presenter.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,13 +23,10 @@ public class Node implements Serializable {
     }
 
     public Node(String name, Gender gender, LocalDate birthDate, Node spouse, Node father, Node mother) {
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
+        this(name, gender, birthDate);
         this.spouse = spouse;
         this.father = father;
         this.mother = mother;
-        this.children = new ArrayList<>();
     }
 
     public void setId(int id) {
