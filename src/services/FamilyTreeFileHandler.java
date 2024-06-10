@@ -1,40 +1,39 @@
 package services;
 
+import java.io.*;
 import models.FamilyTree;
 
-import java.io.*;
-
 /**
- * Класс для сохранения и загрузки генеалогического древа в файл.
+ * Класс FamilyTreeFileHandler обрабатывает файлы с генеалогическими древами.
+ * Он обеспечивает сохранение и загрузку генеалогических древ в файлы.
  */
-public class FamilyTreeFileHandler {
-
+public class FamilyTreeFileHandler implements Serializable {
     /**
-     * Метод для сохранения генеалогического древа в файл.
+     * Сохраняет генеалогическое древо в файл.
      *
-     * @param familyTree Генеалогическое древо, которое нужно сохранить.
-     * @param filename Путь к файлу, в который будет сохранено древо.
-     * @throws IOException Если возникнет ошибка при записи в файл.
+     * @param familyTree генеалогическое древо
+     * @param filename  имя файла
      */
-    public void saveToFile(FamilyTree familyTree, String filename) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream(filename);
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(familyTree);
+    public <T extends Serializable> void saveFamilyTree(FamilyTree<T> familyTree, String filename) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
+            outputStream.writeObject(familyTree);
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении файла: " + e.getMessage());
         }
     }
 
     /**
-     * Метод для загрузки генеалогического древа из файла.
+     * Загружает генеалогическое древо из файла.
      *
-     * @param filename Путь к файлу, из которого будет загружено древо.
-     * @return Генеалогическое древо, загруженное из файла.
-     * @throws IOException Если возникнет ошибка при чтении из файла.
-     * @throws ClassNotFoundException Если класс FamilyTree не найден.
+     * @param filename имя файла
+     * @return загруженное генеалогическое древо
      */
-    public FamilyTree loadFromFile(String filename) throws IOException, ClassNotFoundException {
-        try (FileInputStream fis = new FileInputStream(filename);
-             ObjectInputStream ois = new ObjectInputStream(fis)) {
-            return (FamilyTree) ois.readObject();
+    public <T extends Serializable> FamilyTree<T> loadFamilyTree(String filename) {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename))) {
+            return (FamilyTree<T>) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Ошибка при загрузке файла: " + e.getMessage());
+            return new FamilyTree<>();
         }
     }
 }
