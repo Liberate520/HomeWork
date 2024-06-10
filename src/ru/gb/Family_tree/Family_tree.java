@@ -1,6 +1,6 @@
 package ru.gb.Family_tree;
 
-Genderimport java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 
