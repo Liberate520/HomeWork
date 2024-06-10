@@ -7,19 +7,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree <E extends TreeRoot<E>> implements Serializable, Iterable<E> {
     private int humanId;
-    private List<Human> humanList;
+    private List<E> humanList;
 
     public FamilyTree() {
         this(new ArrayList<>());
     }
 
-    public FamilyTree(List<Human> humanList) {
+    public FamilyTree(List<E> humanList) {
         this.humanList = humanList;
     }
 
-    public boolean add(Human human) {
+    public boolean add(E human) {
         if (!humanList.contains(human)) {
             humanList.add(human);
             human.setId(humanId++);
@@ -31,14 +31,14 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return false;
     }
 
-    private void addToParents(Human human) {
-        for (Human parent: human.getParents()) {
+    private void addToParents(E human) {
+        for (E parent: human.getParents()) {
             parent.addChild(human);
         }
     }
 
-    private void addToChildren(Human human) {
-        for (Human child: human.getChildren()) {
+    private void addToChildren(E human) {
+        for (E child: human.getChildren()) {
             child.addChild(human);
         }
     }
@@ -53,7 +53,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         sb.append("В семейном древе ");
         sb.append(humanList.size());
         sb.append(" членов семьи: \n");
-        for (Human human: humanList) {
+        for (E human: humanList) {
             sb.append(human);
             sb.append("\n");
         }
@@ -69,7 +69,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<E> iterator() {
         return new FamilyTreeIterator(humanList);
     }
 }

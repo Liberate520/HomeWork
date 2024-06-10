@@ -4,9 +4,9 @@ import family_tree.human.Human;
 
 import java.util.Comparator;
 
-public class HumanComparatorSurName implements Comparator<Human> {
+public class HumanComparatorSurName<T extends TreeRoot<T>> implements Comparator<T> {
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(T o1, T o2) {
         return o1.getSurName().compareTo(o2.getSurName());
     }
 }
