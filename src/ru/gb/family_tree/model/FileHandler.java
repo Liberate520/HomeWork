@@ -1,8 +1,8 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.model;
 
 import java.io.*;
 
-public class FileHandler implements Writable{
+public class FileHandler implements Writable {
     @Override
     public boolean save(Serializable serializable, String filePath) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
