@@ -1,86 +1,90 @@
-import models.FamilyTree;
 import models.Human;
-import services.RelationshipSearch;
+import models.FamilyTree;
 import services.FamilyTreeFileHandler;
+import services.RelationshipSearch;
+import utils.List;
 import enums.Gender;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Comparator;
-
 public class Main {
-
     public static void main(String[] args) {
-        try {
-            // Создаем дерево
-            FamilyTree familyTree = new FamilyTree();
+        // Создание объектов класса Human
+        Human ioann = new Human("Иоанн Алексеевич Романов", "06.09.1666", "08.02.1696", Gender.MALE);
+        Human alexey = new Human("Алексей Михайлович Романов", "19.03.1629", "8.02.1676", Gender.MALE);
+        Human maria = new Human("Мария Ильинична Милославская", "11.04.1624", "13.03.1669", Gender.FEMALE);
+        Human dmitry = new Human("Дмитрий Алексеевич Романов", "01.11.1648", "16.10.1649", Gender.MALE);
+        Human evdokia = new Human("Евдокия Алексеевна Романова", "17.02.1650", "10.05.1712", Gender.FEMALE);
+        Human praskovya = new Human("Прасковья Фёдоровна Салтыкова", "22.10.1664", "24.10.1723", Gender.FEMALE);
+        Human mariaIvanovna = new Human("Мария Ивановна Романова", "31.03.1689", "23.02.1692", Gender.FEMALE);
+        Human feodosia = new Human("Феодосия Ивановна Романова", "14.06.1690", "22.05.1691", Gender.FEMALE);
+        Human ekaterina = new Human("Екатерина Иоанновна Романова", "8.11.1691", "25.06.1733", Gender.FEMALE);
+        Human anna = new Human("Анна Иоанновна Романова", "07.02.1693", "28.10.1740", Gender.FEMALE);
+        Human praskovyaIoannovna = new Human("Прасковья Иоанновна Романова", "04.10.1694", "19.10.1731", Gender.FEMALE);
 
-            // Добавляем людей в дерево
-            Human ioannAlexeievich = new Human("Иоанн Алексеевич Романов", LocalDate.of(1666, 9, 6), LocalDate.of(1696, 2, 8), Gender.MALE);
-            Human alexeyMikhailovich = new Human("Алексей Михайлович Романов", LocalDate.of(1629, 3, 19), LocalDate.of(1676, 2, 8), Gender.MALE);
-            Human mariaIljinichna = new Human("Мария Ильинична Милославская", LocalDate.of(1624, 4, 11), LocalDate.of(1669, 3, 13), Gender.FEMALE);
-            Human praskovyaFedorovna = new Human("Прасковья Фёдоровна Салтыкова", LocalDate.of(1664, 10, 22), LocalDate.of(1723, 10, 24), Gender.FEMALE);
+        // Создание объекта класса FamilyTree
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
-            // Добавляем родственников
-            ioannAlexeievich.addMother(mariaIljinichna);
-            ioannAlexeievich.addFather(alexeyMikhailovich);
-            alexeyMikhailovich.setSpouse(praskovyaFedorovna);
+        // Добавление объектов в дерево
+        familyTree.add(ioann);
+        familyTree.add(alexey);
+        familyTree.add(maria);
+        familyTree.add(dmitry);
+        familyTree.add(evdokia);
+        familyTree.add(praskovya);
+        familyTree.add(mariaIvanovna);
+        familyTree.add(feodosia);
+        familyTree.add(ekaterina);
+        familyTree.add(anna);
+        familyTree.add(praskovyaIoannovna);
 
-            // Добавляем детей
-            Human mariaIvanovna = new Human("Мария Ивановна Романова", LocalDate.of(1689, 3, 31), LocalDate.of(1692, 2, 23), Gender.FEMALE);
-            Human feodosiyaIvanovna = new Human("Феодосия Ивановна Романова", LocalDate.of(1690, 6, 14), LocalDate.of(1691, 5, 22), Gender.FEMALE);
-            Human ekaterinaIoannovna = new Human("Екатерина Иоанновна Романова", LocalDate.of(1691, 11, 8), LocalDate.of(1733, 6, 25), Gender.FEMALE);
-            Human annaIoannovna = new Human("Анна Иоанновна Романова", LocalDate.of(1693, 2, 7), LocalDate.of(1740, 10, 28), Gender.FEMALE);
-            Human praskovyaIoannovna = new Human("Прасковья Иоанновна Романова", LocalDate.of(1694, 10, 4), LocalDate.of(1731, 10, 19), Gender.FEMALE);
+        // Установка родственных связей
+        ioann.setMother(maria);
+        ioann.setFather(alexey);
+        dmitry.setMother(maria);
+        dmitry.setFather(alexey);
+        evdokia.setMother(maria);
+        evdokia.setFather(alexey);
+        mariaIvanovna.setMother(praskovya);
+        mariaIvanovna.setFather(ioann);
+        feodosia.setMother(praskovya);
+        feodosia.setFather(ioann);
+        ekaterina.setMother(praskovya);
+        ekaterina.setFather(ioann);
+        anna.setMother(praskovya);
+        anna.setFather(ioann);
+        praskovyaIoannovna.setMother(praskovya);
+        praskovyaIoannovna.setFather(ioann);
 
-            ioannAlexeievich.addChild(mariaIvanovna);
-            ioannAlexeievich.addChild(feodosiyaIvanovna);
-            ioannAlexeievich.addChild(ekaterinaIoannovna);
-            ioannAlexeievich.addChild(annaIoannovna);
-            ioannAlexeievich.addChild(praskovyaIoannovna);
+        // Вывод неотсортированных данных
+        System.out.println("Родственные связи:");
+        for (Human human : familyTree) {
+            System.out.println(human);
+        }
 
-            // Добавляем всех людей в дерево
-            familyTree.addHuman(ioannAlexeievich);
-            familyTree.addHuman(alexeyMikhailovich);
-            familyTree.addHuman(mariaIljinichna);
-            familyTree.addHuman(praskovyaFedorovna);
-            familyTree.addHuman(mariaIvanovna);
-            familyTree.addHuman(feodosiyaIvanovna);
-            familyTree.addHuman(ekaterinaIoannovna);
-            familyTree.addHuman(annaIoannovna);
-            familyTree.addHuman(praskovyaIoannovna);
+        // Вывод сортированных данных по имени
+        System.out.println("\nСортированный по имени:");
+        List<Human> sortedByName = new RelationshipSearch().sortByName(familyTree);
+        for (Human human : sortedByName) {
+            System.out.println(human);
+        }
 
-            // Создаем файловый хандлер
-            FamilyTreeFileHandler fileHandler = new FamilyTreeFileHandler();
+        // Вывод сортированных данных по дате рождения
+        System.out.println("\nСортированный по дате рождения:");
+        List<Human> sortedByBirthDate = new RelationshipSearch().sortByBirthDate(familyTree);
+        for (Human human : sortedByBirthDate) {
+            System.out.println(human);
+        }
 
-            // Сохраняем дерево в файл
-            fileHandler.saveToFile(familyTree, "family_tree.ser");
+        // Сохранение данных в файл
+        FamilyTreeFileHandler fileHandler = new FamilyTreeFileHandler();
+        fileHandler.saveFamilyTree(familyTree, "family_tree.txt");
 
-            // Читаем дерево из файла
-            FamilyTree loadedTree = fileHandler.loadFromFile("family_tree.ser");
+        // Чтение данных из файла
+        FamilyTree<Human> loadedFamilyTree = fileHandler.loadFamilyTree("family_tree.txt");
 
-            // Восстанавливаем связи между людьми после десериализации
-            loadedTree.restoreRelationships();
-
-            // Выводим не сортированный список
-            System.out.println("Не сортированный:");
-            for (Human human : loadedTree.getHumans().values()) {
-                System.out.println(human.toString());
-            }
-
-            // Выводим сортированный список по имени
-            System.out.println("\nСортированный по имени:");
-            loadedTree.getHumans().values().stream()
-                    .sorted(Comparator.comparing(Human::getName))
-                    .forEach(System.out::println);
-
-            // Выводим сортированный список по дате рождения
-            System.out.println("\nСортированный по дате рождения:");
-            loadedTree.getHumans().values().stream()
-                    .sorted(Comparator.comparing(Human::getDateOfBirth))
-                    .forEach(System.out::println);
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Ошибка при работе с файлом: " + e.getMessage());
+        // Вывод загруженных данных
+        System.out.println("\nЗагруженные данные:");
+        for (Human human : loadedFamilyTree) {
+            System.out.println(human);
         }
     }
 }
