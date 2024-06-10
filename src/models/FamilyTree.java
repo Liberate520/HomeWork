@@ -1,31 +1,39 @@
 package models;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Класс для представления генеалогического древа.
+ * Класс FamilyTree представляет генеалогическое древо.
+ * Он содержит список людей и позволяет добавлять, удалять и получать людей из списка.
  */
-public class FamilyTree implements Serializable {
+public class FamilyTree<T extends Serializable> implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private List<T> familyMembers;
 
-    private Map<Integer, Human> humans;
-
+    /**
+     * Конструктор класса FamilyTree.
+     */
     public FamilyTree() {
-        this.humans = new HashMap<>();
+        this.familyMembers = new ArrayList<>();
     }
 
-    public void addHuman(Human human) {
-        this.humans.put(human.getId(), human);
+    /**
+     * Добавляет человека в генеалогическое древо.
+     *
+     * @param member человек, который добавляется в древо
+     */
+    public void add(T member) {
+        familyMembers.add(member);
     }
 
-    public void restoreRelationships() {
-        for (Human human : humans.values()) {
-            human.toString();
-        }
-    }
-
-    public Map<Integer, Human> getHumans() {
-        return humans;
+    /**
+     * Возвращает список людей в генеалогическом древе.
+     *
+     * @return список людей
+     */
+    public List<T> getFamilyMembers() {
+        return familyMembers;
     }
 }
