@@ -1,112 +1,118 @@
 package models;
 
+import java.io.*;
+
 import enums.Gender;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Класс для представления человека в генеалогическом древе.
+ * Класс Human представляет человека в генеалогическом древе.
+ * Он содержит информацию о имени, дате рождения, дате смерти, поле,
+ * а также ссылки на мать и отца.
  */
 public class Human implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
-    private int id;
     private String name;
-    private LocalDate dateOfBirth;
-    private LocalDate dateOfDeath;
+    private String birthDate;
+    private String deathDate;
     private Gender gender;
-    private List<Human> mothers;
-    private List<Human> fathers;
-    private List<Human> children;
-    private Human spouse;
+    private Human mother;
+    private Human father;
 
-    public Human(String name, LocalDate dateOfBirth, LocalDate dateOfDeath, Gender gender) {
-        this.id = System.identityHashCode(this);
+    /**
+     * Конструктор класса Human.
+     *
+     * @param name       имя человека
+     * @param birthDate  дата рождения в формате "dd.MM.yyyy"
+     * @param deathDate  дата смерти в формате "dd.MM.yyyy"
+     * @param gender     пол человека (MALE или FEMALE)
+     */
+    public Human(String name, String birthDate, String deathDate, Gender gender) {
         this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfDeath = dateOfDeath;
+        this.birthDate = birthDate;
+        this.deathDate = deathDate;
         this.gender = gender;
-        this.mothers = new ArrayList<>();
-        this.fathers = new ArrayList<>();
-        this.children = new ArrayList<>();
-        this.spouse = null;
     }
 
-    public int getId() {
-        return id;
-    }
-
+    /**
+     * Возвращает имя человека.
+     *
+     * @return имя человека
+     */
     public String getName() {
         return name;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    /**
+     * Возвращает дату рождения человека.
+     *
+     * @return дата рождения в формате "dd.MM.yyyy"
+     */
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public List<Human> getMothers() {
-        return mothers;
+    /**
+     * Возвращает дату смерти человека.
+     *
+     * @return дата смерти в формате "dd.MM.yyyy"
+     */
+    public String getDeathDate() {
+        return deathDate;
     }
 
-    public List<Human> getFathers() {
-        return fathers;
+    /**
+     * Возвращает пол человека.
+     *
+     * @return пол человека (MALE или FEMALE)
+     */
+    public Gender getGender() {
+        return gender;
     }
 
-    public List<Human> getChildren() {
-        return children;
+    /**
+     * Возвращает мать человека.
+     *
+     * @return объект класса Human, представляющий мать
+     */
+    public Human getMother() {
+        return mother;
     }
 
-    public Human getSpouse() {
-        return spouse;
+    /**
+     * Устанавливает мать человека.
+     *
+     * @param mother объект класса Human, представляющий мать
+     */
+    public void setMother(Human mother) {
+        this.mother = mother;
     }
 
-    public void addMother(Human mother) {
-        this.mothers.add(mother);
+    /**
+     * Возвращает отца человека.
+     *
+     * @return объект класса Human, представляющий отца
+     */
+    public Human getFather() {
+        return father;
     }
 
-    public void addFather(Human father) {
-        this.fathers.add(father);
+    /**
+     * Устанавливает отца человека.
+     *
+     * @param father объект класса Human, представляющий отца
+     */
+    public void setFather(Human father) {
+        this.father = father;
     }
 
-    public void addChild(Human child) {
-        this.children.add(child);
-    }
-
-    public void setSpouse(Human spouse) {
-        this.spouse = spouse;
-    }
-
+    /**
+     * Возвращает строковое представление объекта класса Human.
+     * Формат строки: "Имя Рождение: dd.MM.yyyy Смерть: dd.MM.yyyy Отец: Имя_отца Мать: Имя_матери"
+     *
+     * @return строковое представление объекта класса Human
+     */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name).append(" ").append(dateOfBirth).append(" — ");
-        if (dateOfDeath != null) {
-            sb.append(dateOfDeath);
-        } else {
-            sb.append("жив");
-        }
-        sb.append("\nОтец: ");
-        for (Human father : fathers) {
-            sb.append(father.getName()).append(" ");
-        }
-        sb.append("\nМать: ");
-        for (Human mother : mothers) {
-            sb.append(mother.getName()).append(" ");
-        }
-        sb.append("\nБратья/Сестры: ");
-        for (Human child : children) {
-            sb.append(child.getName()).append(" ");
-        }
-        sb.append("\nСупруг(а): ");
-        if (spouse != null) {
-            sb.append(spouse.getName());
-        } else {
-            sb.append("жив");
-        }
-        return sb.toString();
+        return name + " Рождение: " + birthDate + " Смерть: " + deathDate + " Отец: " + (father != null ? father.getName() : "Неизвестен") + " Мать: " + (mother != null ? mother.getName() : "Неизвестна");
     }
 }
