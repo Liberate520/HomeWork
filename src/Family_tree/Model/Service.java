@@ -26,7 +26,7 @@ public abstract class Service<T extends Endothermal>  {
         }
         return null;
     }
-    public abstract Family_tree<T> setCurrentTree(Family_tree<T> tree);
+    public abstract void setCurrentTree(Family_tree<T> tree);
     public boolean removeTree(int index){
         try{
             getTreeList().remove(index);
