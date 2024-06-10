@@ -1,20 +1,24 @@
 package Family_tree.Model.Tree;
+import java.io.Serializable;
+
 import java.util.*;
 
 import Family_tree.Model.Humans.ComparatorByAge;
 import Family_tree.Model.Humans.ComparatorByID;
 import Family_tree.Model.Humans.ComparatorByName;
 import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Model.Recorder.Recorder;
 
-public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
+
+
+public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Serializable{
     private List<T> list;    
     private String family;
-    private long counter;
+    
 
     public Family_tree(String family){
         list = new ArrayList<>(); 
-        this.family = family;          
-        this.counter = 0;     
+        this.family = family;            
     } 
 
     public String getFamily(){ return this.family; }    
@@ -26,8 +30,7 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
 
     public void add(T value){
         if (value != null && !this.list.contains(value)){            
-            list.add(value);
-            this.counter ++;
+            list.add(value);            
         }        
     }      
 
@@ -40,24 +43,53 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
         }
         return result;
     }
+
+    public List<T> searchByPattern(String pattern){
+        String str1 = pattern.toLowerCase();
+        List<T> result = new ArrayList<>();
+        for (T element : this.list) {
+            if (element.toString().toLowerCase().contains(str1)){
+                result.add(element);
+            }
+        }
+        return result;
+    }  
     public T getItem(int id){        
         return this.list.get(id);
     }
-
-    public void excludeMember(T value){
-        value.setInFamilyStatus(false);
+    public T getItemByInnerID(long id){
+        for (T t : list) {
+            if(t.getInnerID() == id){
+                return t;
+            }
+        }
+        return null;
     }
+
+    public void remove(T value){
+        list.remove(value);
+    }
+    public void remove(int id){
+        list.remove(id);
+    }
+    public void remove(long innerId){
+        T aim = getItemByInnerID(innerId);
+        list.remove(aim);
+    }
+
     public List<T> getMemberList(){
         return this.list;
     }     
 
-    public String getlnfo(){
+    public String getInfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("B дереве объектов: ");
         sb.append(list.size()); 
         sb.append("\n"); 
-        for (T value: list){ 
-            sb.append(value);            
+        for (int i = 0; i < list.size(); i++){ 
+            sb.append(i);
+            sb.append(" ");
+            sb.append(list.get(i));            
             sb.append("\n"); 
         }
         return sb.toString();
@@ -65,7 +97,7 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
 
     
     public long getCount(){
-        return this.counter;
+        return list.size();
     }
     @Override
     public Iterator<T> iterator() {
@@ -81,6 +113,15 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>{
     }
     public void sortByInnerId(){
         this.list.sort(new ComparatorByID<T>());
-    }   
+    }    
+
+    public void save(String path){
+        Recorder recorder = new Recorder();
+        System.out.println(recorder.save(this, path));
+    }
+
+    
+
+    
     
 }

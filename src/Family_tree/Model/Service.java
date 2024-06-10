@@ -1,57 +1,70 @@
 package Family_tree.Model;
 
-import java.io.Serializable;
-
+import java.util.List;
+import Family_tree.Model.Tree.*;
 import Family_tree.Model.Humans.Endothermal;
-import Family_tree.Model.Tree.Family_tree;
+import Family_tree.Model.Recorder.Recorder;
 
-public class Service<T extends Endothermal> implements Serializable{
 
-    private Family_tree<T> tree;    
-    private int counter;      
-    private T currentItem;
+public abstract class Service<T extends Endothermal>  {
 
-    public Service(String family) {
-        tree = new Family_tree<>(family);         
-        this.counter = 0;        
-    }    
-    
-    public void addItem(T value){ 
-        if (!tree.getMemberList().contains(value)) {     
-            value.setFamilyID(counter);
-            counter++;
-            tree.add(value);         
+    public abstract List<Family_tree<T>> getTreeList();
+    public Family_tree<T> getTree(int index){
+        return getTreeList().get(index);
+    };
+    public Family_tree<T> setCurrentTree(int index){
+        return getTreeList().get(index);
+    };
+    public void addTree(String name){
+        getTreeList().add(new Family_tree<T>(name));
+    };
+    public Family_tree<T> getTree(String name){
+        for (Family_tree<T> element : getTreeList()) {
+            if (element.getFamily().equals(name)){
+                return element;
+            }
+        }
+        return null;
+    }
+    public abstract Family_tree<T> setCurrentTree(Family_tree<T> tree);
+    public boolean removeTree(int index){
+        try{
+            getTreeList().remove(index);
+            return true;
+        } catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    };
+    public abstract boolean newChild(T child, T father, T mother);
+    public boolean saveTree(String path, int index){
+        Family_tree<T> current = getTree(index);
+        try{
+            current.save(path);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
         }
     }
-    public Family_tree<T> getTree(){
-        return tree;
-    }
-    public T getItem(int index){
-        if (tree.getMemberList().size() == 0){
-            return null;
+    public Family_tree<T> loadTree(String path){
+        Recorder recorder = new Recorder();
+        Object obj = recorder.read(path);
+        @SuppressWarnings("unchecked")
+        Family_tree<T> newtree = (Family_tree<T>) obj;
+        boolean boo = true;
+        for (Family_tree<T> element : getTreeList()) {
+            if (newtree.getFamily().equals(element.getFamily())){
+                element = newtree;
+                boo = false;
+            } 
         }
-        currentItem = this.tree.getMemberList().get(index);
-        return currentItem;
-    }
-    public String getItemsInfo(){
-        
-        StringBuilder sb = new StringBuilder();
-        sb.append("Список членов семьи " + tree.getFamily() + " \n");
-        for (T value : tree) {
-            sb.append(value + "\n");
+        if(boo){
+            getTreeList().add(newtree);
         }
-        return sb.toString();
-    }
-    public void SortByName(){
-        tree.sortByName();
-    }
-    public void SortByID(){
-        tree.sortByInnerId();
-    }
-    public void SortByAge(){
-        tree.sortByAge();
+        return newtree;
     }
 
-    
+
 
 }

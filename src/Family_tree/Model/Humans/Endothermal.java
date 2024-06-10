@@ -11,16 +11,10 @@ public interface Endothermal extends Serializable, Comparable<Endothermal> {
     int getAge();   
     void setBirthDate(LocalDate birthDate); 
     void setDeathDate(LocalDate deathDate);
-    Gender getGender();
-    Vital getVital();
-    void setVital (Vital value);
+    Gender getGender();    
     String toString();
     String getName();
-    String getlnfo();
-    String getChildrenlnfo();
-    void setFamilyID( int value);
-    int getFamilyID();
-    void setInFamilyStatus(boolean b);
-    boolean inFamily();
+    String getInfo();
+    String getChildrenlnfo();   
     long getInnerID();
 }
