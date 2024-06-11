@@ -4,8 +4,8 @@ package ru.gb.family.familyTree;
 
 
 
-import ru.gb.family.ItemFamilyTrees.genTest.GeneratItemFamilyTree;
-import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.genTest.GeneratItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.ItemFamilyTree;
 
 import java.util.ArrayList;
 import java.util.List;

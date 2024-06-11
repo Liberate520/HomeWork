@@ -1,15 +1,14 @@
 package ru.gb.family;
 
-import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
-import ru.gb.family.ItemFamilyTrees.cat.Cat;
-import ru.gb.family.ItemFamilyTrees.humans.Human;
+import ru.gb.family.familyTree.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.cat.Cat;
+import ru.gb.family.familyTree.ItemFamilyTrees.humans.Human;
 import ru.gb.family.familyTree.FamilyTree;
-import ru.gb.family.ItemFamilyTrees.enums.DegreeOfKinship;
-import ru.gb.family.ItemFamilyTrees.enums.Gender;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.DegreeOfKinship;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.Gender;
 
 import ru.gb.family.service.Service;
 
-import javax.print.Doc;
 import java.io.Serializable;
 import java.time.LocalDate;
 

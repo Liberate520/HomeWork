@@ -1,8 +1,8 @@
-package ru.gb.family.ItemFamilyTrees.genTest;
+package ru.gb.family.familyTree.ItemFamilyTrees.genTest;
 
-import ru.gb.family.ItemFamilyTrees.enums.DegreeOfKinship;
-import ru.gb.family.ItemFamilyTrees.enums.Gender;
-import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.DegreeOfKinship;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.Gender;
+import ru.gb.family.familyTree.ItemFamilyTrees.ItemFamilyTree;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

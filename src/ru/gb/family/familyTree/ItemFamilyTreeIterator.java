@@ -1,6 +1,6 @@
 package ru.gb.family.familyTree;
 
-import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.ItemFamilyTree;
 
 import java.util.Iterator;
 import java.util.List;

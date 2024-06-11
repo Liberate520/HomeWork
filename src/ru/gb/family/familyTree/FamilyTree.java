@@ -3,13 +3,13 @@ package ru.gb.family.familyTree;
 
 
 
-import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
-import ru.gb.family.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByAge;
-import ru.gb.family.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByBirthday;
-import ru.gb.family.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByChildren;
-import ru.gb.family.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByName;
-import ru.gb.family.ItemFamilyTrees.enums.DegreeOfKinship;
-import ru.gb.family.ItemFamilyTrees.enums.Gender;
+import ru.gb.family.familyTree.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByAge;
+import ru.gb.family.familyTree.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByBirthday;
+import ru.gb.family.familyTree.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByChildren;
+import ru.gb.family.familyTree.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByName;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.DegreeOfKinship;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.Gender;
 
 import java.io.Serializable;
 import java.util.*;
@@ -135,7 +135,7 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
         stringBuilder.append("Результаты поиска:");
         for (ItemFamilyTree<T> itemFamilyTree : result){
             stringBuilder.append("\n id=" + itemFamilyTree.getId() + '\t' +
-                    "name=" +itemFamilyTree.getName() +" ("+itemFamilyTree.getAge()+" лет.))"+
+                    "name=" +itemFamilyTree.getName() +" ("+itemFamilyTree.getAge()+" лет.)"+
                     "\t birthday(" + itemFamilyTree.getBirthday() +
                     ")\t dateOfDeath(" + itemFamilyTree.getDateOfDeath() +
                     ")\t gender=" + itemFamilyTree.getGender());

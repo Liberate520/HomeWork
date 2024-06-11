@@ -1,8 +1,8 @@
-package ru.gb.family.ItemFamilyTrees.humans;
+package ru.gb.family.familyTree.ItemFamilyTrees.humans;
 
-import ru.gb.family.ItemFamilyTrees.ItemFamilyTree;
-import ru.gb.family.ItemFamilyTrees.enums.Gender;
-import ru.gb.family.ItemFamilyTrees.enums.Сountries;
+import ru.gb.family.familyTree.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.Gender;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.Сountries;
 
 import java.time.LocalDate;
 

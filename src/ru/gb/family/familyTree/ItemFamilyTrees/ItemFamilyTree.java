@@ -1,7 +1,6 @@
-package ru.gb.family.ItemFamilyTrees;
+package ru.gb.family.familyTree.ItemFamilyTrees;
 
-import ru.gb.family.ItemFamilyTrees.enums.*;
-import ru.gb.family.familyTree.FamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.*;
 import ru.gb.family.service.Service;
 
 
@@ -18,10 +17,10 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
     private String name;
     private Gender gender;
     private LocalDate birthday,dateOfDeath;
-    private ItemFamilyTree<T> father;
-    private ItemFamilyTree<T> mother;
+    private T father;
+    private T mother;
     private List<ItemFamilyTree<T>> children;
-    private ItemFamilyTree<T> spouse;
+    private T spouse;
 
 
     public ItemFamilyTree(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
@@ -44,8 +43,8 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
 
     }
 
-    public void addParent(ItemFamilyTree<T> parent){
-        if (parent.gender == Gender.Male){
+    public void addParent(T parent){
+        if (parent.getGender() == Gender.Male){
             this.father = parent;
         }
         else{
@@ -54,11 +53,11 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
 
     }
 
-    public void editItemFamilyTree(ItemFamilyTree<T> addItemFamilyTree, DegreeOfKinship degreeOfKinship){
+    public void editItemFamilyTree(T addItemFamilyTree, DegreeOfKinship degreeOfKinship){
         switch(degreeOfKinship) {
             case Father, Mother :
                 this.addParent(addItemFamilyTree);
-                addItemFamilyTree.children.add(this);
+                addItemFamilyTree.getChildren().add(this);
                 break;
             case Spouse:
                 this.addSpouse(addItemFamilyTree);
@@ -71,7 +70,7 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
         }
     }
 
-    private void addSpouse(ItemFamilyTree<T> spouse) {
+    void addSpouse(T spouse) {
         this.spouse = spouse;
     }
 
@@ -115,9 +114,9 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
                 "\t birthday(" + birthday +
                 ")\t dateOfDeath(" + dateOfDeath +
                 ")\t gender=" + gender +
-                "\n\t супруг(а):" + ((!(spouse == null)) ? spouse.name : "") +
-                "\n\t Отец:" + ((!(father == null)) ? father.name : "") +
-                "\n\t Мать:" + ((!(mother == null)) ? mother.name : "") +
+                "\n\t супруг(а):" + ((!(spouse == null)) ? spouse.getName() : "") +
+                "\n\t Отец:" + ((!(father == null)) ? father.getName() : "") +
+                "\n\t Мать:" + ((!(mother == null)) ? mother.getName() : "") +
                 "\n\t дети:" + stringBuilder + "\n";
 
     }
@@ -179,15 +178,15 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
         return father;
     }
 
-    public void setFather(ItemFamilyTree<T> father) {
+    public void setFather(T father) {
         this.father = father;
     }
 
-    public ItemFamilyTree<T> getMother() {
+    public T getMother() {
         return mother;
     }
 
-    public void setMother(ItemFamilyTree<T> mother) {
+    public void setMother(T mother) {
         this.mother = mother;
     }
 
@@ -203,7 +202,7 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
         return spouse;
     }
 
-    public void setSpouse(ItemFamilyTree<T> spouse) {
+    public void setSpouse(T spouse) {
         this.spouse = spouse;
     }
 }
