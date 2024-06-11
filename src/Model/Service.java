@@ -12,8 +12,6 @@ import java.util.HashMap;
 public class Service implements Serializable {
     private FamilyTree<Person> familyTree;
     private FileHandler fileHandler;
-    //при желании путь переноситься в конструктор
-    private String path = "homeWork.out";
 
     //конструктор
     public Service() {
@@ -25,7 +23,7 @@ public class Service implements Serializable {
 
     public void addPerson(String name, Gender gender) {
         Person person = new Person(name, gender);
-        familyTree.addPers(person);
+         familyTree.addPers(person);
     }
 
     public void addParent(int index, int indexParent) {
@@ -36,19 +34,19 @@ public class Service implements Serializable {
         familyTree.getByIndex(index).addParent(familyTree.getByIndex(indexChield));
     }
 
-    public void getAllFamily() {
-        System.out.println(familyTree.getAllFamily());
+    public String getAllFamily() {
+        return familyTree.getAllFamily();
     }
 
-    public void getFullPerson(int index) {
+    public String getFullPerson(int index) {
         if (index < familyTree.size())
-            System.out.println(familyTree.getFullPerson(index).toString());
+            return familyTree.getFullPerson(index).toString();
         else
-            System.out.println("Такого индекса не существует");
+            return "Такого индекса не существует";
     }
 
-    public void getPersonOnSurname(String name) {
-        System.out.println(familyTree.getPersonOnSurname(name).toString());
+    public String getPersonOnSurname(String name) {
+        return familyTree.getPersonOnSurname(name).toString();
     }
 
     public void sortedByName() {
@@ -59,11 +57,11 @@ public class Service implements Serializable {
         familyTree.sortByBirthday();
     }
 
-    public void getFullFamily() {
+    public String getFullFamily() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Person person : familyTree)
             stringBuilder.append(person);
-        System.out.println(stringBuilder);
+        return stringBuilder.toString();
     }
 
     public void addBirthday(LocalDate birthday, int index) {
@@ -89,11 +87,11 @@ public class Service implements Serializable {
     //Сериализация
 
     public void save() {
-        fileHandler.save(familyTree, path);
+        fileHandler.save(familyTree);
     }
 
     public void load() {
-        fileHandler.load(path);
+        fileHandler.load();
     }
 
 }

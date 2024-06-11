@@ -1,5 +1,4 @@
 package Model.OrganismTree;
-import Model.Organisms.Mammals.Persons.Person;
 import Model.Organisms.Organism;
 
 import java.io.Serializable;
@@ -19,7 +18,7 @@ public abstract class OrganismeTree<T extends Organism> implements Serializable,
     public HashMap<Integer, String> getAllIndices() {
         HashMap <Integer, String> indices = new HashMap<Integer, String>();
         for (int i = 0; i < tree.size(); i++){
-            indices.put(i,tree.get(i).getName());
+            indices.put(i, tree.get(i).getName());
         }
         return indices;
     }

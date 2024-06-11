@@ -25,24 +25,8 @@ public abstract class Organism<T extends Organism> implements Comparable<T> {
         }
         return out;
     }
-    public void addChildren(T child) {
-        this.children.add(child);
-    }
     public void addBirthday(LocalDate birthday) {
         this.birthday = birthday;
-    }
-    public void addDeathDate(LocalDate deathDate) {
-        this.deathDate = deathDate;
-    }
-    /**
-     * @return Метод вовзращает динамический массив с датой рождения, датой смерти (при наличии), в формате `LocalDate`
-     *  */
-    public ArrayList getDates() {
-        ArrayList<LocalDate> personDate = new ArrayList<LocalDate>();
-        personDate.add(birthday);
-        if (deathDate.getYear() != 9999)
-            personDate.add(deathDate);
-        return personDate;
     }
     public int getId() {
         return this.id;

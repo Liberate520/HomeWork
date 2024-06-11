@@ -5,6 +5,7 @@ import Model.Service;
 import View.View;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Presentor {
     private Service service;
@@ -13,6 +14,7 @@ public class Presentor {
     public Presentor(View view) {
         this.view = view;
         service = new Service();
+        load();
     }
 
     public void addPerson(String  name, Gender gender) {
@@ -42,18 +44,18 @@ public class Presentor {
         service.sortedByName();
     }
 
-    public void getPersonOnSurname(String name) {
-        service.getPersonOnSurname(name);
+    public String getPersonOnSurname(String name) {
+        return service.getPersonOnSurname(name);
     }
 
-    public void getFullPerson(int index) {
-        service.getFullPerson(index);
+    public String getFullPerson(int index) {
+        return service.getFullPerson(index);
     }
-    public void getAllFamily() {
-        service.getAllFamily();
+    public String getAllFamily() {
+        return service.getAllFamily();
     }
-    public void getAllIndices() {
-        service.getAllIndices();
+    public HashMap<Integer, String> getAllIndices() {
+        return service.getAllIndices();
     }
     public void save() {
         service.save();
