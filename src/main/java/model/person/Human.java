@@ -1,33 +1,27 @@
-package human;
+package model.person;
 
-import tree.interfaces.TreeCreaturable;
+import model.tree.interfaces.TreeCreaturable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Human implements Serializable, Comparable<Human>, TreeCreaturable<Human> {
-    private String name;
     private String surname;
     private String patronymic;
-    private Human mother;
+    private Human spouse;
+    private List<Human> oldSpouse;
+    private String name;
+    private Human  mother;
     private Human father;
     private List<Human> childrenList;
     private LocalDate birthDay;
     private LocalDate deathDay;
     private Gender gender;
-    private Human spouse;
-    private List<Human> oldSpouse;
-    private int id;
-    private int age;
-    static AtomicInteger nextId = new AtomicInteger();
+    int id;
+    int age;
 
-    @Override
-    public int compareTo(Human o) {
-        return name.compareTo(o.name);
-    }
 
     public Human(String name, Gender gen, LocalDate birthDay, LocalDate deathDay) {
         this.name = name.split(" ")[1];
@@ -37,8 +31,6 @@ public class Human implements Serializable, Comparable<Human>, TreeCreaturable<H
         this.birthDay = birthDay;
         this.deathDay = deathDay;
         this.childrenList = new ArrayList<>();
-        id = nextId.incrementAndGet();
-
     }
 
     public Human(String name, Gender gen, LocalDate birthDay) {
@@ -48,9 +40,96 @@ public class Human implements Serializable, Comparable<Human>, TreeCreaturable<H
         this.gender = gen;
         this.birthDay = birthDay;
         this.childrenList = new ArrayList<>();
-        id = nextId.incrementAndGet();
-
     }
+
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public void setBirthDay(LocalDate birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public void setDeathDay(LocalDate deathDay) {
+        this.deathDay = deathDay;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setMother(Human human) {
+        this.mother = human;
+    }
+
+    public void setFather(Human  human) {
+        this.father = human;
+    }
+
+    public Human  getMother() {
+        return this.mother;
+    }
+
+    public Human  getFather() {
+        return this.father;
+    }
+
+    public List<Human> getChildrenList() {
+        return childrenList;
+    }
+
+    public void addChild(Human  child) {
+        if (!childrenList.contains(child)) this.childrenList.add(child);
+    }
+
+    public int getAge() {
+        if (this.deathDay == null) return LocalDate.now().getYear() - this.birthDay.getYear();
+        else return this.deathDay.getYear() - this.birthDay.getYear();
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+
+
+    public String getMa() {
+        String ma;
+        if (this.mother == null) ma = "Нет информации; ";
+        else ma = this.mother.getName();
+        return ma;
+    }
+
+    public String getFa() {
+        String fa;
+        if (this.father == null) fa = "Нет информации; ";
+        else fa = this.father.getName();
+        return fa;
+    }
+
+    public String childGetName() {
+        StringBuilder sb = new StringBuilder();
+        if (childrenList.size() != 0) {
+            for (Human child : this.childrenList) {
+                sb.append(child.getName() + "; ");
+            }
+        } else sb.append("Отсутствуют; ");
+        return sb.toString();
+    }
+
 
     public void setSpouse(Human spou) {
         this.spouse = spou;
@@ -85,58 +164,14 @@ public class Human implements Serializable, Comparable<Human>, TreeCreaturable<H
         this.patronymic = name.split(" ")[2];
     }
 
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getName(){
-        return this.name;
+    public String getFullName() {
+        return this.surname + " " + this.name + " " + this.patronymic;
     }
 
     public void setSurname(String name) {
         this.surname = name;
     }
 
-
-    public void setBirthDay(LocalDate birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public void setDeathDay(LocalDate deathDay) {
-        this.deathDay = deathDay;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void setMother(Human human) {
-        this.mother = human;
-    }
-
-    public void setFather(Human human) {
-        this.father = human;
-    }
-
-    public Human getMother() {
-        return this.mother;
-    }
-
-    public Human getFather() {
-        return this.father;
-    }
-
-    public List<Human> getChildrenList() {
-        return childrenList;
-    }
-
-    public void addChild(Human child) {
-        if (!childrenList.contains(child)) this.childrenList.add(child);
-    }
-
-    public String getFullName() {
-        return this.surname + " " + this.name + " " + this.patronymic;
-    }
 
     public LocalDate getBirthDay() {
         return this.birthDay;
@@ -192,38 +227,9 @@ public class Human implements Serializable, Comparable<Human>, TreeCreaturable<H
         } else return "Супруг/супруга: " + this.spouse.getFullName() + "; ";
     }
 
-    public String getMa() {
-        String ma;
-        if (this.mother == null) ma = "Нет информации; ";
-        else ma = this.mother.getFullName();
-        return ma;
-    }
 
-    public String getFa() {
-        String fa;
-        if (this.father == null) fa = "Нет информации; ";
-        else fa = this.father.getFullName();
-        return fa;
-    }
 
-    public String childGetName() {
-        StringBuilder sb = new StringBuilder();
-        if (childrenList.size() != 0) {
-            for (Human child : this.childrenList) {
-                sb.append(child.getFullName() + "; ");
-            }
-        } else sb.append("Отсутствуют; ");
-        return sb.toString();
-    }
 
-    public int getAge() {
-        if (this.deathDay == null) return LocalDate.now().getYear() - this.birthDay.getYear();
-        else return this.deathDay.getYear() - this.birthDay.getYear();
-    }
-
-    public int getId() {
-        return this.id;
-    }
 
     public boolean equals(Human hum) {
         return (this.name == hum.name) && (this.surname == hum.surname) &&

@@ -1,7 +1,6 @@
-package tree.itrator;
+package model.tree.itrator;
 
-import human.Human;
-import tree.interfaces.TreeCreaturable;
+import model.tree.interfaces.TreeCreaturable;
 
 import java.util.Iterator;
 import java.util.List;

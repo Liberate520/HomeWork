@@ -1,12 +1,11 @@
-package tree;
+package model.tree;
 
-import human.Comparators.SortByAgeComparator;
-import human.Comparators.SortByNameComporator;
+import model.person.Comparators.SortByAgeComparator;
+import model.person.Comparators.SortByNameComporator;
 
-import human.Gender;
-
-import tree.interfaces.TreeCreaturable;
-import tree.itrator.TreeIterable;
+import model.person.Gender;
+import model.tree.itrator.TreeIterable;
+import model.tree.interfaces.TreeCreaturable;
 
 import java.io.Serializable;
 import java.util.*;

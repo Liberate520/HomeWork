@@ -1,4 +1,4 @@
-package tree.file;
+package model.tree.file;
 
 import java.io.IOException;
 import java.io.Serializable;

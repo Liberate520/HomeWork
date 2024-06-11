@@ -1,6 +1,6 @@
-package tree.interfaces;
+package model.tree.interfaces;
 
-import human.Gender;
+import model.person.Gender;
 
 import java.io.Serializable;
 import java.util.List;

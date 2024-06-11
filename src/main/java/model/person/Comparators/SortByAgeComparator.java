@@ -1,8 +1,7 @@
-package human.Comparators;
+package model.person.Comparators;
 
 
-import human.Human;
-import tree.interfaces.TreeCreaturable;
+import model.tree.interfaces.TreeCreaturable;
 
 import java.util.Comparator;
 

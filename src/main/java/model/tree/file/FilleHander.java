@@ -1,4 +1,4 @@
-package tree.file;
+package model.tree.file;
 
 import java.io.*;
 
@@ -7,6 +7,7 @@ public class FilleHander implements Writeble {
     public boolean saveing(Serializable serializable, String filepath) throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filepath));
         objectOutputStream.writeObject(serializable);
+        objectOutputStream.close();
         return true;
     }
     @Override
