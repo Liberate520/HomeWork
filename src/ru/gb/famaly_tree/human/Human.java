@@ -1,13 +1,12 @@
-package ru.gb.famaly_tree;
+package ru.gb.famaly_tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.Period;
-import java.util.stream.Stream;
 
-public class Human implements Serializable {
+public class Human implements Serializable{
         private String name;
         private LocalDate birthDate;
         private LocalDate deathDate;
@@ -107,9 +106,9 @@ public class Human implements Serializable {
                 return children;
         }
 
-        public String Age(){
+        public Integer Age(){
                 Period period = Period.between(birthDate, deathDate);
-                return "" + period.getYears();
+                return period.getYears();
         }
 
         public String ToString(){
@@ -151,4 +150,9 @@ public class Human implements Serializable {
                 //System.out.println(outputPersonInfo);
                 return outputPersonInfo;
         }
+
+//        @Override
+//        public int compareTo(Human o) {
+//                return getName().compareTo(o.getName());
+//        }
 }

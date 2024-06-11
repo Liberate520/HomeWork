@@ -1,6 +1,7 @@
-package ru.gb.famaly_tree;
+package ru.gb.famaly_tree.filehandler;
 
-import java.io.FileNotFoundException;
+import ru.gb.famaly_tree.ft.Famaly_tree;
+
 import java.io.IOException;
 
 public interface Writable {

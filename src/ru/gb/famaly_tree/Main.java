@@ -1,5 +1,11 @@
 package ru.gb.famaly_tree;
 
+import ru.gb.famaly_tree.filehandler.FileHandler;
+import ru.gb.famaly_tree.filehandler.Writable;
+import ru.gb.famaly_tree.ft.Famaly_tree;
+import ru.gb.famaly_tree.human.Gender;
+import ru.gb.famaly_tree.human.Human;
+
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -25,7 +31,7 @@ public class Main {
 
         //создание экземпляров класса human
         ///*
-        Human h1 = new Human("имя1",Gender.male,LocalDate.of(1940,3,5),LocalDate.of(2010,1,4));
+        Human h1 = new Human("имя1", Gender.male,LocalDate.of(1940,3,5),LocalDate.of(2010,1,4));
         Human h2 = new Human("имя2",Gender.female,LocalDate.of(1940,7,23),LocalDate.of(2009,10,8));
 
         Human h31 = new Human("имя3.1",Gender.male,LocalDate.of(1960,4,15),LocalDate.of(2021,12,11));
@@ -46,7 +52,7 @@ public class Main {
 
         //создание дерева
         Famaly_tree famaly1 = new Famaly_tree();
-        famaly1.AddFounder(h1);
+        famaly1.addFounder(h1);
 
         //добавление детей h3 и h31 к родителю h2
         famaly1.addThisInThis(h3,h2);
@@ -93,8 +99,20 @@ public class Main {
         System.out.println("__________________");
         System.out.println(h311.ToString());
         System.out.println("__________________");
+
+
         writable.saved(famaly1);
-        famaly1.printFamalyTree(h1);
+        System.out.println(famaly1.printFamalyTree(h1));
+
+        System.out.println(famaly1.humanListToString());
+
+        System.out.println(famaly1.humanListToString(famaly1.sortByAge(false)));
+        System.out.println(famaly1.humanListToString(famaly1.sortByChildrenCount(false)));
+        System.out.println(famaly1.humanListToString(famaly1.sortByName(false)));
+        System.out.println();
+        System.out.println(famaly1.humanListToString(famaly1.sortByAge(true)));
+        System.out.println(famaly1.humanListToString(famaly1.sortByChildrenCount(true)));
+        System.out.println(famaly1.humanListToString(famaly1.sortByName(true)));
 
         //*/
         //закомментровать все что выше и раскомментировать ниже. Далее проиходит загрузка и вывод информации о персоне h1 и его семейного дерева
@@ -103,3 +121,4 @@ public class Main {
         //famaly1.printFamalyTree(famaly1.GetFounder());
     }
 }
+//https://github.com/NukeTree3/homeWorkFamalyTree.git

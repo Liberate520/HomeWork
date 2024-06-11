@@ -1,8 +1,10 @@
-package ru.gb.famaly_tree;
+package ru.gb.famaly_tree.filehandler;
+
+import ru.gb.famaly_tree.ft.Famaly_tree;
 
 import java.io.*;
 
-public class FileHandler implements Writable{
+public class FileHandler implements Writable {
 
     @Override
     public void saved(Famaly_tree famalyTree) throws IOException {
@@ -10,13 +12,16 @@ public class FileHandler implements Writable{
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(famalyTree);
         objectOutputStream.close();
+        fileOutputStream.close();
     }
 
     @Override
     public Famaly_tree download() throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("file");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        //objectInputStream.close();
-        return (Famaly_tree) objectInputStream.readObject();
+        Famaly_tree famalyTree = (Famaly_tree) objectInputStream.readObject();
+        objectInputStream.close();
+        fileInputStream.close();
+        return famalyTree;
     }
 }
