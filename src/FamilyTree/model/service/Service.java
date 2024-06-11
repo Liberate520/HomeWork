@@ -1,14 +1,16 @@
 package FamilyTree.model.service;
 
-import FamilyTree.model.builder.ItemBuilder;
-import FamilyTree.model.familyTree.ElementFamilyTree;
-import FamilyTree.model.familyTree.FamilyTree;
 import FamilyTree.model.builder.HumanBuilder;
+import FamilyTree.model.builder.ItemBuilder;
+import FamilyTree.model.element.ElementFamilyTree;
+import FamilyTree.model.element.Human;
+import FamilyTree.model.familyTree.FamilyTree;
 import FamilyTree.model.familyTree.Writable;
-import FamilyTree.model.human.Gender;
+import FamilyTree.model.element.Gender;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Service<E extends ElementFamilyTree<E>> {
     private FamilyTree<E> familyTree = new FamilyTree<>();
@@ -23,8 +25,8 @@ public class Service<E extends ElementFamilyTree<E>> {
         this.writable = writable;
     }
 
-    public void addElement(String name, Gender gender, LocalDate birthDate, LocalDate deathDate){
-        familyTree.add(itemBuilder.createItem(name, gender, birthDate, deathDate));
+    public void addElement(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, E father, E mother, List<E> children, E spouse){
+        familyTree.add((E) itemBuilder.createItem(name, gender, birthDate, deathDate, father, mother, children, spouse));
     }
 
     public void setName(String name){
@@ -56,4 +58,19 @@ public class Service<E extends ElementFamilyTree<E>> {
         familyTree.sortByAge();
     }
 
+    public List<E> searchByName(String name){
+        return familyTree.searchByName(name);
+    }
+
+    public E searchById(Long id){
+        return familyTree.searchById(id);
+    }
+
+    public void addChild(long idChild, long idParent){
+        familyTree.addChild(searchById(idChild), searchById(idParent));
+    }
+
+    public void addParent(long idChild, long idParent){
+        familyTree.addParent(searchById(idChild), searchById(idParent));
+    }
 }

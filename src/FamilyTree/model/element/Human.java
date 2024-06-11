@@ -1,6 +1,4 @@
-package FamilyTree.model.human;
-
-import FamilyTree.model.familyTree.ElementFamilyTree;
+package FamilyTree.model.element;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,10 +9,10 @@ import java.util.Objects;
 
 public class Human implements Serializable, ElementFamilyTree<Human> {
     private long id;
-    private final String name;
-    private final Gender gender;
-    private final LocalDate birthDate;
-    private final LocalDate deathDate;
+    private String name;
+    private Gender gender;
+    private LocalDate birthDate;
+    private LocalDate deathDate;
     private List<Human> parents;
 
     public void setChildren(List<Human> children) {
@@ -42,12 +40,20 @@ public class Human implements Serializable, ElementFamilyTree<Human> {
         this.spouse = spouse;
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate){
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother, List<Human> children){
         id = -1;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.deathDate = null;
+        this.deathDate = deathDate;
+        this.parents = new ArrayList<>();
+        if(father != null){
+            parents.add(father);
+        }
+        if(mother != null){
+            parents.add(mother);
+        }
+        this.children = children;
     }
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate){
@@ -56,6 +62,10 @@ public class Human implements Serializable, ElementFamilyTree<Human> {
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
+    }
+
+    public Human(){
+
     }
 
     public void addChild(Human child){
@@ -150,7 +160,7 @@ public class Human implements Serializable, ElementFamilyTree<Human> {
         if(children != null) {
             for (Human human : children) {
                 sb.append(human.getName());
-                if(!children.iterator().hasNext()){
+                if(children.iterator().hasNext()){
                     sb.append(", ");
                 }
             }

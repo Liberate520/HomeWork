@@ -1,5 +1,7 @@
 package FamilyTree.model.familyTree;
 
+import FamilyTree.model.element.ElementFamilyTree;
+
 import java.util.Iterator;
 import java.util.List;
 

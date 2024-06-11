@@ -14,6 +14,10 @@ public class HelpListCommand {
         sb.append("\n- /load - загрузить древо по имени!");
         sb.append("\n- /sortedByAge - отсортировать по возрасту элементов!");
         sb.append("\n- /sortedByName - отсортировать по именам элементов!");
+        sb.append("\n- /searchByName - поиск по имени.");
+        sb.append("\n- /searchById - поиск по ID элемента.");
+        sb.append("\n- /addParent - добавить ребенку родителя.");
+        sb.append("\n- /addChild - добавить родителю ребенка.");
         sb.append("\n- /stop - остановить выполнение программы.");
         return sb.toString();
     }

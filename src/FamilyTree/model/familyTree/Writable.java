@@ -1,5 +1,7 @@
 package FamilyTree.model.familyTree;
 
+import FamilyTree.model.element.ElementFamilyTree;
+
 import java.io.*;
 
 public interface Writable<E extends ElementFamilyTree<E>> {

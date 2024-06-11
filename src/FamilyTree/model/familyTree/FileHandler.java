@@ -1,5 +1,7 @@
 package FamilyTree.model.familyTree;
 
+import FamilyTree.model.element.ElementFamilyTree;
+
 import java.io.*;
 
 public class FileHandler<E extends ElementFamilyTree<E>> implements Writable<E> {

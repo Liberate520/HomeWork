@@ -1,7 +1,5 @@
 package FamilyTree.view;
 
-import FamilyTree.presenter.Presenter;
-
 import java.io.IOException;
 
 public interface View {

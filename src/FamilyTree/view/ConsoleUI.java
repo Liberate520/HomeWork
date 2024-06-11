@@ -1,6 +1,6 @@
 package FamilyTree.view;
 
-import FamilyTree.model.human.Gender;
+import FamilyTree.model.element.Gender;
 import FamilyTree.presenter.Presenter;
 
 import java.io.FileNotFoundException;
@@ -8,19 +8,19 @@ import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleUI implements View {
 
-    private Presenter presenter;
-    private Scanner scanner;
+    private final Map<String, Command> commands = new HashMap<>();
+    private final Presenter<?> presenter;
+    private final Scanner scanner;
     private int work = 1;
     HelpListCommand helpListCommand = new HelpListCommand();
 
     public ConsoleUI(){
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+        presenter = new Presenter<>(this);
     }
 
     public void printHelp() {
@@ -39,9 +39,11 @@ public class ConsoleUI implements View {
         String name = scanner.nextLine();
         int checkCorrectGender = 1;
         int checkCorrectDate = 1;
+        int checkCorrectChildren = 1;
         Gender gender = null;
         LocalDate birthDate = null;
         LocalDate deathDate = null;
+        List children = new ArrayList<>();
         while (checkCorrectGender == 1) {
             try {
                 System.out.println("Укажите гендер (1 - мужчина, 2 - женщина): ");
@@ -94,7 +96,45 @@ public class ConsoleUI implements View {
                 System.out.println("Введен неправильный формат даты.");
             }
         }
-        presenter.addElement(name, gender, birthDate, deathDate);
+        System.out.println("Если известен отец - введите его id.");
+        Long fatherId;
+        try {
+            fatherId = Long.parseLong(scanner.nextLine());
+        } catch (NumberFormatException exception){
+            fatherId = null;
+            System.out.println("ID не распознан. Передано пустое значение!");
+        }
+        System.out.println("Если известна мама - введите её id.");
+        Long motherId;
+        try {
+            motherId = Long.parseLong(scanner.nextLine());
+        } catch (NumberFormatException exception){
+            motherId = null;
+            System.out.println("ID не распознан. Передано пустое значение!");
+        }
+        System.out.println("Если известна супруг(а) - введите его(её) id.");
+        Long spouseId;
+        try {
+            spouseId = Long.parseLong(scanner.nextLine());
+        } catch (NumberFormatException exception){
+            spouseId = null;
+            System.out.println("ID не распознан. Передано пустое значение!");
+        }
+        System.out.println("Если известны дети - введите их id по одному. Если хотите завершить добавление напишите stop");
+        while (checkCorrectChildren == 1){
+            String query = scanner.nextLine();
+            if(query.equals("stop")){
+                checkCorrectChildren = 0;
+            } else {
+                try {
+                    long childrenId = Long.parseLong(query);
+                    children.add(presenter.searchById(childrenId));
+                } catch (Exception exception){
+                    System.out.println("Введен неверный ID");
+                }
+            }
+        }
+        presenter.addElement(name, gender, birthDate, deathDate, fatherId, motherId, children, spouseId);
         System.out.println("Персона успешно добавлена в древо!");
     }
 
@@ -137,8 +177,52 @@ public class ConsoleUI implements View {
         presenter.sortedByName();
     }
 
+    public void searchByName(){
+        System.out.println("Инициализирован поиск по имени, введите имя: ");
+        System.out.println(presenter.searchByName(scanner.nextLine()));
+    }
+
+    public void searchById(){
+        System.out.println("Инициализирован поиск по id, введите id элемента: ");
+        System.out.println(presenter.searchById(Long.parseLong(scanner.nextLine())));
+    }
+
+    public void addParent(){
+        System.out.println("Вы хотите добавить родителя ребенку, введите ID родителя: ");
+        long idParent = Long.parseLong(scanner.nextLine());
+        System.out.println("Введите id ребенка: ");
+        long idChild = Long.parseLong(scanner.nextLine());
+        presenter.addParent(idChild, idParent);
+    }
+
+    public void addChild(){
+        System.out.println("Вы хотите добавить ребенка родителю, введите ID родителя: ");
+        long idParent = Long.parseLong(scanner.nextLine());
+        System.out.println("Введите id ребенка: ");
+        long idChild = Long.parseLong(scanner.nextLine());
+        presenter.addChild(idChild, idParent);
+    }
+
+    public void initializeCommands() {
+        commands.put("/help", this::printHelp);
+        commands.put("/createFamilyTree", this::createFamilyTree);
+        commands.put("/addElement", this::addElement);
+        commands.put("/viewFamilyTree", this::viewFamilyTree);
+        commands.put("/setWedding", this::setWedding);
+        commands.put("/save", this::save);
+        commands.put("/load", this::load);
+        commands.put("/sortedByName", this::sortedByName);
+        commands.put("/sortedByAge", this::sortedByAge);
+        commands.put("/searchByName", this::searchByName);
+        commands.put("/searchById", this::searchById);
+        commands.put("/addParent", this::addParent);
+        commands.put("/addChild", this::addChild);
+        commands.put("/stop", () -> work = 0);
+    }
+
     @Override
     public void start() throws IOException, ClassNotFoundException {
+        initializeCommands();
         printAnswer("Приветствуем в программе создания древа! Это начальный вариант реализации консольного приложения. \n" +
                 "Если хоите узнать список команд - напишите /help");
         while (work == 1){
@@ -146,39 +230,17 @@ public class ConsoleUI implements View {
             String[] parts = query.split(" ");
             if(parts.length > 2){
                 System.out.println("Запрос неверный, введите комманду ещё раз.");
+                continue;
             }
-            switch (parts[0]) {
-                case "/help":
-                    printHelp();
-                    break;
-                case "/createFamilyTree":
-                    createFamilyTree();
-                    break;
-                case "/addElement":
-                    addElement();
-                    break;
-                case "/viewFamilyTree":
-                    viewFamilyTree();
-                    break;
-                case "/setWedding":
-                    setWedding();
-                    break;
-                case "/save":
-                    save();
-                    break;
-                case "/load":
-                    load();
-                    break;
-                case "/sortedByName":
-                    sortedByName();
-                    break;
-                case "/sortedByAge":
-                    sortedByAge();
-                    break;
-                case "/stop":
-                    work = 0;
-                    break;
-                default: printAnswer("Комманда введена неверно!");
+            Command command = commands.get(parts[0]);
+            if (command != null) {
+                try {
+                    command.execute();
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                printAnswer("Комманда введена неверно!");
             }
         }
     }

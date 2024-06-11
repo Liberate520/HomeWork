@@ -2,20 +2,22 @@ package FamilyTree.presenter;
 
 import FamilyTree.model.builder.HumanBuilder;
 import FamilyTree.model.builder.ItemBuilder;
-import FamilyTree.model.familyTree.ElementFamilyTree;
+import FamilyTree.model.element.ElementFamilyTree;
+import FamilyTree.model.element.Human;
 import FamilyTree.model.familyTree.FamilyTree;
 import FamilyTree.model.familyTree.FileHandler;
-import FamilyTree.model.human.Gender;
+import FamilyTree.model.element.Gender;
 import FamilyTree.model.service.Service;
 import FamilyTree.view.View;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Presenter<E extends ElementFamilyTree<E>> {
-    private View view;
+    private final View view;
     private final Service<E> service = new Service<>();
-    private final HumanBuilder<E> humanBuilder = new HumanBuilder<>();
+    private final HumanBuilder humanBuilder = new HumanBuilder();
     private final FileHandler<E> fileHandler = new FileHandler<>();
 
     public Presenter(View view){
@@ -26,9 +28,12 @@ public class Presenter<E extends ElementFamilyTree<E>> {
         service.setName(name);
     }
 
-    public void addElement(String name, Gender gender, LocalDate birthDate, LocalDate deathDate){
+    public void addElement(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Long father, Long mother, List<E> children, Long spouse){
         service.setItemBuilder(humanBuilder);
-        service.addElement(name, gender, birthDate, deathDate);
+        E fatherE = searchById(father);
+        E motherE = searchById(mother);
+        E spouseE = searchById(spouse);
+        service.addElement(name, gender, birthDate, deathDate, fatherE, motherE, children, spouseE);
     }
 
     public void save() throws IOException {
@@ -55,5 +60,23 @@ public class Presenter<E extends ElementFamilyTree<E>> {
 
     public void sortedByAge(){
         service.sortedByAge();
+    }
+
+    public List<E> searchByName(String name){
+        return service.searchByName(name);
+    }
+
+    public E searchById(Long id){
+        return service.searchById(id);
+    }
+
+    public void addParent(long longIdChild, long longIdParent){
+        service.addParent(longIdChild, longIdParent);
+        service.addChild(longIdChild, longIdParent);
+    }
+
+    public void addChild(long longIdChild, long longIdParent){
+        service.addParent(longIdChild, longIdParent);
+        service.addChild(longIdChild,longIdParent);
     }
 }

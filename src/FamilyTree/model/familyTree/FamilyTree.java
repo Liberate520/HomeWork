@@ -1,5 +1,7 @@
 package FamilyTree.model.familyTree;
 
+import FamilyTree.model.element.ElementFamilyTree;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +44,7 @@ public class FamilyTree<E extends ElementFamilyTree<E>> implements Serializable,
 
             addParents(item);
             addChild(item);
+            addSpouse(item);
         }
     }
 
@@ -55,11 +58,29 @@ public class FamilyTree<E extends ElementFamilyTree<E>> implements Serializable,
 
 
     private void addChild(E item){
-        if(item.getChildren() != null) {
+        if (item.getChildren() != null) {
             for (E child : item.getChildren()) {
                 child.addParents(item);
             }
         }
+    }
+
+    private void addSpouse(E item){
+        if(item.getSpouse() != null) {
+            for (E spose : itemList) {
+                if (item.getSpouse() == spose) {
+                    spose.setSpouse(item);
+                }
+            }
+        }
+    }
+
+    public void addChild(E item, E parent){
+        parent.addChild(item);
+    }
+
+    public void addParent(E item, E parent){
+        item.addParents(parent);
     }
 
     public List<E> searchByName(String name){
@@ -87,7 +108,12 @@ public class FamilyTree<E extends ElementFamilyTree<E>> implements Serializable,
         return id < itemId && id > 0;
     }
 
-    public E searchById(long id){
+    public E searchById(Long id){
+        if(id == null){
+            return null;
+        } else if (id > itemList.size()) {
+            return null;
+        }
         for (E item : itemList){
             if(item.getId() == id){
                 return item;

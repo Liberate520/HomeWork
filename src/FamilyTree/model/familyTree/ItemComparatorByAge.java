@@ -1,5 +1,7 @@
 package FamilyTree.model.familyTree;
 
+import FamilyTree.model.element.ElementFamilyTree;
+
 import java.util.Comparator;
 
 public class ItemComparatorByAge<T extends ElementFamilyTree<T>> implements Comparator<T> {
