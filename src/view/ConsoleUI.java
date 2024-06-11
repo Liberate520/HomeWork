@@ -1,6 +1,9 @@
 package view;
 import model.family_tree.instances.Gender;
 import model.family_tree.instances.Human;
+import model.family_tree.service.Service;
+import model.family_tree.tree.FamilyTree;
+import model.family_tree.writer.FileHandler;
 import presenter.Presenter;
 import java.io.IOException;
 import java.time.YearMonth;
@@ -15,12 +18,22 @@ public class ConsoleUI implements View {
     private boolean work;
     private MainMenu menu;
     Calendar calendar = Calendar.getInstance();
+    private FamilyTree<Human> familyTree;
+    private FileHandler writable;
+    private Service service;
+    String pathToSave;
 
     public ConsoleUI() {
+        pathToSave = "savesFamilyTree.ftr";
+        writable = new FileHandler(pathToSave);
+        familyTree = new FamilyTree<>();
+        service = new Service(familyTree, writable);
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+        presenter = new Presenter(this, service);
         work = true;
         menu = new MainMenu(this);
+
+
     }
 
     public void addHuman(){
@@ -46,9 +59,8 @@ public class ConsoleUI implements View {
         }else {gender = Gender.Female;}
 
         Date date = getDate(); //Получение даты
-        Human human = new Human(name, date, gender);
 
-        presenter.addToTree(human);
+        presenter.addToTree(name, date, gender);
         showTree();
     }
 

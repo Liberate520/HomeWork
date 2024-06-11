@@ -1,4 +1,5 @@
 package presenter;
+import model.family_tree.instances.Gender;
 import model.family_tree.instances.Human;
 import model.family_tree.service.Service;
 import model.family_tree.tree.FamilyTree;
@@ -7,30 +8,31 @@ import model.family_tree.writer.Writable;
 import view.View;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class Presenter {
     private View view;
-    private FamilyTree<Human> familyTree;
-    private FileHandler writable;
-    private Service<Human> service;
+    private Service service;
 
-    public Presenter(View view) {
+    public Presenter(View view, Service service) {
         this.view = view;
-        familyTree = new FamilyTree<Human>();
-        writable = new FileHandler();
-        service = new Service<Human>(familyTree, writable);
+        this.service = service;
     }
 
     public boolean addToTree(Human human){
         return service.addToTree(human);
     }
 
+    public boolean addToTree(String name, Date date, Gender gender){
+        return service.addToTree(name, date, gender);
+    }
+
     public void readFromFile() throws IOException, ClassNotFoundException {
-        service.readFromFamilyTree("savesFamilyTree.ftr");
+        service.readFromFamilyTree();
     }
 
     public void saveToFile() throws IOException {
-        service.writeToFamilyTree("savesFamilyTree.ftr");
+        service.writeToFamilyTree();
     }
 
     public void showTree(){

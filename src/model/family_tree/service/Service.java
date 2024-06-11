@@ -1,22 +1,30 @@
 package model.family_tree.service;
 
+import model.family_tree.instances.Gender;
+import model.family_tree.instances.Human;
 import model.family_tree.tree.FamilyTree;
 import model.family_tree.tree.TreeItem;
 import model.family_tree.writer.Writable;
 
 import java.io.IOException;
+import java.util.Date;
 
-public class Service<T extends TreeItem<T>> {
-    private FamilyTree<T> familyTree;
-    private final Writable<T> writer;
+public class Service {
+    private FamilyTree<Human> familyTree;
+    private final Writable<Human> writer;
 
-    public Service(FamilyTree<T> familyTree, Writable<T> writer) {
+    public Service(FamilyTree<Human> familyTree, Writable<Human> writer) {
         this.familyTree = familyTree;
         this.writer = writer;
     }
 
-    public boolean addToTree(T obj) {
+    public boolean addToTree(Human obj) {
         return familyTree.addToTree(obj);
+    }
+
+    public boolean addToTree(String name, Date date, Gender gender){
+        Human human = new Human(name, date, gender);
+        return addToTree(human);
     }
 
     public void sortByAge() {
@@ -35,11 +43,11 @@ public class Service<T extends TreeItem<T>> {
         familyTree.sortByDeathDate();
     }
 
-    public boolean setMother(T objForSet, T mother) {
+    public boolean setMother(Human objForSet, Human mother) {
         return familyTree.setMother(objForSet, mother);
     }
 
-    public boolean setFather(T objForSet, T father){
+    public boolean setFather(Human objForSet, Human father){
         return familyTree.setFather(objForSet, father);
     }
 
@@ -47,7 +55,7 @@ public class Service<T extends TreeItem<T>> {
         return familyTree.getNumInFamily();
     }
 
-    public T getFamilyMember(int index) {
+    public Human getFamilyMember(int index) {
         return familyTree.getFamilyMember(index);
     }
 
@@ -55,11 +63,11 @@ public class Service<T extends TreeItem<T>> {
         return familyTree.toString();
     }
 
-    public void writeToFamilyTree(String path) throws IOException{
-        writer.writeToFamilyTree(familyTree, path);
+    public void writeToFamilyTree() throws IOException{
+        writer.writeToFamilyTree(familyTree);
     }
 
-    public void readFromFamilyTree(String path) throws IOException, ClassNotFoundException{
-        familyTree = writer.readFromFamilyTree(path);
+    public void readFromFamilyTree() throws IOException, ClassNotFoundException{
+        familyTree = writer.readFromFamilyTree();
     }
 }

@@ -7,6 +7,6 @@ import model.family_tree.tree.TreeItem;
 import java.io.IOException;
 
 public interface Writable<T extends TreeItem<T>> {
-    public void writeToFamilyTree(FamilyTree<T> obj, String path) throws IOException;
-    public FamilyTree<T> readFromFamilyTree(String path) throws IOException, ClassNotFoundException;
+    public void writeToFamilyTree(FamilyTree<T> obj) throws IOException;
+    public FamilyTree<T> readFromFamilyTree() throws IOException, ClassNotFoundException;
 }
