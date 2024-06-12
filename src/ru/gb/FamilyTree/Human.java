@@ -85,7 +85,8 @@ public class Human {
         return diff.getYears();
     }
 
-    public void setSpouse(Human spouse) { this.spouse = spouse; }
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse; }
 
     public Human getSpouse() {return spouse; }
 

@@ -1,6 +1,5 @@
 package ru.gb.FamilyTree;
 
-//import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class FamilyTree  {
 
     public boolean add(Human human){
         if(human == null){
-            return false;
+            return false ;
         }
         if(!humanList.contains(human)){
             humanList.add(human);
