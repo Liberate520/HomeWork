@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
 
     /**
      * id            - идентификатор
@@ -41,14 +41,14 @@ public class Human implements Serializable {
 
 
     public Human(String name, String surname, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath,
-                 Human father, Human mother){
+                 Human spouse, Human father, Human mother){
         id = -1;  // -1 - родственник ещё не в дереве
         this.name = name;
         this.surname = surname;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.dateOfDeath = dateOfDeath;
-
+        this.spouse = spouse;
         parents = new ArrayList<>();
         children = new ArrayList<>();
 
@@ -63,11 +63,16 @@ public class Human implements Serializable {
     }
 
     public Human(String name, String surname, Gender gender, LocalDate dateOfBirth){
-        this(name, surname, gender, dateOfBirth, null, null, null);
+        this(name, surname, gender, dateOfBirth, null, null, null, null);
     }
 
+//    public Human(String name, String surname, Gender gender, LocalDate dateOfBirth, String spouse){
+//        this(name, surname, gender, dateOfBirth, null, spouse, null, null);
+//    }
+
+
     public Human(String name, String surname, Gender gender, LocalDate dateOfBirth, Human father, Human mother){
-        this(name, surname, gender, dateOfBirth, null, father, mother);
+        this(name, surname, gender, dateOfBirth, null, null, father, mother);
     }
 
 
@@ -87,6 +92,9 @@ public class Human implements Serializable {
         }
         return false;
     }
+
+
+
 
     public Human getFather(){
         for(Human parent: parents){
@@ -174,14 +182,14 @@ public class Human implements Serializable {
         return gender;
     }
 
-    public void setSpouse(Human spouse) {
-        this.spouse = spouse;
-    }
-
     public Human getSpouse() {
         return spouse;
     }
-    //-----------------------------------------------------------------------------------------------------------------
+
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+//-----------------------------------------------------------------------------------------------------------------
 
     public String getMotherInfo(){
         String result = "мать: ";
@@ -228,6 +236,21 @@ public class Human implements Serializable {
         return result.toString();
     }
 
+    public String getSpouseInfo(){
+        String result = "супруг(а): ";
+
+        if(spouse == null){
+            result += "нет, ";
+        }else{
+            result += spouse.getName();
+            result += " ";
+            result += spouse.getSurname();
+            result += ", ";
+        }
+
+        return result;
+    }
+
     @Override
     public String toString() {
         return getInfo();
@@ -251,9 +274,21 @@ public class Human implements Serializable {
         info.append(getMotherInfo());
         info.append(", ");
         info.append(getFatherInfo() + "\n");
+        info.append(getSpouseInfo());
         info.append(getChildrenInfo() + "\n");
         return info.toString();
 
+    }
+    public String getBriefInfo(){
+        StringBuilder info = new StringBuilder();
+
+        info.append(surname);
+        info.append(", ");
+        info.append(name);
+        info.append("; \n");
+        info.append(getSpouseInfo() + "\n");
+        info.append(getChildrenInfo() + "\n");
+        return info.toString();
     }
 
     @Override
@@ -267,4 +302,15 @@ public class Human implements Serializable {
         Human human = (Human) obj;
         return human.getId() == getId();
     }
+
+    @Override
+    public int compareTo(Human o) {
+        return 0;
+    }
+    // Это переопределение же не имеет никакого смысла, так как мы не выводим сортировку по имени для разных Human?
+
+//    @Override
+//    public int compareTo(Human o) {
+//        return this.name.compareTo(o.name);
+//    }
 }
