@@ -1,6 +1,11 @@
 package Family_tree.View;
 
-public abstract class View<T> {
+import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Presenter.Presenter;
+
+public abstract class View<T extends Endothermal> {
     public abstract void start();
+
+    public abstract Presenter<T> getPresenter();
 
 }
