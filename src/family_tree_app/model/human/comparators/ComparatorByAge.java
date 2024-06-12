@@ -10,6 +10,4 @@ public class ComparatorByAge<T extends FamilyTreeEntry<T>> implements Comparator
     public int compare(T o1, T o2) {
         return o1.getAge() - o2.getAge();
     }
-
-
 }

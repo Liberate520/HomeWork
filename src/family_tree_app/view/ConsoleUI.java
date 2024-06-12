@@ -180,14 +180,6 @@ public class ConsoleUI implements View {
         }
     }
 
-    // public void setChildren() {
-    // System.out.println("Who is a parent?");
-    // Human parent = chooseHuman();
-    // System.out.println("Who is a child?");
-    // Human child = chooseHuman();
-    // presenter.setChildren(parent, child);
-    // }
-
     public void setPeriodOfLife() {
         System.out.println("Whose period of life do you want to set?");
         Human human = chooseHuman();
@@ -201,5 +193,13 @@ public class ConsoleUI implements View {
     @Override
     public void print(String answer) {
         System.out.println(answer);
+    }
+
+    public void save() {
+        presenter.save();
+    }
+
+    public void load() {
+        presenter.load();
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import family_tree_app.model.Service;
 import family_tree_app.model.human.Gender;
 import family_tree_app.model.human.Human;
+import family_tree_app.model.work_with_files.FileHandler;
 import family_tree_app.view.View;
 
 public class Presenter {
@@ -15,6 +16,7 @@ public class Presenter {
     public Presenter(View view) {
         this.view = view;
         service = new Service();
+        service.setSavable(new FileHandler<>());
     }
 
     public void addPersonToTree(String name, Gender gender, LocalDate dateOfBirth) {
@@ -34,10 +36,6 @@ public class Presenter {
     public void setParent(Human child, Human parent) {
         service.setParent(child, parent);
     }
-
-    // public void setChildren(Human parent, Human child) {
-    //     service.setChildren(parent, child);
-    // }
 
     public void setPeriodOfLife(Human human, LocalDate dateOfBirth, LocalDate dateOfDeath) {
         service.setPeriodOfLife(human, dateOfBirth, dateOfDeath);
@@ -80,5 +78,13 @@ public class Presenter {
     public void sortByAmountOfChildren() {
         service.sortByAmountOfChildren();
         getList();
+    }
+
+    public void save() {
+        service.save();
+    }
+
+    public void load() {
+        service.load();
     }
 }

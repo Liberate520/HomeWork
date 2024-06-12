@@ -10,6 +10,4 @@ public class ComparatorByAmountOfChildren<T extends FamilyTreeEntry<T>> implemen
     public int compare(T o1, T o2) {
         return Integer.compare(o1.getChildren().size(), o2.getChildren().size());
     }
-
-
 }

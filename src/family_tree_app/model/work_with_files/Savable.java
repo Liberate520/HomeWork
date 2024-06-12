@@ -12,4 +12,3 @@ public interface Savable<T extends FamilyTreeEntry<T>> {
     Object read(String filePath);
     Tree<T> read();
 }
-

@@ -6,7 +6,9 @@ import java.util.List;
 import family_tree_app.view.commands.AddPerson;
 import family_tree_app.view.commands.Command;
 import family_tree_app.view.commands.GetList;
+import family_tree_app.view.commands.Load;
 import family_tree_app.view.commands.Quit;
+import family_tree_app.view.commands.Save;
 import family_tree_app.view.commands.SetParents;
 import family_tree_app.view.commands.SetPeriodOfLife;
 import family_tree_app.view.commands.ShowMen;
@@ -31,6 +33,8 @@ public class MainMenu {
         commands.add(new SortByAge(consoleUI));
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByAmountOfChildren(consoleUI));
+        commands.add(new Load(consoleUI));
+        commands.add(new Save(consoleUI));
         commands.add(new Quit(consoleUI));
     }
 

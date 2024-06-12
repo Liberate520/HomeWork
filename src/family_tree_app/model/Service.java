@@ -26,32 +26,28 @@ public class Service {
         tree.addToTree(human);
     }
 
-    public void setParents(Human child, Human parent1, Human parent2){
+    public void setParents(Human child, Human parent1, Human parent2) {
         child.setParents(parent1, parent2);
     }
 
-    public void setParent(Human child, Human parent){
+    public void setParent(Human child, Human parent) {
         child.setParent(parent);
     }
 
-    // public void setChildren(Human parent, Human child){
-    //     parent.setChildren(child);
-    // }
-
-    public void setPeriodOfLife(Human human, LocalDate dateOfBirth, LocalDate dateOfDeath){
+    public void setPeriodOfLife(Human human, LocalDate dateOfBirth, LocalDate dateOfDeath) {
         human.setDateOfBirth(dateOfBirth);
         human.setDateOfDeath(dateOfDeath);
     }
 
-    public String showProgenitors(Human human){
+    public String showProgenitors(Human human) {
         return human.showProgenitors();
     }
 
-    public String showMen(){
+    public String showMen() {
         return tree.showMen();
     }
 
-    public String showWomen(){
+    public String showWomen() {
         return tree.showWomen();
     }
 
@@ -71,19 +67,23 @@ public class Service {
         tree.sortByAge();
     }
 
-    public void sortByAmountOfChildren(){
+    public void sortByAmountOfChildren() {
         tree.sortByAmountOfChildren();
     }
 
-    public boolean save(){
-        if (savable == null){
+    public void setSavable(Savable<Human> savable) {
+        this.savable = savable;
+    }
+
+    public boolean save() {
+        if (savable == null) {
             return false;
         }
         return savable.save(tree);
     }
 
-    public boolean load(){
-        if (savable == null){
+    public boolean load() {
+        if (savable == null) {
             return false;
         }
         tree = savable.read();
