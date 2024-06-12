@@ -6,9 +6,13 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
 
-        FamilyTree<Human> familyTree = new FamilyTree<>();
-        FileHandler fileHandler = new FileHandler();
-        String filename = "familyTree.dat";
+        FamilyTreePresenter presenter = new FamilyTreePresenterImpl(null);
+        FamilyTreeView view = new FamilyTreeConsoleView(presenter);
+        ((FamilyTreePresenterImpl) presenter).setView(view);
+        // FamilyTree<Human> familyTree = new FamilyTree<>();
+        // FileHandler fileHandler = new FileHandler();
+        // String filename = "familyTree.dat";
+        view.displayMessage("Добавление в семейное древо...");
 
         Human john = new Human("John", LocalDate.of(1980, 5, 15), Gender.Male);
         Human jane = new Human("Jane", LocalDate.of(1982, 7, 10), Gender.Female);
@@ -19,59 +23,66 @@ public class Main {
         jane.addChild(mary);
         anna.addChild(john);
 
-        familyTree.addMember(john);
-        familyTree.addMember(jane);
-        familyTree.addMember(mary);
-        familyTree.addMember(anna);
+        presenter.addMember(john);
+        presenter.addMember(jane);
+        presenter.addMember(mary);
+        presenter.addMember(anna);
 
-       // Запись в файл объекта Annа
-       try {
-           //fileHandler.writeToFile(filename, (Serializable) familyTree.getPeople());
-           fileHandler.writeToFile(filename, familyTree);
-           System.out.println("Данные успешно записаны в файл " + filename);
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
+        presenter.saveFamilyTree("familyTree.dat");
+        presenter.loadFamilyTree("familyTree.dat");
 
-       // Чтение из файла
-       try {
-           @SuppressWarnings("unchecked")
-           FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.readFromFile(filename);
-           System.out.println("Данные успешно считаны из файла " + filename);
-           List<String> memberDescriptions = loadedTree.getMemberDescriptions();
-           for (String description : memberDescriptions) {
-               System.out.println(description);
-           }
-       } catch (IOException | ClassNotFoundException e) {
-           e.printStackTrace();
-       }
+        presenter.displayChildrenOf("Anna");
 
-       // Проводим исследование: находим детей Anna
-       Human targetHuman = (Human) familyTree.getHumanByName("Anna");
-       if (targetHuman != null) {
-           List<TreeMember> children = familyTree.getChildrenOf(targetHuman);
-           System.out.println("Дети " + targetHuman.getName() + ": " + children);
-       } else {
-           System.out.println("Человек не найден");
-       }
+        presenter.sortByName();
+        presenter.sortByBirthDate();
 
-        // Сортировка по имени
-        familyTree.sortByName();
+    //    // Запись в файл объекта Annа
+    //    try {
+    //        //fileHandler.writeToFile(filename, (Serializable) familyTree.getPeople());
+    //        fileHandler.writeToFile(filename, familyTree);
+    //        System.out.println("Данные успешно записаны в файл " + filename);
+    //    } catch (IOException e) {
+    //        e.printStackTrace();
+    //    }
 
-        List<String> sortedByNameDescriptions = familyTree.getMemberDescriptions();
-        System.out.println("Семья, отсортированная по имени:");
-        for (String description : sortedByNameDescriptions) {
-            System.out.println(description);
-        }
+    //    // Чтение из файла
+    //    try {
+    //        FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.readFromFile(filename);
+    //        System.out.println("Данные успешно считаны из файла " + filename);
+    //        List<String> memberDescriptions = loadedTree.getMemberDescriptions();
+    //        for (String description : memberDescriptions) {
+    //            System.out.println(description);
+    //        }
+    //    } catch (IOException | ClassNotFoundException e) {
+    //        e.printStackTrace();
+    //    }
 
-        // Сортировка по дате рождения
-        familyTree.sortByBirthDate();
+    //    // Проводим исследование: находим детей Anna
+    //    Human targetHuman = (Human) familyTree.getHumanByName("Anna");
+    //    if (targetHuman != null) {
+    //        List<TreeMember> children = familyTree.getChildrenOf(targetHuman);
+    //        System.out.println("Дети " + targetHuman.getName() + ": " + children);
+    //    } else {
+    //        System.out.println("Человек не найден");
+    //    }
 
-        List<String> sortedByBirthDateDescriptions = familyTree.getMemberDescriptions();
-        System.out.println("Семья, отсортированная по дате рождения:");
-        for (String description : sortedByBirthDateDescriptions) {
-            System.out.println(description);
-        }
+    //     // Сортировка по имени
+    //     familyTree.sortByName();
+
+    //     List<String> sortedByNameDescriptions = familyTree.getMemberDescriptions();
+    //     System.out.println("Семья, отсортированная по имени:");
+    //     for (String description : sortedByNameDescriptions) {
+    //         System.out.println(description);
+    //     }
+
+    //     // Сортировка по дате рождения
+    //     familyTree.sortByBirthDate();
+
+    //     List<String> sortedByBirthDateDescriptions = familyTree.getMemberDescriptions();
+    //     System.out.println("Семья, отсортированная по дате рождения:");
+    //     for (String description : sortedByBirthDateDescriptions) {
+    //         System.out.println(description);
+    //     }
 
         
     }
