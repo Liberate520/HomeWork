@@ -12,7 +12,8 @@ public class HumanService extends Service<Human> {
     private Family_tree<Human> currentTree;
 
     public HumanService(){
-        list = new ArrayList<>();        
+        list = new ArrayList<>(); 
+        currentTree = null;       
     }
 
     @Override

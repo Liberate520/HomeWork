@@ -14,7 +14,9 @@ public abstract class Service<T extends Endothermal>  {
     };
     public abstract void setCurrentTree(int index);
     public void addTree(String name){
-        getTreeList().add(new Family_tree<T>(name));
+        Family_tree<T> newtree = new Family_tree<T>(name);
+        setCurrentTree(newtree);
+        getTreeList().add(newtree);
     };
     public Family_tree<T> getTree(String name){
         for (Family_tree<T> element : getTreeList()) {
@@ -61,6 +63,7 @@ public abstract class Service<T extends Endothermal>  {
         if(boo){
             getTreeList().add(newtree);
         }
+        setCurrentTree(newtree);
         return newtree;
     }
     
