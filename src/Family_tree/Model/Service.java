@@ -12,9 +12,7 @@ public abstract class Service<T extends Endothermal>  {
     public Family_tree<T> getTree(int index){
         return getTreeList().get(index);
     };
-    public Family_tree<T> setCurrentTree(int index){
-        return getTreeList().get(index);
-    };
+    public abstract void setCurrentTree(int index);
     public void addTree(String name){
         getTreeList().add(new Family_tree<T>(name));
     };
@@ -26,7 +24,9 @@ public abstract class Service<T extends Endothermal>  {
         }
         return null;
     }
+    public abstract boolean setMarriage(T male, T female);
     public abstract void setCurrentTree(Family_tree<T> tree);
+    public abstract Family_tree<T> getCurrentTree();
     public boolean removeTree(int index){
         try{
             getTreeList().remove(index);
@@ -64,7 +64,7 @@ public abstract class Service<T extends Endothermal>  {
         }
         return newtree;
     }
-
+    
 
 
 }

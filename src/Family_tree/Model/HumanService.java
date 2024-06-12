@@ -38,7 +38,8 @@ public class HumanService extends Service<Human> {
             child.setMother(mother);
             if (mother != null){
                 mother.addChild(child);
-            }        
+            }   
+            currentTree.add(child);     
         return true;
         } catch (Exception e){
             System.out.println(e);
@@ -51,4 +52,9 @@ public class HumanService extends Service<Human> {
         return boo;
     }
 
+    @Override
+    public void setCurrentTree(int index) {
+        this.currentTree = list.get(index);
+    }
+    
 }
