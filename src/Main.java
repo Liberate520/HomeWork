@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -48,9 +47,9 @@ public class Main {
        }
 
        // Проводим исследование: находим детей Anna
-       Human targetHuman = familyTree.getHumanByName("Anna");
+       Human targetHuman = (Human) familyTree.getHumanByName("Anna");
        if (targetHuman != null) {
-           List<Human> children = familyTree.getChildrenOf(targetHuman);
+           List<TreeMember> children = familyTree.getChildrenOf(targetHuman);
            System.out.println("Дети " + targetHuman.getName() + ": " + children);
        } else {
            System.out.println("Человек не найден");

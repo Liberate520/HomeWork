@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-class FamilyTree<T extends Human> implements Serializable, Iterable<T>{
+class FamilyTree<T extends TreeMember> implements Serializable, Iterable<T>{
     private List<T> memberList;
 
     public FamilyTree() {
@@ -31,18 +31,18 @@ class FamilyTree<T extends Human> implements Serializable, Iterable<T>{
     }
 
     private void addToParents(T member) {
-        for (Human parent: member.getParents()) {
+        for (TreeMember parent: member.getParents()) {
             parent.addChild(member);
         }
     }
 
     private void addToChildren(T member) {
-        for (Human child: member.getChildren()) {
+        for (TreeMember child: member.getChildren()) {
             child.addParent(member);
         }
     }
 
-    public Human getHumanByName(String name) {
+    public TreeMember getHumanByName(String name) {
         for (T member : memberList) {
             if (member.getName().equals(name)) {
                 return member;
@@ -51,7 +51,7 @@ class FamilyTree<T extends Human> implements Serializable, Iterable<T>{
         return null;
     }
 
-    public List<Human> getChildrenOf(T member) {
+    public List<TreeMember> getChildrenOf(T member) {
         return member.getChildren();
     }
 
