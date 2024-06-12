@@ -1,21 +1,26 @@
 package view;
 
 import Presenter.Presenter;
-import view.commands.CreateTree;
+
+import view.menu.AbstractMenu;
 import view.menu.HomMenu;
+import view.menu.Menu;
 import view.menu.Path;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Scanner;
 
 public class ConsoleUI implements View{
-    private static final String INPUT_ERROR = "Ошибка Ввода";
 
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
     private HomMenu homMenu;
+
+
+
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
@@ -47,12 +52,14 @@ public class ConsoleUI implements View{
         System.out.println(str + " выберите действие:");
     }
 
-    public void CreateTree(){
-        presenter.CreateTree();
+
+
+    public void loadTree() throws IOException, ClassNotFoundException {
+        presenter.loadTree(Path.PATH.getPath());
     }
 
-    public void LoadTree() throws IOException, ClassNotFoundException {
-        presenter.LoadTree(Path.PATH.getPath());
+    public void saveTree() throws IOException, ClassNotFoundException{
+        presenter.saveTree(Path.PATH.getPath());
     }
 
     private void printMenu(){
@@ -87,7 +94,24 @@ public class ConsoleUI implements View{
         }
     }
     private void inputError(){
-        System.out.println(INPUT_ERROR);
+        System.out.println(Message.INPUT_ERROR.getMessage());
+    }
+
+    public void addHuman() {
+        System.out.println("Введите Фамилию имя отчество");
+        String name = scanner.nextLine();
+        System.out.println("Укажите пол: ");
+        System.out.println("Укажите дату рождения");
+        String birthDayString = scanner.nextLine();
+
+        LocalDate birthsDay = LocalDate.parse(birthDayString);
+
+    }
+
+    public void finish() {
+
+        System.out.println(Message.THEEND.getMessage());
+        work = false;
     }
 
 }

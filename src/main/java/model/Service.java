@@ -5,22 +5,38 @@ import model.tree.FamilyTree;
 import model.tree.file.FilleHander;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Service {
     private FamilyTree familyTree;
     private Human human;
     private int id;
     private FilleHander filehander;
-    public void CreateTree(){
-        FamilyTree tree = new FamilyTree();
+
+    public Service() {
+        familyTree =  new FamilyTree<>();
     }
 
-    public FamilyTree LoadTree(String path) throws IOException, ClassNotFoundException {
+    public void loadTree(String path) throws IOException, ClassNotFoundException {
         FilleHander filehander = new FilleHander();
-        FamilyTree tree = new FamilyTree();
-        return  tree = (FamilyTree) filehander.reading(path);
+        this.familyTree = (FamilyTree) filehander.reading(path);
 
     }
+
+    public void saveTree(String path) throws IOException, ClassNotFoundException {
+        FilleHander filehander = new FilleHander();
+        if(filehander.saveing(this.familyTree, path)) System.out.println("Дерево cохранено по пути:" + path);
+
+    }
+
+    public void addHuman(String name, String gen, LocalDate birthDay){
+        Human hum = new Human(name, gen, birthDay);
+        this.familyTree.add(hum);
+    }
+
+
+
+
 //    public void CreateHuman(String string){
 //        Human human = new Human();
 //        human.setId(id++);

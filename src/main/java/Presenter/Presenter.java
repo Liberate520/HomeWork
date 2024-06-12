@@ -1,10 +1,12 @@
 package Presenter;
 
 import model.Service;
+import model.person.Human;
 import model.tree.FamilyTree;
 import view.View;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Presenter {
     private View view;
@@ -15,10 +17,16 @@ public class Presenter {
         service = new Service();
     }
 
-    public void CreateTree(){
-        this.service.CreateTree();
+
+    public void loadTree(String path) throws IOException, ClassNotFoundException {
+        this.service.loadTree(path);
     }
-    public FamilyTree LoadTree(String path) throws IOException, ClassNotFoundException {
-        return this.service.LoadTree(path);
+
+    public void saveTree(String path) throws IOException, ClassNotFoundException {
+        this.service.saveTree(path);
+    }
+
+    public void addHuman(String name, String gender, LocalDate birtDay){
+        this.service.addHuman(name,gender, birtDay);
     }
 }

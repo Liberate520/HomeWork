@@ -5,15 +5,16 @@ import view.Message;
 
 import java.io.IOException;
 
-public class LoadTree extends Command {
-
-    public LoadTree(ConsoleUI consoleUI){
+public class Finish extends Command{
+    public Finish(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = Message.LOADTREE.getMessage();
+        description = Message.THEEND.getMessage();
     }
+
 
     @Override
     public void execute() throws IOException, ClassNotFoundException {
-        consoleUI.loadTree();
+        consoleUI.finish();
+
     }
 }

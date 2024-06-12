@@ -1,7 +1,12 @@
+import model.person.Gender;
+import model.person.Human;
+import model.tree.FamilyTree;
+import model.tree.file.FilleHander;
 import view.ConsoleUI;
 import view.Message;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class homeWork {
@@ -11,7 +16,7 @@ public class homeWork {
         consoleUI.start();
 
     }
-//
+
 //        Human hum1 = new Human("Иванов Иван Иванович ", Gender.Man, LocalDate.of(1960, 2, 5));
 //        Human wom1 = new Human("Иванова Ирина Петровна ", Gender.Woman, LocalDate.of(1962, 5, 1));
 //        Human wom2_1 = new Human("Иванова Елена Ивановна ", Gender.Woman, LocalDate.of(1983, 2, 21));
@@ -53,4 +58,5 @@ public class homeWork {
 //        tree.sortByAge();
 //        System.out.println(tree.getInfo());
 
+//  }
 }

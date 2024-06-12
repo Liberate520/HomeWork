@@ -33,11 +33,11 @@ public class Human implements Serializable, Comparable<Human>, TreeCreaturable<H
         this.childrenList = new ArrayList<>();
     }
 
-    public Human(String name, Gender gen, LocalDate birthDay) {
+    public Human(String name, String gen, LocalDate birthDay) {
         this.name = name.split(" ")[1];
         this.surname = name.split(" ")[0];
         this.patronymic = name.split(" ")[2];
-        this.gender = gen;
+        this.gender = Gender.valueOf(gen);
         this.birthDay = birthDay;
         this.childrenList = new ArrayList<>();
     }

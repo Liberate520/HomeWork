@@ -10,14 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomMenu extends AbstractMenu implements Menu{
+public class HumanMenu extends AbstractMenu implements Menu {
 
-    public HomMenu(ConsoleUI consoleUI) {
+    public HumanMenu(ConsoleUI consoleUI) {
         commandList = new ArrayList<>();
         commandList.add(new LoadTree(consoleUI));
         commandList.add(new SaveTree(consoleUI));
         commandList.add(new Finish(consoleUI));
+
     }
-
-
 }
