@@ -1,4 +1,4 @@
-package seminar2;
+package seminar2.Human;
 
 public enum Gender {
     Male ("Мужской"),

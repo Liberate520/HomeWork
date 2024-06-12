@@ -1,5 +1,11 @@
 package seminar2;
 
+import seminar2.Human.Gender;
+import seminar2.Human.Human;
+import seminar2.Service.FileHandler;
+import seminar2.Service.Writable;
+import seminar2.Tree.FamilyTree;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;

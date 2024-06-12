@@ -1,4 +1,4 @@
-package seminar2;
+package seminar2.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;

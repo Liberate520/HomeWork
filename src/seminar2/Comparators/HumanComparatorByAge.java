@@ -1,4 +1,6 @@
-package seminar2;
+package seminar2.Comparators;
+
+import seminar2.Human.Human;
 
 import java.util.Comparator;
 

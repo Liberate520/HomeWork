@@ -1,4 +1,6 @@
-package seminar2;
+package seminar2.Human;
+
+import seminar2.Human.Human;
 
 import java.util.Iterator;
 import java.util.List;

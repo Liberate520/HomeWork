@@ -1,4 +1,11 @@
-package seminar2;
+package seminar2.Tree;
+
+import seminar2.Human.Human;
+import seminar2.Human.HumanIterator;
+import seminar2.Comparators.HumanComparatorByAge;
+import seminar2.Comparators.HumanComparatorByChildren;
+import seminar2.Comparators.HumanComparatorByName;
+import seminar2.Comparators.HumanComparatorBySurname;
 
 import java.io.Serializable;
 import java.util.ArrayList;

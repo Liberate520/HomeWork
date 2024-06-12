@@ -1,4 +1,4 @@
-package seminar2;
+package seminar2.Service;
 
 import java.io.IOException;
 import java.io.Serializable;
