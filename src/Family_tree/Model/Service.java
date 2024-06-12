@@ -23,8 +23,7 @@ public abstract class Service<T extends Endothermal>  {
             }
         }
         return null;
-    }
-    public abstract boolean setMarriage(T male, T female);
+    }    
     public abstract void setCurrentTree(Family_tree<T> tree);
     public abstract Family_tree<T> getCurrentTree();
     public boolean removeTree(int index){
