@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public interface Creature {
     public String getName();
+    public int getAge();
     public Gender getGender();
     public LocalDate getBirthDay();
     public int getId();

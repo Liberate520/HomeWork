@@ -3,6 +3,7 @@ package OOP.SemDZ.homeWork.presenter;
 import java.time.LocalDate;
 
 import OOP.SemDZ.homeWork.model.Service.Service;
+import OOP.SemDZ.homeWork.model.Service.ServiceHuman;
 import OOP.SemDZ.homeWork.model.human.Gender;
 import OOP.SemDZ.homeWork.view.View;
 
@@ -12,7 +13,7 @@ public class Presenter {
 
     public Presenter(View view){
         this.viev = view;
-        service = new Service();
+        service = new ServiceHuman();
     }
 
     public void birthChildren(String name, Gender gender, LocalDate birthday, String IdFather, String IdMather){

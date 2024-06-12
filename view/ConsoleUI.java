@@ -7,67 +7,32 @@ import OOP.SemDZ.homeWork.model.human.Gender;
 import OOP.SemDZ.homeWork.presenter.Presenter;
 
 public class ConsoleUI implements View {
+    private static final String INPUT_ERROR = "Вы ввели неверное значение";
     private Scanner scanner;
     private Presenter presenter;
     private boolean work = true;
+    private MainMenu menu;
 
     public ConsoleUI () {
         scanner = new Scanner (System.in);
         work = true;
         presenter = new Presenter(this);
+        menu = new MainMenu(this);
     }
 
     @Override
     public void start () {
         System.out.println("Hello");
         while (work){
-            System.out.println("Выберите действие:");
-            System.out.println("1: Добавить нового члена семьи");
-            System.out.println("2: Показать семейное дерево");
-            System.out.println("3: Отсортировать дерево по имени");
-            System.out.println("4: Отсортировать дерево по возрасту");
-            System.out.println("5: Записать данные в файл");
-            System.out.println("6: Загрузить данные из файла");
-            System.out.println("7: Свадьба");
-            System.out.println("8: Рождение ребенка");
-            System.out.println("9: Завершение работы");
-
-            String choise = scanner.nextLine();
-            switch (choise) {
-                case "1":
-                    addHuman();
-                    break;
-                case "2":
-                    printFamilyTree();
-                    break;
-                case "3":
-                    sortByName();
-                    break;
-                case "4":
-                    sortByAge();
-                    break;
-                case "5":
-                    saveToFile();
-                    break;
-                case "6":
-                    loadOfFile();
-                    break;
-                case "7":
-                    wedding();
-                    break;
-                case "8":
-                    birthChildren();
-                    break;
-                case "9":
-                    work = false;
-                    break;
-                    
-            
-                default:
-                System.out.println("Неверное значение. Попробуйте еще раз.");
-                
-            }
+            printMenu();
+            execute();
         }
+    }
+
+    public void finish(){
+
+        System.out.println("Работа завершена. Bay!!!");
+        work = false;
     }
 
     public void birthChildren(){
@@ -117,11 +82,11 @@ public class ConsoleUI implements View {
         presenter.sortByName();
     }
 
-    private void printFamilyTree(){
+    public void printFamilyTree(){
         System.out.println(presenter.printFamilyTree());
     }
 
-    private void addHuman(){
+    public void addHuman(){
 
         System.out.println("Укажите имя: ");
         String name = scanner.nextLine();
@@ -148,6 +113,42 @@ public class ConsoleUI implements View {
         else if (genderStr.equals("2")){return Gender.Female;}
         else return null;      
 
+    }
+
+    private void execute(){
+        String line = scanner.nextLine();
+        if (checkTextForInt(line)){
+            int numCommand = Integer.parseInt(line);
+            if (checkCommand(numCommand)){
+                menu.execute(numCommand);
+            }
+        }
+    }
+
+    private boolean checkTextForInt(String text){
+        if (text.matches("[0-9]+")){
+            return true;
+        } else {
+            inputError();
+            return false;
+        }
+    }
+
+    private boolean checkCommand(int numCommand){
+        if (numCommand <= menu.getSize()){
+            return true;
+        } else {
+            inputError();
+            return false;
+        }
+    }
+
+    private void printMenu(){
+        System.out.println(menu.menuPrint());
+    }
+
+    private void inputError(){
+        System.out.println(INPUT_ERROR);
     }
 
     @Override
