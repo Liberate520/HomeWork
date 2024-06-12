@@ -1,4 +1,4 @@
-package family_tree;
+package model.writer.family_tree;
 
 import java.util.Comparator;
 

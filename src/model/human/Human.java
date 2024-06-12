@@ -1,6 +1,6 @@
-package human;
+package model.writer.human;
 
-import family_tree.TreeNode;
+import model.writer.family_tree.TreeNode;
 
 import java.io.Serializable;
 import java.time.LocalDate;

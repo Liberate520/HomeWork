@@ -1,9 +1,4 @@
-package family_tree;
-
-import family_tree.FamilyTreeComparatorByBirthDate;
-import family_tree.FamilyTreeComparatorByName;
-import family_tree.FamilyTreeIterator;
-import family_tree.TreeNode;
+package model.writer.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
