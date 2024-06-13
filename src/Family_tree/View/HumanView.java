@@ -7,100 +7,103 @@ import Family_tree.Presenter.HumanPresenter;
 import Family_tree.Presenter.Presenter;
 
 public class HumanView extends View<Human> {
-    private HumanPresenter presenter;
-    private boolean flag;
-    private Scanner sc;
-    private String path;
+    private HumanPresenter presenter;    
+    static String optionString = """
+            Выбор действия:
+            \t 1. Создать древо;
+            \t 2. Загрузить древо;
+            \t 3. Сохранить древо;
+            \t 4. Выбрать древо;
+            \t 5. удалить древо;
+            \t 6. Добавить родича;
+            \t 7. Удалить родича;
+            \t 8. Зарегистрировать брак;
+            \t 9. Зарегистрировать ребёнка;
+            \t s. Найти родича;
+            \t i. Информация о родиче;
+            \t v. Список родичей;
+            \t q. Выход.
+            """;
+    private Scanner scanner ;
     public HumanView(){
-        presenter = new HumanPresenter(this);
-        sc = new Scanner(System.in);
-        path = "mine.tree";
+        presenter = new HumanPresenter(this); 
+        scanner = new Scanner(System.in)  ;    
     }
     @Override
     public void start() {
-        step1();
+        System.out.println(optionString);
+        boolean flag = true;
+        while (flag) {
+            String action = scanner.nextLine();
+            switch (action) {
+                case "1":
+                    System.out.println("Укажите фамилию");
+                    String family = scanner.nextLine();
+                    String result = presenter.createActiveTree(family);
+                    System.out.println(result);
+                    break;
+                case "2":
+                    System.out.println("Укажите путь");
+                    String filePath = scanner.nextLine();
+                    System.out.println(presenter.loadTree(filePath));
+                    break;
+                case "3":
+                    if (this.hasActiveTree() == false){
+                        System.out.println("Невыбрано активное древо");
+                        break;
+                    }
+                    System.out.println("Укажите путь");
+                    String savePath = scanner.nextLine();
+                    System.out.println(presenter.saveTree(savePath));
+                    break;
+                case "4":
+                    System.out.println("Выбор древа");
+                    if (presenter.getTreeList().isEmpty()){
+                        System.out.println("Список пуст");
+                        break;
+                    }
+                    System.out.println(presenter.showListTree());
+                    break;
+                case "5":
+                    
+                    break;
+                case "6":
+                    
+                    break;
+                case "7":
+                    
+                    break;
+                case "8":
+                    
+                    break;
+                case "9":
+                    
+                    break;
+                case "s":
+                    
+                    break;
+                case "i":
+                    
+                    break;
+                case "v":
+                    
+                    break;
+                case "q":
+                    flag = false;   
+                    break;
+                default:
+                    break;
+            }
+        }
     }
+
+    
+
+  
     @Override
     public Presenter<Human> getPresenter() {
         return this.presenter;
     }
-    
-
-    private void step1(){
-        String s = """
-            Для начала, Вы должны выбрать, создать или загрузить древо. \n Ваш выбор:
-            \t 1 Создать древо;
-            \t 2 Загрузить древо;
-            \t 3 Выбрать из списка имеющихся;
-            \t q Выход.
-            """ ;
-            System.out.println(s);
-            flag = true;            
-            while (flag) {
-                String choice = sc.nextLine();
-                switch (choice) {
-                    case "1":
-                        System.out.println(presenter.createActiveTree());                        
-                        flag = !checkActive();
-                        break;
-                    case "2":
-                        System.out.println(presenter.loadTree());
-                        flag = !checkActive();
-                        break;
-                    case "3":
-                        System.out.println(choiseTree());
-                        flag = !checkActive();
-                        System.out.println(flag);
-                        break;
-                    case "q":
-                        this.exit();
-                    default:
-                        break;
-                }                
-            } 
-            step2();                 
-    }
-    private String choiseTree(){
-        System.out.println("Укажите номер древа:");
-        if (presenter.getTreeList().isEmpty()){
-            return "Не из чего выбирать";
-        }
-        System.out.println(presenter.showListTree());
-        boolean choosen = true;
-        while (choosen) {
-            int number = Integer.parseInt(sc.nextLine());           
-            if (number < 0 || number > presenter.getTreeList().size()){
-                System.out.println("Вне ранга, повторите попытку");
-            } else {
-                try{
-                    presenter.setActiveTree(presenter.selectTree(number));
-                    choosen = false;
-                    return String.format("Выбрано древо %s", presenter.getActiveTree().toString());                    
-                } catch (Exception e){
-                    System.out.println(e);
-                    return "Ошибка выбора";
-                }                
-            }
-        }
-        return "Ошибка выбора";
-    }
-
-    private void step2(){
-        System.out.println("in progress");
-    }
-    @Override
-    public String getPath() {
-        return this.path;
-    }
-    @Override
-    public void setPath(String value) {
-        this.path = value;
-    }
-    private boolean checkActive(){
-        if (presenter.getActiveTree() != null) {
-            return true;
-        }
-        return false;
-    }
-
+   
+   
 }

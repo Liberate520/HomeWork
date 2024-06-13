@@ -66,7 +66,15 @@ public abstract class Service<T extends Endothermal>  {
         setCurrentTree(newtree);
         return newtree;
     }
-    
+    public boolean saveTree(String path){        
+        try{
+            getCurrentTree().save(path);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
 
 
 }

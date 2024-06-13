@@ -34,13 +34,9 @@ public class HumanPresenter extends Presenter<Human> {
 
 
     @Override
-    public String createActiveTree() {
-        System.out.println("Укажите фамилию");
-        Scanner scanner = new Scanner(System.in);
-        String family = scanner.nextLine();
-        scanner.close();
+    public String createActiveTree(String value) {        
         try{
-            service.addTree(family);
+            service.addTree(value);
             this.activeTree = service.getCurrentTree();
             return String.format("Древо %s создано", this.activeTree.toString());
         } catch (Exception e) {
@@ -61,37 +57,35 @@ public class HumanPresenter extends Presenter<Human> {
     }
 
 
-    @Override
-    public String loadTree() {
-        System.out.println(String.format("Уккажите путь к файлу. (По умолчанию %s)", this.view.getPath()));
-        Scanner scanner = new Scanner(System.in);
-        String path = scanner.nextLine();
-        scanner.close();
-        Path file = Paths.get(path);
-        if (Files.exists(file)){           
-                String s = fileLoad(path);
-                return s;            
-        } else {
-            System.out.println("Файл не существует, используем путь по умолчанию");
-            String s = fileLoad(this.view.getPath());
-            return s;
-        }
-        
-    }
-    private String fileLoad(String value){
-        try{ 
-            service.loadTree(value);
-            this.view.setPath(value);
-            return String.format("Древо %s загружено", activeTree.toString());
-        }catch (Exception e){
-            System.out.println(e);
-            return "Ошибка загрузки";
-        }
-    }
+    
     @Override
     public void setActiveTree(Family_tree<Human> tree) {
         this.service.setCurrentTree(tree);
         this.activeTree = tree;
+    }
+    @Override
+    public String loadTree(String path) {
+        Family_tree<Human> tree;
+        Path file = Paths.get(path);
+        if (Files.exists(file)){
+            try {
+                tree = service.loadTree(path);
+                return String.format("Древо %s загружено", tree.toString());
+            } catch (Exception e){
+                System.out.println(e);
+                return "Ошибка чтения";
+            }
+        } else {
+            return "Файл не найден";
+        }
+    }
+    @Override
+    public String saveTree(String path) {
+       if(service.saveTree(path)){
+        return "Сохранено";
+       }else{
+        return "Ошибка сохранения";
+       }
     }   
 
 }
