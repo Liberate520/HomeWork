@@ -32,8 +32,8 @@ public class Main {
 
         // ------- ЗАГС -----------
 
-        person1.setSpouse(person2);
-        person2.setSpouse(person1);
+        person1.setPartner(person2);
+        person2.setPartner(person1);
 
         // ------ Рождение детей ----
         Human person3 = new Human("Ирина", "Иванова", Gender.valueOf("Female"),
