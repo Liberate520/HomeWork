@@ -1,5 +1,6 @@
 package seminar2.Tree;
 
+import seminar2.Human.Creature;
 import seminar2.Human.Human;
 import seminar2.Human.HumanIterator;
 import seminar2.Comparators.HumanComparatorByAge;
@@ -12,20 +13,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     private long humansId;
-    private List<Human> humanList;
+    private List<E> humanList;
     private int index;
 
     public FamilyTree(){
         this(new ArrayList<>());
     }
 
-    public FamilyTree(List<Human> humanList){
+    public FamilyTree(List<E> humanList){
         this.humanList = humanList;
     }
 
-    public boolean add(Human human){
+    public boolean add(E human){
         if(human == null){
             return false;
         }
@@ -42,13 +43,13 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return false;
     }
 
-    private void addToParents(Human human){
+    private void addToParents(E human){
         for (Human parent: human.getParents()){
             parent.addChild(human);
         }
     }
 
-    private void addToChildren(Human human){
+    private void addToChildren(E human){
         for(Human child: human.getChildren()){
             child.addParent(human);
         }
@@ -56,9 +57,9 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
 
 
-    public List<Human> getByNameSurname(String name, String surname){
-        List<Human> result = new ArrayList<>();
-        for(Human human: humanList){
+    public List<E> getByNameSurname(String name, String surname){
+        List<E> result = new ArrayList<>();
+        for(E human: humanList){
             if(human.getName().equals(name) && human.getSurname().equals(surname)){
                 result.add(human);
             }
@@ -70,7 +71,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         StringBuilder result = new StringBuilder();
         result.append("Семья (муж/жена/дети) " + surname + "(a/ой) состоит из: \n");
 
-        for(Human human: humanList){
+        for(E human: humanList){
             if(human.getSurname().equals(surname)){
                 result.append(human.getBriefInfo() + "\n");
 
@@ -93,7 +94,6 @@ public class FamilyTree implements Serializable, Iterable<Human> {
             default:
                 return getInfo();
         }
-        //return getInfo();
     }
 
     public String getInfo(){
@@ -194,7 +194,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<E> iterator() {
         return new HumanIterator(humanList);
     }
 }
