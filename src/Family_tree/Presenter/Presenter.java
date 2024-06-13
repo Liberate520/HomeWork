@@ -23,6 +23,7 @@ public abstract class Presenter<T extends Endothermal> {
         return getTreeList().get(tree).getItem(index);
     }
     public abstract String createActiveTree(String value);
+    public abstract String removeTree(int indrx);
     public abstract String showActiveTreeInfo();
     public abstract String loadTree(String path);
     public abstract String saveTree(String path);    
@@ -39,9 +40,7 @@ public abstract class Presenter<T extends Endothermal> {
         }
         return sb.toString();
     }
-    public Family_tree<T> selectTree(int index){
-        return getTreeList().get(index);
-    }
+    public abstract String selectTree(int index);
     public abstract void setActiveTree(Family_tree<T> tree);
     public boolean hasActiveTree(){
         if (getActiveTree() == null){

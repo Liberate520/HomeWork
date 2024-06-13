@@ -21,6 +21,7 @@ public class HumanView extends View<Human> {
             \t 9. Зарегистрировать ребёнка;
             \t s. Найти родича;
             \t i. Информация о родиче;
+            \t l. Список древ;
             \t v. Список родичей;
             \t q. Выход.
             """;
@@ -62,10 +63,19 @@ public class HumanView extends View<Human> {
                         System.out.println("Список пуст");
                         break;
                     }
+                    System.out.println("Укажите номер");
                     System.out.println(presenter.showListTree());
+                    int selected = Integer.parseInt(scanner.nextLine());
+                    System.out.println(presenter.selectTree(selected));
                     break;
                 case "5":
-                    
+                    System.out.println("Укажите номер");
+                    System.out.println(presenter.showListTree());
+                    int deleted = Integer.parseInt(scanner.nextLine());
+                    System.out.println(presenter.removeTree(deleted));
+                    break;
+                case "l":                    
+                    System.out.println(presenter.showListTree());                    
                     break;
                 case "6":
                     

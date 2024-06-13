@@ -3,6 +3,8 @@ package Family_tree.Presenter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Family_tree.Model.HumanService;
@@ -16,10 +18,11 @@ public class HumanPresenter extends Presenter<Human> {
     private HumanService service;
     private Family_tree<Human> activeTree;
     private HumanView view;
-
+    
     public HumanPresenter(HumanView view){
         service = new HumanService();
         this.view = view;
+       
     }
     @Override
     public View<Human> getView() {
@@ -86,6 +89,27 @@ public class HumanPresenter extends Presenter<Human> {
        }else{
         return "Ошибка сохранения";
        }
+    }
+    @Override
+    public String removeTree(int index) {
+        if (index < 0 || index > this.service.getTreeList().size()-1){
+            return "Индекс вне диапазона";
+        }
+        Family_tree<Human> selected = this.service.getTreeList().get(index);
+        if (selected.equals(activeTree)){
+            activeTree = null;
+        }
+        service.removeTree(index);
+        return "Удалено";
+    }
+    @Override
+    public String selectTree(int index) {
+        if (index < 0 || index > this.service.getTreeList().size()-1){
+            return "Индекс вне диапазона";
+        }
+        Family_tree<Human> selected = this.service.getTreeList().get(index);
+        this.activeTree = selected;
+        return String.format("Выбрано древо %d", index);
     }   
 
 }
