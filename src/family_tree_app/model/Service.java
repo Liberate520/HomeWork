@@ -10,7 +10,7 @@ import family_tree_app.model.work_with_files.Savable;
 
 public class Service {
     private Tree<Human> tree;
-    private Savable<Human> savable;
+    private Savable<Tree<Human>> savable;
 
     public Service() {
         tree = new Tree<>();
@@ -18,11 +18,6 @@ public class Service {
 
     public void addPerson(String name, Gender gender, LocalDate dateOfBirth) {
         Human human = new Human(name, gender, dateOfBirth);
-        tree.addToTree(human);
-    }
-
-    public void addPerson(String name, Gender gender) {
-        Human human = new Human(name, gender);
         tree.addToTree(human);
     }
 
@@ -71,7 +66,7 @@ public class Service {
         tree.sortByAmountOfChildren();
     }
 
-    public void setSavable(Savable<Human> savable) {
+    public void setSavable(Savable<Tree<Human>> savable) {
         this.savable = savable;
     }
 

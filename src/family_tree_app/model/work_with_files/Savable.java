@@ -2,13 +2,12 @@ package family_tree_app.model.work_with_files;
 
 import java.io.Serializable;
 
-import family_tree_app.model.family_tree.FamilyTreeEntry;
-import family_tree_app.model.family_tree.Tree;
+import family_tree_app.model.family_tree.FamilyTree;
 
-public interface Savable<T extends FamilyTreeEntry<T>> {
+public interface Savable<F extends FamilyTree<F>> {
 
     boolean save(Serializable serializable, String filePath);
-    boolean save(Tree<T> tree);
+    boolean save(F tree);
     Object read(String filePath);
-    Tree<T> read();
+    F read();
 }

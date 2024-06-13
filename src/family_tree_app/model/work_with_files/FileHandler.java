@@ -6,10 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import family_tree_app.model.family_tree.FamilyTreeEntry;
-import family_tree_app.model.family_tree.Tree;
+import family_tree_app.model.family_tree.FamilyTree;
 
-public class FileHandler<T extends FamilyTreeEntry<T>> implements Savable<T> {
+public class FileHandler<F extends FamilyTree<F>> implements Savable<F> {
     private String filePath = "family.out";
 
     @Override
@@ -34,13 +33,13 @@ public class FileHandler<T extends FamilyTreeEntry<T>> implements Savable<T> {
     }
 
     @Override
-    public boolean save(Tree<T> tree) {
+    public boolean save(F tree) {
         return save(tree, filePath);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Tree<T> read() {
-        return (Tree<T>) read(filePath);
+    public F read() {
+        return (F) read(filePath);
     }
 }

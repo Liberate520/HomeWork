@@ -1,6 +1,5 @@
 package family_tree_app.model.family_tree;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +9,7 @@ import family_tree_app.model.human.comparators.ComparatorByAge;
 import family_tree_app.model.human.comparators.ComparatorByAmountOfChildren;
 import family_tree_app.model.human.comparators.ComparatorByName;
 
-public class Tree<T extends FamilyTreeEntry<T>> implements Serializable, Iterable<T> {
+public class Tree<T extends FamilyTreeEntry<T>> implements FamilyTree<Tree<T>>, Iterable<T> {
     private List<T> familyTree;
 
     public Tree() {
@@ -23,6 +22,10 @@ public class Tree<T extends FamilyTreeEntry<T>> implements Serializable, Iterabl
 
     public void addToTree(T human) {
         familyTree.add(human);
+    }
+
+    public void removeFromTree(T human){
+        familyTree.remove(human);
     }
 
     public String showMen() {
