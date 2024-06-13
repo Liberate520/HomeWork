@@ -1,38 +1,59 @@
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
+
+    private long id;
     private String name;
-    private String sname;
+    private String lastName;
     private LocalDate  dateOfBirth, dateOfDeath;
     private List<Human> children;
     private Human father, mother;
     private Gender gender;
-    public Human (String name, String sname, LocalDate dateOfBirth, Gender gender){
+
+    public Human (String name, String lastName, LocalDate dateOfBirth, LocalDate dateOfDeath, Gender gender, Human mother, Human father){
+        id = -1;
         this.name = name;
-        this.sname = sname;
+        this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
+        if (dateOfDeath != null) { // заимствовал. не думал что так можно
+            this.dateOfDeath = dateOfDeath;
+        }
+        if (mother != null) {
+            this.mother = mother;
+        }
+        if (father != null) {
+            this.father = father;
+        }
+        children = new ArrayList<>(); // заимствовал
     }
-    public Human (String name, String sname, LocalDate dateOfBirth, LocalDate dateOfDeath, Gender gender){
-        this.name = name;
-        this.sname = sname;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfDeath = dateOfDeath;
-        this.gender = gender;
+    public Human (String name, String lastName, LocalDate dateOfBirth, Gender gender){
+        this(name, lastName, dateOfBirth, null, gender, null, null);
+    }
+    public Human (String name, String lastName, LocalDate dateOfBirth, Gender gender, Human mother, Human father){
+        this(name, lastName, dateOfBirth, null, gender, mother, father);
+    }
+    public Human (String name, String lastName, LocalDate dateOfBirth,LocalDate dateOfDeath, Gender gender){
+        this(name, lastName, dateOfBirth, dateOfDeath, gender, null, null);
     }
     // get\set
+    public void setID(long id){
+        this.id = id;
+    }
     public String  getName() {
         return name;
     }
     public void setName(String name){
         this.name = name;
     }
-    public String  getSname() {
-        return sname;
+    public String  getLastName() {
+        return lastName;
     }
-    public void setSname(String sname){
-        this.sname = sname;
+    public void setLastName(String lastName){
+        this.lastName = lastName;
     }
     public LocalDate  getDateOfBirth() {
         return dateOfBirth;
@@ -69,11 +90,19 @@ public class Human {
     public String getStringListChildren() {
         return children.toString(); // не уверен что будет работать.
     }
-    public void addToListChildren(Human children){
-        this.children.add(children);
+    public boolean addChildToList(Human child){
+        if (!children.contains(child)){
+            children.add(child);
+            return true;
+        }
+        return false;
     }
-    public boolean removeFromListChildren(){
-        //заглушка
+    public boolean removeChildFromList(Human child){
+        //на случай если добавлен по ошибке
+        if (!children.contains(child)){
+            children.remove(child);
+            return true;
+        }
         return  false;
     }
 
@@ -91,5 +120,33 @@ public class Human {
 
     public void setMother(Human mother) {
         this.mother = mother;
+    }
+    public String getInfo(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ");
+        sb.append(id);
+        sb.append("\t| Имя: ");
+        sb.append(name);
+        sb.append("\t| Фамилия: ");
+        sb.append(lastName);
+        sb.append("\t| Родители: ");
+        if( getFather() != null ) {
+            sb.append(getFather().getName());
+        } else {
+            sb.append("неизвестно");
+        }
+        if( getMother() != null ) {
+            sb.append(", " + getMother().getName());
+        }else {
+            sb.append(", неизвестно");
+        }
+        sb.append("\t| дата рождения: ");
+        sb.append(getDateOfBirth());
+        if(getDateOfDeath()!=null) {
+            sb.append("\t| дата смерти: ");
+            sb.append(getDateOfDeath());
+        }
+
+        return sb.toString();
     }
 }
