@@ -51,6 +51,7 @@ public class ConsoleUI implements View{
             gender = Gender.Male;
         }
         presenter.addHuman(name, birth, gender);
+        System.out.println("Добавлен " + name + "\n");
     }
 
     public void addChildren() {
@@ -59,6 +60,7 @@ public class ConsoleUI implements View{
         System.out.println("Введите имя ребенка:");
         String child = scanner.nextLine();
         presenter.addChildren(parent, child);
+        System.out.println(parent + " добавлен ребенок " + child + "\n");
     }
 
     public void addSpouse() {
@@ -67,6 +69,7 @@ public class ConsoleUI implements View{
         System.out.println("Введите имя второго супруга:");
         String spouseSecond = scanner.nextLine();
         presenter.addSpouse(spouseFirst, spouseSecond);
+        System.out.println(spouseFirst + " добавлен супруг " + spouseSecond + "\n");
     }
 
     public void getFamilyTreeInfo(){

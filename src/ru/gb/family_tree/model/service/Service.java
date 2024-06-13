@@ -1,7 +1,8 @@
 package ru.gb.family_tree.model.service;
 
-import ru.gb.family_tree.model.family_tree.FamilyTree;
-import ru.gb.family_tree.model.family_tree.FileHandler;
+import ru.gb.family_tree.model.family_tree.*;
+import ru.gb.family_tree.model.family_tree.SaveFile;
+import ru.gb.family_tree.model.family_tree.Readable;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 
@@ -55,13 +56,13 @@ public class Service {
     }
 
     public void saveFileByte(FamilyTree familyTree) throws IOException {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.saveFileByte(familyTree);
+        Writable saveFile = new SaveFile();
+        saveFile.saveFileByte(familyTree);
     }
 
     public void loadFileByte() throws IOException, ClassNotFoundException {
-        FileHandler fileHandler = new FileHandler();
-        familyTree = fileHandler.loadFileByte();
+        Readable readFile = new ReadFile();
+        familyTree =readFile.loadFileByte();
     }
 
     public String getFamilyTreeInfo(){
