@@ -1,8 +1,10 @@
 package Family_tree.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Tree.Family_tree;
 
@@ -56,6 +58,10 @@ public class HumanService extends Service<Human> {
     @Override
     public void setCurrentTree(int index) {
         this.currentTree = list.get(index);
+    }
+    public Human newHuman(String nane, Gender gender, LocalDate birthDate){
+        Human human = new Human(nane, gender, birthDate);
+        return human;
     }
     
 }

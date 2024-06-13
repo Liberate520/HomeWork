@@ -22,6 +22,9 @@ public abstract class Presenter<T extends Endothermal> {
     public T getMember(int tree, int index){
         return getTreeList().get(tree).getItem(index);
     }
+    public void removeMember(int index){
+        getActiveTree().remove(index);
+    }
     public abstract String createActiveTree(String value);
     public abstract String removeTree(int indrx);
     public abstract String showActiveTreeInfo();

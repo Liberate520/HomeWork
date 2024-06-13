@@ -1,7 +1,9 @@
 package Family_tree.View;
 
+import java.time.LocalDate;
 import java.util.*;
 
+import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Humans.Human;
 import Family_tree.Presenter.HumanPresenter;
 import Family_tree.Presenter.Presenter;
@@ -23,6 +25,7 @@ public class HumanView extends View<Human> {
             \t i. Информация о родиче;
             \t l. Список древ;
             \t v. Список родичей;
+            \t h. Список команд;
             \t q. Выход.
             """;
     private Scanner scanner ;
@@ -78,10 +81,25 @@ public class HumanView extends View<Human> {
                     System.out.println(presenter.showListTree());                    
                     break;
                 case "6":
-                    
+                    System.out.println("ФИО");
+                    String FIO = scanner.nextLine();
+                    System.out.println("пол (м/ж)");
+                    Gender gender = sexFromString(scanner.nextLine());
+                    System.out.println("Дата рождения (гггг-ММ-ДД)");
+                    LocalDate day = LocalDate.parse(scanner.nextLine());
+                    Human human = newHuman(FIO, gender, day);
+                    System.out.println(addToTree(human));
                     break;
                 case "7":
-                    
+                    System.out.println("Укажите индекс");
+                    System.out.println(presenter.showListTree());
+                    int index = Integer.parseInt(scanner.nextLine());
+                    try{
+                        presenter.removeMember(index);
+                        System.out.println("Родич удалён");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case "8":
                     
@@ -101,19 +119,43 @@ public class HumanView extends View<Human> {
                 case "q":
                     flag = false;   
                     break;
+                case "h":
+                    System.out.println(optionString);   
+                    break;
                 default:
                     break;
             }
         }
     }
 
-    
+    private Gender sexFromString(String value){
+        if (value.equalsIgnoreCase("м")){
+            return Gender.Male;            
+        } else if (value.equalsIgnoreCase("ж")){
+            return Gender.Female;
+        } else {
+            return null;
+        }
+    }
 
   
     @Override
     public Presenter<Human> getPresenter() {
         return this.presenter;
     }
-   
+    @Override
+    public String addToTree(Human value) {
+
+        try {
+            presenter.getActiveTree().add(value);
+            return String.format("%s добавлен(а)", value.toString());
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Ошибка записи";
+        }
+    }
+    private Human newHuman(String nane, Gender gender, LocalDate birthDate){
+        return presenter.newHuman(nane, gender, birthDate);
+    }
    
 }
