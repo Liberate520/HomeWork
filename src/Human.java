@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Human implements Serializable {
     private String name;
-    Gender gender;
+    private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
     private List<Human> children;

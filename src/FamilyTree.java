@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree  implements Serializable {
-    static List<Human> humans = new ArrayList<>();
-    public static void addHuman(Human human){
+    List<Human> humans = new ArrayList<>();
+    public void addHuman(Human human){
         humans.add(human);
         if(human.getMother() != null){
             human.getMother().addChild(human);
@@ -18,7 +18,7 @@ public class FamilyTree  implements Serializable {
 
 
 
-    public static String getHumansInfo(){
+    public String getHumansInfo(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Древо состоит из ");
         stringBuilder.append(humans.size());
