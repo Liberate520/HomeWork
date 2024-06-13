@@ -92,7 +92,7 @@ public class HumanView extends View<Human> {
                     break;
                 case "7":
                     System.out.println("Укажите индекс");
-                    System.out.println(presenter.showListTree());
+                    System.out.println(presenter.getActiveTree().getInfo());
                     int index = Integer.parseInt(scanner.nextLine());
                     try{
                         presenter.removeMember(index);
@@ -102,19 +102,43 @@ public class HumanView extends View<Human> {
                     }
                     break;
                 case "8":
-                    
+                    System.out.println("Укажите id жениха");
+                    int id1 = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Укажите id невесты");
+                    int id2 = Integer.parseInt(scanner.nextLine());
+                    if (presenter.setMarriage(id1, id2)){
+                        System.out.println("Зарегистрировано");
+                    }else{
+                        System.out.println("Ошибка регистрации");
+                    }
                     break;
                 case "9":
-                    
+                    System.out.println("ФИО");
+                    FIO = scanner.nextLine();
+                    System.out.println("пол (м/ж)");
+                    gender = sexFromString(scanner.nextLine());
+                    System.out.println("Дата рождения (гггг-ММ-ДД)");
+                    day = LocalDate.parse(scanner.nextLine());                    
+                    System.out.println("Укажите id отца");
+                    id1 = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Укажите id матери");
+                    id2 = Integer.parseInt(scanner.nextLine());                    
+                    if (presenter.newChild(FIO, gender, day, id1, id2)){
+                        System.out.println("Ребёнок добавлен");
+                    } else {
+                        System.out.println("Ошибка регистрации");
+                    }
                     break;
                 case "s":
-                    
+                    System.out.println("Шаблон для поска");
+                    String pattern = "*" + scanner.nextLine().toLowerCase() + "*";
+                    System.out.println(presenter.searchByPattern(pattern));
                     break;
                 case "i":
-                    
+                    System.out.println(presenter.showListTree());
                     break;
                 case "v":
-                    
+                    System.out.println(presenter.getActiveTree().getInfo());
                     break;
                 case "q":
                     flag = false;   

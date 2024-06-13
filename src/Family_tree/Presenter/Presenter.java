@@ -1,11 +1,14 @@
 package Family_tree.Presenter;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import Family_tree.Model.Service;
 import Family_tree.Model.Tree.*;
 import Family_tree.View.View;
 import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Model.Humans.Gender;
 
 public abstract class Presenter<T extends Endothermal> {
     public abstract Service<T> getService();
@@ -52,5 +55,8 @@ public abstract class Presenter<T extends Endothermal> {
             return true;
         }
     }
-
+    public abstract boolean newChild(String nane, Gender gender, LocalDate birthDate, int idfather, int idmother);
+    public String searchByPattern(String pattern){
+        return getService().searchByPattern(pattern);
+    }
 }

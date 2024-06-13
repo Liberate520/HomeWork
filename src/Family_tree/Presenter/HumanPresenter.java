@@ -3,12 +3,12 @@ package Family_tree.Presenter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDate;
+
 
 import Family_tree.Model.HumanService;
 import Family_tree.Model.Service;
+import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Tree.Family_tree;
 import Family_tree.View.HumanView;
@@ -34,7 +34,9 @@ public class HumanPresenter extends Presenter<Human> {
     public Service<Human> getService() {
         return this.service;
     }
-
+    public boolean setMarriage(int male, int female){
+        return service.setMarriage(activeTree.getItem(female), activeTree.getItem(male));
+    }
 
     @Override
     public String createActiveTree(String value) {        
@@ -111,5 +113,11 @@ public class HumanPresenter extends Presenter<Human> {
         this.activeTree = selected;
         return String.format("Выбрано древо %d", index);
     }   
+    public Human newHuman(String nane, Gender gender, LocalDate birthDate){
+        return service.newHuman(nane, gender, birthDate);
+    }
+    public boolean newChild(String nane, Gender gender, LocalDate birthDate, int idfather, int idmother){
+        return service.newChild(nane, gender, birthDate, idfather, idmother);
+    }
 
 }

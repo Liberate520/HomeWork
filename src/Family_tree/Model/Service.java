@@ -1,6 +1,6 @@
 package Family_tree.Model;
 
-import java.util.List;
+import java.util.*;
 import Family_tree.Model.Tree.*;
 import Family_tree.Model.Humans.Endothermal;
 import Family_tree.Model.Recorder.Recorder;
@@ -75,6 +75,27 @@ public abstract class Service<T extends Endothermal>  {
             return false;
         }
     }
-
+    public String searchByPattern(String pattern){
+        String str1 = pattern.toLowerCase();
+        Map<Integer,T> result = new HashMap<Integer, T>();
+        for (int i = 0; i < getCurrentTree().getMemberList().size(); i++){
+            if (getCurrentTree().getMemberList().get(i).toString().toLowerCase().contains(str1)){
+                result.put(i, getCurrentTree().getMemberList().get(i));
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Результат поиска:\n");
+        if (result.isEmpty()){
+            sb.append("Ничего не найдено");
+            return sb.toString();
+        }
+        for(Map.Entry<Integer, T> set : result.entrySet()){
+            sb.append(set.getKey());
+            sb.append(" ");
+            sb.append(set.getValue().toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }  
 
 }

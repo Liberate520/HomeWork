@@ -49,6 +49,12 @@ public class HumanService extends Service<Human> {
             return false;
         }
     }
+    public boolean newChild(String nane, Gender gender, LocalDate birthDate, int idfather, int idmother){
+        Human child = newHuman(nane, gender, birthDate);
+        Human father = currentTree.getItem(idfather);
+        Human mother = currentTree.getItem(idmother);
+        return newChild(child, father, mother);
+    }
     public boolean setMarriage(Human one, Human two){
         boolean boo = one.setSpouse(two);
         boo = two.setSpouse(one);
