@@ -1,4 +1,5 @@
 package model;
+
 import Presenter.*;
 import java.util.Iterator;
 import java.util.List;
@@ -58,4 +59,9 @@ public class FamilyTree<T extends Node> implements Iterable<T> {
     public void sortByBirthDate() {
         Collections.sort(nodeList, (node1, node2) -> node1.getBirthDate().compareTo(node2.getBirthDate()));
     }
+
+    public List<T> getNodes() {
+        return nodeList;
+    }
 }
+

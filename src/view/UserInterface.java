@@ -1,8 +1,8 @@
 package view;
 import Presenter.FamilyTreePresenter;
-import model.Gender;
 import model.FamilyTree;
 import model.Node;
+import model.Gender;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -10,21 +10,24 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-    public void setPresenter(FamilyTreePresenter presenter) {
-    }
-
-    // Другие методы и функциональности класса UserInterface...
-
-
-    private FamilyTree<Node> familyTree;
+    private FamilyTreePresenter presenter;
     private Scanner scanner;
 
     public UserInterface() {
-        this.familyTree = new FamilyTree<>();
         this.scanner = new Scanner(System.in);
     }
 
+    public void setPresenter(FamilyTreePresenter presenter) {
+        this.presenter = presenter;
+        // Этот метод пока не реализован, но необходим для совместимости с интерфейсом.
+    }
+
     public void start() {
+        if (presenter == null) {
+            System.out.println("Ошибка: Презентер не установлен. Используйте метод setPresenter.");
+            return;
+        }
+
         while (true) {
             System.out.println("Введите команду (add, remove, save, load, sortByName, sortByBirthDate, print, exit):");
             String command = scanner.nextLine();
@@ -43,13 +46,13 @@ public class UserInterface {
                     loadTree();
                     break;
                 case "sortByName":
-                    familyTree.sortByName();
+                    presenter.sortByName();
                     break;
                 case "sortByBirthDate":
-                    familyTree.sortByBirthDate();
+                    presenter.sortByBirthDate();
                     break;
                 case "print":
-                    familyTree.printTree();
+                    presenter.printTree();
                     break;
                 case "exit":
                     return;
@@ -71,45 +74,32 @@ public class UserInterface {
         String birthDateInput = scanner.nextLine();
         LocalDate birthDate = LocalDate.parse(birthDateInput);
 
-        Node node = new Node(name, gender, birthDate);
-        familyTree.addNode(node);
+        presenter.addNode(name, genderInput, birthDate);
     }
 
     private void removeNode() {
         System.out.println("Введите имя узла для удаления:");
         String name = scanner.nextLine();
-        boolean removed = familyTree.removeNode(name);
-        if (removed) {
-            System.out.println("Узел успешно удален.");
-        } else {
-            System.out.println("Узел с таким именем не найден.");
-        }
+        presenter.removeNode(name);
     }
 
     private void saveTree() {
         System.out.println("Введите имя файла для сохранения:");
         String filename = scanner.nextLine();
-        try {
-            familyTree.saveTreeToFile(filename);
-            System.out.println("Дерево успешно сохранено в файл " + filename);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Ошибка при сохранении дерева в файл " + filename);
-        }
+        presenter.saveTree(filename);
     }
 
     private void loadTree() {
         System.out.println("Введите имя файла для загрузки:");
         String filename = scanner.nextLine();
-        try {
-            familyTree.loadTreeFromFile(filename);
-            System.out.println("Дерево успешно загружено из файла " + filename);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Ошибка при загрузке дерева из файла " + filename);
-        }
+        presenter.loadTree(filename);
     }
 
-    public void displayErrorMessage(String s) {
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
+    public void displayErrorMessage(String message) {
+        System.out.println("Ошибка: " + message);
     }
 }
