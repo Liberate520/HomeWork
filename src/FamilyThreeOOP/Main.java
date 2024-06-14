@@ -1,6 +1,9 @@
 package FamilyThreeOOP;
 
-import FamilyThreeOOP.FamilyTree.FamilyTree;
+import FamilyThreeOOP.Family.Comporator.FamilyTree;
+import FamilyThreeOOP.Family.Human.Gender;
+import FamilyThreeOOP.Family.Human.Human;
+import FamilyThreeOOP.writer.FileHandler;
 
 import java.io.Serializable;
 import java.time.LocalDate;
