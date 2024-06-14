@@ -1,12 +1,19 @@
-package ru.gb.Family_tree;
+package ru.gb.Family_tree.family_tree;
 
+import ru.gb.Family_tree.human.Human;
+import ru.gb.Family_tree.human.HumanComporatorByBirthdate;
+import ru.gb.Family_tree.human.HumanComporatorByName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
-public class Family_tree {
+public class Family_tree implements Serializable, Iterable<Human> {
     private long humansId;
     private List<Human> humanList;
+    
 
     public Family_tree() {
         this(new ArrayList<>());
@@ -33,14 +40,15 @@ public class Family_tree {
     }
 
     private void addToParents(Human human) {
-        for (Human parent : human.getParents()) {
+        for (Human parent: human.getParents()) {
             parent.addChild(human);
         }
     }
 
+
     private void addToChildren(Human human) {
-        for (Human child : human.getChildren()) {
-            child.addParent(human);
+        for (Human child: human.getChildren()) {
+            child.addChild(human);
         }
     }
 
@@ -120,6 +128,19 @@ public class Family_tree {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public void sortName(){
+        humanList.sort(new HumanComporatorByBirthdate());
+    }
+
+    public void sortBirthDate(){
+        humanList.sort(new HumanComporatorByName());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humanList);
     }
 }
 

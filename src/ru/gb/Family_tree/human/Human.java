@@ -1,12 +1,20 @@
-package ru.gb.Family_tree;
+package ru.gb.Family_tree.human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable, Iterable<Human>{
     private long id;
+
+    @Override
+    public Iterator<Human> iterator() {
+        return null;
+    }
+
     private String name;
     private Gender gender;
     private LocalDate birthDate;
@@ -75,8 +83,8 @@ public class Human {
         this.children = children;
     }
 
-    public long getId() {
-        return id;
+    public int getId() {
+        return (int) id;
     }
 
     public void setId(long id) {
@@ -132,6 +140,10 @@ public class Human {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     public void setDeathDate(LocalDate deathDate) {
@@ -220,4 +232,5 @@ public class Human {
         Human human = (Human) obj;
         return human.getId() == getId();
     }
+
 }
