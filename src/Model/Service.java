@@ -9,14 +9,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class Service implements Serializable {
+public class Service implements Serializable{
     private FamilyTree<Person> familyTree;
     private FileHandler fileHandler;
 
     //конструктор
     public Service() {
         familyTree = new FamilyTree();
-        fileHandler = new FileHandler();
     }
 
     //методы
@@ -91,6 +90,7 @@ public class Service implements Serializable {
     }
 
     public void load() {
+        fileHandler = new FileHandler();
         fileHandler.load();
     }
 
