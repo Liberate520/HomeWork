@@ -93,6 +93,7 @@ public class HumanPresenter extends Presenter<Human> {
         return "Ошибка сохранения";
        }
     }
+    //_________________________________________________________________________Спихнуть в сервис
     @Override
     public String removeTree(int index) {
         if (index < 0 || index > this.service.getTreeList().size()-1){
@@ -105,6 +106,7 @@ public class HumanPresenter extends Presenter<Human> {
         service.removeTree(index);
         return "Удалено";
     }
+    //______________________________________________________________________________________________
     @Override
     public String selectTree(int index) {
         if (index < 0 || index > this.service.getTreeList().size()-1){

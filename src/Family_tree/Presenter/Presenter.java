@@ -20,10 +20,10 @@ public abstract class Presenter<T extends Endothermal> {
         return getService().getCurrentTree();
     }
     public T getMember(int index){
-        return getActiveTree().getItem(index);
+        return getActiveTree().getItem(index); //надо менять на String
     }
     public T getMember(int tree, int index){
-        return getTreeList().get(tree).getItem(index);
+        return getTreeList().get(tree).getItem(index); //надо менять на String
     }
     public String removeMember(int index){
         String s = "";
@@ -40,8 +40,9 @@ public abstract class Presenter<T extends Endothermal> {
     public abstract String removeTree(int indrx);
     public abstract String showActiveTreeInfo();
     public abstract String loadTree(String path);
-    public abstract String saveTree(String path);    
-    public String showListTree(){
+    public abstract String saveTree(String path); 
+    //_________________________________________________________________________________________   
+    public String showListTree(){ // Это надо перевести в Service
         if (getTreeList().size() == 0){
             return "Древо пусто";
         }
@@ -54,6 +55,7 @@ public abstract class Presenter<T extends Endothermal> {
         }
         return sb.toString();
     }
+    //__________________________________________________________________________________________
     public abstract String selectTree(int index);
     public abstract void setActiveTree(Family_tree<T> tree);
     public boolean hasActiveTree(){
