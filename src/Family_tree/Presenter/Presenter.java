@@ -1,7 +1,7 @@
 package Family_tree.Presenter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import Family_tree.Model.Service;
@@ -25,8 +25,16 @@ public abstract class Presenter<T extends Endothermal> {
     public T getMember(int tree, int index){
         return getTreeList().get(tree).getItem(index);
     }
-    public void removeMember(int index){
-        getActiveTree().remove(index);
+    public String removeMember(int index){
+        String s = "";
+        try{
+            getActiveTree().remove(index);
+            s ="Родич удалён";
+        } catch (Exception e) {
+            System.out.println(e);
+            s = "Ошибка удаления";
+        }
+        return s;
     }
     public abstract String createActiveTree(String value);
     public abstract String removeTree(int indrx);
@@ -59,4 +67,10 @@ public abstract class Presenter<T extends Endothermal> {
     public String searchByPattern(String pattern){
         return getService().searchByPattern(pattern);
     }
+    public String addToTree(String name, Gender gender, LocalDate birthDate){
+        return getService().addToTree(name, gender, birthDate);
+    }
+
+    
+
 }

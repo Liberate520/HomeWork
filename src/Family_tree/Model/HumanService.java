@@ -69,5 +69,15 @@ public class HumanService extends Service<Human> {
         Human human = new Human(nane, gender, birthDate);
         return human;
     }
-    
+    @Override
+    public String addToTree(String name, Gender gender, LocalDate birthDate) {
+        Human human = new Human(name, gender, birthDate);
+        try {
+            this.currentTree.add(human);            
+            return String.format("%s добавлен(а)", human.toString());
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Ошибка записи";
+        }
+    }
 }

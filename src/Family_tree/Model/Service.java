@@ -1,8 +1,10 @@
 package Family_tree.Model;
 
+import java.time.LocalDate;
 import java.util.*;
 import Family_tree.Model.Tree.*;
 import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Recorder.Recorder;
 
 
@@ -97,5 +99,5 @@ public abstract class Service<T extends Endothermal>  {
         }
         return sb.toString();
     }  
-
+    public abstract String addToTree(String name, Gender gender, LocalDate birthDate);
 }

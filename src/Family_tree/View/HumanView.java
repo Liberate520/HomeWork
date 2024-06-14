@@ -33,6 +33,9 @@ public class HumanView extends View<Human> {
         presenter = new HumanPresenter(this); 
         scanner = new Scanner(System.in)  ;    
     }
+    
+
+
     @Override
     public void start() {
         System.out.println(optionString);
@@ -77,29 +80,27 @@ public class HumanView extends View<Human> {
                     int deleted = Integer.parseInt(scanner.nextLine());
                     System.out.println(presenter.removeTree(deleted));
                     break;
-                case "l":                    
-                    System.out.println(presenter.showListTree());                    
-                    break;
+                
                 case "6":
+                    if (this.hasActiveTree() == false){
+                        System.out.println("Невыбрано активное древо");
+                        break;
+                    }
                     System.out.println("ФИО");
                     String FIO = scanner.nextLine();
                     System.out.println("пол (м/ж)");
                     Gender gender = sexFromString(scanner.nextLine());
                     System.out.println("Дата рождения (гггг-ММ-ДД)");
                     LocalDate day = LocalDate.parse(scanner.nextLine());
-                    Human human = newHuman(FIO, gender, day);
-                    System.out.println(addToTree(human));
+                    
+                    System.out.println(presenter.addToTree(FIO, gender, day));
+
                     break;
                 case "7":
                     System.out.println("Укажите индекс");
                     System.out.println(presenter.getActiveTree().getInfo());
                     int index = Integer.parseInt(scanner.nextLine());
-                    try{
-                        presenter.removeMember(index);
-                        System.out.println("Родич удалён");
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
+                    System.out.println(presenter.removeMember(index));
                     break;
                 case "8":
                     System.out.println("Укажите id жениха");
@@ -130,12 +131,14 @@ public class HumanView extends View<Human> {
                     }
                     break;
                 case "s":
-                    System.out.println("Шаблон для поска");
+                    System.out.println("Шаблон для поиска");
                     String pattern = "*" + scanner.nextLine().toLowerCase() + "*";
                     System.out.println(presenter.searchByPattern(pattern));
                     break;
                 case "i":
-                    System.out.println(presenter.showListTree());
+                    System.out.println("Укажите индекс");
+                    index = Integer.parseInt(scanner.nextLine());
+                    System.out.println(presenter.getMember(index).getInfo());
                     break;
                 case "v":
                     System.out.println(presenter.getActiveTree().getInfo());
@@ -145,6 +148,9 @@ public class HumanView extends View<Human> {
                     break;
                 case "h":
                     System.out.println(optionString);   
+                    break;
+                case "l":
+                    System.out.println(presenter.showListTree());  
                     break;
                 default:
                     break;
@@ -167,19 +173,7 @@ public class HumanView extends View<Human> {
     public Presenter<Human> getPresenter() {
         return this.presenter;
     }
-    @Override
-    public String addToTree(Human value) {
-
-        try {
-            presenter.getActiveTree().add(value);
-            return String.format("%s добавлен(а)", value.toString());
-        } catch (Exception e) {
-            System.out.println(e);
-            return "Ошибка записи";
-        }
-    }
-    private Human newHuman(String nane, Gender gender, LocalDate birthDate){
-        return presenter.newHuman(nane, gender, birthDate);
-    }
+    
+    
    
 }

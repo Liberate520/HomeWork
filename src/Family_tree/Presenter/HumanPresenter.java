@@ -75,6 +75,7 @@ public class HumanPresenter extends Presenter<Human> {
         if (Files.exists(file)){
             try {
                 tree = service.loadTree(path);
+                this.activeTree = tree;
                 return String.format("Древо %s загружено", tree.toString());
             } catch (Exception e){
                 System.out.println(e);

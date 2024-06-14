@@ -16,5 +16,5 @@ public abstract class View<T extends Endothermal> {
         System.out.println("Good bye");
         System.exit(0);
     }
-    public abstract String addToTree(T value); 
+     
 }
