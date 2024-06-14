@@ -1,7 +1,6 @@
-package FamTree.ft;
+package FamTree.model.ft;
 
 import java.util.Comparator;
-import FamTree.human.Human;
 
 public class FamilyTreeComparatorByBirthDate<T extends LifeFormGroup<T>> implements Comparator<T> {
 

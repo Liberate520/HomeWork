@@ -1,4 +1,4 @@
-package FamTree.ft;
+package FamTree.model.ft;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,4 +1,4 @@
-package FamTree;
+package FamTree.model.ft;
 
 
     public enum Gender {

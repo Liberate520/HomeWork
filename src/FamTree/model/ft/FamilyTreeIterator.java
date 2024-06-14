@@ -1,6 +1,4 @@
-package FamTree.ft;
-
-import FamTree.human.Human;
+package FamTree.model.ft;
 
 import java.util.Iterator;
 import java.util.List;

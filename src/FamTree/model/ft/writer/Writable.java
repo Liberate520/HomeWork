@@ -1,4 +1,4 @@
-package FamTree.writer;
+package FamTree.model.ft.writer;
 
 import java.io.*;
 

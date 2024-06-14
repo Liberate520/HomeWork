@@ -1,6 +1,4 @@
-package FamTree.ft;
-
-import FamTree.human.Human;
+package FamTree.model.ft;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -138,4 +136,6 @@ public class FamilyTree<T extends LifeFormGroup<T>> implements Serializable, Ite
     public void sortByBirthDate(){
         humanList.sort(new FamilyTreeComparatorByBirthDate<>());
     }
+
+
 }

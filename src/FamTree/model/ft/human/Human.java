@@ -1,7 +1,7 @@
-package FamTree.human;
+package FamTree.model.ft.human;
 
-import FamTree.Gender;
-import FamTree.ft.LifeFormGroup;
+import FamTree.model.ft.Gender;
+import FamTree.model.ft.LifeFormGroup;
 
 import java.io.Serializable;
 import java.time.LocalDate;
