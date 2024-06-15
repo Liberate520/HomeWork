@@ -1,11 +1,12 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Класс List обеспечивает работу с списком объектов.
  */
-public class List<T> {
+public class List<T> implements Iterable<T> {
     private java.util.List<T> list;
 
     /**
@@ -38,7 +39,8 @@ public class List<T> {
      *
      * @return итератор для списка объектов
      */
-    public ListIterator<T> iterator() {
-        return new ListIterator<>(list);
+    @Override
+    public Iterator<T> iterator() {
+        return list.iterator();
     }
 }
