@@ -1,8 +1,9 @@
+package main;
+
 import models.Human;
 import models.FamilyTree;
 import services.FamilyTreeFileHandler;
 import services.RelationshipSearch;
-import utils.List;
 import enums.Gender;
 
 public class Main {
@@ -62,14 +63,14 @@ public class Main {
 
         // Вывод сортированных данных по имени
         System.out.println("\nСортированный по имени:");
-        familyTree.sortAscending();
+        familyTree.sortByName();
         for (Human human : familyTree) {
             System.out.println(human);
         }
 
         // Вывод сортированных данных по дате рождения
         System.out.println("\nСортированный по дате рождения:");
-        familyTree.sortDescending();
+        familyTree.sortByBirthDate();
         for (Human human : familyTree) {
             System.out.println(human);
         }
