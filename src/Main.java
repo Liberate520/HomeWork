@@ -62,15 +62,15 @@ public class Main {
 
         // Вывод сортированных данных по имени
         System.out.println("\nСортированный по имени:");
-        List<Human> sortedByName = new RelationshipSearch().sortByName(familyTree);
-        for (Human human : sortedByName) {
+        familyTree.sortAscending();
+        for (Human human : familyTree) {
             System.out.println(human);
         }
 
         // Вывод сортированных данных по дате рождения
         System.out.println("\nСортированный по дате рождения:");
-        List<Human> sortedByBirthDate = new RelationshipSearch().sortByBirthDate(familyTree);
-        for (Human human : sortedByBirthDate) {
+        familyTree.sortDescending();
+        for (Human human : familyTree) {
             System.out.println(human);
         }
 
