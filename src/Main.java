@@ -73,7 +73,7 @@ public class Main {
         }
 
         // Сохранение данных в файл
-        FamilyTreeFileHandler fileHandler = new FamilyTreeFileHandler();
+        FamilyTreeFileHandler<Human> fileHandler = new FamilyTreeFileHandler<>();
         fileHandler.saveFamilyTree(familyTree, "family_tree.txt");
 
         // Чтение данных из файла
