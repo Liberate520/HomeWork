@@ -15,8 +15,8 @@ public class RelationshipSearch {
      * @param familyMembers список людей для сортировки
      * @return отсортированный список людей
      */
-    public List<Human> sortByName(List<Human> familyMembers) {
-        List<Human> sortedList = new List<>();
+    public utils.List<Human> sortByName(utils.List<Human> familyMembers) {
+        utils.List<Human> sortedList = new utils.List<>();
         sortedList.addAll(familyMembers.getElements());
         sortedList.getElements().sort(Comparator.comparing(Human::getName));
         return sortedList;
@@ -28,8 +28,8 @@ public class RelationshipSearch {
      * @param familyMembers список людей для сортировки
      * @return отсортированный список людей
      */
-    public List<Human> sortByBirthDate(List<Human> familyMembers) {
-        List<Human> sortedList = new List<>();
+    public utils.List<Human> sortByBirthDate(utils.List<Human> familyMembers) {
+        utils.List<Human> sortedList = new utils.List<>();
         sortedList.addAll(familyMembers.getElements());
         sortedList.getElements().sort(Comparator.comparing(Human::getBirthDate));
         return sortedList;
