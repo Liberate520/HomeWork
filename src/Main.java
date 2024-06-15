@@ -1,9 +1,6 @@
-package main;
-
 import models.Human;
 import models.FamilyTree;
 import services.FamilyTreeFileHandler;
-import services.RelationshipSearch;
 import enums.Gender;
 
 public class Main {
