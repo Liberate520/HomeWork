@@ -1,69 +1,69 @@
 package presenter;
 
-import model.FamilyTree;
 import model.Person;
-import storage.DataStorage;
+import service.FamilyTreeService;
 import view.TreeView;
-
 import java.io.IOException;
 import java.util.List;
 
 public class FamilyTreePresenter implements TreePresenter {
-    private FamilyTree<Person> familyTree;
     private TreeView view;
-    private DataStorage storage;
+    private FamilyTreeService service;
 
-    public FamilyTreePresenter(TreeView view, DataStorage storage) {
+    public FamilyTreePresenter(TreeView view, FamilyTreeService service) {
         this.view = view;
-        this.storage = storage;
-        this.familyTree = new FamilyTree<>();
+        this.service = service;
     }
 
     @Override
     public void loadFamilyTree() {
         try {
-            List<Person> loadedMembers = storage.loadFromFile("family_tree.dat");
-            familyTree.setMembers(loadedMembers);
+            List<Person> loadedMembers = service.loadFamilyTree();
             view.displayMembers(loadedMembers);
         } catch (IOException e) {
-            view.showMessage("Error loading family tree: " + e.getMessage());
+            view.showMessage("Ошибка загрузки семейного дерева: " + e.getMessage());
         }
     }
 
     @Override
     public void addMember(String name, int age) {
         Person person = new Person(name, age);
-        familyTree.addMember(person);
-        view.showMessage("Member added: " + person);
+        service.addMember(person);
+        view.showMessage("Член добавлен: " + person);
         saveFamilyTree();
     }
 
     @Override
     public void findMember(String name) {
-        Person person = familyTree.findPersonByName(name);
+        Person person = service.findPersonByName(name);
         if (person != null) {
-            view.showMessage("Found: " + person);
+            view.showMessage("Найден: " + person);
         } else {
-            view.showMessage("Person not found.");
+            view.showMessage("Человек не найден.");
         }
     }
 
     @Override
     public void getChildrenOf(String name) {
-        Person parent = familyTree.findPersonByName(name);
+        Person parent = service.findPersonByName(name);
         if (parent != null) {
-            List<Person> children = familyTree.getChildrenOf(parent);
+            List<Person> children = service.getChildrenOf(parent);
             view.displayChildren(children);
         } else {
-            view.showMessage("Person not found.");
+            view.showMessage("Человек не найден.");
         }
     }
 
     private void saveFamilyTree() {
         try {
-            storage.saveToFile("family_tree.dat", familyTree.getMembers());
+            service.saveFamilyTree();
         } catch (IOException e) {
-            view.showMessage("Error saving family tree: " + e.getMessage());
+            view.showMessage("Ошибка сохранения семейного дерева: " + e.getMessage());
         }
     }
 }
+
+
+
+
+

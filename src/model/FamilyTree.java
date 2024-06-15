@@ -1,9 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T> {
+public class FamilyTree<T> implements Iterable<T> {
     private List<T> members;
 
     public FamilyTree() {
@@ -15,10 +16,7 @@ public class FamilyTree<T> {
     }
 
     public List<Person> getChildrenOf(Person parent) {
-        if (parent instanceof Person) {
-            return ((Person) parent).getChildren();
-        }
-        return new ArrayList<>();
+        return parent.getChildren();
     }
 
     public T findPersonByName(String name) {
@@ -37,5 +35,18 @@ public class FamilyTree<T> {
     public void setMembers(List<T> members) {
         this.members = members;
     }
+
+    @Override
+    public Iterator<T> iterator() {
+        return members.iterator();
+    }
 }
+
+
+
+
+
+
+
+
 

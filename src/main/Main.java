@@ -2,17 +2,32 @@ package main;
 
 import presenter.FamilyTreePresenter;
 import presenter.TreePresenter;
-import storage.DataStorage;
-import storage.FileDataStorage;
+import service.FamilyTreeService;
+import storage.DataLoader;
+import storage.DataSaver;
+import storage.FileDataLoader;
+import storage.FileDataSaver;
 import view.ConsoleTreeView;
+import view.TreeView;
 
 public class Main {
     public static void main(String[] args) {
-        DataStorage storage = new FileDataStorage();
-        ConsoleTreeView view = new ConsoleTreeView();
-        TreePresenter presenter = new FamilyTreePresenter(view, storage);
-        view.setPresenter(presenter);
-        view.start();
+        DataLoader dataLoader = new FileDataLoader();
+        DataSaver dataSaver = new FileDataSaver();
+        FamilyTreeService service = new FamilyTreeService(dataLoader, dataSaver);
+
+        TreeView treeView = new ConsoleTreeView();
+        TreePresenter presenter = new FamilyTreePresenter(treeView, service);
+
+        treeView.setPresenter(presenter);
+        treeView.start();
     }
 }
+
+
+
+
+
+
+
 
