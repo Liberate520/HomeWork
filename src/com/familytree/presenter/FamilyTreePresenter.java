@@ -1,45 +1,55 @@
+
 package com.familytree.presenter;
 
-import com.familytree.model.family_tree.FamilyTree;
+import com.familytree.model.animal.Dog;
 import com.familytree.model.family_tree.FamilyTreeModel;
+import com.familytree.model.family_tree.TreeNode;
 import com.familytree.model.human.Human;
-import com.familytree.view.ConsoleUI;
-import com.familytree.view.FamilyTreeView;
+import com.familytree.view.View;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-public class FamilyTreePresenter {
-    private FamilyTreeModel model;
-    private FamilyTreeView view;
+public class FamilyTreePresenter<T extends TreeNode> {
+    private final FamilyTreeModel<T> model;
+    private final View view;
 
-    public FamilyTreePresenter(FamilyTreeModel model, FamilyTreeView view) {
+    public FamilyTreePresenter(FamilyTreeModel<T> model, View view) {
         this.model = model;
         this.view = view;
     }
 
-
-    public void addHuman(Human human){
-        model.addHuman(human);
+    public void addNode(T node) {
+        model.addNode(node);
         view.updateView();
-        view.displayHumans();
+        view.displayNodes(model.getNodes().toArray(new TreeNode[0]));
+    }
+
+    public void addHuman(Human human) {
+        addNode((T) human);
+    }
+
+    public void addDog(Dog dog) {
+        addNode((T) dog);
+    }
+
+    public List<T> getNodes() {
+        return model.getNodes();
     }
 
     public void sortByName() {
         model.sortByName();
-
-    }
-
-    public void getHumanListInfo() {
-        List<Human> humans = FamilyTreeModel.getHumans();
-        for (Human human : humans){
-            System.out.println(human.getName());
-        }
+        view.displayNodes(model.getNodes().toArray(new TreeNode[0]));
     }
 
     public void sortByBirthDate() {
         model.sortByBirthDate();
+        view.displayNodes(model.getNodes().toArray(new TreeNode[0]));
+    }
+
+    public void getNodeListInfo() {
+        List<T> nodes = model.getNodes();
+        for (T node : nodes) {
+            System.out.println(node.getName());
+        }
     }
 }

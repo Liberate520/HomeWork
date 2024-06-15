@@ -1,11 +1,12 @@
+
 package com.familytree.view;
 
 import com.familytree.presenter.FamilyTreePresenter;
 import com.familytree.view.commands.*;
 
 public class MainMenu {
-    private ConsoleUI consoleUI;
-    private Command[] commands;
+    private final ConsoleUI consoleUI;
+    private final Command[] commands;
 
     public MainMenu(ConsoleUI consoleUI, FamilyTreePresenter familyTreePresenter) {
         this.consoleUI = consoleUI;
@@ -18,11 +19,11 @@ public class MainMenu {
         };
     }
 
-    public String menu(){
+    public String menu() {
         StringBuilder sb = new StringBuilder();
         sb.append("Выберите команду: \n");
         for (int i = 0; i < commands.length; i++) {
-            sb.append(i+1).append(" "). append(commands[i].getDescription()).append("\n");
+            sb.append(i + 1).append(" ").append(commands[i].getDescription()).append("\n");
         }
         return sb.toString();
     }
@@ -34,8 +35,4 @@ public class MainMenu {
             System.out.println("Неверный выбор");
         }
     }
-
-
-
-
 }

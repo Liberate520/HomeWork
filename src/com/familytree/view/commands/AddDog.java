@@ -3,18 +3,18 @@ package com.familytree.view.commands;
 
 import com.familytree.view.ConsoleUI;
 
-public class AddHuman extends Command {
-    public AddHuman(ConsoleUI consoleUI) {
+public class AddDog extends Command {
+    public AddDog(ConsoleUI consoleUI) {
         super(consoleUI);
     }
 
     @Override
     public void execute() {
-        getConsoleUI().addHuman();
+        getConsoleUI().addDog();
     }
 
     @Override
     public String getDescription() {
-        return "Добавить человека";
+        return "Добавить собаку";
     }
 }
