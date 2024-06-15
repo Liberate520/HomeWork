@@ -2,18 +2,19 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * Класс FamilyTree представляет генеалогическое древо.
- * Он содержит список людей и позволяет добавлять, удалять и получать людей из списка.
+ * Он содержит список объектов и позволяет добавлять, удалять и получать объекты из списка.
  * Класс параметризован, что позволяет использовать его для хранения объектов любого типа,
- * реализующего интерфейс Serializable.
+ * реализующего интерфейсы Serializable и Comparable.
  *
  * @param <T> тип объектов, которые будут храниться в генеалогическом древе
  */
-public class FamilyTree<T extends Serializable> implements Iterable<T>, Serializable {
+public class FamilyTree<T extends Serializable & Comparable<T>> implements Iterable<T>, Serializable {
     private static final long serialVersionUID = 1L;
     private List<T> familyMembers;
 
@@ -51,5 +52,19 @@ public class FamilyTree<T extends Serializable> implements Iterable<T>, Serializ
     @Override
     public Iterator<T> iterator() {
         return familyMembers.iterator();
+    }
+
+    /**
+     * Сортирует объекты в генеалогическом древе по возрастанию.
+     */
+    public void sortAscending() {
+        familyMembers.sort(Comparator.naturalOrder());
+    }
+
+    /**
+     * Сортирует объекты в генеалогическом древе по убыванию.
+     */
+    public void sortDescending() {
+        familyMembers.sort(Comparator.reverseOrder());
     }
 }
