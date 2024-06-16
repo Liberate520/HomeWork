@@ -1,16 +1,34 @@
-import ru.gb.family_tree.FamilyTree;
-import ru.gb.family_tree.Gender;
-import ru.gb.family_tree.Human;
+import ru.gb.family_tree.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main implements Serializable {
+    public static void main (String[] args) {
+        String filePath = "src\\ru\\gb\\family_tree\\tree.txt";
+//        FamilyTree tree = testTree();
+        FamilyTree tree = load(filePath);
+        System.out.println(tree);
+
+//        save(tree, filePath);
+    }
+
+    private static FamilyTree load(String filePath) {
+        Writable writable = new FileHandler();
+        return (FamilyTree) writable.read(filePath);
+    }
+
+    private static void save(FamilyTree tree, String filePath) {
+        Writable writable = new FileHandler();
+        writable.save(tree, filePath);
+    }
+
+
+    private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
         Human vanya = new Human("Иван", "Золотов", Gender.мужской,
                 LocalDate.of(1901, 01, 12));
-
         Human vasilisa = new Human("Василиса", "Премудрая",
                 Gender.женский, LocalDate.of(1903, 11, 02));
 
@@ -21,7 +39,6 @@ public class Main {
 
         Human petya = new Human("Петр","Золотов",Gender.мужской,
                 LocalDate.of(1921, 5, 20), vanya, vasilisa);
-
         Human irina = new Human("Ирина", "Золотова", Gender.женский,
                 LocalDate.of(1923, 2, 4), vanya, vasilisa);
 
@@ -33,10 +50,6 @@ public class Main {
 
         tree.add(ulya);
 
-        System.out.println(tree);
-
-
-
-
+        return tree;
     }
 }
