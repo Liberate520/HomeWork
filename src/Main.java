@@ -1,12 +1,13 @@
 
 import com.familytree.model.family_tree.FamilyTreeModel;
-import com.familytree.model.family_tree.TreeNode;
+import com.familytree.model.io.FileHandler;
 import com.familytree.view.ConsoleUI;
 
 public class Main {
         public static void main(String[] args) {
-                FamilyTreeModel<TreeNode> treeModel = new FamilyTreeModel<>("src/tree.txt");
-                ConsoleUI consoleUI = new ConsoleUI(treeModel);
+                FileHandler fileHandler = new FileHandler("src/tree.txt");
+                FamilyTreeModel model = new FamilyTreeModel(fileHandler);
+                ConsoleUI consoleUI = new ConsoleUI(model);
                 consoleUI.start();
         }
 }

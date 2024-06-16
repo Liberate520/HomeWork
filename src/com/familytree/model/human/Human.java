@@ -1,5 +1,4 @@
 
-
 package com.familytree.model.human;
 
 import com.familytree.model.family_tree.TreeNode;
@@ -16,7 +15,7 @@ public class Human implements TreeNode, Serializable {
     private List<Human> parents;
     private List<Human> children;
 
-    public Human(String name, LocalDate birthDate) {
+    public Human(long id, String name, LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -34,10 +33,15 @@ public class Human implements TreeNode, Serializable {
         return name;
     }
 
-    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
+
+    public List<Human> getParents() {
+        return parents;
+    }
+
+    public List<Human> getChildren() {
+        return children;
+    }
 }
-
-

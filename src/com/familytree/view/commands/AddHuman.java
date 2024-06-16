@@ -3,14 +3,16 @@ package com.familytree.view.commands;
 
 import com.familytree.view.ConsoleUI;
 
-public class AddHuman extends Command {
+public class AddHuman implements Command {
+    private ConsoleUI consoleUI;
+
     public AddHuman(ConsoleUI consoleUI) {
-        super(consoleUI);
+        this.consoleUI = consoleUI;
     }
 
     @Override
     public void execute() {
-        getConsoleUI().addHuman();
+        consoleUI.addHuman();
     }
 
     @Override
@@ -18,3 +20,4 @@ public class AddHuman extends Command {
         return "Добавить человека";
     }
 }
+

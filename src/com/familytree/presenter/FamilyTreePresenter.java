@@ -1,55 +1,44 @@
 
 package com.familytree.presenter;
 
-import com.familytree.model.animal.Dog;
 import com.familytree.model.family_tree.FamilyTreeModel;
-import com.familytree.model.family_tree.TreeNode;
 import com.familytree.model.human.Human;
 import com.familytree.view.View;
 
+import java.time.LocalDate;
 import java.util.List;
 
-public class FamilyTreePresenter<T extends TreeNode> {
-    private final FamilyTreeModel<T> model;
+public class FamilyTreePresenter {
+    private final FamilyTreeModel model;
     private final View view;
 
-    public FamilyTreePresenter(FamilyTreeModel<T> model, View view) {
+    public FamilyTreePresenter(FamilyTreeModel model, View view) {
         this.model = model;
         this.view = view;
     }
 
-    public void addNode(T node) {
-        model.addNode(node);
-        view.updateView();
-        view.displayNodes(model.getNodes().toArray(new TreeNode[0]));
+    public void addNode(String name, LocalDate birthDate) {
+        Human human = new Human(model.getNodes().size() + 1, name, birthDate);
+        model.addNode(human);
+        updateView();
     }
 
-    public void addHuman(Human human) {
-        addNode((T) human);
-    }
-
-    public void addDog(Dog dog) {
-        addNode((T) dog);
-    }
-
-    public List<T> getNodes() {
-        return model.getNodes();
+    public void getNodesListInfo() {
+        List<Human> nodes = model.getNodes();
+        view.displayNodes(nodes.toArray(new Human[0]));
     }
 
     public void sortByName() {
         model.sortByName();
-        view.displayNodes(model.getNodes().toArray(new TreeNode[0]));
+        updateView();
     }
 
     public void sortByBirthDate() {
         model.sortByBirthDate();
-        view.displayNodes(model.getNodes().toArray(new TreeNode[0]));
+        updateView();
     }
 
-    public void getNodeListInfo() {
-        List<T> nodes = model.getNodes();
-        for (T node : nodes) {
-            System.out.println(node.getName());
-        }
+    private void updateView() {
+        view.displayNodes(model.getNodes().toArray(new Human[0]));
     }
 }

@@ -3,14 +3,16 @@ package com.familytree.view.commands;
 
 import com.familytree.view.ConsoleUI;
 
-public class GetHumanListInfo extends Command {
+public class GetHumanListInfo implements Command {
+    private ConsoleUI consoleUI;
+
     public GetHumanListInfo(ConsoleUI consoleUI) {
-        super(consoleUI);
+        this.consoleUI = consoleUI;
     }
 
     @Override
     public void execute() {
-        getConsoleUI().printHumanList(getConsoleUI().getFamilyTreePresenter().getNodes());
+        consoleUI.getHumanListInfo();
     }
 
     @Override

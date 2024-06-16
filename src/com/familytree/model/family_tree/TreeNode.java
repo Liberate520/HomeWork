@@ -11,15 +11,4 @@ public interface TreeNode extends Serializable {
     long getId();
     String getName();
     LocalDate getBirthDate();
-
-    //    Gender getGender();
-//    LocalDate getDeathDate();
-//    List<Human> getParents();
-//    List<Human> getChildren();
-//    TreeNode getSpouse();
-//    void setSpouse(TreeNode spouse);
-//    void addParent(TreeNode parent);
-//    void addChild(TreeNode child);
-
-
 }

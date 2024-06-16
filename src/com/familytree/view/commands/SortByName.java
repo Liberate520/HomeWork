@@ -1,16 +1,19 @@
 
+
 package com.familytree.view.commands;
 
 import com.familytree.view.ConsoleUI;
 
-public class SortByName extends Command {
+public class SortByName implements Command {
+    private ConsoleUI consoleUI;
+
     public SortByName(ConsoleUI consoleUI) {
-        super(consoleUI);
+        this.consoleUI = consoleUI;
     }
 
     @Override
     public void execute() {
-        getConsoleUI().sortByName();
+        consoleUI.sortByName();
     }
 
     @Override
@@ -18,4 +21,3 @@ public class SortByName extends Command {
         return "Сортировать по имени";
     }
 }
-

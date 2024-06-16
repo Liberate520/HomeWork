@@ -1,16 +1,19 @@
 
+
 package com.familytree.view.commands;
 
 import com.familytree.view.ConsoleUI;
 
-public class SortByBirthDate extends Command {
+public class SortByBirthDate implements Command {
+    private ConsoleUI consoleUI;
+
     public SortByBirthDate(ConsoleUI consoleUI) {
-        super(consoleUI);
+        this.consoleUI = consoleUI;
     }
 
     @Override
     public void execute() {
-        getConsoleUI().sortByBirthDate();
+        consoleUI.sortByBirthDate();
     }
 
     @Override
