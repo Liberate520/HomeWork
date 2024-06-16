@@ -1,6 +1,6 @@
 package View;
 
-public interface View {
+public interface IView {
 
     void printAnswer(String text);
 

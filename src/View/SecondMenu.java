@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SecondMenu {
+    private final ConsoleUI consoleUI;
     List<Command> commandList;
-    private ConsoleUI consoleUI;
     private Human creatureId;
 
     public SecondMenu(ConsoleUI consoleUI){
@@ -21,9 +21,10 @@ public class SecondMenu {
         commandList.add(new getSisters(consoleUI));
         commandList.add(new getBrothers(consoleUI));
         commandList.add(new Finish(consoleUI));
+        commandList.add(new getInfo(consoleUI));
     }
 
-    public String SecondMenu(){
+    public String printSecondMenu(){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < commandList.size(); i++) {
             stringBuilder.append(i+1);
@@ -45,12 +46,11 @@ public class SecondMenu {
 
     public void setCreatureId(Human creatureId) {
         this.creatureId = creatureId;
-    }
+    } // Реализуется в будущем
 
     public int getSize(){
         return commandList.size();
     }
-
 
 
 }

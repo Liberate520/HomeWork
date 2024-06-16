@@ -14,8 +14,4 @@ public class printFamilyTree extends Command{
         consoleUI.printFamilyTree();
     }
 
-    @Override
-    public void execute(Human human) {
-
-    }
 }

@@ -4,23 +4,21 @@ import Model.Human.Gender;
 import Model.Human.Human;
 import PresenterF.Presenter;
 
+
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI implements View {
-    private static final String NEW_ATTEMPT_MESSAGE = "Ошибка ввода, попробуйте снова";
-    private static final String INPUT_ERROR = "Введено не правильное значение";
-    private Scanner scanner;
-    private Presenter presenter;
+public class ConsoleUI implements IView, CheckMethods {
+    private final Scanner scanner;
+    private final Presenter presenter;
     private boolean work;
-    private MainMenu menu;
+    private final MainMenu MENU;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
         work = true;
-        menu = new MainMenu(this);
+        MENU = new MainMenu(this);
     }
 
     @Override
@@ -52,64 +50,50 @@ public class ConsoleUI implements View {
 
     private void execute() {
         String line = scanner.nextLine();
-        if (checkLine(line)) {
+        if (CheckMethods.checkLine(line)) {
             int command = Integer.parseInt(line);
-            if (checkCommand(command)) {
-                menu.execute(command);
+            if (CheckMethods.checkCommand(MENU, command)) {
+                MENU.execute(command);
             }
         }
     }
 
-    private boolean checkLine(String text) {
-        if (text.matches("[0-9]+")) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
 
-    private boolean checkCommand(int numCommand) {
-        if (numCommand <= menu.getSize()) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
 
-    public String menu() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < menu.commandList.size(); i++) {
-            stringBuilder.append(i + 1);
-            stringBuilder.append(". ");
-            stringBuilder.append(menu.commandList.get(i).getDescription());
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
-    }
+
+
+//    public String MENU() {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (int i = 0; i < MENU.commandList.size(); i++) {
+//            stringBuilder.append(i + 1);
+//            stringBuilder.append(". ");
+//            stringBuilder.append(MENU.commandList.get(i).getDescription());
+//            stringBuilder.append("\n");
+//        }
+//        return stringBuilder.toString();
+//    }
 
     private void printMenu() {
-        System.out.println(menu.menu());
+        System.out.println(MENU.menu());
     }
 
-    private void inputError() {
-        System.out.println(INPUT_ERROR);
-    }
 
     public void addCreature() {
         Gender gender;
-        System.out.println("Введите имя существа");
-        String name = scanner.nextLine();
+        String name = "";
+        while(checkEmptyString(name)){
+            System.out.println("Введите имя существа");
+            name = scanner.nextLine();
+        }
         gender = choiceGender();
         LocalDate birth = setBirthDate();
         System.out.println("Существо мертво? Да/Нет");
         String answer = scanner.nextLine();
-        while (!checkQuestionIsDeath(answer)) {
+        while (!CheckMethods.checkQuestionIsDeath(answer)) {
             System.out.println(NEW_ATTEMPT_MESSAGE);
             answer = scanner.nextLine();
         }
-        if (checkIsDeath(answer)) {
+        if (CheckMethods.checkIsDeath(answer)) {
             LocalDate death = setDeathDate(birth);
             presenter.addCreature(name, birth, death, gender);
         } else {
@@ -117,18 +101,23 @@ public class ConsoleUI implements View {
         }
     }
 
-    private boolean checkChoiceGender(String choice) {
-        if (choice != null && (choice.equalsIgnoreCase("Мужской") || choice.equalsIgnoreCase("Женский"))) {
+    private boolean checkEmptyString (String name){
+        if (!name.isEmpty()) {
+            System.out.println(INPUT_ERROR);
             return true;
         }
-        System.out.println(NEW_ATTEMPT_MESSAGE);
-        return false;
+        else {
+            return false;
+        }
+
     }
+
+
 
     private Gender choiceGender() {
         System.out.println("Введите пол существа: Мужской/Женский");
         String genderChoice = scanner.nextLine();
-        while (!checkChoiceGender(genderChoice)) {
+        while (!CheckMethods.checkChoiceGender(genderChoice)) {
             System.out.println("Введите пол существа: Мужской/Женский");
             genderChoice = scanner.nextLine();
         }
@@ -141,33 +130,25 @@ public class ConsoleUI implements View {
         return gender;
     }
 
-    private boolean checkQuestionIsDeath(String answer) {
-        if (answer != null && (answer.equalsIgnoreCase("Да") || answer.equalsIgnoreCase("Нет"))) {
-            return true;
-        }
-        return false;
-    }
 
-    private boolean checkIsDeath(String answer) {
-        return answer != null && answer.equalsIgnoreCase("Да");
-    }
+
 
     private LocalDate setDeathDate(LocalDate birth) {
         LocalDate death = null;
-        String deathDay = "1";
-        String deathMonth = "1";
-        String deathYear = "1";
-        while (!checkDate(death, birth) && checkDate(LocalDate.now(), death)) {
-            while (!checkInt(deathDay)) {
+        String deathDay = "";
+        String deathMonth = "";
+        String deathYear = "";
+        while (!CheckMethods.checkDate(death, birth) && CheckMethods.checkDate(LocalDate.now(), death)) {
+            while (!CheckMethods.checkInt(deathDay)) {
                 System.out.println("Введите день смерти существа");
                 deathDay = scanner.nextLine();
             }
-            while (!checkInt(deathMonth)) {
+            while (!CheckMethods.checkInt(deathMonth)) {
                 System.out.println("Введите месяц смерти существа");
                 deathMonth = scanner.nextLine();
             }
 
-            while (!checkInt(deathYear)) {
+            while (!CheckMethods.checkInt(deathYear)) {
                 System.out.println("Введите год смерти существа");
                 deathYear = scanner.nextLine();
             }
@@ -176,42 +157,28 @@ public class ConsoleUI implements View {
         return death;
     }
 
-    private boolean checkInt(String text) {
-        if (text != null && text.matches("\\d+")) {
-            return true;
-        }
-        System.out.println(NEW_ATTEMPT_MESSAGE);
-        return false;
-    }
 
-    private boolean checkDate(LocalDate firstDate, LocalDate secondDate) {
-        if (firstDate != null && secondDate != null && firstDate.isAfter(secondDate)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private LocalDate setBirthDate() {
         LocalDate birth = null;
         String birthDay = null;
         String birthMonth = null;
         String birthYear = null;
-        while (birth == null && !checkDate(LocalDate.now(), birth)) {
-            while (!checkInt(birthDay)) {
+        while (((birth == null) || (!CheckMethods.checkDate(LocalDate.now(), birth)))) {
+            while (!CheckMethods.checkInt(birthDay)) {
                 System.out.println("Введите день рождения существа");
                 birthDay = scanner.nextLine();
             }
-            while (!checkInt(birthMonth)) {
+            while (!CheckMethods.checkInt(birthMonth)) {
                 System.out.println("Введите месяц рождения существа");
                 birthMonth = scanner.nextLine();
             }
-            while (!checkInt(birthYear)) {
+            while (!CheckMethods.checkInt(birthYear)) {
                 System.out.println("Введите год рождения существа");
                 birthYear = scanner.nextLine();
             }
             birth = LocalDate.of(Integer.parseInt(birthYear), Integer.parseInt(birthMonth), Integer.parseInt(birthDay));
-        }
+        } //Проверки на null реализуются в методе CheckMethods.checkInt в строках 168, 172, 176
         return birth;
     }
 
@@ -235,7 +202,7 @@ public class ConsoleUI implements View {
         presenter.getInfo(human);
     }
 
-    public void getSister(Human human) {
+    public void getSisters(Human human) {
         presenter.getSisters(human);
     }
 
@@ -243,10 +210,10 @@ public class ConsoleUI implements View {
         presenter.getBrothers(human);
     }
 
-    public void getInteractionWithCreature(Human human) {
+    public void getInteractionWithCreature(Human human) { // Реализуется в будущем
         SecondMenu secondMenu = new SecondMenu(this);
-        while (true) {
-            System.out.println(secondMenu.SecondMenu());
+        while (true) { //Необходимость в постоянной работе цикла
+            System.out.println(secondMenu.printSecondMenu());
             int choice = Integer.parseInt(scanner.nextLine());
             if (choice > 0 && choice <= secondMenu.getSize()) {
                 secondMenu.execute(choice);
@@ -255,4 +222,19 @@ public class ConsoleUI implements View {
             }
         }
     }
+
+    public void sortByAge(){
+        presenter.sortByAge();
+    }
+
+    public void sortByName(){
+        presenter.sortByName();
+    }
+
+    public void sortByCountChildren(){
+        presenter.sortByCountOfChildren();
+    }
+
+
+
 }

@@ -3,15 +3,15 @@ package PresenterF;
 import Model.Human.Gender;
 import Model.Human.Human;
 import Model.Service.Service;
-import View.View;
+import View.IView;
 
 import java.time.LocalDate;
 
 public class Presenter {
-    private View view;
+    private IView view;
     private Service service;
 
-    public Presenter(View view){
+    public Presenter(IView view){
         this.view = view;
         service = new Service();
     }
@@ -51,5 +51,17 @@ public class Presenter {
 
     public void getBrothers(Human human){
         service.printBrothers(human);
+    }
+
+    public void sortByName(){
+        service.sortByName();
+    }
+
+    public void sortByAge(){
+        service.sortByAge();
+    }
+
+    public void sortByCountOfChildren(){
+        service.sortByCountOfChildren();
     }
 }

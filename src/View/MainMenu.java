@@ -14,6 +14,9 @@ public class MainMenu {
         commandList.add(new printFamilyTree(consoleUI));
         commandList.add(new Finish(consoleUI));
         //commandList.add(new getInteractionWithCreature(consoleUI));
+        commandList.add(new sortByChildrenAmount(consoleUI));
+        commandList.add(new sortByAge(consoleUI));
+        commandList.add(new sortByName(consoleUI));
     }
 
     public String menu(){

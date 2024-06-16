@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Human implements Serializable, FamilyTreeItem<Human>{
+    private static short count = 0;
     private short id;
     private String name;
     private LocalDate birthDate, deathDate;
@@ -17,12 +18,16 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
     private Human spouse;
 
     public Human(String name, LocalDate birthDate, Gender gender) {
+        this.id = count;
+        count++;
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
     }
 
     public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender) {
+        this.id = count;
+        count++;
         this.name = name;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
@@ -47,10 +52,6 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
 
     public short getId() {
         return id;
-    }
-
-    public void setId(short id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -201,7 +202,7 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
         info += "Мать - " + motherName + "\nОтец - " + fatherName + "\nВозраст - " + this.calculateAge();
         if (this.spouse != null)
             info += "Супруг: \n" + this.spouse;
-        info += "\n-------------------------------------";
+        info += "\n......................................\n";
 
         return info;
     }

@@ -9,7 +9,7 @@ public class printFather extends Command{
         description = "Получить информацию о отце существа";
     }
 
-    @Override
+
     public void execute() {
 
     }

@@ -16,6 +16,6 @@ public class getBrothers extends Command{
 
 
     public void execute(Human human){
-        consoleUI.getSister(human);
+        consoleUI.getBrothers(human);
     }
 }

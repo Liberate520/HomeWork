@@ -3,11 +3,11 @@ package View.Commands;
 import Model.Human.Human;
 import View.ConsoleUI;
 
-public abstract class Command {
+public abstract class CommandForCreature<T> {
     String description;
     ConsoleUI consoleUI;
 
-    public Command(ConsoleUI consoleUI) {
+    public CommandForCreature(ConsoleUI consoleUI) {
         this.consoleUI = consoleUI;
     }
 
@@ -15,7 +15,8 @@ public abstract class Command {
         return description;
     }
 
-    public abstract void execute();
 
-    public abstract void execute(Human human);
+
+    public abstract void execute(T creature);
 }
+
