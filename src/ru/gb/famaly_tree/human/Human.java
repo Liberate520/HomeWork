@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.Period;
 
-public class Human implements Serializable{
+public class Human implements Serializable, DutiesOfTheCreature<Human>{
         private String name;
         private LocalDate birthDate;
         private LocalDate deathDate;
@@ -74,7 +74,7 @@ public class Human implements Serializable{
                 }
         }
 
-        public String  getName(){
+        public String getName(){
                 return name;
         }
 
@@ -151,8 +151,8 @@ public class Human implements Serializable{
                 return outputPersonInfo;
         }
 
-//        @Override
-//        public int compareTo(Human o) {
-//                return getName().compareTo(o.getName());
-//        }
+        @Override
+        public int compareTo(Human o) {
+                return getName().compareTo(o.getName());
+        }
 }

@@ -51,7 +51,7 @@ public class Main {
         Human h311 = new Human("имя3.1.1",Gender.male,LocalDate.of(1980,11,6),null,h32,h31,null);
 
         //создание дерева
-        Famaly_tree famaly1 = new Famaly_tree();
+        Famaly_tree<Human> famaly1 = new Famaly_tree<>();
         famaly1.addFounder(h1);
 
         //добавление детей h3 и h31 к родителю h2
