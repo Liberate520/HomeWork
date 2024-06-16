@@ -1,55 +1,52 @@
 package ru.gb.family.familyTree.ItemFamilyTrees.genTest;
 
+import ru.gb.family.familyTree.FamilyTree;
 import ru.gb.family.familyTree.ItemFamilyTrees.enums.DegreeOfKinship;
 import ru.gb.family.familyTree.ItemFamilyTrees.enums.Gender;
 import ru.gb.family.familyTree.ItemFamilyTrees.ItemFamilyTree;
+import ru.gb.family.familyTree.ItemFamilyTrees.humans.Human;
+import ru.gb.family.service.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneratItemFamilyTree {
+public class GeneratItemFamilyTree<T extends ItemFamilyTree<T>> {
     public GeneratItemFamilyTree() {
-        List<ItemFamilyTree> newItemFamilyTree = new ArrayList<>();
+        List<ItemFamilyTree<Human>> newItemFamilyTree = new ArrayList<>();
     }
 
-    public List<ItemFamilyTree> GeneratItemFamilyTree() {
-        List<ItemFamilyTree> newItemFamilyTree = new ArrayList<>();
-        ItemFamilyTree itemFamilyTree1 = new ItemFamilyTree("Васильев Роман Максимович", LocalDate.of(2015, 5, 6), null, Gender.Male);
-        ItemFamilyTree itemFamilyTree2 = new ItemFamilyTree("Васильев Максим Николаевич", LocalDate.of(1986, 6, 21), null, Gender.Male);
-        ItemFamilyTree itemFamilyTree3 = new ItemFamilyTree("Васильева Татьяна Владимировна", LocalDate.of(1987, 10, 17), null, Gender.Female);
+    public FamilyTree gen() {
 
-        ItemFamilyTree itemFamilyTree4 = new ItemFamilyTree("Васильева Алина Андреевна", LocalDate.of(2018, 3, 8), null, Gender.Female);
-        ItemFamilyTree itemFamilyTree5 = new ItemFamilyTree("Васильев Андрей Николаевич", LocalDate.of(1990, 8, 1), null, Gender.Male);
-        ItemFamilyTree itemFamilyTree6 = new ItemFamilyTree("Васильева Наталья Николаевна", LocalDate.of(1988, 7, 11), null, Gender.Female);
+        //FamilyTree<T> testfamilyTree = new FamilyTree<>();
+        Service testService = new Service<FamilyTree, T>();
 
-        ItemFamilyTree itemFamilyTree7 = new ItemFamilyTree("Васильев Николай Михайлович", LocalDate.of(1954, 1, 15), LocalDate.of(2010, 5, 1), Gender.Male);
-        ItemFamilyTree itemFamilyTree8 = new ItemFamilyTree("Васильева Надежда Николаевна", LocalDate.of(1954, 1, 28), null, Gender.Female);
+        testService.creatItemFamilyTree("Васильев Роман Максимович", LocalDate.of(2015, 5, 6),null, Gender.Male);
+        testService.creatItemFamilyTree("Васильев Максим Николаевич", LocalDate.of(1986, 6, 21), null, Gender.Male);
+        testService.creatItemFamilyTree("Васильева Татьяна Владимировна", LocalDate.of(1987, 10, 17), null, Gender.Female);
 
-        itemFamilyTree1.editItemFamilyTree(itemFamilyTree2, DegreeOfKinship.Father);
-        itemFamilyTree1.editItemFamilyTree(itemFamilyTree3, DegreeOfKinship.Mother);
-        itemFamilyTree2.editItemFamilyTree(itemFamilyTree3, DegreeOfKinship.Spouse);
+        testService.creatItemFamilyTree("Васильева Алина Андреевна", LocalDate.of(2018, 3, 8), null, Gender.Female);
+        testService.creatItemFamilyTree("Васильев Андрей Николаевич", LocalDate.of(1990, 8, 1), null, Gender.Male);
+        testService.creatItemFamilyTree("Васильева Наталья Николаевна", LocalDate.of(1988, 7, 11), null, Gender.Female);
 
-        itemFamilyTree4.editItemFamilyTree(itemFamilyTree5, DegreeOfKinship.Father);
-        itemFamilyTree4.editItemFamilyTree(itemFamilyTree6, DegreeOfKinship.Mother);
-        itemFamilyTree5.editItemFamilyTree(itemFamilyTree6, DegreeOfKinship.Spouse);
+        testService.creatItemFamilyTree("Васильев Николай Михайлович", LocalDate.of(1954, 1, 15), LocalDate.of(2010, 5, 1),  Gender.Male);
+        testService.creatItemFamilyTree("Васильева Надежда Николаевна", LocalDate.of(1954, 1, 28), null, Gender.Female);
 
-        itemFamilyTree7.editItemFamilyTree(itemFamilyTree2, DegreeOfKinship.Children);
-        itemFamilyTree7.editItemFamilyTree(itemFamilyTree5, DegreeOfKinship.Children);
-        itemFamilyTree8.editItemFamilyTree(itemFamilyTree2, DegreeOfKinship.Children);
-        itemFamilyTree8.editItemFamilyTree(itemFamilyTree5, DegreeOfKinship.Children);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильев Роман Максимович",LocalDate.of(2015, 5, 6)),testService.getItemFamilyTree("Васильев Максим Николаевич", LocalDate.of(1986, 6, 21)), DegreeOfKinship.Father);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильев Роман Максимович",LocalDate.of(2015, 5, 6)),testService.getItemFamilyTree("Васильева Татьяна Владимировна", LocalDate.of(1987, 10, 17)), DegreeOfKinship.Mother);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильев Максим Николаевич", LocalDate.of(1986, 6, 21)),testService.getItemFamilyTree("Васильева Татьяна Владимировна", LocalDate.of(1987, 10, 17)), DegreeOfKinship.Spouse);
 
-        itemFamilyTree7.editItemFamilyTree(itemFamilyTree8, DegreeOfKinship.Spouse);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильева Алина Андреевна", LocalDate.of(2018, 3, 8)),testService.getItemFamilyTree("Васильев Андрей Николаевич", LocalDate.of(1990, 8, 1)), DegreeOfKinship.Father);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильева Алина Андреевна", LocalDate.of(2018, 3, 8)),testService.getItemFamilyTree("Васильева Наталья Николаевна", LocalDate.of(1988, 7, 11)), DegreeOfKinship.Mother);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильева Наталья Николаевна", LocalDate.of(1988, 7, 11)),testService.getItemFamilyTree("Васильев Андрей Николаевич", LocalDate.of(1990, 8, 1)), DegreeOfKinship.Spouse);
 
-        newItemFamilyTree.add(itemFamilyTree1);
-        newItemFamilyTree.add(itemFamilyTree2);
-        newItemFamilyTree.add(itemFamilyTree3);
-        newItemFamilyTree.add(itemFamilyTree4);
-        newItemFamilyTree.add(itemFamilyTree5);
-        newItemFamilyTree.add(itemFamilyTree6);
-        newItemFamilyTree.add(itemFamilyTree7);
-        newItemFamilyTree.add(itemFamilyTree8);
-        return newItemFamilyTree;
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильев Николай Михайлович", LocalDate.of(1954, 1, 15)),testService.getItemFamilyTree("Васильев Андрей Николаевич", LocalDate.of(1990, 8, 1)), DegreeOfKinship.Children);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильев Николай Михайлович", LocalDate.of(1954, 1, 15)),testService.getItemFamilyTree("Васильев Максим Николаевич", LocalDate.of(1986, 6, 21)), DegreeOfKinship.Children);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильева Надежда Николаевна", LocalDate.of(1954, 1, 28)),testService.getItemFamilyTree("Васильев Андрей Николаевич", LocalDate.of(1990, 8, 1)), DegreeOfKinship.Children);
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильева Надежда Николаевна", LocalDate.of(1954, 1, 28)),testService.getItemFamilyTree("Васильев Максим Николаевич", LocalDate.of(1986, 6, 21)), DegreeOfKinship.Children);
+
+        testService.editItemFamilyTree(testService.getItemFamilyTree( "Васильева Надежда Николаевна", LocalDate.of(1954, 1, 28)),testService.getItemFamilyTree("Васильев Николай Михайлович", LocalDate.of(1954, 1, 15)), DegreeOfKinship.Spouse);
+        return  testService.getFamilyTree();
     }
 
 

@@ -23,10 +23,22 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
     private T spouse;
 
 
-    public ItemFamilyTree(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
-        id = -1;
+    public ItemFamilyTree(long id,String name, LocalDate birthday, Gender gender) {
+        this.id = id;
+        this.age = getPeriod(birthday,LocalDate.now());
+        spouse = null;
+        father = null;
+        mother = null;
+        this.name = name;
+        this.birthday = birthday;
+        this.dateOfDeath = dateOfDeath;
+        this.gender = gender;
+        this.children = new ArrayList<>();
+    }
+    public ItemFamilyTree(long id,String name, LocalDate birthday,LocalDate dateOfDeath, Gender gender) {
+        this.id = id;
         if (dateOfDeath == null){
-           this.age = getPeriod(birthday,LocalDate.now());
+            this.age = getPeriod(birthday,LocalDate.now());
         }
         else{
             this.age = getPeriod(birthday,dateOfDeath);
@@ -40,7 +52,6 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
         this.dateOfDeath = dateOfDeath;
         this.gender = gender;
         this.children = new ArrayList<>();
-
     }
 
     public void addParent(T parent){
@@ -53,19 +64,19 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
 
     }
 
-    public void editItemFamilyTree(T addItemFamilyTree, DegreeOfKinship degreeOfKinship){
+    public void editItemFamilyTree(ItemFamilyTree<T> addItemFamilyTree, DegreeOfKinship degreeOfKinship){
         switch(degreeOfKinship) {
             case Father, Mother :
-                this.addParent(addItemFamilyTree);
+                this.addParent((T) addItemFamilyTree);
                 addItemFamilyTree.getChildren().add(this);
                 break;
             case Spouse:
-                this.addSpouse(addItemFamilyTree);
-                addItemFamilyTree.addSpouse(this);
+                this.addSpouse((T)addItemFamilyTree);
+                addItemFamilyTree.addSpouse((T)this);
                 break;
             case Children:
                 this.addChildren(addItemFamilyTree);
-                addItemFamilyTree.addParent(this);
+                addItemFamilyTree.addParent((T)this);
                 break;
         }
     }
@@ -106,7 +117,7 @@ public class ItemFamilyTree<T extends ItemFamilyTree> extends Service implements
         StringBuilder stringBuilder = new StringBuilder();
         // список детей
         for (ItemFamilyTree<T> itemFamilyTree : children){
-            stringBuilder.append(itemFamilyTree.name+" ("+age +" лет.)");
+            stringBuilder.append(itemFamilyTree.name+" ("+itemFamilyTree.age +" лет.)");
             stringBuilder.append(",\t");
         }
         return "\n id=" + id + '\t' +

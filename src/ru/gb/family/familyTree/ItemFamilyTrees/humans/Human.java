@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public class Human extends ItemFamilyTree {
     private Сountries сountry;
 
-    public Human(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender, Сountries сountry) {
-        super(name, birthday, dateOfDeath, gender);
+    public Human(long id,String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender, Сountries сountry) {
+        super(id,name, birthday, gender);
         this.сountry = сountry;
 
     }

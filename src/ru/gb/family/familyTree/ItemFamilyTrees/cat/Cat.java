@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Cat extends ItemFamilyTree {
     private String color;
 
-    public Cat(String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
-        super(name, birthday, dateOfDeath, gender);
+    public Cat(long id,String name, LocalDate birthday, Gender gender) {
+        super(id,name, birthday,gender);
     }
 }

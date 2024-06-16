@@ -10,12 +10,15 @@ import ru.gb.family.familyTree.ItemFamilyTrees.comparators.ItemFamilyTreeCompara
 import ru.gb.family.familyTree.ItemFamilyTrees.comparators.ItemFamilyTreeComparatorByName;
 import ru.gb.family.familyTree.ItemFamilyTrees.enums.DegreeOfKinship;
 import ru.gb.family.familyTree.ItemFamilyTrees.enums.Gender;
+import ru.gb.family.familyTree.ItemFamilyTrees.enums.SortBy;
+import ru.gb.family.familyTree.ItemFamilyTrees.humans.Human;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
-public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, Iterable<ItemFamilyTree<T>> {
-    private long ItemFamilyTreeId;
+public class FamilyTree <T extends ItemFamilyTree<T>> implements Serializable, Iterable<ItemFamilyTree<T>> {
+
     private List<ItemFamilyTree<T>> familyTree;
 
 
@@ -23,26 +26,32 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
         familyTree = new ArrayList<>();
 
         }
+
+    public void creatItemFamilyTreeInTree(long itemFamilyTreeId, String name, LocalDate birthday,Gender gender) {
+        familyTree.add(new ItemFamilyTree<>(itemFamilyTreeId,name,birthday,gender));
+    }
+
+    public void creatItemFamilyTreeInTree(long itemFamilyTreeId, String name, LocalDate birthday,LocalDate dateOfDeath,Gender gender) {
+        familyTree.add(new ItemFamilyTree<>(itemFamilyTreeId,name,birthday,dateOfDeath,gender));
+    }
+
     public void addItemFamilyTreeInTree(ItemFamilyTree<T> newItemFamilyTree) {
         if (newItemFamilyTree == null) {
             return;
         }
         if (!(familyTree.contains(newItemFamilyTree))) {
             this.familyTree.add(newItemFamilyTree);
-            newItemFamilyTree.setId((int) ItemFamilyTreeId++);
+
         }
     }
-    public void sortByAge(){
-        familyTree.sort(new ItemFamilyTreeComparatorByAge());
-    }
-    public void sortByBirthday(){
-        familyTree.sort(new ItemFamilyTreeComparatorByBirthday());
-    }
-    public void sortByChildren(){
-        familyTree.sort(new ItemFamilyTreeComparatorByChildren());
-    }
-    public void sortByName(){
-        this.familyTree.sort(new ItemFamilyTreeComparatorByName());
+
+    public void sort(SortBy select){
+        switch (select){
+            case Age -> this.familyTree.sort(new ItemFamilyTreeComparatorByAge());
+            case Birthday -> this.familyTree.sort(new ItemFamilyTreeComparatorByBirthday());
+            case Name -> this.familyTree.sort(new ItemFamilyTreeComparatorByName());
+            case Children -> this.familyTree.sort(new ItemFamilyTreeComparatorByChildren());
+        }
     }
 
     public List<ItemFamilyTree<T>> searchByItemFamilyTree(ItemFamilyTree<T> searchItemFamilyTree){
@@ -100,26 +109,17 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("-----У человека [").append(searchItemFamilyTree.getName()).append("]  из семейного дерева-------------");
         stringBuilder.append("\n");
-        for (ItemFamilyTree<T> fd : this.familyTree ){
-           if (fd.equals(searchItemFamilyTree)){
-               if (fd.getChildren() != null){
-                   stringBuilder.append("Есть дети:\n");
-
-                   // список детей
-                   for (ItemFamilyTree<T> itemFamilyTree : fd.getChildren()){
-                       stringBuilder.append(itemFamilyTree.getName()+"("+itemFamilyTree.getAge()+" лет.))");
-                       stringBuilder.append("\t\n");
-
-                   }
-
-               }
-               else{
-                   stringBuilder.append("\nНет детей! ");
-               }
-               stringBuilder.append("----------------------------------------------");
-
+        if (searchItemFamilyTree.getChildren() != null){
+            stringBuilder.append("Есть дети:\n");
+            // список детей
+            for (ItemFamilyTree<T> itemFamilyTree : searchItemFamilyTree.getChildren()){
+                stringBuilder.append(itemFamilyTree.getName()+"("+itemFamilyTree.getAge()+" лет.))");
+                stringBuilder.append("\t\n");
             }
+        }else{
+            stringBuilder.append("\nНет детей! ");
         }
+        stringBuilder.append("----------------------------------------------");
         return stringBuilder;
     }
 
@@ -127,7 +127,7 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
 
     @Override
     public Iterator<ItemFamilyTree<T>> iterator() {
-        return new ItemFamilyTreeIterator();
+        return new ItemFamilyTreeIterator(familyTree);
     }
     public StringBuilder printResult(List<ItemFamilyTree<T>> result){
         StringBuilder stringBuilder = new StringBuilder();

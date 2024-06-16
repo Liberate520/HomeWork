@@ -1,6 +1,7 @@
 package ru.gb.family.jobfiles;
 
 
+
 import ru.gb.family.service.Service;
 
 import java.io.*;
@@ -18,13 +19,13 @@ public class FileHandler implements Writable {
 
     }
     public Object read(String pathFile) {
-        Service service = new Service();
+
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(pathFile));
             return objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            //throw new RuntimeException(e);
-            return Service.newFamilyTree();
+           // throw new RuntimeException(e);
+            return new Service();
         }
 
     }
