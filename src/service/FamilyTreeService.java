@@ -24,21 +24,29 @@ public class FamilyTreeService {
     }
 
     public Person findPersonByName(String name) {
-        return familyTree.findPersonByName(name);
+        for (Person person : familyTree.getMembers()) {
+            if (person.getName().equals(name)) {
+                return person;
+            }
+        }
+        return null;
     }
 
     public List<Person> getChildrenOf(Person parent) {
-        return familyTree.getChildrenOf(parent);
+        return parent.getChildren();
     }
 
     public List<Person> loadFamilyTree() throws IOException {
-        return dataLoader.loadData();
+        List<Person> loadedMembers = dataLoader.loadData();
+        familyTree.setMembers(loadedMembers);
+        return loadedMembers;
     }
 
     public void saveFamilyTree() throws IOException {
         dataSaver.saveData(familyTree.getMembers());
     }
 }
+
 
 
 

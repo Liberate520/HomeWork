@@ -2,38 +2,42 @@ package main;
 
 import model.Person;
 import service.FamilyTreeService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.io.IOException;
-import java.util.List;
 
 public class CommandProcessor {
     private FamilyTreeService service;
     private Scanner scanner;
+    private Map<String, Runnable> commandMap;
 
     public CommandProcessor(FamilyTreeService service) {
         this.service = service;
         this.scanner = new Scanner(System.in);
+        initializeCommands();
+    }
+
+    private void initializeCommands() {
+        commandMap = new HashMap<>();
+        commandMap.put("add", this::addMember);
+        commandMap.put("find", this::findMember);
+        commandMap.put("children", this::getChildrenOf);
+        commandMap.put("exit", () -> System.exit(0));
     }
 
     public void start() {
         while (true) {
             System.out.println("Введите команду (add/find/children/exit):");
             String command = scanner.nextLine();
+            Runnable action = commandMap.get(command);
 
-            switch (command) {
-                case "add":
-                    addMember();
-                    break;
-                case "find":
-                    findMember();
-                    break;
-                case "children":
-                    getChildrenOf();
-                    break;
-                case "exit":
-                    return;
-                default:
-                    System.out.println("Неизвестная команда.");
+            if (action != null) {
+                action.run();
+            } else {
+                System.out.println("Неизвестная команда.");
             }
         }
     }
@@ -89,6 +93,7 @@ public class CommandProcessor {
         }
     }
 }
+
 
 
 

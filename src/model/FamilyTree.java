@@ -15,19 +15,6 @@ public class FamilyTree<T> implements Iterable<T> {
         this.members.add(person);
     }
 
-    public List<Person> getChildrenOf(Person parent) {
-        return parent.getChildren();
-    }
-
-    public T findPersonByName(String name) {
-        for (T person : members) {
-            if (person instanceof Person && ((Person) person).getName().equals(name)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
     public List<T> getMembers() {
         return members;
     }
