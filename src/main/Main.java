@@ -10,6 +10,8 @@ import storage.FileDataSaver;
 import view.ConsoleTreeView;
 import view.TreeView;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         DataLoader dataLoader = new FileDataLoader();
@@ -20,9 +22,23 @@ public class Main {
         TreePresenter presenter = new FamilyTreePresenter(treeView, service);
 
         treeView.setPresenter(presenter);
-        treeView.start();
+
+        CommandProcessor commandProcessor = new CommandProcessor(service);
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Введите команду (add/find/children/exit):");
+            String command = scanner.nextLine();
+
+            if (command.equals("exit")) {
+                System.exit(0);
+            }
+
+            commandProcessor.tryExecute(command);
+        }
     }
 }
+
 
 
 

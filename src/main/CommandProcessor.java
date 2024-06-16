@@ -25,20 +25,18 @@ public class CommandProcessor {
         commandMap.put("add", this::addMember);
         commandMap.put("find", this::findMember);
         commandMap.put("children", this::getChildrenOf);
-        commandMap.put("exit", () -> System.exit(0));
     }
 
-    public void start() {
-        while (true) {
-            System.out.println("Введите команду (add/find/children/exit):");
-            String command = scanner.nextLine();
-            Runnable action = commandMap.get(command);
-
-            if (action != null) {
+    public void tryExecute(String command) {
+        Runnable action = commandMap.get(command);
+        if (action != null) {
+            try {
                 action.run();
-            } else {
-                System.out.println("Неизвестная команда.");
+            } catch (Exception e) {
+                System.out.println("При выполнении команды произошла ошибка: " + e.getMessage());
             }
+        } else {
+            System.out.println("Неизвестная команда.");
         }
     }
 
@@ -93,6 +91,7 @@ public class CommandProcessor {
         }
     }
 }
+
 
 
 
