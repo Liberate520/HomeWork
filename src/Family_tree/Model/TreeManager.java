@@ -3,19 +3,18 @@ package Family_tree.Model;
 import java.util.*;
 
 import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Model.Recorder.Recorder;
 import Family_tree.Model.Tree.Family_tree;
 
 public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
 
     private Family_tree<T> activeTree;
     private List<Family_tree<T>> list;
-    private Service<T> service;
-    private ElementManager<T> elementManager;
+    
+    
 
-    public TreeManager (Service<T> service, ElementManager<T> element){
-        this.service = service;
-        this.elementManager = element;
-        this.activeTree = null; //Ну не верю я в надежность автозаполнения.....
+    public TreeManager (){       
+        this.activeTree = null; //Ну не верю я в надежность автозаполнения.....(тяжелое детство с VB 6.*)
         this.list = new ArrayList<>();
     }
 
@@ -127,16 +126,30 @@ public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean loadTree(String path) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'loadTree'");
+        Recorder recorder = new Recorder();
+        try{
+            Object o = recorder.read(path);
+            Family_tree<T> n = (Family_tree<T>) o;
+            long ID = n.getInnerID();
+            Family_tree<T> old = byInnerIdSearch(ID);
+            if (old != null){
+                this.list.remove(old);
+            }
+            this.list.add(n);
+            this.activeTree = n;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean saveTree(String path) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveTree'");
+    public boolean saveTree(String path) { // Для ActiveTree
+        Recorder recorder = new Recorder();
+        return recorder.save(this.activeTree, path);
     }    
     public Family_tree<T> getActiveTree() {
         return this.activeTree;
