@@ -18,6 +18,8 @@ public class Human implements Endothermal{
     private Gender gender;
     private Human spouse;  
     private Family_tree<Human> tree; 
+    private List<String> oldNames;
+    private boolean changedName;
    
    
     public Human (String name, Gender gender, LocalDate birthDate, Human father, Human mother){
@@ -43,7 +45,9 @@ public class Human implements Endothermal{
             nameValue = nameValue + (long) iterable_element;
         }
         this.innerID = instant.toEpochMilli() + nameValue; 
-        this.children = new ArrayList<>() ;        
+        this.children = new ArrayList<>() ;  
+        this.oldNames = new ArrayList<String>();
+        this.changedName = false;      
     }
     public Human getMother(){
         return this.mother;
@@ -104,6 +108,8 @@ public class Human implements Endothermal{
         StringBuilder sb = new StringBuilder();         
         sb.append("имя: "); 
         sb.append(name);
+        sb.append("\n");
+        sb.append(this.getNameInfo()); //я ещё пожалею об этом
         sb.append(", non: "); 
         sb.append(getGender()); 
         sb.append(", возраст: ");
@@ -198,6 +204,25 @@ public class Human implements Endothermal{
         this.tree = value;
     }
  //__________________________________________________________   
-
+    public boolean hasOldName(){
+        return this.changedName;
+    }
+    public void changeName(String value){
+        this.oldNames.add(this.name);
+        this.name = value;
+        this.changedName = true;
+    }
+    public String getNameInfo(){
+        if (this.changedName == false){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder(); 
+        sb.append("Предыдущие имена:\n");
+        for (String string : oldNames) {
+            sb.append(string);            
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
    
 }
