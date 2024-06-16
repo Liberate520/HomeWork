@@ -1,4 +1,8 @@
-import ru.gb.family_tree.*;
+import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.save.FileHandler;
+import ru.gb.family_tree.save.Writable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,6 +13,13 @@ public class Main implements Serializable {
 //        FamilyTree tree = testTree();
         FamilyTree tree = load(filePath);
         System.out.println(tree);
+
+//        tree.sortByName();
+//        System.out.println(tree);
+//
+//        tree.sortByBirthdate();
+//        System.out.println(tree);
+
 
 //        save(tree, filePath);
     }
