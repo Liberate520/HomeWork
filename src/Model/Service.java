@@ -1,6 +1,7 @@
 package Model;
 
 import Model.FileHandlerFilse.FileHandler;
+import Model.FileHandlerFilse.Writable;
 import Model.OrganismTree.PersonsTree.FamilyTree;
 import Model.Organisms.Mammals.Persons.Enums.Gender;
 import Model.Organisms.Mammals.Persons.Person;
@@ -11,11 +12,12 @@ import java.util.HashMap;
 
 public class Service implements Serializable{
     private FamilyTree<Person> familyTree;
-    private FileHandler fileHandler;
+    private Writable fileHandler;
 
     //конструктор
     public Service() {
         familyTree = new FamilyTree();
+        fileHandler = new FileHandler();
     }
 
     //методы
@@ -90,7 +92,6 @@ public class Service implements Serializable{
     }
 
     public void load() {
-        fileHandler = new FileHandler();
         fileHandler.load();
     }
 
