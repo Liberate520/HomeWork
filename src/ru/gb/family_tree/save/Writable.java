@@ -1,4 +1,4 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.save;
 
 import java.io.Serializable;
 
