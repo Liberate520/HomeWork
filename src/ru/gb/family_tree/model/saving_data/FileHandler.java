@@ -1,60 +1,59 @@
-package ru.gb.family_tree.saving_data;
+package ru.gb.family_tree.model.saving_data;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import ru.gb.family_tree.tree.FamilyTree;
+import java.io.Serializable;
 
 public class FileHandler implements Writable {
 
-    public FileHandler(Object obj) {
+    /*
+     * public FileHandler(Object obj) {
+     * }
+     * 
+     * @Override
+     * public void write_object(Object obj, String target) throws
+     * FileNotFoundException, IOException {
+     * ObjectOutputStream objectOutputStream = new ObjectOutputStream(new
+     * FileOutputStream(target));
+     * objectOutputStream.writeObject(obj);
+     * objectOutputStream.close();
+     * }
+     * 
+     * @SuppressWarnings("rawtypes")
+     * 
+     * @Override
+     * public FamilyTree read_object(String target) throws FileNotFoundException,
+     * IOException, ClassNotFoundException {
+     * Object obj;
+     * ObjectInputStream objectInputStream = new ObjectInputStream(new
+     * FileInputStream(target));
+     * obj = objectInputStream.readObject();
+     * objectInputStream.close();
+     * return (FamilyTree) obj;
+     * }
+     */
+
+    public void write_object(Serializable obj, String target) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(target))) {
+            objectOutputStream.writeObject(obj);
+            System.out.println("Файл успешно сохранён!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void write_object(Object obj, String target) throws FileNotFoundException, IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(target));
-        objectOutputStream.writeObject(obj);
-        objectOutputStream.close();
+    public Object read_object(String target) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(target))) {
+            return objectInputStream.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    @SuppressWarnings("rawtypes")
-    @Override
-    public FamilyTree read_object(String target) throws FileNotFoundException, IOException, ClassNotFoundException {
-        Object obj;
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(target));
-        obj = objectInputStream.readObject();
-        objectInputStream.close();
-        return (FamilyTree) obj;
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // @Override
 // // public void write_object(Object obj, String target) throws

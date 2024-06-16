@@ -1,15 +1,15 @@
-package ru.gb.family_tree.service;
+package ru.gb.family_tree.model.service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-import ru.gb.family_tree.builder.ItemBuilder;
-import ru.gb.family_tree.item.FamilyTreeItem;
-import ru.gb.family_tree.item.Gender;
-import ru.gb.family_tree.tree.FamilyTree;
-import ru.gb.family_tree.saving_data.*;
+import ru.gb.family_tree.model.builder.ItemBuilder;
+import ru.gb.family_tree.model.item.FamilyTreeItem;
+import ru.gb.family_tree.model.item.Gender;
+import ru.gb.family_tree.model.saving_data.*;
+import ru.gb.family_tree.model.tree.FamilyTree;
 
 public class Service<E extends FamilyTreeItem<E>> {
     private String name;
@@ -17,7 +17,7 @@ public class Service<E extends FamilyTreeItem<E>> {
     private LocalDate birthDate;
     private FamilyTree<E> tree;
     private ItemBuilder<E> itemBuilder;
-    private FamilyTreeItem<E> item;
+    private E item;
     private String storage;
     private Writable writable;
 
@@ -28,13 +28,12 @@ public class Service<E extends FamilyTreeItem<E>> {
         // storage = "I:/000 Geek Brains/ОСНОВНОЙ КУРС
         // ПРОГРАММИРОВАНИЕ/Объектно-ориентированное
         // программирование/homeWork/family_tree.out";
-        storage = "../../../../../family_tree.out";
-        writable = new FileHandler(tree);
+        storage = "src/family_tree.out"; //"../../../../../family_tree.out";
+        writable = new FileHandler();
     }
 
-    @SuppressWarnings("unchecked")
-    public void addItem(String name, Gender gender, LocalDate birthDate) {
-        tree.add((E) itemBuilder.build(name, gender, birthDate));
+    public void addItem(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, E father, E mother) {
+        tree.add(itemBuilder.build(name, gender, birthDate, deathDate, father, mother));
     }
 
     public void sortByName() {
@@ -54,16 +53,16 @@ public class Service<E extends FamilyTreeItem<E>> {
     }
 
     @SuppressWarnings("unchecked")
-    public FamilyTree<E> readTree() throws FileNotFoundException, ClassNotFoundException, IOException {
-        tree = writable.read_object(storage);
+    public FamilyTree<E> loadTree() throws FileNotFoundException, ClassNotFoundException, IOException {
+        tree = (FamilyTree<E>) writable.read_object(storage);
         return tree;
     }
 
-    public List<FamilyTreeItem<E>> getSiblings(long id) { // Поиск братьев и сестёр...
+    public List<E> getSiblings(long id) { // Поиск братьев и сестёр...
         return tree.getSiblings(id);
     }
 
-    public List<FamilyTreeItem<E>> getByName(String name) {
+    public List<E> getByName(String name) {
         return tree.getByName(name);
     }
 
@@ -79,7 +78,7 @@ public class Service<E extends FamilyTreeItem<E>> {
         return tree.remove(id);
     }
 
-    public FamilyTreeItem<E> getById(long id) {
+    public E getById(long id) {
         return tree.getById(id);
     }
 
@@ -91,4 +90,5 @@ public class Service<E extends FamilyTreeItem<E>> {
     public String toString() {
         return tree.getInfo();
     }
+
 }

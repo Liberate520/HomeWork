@@ -1,9 +1,11 @@
-import java.time.LocalDate;
+// import java.time.LocalDate;
 
-import ru.gb.family_tree.item.FamilyTreeItem;
-import ru.gb.family_tree.item.Gender;
-import ru.gb.family_tree.item.Human;
-import ru.gb.family_tree.service.Service;
+// import ru.gb.family_tree.model.item.FamilyTreeItem;
+// import ru.gb.family_tree.model.item.Gender;
+// import ru.gb.family_tree.model.item.Human;
+// import ru.gb.family_tree.model.service.Service;
+import ru.gb.family_tree.view.ConsoleUI;
+import ru.gb.family_tree.view.View;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -55,7 +57,7 @@ public class Main {
         // // System.out.println("ПРОВЕРКА СОРТИРОВКИ ПО СЕМЕЙНОМУ ПОЛОЖЕНИЮ\n");
         // // System.out.println(tree);
 
-        Service<Human> tree = new Service<>();
+        /*Service<Human> tree = new Service<>();
 
         tree.addItem("Василий", Gender.Male, LocalDate.of(1963, 12, 11));
         tree.addItem("Мария", Gender.Female, LocalDate.of(1965, 9, 29));
@@ -90,7 +92,11 @@ public class Main {
         System.out.println("ПОСЛЕ СОРТИРОВКИ ПО ИМЕНИ:\n" + tree);
 
         tree.sortBySpouse();
-        System.out.println("ПОСЛЕ СОРТИРОВКИ ПО СЕМЕЙНОМУ ПОЛОЖЕНИЮ:\n" + tree); 
+        System.out.println("ПОСЛЕ СОРТИРОВКИ ПО СЕМЕЙНОМУ ПОЛОЖЕНИЮ:\n" + tree); */
+
+        @SuppressWarnings("rawtypes")
+        View view = new ConsoleUI();
+        view.start();        
 
     }
 }

@@ -1,8 +1,8 @@
-package ru.gb.family_tree.item.comparators;
+package ru.gb.family_tree.model.item.comparators;
 
 import java.util.Comparator;
 
-import ru.gb.family_tree.item.FamilyTreeItem;
+import ru.gb.family_tree.model.item.FamilyTreeItem;
 
 public class ItemComparatorBySpouse<E extends FamilyTreeItem<E>> implements Comparator<E> {
     @Override

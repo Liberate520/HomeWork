@@ -1,30 +1,29 @@
-package ru.gb.family_tree.item;
+package ru.gb.family_tree.model.item;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeItem<E>> {
+public class FamilyTreeItem<E> implements Serializable {
     protected long id;
     protected String name;
-    protected List<FamilyTreeItem<E>> parents;
-    protected List<FamilyTreeItem<E>> children;
+    protected List<E> parents;
+    protected List<E> children;
     protected LocalDate birthDate, deathDate;
     protected Gender gender;
-    protected FamilyTreeItem<E> spouse;
-    protected FamilyTreeItem<E> father;
-    protected FamilyTreeItem<E> mother;
+    protected E spouse;
+    protected E father;
+    protected E mother;
 
     public FamilyTreeItem(long id,
             String name,
             Gender gender,
             LocalDate birthDate,
             LocalDate deathDate,
-            FamilyTreeItem<E> father,
-            FamilyTreeItem<E> mother) {
+            E father,
+            E mother) {
 
         this.id = id;
         this.name = name;
@@ -53,13 +52,13 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
             String name,
             Gender gender,
             LocalDate birthDate,
-            FamilyTreeItem<E> father,
-            FamilyTreeItem<E> mother) {
+            E father,
+            E mother) {
 
         this(id, name, gender, birthDate, null, father, mother);
     }
 
-    public boolean addChild(FamilyTreeItem<E> child) {
+    public boolean addChild(E child) {
         if (!children.contains(child)) {
             children.add(child);
             return true;
@@ -67,7 +66,7 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
         return false;
     }
 
-    public boolean addParent(FamilyTreeItem<E> parent) {
+    public boolean addParent(E parent) {
         if (!parents.contains(parent) && parents.size() < 2) { /// && parents.size() < 2 ДОБАВИЛ Я
             parents.add(parent);
             return true;
@@ -75,18 +74,20 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
         return false;
     }
 
-    public FamilyTreeItem<E> getMother() {
-        for (FamilyTreeItem<E> parent : parents) {
-            if (parent.getGender() == Gender.Female) {
+    @SuppressWarnings("rawtypes")
+    public E getMother() {
+        for (E parent : parents) {
+            if (((FamilyTreeItem) parent).getGender() == Gender.Female) {
                 return parent;
             }
         }
         return null;
     }
 
-    public FamilyTreeItem<E> getFather() {
-        for (FamilyTreeItem<E> parent : parents) {
-            if (parent.getGender() == Gender.Male) {
+    @SuppressWarnings("rawtypes")
+    public E getFather() {
+        for (E parent : parents) {
+            if (((FamilyTreeItem) parent).getGender() == Gender.Male) {
                 return parent;
             }
         }
@@ -106,44 +107,48 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
         return diff.getYears();
     }
 
+    @SuppressWarnings("rawtypes")
     public String getSpouseInfo() {
         String res = "супруг[а]: ";
         if (spouse == null) {
             res += "нет";
         } else {
-            res += spouse.getName();
+            res += ((FamilyTreeItem) spouse).getName();
         }
         return res;
     }
 
+    @SuppressWarnings("rawtypes")
     public String getMotherInfo() {
         String res = "мать: ";
         if (mother == null) {
             res += "неизвестна";
         } else {
-            res += mother.getName();
+            res += ((FamilyTreeItem) mother).getName();
         }
         return res;
     }
 
+    @SuppressWarnings("rawtypes")
     public String getFatherInfo() {
         String res = "отец: ";
         if (father == null) {
             res += "неизвестен";
         } else {
-            res += father.getName();
+            res += ((FamilyTreeItem) father).getName();
         }
         return res;
     }
 
+    @SuppressWarnings("rawtypes")
     public String getChildrenInfo() {
         StringBuilder res = new StringBuilder();
         res.append("дети: ");
         if (children.size() != 0) {
-            res.append(children.get(0).getName()); /// ОТ ЭТОГО МОЖНО ИЗБАВИТЬСЯ, НАВЕРНО???
+            res.append(((FamilyTreeItem) children.get(0)).getName()); /// ОТ ЭТОГО МОЖНО ИЗБАВИТЬСЯ, НАВЕРНО???
             for (int i = 1; i < children.size(); i++) {
                 res.append(", "); /// ВОТ ТУТ БУДЕТ НЕМНОГО НЕКРАСИВО
-                res.append(children.get(i).getName());
+                res.append(((FamilyTreeItem) children.get(i)).getName());
             }
         } else {
             res.append("отсутствуют");
@@ -151,11 +156,11 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
         return res.toString();
     }
 
-    public void setSpouse(FamilyTreeItem<E> spouse) {
+    public void setSpouse(E spouse) {
         this.spouse = spouse;
     }
 
-    public FamilyTreeItem<E> getSpouse() {
+    public E getSpouse() {
         return spouse;
     }
 
@@ -179,11 +184,11 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
         return deathDate;
     }
 
-    public List<FamilyTreeItem<E>> getParents() {
+    public List<E> getParents() {
         return parents;
     }
 
-    public List<FamilyTreeItem<E>> getChildren() {
+    public List<E> getChildren() {
         return children;
     }
 
@@ -225,7 +230,7 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
         return sb.toString();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -234,12 +239,8 @@ public class FamilyTreeItem<E> implements Serializable, Comparator<FamilyTreeIte
         if (!(obj instanceof FamilyTreeItem)) {
             return false;
         }
-        FamilyTreeItem<E> item = (FamilyTreeItem<E>) obj;
-        return item.getId() == getId();
+        E item = (E) obj;
+        return ((FamilyTreeItem) item).getId() == getId();
     }
 
-    @Override
-    public int compare(FamilyTreeItem<E> o1, FamilyTreeItem<E> o2) {
-        return o1.getName().compareTo(o2.getName());
-    }
 }
