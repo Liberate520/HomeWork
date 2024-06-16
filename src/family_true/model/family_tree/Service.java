@@ -31,6 +31,17 @@ public class Service {
         this.external = new FileHandler(this);
     }
 
+    public Service(Externalizable external) {
+        this(new FamilyTreeGroup(), new FamilyTreeBuilder(), external);
+        external.setService(this);
+    }
+
+    public Service(FamilyTreeGroup<Human> familyTreeGroup, FamilyTreeBuilder familyTreeBuilder, Externalizable external) {
+        this.familyTreeGroup = familyTreeGroup;
+        this.familyTreeBuilder = familyTreeBuilder;
+        this.external = external;
+    }
+
     public FamilyTreeGroup getFamilyTreeGroup() {
         return familyTreeGroup;
     }

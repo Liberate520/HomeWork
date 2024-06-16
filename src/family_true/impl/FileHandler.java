@@ -22,12 +22,20 @@ public class FileHandler implements Externalizable {
     private String outputDir;
     private Service service;
 
+    public FileHandler() {
+        this(OUTPUT_DIR_DEFAULT, null);
+    }
+
     public FileHandler(Service service) {
         this(OUTPUT_DIR_DEFAULT, service);
     }
 
     public FileHandler(String outputDir, Service service) {
         this.outputDir = outputDir;
+        this.service = service;
+    }
+
+    public void setService(Service service) {
         this.service = service;
     }
 

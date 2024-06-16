@@ -24,7 +24,7 @@ public class Main {
     }
 
     public static void testData() {
-        Service service = new Service();
+        Service service = new Service(new FileHandler());
 
         Human father0 = new Human("Степан", "Юрьевич", "Степанов", Gender.MALE, LocalDate.of(1956, 1, 1));
         Human mother0 = new Human("Марина", "Ильинична", "Степанова", Gender.FEMALE, LocalDate.of(1958, 5, 5));

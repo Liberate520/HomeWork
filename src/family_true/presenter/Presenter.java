@@ -7,6 +7,7 @@
 
 package family_true.presenter;
 
+import family_true.impl.FileHandler;
 import family_true.model.family_tree.Service;
 import family_true.model.human.Gender;
 import family_true.model.human.Human;
@@ -21,7 +22,7 @@ public class Presenter {
 
     public Presenter (View view) {
         this.view = view;
-        this.service = new Service();
+        this.service = new Service(new FileHandler());
     }
 
     public void addEntity(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay, LocalDate deathDay) {

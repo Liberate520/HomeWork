@@ -8,12 +8,15 @@
 package family_true.api;
 
 import family_true.model.family_tree.FamilyTree;
+import family_true.model.family_tree.Service;
 import family_true.model.human.Human;
 
 import java.io.Serializable;
 import java.util.List;
 
 public interface Externalizable extends Serializable {
+
+    void setService(Service service);
 
     /**
      * Запись в файл
