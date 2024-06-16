@@ -8,8 +8,12 @@ import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Recorder.Recorder;
 
 
-public abstract class Service<T extends Endothermal>  {
+public /*abstract*/ class Service<T extends Endothermal>  {
 
+
+
+
+/* Усё в топку (сопли до полу)
     public abstract List<Family_tree<T>> getTreeList();
     public Family_tree<T> getTree(int index){
         return getTreeList().get(index);
@@ -100,4 +104,5 @@ public abstract class Service<T extends Endothermal>  {
         return sb.toString();
     }  
     public abstract String addToTree(String name, Gender gender, LocalDate birthDate);
+*/
 }

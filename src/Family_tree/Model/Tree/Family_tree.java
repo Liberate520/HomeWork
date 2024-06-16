@@ -27,7 +27,11 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
         }
         this.innerID = instant.toEpochMilli() + nameValue;            
     } 
-
+    //new for members join______________________________________________________
+    public void setMemberList(List<T> value){
+        this.list = value;
+    }
+    //______________________________________________________________________________
     public String getFamily(){ return this.family; }    
     
     @Override

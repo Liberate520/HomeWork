@@ -14,6 +14,10 @@ public interface TreeManagment<T extends Endothermal> {
     boolean deleteTree(Family_tree<T> tree);
     boolean loadTree(String path);
     boolean saveTree(String path);
-    boolean getActiveTree();
+    int getActiveTreeIndex();
+    long getActiveTreeInnerID();
+    boolean haveActiveTree();
+    boolean join(Family_tree<T> tree1, Family_tree<T> tree2);
+  /*boolean divide(); Разделение древа по веткам. Пока идей как это сделать - нет */
     String getInfo(); //для ActiveTree
 }
