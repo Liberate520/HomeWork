@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
+import Family_tree.Model.Tree.Family_tree;
+
 
 
 public class Human implements Endothermal{
@@ -14,8 +16,9 @@ public class Human implements Endothermal{
     private List<Human> children;
     private LocalDate birthDate, deathDate;  
     private Gender gender;
-    private Human spouse;   
-    
+    private Human spouse;  
+    private Family_tree<Human> tree; 
+   
    
     public Human (String name, Gender gender, LocalDate birthDate, Human father, Human mother){
         this(name, gender, birthDate);
@@ -88,9 +91,7 @@ public class Human implements Endothermal{
 
     public List<Human> getChildren() { return children; }
     public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
-    public void setDeathDate(LocalDate deathDate) {         
-        this.deathDate = deathDate; 
-    }
+    public void setDeathDate(LocalDate deathDate) {  this.deathDate = deathDate;  }
     public Gender getGender(){ return gender; }    
 
     @Override 
@@ -180,13 +181,23 @@ public class Human implements Endothermal{
         children.add(child);
         return true;
     }
-    
 
     @Override
     public int compareTo(Endothermal o) {
-        return Long.compare(this.innerID, o.getInnerID());
-       
+        return (int) (this.getInnerID() - o.getInnerID());
     }
+/*Добавлено для обратной связи */
+    @Override
+    public long getTreeID() {
+        return this.tree.getInnerID();
+    }
+    public Family_tree<Human> getTree(){
+        return this.tree;
+    }
+    public void setTree(Family_tree<Human> value){
+        this.tree = value;
+    }
+ //__________________________________________________________   
 
    
 }

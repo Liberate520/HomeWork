@@ -1,6 +1,6 @@
 package Family_tree.Model.Tree;
 import java.io.Serializable;
-
+import java.time.Instant;
 import java.util.*;
 
 import Family_tree.Model.Humans.ComparatorByAge;
@@ -14,11 +14,18 @@ import Family_tree.Model.Recorder.Recorder;
 public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Serializable{
     private List<T> list;    
     private String family;
-    
+    private long innerID;
 
     public Family_tree(String family){
+        long nameValue = 0;
+        Instant instant = Instant.now(); 
         list = new ArrayList<>(); 
-        this.family = family;            
+        this.family = family; 
+        char[] chars = family.toCharArray();
+        for (char iterable_element : chars) {
+            nameValue = nameValue + (long) iterable_element;
+        }
+        this.innerID = instant.toEpochMilli() + nameValue;            
     } 
 
     public String getFamily(){ return this.family; }    
@@ -119,7 +126,7 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
         Recorder recorder = new Recorder();
         System.out.println(recorder.save(this, path));
     }
-
+    public long getInnerID(){return this.innerID;}
     
 
     

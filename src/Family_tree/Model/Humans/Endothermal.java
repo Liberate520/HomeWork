@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 
+
+
 public interface Endothermal extends Serializable, Comparable<Endothermal> {
     
     Endothermal getMother();  
@@ -16,5 +18,6 @@ public interface Endothermal extends Serializable, Comparable<Endothermal> {
     String getName();
     String getInfo();
     String getChildrenlnfo();   
-    long getInnerID();
+    long getInnerID();    
+    long getTreeID();
 }
