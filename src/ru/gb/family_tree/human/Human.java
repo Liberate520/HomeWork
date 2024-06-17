@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable  {
     private long id;
     private String name;
     private String lastName;
@@ -155,60 +155,25 @@ public class Human implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
+      public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public LocalDate getDateOfDeath() {
-        return dateOfDeath;
-    }
-
-    public void setDateOfDeath(LocalDate dateOfDeath) {
-        this.dateOfDeath = dateOfDeath;
     }
 
     public List<Human> getParents() {
         return parents;
     }
 
-    public void setParents(List<Human> parents) {
-        this.parents = parents;
-    }
-
     public List<Human> getChildren() {
         return children;
     }
-
-    public void setChildren(List<Human> children) {
-        this.children = children;
-    }
-
-    //    public Human(String иван, String гагарин) {
-//    }
 
     @Override
     public String toString() {

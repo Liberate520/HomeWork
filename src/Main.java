@@ -1,8 +1,9 @@
-import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.family_tree.TreeNode;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.save.FileHandler;
 import ru.gb.family_tree.save.Writable;
+import ru.gb.family_tree.family_tree.FamilyTree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,8 +11,8 @@ import java.time.LocalDate;
 public class Main implements Serializable {
     public static void main (String[] args) {
         String filePath = "src\\ru\\gb\\family_tree\\tree.txt";
-//        FamilyTree tree = testTree();
-        FamilyTree tree = load(filePath);
+        FamilyTree tree = testTree();
+//        FamilyTree tree = load(filePath);
         System.out.println(tree);
 
 //        tree.sortByName();
@@ -38,7 +39,7 @@ public class Main implements Serializable {
     private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
-        Human vanya = new Human("Иван", "Золотов", Gender.мужской,
+          Human vanya = new Human("Иван", "Золотов", Gender.мужской,
                 LocalDate.of(1901, 01, 12));
         Human vasilisa = new Human("Василиса", "Премудрая",
                 Gender.женский, LocalDate.of(1903, 11, 02));
