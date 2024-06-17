@@ -4,29 +4,30 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class FamilyTreeService extends FamilyTree<Node> {
-    private final IOOperations<Node> ioOperations;
+public class FamilyTreeService {
+    private final FamilyTree<Node> familyTree;
+    private final TreeIO<Node> ioOperations; // Используем интерфейс TreeIO
 
-    public FamilyTreeService() {
-        super(); // Вызов конструктора суперкласса FamilyTree<Node>()
-        this.ioOperations = new FileIO<>();
+    public FamilyTreeService(TreeIO<Node> ioOperations) {
+        this.familyTree = new FamilyTree<>();
+        this.ioOperations = ioOperations; // Инициализируем через переданный интерфейс
     }
 
     // Метод для добавления узла
     public void addNode(String name, String gender, LocalDate birthDate) {
         Node node = new Node(name, Gender.valueOf(gender), birthDate);
-        super.addNode(node); // Использование метода addNode из суперкласса
+        familyTree.addNode(node);
     }
 
     // Метод для удаления узла
     public boolean removeNode(String name) {
-        return super.removeNode(name); // Использование метода removeNode из суперкласса
+        return familyTree.removeNode(name);
     }
 
     // Метод для сохранения дерева в файл
     public void saveTreeToFile(String filename) {
         try {
-            super.saveTreeToFile(filename); // Использование метода saveTreeToFile из суперкласса
+            ioOperations.saveTree(familyTree.getNodes(), filename); // Используем ioOperations для сохранения
         } catch (IOException e) {
             e.printStackTrace();
             // Логгирование ошибки
@@ -34,32 +35,36 @@ public class FamilyTreeService extends FamilyTree<Node> {
     }
 
     // Метод для загрузки дерева из файла
-    public void loadTreeFromFile(String filename) {
+    public List<Node> loadTreeFromFile(String filename) {
         try {
-            super.loadTreeFromFile(filename); // Использование метода loadTreeFromFile из суперкласса
+            List<Node> nodes = ioOperations.loadTree(filename); // Используем ioOperations для загрузки
+            for (Node node : nodes) {
+                familyTree.addNode(node);
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             // Логгирование ошибки
         }
+        return null;
     }
 
     // Метод для сортировки узлов по имени
     public void sortByName() {
-        super.sortByName(); // Использование метода sortByName из суперкласса
+        familyTree.sortByName();
     }
 
     // Метод для сортировки узлов по дате рождения
     public void sortByBirthDate() {
-        super.sortByBirthDate(); // Использование метода sortByBirthDate из суперкласса
+        familyTree.sortByBirthDate();
     }
 
     // Метод для получения всех узлов
     public List<Node> getAllNodes() {
-        return super.getNodes(); // Использование метода getNodes из суперкласса
+        return familyTree.getNodes();
     }
 
     // Метод для печати дерева
     public void printTree() {
-        super.printTree(); // Использование метода printTree из суперкласса
+        familyTree.printTree();
     }
 }

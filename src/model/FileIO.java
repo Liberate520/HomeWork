@@ -3,7 +3,7 @@ import Presenter.*;
 import java.io.*;
 import java.util.List;
 
-public class FileIO<T extends Node> implements IOOperations<T> {
+public class FileIO<T extends Node> extends IOOperations<T> {
 
     @Override
     public void saveTree(List<T> nodeList, String filename) throws IOException {

@@ -1,19 +1,15 @@
 package model;
 
-import Presenter.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.io.IOException;
 
 public class FamilyTree<T extends Node> implements Iterable<T> {
     private List<T> nodeList;
-    private IOOperations<T> ioOperations;
 
     public FamilyTree() {
         this.nodeList = new ArrayList<>();
-        this.ioOperations = new FileIO<>();
     }
 
     public void addNode(T node) {
@@ -31,14 +27,6 @@ public class FamilyTree<T extends Node> implements Iterable<T> {
             }
         }
         return false;
-    }
-
-    public void saveTreeToFile(String filename) throws IOException {
-        ioOperations.saveTree(nodeList, filename);
-    }
-
-    public void loadTreeFromFile(String filename) throws IOException, ClassNotFoundException {
-        this.nodeList = ioOperations.loadTree(filename);
     }
 
     public void printTree() {
@@ -64,4 +52,3 @@ public class FamilyTree<T extends Node> implements Iterable<T> {
         return nodeList;
     }
 }
-
