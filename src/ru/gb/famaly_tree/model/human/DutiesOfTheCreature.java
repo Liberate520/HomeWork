@@ -1,4 +1,4 @@
-package ru.gb.famaly_tree.human;
+package ru.gb.famaly_tree.model.human;
 
 import java.time.LocalDate;
 import java.util.List;

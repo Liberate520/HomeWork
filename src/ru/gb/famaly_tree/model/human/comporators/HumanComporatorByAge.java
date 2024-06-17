@@ -1,4 +1,6 @@
-package ru.gb.famaly_tree.human;
+package ru.gb.famaly_tree.model.human.comporators;
+
+import ru.gb.famaly_tree.model.human.DutiesOfTheCreature;
 
 import java.util.Comparator;
 

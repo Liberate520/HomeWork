@@ -1,6 +1,9 @@
-package ru.gb.famaly_tree.ft;
+package ru.gb.famaly_tree.model.ft;
 
-import ru.gb.famaly_tree.human.*;
+import ru.gb.famaly_tree.model.human.*;
+import ru.gb.famaly_tree.model.human.comporators.HumanComporatorByAge;
+import ru.gb.famaly_tree.model.human.comporators.HumanComporatorByChildrenCount;
+import ru.gb.famaly_tree.model.human.comporators.HumanComporatorByName;
 
 import java.io.Serializable;
 import java.util.*;
@@ -8,6 +11,7 @@ import java.util.*;
 public class Famaly_tree<T extends DutiesOfTheCreature<T>> implements Serializable, Iterable<T> {
     private T founder;
     private List<T> humanList = new ArrayList<>();
+    private List<List<T>> couplList = new ArrayList<>();
 
     //добваление ребенка к родителю
     public void addThisInThis(T child, T parent){
@@ -31,6 +35,9 @@ public class Famaly_tree<T extends DutiesOfTheCreature<T>> implements Serializab
             T child = childrenList.remove();
             stringBuilder.append("\n");
             stringBuilder.append("У "+child.getName());
+            if(findSpouse(child)!=null){
+                stringBuilder.append(" и " + findSpouse(child).getName());
+            }
             if (!persona.getChildren().isEmpty()){
                 stringBuilder.append(" дети: ");
                 for (T childchild : child.getChildren()){
@@ -45,6 +52,7 @@ public class Famaly_tree<T extends DutiesOfTheCreature<T>> implements Serializab
     //добваление ключегого члена дерева
     public void addFounder(T founderOfFamalyTree){
         founder = founderOfFamalyTree;
+        humanList.add(founderOfFamalyTree);
     }
     //возварат ключегого члена дерева
     public T GetFounder(){
@@ -52,13 +60,53 @@ public class Famaly_tree<T extends DutiesOfTheCreature<T>> implements Serializab
     }
     //создание пар
     public void coupl(T man, T woman){
+        List<T> temporaryHumanList = man.getChildren();
         man.addChildren(woman.getChildren());
+        woman.addChildren(temporaryHumanList);
+
         for(T child : woman.getChildren()){
             child.addFather(man);
             addUniqueHuman(child);
         }
+
+        for(T child : temporaryHumanList){
+            child.addMother(woman);
+            addUniqueHuman(child);
+        }
+
         addUniqueHuman(man);
         addUniqueHuman(woman);
+
+        List<T> temporaryCouplList = new ArrayList<>();
+        temporaryCouplList.add(man);
+        temporaryCouplList.add(woman);
+        couplList.add(temporaryCouplList);
+    }
+
+    public List<List<T>> outputCouplList(){
+        return couplList;
+    }
+
+    public Human searchByName(String name){
+        for(int i =0; i<humanList.size();i++){
+            //System.out.println(name+"__"+humanList.get(i).getName());
+            if (humanList.get(i).getName().equals(name)){
+                return (Human) humanList.get(i);
+            }
+        }
+        return null;
+    }
+
+    private T findSpouse(T human){
+        for(int i = 0; i<couplList.size(); i++){
+            if (couplList.get(i).get(0).equals(human)){
+                return (T) couplList.get(i).get(1);
+            }
+            else if (couplList.get(i).get(1).equals(human)) {
+                return (T) couplList.get(i).get(0);
+            }
+        }
+        return null;
     }
 
     private void addUniqueHuman(T human){

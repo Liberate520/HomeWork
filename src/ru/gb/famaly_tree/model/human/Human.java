@@ -1,4 +1,4 @@
-package ru.gb.famaly_tree.human;
+package ru.gb.famaly_tree.model.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ public class Human implements Serializable, DutiesOfTheCreature<Human>{
         private List<Human> children = new ArrayList<>();
         private Gender gender;
         private boolean isHeLive = false;
-        private String childStringOutput;
+        //private String childStringOutput;
 
         public void addMother(Human mother){
                 this.mother = mother;

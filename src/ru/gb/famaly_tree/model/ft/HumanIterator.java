@@ -1,7 +1,6 @@
-package ru.gb.famaly_tree.ft;
+package ru.gb.famaly_tree.model.ft;
 
-import ru.gb.famaly_tree.human.DutiesOfTheCreature;
-import ru.gb.famaly_tree.human.Human;
+import ru.gb.famaly_tree.model.human.DutiesOfTheCreature;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,6 +1,6 @@
-package ru.gb.famaly_tree.filehandler;
+package ru.gb.famaly_tree.model.filehandler;
 
-import ru.gb.famaly_tree.ft.Famaly_tree;
+import ru.gb.famaly_tree.model.ft.Famaly_tree;
 
 import java.io.*;
 
