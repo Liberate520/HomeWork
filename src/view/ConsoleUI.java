@@ -1,22 +1,38 @@
+
 package view;
 
+import model.human.Gender;
+import model.human.Human;
 import presenter.Presenter;
+import view.commands.*;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+import model.service.Service;
 
 public class ConsoleUI implements View {
-    private static final String INPUT_ERROR = "Вы ввели неверное значение";
-    private Scanner scanner;
     private Presenter presenter;
-    private boolean work;
-    private MainMenu menu;
+    private Scanner scanner;
+    private boolean isWorking;
+    private MainMenu mainMenu;
+    private Service service;
 
-    public ConsoleUI() {
-        scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
-        work = true;
-        menu = new MainMenu(this);
+    public ConsoleUI(Service service) {
+        this.service = service;
+        this.presenter = new Presenter(this);
+        this.scanner = new Scanner(System.in);
+        this.isWorking = true;
+        this.mainMenu = new MainMenu(this, service); // Передаем service
+    }
+
+    @Override
+    public void start() {
+        System.out.println("Добро пожаловать!");
+        while (isWorking) {
+            System.out.println(mainMenu.printMenu());
+            String choice = scanner.nextLine();
+            mainMenu.execute(choice);
+        }
     }
 
     @Override
@@ -24,18 +40,69 @@ public class ConsoleUI implements View {
         System.out.println(text);
     }
 
-    @Override
-    public void start() {
-        hello();
-        while (work) {
-            printMenu();
-            execute();
+    public void addMember() {
+        System.out.println("Введите имя:");
+        String name = scanner.nextLine();
+        System.out.println("Введите пол (Male/Female):");
+        Gender gender = Gender.valueOf(scanner.nextLine());
+        System.out.println("Введите дату рождения (YYYY-MM-DD):");
+        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+        presenter.addHuman(name, gender, birthDate);
+    }
+
+
+    public void addChild() {
+        System.out.println("Введите ID родителя:");
+        long parentId = Long.parseLong(scanner.nextLine());
+        System.out.println("Введите имя ребёнка:");
+        String name = scanner.nextLine();
+        System.out.println("Введите пол ребёнка (Male/Female):");
+        Gender gender = Gender.valueOf(scanner.nextLine());
+        System.out.println("Введите дату рождения ребёнка (YYYY-MM-DD):");
+        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+        boolean added = service.addChild(parentId, name, gender, birthDate);
+        if (added) {
+            System.out.println("Ребёнок успешно добавлен.");
+        } else {
+            System.out.println("Не удалось добавить ребёнка.");
         }
     }
 
+    public void loadTree() {
+        System.out.println("Введите путь к файлу:");
+        String path = scanner.nextLine();
+        presenter.loadTree(path);
+    }
+
+    public void saveTree() {
+        System.out.println("Введите путь к файлу:");
+        String path = scanner.nextLine();
+        presenter.saveTree(path);
+    }
+
+    public void setWedding() {
+        System.out.println("Введите ID первого человека:");
+        long id1 = Long.parseLong(scanner.nextLine());
+        System.out.println("Введите ID второго человека:");
+        long id2 = Long.parseLong(scanner.nextLine());
+        presenter.setWedding(id1, id2);
+    }
+
+    public void setDivorce() {
+        System.out.println("Введите ID первого человека:");
+        long id1 = Long.parseLong(scanner.nextLine());
+        System.out.println("Введите ID второго человека:");
+        long id2 = Long.parseLong(scanner.nextLine());
+        presenter.setDivorce(id1, id2);
+    }
+
     public void finish() {
-        System.out.println("Приятно было пообщаться");
-        work = false;
+        isWorking = false;
+        System.out.println("До свидания!");
+    }
+
+    public void getTreeInfo() {
+        presenter.getTreeInfo();
     }
 
     public void sortByBirthDate() {
@@ -46,57 +113,12 @@ public class ConsoleUI implements View {
         presenter.sortByName();
     }
 
-    public void getTreeInfo() {
-        presenter.getTreeInfo();
+    public Scanner getScanner() {
+        return scanner;
     }
 
-    public void addMember() {
-        System.out.println("Введите имя члена семьи");
-        String name = scanner.nextLine();
-        System.out.println("Укажите пол (Male/Female)");
-        model.writer.human.Gender gender = model.writer.human.Gender.valueOf(scanner.nextLine());
-        System.out.println("Укажите дату рождения (yyyy-MM-dd)");
-        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
-        presenter.addMember(name, gender, birthDate);
-    }
-
-    private void hello() {
-        System.out.println("Доброго времени суток!");
-    }
-
-    private void execute() {
-        String line = scanner.nextLine();
-        if (checkTextForInt(line)) {
-            int numCommand = Integer.parseInt(line);
-            if (checkCommand(numCommand)) {
-                menu.execute(numCommand);
-            }
-        }
-    }
-
-    private boolean checkTextForInt(String text) {
-        if (text.matches("[0-9]+")) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
-
-    private boolean checkCommand(int numCommand) {
-        if (numCommand <= menu.getSize()) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
-
-    private void printMenu() {
-        System.out.println(menu.menu());
-    }
-
-    private void inputError() {
-        System.out.println(INPUT_ERROR);
+    public Human getParentById(long parentId) {
+        return service.getTree().getById(parentId);
     }
 }
+

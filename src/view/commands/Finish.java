@@ -2,10 +2,11 @@ package view.commands;
 
 import view.ConsoleUI;
 
-public class Finish extends Command {
+public class Finish implements Command {
+    private ConsoleUI consoleUI;
+
     public Finish(ConsoleUI consoleUI) {
-        super(consoleUI);
-        description = "Завершить работу";
+        this.consoleUI = consoleUI;
     }
 
     @Override

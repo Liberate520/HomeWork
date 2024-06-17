@@ -1,6 +1,7 @@
-package model.writer.human;
 
-import model.writer.family_tree.TreeNode;
+package model.human;
+
+import model.family_tree.TreeNode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -17,6 +18,11 @@ public class Human implements Serializable, TreeNode<Human> {
     private List<Human> parents;
     private List<Human> children;
     private Human spouse;
+
+//    private int childrenCount;
+//    private String fatherName;
+//    private String motherName;
+
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         id = -1;
@@ -75,6 +81,7 @@ public class Human implements Serializable, TreeNode<Human> {
         }
         return null;
     }
+
 
     public int getAge(){
         if(deathDate == null){

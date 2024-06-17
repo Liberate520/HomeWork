@@ -1,20 +1,31 @@
-import model.writer.family_tree.FamilyTree;
-import model.writer.FileHandler;
-import model.writer.human.Gender;
-import model.writer.human.Human;
-import model.writer.Writable;
+import model.service.Service;
 import view.ConsoleUI;
-import view.View;
-
-import java.time.LocalDate;
 
 
 public class Main {
     public static void main(String[] args) {
-        View view = new ConsoleUI();
-        view.start();
+        Service service = new Service(); // Создаем экземпляр Service
+        ConsoleUI consoleUI = new ConsoleUI(service); // Передаем service в ConsoleUI
+        consoleUI.start(); // Запускаем консольный интерфейс
     }
 }
+
+
+//import model.writer.human.Gender;
+//import model.writer.human.Human;
+//import model.writer.Writable;
+//import view.ConsoleUI;
+//import view.View;
+//
+//import java.time.LocalDate;
+//
+//
+//public class Main {
+//    public static void main(String[] args) {
+//        View view = new ConsoleUI();
+//        view.start();
+//    }
+//}
 
 //public class Main {
 //    public static void main(String[] args) {

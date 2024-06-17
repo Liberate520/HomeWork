@@ -2,15 +2,15 @@ package view.commands;
 
 import view.ConsoleUI;
 
-public class AddMember implements Command {
+public class SaveTree implements Command {
     private ConsoleUI consoleUI;
 
-    public AddMember(ConsoleUI consoleUI) {
+    public SaveTree(ConsoleUI consoleUI) {
         this.consoleUI = consoleUI;
     }
 
     @Override
     public void execute() {
-        consoleUI.addMember();
+        consoleUI.saveTree();
     }
 }

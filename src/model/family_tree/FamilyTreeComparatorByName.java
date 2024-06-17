@@ -1,10 +1,10 @@
-package model.writer.family_tree;
+package model.family_tree;
 
 import java.util.Comparator;
 
-public class FamilyTreeComparatorByName<T extends TreeNode<T>> implements Comparator<T> {
+public class FamilyTreeComparatorByName<E extends TreeNode<E>> implements Comparator<E> {
     @Override
-    public int compare(T o1, T o2) {
+    public int compare(E o1, E o2) {
         return o1.getName().compareTo(o2.getName());
     }
 }

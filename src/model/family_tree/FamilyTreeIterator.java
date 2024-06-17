@@ -1,20 +1,23 @@
-package model.writer.family_tree;
+package model.family_tree;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator<T extends TreeNode<T>> implements Iterator<T> {
-    private List<T> list;
+public class FamilyTreeIterator<E> implements Iterator<E> {
     private int index;
+    private List<E> humanList;
 
-    public FamilyTreeIterator(List<T> list) {
-        this.list = list;
-        index = 0;
+    public FamilyTreeIterator(List<E> humanList) {
+        this.humanList = humanList;
     }
 
     @Override
-    public boolean hasNext() {return index < list.size(); }
+    public boolean hasNext() {
+        return index < humanList.size();
+    }
 
     @Override
-    public T next() {return list.get(index++);}
+    public E next() {
+        return humanList.get(index++);
+    }
 }

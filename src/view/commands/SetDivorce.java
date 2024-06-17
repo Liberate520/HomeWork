@@ -2,15 +2,15 @@ package view.commands;
 
 import view.ConsoleUI;
 
-public class AddMember implements Command {
+public class SetDivorce implements Command {
     private ConsoleUI consoleUI;
 
-    public AddMember(ConsoleUI consoleUI) {
+    public SetDivorce(ConsoleUI consoleUI) {
         this.consoleUI = consoleUI;
     }
 
     @Override
     public void execute() {
-        consoleUI.addMember();
+        consoleUI.setDivorce();
     }
 }
