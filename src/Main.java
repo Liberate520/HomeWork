@@ -8,11 +8,14 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
       
-      
-     
-      View<Human> view = new HumanView();
-      view.start();
-
-      
+      System.out.println("_________________________________________________");
+      HumanManager humanManager = new HumanManager(null);
+      System.out.println(humanManager.getInDependentList());
+      System.out.println("_________________________________________________");
+      System.out.println(humanManager.getTreeDependentList());
+      System.out.println("_________________________________________________");
+      System.out.println(humanManager.getelementDependentList());
+      System.out.println("_________________________________________________");
+      System.out.println(humanManager.getFullDependentList());
     }
 }

@@ -72,6 +72,7 @@ public abstract class Presenter<T extends Endothermal> {
     public String addToTree(String name, Gender gender, LocalDate birthDate){
         return getService().addToTree(name, gender, birthDate);
     }
+    public abstract String showActiveSubjectInfo();
 
     
 

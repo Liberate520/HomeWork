@@ -4,6 +4,7 @@ import Family_tree.Model.Humans.Endothermal;
 import Family_tree.Model.Tree.Family_tree;
 
 public interface ElementManagment<T extends Endothermal> {
+    boolean ActiveTreeIsEmpty();
     boolean newSubject(String name, String gender, String bd);
     boolean addToTree(T subject); //для ActiveTree
     boolean addToTree(T subject, Family_tree<T> tree);

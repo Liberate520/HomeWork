@@ -12,13 +12,29 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
     private T activeElement;
     private Family_tree<T> activeTree;
     private String FormateDate = "d.MM.yyyy";
+    private boolean isActiveTreeEmpty;
     //private TreeManager<T> treeManager;
     
 
     public ElementManager (/*TreeManager<T> treeManager*/){       
         this.activeElement = null;
         this.activeTree = null;
+        this.isActiveTreeEmpty = true;
         //this.treeManager = treeManager;
+    }
+    public void setFormateDate(String value){
+        this.FormateDate = value;
+    }
+
+    public String getFormateDate(){
+        return this.FormateDate;
+    }
+    
+    public boolean ActiveTreeIsEmpty(){
+        if (activeTree == null || activeTree.getMemberList().isEmpty()){
+            return true;
+        }
+        return false;
     }
 
     abstract T newSubject(String name, Gender gender, LocalDate bd);
@@ -35,7 +51,7 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
 
     private LocalDate strToDate(String value){
         try{
-            DateTimeFormatter formatter =DateTimeFormatter.ofPattern(value);
+            DateTimeFormatter formatter =DateTimeFormatter.ofPattern(FormateDate);
             LocalDate d = LocalDate.parse(value, formatter);
             return d;
         } catch (Exception e){
@@ -50,6 +66,7 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
         }
         activeTree.add(subject);
         activeElement = subject;
+        this.isActiveTreeEmpty = false;
         return true;
     }
 
