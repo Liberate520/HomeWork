@@ -17,14 +17,7 @@ public class Service {
     public String getHumanListInfo(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Person List\n");
-
-        //System.out.println(this.familyTree.humanList.get(0).getName());
         for(Human human: familyTree){
-            //System.out.println(this.familyTree.humanList.get(0).getName());
-            //System.out.println("==================================================");
-            //System.out.println(this.familyTree.getAllInfo());
-            //System.out.println("==================================================");
-
             stringBuilder.append(human.toString());
             stringBuilder.append("\n");
         }

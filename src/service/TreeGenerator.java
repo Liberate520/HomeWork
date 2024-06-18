@@ -58,25 +58,14 @@ public class TreeGenerator {
         humansArrayList.add(new Human(getRandomName(NameType.nameMale), getRandomName(NameType.lastName),  LocalDate.of(1750,1,10), LocalDate.of(1820,3,1), Gender.Male));
         humansArrayList.add(new Human(getRandomName(NameType.nameFamale), humansArrayList.get(0).getLastName(),  LocalDate.of(1755,5,15), LocalDate.of(1820,12,13), Gender.Female,null,null, humansArrayList.get(0)));
 
-        //tree.add(humansArrayList.get(0));
-        //tree.add(humansArrayList.get(1));
-
         int startID = 0, endID = humansArrayList.size();
-        //System.out.println(humansArrayList.size());
-        //System.out.println(startID);
-        //System.out.println(humansArrayList.size());
+
 
 
         for(int g = 1; g < 8; g++){ // цикл поколений
-            //System.out.println("gen"+g);
             for(int h = startID; h < endID; h++){ //проходим по людям в поколении. для каждой женщины генерирует детей
-                //System.out.println(h);
-                //System.out.println(getFertilePeriod(humansArrayList.get(h)));
-                //long fertilPeriod = getFertilePeriod(humansArrayList.get(h));
                 if(getFertilePeriod(humansArrayList.get(h)) != 0 && humansArrayList.get(h).getGender() == Gender.Female) { // усли девушка и дожила до репродуктивного возраста
-                    //System.out.println(startID);
                     int childCount = rnd.nextInt(Math.toIntExact(getFertilePeriod(humansArrayList.get(h))/2)-1); // кол-во детей в семье
-                    //System.out.println(childCount);
                     for (int i = 0; i < childCount; i++) {
                         Gender gender;
                         if (rnd.nextBoolean()) {
@@ -88,25 +77,13 @@ public class TreeGenerator {
                         tmpBD = humansArrayList.get(h).getDateOfBirth();
                         tmpBD = tmpBD.plusDays((rnd.nextInt(7300) + 5840));
                         humansArrayList.add(new Human(getRandomName(gender), humansArrayList.get(h).getSpouse().getLastName(), tmpBD, tmpBD.plusDays(rnd.nextInt(36500)), gender, humansArrayList.get(h), humansArrayList.get(h).getSpouse()));
-                        //tree.add(humansArrayList.get(endID + i));
-                        /*
-                        LocalDate db = humansArrayList.get(2+i).getDateOfBirth();
-                        LocalDate dd = humansArrayList.get(2+i).getDateOfDeath();
-                        long res = ChronoUnit.DAYS.between(db, dd);
-                        System.out.println(res/365 + " " + (res%365)/12);
-                         */
-
-                        //генерируем супругов
-                        //if()
                     }
                 }
             }
             startID = endID;
             endID = humansArrayList.size();
-            //System.out.println(humansArrayList.size());
             for(int h = startID; h < endID; h++) { // проходим по детям в поколении, генерируем супругов
                 if(getFertilePeriod(humansArrayList.get(h)) != 0) { // если человек дожил до репродуктивного возраста то генерим супругов
-                    //System.out.println(getFertilePeriod(humansArrayList.get(h)));
                     Gender gender;
                     String lastName;
                     if(humansArrayList.get(h).getGender() == Gender.Male){
@@ -126,16 +103,11 @@ public class TreeGenerator {
                     }
                 }
             }
-            //startID = endID;
             endID = humansArrayList.size();
-            //System.out.println(startID +"-"+humansArrayList.size());
-
         }
         for (int i =0; i < humansArrayList.size(); i++){
             tree.add(humansArrayList.get(i));
         }
-        //System.out.println(humansArrayList.size());
-
         return tree;
     }
     private enum NameType{

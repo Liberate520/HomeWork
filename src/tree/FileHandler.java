@@ -11,7 +11,6 @@ public class FileHandler implements Writable {
         try{
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
             objectOutputStream.writeObject((serializable));
-            //objectOutputStream.close();
             return  true;
         } catch (Exception e){
             e.printStackTrace();
@@ -25,7 +24,6 @@ public class FileHandler implements Writable {
         try{
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName));
             return objectInputStream.readObject();
-            //objectInputStream.close();
         } catch (Exception e){
             e.printStackTrace();
             return null;

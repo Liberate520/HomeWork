@@ -44,8 +44,6 @@ public class Main {
         return (FamilyTree) writable.read((fileName));
 
         //tree.FamilyTree tree = (tree.FamilyTree) rw.readTree("Gluhov_ft.dat");
-
-        //System.out.println(tree.getAllInfo());
     }
     private static FamilyTree createTree(){
         FamilyTree tree = new FamilyTree();

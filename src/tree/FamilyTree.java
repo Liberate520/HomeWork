@@ -101,7 +101,6 @@ public class FamilyTree implements Serializable, Iterable<Human>{
         outHTML.append(humanList.get(i).getHTML());
 
         outHTML.append("</ul>");
-        //System.out.println(outHTML.toString());
         try {
             FileWriter writer = new FileWriter("output.html");
             writer.write(outHTML.toString());
