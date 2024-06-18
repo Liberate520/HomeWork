@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import Family_tree.Model.Humans.Human;
-import Family_tree.Presenter.Presenter;
+import Family_tree.Presenter.*;
 
 public class HumanManager extends FunctionManager<Human> { //консольная версия
 
@@ -15,10 +15,10 @@ public class HumanManager extends FunctionManager<Human> { //консольна�
     private Map<String, String> elementDependentDesc = super.getSubjectdependentMap() ;    
     private Map<String, String> treeDependentDesc = super.getTreedependentMap() ;
     private Map<String, String> inDependentDesc = super.getIndependentMap() ;
-    Presenter<Human> presenter;
+    HumanPresenter presenter;
     Scanner scanner;
 
-    public HumanManager(Presenter<Human> presenter, Scanner scanner) {
+    public HumanManager(HumanPresenter presenter, Scanner scanner) {
         super(presenter, scanner);
         this.treeDependentDesc.put("/mm", "Зарегистрировать брак");
         this.treeDependentDesc.put("/dd", "Расторгнуть брак");
@@ -87,5 +87,21 @@ public class HumanManager extends FunctionManager<Human> { //консольна�
         System.out.println("Укажите номер");
         return presenter.selectTree(Integer.parseInt(scanner.nextLine()) );
     };
+
+    public String setMarriage(){
+        System.out.println("Укажите номер для жениха");
+        int id1 = Integer.parseInt(scanner.nextLine());
+        System.out.println("Укажите номер для невесты");
+        int id2 = Integer.parseInt(scanner.nextLine());
+        return presenter.setMarriage(id1, id2);
+    }
+
+    public String delMarriage(){
+        System.out.println("Укажите номер мужа");
+        int id1 = Integer.parseInt(scanner.nextLine());
+        System.out.println("Укажите номер жены");
+        int id2 = Integer.parseInt(scanner.nextLine());
+        return presenter.delMarriage(id1, id2);
+    }
 
 }

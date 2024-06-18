@@ -11,6 +11,7 @@ import Family_tree.Model.Service;
 import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Tree.Family_tree;
+import Family_tree.View.ActionLevel;
 import Family_tree.View.HumanView;
 import Family_tree.View.View;
 
@@ -18,11 +19,12 @@ public class HumanPresenter extends Presenter<Human> {
     private HumanService service;
     private Family_tree<Human> activeTree;
     private HumanView view;
-    
+    private ActionLevel level;
+
     public HumanPresenter(HumanView view){
         service = new HumanService();
         this.view = view;
-       
+       this.level = ActionLevel.TreeLevel;
     }
     @Override
     public View<Human> getView() {
@@ -34,8 +36,12 @@ public class HumanPresenter extends Presenter<Human> {
     public Service<Human> getService() {
         return this.service;
     }
-    public boolean setMarriage(int male, int female){
-        return service.setMarriage(activeTree.getItem(female), activeTree.getItem(male));
+
+    public String setMarriage(int male, int female){ // В замыслах браки между семьями
+        if (service.setMarriage(activeTree.getItem(female), activeTree.getItem(male))){
+            return "OK";
+        }
+        return "Регистрация не удалась";
     }
 
     @Override
@@ -122,5 +128,10 @@ public class HumanPresenter extends Presenter<Human> {
     public boolean newChild(String nane, Gender gender, LocalDate birthDate, int idfather, int idmother){
         return service.newChild(nane, gender, birthDate, idfather, idmother);
     }
+    public String delMarriage(int id1, int id2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delMarriage'");
+    }
+  
 
 }

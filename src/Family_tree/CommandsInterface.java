@@ -1,4 +1,4 @@
-package Family_tree.View;
+package Family_tree;
 
 public interface CommandsInterface {
     

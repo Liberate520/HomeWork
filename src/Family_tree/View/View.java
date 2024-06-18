@@ -4,8 +4,12 @@ import Family_tree.Model.Humans.Endothermal;
 import Family_tree.Presenter.Presenter;
 
 public abstract class View<T extends Endothermal> {
+    private ActionLevel level = ActionLevel.TreeLevel;
     public abstract void start();
     public abstract Presenter<T> getPresenter(); 
+    public ActionLevel getActionLevel(){
+        return level;
+    }
     
      
 }
