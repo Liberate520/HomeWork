@@ -238,8 +238,6 @@ public class Human implements Serializable, Comparable<Human> {
                 //", spouse=" + spouse +
                 '}';
     }
-
-
     @Override
     public int compareTo(Human o) {
         return name.compareTo(o.name);

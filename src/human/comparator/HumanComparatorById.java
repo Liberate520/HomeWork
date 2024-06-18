@@ -9,4 +9,5 @@ public class HumanComparatorById implements Comparator<Human> {
     public int compare(Human o1, Human o2) {
         return Integer.compare((int)o1.getId(), (int)o2.getId());
     }
+
 }

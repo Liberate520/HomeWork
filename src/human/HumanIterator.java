@@ -21,4 +21,5 @@ public class HumanIterator implements Iterator<Human>{
     public Human next() {
         return humanList.get(currentId++);
     }
+
 }

@@ -9,4 +9,5 @@ public class HumanComparatorByDateOfDeath implements Comparator<Human> {
     public int compare(Human o1, Human o2) {
         return o1.getDateOfDeath().compareTo(o2.getDateOfDeath());
     }
+
 }
