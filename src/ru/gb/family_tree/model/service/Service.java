@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Service {
     private FamilyTree<Human> familyTree;
 
+
     public Service() {
        familyTree = new FamilyTree<>();
 
@@ -55,14 +56,14 @@ public class Service {
         spouseSecond.setSpouse(spouseFirst);
     }
 
-    public void saveFileByte(FamilyTree familyTree) throws IOException {
+    public void saveFileByte(Tree familyTree) throws IOException {
         Writable saveFile = new SaveFile();
         saveFile.saveFileByte(familyTree);
     }
 
     public void loadFileByte() throws IOException, ClassNotFoundException {
         Readable readFile = new ReadFile();
-        familyTree =readFile.loadFileByte();
+        familyTree = readFile.loadFileByte();
     }
 
     public String getFamilyTreeInfo(){
