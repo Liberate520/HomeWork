@@ -17,6 +17,7 @@ public class HumanManager extends FunctionManager<Human> { //консольна�
     private Map<String, String> inDependentDesc = super.getIndependentMap() ;
     HumanPresenter presenter;
     Scanner scanner;
+    private ActionLevel level;
 
     public HumanManager(HumanPresenter presenter, Scanner scanner) {
         super(presenter, scanner);
@@ -26,6 +27,7 @@ public class HumanManager extends FunctionManager<Human> { //консольна�
         this.treeDependentNames.put("/dd", "delMarriage");
         this.inDependentDesc.put("/aa", "Список доступных команд");
         this.inDependentNames.put("/aa", "getListUsageAction");
+        this.level = ActionLevel.NoLevel;
     }
 
     public String setDeathDate() {
@@ -102,6 +104,14 @@ public class HumanManager extends FunctionManager<Human> { //консольна�
         System.out.println("Укажите номер жены");
         int id2 = Integer.parseInt(scanner.nextLine());
         return presenter.delMarriage(id1, id2);
+    }
+
+    public void setLevel(ActionLevel level){
+        this.level = level;
+    }
+
+    public ActionLevel getLevel(){
+        return this.level;
     }
 
 }
