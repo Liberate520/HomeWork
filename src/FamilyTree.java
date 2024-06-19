@@ -1,11 +1,16 @@
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree  implements Serializable {
-    List<Human> humans = new ArrayList<>();
+public class FamilyTree  implements Serializable, Iterable<Human> {
+    private final List<Human> humans;
+    public FamilyTree(){this(new ArrayList<>()); }
+    public FamilyTree(List<Human> humans){this.humans = humans;}
     public void addHuman(Human human){
         humans.add(human);
         if(human.getMother() != null){
@@ -15,7 +20,6 @@ public class FamilyTree  implements Serializable {
             human.getFather().addChild(human);
         }
     }
-
 
 
     public String getHumansInfo(){
@@ -28,5 +32,17 @@ public class FamilyTree  implements Serializable {
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
+    }
+
+    public void sortByName(){
+        humans.sort(new HumanComparatorByName());
+    }
+    public void sortByBirthDate(){
+        humans.sort(new HumanComparatorByBirthDate());
+    }
+
+    @Override
+    public @NotNull Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humans);
     }
 }

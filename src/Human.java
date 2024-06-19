@@ -1,7 +1,10 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Human implements Serializable {
@@ -24,8 +27,6 @@ public class Human implements Serializable {
         this.father = father;
         this.spouse = spouse;
     }
-
-
 
     public Human(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate, null, null, null, null);

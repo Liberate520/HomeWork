@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
@@ -6,7 +7,11 @@ public class Main {
         String file = "src/tree.txt";
         FamilyTree tree = finalTree();
 //        FamilyTree tree = load(file);
+        tree.sortByName();
         System.out.println(tree.getHumansInfo());
+        tree.sortByBirthDate();
+        System.out.println(tree.getHumansInfo());
+
         save(tree, file);
     }
 
@@ -41,6 +46,8 @@ public class Main {
         tree.addHuman(egor);
 
         return tree;
+
     }
+
 }
 
