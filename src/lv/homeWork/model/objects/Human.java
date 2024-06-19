@@ -1,13 +1,12 @@
 package lv.homeWork.model.objects;
 
 import lv.homeWork.model.Gender;
-import lv.homeWork.model.interfaces.TreeNode;
+import lv.homeWork.model.ObjectRelations;
+import lv.homeWork.model.AgeCalculator;
+import lv.homeWork.model.GenerationCalculator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.time.Period;
 
 public class Human implements Serializable, TreeNode<Human> {
 
@@ -15,123 +14,46 @@ public class Human implements Serializable, TreeNode<Human> {
     private Gender gender;
     private LocalDate dateOfBirth;
     private LocalDate dateOfDeath;
-    private List<Human> parents;
-    private List<Human> childrens;
-    private Human married;
+    private ObjectRelations objectRelations;
     private int passportID;
     private long personID;
     private int generation;
-
 
     public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human mother, Human father) {
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.dateOfDeath = dateOfDeath;
-        parents = new ArrayList<>();
-        childrens = new ArrayList<>();
+        this.objectRelations = new ObjectRelations();
         this.passportID = passportID;
         this.personID = -1;
         this.generation = -1;
-        if(father != null){
-            parents.add(father);
+        if (father != null) {
+            objectRelations.addParent(father);
         }
-        if (mother != null){
-            parents.add(mother);
+        if (mother != null) {
+            objectRelations.addParent(mother);
         }
-        setGeneration();
-
+        GenerationCalculator.setGeneration(this);
     }
 
-    public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth){
-        this.name = name;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfDeath = null;
-        parents = new ArrayList<>();
-        childrens = new ArrayList<>();
-        this.married = null;
-        this.passportID = passportID;
-        this.personID = -1;
-        this.generation = -1;
-        setGeneration();
+    public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth) {
+        this(passportID, name, gender, dateOfBirth, null, null);
     }
 
-    public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth, Human mother, Human father ){
-        this.name = name;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfDeath = null;
-        parents = new ArrayList<>();
-        childrens = new ArrayList<>();
-        this.married = null;
-        this.passportID = passportID;
-        this.personID = -1;
-        this.generation = -1;
-        if(father != null){
-            parents.add(father);
-        }
-        if (mother != null){
-            parents.add(mother);
-        }
-        setGeneration();
+    public Human(Integer passportID, String name, Gender gender, LocalDate dateOfBirth, Human mother, Human father) {
+        this(passportID, name, gender, dateOfBirth, null, mother, father);
     }
 
-    public List<Human> getParents() {
-        return parents;
-    }
-
-    public List<Human> getChildrens() {
-        return childrens;
-    }
-
-
-
-    public void addChild(Human child) {
-        if (child != null) {
-            childrens.add(child);
-            child.addParent(this);
-            child.setGeneration();
-        }
-    }
-
-    private void addParent(Human parent) {
-        if (parent != null) {
-            parents.add(parent);
-        }
-    }
-
-    public Human getFather() {
-        for (Human parent : parents) {
-            if (parent.getGender() == Gender.Male) {
-                return parent;
-            }
-        }
-        return null;
-    }
-
-    public Human getMother() {
-        for (Human parent : parents) {
-            if (parent.getGender() == Gender.Female) {
-                return parent;
-            }
-        }
-        return null;
+    public ObjectRelations getObjectRelations() {
+        return objectRelations;
     }
 
     public int getHumanAge() {
-        LocalDate currentDate = LocalDate.now();
-        Period period = Period.between(dateOfBirth, currentDate);
-        return period.getYears();
+        return AgeCalculator.calculateAge(dateOfBirth, dateOfDeath);
     }
 
-    public void setMarried(Human spouse) {
-        this.married = spouse;
-        if (spouse != null && spouse.getMarried() != this) {
-            spouse.setMarried(this);
-        }
-    }
-
+    @Override
     public String getName() {
         return name;
     }
@@ -140,6 +62,7 @@ public class Human implements Serializable, TreeNode<Human> {
         this.name = name;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
@@ -148,6 +71,7 @@ public class Human implements Serializable, TreeNode<Human> {
         this.gender = gender;
     }
 
+    @Override
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
@@ -156,6 +80,7 @@ public class Human implements Serializable, TreeNode<Human> {
         this.dateOfBirth = dateOfBirth;
     }
 
+    @Override
     public LocalDate getDateOfDeath() {
         return dateOfDeath;
     }
@@ -164,10 +89,7 @@ public class Human implements Serializable, TreeNode<Human> {
         this.dateOfDeath = dateOfDeath;
     }
 
-    public Human getMarried() {
-        return married;
-    }
-
+    @Override
     public long getPassportID() {
         return passportID;
     }
@@ -176,6 +98,7 @@ public class Human implements Serializable, TreeNode<Human> {
         this.passportID = passportID;
     }
 
+    @Override
     public long getPersonID() {
         return personID;
     }
@@ -184,54 +107,40 @@ public class Human implements Serializable, TreeNode<Human> {
         this.personID = personID;
     }
 
+    @Override
     public int getGeneration() {
         return generation;
     }
 
-    public void setGeneration() {
-        if (parents.isEmpty()) {
-            this.generation = 0;
-        } else {
-            int maxParentGeneration = 0;
-            for (Human parent : parents) {
-                if (parent.getGeneration() > maxParentGeneration) {
-                    maxParentGeneration = parent.getGeneration();
-                }
-            }
-            this.generation = maxParentGeneration + 1;
-        }
-        for (Human child : childrens) {
-            child.setGeneration();
-        }
+    @Override
+    public void setGeneration(int generation) {
+        this.generation = generation;
     }
 
+    @Override
+    public Human getMarried() {
+        return objectRelations.getMarried();
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         return getInfo();
     }
 
-    public String getInfo(){
+    @Override
+    public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Generation: ");
-        sb.append(getGeneration());
-        sb.append(" / Passport ID: ");
-        sb.append(passportID);
-        sb.append(" / Name: ");
-        sb.append(name);
-        sb.append(" / Gender: ");
-        sb.append(getGender());
-        sb.append(" / Age ");
-        sb.append(getHumanAge());
+        sb.append("Generation: ").append(getGeneration());
+        sb.append(" / Passport ID: ").append(passportID);
+        sb.append(" / Name: ").append(name);
+        sb.append(" / Gender: ").append(getGender());
+        sb.append(" / Age: ").append(getHumanAge());
         sb.append(" / Mother: ");
-        Human mother = getMother();
+        Human mother = objectRelations.getMother();
         sb.append(mother != null ? mother.getName() : "Unknown");
         sb.append(" / Father: ");
-        Human father = getFather();
+        Human father = objectRelations.getFather();
         sb.append(father != null ? father.getName() : "Unknown");
         return sb.toString();
     }
-
-
-
 }

@@ -1,6 +1,6 @@
 package lv.homeWork.model.comparators_iterators;
 
-import lv.homeWork.model.interfaces.TreeNode;
+import lv.homeWork.model.objects.TreeNode;
 
 import java.util.Comparator;
 

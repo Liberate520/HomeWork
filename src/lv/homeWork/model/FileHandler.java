@@ -1,7 +1,5 @@
 package lv.homeWork.model;
 
-import lv.homeWork.model.interfaces.Writable;
-
 import java.io.*;
 
 public class FileHandler implements Writable {
