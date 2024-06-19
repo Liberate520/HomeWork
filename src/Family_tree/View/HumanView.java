@@ -20,7 +20,7 @@ public class HumanView extends View<Human> {
     }   
 
     @Override
-    public Presenter<Human> getPresenter() {
+    public Presenter getPresenter() {
         return this.presenter;
     }    
 
@@ -32,10 +32,10 @@ public class HumanView extends View<Human> {
     //________________________________________________________________________________________________
     
     public void intro() {
-        System.out.println("На старте доступны команды:");
+        System.out.println("На старте доступны команды:"); 
         manager.setLevel(ActionLevel.NoLevel);
         System.out.println(manager.getInDependentList());
-        System.out.println("После создания древа добавятся:");
+        System.out.println("После создания или выбора древа добавятся:");
         System.out.println(manager.getTreeDependentList());
         System.out.println("После создания или выбора человека добавятся:");
         System.out.println(manager.getelementDependentList());

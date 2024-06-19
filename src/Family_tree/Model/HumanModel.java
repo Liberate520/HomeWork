@@ -1,71 +1,69 @@
-package Family_tree.Presenter;
+package Family_tree.Model;
 
-import Family_tree.Model.HumanModel;
-import Family_tree.Model.Model;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import Family_tree.Model.Humans.Human;
-import Family_tree.Model.Tree.Family_tree;
 import Family_tree.View.ActionLevel;
-import Family_tree.View.HumanView;
 
+public class HumanModel extends Model<Human> {
 
-public class HumanPresenter extends Presenter {
-    
-    private Family_tree<Human> activeTree;
-    private HumanView view;
+    private TreeManager<Human> treeModel;
+    private ElementManager<Human> humanManagerClass;
     private ActionLevel level;
-    private Human activeSubject;
-    private Model model;
 
-
-    public HumanPresenter(HumanView humanView){
-        this.view = humanView;
-        this.activeTree = null;
+    public HumanModel(){
+        this.treeModel = new TreeManager<>();
+        this.humanManagerClass = new HumanManagerClass();
         this.level = ActionLevel.NoLevel;
-        this.activeSubject = null;
-        this.model = new HumanModel();        
-        
-    }
-
-
-
-
-    public String setMarriage(int maleID, int femaleID){
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectTree'");
-    }
-
-    public String delMarriage(int maleID, int femaleID){
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectTree'");
     }
 
     @Override
-    public String selectTree(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectTree'");
+    public void setTreeModel(TreeManager<Human> treeModel) {
+        this.treeModel = treeModel;
     }
 
     @Override
-    public String setDeathDate(String text) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDeathDate'");
+    public void setSubjectModel(ElementManager<Human> subjectModel) {
+        this.humanManagerClass = subjectModel;
     }
 
     @Override
-    public String saveTree(String text) {
+    public boolean selectTree(int index) {
+        this.level = ActionLevel.TreeLevel;
+        return this.treeModel.setActiveTree(index);
+    }
+
+    private LocalDate dayFromText(String value){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
+        LocalDate day = LocalDate.parse(value, formatter);
+        return day;
+    }
+
+    @Override
+    public boolean setDeathDate(String text) {
+        if (this.level == ActionLevel.SubjectLevel){
+            HumanManagerClass manager = (HumanManagerClass) this.humanManagerClass;
+            return manager.setDeathDate(dayFromText(text));
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean saveTree(String text) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'saveTree'");
     }
 
     @Override
-    public String addToTree(String name, String gender, String birhday) {
+    public boolean addToTree(String name, String gender, String birhday) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addToTree'");
     }
 
     @Override
-    public String newChild(String name, String gender, String birhday, int IDFather, int IDMother) {
+    public boolean newChild(String name, String gender, String birhday, int IDFather, int IDMother) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'newChild'");
     }
@@ -83,7 +81,7 @@ public class HumanPresenter extends Presenter {
     }
 
     @Override
-    public String loadTree(String text) {
+    public boolean loadTree(String text) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'loadTree'");
     }
@@ -95,13 +93,13 @@ public class HumanPresenter extends Presenter {
     }
 
     @Override
-    public String removeMember() {
+    public boolean removeMember() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'removeMember'");
     }
 
     @Override
-    public String removeTree() {
+    public boolean removeTree() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'removeTree'");
     }
@@ -117,19 +115,5 @@ public class HumanPresenter extends Presenter {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTreeList'");
     }
-
-    @Override
-    public Model getModel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getModel'");
-    }
-
-    @Override
-    public void setModel(Model value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setModel'");
-    }
-
-    
 
 }

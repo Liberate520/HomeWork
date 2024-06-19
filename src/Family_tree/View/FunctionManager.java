@@ -17,10 +17,10 @@ public abstract class FunctionManager<T extends Endothermal> implements Commands
     private Map<String, String> elementDependentDesc;
     private Map<String, String> treeDependentDesc;
     private Map<String, String> inDependentDesc;
-    private Presenter<T> presenter;
+    private Presenter presenter;
     private Scanner sc;
 
-    public FunctionManager(Presenter<T> presenter, Scanner sc) {
+    public FunctionManager(Presenter presenter, Scanner sc) {
         this.sc = sc;
         this.presenter = presenter;
         elementDependentDesc = new HashMap<String, String>() {
