@@ -1,4 +1,6 @@
-package human;
+package model.human;
+
+import model.tree.TreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, TreeItem<Human> {
 
     private long id;
     private String name;
@@ -49,6 +51,7 @@ public class Human implements Serializable, Comparable<Human> {
     public Human (String name, String lastName, LocalDate dateOfBirth,LocalDate dateOfDeath, Gender gender){
         this(name, lastName, dateOfBirth, dateOfDeath, gender, null, null);
     }
+
     // get\set
     public long  getId() {
         return id;
@@ -91,7 +94,11 @@ public class Human implements Serializable, Comparable<Human> {
         }
     }
     public int getAge(){
-        return (int)ChronoUnit.YEARS.between(dateOfBirth, dateOfDeath);
+        if(dateOfDeath!=null) {
+            return (int) ChronoUnit.YEARS.between(dateOfBirth, dateOfDeath);
+        }else{
+            return (int) ChronoUnit.YEARS.between(dateOfBirth, LocalDate.now());
+        }
     }
 
     public Gender getGender() {
@@ -225,7 +232,7 @@ public class Human implements Serializable, Comparable<Human> {
 
     @Override
     public String toString() {
-        return "human.Human{" +
+        return "model.human.Human{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +

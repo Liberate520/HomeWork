@@ -1,6 +1,4 @@
-package tree;
-
-import tree.FamilyTree;
+package model.tree;
 
 import java.io.*;
 import java.io.Serializable;
@@ -17,7 +15,6 @@ public class FileHandler implements Writable {
             return false;
         }
     }
-
     @Override
     public Object read(String fileName) {
         FamilyTree tree = new FamilyTree();

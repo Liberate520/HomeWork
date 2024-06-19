@@ -1,13 +1,11 @@
-package service;
+package model.service;
 
-import human.Gender;
-import human.Human;
-import tree.FamilyTree;
+import model.human.Gender;
+import model.human.Human;
+import model.tree.FamilyTree;
 
 import java.time.*;
 import java.util.*;
-
-
 public class TreeGenerator {
     public TreeGenerator(FamilyTree familyTree, long randomSeed){
         rnd = new Random();

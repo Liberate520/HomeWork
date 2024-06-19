@@ -1,4 +1,4 @@
-package human.comparator;
+package model.human.comparator;
 
 public class HumanComparator {
 
