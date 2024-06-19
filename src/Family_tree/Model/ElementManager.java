@@ -37,6 +37,10 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
         return false;
     }
 
+    public Family_tree<T> getActiveTree(){return this.activeTree;}
+
+    public void setActiveTree(Family_tree<T> value) {this.activeTree = value; }
+
     abstract T newSubject(String name, Gender gender, LocalDate bd);
 
     private Gender strToGender(String value){
@@ -92,6 +96,28 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
          catch (Exception e)  {
             return false;
          }
+    }
+
+    public boolean setDeathDate(String date){        
+        try{
+            this.activeElement.setDeathDate(strToDate(date));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private String dateText(LocalDate date){
+        return date.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));
+    }
+
+
+    public String getDeathDate(){
+        if (this.activeElement.getDeatdDate() != null){
+            LocalDate date = this.activeElement.getDeatdDate();
+            return dateText(date);
+        }
+        return "отсутствует";
     }
 
     @Override

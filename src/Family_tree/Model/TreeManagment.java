@@ -20,4 +20,5 @@ public interface TreeManagment<T extends Endothermal> {
     boolean join(Family_tree<T> tree1, Family_tree<T> tree2);
   /*boolean divide(); Разделение древа по веткам. Пока идей как это сделать - нет */
     String getInfo(); //для ActiveTree
+    String searchByPattern(String pattern); //для ActiveTree
 }

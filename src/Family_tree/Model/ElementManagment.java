@@ -1,5 +1,7 @@
 package Family_tree.Model;
 
+
+
 import Family_tree.Model.Humans.Endothermal;
 import Family_tree.Model.Tree.Family_tree;
 
@@ -21,5 +23,7 @@ public interface ElementManagment<T extends Endothermal> {
     int getActiveSubjectIndex();
     long getActiveSubjectInnerID();
     String getInfo(); //для ActiveSubject
-    
+    boolean setDeathDate(String date);
+    String getDeathDate();
+    boolean removeSubject(); //для ActiveSubject
 }

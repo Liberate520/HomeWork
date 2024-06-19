@@ -20,4 +20,5 @@ public interface Endothermal extends Serializable, Comparable<Endothermal> {
     String getChildrenlnfo();   
     long getInnerID();    
     long getTreeID();
+    LocalDate getDeatdDate();
 }

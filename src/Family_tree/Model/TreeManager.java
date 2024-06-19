@@ -150,7 +150,9 @@ public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
     public boolean saveTree(String path) { // Для ActiveTree
         Recorder recorder = new Recorder();
         return recorder.save(this.activeTree, path);
-    }    
+    }  
+    
+    
     public Family_tree<T> getActiveTree() {
         return this.activeTree;
     }
@@ -199,4 +201,27 @@ public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
         }
         return true;
     }
+
+    public String searchByPattern(String pattern){
+        String str1 = pattern.toLowerCase();
+        Map<Integer,T> result = new HashMap<Integer, T>();
+        for (int i = 0; i < getActiveTree().getMemberList().size(); i++){
+            if (getActiveTree().getMemberList().get(i).toString().toLowerCase().contains(str1)){
+                result.put(i, getActiveTree().getMemberList().get(i));
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Результат поиска:\n");
+        if (result.isEmpty()){
+            sb.append("Ничего не найдено");
+            return sb.toString();
+        }
+        for(Map.Entry<Integer, T> set : result.entrySet()){
+            sb.append(set.getKey());
+            sb.append(" ");
+            sb.append(set.getValue().toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+    } 
 }
