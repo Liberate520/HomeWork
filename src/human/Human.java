@@ -1,10 +1,9 @@
-import org.jetbrains.annotations.NotNull;
+package human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Human implements Serializable {
@@ -39,6 +38,7 @@ public class Human implements Serializable {
     public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father) {
         this(name, gender, birthDate, mother, father, null, null);
     }
+    
     public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father, Human spouse) {
         this(name, gender, birthDate, mother, father, spouse, null);
     }

@@ -1,17 +1,21 @@
+package family_tree;
 
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree  implements Serializable, Iterable<Human> {
-    private final List<Human> humans;
+import family_tree.Comparator.HumanComparatorByBirthDate;
+import family_tree.Comparator.HumanComparatorByName;
+
+public class FamilyTree<E extends TreeNode<E>>  implements Serializable, Iterable<E> {
+    private List<E> humans;
+    
     public FamilyTree(){this(new ArrayList<>()); }
-    public FamilyTree(List<Human> humans){this.humans = humans;}
-    public void addHuman(Human human){
+    public FamilyTree(List<E> humans){this.humans = humans;}
+
+    public void addHuman(E human){
         humans.add(human);
         if(human.getMother() != null){
             human.getMother().addChild(human);
@@ -27,22 +31,19 @@ public class FamilyTree  implements Serializable, Iterable<Human> {
         stringBuilder.append("Древо состоит из ");
         stringBuilder.append(humans.size());
         stringBuilder.append(" человек:\n");
-        for (Human human: humans){
+        for (E human: humans){
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
 
-    public void sortByName(){
-        humans.sort(new HumanComparatorByName());
-    }
-    public void sortByBirthDate(){
-        humans.sort(new HumanComparatorByBirthDate());
-    }
+    public void sortByName(){ humans.sort(new HumanComparatorByName<>());}
+    public void sortByBirthDate(){ humans.sort(new HumanComparatorByBirthDate<>());}
 
     @Override
-    public @NotNull Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humans);
+    public Iterator<E> iterator() {
+        return new FamilyTreeIterator<>(humans);
     }
+
 }

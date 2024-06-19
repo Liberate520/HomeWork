@@ -1,10 +1,16 @@
 import java.time.LocalDate;
-import java.util.Collections;
+
+import family_tree.FamilyTree;
+import family_tree.TreeNode;
+import human.Gender;
+import human.Human;
+import save_and_load.FileHandler;
+import save_and_load.Writable;
 
 public class Main {
     public static void main(String[] args) {
 
-        String file = "src/tree.txt";
+        String file = "src/save_and_load/tree.txt";
         FamilyTree tree = finalTree();
 //        FamilyTree tree = load(file);
         tree.sortByName();
@@ -44,6 +50,8 @@ public class Main {
         tree.addHuman(kolya);
         tree.addHuman(sonya);
         tree.addHuman(egor);
+        tree.addHuman(ira);
+        tree.addHuman(kolya);
 
         return tree;
 
