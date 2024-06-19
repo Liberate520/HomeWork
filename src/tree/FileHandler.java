@@ -17,7 +17,6 @@ public class FileHandler implements Writable {
             return false;
         }
     }
-
     @Override
     public Object read(String fileName) {
         FamilyTree tree = new FamilyTree();

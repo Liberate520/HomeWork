@@ -1,12 +1,14 @@
 package human;
 
+import tree.TreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, TreeItem<Human> {
 
     private long id;
     private String name;

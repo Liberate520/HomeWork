@@ -6,6 +6,7 @@ import java.io.Serializable;
 public interface  Writable {
     boolean save(Serializable serializable, String fileName);
     Object read(String fileName);
+
     /*
     public String writeTree(tree.FamilyTree tree, String FileName) throws IOException {
         try{

@@ -6,8 +6,6 @@ import tree.FamilyTree;
 
 import java.time.*;
 import java.util.*;
-
-
 public class TreeGenerator {
     public TreeGenerator(FamilyTree familyTree, long randomSeed){
         rnd = new Random();

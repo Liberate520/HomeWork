@@ -1,13 +1,15 @@
 package human;
 
 
+import tree.TreeItem;
+
 import java.util.*;
 
-public class HumanIterator implements Iterator<Human>{
+public class HumanIterator<T extends TreeItem> implements Iterator<T>{
     private int currentId;
-    private List<Human> humanList;
+    private List<T> humanList;
 
-    public HumanIterator(List<Human> humanList) {
+    public HumanIterator(List<T> humanList) {
         this.humanList = humanList;
     }
 
@@ -18,7 +20,7 @@ public class HumanIterator implements Iterator<Human>{
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return humanList.get(currentId++);
     }
 

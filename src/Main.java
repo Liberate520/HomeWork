@@ -1,6 +1,5 @@
 
-import service.Service;
-import service.SortType;
+import tree.SortType;
 import service.TreeGenerator;
 import tree.FamilyTree;
 import tree.FileHandler;

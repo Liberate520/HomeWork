@@ -16,11 +16,11 @@ public class Service {
 
     public String getHumanListInfo(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Person List\n");
+        /*stringBuilder.append("Person List\n");
         for(Human human: familyTree){
             stringBuilder.append(human.toString());
             stringBuilder.append("\n");
-        }
+        }*/
         return  stringBuilder.toString();
     }
 
