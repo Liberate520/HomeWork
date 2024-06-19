@@ -5,11 +5,11 @@ import ru.gb.family_tree.human.Human;
 import java.util.Iterator;
 import java.util.List;
 
-public class HumanIterator implements Iterator<Human> {
+public class HumanIterator<E extends FamTreeItem> implements Iterator<E> {
     private int curId;
-    private List<Human> familyTreeList;
+    private List<E> familyTreeList;
 
-    public HumanIterator(List<Human> familyTreeList){
+    public HumanIterator(List<E> familyTreeList){
         this.familyTreeList = familyTreeList;
     }
     @Override
@@ -18,7 +18,7 @@ public class HumanIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public E next() {
         return familyTreeList.get(curId++ );
     }
 }

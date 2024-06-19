@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Human>, Serializable {
-    private List<Human> familyTreeList = new ArrayList<>();
+public class FamilyTree<E extends FamTreeItem<E>> implements Iterable<E>, Serializable {
+    private List<E> familyTreeList = new ArrayList<>();
     private List<Long> emptyIds = new ArrayList<>();
 
 
-    private void letHumanId(Human human) {
+    private void letHumanId(E human) {
         human.setId(human.getCurrentId());
         human.setCurrentId();
     }
 
-    public void addHumansInFamTree(Human... human) {
-        for (Human fam: human) {
+    public void addHumansInFamTree(E... human) {
+        for (E fam: human) {
             familyTreeList.add(fam);
             if (emptyIds.isEmpty()) {
                 letHumanId(fam);
@@ -29,22 +29,22 @@ public class FamilyTree implements Iterable<Human>, Serializable {
         }
     }
 
-    public void removeHumansFromFamTree(Human... human) {
-        for (Human fam: human) {
+    public void removeHumansFromFamTree(E... human) {
+        for (E fam: human) {
             familyTreeList.remove(fam);
             emptyIds.add(fam.getId());
         }
     }
 
 
-    public void removeHumanFromFamTree(Human... human){
-        for (Human fam: human) {
+    public void removeHumanFromFamTree(E... human){
+        for (E fam: human) {
             familyTreeList.remove(fam);
         }
     }
 
-    public Human findHuman(String firstName){
-        for (Human el : familyTreeList) {
+    public E findHuman(String firstName){
+        for (E el : familyTreeList) {
             if (el.getFirstName().equals(firstName)){
                 return el;
             }
@@ -75,7 +75,7 @@ public class FamilyTree implements Iterable<Human>, Serializable {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        for (Human el: familyTreeList) {
+        for (E el: familyTreeList) {
             str.append(el + "\n");
         }
         String res = String.valueOf(str);
@@ -83,7 +83,7 @@ public class FamilyTree implements Iterable<Human>, Serializable {
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<E> iterator() {
         return new HumanIterator(familyTreeList);
     }
 

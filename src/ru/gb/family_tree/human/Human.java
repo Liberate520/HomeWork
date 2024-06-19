@@ -1,11 +1,13 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.tree.FamTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements FamTreeItem<Human>, Serializable {
     private static long currentId;
     private long id;
     private String firstName;
