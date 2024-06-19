@@ -1,4 +1,6 @@
-package ru.gb.Family_tree.human;
+package Family_tree.human;
+
+import ru.gb.Family_tree.family_tree.TreeTop;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Human implements Serializable, Iterable<Human>{
+public class Human implements Serializable, Iterable<Human>, TreeTop {
     private long id;
 
     @Override
@@ -44,7 +46,9 @@ public class Human implements Serializable, Iterable<Human>{
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = null;
-        this.parents = null;
+        this.parents = new ArrayList<>();
+        this.children = new ArrayList<>(); {
+        }
     }
 
     public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
@@ -95,6 +99,11 @@ public class Human implements Serializable, Iterable<Human>{
         return spouse;
     }
 
+    @Override
+    public void setSpouse(Object human) {
+
+    }
+
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
     }
@@ -129,6 +138,16 @@ public class Human implements Serializable, Iterable<Human>{
         return null;
     }
 
+    @Override
+    public void addChild(Object child) {
+
+    }
+
+    @Override
+    public void addParent(Object parent) {
+
+    }
+
     private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
         Period diff = Period.between(birthDate, deathDate);
         return diff.getYears();
@@ -144,6 +163,11 @@ public class Human implements Serializable, Iterable<Human>{
 
     public LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    @Override
+    public LocalDate getDeathDate() {
+        return null;
     }
 
     public void setDeathDate(LocalDate deathDate) {

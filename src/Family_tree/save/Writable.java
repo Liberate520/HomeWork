@@ -1,4 +1,4 @@
-package ru.gb.Family_tree.save;
+package Family_tree.save;
 
 import ru.gb.Family_tree.family_tree.Family_tree;
 
