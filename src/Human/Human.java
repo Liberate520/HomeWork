@@ -1,5 +1,6 @@
 package Human;
 
+import FamilyTree.FamilyItem;
 import Gender.Gender;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyItem {
     private String name;
     private List<Human> parents;
     private List<Human> children;

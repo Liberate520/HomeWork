@@ -7,27 +7,27 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> familyTree;
+public class FamilyTree<T extends FamilyItem> implements Serializable, Iterable<T> {
+    private List<T> familyTree;
 
     public FamilyTree() {
         this.familyTree = new ArrayList<>();
     }
 
-    public void addHuman(Human human){
-        this.familyTree.add(human);
+    public void addFamilyItem(T familyItem){
+        this.familyTree.add(familyItem);
     }
 
-    public String findHumansByName(String name){
-        ArrayList<Human> foundHumans = new ArrayList<>();
-        for (Human human : familyTree) {
+    public String findFamilyItemByName(String name){
+        ArrayList<T> foundFamilyItem = new ArrayList<>();
+        for (T human : familyTree) {
             if (human.getName().equalsIgnoreCase(name)) {
-                foundHumans.add(human);
+                foundFamilyItem.add(human);
             }
         }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Results:\n");// \n -перенос строки
-        for(Human human : foundHumans){
+        for(T human : foundFamilyItem){
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
@@ -35,11 +35,11 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     public void sortByName(){
-        familyTree.sort(new HumanComparatorByName());
+        familyTree.sort(new FamilyItemComparatorByName<T>());
     }
 
     public void sortByAge(){
-        familyTree.sort(new HumanComparatorByAge());
+        familyTree.sort(new FamilyItemComparatorByAge<T>());
     }
 
 
@@ -47,7 +47,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Family Tree:\n");// \n -перенос строки
-        for(Human human : familyTree){
+        for(T human : familyTree){
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
@@ -55,8 +55,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(familyTree);
+    public Iterator<T> iterator() {
+        return new FamilyTreeIterator<>(familyTree);
     }
 
 

@@ -2,6 +2,7 @@
 import FamilyTree.FamilyTree;
 import FileHandler_and_Writable.FileHandler;
 import Gender.Gender;
+import Human.Human;
 
 import java.time.LocalDate;
 
@@ -16,13 +17,14 @@ public class Main {
 
         familyTree.sortByAge();
         System.out.println(familyTree);
-//        Human.Human sergey = new Human.Human("Sergey", null, null, Gender.Male, LocalDate.of(1981, 7, 17), null);
+
+//        Human sergey = new Human("Sergey", null, null, Gender.Male, LocalDate.of(1981, 7, 17), null);
 //        System.out.println(sergey.getAge());
 //        System.out.println(sergey);
 //
-//        Human.Human maria = new Human.Human("Maria", null, null, Gender.Female, LocalDate.of(1981, 9, 1), null);
-//        Human.Human ksenia = new Human.Human("Ksenia", null, null, Gender.Female, LocalDate.of(2007, 9,1), null);
-//        Human.Human julia = new Human.Human("Julia", sergey, maria, Gender.Female, LocalDate.of(2010, 7, 18), null);
+//        Human maria = new Human("Maria", null, null, Gender.Female, LocalDate.of(1981, 9, 1), null);
+//        Human ksenia = new Human("Ksenia", null, null, Gender.Female, LocalDate.of(2007, 9,1), null);
+//        Human julia = new Human("Julia", sergey, maria, Gender.Female, LocalDate.of(2010, 7, 18), null);
 //
 //        sergey.addChild(ksenia);
 //        sergey.addChild(julia);
@@ -35,21 +37,21 @@ public class Main {
 //        System.out.println(ksenia.getParents());
 //        System.out.println(ksenia.getSistersAndBrothers());
 //
-//        Human.Human nadya = new Human.Human("Nadya", null, null, Gender.Female, LocalDate.of(1950, 2,5), null);
+//        Human nadya = new Human("Nadya", null, null, Gender.Female, LocalDate.of(1950, 2,5), null);
 //        sergey.addParent(nadya);
 //        System.out.println(nadya.getBirthDate());
 //        System.out.println(nadya.getGender());
 //
-//        FamilyTree familyTree = new FamilyTree();
-//        familyTree.addHuman(sergey);
-//        familyTree.addHuman(maria);
-//        familyTree.addHuman(ksenia);
-//        familyTree.addHuman(julia);
-//        familyTree.addHuman(nadya);
+//        FamilyTree<Human> familyTree = new FamilyTree<Human>();
+//        familyTree.addFamilyItem(sergey);
+//        familyTree.addFamilyItem(maria);
+//        familyTree.addFamilyItem(ksenia);
+//        familyTree.addFamilyItem(julia);
+//        familyTree.addFamilyItem(nadya);
 //
-//        Human.Human nadejda = new Human.Human("Nadya", null, null, Gender.Female, LocalDate.of(2012, 12,12), null);
-//        familyTree.addHuman(nadejda);
-//        System.out.println( familyTree.findHumansByName("Nadya") );
+//        Human nadejda = new Human("Nadya", null, null, Gender.Female, LocalDate.of(2012, 12,12), null);
+//        familyTree.addFamilyItem(nadejda);
+//        System.out.println( familyTree.findFamilyItemByName("Nadya") );
 //
 //        System.out.println(familyTree);
 //
