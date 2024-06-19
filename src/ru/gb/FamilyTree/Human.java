@@ -1,16 +1,18 @@
 package ru.gb.FamilyTree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Human {
+public class Human implements Serializable {
     private long id;
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
+    private int age;
     private List<Human> parents;
     private List<Human> children;
     private Human spouse;
@@ -22,6 +24,7 @@ public class Human {
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
+        this.age = age;
         parents = new ArrayList<>();
         if(father != null){
             parents.add(father);
@@ -31,6 +34,16 @@ public class Human {
         }
         children = new ArrayList<>();
     }
+
+//    public long getId() {
+//        return id;
+//    }
+//    public String getName() {
+//        return name;
+//    }
+//    public int getAge() {
+//        return age;
+//    }
     public Human(String name, Gender gender, LocalDate birthDate){
         this(name, gender, birthDate, null, null, null);
     }
@@ -95,6 +108,13 @@ public class Human {
     public long getId() {return id; }
 
     public void setId(Long id) {this.id = id; }
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
 
     public LocalDate getBirthDate() {return birthDate; }
 
@@ -104,15 +124,13 @@ public class Human {
 
     public List<Human> getChildren() {return children; }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setDeathDate(LocalDate deathDate) {
-        this.deathDate = deathDate;
-    }
 
     public Gender getGender () {return gender; }
+
+    @Override
+    public String toString() {
+        return getInfo();
+    }
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();

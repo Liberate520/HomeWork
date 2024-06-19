@@ -1,17 +1,29 @@
 package ru.gb.FamilyTree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree  {
+public class FamilyTree implements Serializable,Iterable<Human> {
+
     private long humansId;
     private List<Human> humanList;
 
-    public FamilyTree() {this (new ArrayList<>()); }
+    public FamilyTree() {
+        this (new ArrayList<>());
+    }
+
 
     public FamilyTree(List<Human> humanList) {
+
         this.humanList = humanList;
     }
+
+//    @Override
+//    public Iterator<Human> iterator() {
+//        return null;
+//    }
 
     public boolean add(Human human){
         if(human == null){
@@ -28,6 +40,7 @@ public class FamilyTree  {
         }
         return false;
     }
+
 
     private void addToParents(Human human){
         for(Human parent: human.getParents()){
@@ -129,5 +142,19 @@ public class FamilyTree  {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+
+    public void sortByName() {
+        humanList.sort(new HumanComparatorByName());
+    }
+
+    public void sortByBirthDate() {
+        humanList.sort(new HumanComparatorByBirthDate());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humanList);
     }
 }
