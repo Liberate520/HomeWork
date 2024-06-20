@@ -1,9 +1,11 @@
 package project.servis;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import project.FamilyTree.FamilyTree;
+import project.FamilyTree.FamilyTreeIMPL;
 import project.FileHandler.FileHandler;
 import project.Members.Human;
 import project.Members.TreeMember;
@@ -13,7 +15,7 @@ public class FamilyTreeService {
     private FileHandler fileHandler;
 
     public FamilyTreeService() {
-        this.familyTree = new FamilyTree<>();
+        this.familyTree = new FamilyTreeIMPL<>();
         this.fileHandler = new FileHandler();
     }
 
@@ -22,7 +24,7 @@ public class FamilyTreeService {
     }
 
     public void saveFamilyTree(String filename) throws IOException {
-        fileHandler.writeToFile(filename, familyTree);
+        fileHandler.writeToFile(filename, (Serializable) familyTree);
     }
 
     public boolean addMember(Human member) {

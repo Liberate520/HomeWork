@@ -2,8 +2,6 @@ package project.Presenter;
 import java.io.IOException;
 import java.util.List;
 
-import project.FamilyTree.FamilyTree;
-import project.FileHandler.FileHandler;
 import project.Members.Human;
 import project.Members.TreeMember;
 import project.View.FamilyTreeView;
@@ -72,10 +70,6 @@ public class FamilyTreePresenterImpl implements FamilyTreePresenter {
         view.displayMessage("Сортировка по дате рождения:");
         service.sortByBirthDate();
         view.displayMemberDescriptions(service.getMemberDescriptions());
-    }
-
-    public void setView(FamilyTreeView view) {
-        this.view = view;
     }
 }
 
