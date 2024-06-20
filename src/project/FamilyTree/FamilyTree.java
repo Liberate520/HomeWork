@@ -1,10 +1,13 @@
+package project.FamilyTree;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-class FamilyTree<T extends TreeMember> implements Serializable, Iterable<T>{
+import project.Members.TreeMember;
+
+public class FamilyTree<T extends TreeMember> implements Serializable, Iterable<T>{
     private List<T> memberList;
 
     public FamilyTree() {

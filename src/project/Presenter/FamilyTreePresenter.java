@@ -1,3 +1,6 @@
+package project.Presenter;
+import project.Members.Human;
+
 public interface FamilyTreePresenter {
     void loadFamilyTree(String filename);
     void saveFamilyTree(String filename);
