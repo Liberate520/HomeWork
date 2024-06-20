@@ -1,5 +1,7 @@
 package family_tree.human;
 
+import family_tree.family_tree.TreeRoot;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class Human implements Serializable, TreeRoot {
     private int id;
     private String name;
     private String surName;
@@ -68,6 +70,16 @@ public class Human implements Serializable {
         return id;
     }
 
+    @Override
+    public boolean addChild(Object human) {
+        return false;
+    }
+
+    @Override
+    public boolean addParent(Object human) {
+        return false;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -90,6 +102,11 @@ public class Human implements Serializable {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    @Override
+    public LocalDate getDateOfDeath() {
+        return null;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {

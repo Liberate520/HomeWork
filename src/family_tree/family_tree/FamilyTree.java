@@ -61,16 +61,16 @@ public class FamilyTree <E extends TreeRoot<E>> implements Serializable, Iterabl
     }
 
     public void sortName() {
-        humanList.sort(new HumanComparatorName());
+        humanList.sort(new HumanComparatorName<>());
     }
 
     public void sortSurName() {
-        humanList.sort(new HumanComparatorSurName());
+        humanList.sort(new HumanComparatorSurName<>());
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new FamilyTreeIterator(humanList);
+        return new FamilyTreeIterator<>(humanList);
     }
 }
 
