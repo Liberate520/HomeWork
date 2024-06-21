@@ -110,7 +110,7 @@ public class Human implements Endothermal{
         sb.append(name);
         sb.append("\n");
         sb.append(this.getNameInfo()); //я ещё пожалею об этом
-        sb.append(", non: "); 
+        sb.append("non: "); 
         sb.append(getGender()); 
         sb.append(", возраст: ");
         sb.append(getAge()); 

@@ -27,6 +27,7 @@ public class HumanManager implements CommandsInterface { //консольная 
             put("/cr", "addChild");
             put("/sm", "searchSubject");
             put("/lm", "getSubjectsList");
+            put("/sh", "selectSubject");
         }
     };
     private Map<String, String> inDependentNames = new HashMap<String, String>() {
@@ -54,6 +55,7 @@ public class HumanManager implements CommandsInterface { //консольная 
             put("/cr", "Зарегистрировать ребёнка");
             put("/sm", "Найти субъект");
             put("/lm", "Список субъектов");
+            put("/sh", "Выбрать субъект");
         }
     };
     private Map<String, String> inDependentDesc = new HashMap<String, String>() {
@@ -276,6 +278,11 @@ public class HumanManager implements CommandsInterface { //консольная 
 
     public  Map<String, String> getSubjectdependentActions(){ return this.elementDependentNames; }
 
-
+    public String  selectSubject(){
+        System.out.println(this.presenter.showSubjectList());
+        System.out.println("Выбор субъекта");
+        int index = Integer.parseInt(scanner.nextLine());
+        return this.presenter.selectSubject(index)     ; 
+    }
   
 }

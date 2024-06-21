@@ -99,8 +99,7 @@ public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
     @Override
     public boolean deleteTree(int ID) {        
         try{
-            this.list.remove(ID)  ;
-            this.activeTree = null;
+            this.list.remove(ID)  ;                        
             return true;
         } catch(Exception e){
             return false;

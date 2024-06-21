@@ -168,30 +168,28 @@ public class HumanPresenter extends Presenter {
 
     @Override
     public String showActiveSubjectInfo() {
-        if (this.getActionLevel() == ActionLevel.SubjectLevel){
-            return this.getActiveSubject().getInfo();
-        }
-        return "Субъект не обнаружен";
+        return this.getActiveSubject().getInfo();
     }
 
     @Override
     public String removeMember() {
-        if (this.getActionLevel() == ActionLevel.SubjectLevel){
-           if (this.model.removeSubject()){
-            this.setActiveSubject(null);
+        try{
+            Human human = this.getActiveSubject();
+            Family_tree<Human> tree = this.getActiveTree();
+            tree.remove(human);
             this.setActionLevel(ActionLevel.TreeLevel);
-            return "OK";
-           }
+            return "Удалено";
+        } catch (Exception e) {
+            return "Ошибка удаления";
         }
-        return "Ошибка удаления";
+        
+
     }
 
     @Override
     public String removeTree() {
         try {
-            this.manager.deleteTree(this.getActiveTree());
-            this.setActiveSubject(null);
-            this.setActiveTree(null);
+            this.manager.deleteTree(this.getActiveTree());              
             this.setActionLevel(ActionLevel.NoLevel);
             return "OK";
         } catch (Exception e) {
@@ -230,7 +228,7 @@ public class HumanPresenter extends Presenter {
         if (male == null || female == null){
             return "Субъекты не обнаружены";
         }
-        if (male.setSpouse(female) && female.setSpouse(female)){
+        if (male.setSpouse(female) && female.setSpouse(male)){
             return "OK";
         }
         return "Ошибка регистрации";
@@ -247,6 +245,23 @@ public class HumanPresenter extends Presenter {
 
     public TreeManager<Human> getTreeModel(){
         return this.manager;
+    }
+
+    public String selectSubject(int index) {
+        String s;
+        Human human;
+        try{
+            human = this.manager.getActiveTree().getItem(index);
+            s = String.format("Выбран(а) %s", human.toString());
+            this.setActiveSubject(human);
+            this.setActionLevel(ActionLevel.SubjectLevel);
+        } catch (Exception e) {
+            System.out.println(e);
+            this.setActiveSubject(null);
+            this.setActionLevel(ActionLevel.TreeLevel);
+            s = "Никто не выбран";
+        }
+        return s;
     }
 
     
