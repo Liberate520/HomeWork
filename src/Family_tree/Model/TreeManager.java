@@ -3,7 +3,6 @@ package Family_tree.Model;
 import java.util.*;
 
 import Family_tree.Model.Humans.Endothermal;
-import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Recorder.Recorder;
 import Family_tree.Model.Tree.Family_tree;
 import Family_tree.View.ActionLevel;

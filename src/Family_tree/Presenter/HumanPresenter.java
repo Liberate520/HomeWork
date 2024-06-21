@@ -1,11 +1,6 @@
 package Family_tree.Presenter;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import Family_tree.Model.HumanModel;
 import Family_tree.Model.TreeManager;
-import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Tree.Family_tree;
 import Family_tree.View.ActionLevel;

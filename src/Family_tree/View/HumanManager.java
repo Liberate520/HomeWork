@@ -6,9 +6,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
 import Family_tree.CommandsInterface;
-import Family_tree.Model.Humans.Human;
 import Family_tree.Presenter.*;
 
 public class HumanManager implements CommandsInterface { //консольная версия

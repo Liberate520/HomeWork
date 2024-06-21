@@ -2,9 +2,7 @@ package Family_tree.Model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import Family_tree.Model.Humans.Endothermal;
-import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Tree.Family_tree;
 
 public abstract class ElementManager<T extends Endothermal> implements ElementManagment<T> { 
@@ -12,15 +10,15 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
     private T activeElement;
     private Family_tree<T> activeTree;
     private String FormateDate = "d.MM.yyyy";
-    private boolean isActiveTreeEmpty;
-    //private TreeManager<T> treeManager;
+    
+   
     
 
     public ElementManager (/*TreeManager<T> treeManager*/){       
         this.activeElement = null;
         this.activeTree = null;
-        this.isActiveTreeEmpty = true;
-        //this.treeManager = treeManager;
+       
+        
     }
     public void setFormateDate(String value){
         this.FormateDate = value;
@@ -54,22 +52,11 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
         }
         activeTree.add(subject);
         activeElement = subject;
-        this.isActiveTreeEmpty = false;
         return true;
     }
 
     @Override
-    public abstract boolean newSubject(String name, String gender, String bd); /* {
-        Gender sex = strToGender(gender);
-        LocalDate birthDate = strToDate(bd);
-        try{
-            T subject = newSubject(name, sex, birthDate);
-            this.activeElement = subject;
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    } */
+    public abstract boolean newSubject(String name, String gender, String bd); 
 
     public abstract T newItem(String name, String gender, String bd);
 
