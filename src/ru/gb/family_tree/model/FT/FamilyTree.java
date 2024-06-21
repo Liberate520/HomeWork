@@ -1,8 +1,7 @@
-package ru.gb.family_tree.FT;
+package ru.gb.family_tree.model.FT;
 
-import ru.gb.family_tree.ComparatorByBirthDate;
-import ru.gb.family_tree.Human.Human;
-import ru.gb.family_tree.Human.HumanIterator;
+import ru.gb.family_tree.model.Human.comparator.ComparatorByBirthDate;
+import ru.gb.family_tree.model.Human.HumanIterator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
     public FamilyTree(){
         humanList = new ArrayList<>();
     }
+
     public void addHuman(T human){
         humanList.add(human);
     }

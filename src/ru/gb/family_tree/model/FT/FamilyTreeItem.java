@@ -1,7 +1,4 @@
-package ru.gb.family_tree.FT;
-
-import ru.gb.family_tree.Human.Gender;
-import ru.gb.family_tree.Human.Human;
+package ru.gb.family_tree.model.FT;
 
 import java.time.LocalDate;
 import java.util.List;

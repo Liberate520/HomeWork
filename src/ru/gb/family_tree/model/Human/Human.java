@@ -1,19 +1,18 @@
-package ru.gb.family_tree.Human;
+package ru.gb.family_tree.model.Human;
 
-import ru.gb.family_tree.FT.FamilyTreeItem;
+import ru.gb.family_tree.model.FT.FamilyTreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 
 public class Human implements Serializable, FamilyTreeItem<Human> {
     private static final long serialVersionUID = 1L;
 
+    private long id;
     private String lastName;
     private String name;
     private Human mother, father;
@@ -23,12 +22,17 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     private Integer age;
 
 
-    public Human(String lastName, String name, Gender gender, LocalDate birthDate) {
+    public Human(long id, String lastName, String name, Gender gender, LocalDate birthDate) {
+        this.id = id;
         this.lastName =  lastName;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
         this.children = new ArrayList<>();
+    }
+
+    public long getId(){
+        return id;
     }
 
     public void setParents(Human mother, Human father) {
@@ -78,6 +82,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     @Override
     public String toString() {
         return "Член семьи {" +
+                "ID: " + id + " " +
                 "Фамилия: " + lastName  +
                 " Имя: " + name +
                 " возраст: " + age +

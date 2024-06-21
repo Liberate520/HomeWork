@@ -1,4 +1,4 @@
-package ru.gb.family_tree.FT;
+package ru.gb.family_tree.model.FT;
 
 import java.io.*;
 
