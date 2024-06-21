@@ -12,22 +12,42 @@ import Family_tree.View.ActionLevel;
 import Family_tree.View.HumanView;
 
 
-public class HumanPresenter extends Presenter {
-    
-    private Family_tree<Human> activeTree;
-    private HumanView view;
-    private ActionLevel level;
-    private Human activeSubject;
+public class HumanPresenter extends Presenter {    
+    private HumanView view;      
     private HumanModel model;
     private TreeManager<Human> manager;
 
 
-    public HumanPresenter(){        
-        this.activeTree = null;
-        this.level = ActionLevel.NoLevel;
-        this.activeSubject = null;
+    public HumanPresenter(){                 
         this.model = new HumanModel();        
         this.manager = new TreeManager<Human>();
+    }
+
+    public ActionLevel getActionLevel(){
+        return view.getActionLevel();
+    }
+
+    public void setActionLevel(ActionLevel level){
+        model.setActionLevel(level);
+        manager.setActionLevel(level);
+        view.setActionLevel(level);
+    }
+
+    public Family_tree<Human> getActiveTree(){
+        return model.getActiveTree();
+    }
+
+    public void setActiveTree(Family_tree<Human> tree){
+        model.setActiveTree(tree);
+        manager.setActiveTree(tree);
+    }
+
+    public Human getActiveSubject(){
+        return model.getActiveElement();
+    }
+
+    public void setActiveSubject(Human human){
+        model.setActiveElement(human);
     }
 
     public void setView(HumanView value) {
@@ -40,8 +60,8 @@ public class HumanPresenter extends Presenter {
     public String selectTree(int index) {
         boolean boo = this.manager.isEmpty();        
         if (!boo){
-            model.setActiveTree(manager.getActiveTree());
-            this.level = ActionLevel.TreeLevel;
+            this.setActiveTree(manager.selectTree(index)) ;
+            this.setActionLevel(ActionLevel.TreeLevel);
             return "OK";
         }
         return "Древо не найдено";
@@ -49,7 +69,7 @@ public class HumanPresenter extends Presenter {
 
     @Override
     public String setDeathDate(String text) {
-        if (this.level == ActionLevel.SubjectLevel){
+        if (this.model.getActionLevel() == ActionLevel.SubjectLevel){
             if (this.model.setDeathDate(text)){
                 return "OK";
             }
@@ -60,7 +80,7 @@ public class HumanPresenter extends Presenter {
    
 
     public String getDeathDate(){
-        if (this.level == ActionLevel.SubjectLevel) {   
+        if (this.model.getActionLevel() == ActionLevel.SubjectLevel) {   
             return model.getDeathDate();
         }               
         return "Древо не найдено";        
@@ -68,7 +88,8 @@ public class HumanPresenter extends Presenter {
 
     @Override
     public String saveTree(String text) {
-        if (this.level == ActionLevel.TreeLevel){
+        if (this.manager.getActionLevel() == ActionLevel.TreeLevel || this.model.getActionLevel() == ActionLevel.SubjectLevel){
+            //System.out.println(this.manager.getActionLevel());
             if (this.manager.saveTree(text)){
                 return "OK";
             }
@@ -80,38 +101,37 @@ public class HumanPresenter extends Presenter {
 
     @Override
     public String addToTree(String name, String gender, String birhday) {
-        if (this.level == ActionLevel.TreeLevel){
-            try{
-            boolean boo = model.addToActiveTree(name, gender, birhday); 
-            if (boo){
-                this.activeSubject = model.getActiveHuman();
-                this.level = ActionLevel.SubjectLevel;
-                return "OK";
-            }}           
-            catch (Exception e) {
-                System.out.println(e);
-                return "Ошибка записи";
-            }
+        try{
+            Human human = model.newItem( name,  gender,  birhday);
+            Family_tree<Human> tree = manager.getActiveTree();
+            tree.add(human);
+            this.setActiveSubject(human);
+            this.setActionLevel(ActionLevel.SubjectLevel);
+            return "OK";
+        }catch(Exception e){
+            System.out.println(e);
+            return "Ошибка записи";
         }
-        return "Нет активного древа";
+        
     }
+        
 
     @Override
     public String newChild(String name, String gender, String birhday, int IDFather, int IDMother) {
-        if (this.level == ActionLevel.TreeLevel){
+        if (this.getActionLevel() == ActionLevel.TreeLevel || this.model.getActionLevel() == ActionLevel.SubjectLevel){
             try{
                 boolean boo = model.addToActiveTree(name, gender, birhday);
                 if (boo){
-                    Human human = model.getActiveHuman();          
-                    Human fater = this.activeTree.getItem(IDFather);
-                    Human mother = this.activeTree.getItem(IDMother);
+                    Human human = model.getActiveElement();          
+                    Human fater = manager.getActiveTree().getItem(IDFather);
+                    Human mother = manager.getActiveTree().getItem(IDMother);
                     human.setFather(fater);
                     human.setMother(mother);
                     fater.addChild(human);
                     mother.addChild(human);
-                    this.activeTree.add(human);
-                    this.activeSubject = human;
-                    this.level = ActionLevel.SubjectLevel;
+                    this.getActiveTree().add(human);
+                    this.setActiveSubject(human);
+                    this.setActionLevel( ActionLevel.SubjectLevel);
             return "OK";
                 } 
             
@@ -124,49 +144,47 @@ public class HumanPresenter extends Presenter {
 
     @Override
     public String searchByPattern(String text) {
-        if (this.level == ActionLevel.TreeLevel){
+        if (this.getActionLevel() == ActionLevel.TreeLevel || this.model.getActionLevel() == ActionLevel.SubjectLevel){
             return this.manager.searchByPattern(text);
         }
         return "Нет активного древа";
     }
 
     @Override
-    public String createActiveTree(String text) {
-        try {
-            this.activeTree = new Family_tree<Human>(text);
-            this.manager.addTree(this.activeTree);
-            this.level = ActionLevel.TreeLevel;
-            return String.format("Создано древа %s", this.activeTree.toString());
-        } catch (Exception e) {
-            return "Ошибка записи";
+    public String createActiveTree(String text) {        
+        boolean boo = manager.newTree(text);
+        if (boo){            
+            this.setActiveTree(manager.getActiveTree());
+            this.setActionLevel(ActionLevel.TreeLevel);
+            return "OK";
         }
+        return "Ошибка записи"; 
     }
 
     @Override
     public String loadTree(String text) {
         if (this.manager.loadTree(text)){
-            this.activeTree = this.manager.getActiveTree();
-            this.model.setActiveTree(this.activeTree);
-            this.level = ActionLevel.TreeLevel;
-            return String.format("Древо %s загружено", this.activeTree.toString());
+            this.setActiveTree(this.manager.getActiveTree());            
+            this.setActionLevel(ActionLevel.TreeLevel);
+            return String.format("Древо %s загружено", this.getActiveTree().toString());
         }
         return "Ошибка чтения";
     }
 
     @Override
     public String showActiveSubjectInfo() {
-        if (this.level == ActionLevel.SubjectLevel){
-            return this.activeSubject.getInfo();
+        if (this.getActionLevel() == ActionLevel.SubjectLevel){
+            return this.getActiveSubject().getInfo();
         }
         return "Субъект не обнаружен";
     }
 
     @Override
     public String removeMember() {
-        if (this.level == ActionLevel.SubjectLevel){
+        if (this.getActionLevel() == ActionLevel.SubjectLevel){
            if (this.model.removeSubject()){
-            this.activeSubject = null;
-            this.level = ActionLevel.TreeLevel;
+            this.setActiveSubject(null);
+            this.setActionLevel(ActionLevel.TreeLevel);
             return "OK";
            }
         }
@@ -176,10 +194,10 @@ public class HumanPresenter extends Presenter {
     @Override
     public String removeTree() {
         try {
-            this.manager.deleteTree(this.activeTree);
-            this.activeSubject = null;
-            this.activeTree = null;
-            this.level = ActionLevel.NoLevel;
+            this.manager.deleteTree(this.getActiveTree());
+            this.setActiveSubject(null);
+            this.setActiveTree(null);
+            this.setActionLevel(ActionLevel.NoLevel);
             return "OK";
         } catch (Exception e) {
             return "Ошибка удаления";
@@ -189,7 +207,7 @@ public class HumanPresenter extends Presenter {
 
     @Override
     public String showSubjectList() {
-        return this.activeSubject.getInfo();
+        return this.getActiveTree().getInfo();
     }
 
     @Override
@@ -212,8 +230,8 @@ public class HumanPresenter extends Presenter {
 
     public String setMarriage(int id1, int id2) {
         Human male, female;        
-            male = this.activeTree.getItem(id1);
-            female = this.activeTree.getItem(id2);        
+            male = this.getActiveTree().getItem(id1);
+            female = this.getActiveTree().getItem(id2);        
         if (male == null || female == null){
             return "Субъекты не обнаружены";
         }
@@ -224,8 +242,8 @@ public class HumanPresenter extends Presenter {
     }
 
     public String delMarriage(int id1, int id2) {
-        Human male = this.activeTree.getItem(id1);
-        Human female = this.activeTree.getItem(id2);
+        Human male = this.getActiveTree().getItem(id1);
+        Human female = this.getActiveTree().getItem(id2);
         if (male.setSpouse(null) && female.setSpouse(null)){
             return "OK";
         }
@@ -236,9 +254,7 @@ public class HumanPresenter extends Presenter {
         return this.manager;
     }
 
-    public ActionLevel getActionLevel(){
-        return this.level;
-    }
+    
 
     
 

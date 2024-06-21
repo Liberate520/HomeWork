@@ -25,10 +25,9 @@ public class HumanView extends View<Human> {
     @Override
     public Presenter getPresenter() {
         return this.presenter;
-    }    
-
-    @Override
-    public FunctionManager<Human> getManager() {
+    } 
+       
+    public HumanManager getManager() {
         return this.manager;
     }
 

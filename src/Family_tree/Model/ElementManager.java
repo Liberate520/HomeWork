@@ -41,27 +41,11 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
 
     public void setActiveTree(Family_tree<T> value) {this.activeTree = value; }
 
-    abstract T newSubject(String name, Gender gender, LocalDate bd);
+    
 
-    private Gender strToGender(String value){
-        if (value.equalsIgnoreCase("м")){
-            return Gender.Male;
-        } else if(value.equalsIgnoreCase("ж")){
-            return Gender.Female;
-        } else {
-            return null;
-        }
-    }
+    
 
-    private LocalDate strToDate(String value){
-        try{
-            DateTimeFormatter formatter =DateTimeFormatter.ofPattern(FormateDate);
-            LocalDate d = LocalDate.parse(value, formatter);
-            return d;
-        } catch (Exception e){
-            return null;
-        }
-    }
+    
 
     @Override
     public boolean addToTree(T subject) {
@@ -75,7 +59,7 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
     }
 
     @Override
-    public boolean newSubject(String name, String gender, String bd) {
+    public abstract boolean newSubject(String name, String gender, String bd); /* {
         Gender sex = strToGender(gender);
         LocalDate birthDate = strToDate(bd);
         try{
@@ -85,7 +69,9 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
         } catch (Exception e) {
             return false;
         }
-    }
+    } */
+
+    public abstract T newItem(String name, String gender, String bd);
 
     @Override
     public boolean addToTree(T subject, Family_tree<T> tree) {
@@ -98,14 +84,7 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
          }
     }
 
-    public boolean setDeathDate(String date){        
-        try{
-            this.activeElement.setDeathDate(strToDate(date));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+    public abstract boolean setDeathDate(String date);
 
     private String dateText(LocalDate date){
         return date.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));

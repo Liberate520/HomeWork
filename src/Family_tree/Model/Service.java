@@ -9,7 +9,7 @@ import Family_tree.Model.Recorder.Recorder;
 
 
 public /*abstract*/ class Service<T extends Endothermal>  {
-
+/*  old , not in use
     public String searchByPattern(String pattern) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'searchByPattern'");
@@ -24,7 +24,7 @@ public /*abstract*/ class Service<T extends Endothermal>  {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTreeList'");
     }
-
+*/
 
 
 

@@ -3,20 +3,25 @@ package Family_tree.Model;
 import java.util.*;
 
 import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Recorder.Recorder;
 import Family_tree.Model.Tree.Family_tree;
+import Family_tree.View.ActionLevel;
 
 public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
 
     private Family_tree<T> activeTree;
     private List<Family_tree<T>> list;
-    
+    private ActionLevel level;
+   
     
 
     public TreeManager (){       
         this.activeTree = null; //Ну не верю я в надежность автозаполнения.....(тяжелое детство с VB 6.*)
         this.list = new ArrayList<>();
+        this.level = ActionLevel.NoLevel;
     }
+
 
     public boolean isEmpty(){
         return this.list.isEmpty();
@@ -235,5 +240,19 @@ public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public Family_tree<T> selectTree(int id) {
+        Family_tree<T> t = this.list.get(id);
+        this.activeTree = t;
+        return t;
+    }
+
+    public void setActionLevel(ActionLevel level) {
+        this.level = level;
     } 
+
+    public ActionLevel getActionLevel(){
+        return this.level;
+    }
 }
