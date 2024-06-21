@@ -14,6 +14,16 @@ public class Gender implements Serializable {
         this.gender = gender;
     }
 
+    public static Gender valueOf(String genderStr) {
+        if (genderStr.equalsIgnoreCase("мужской")) {
+            return Male;
+        } else if (genderStr.equalsIgnoreCase("женский")) {
+            return Female;
+        } else {
+            throw new IllegalArgumentException("Некорректное значение пола: " + genderStr);
+        }
+    }
+
     @Override
     public String toString() {
         return gender;
