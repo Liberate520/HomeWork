@@ -8,8 +8,8 @@ import Family_tree.Model.Humans.Gender;
 import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Tree.Family_tree;
 
-public class HumanService extends Service<Human> {
-
+public class HumanService extends Service<Human> { //old, not in use
+/*
     private List<Family_tree<Human>> list;
     private Family_tree<Human> currentTree;
 
@@ -80,4 +80,5 @@ public class HumanService extends Service<Human> {
             return "Ошибка записи";
         }
     }
+        */
 }

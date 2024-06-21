@@ -18,8 +18,8 @@ public interface ElementManagment<T extends Endothermal> {
     String searchSubject(String pattern, long treeInnerID);
     String searchSubject(String pattern, int treeIndex);
     boolean setChild(T subject, T father, T mother); //для ActiveTree
-    boolean setChild(int subject, int father, int mother, Family_tree<T> tree);
-    boolean setChild(long subject, long father, long mother);
+    //boolean setChild(int subject, int father, int mother, Family_tree<T> tree); зарезервировано
+    //boolean setChild(long subject, long father, long mother); зарезервировано
     int getActiveSubjectIndex();
     long getActiveSubjectInnerID();
     String getInfo(); //для ActiveSubject

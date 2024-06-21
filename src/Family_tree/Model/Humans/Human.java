@@ -224,5 +224,10 @@ public class Human implements Endothermal{
         }
         return sb.toString();
     }
+
+    @Override
+    public LocalDate getDeatdDate() {
+        return this.deathDate;
+    }
    
 }

@@ -9,7 +9,8 @@ public abstract class View<T extends Endothermal> {
     public abstract Presenter getPresenter(); 
     public ActionLevel getActionLevel(){
         return level;
-    }    
+    }  
+    public abstract void setActionLevel(ActionLevel value);  
     public abstract FunctionManager<T> getManager();
     
      

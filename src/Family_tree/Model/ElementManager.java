@@ -121,81 +121,23 @@ public abstract class ElementManager<T extends Endothermal> implements ElementMa
     }
 
     @Override
-    public boolean setActiveSubject(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setActiveSubject'");
-    }
-
-    @Override
-    public boolean setActiveSubject(long innerID) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setActiveSubject'");
-    }
-
-    @Override
-    public boolean setActiveSubject(T subject) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setActiveSubject'");
-    }
-
-    @Override
-    public String searchSubject(String pattern) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchSubject'");
-    }
-
-    @Override
-    public String searchSubject(String pattern, Family_tree<T> tree) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchSubject'");
-    }
-
-    @Override
-    public String searchSubject(String pattern, long treeInnerID) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchSubject'");
-    }
-
-    @Override
-    public String searchSubject(String pattern, int treeIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchSubject'");
-    }
-
-    @Override
-    public boolean setChild(T subject, T father, T mother) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setChild'");
-    }
-
-    @Override
-    public boolean setChild(int subject, int father, int mother, Family_tree<T> tree) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setChild'");
-    }
-
-    @Override
-    public boolean setChild(long subject, long father, long mother) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setChild'");
-    }
-
-    @Override
     public int getActiveSubjectIndex() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActiveSubjectIndex'");
+        for (int i = 0; i < this.activeTree.getCount(); i++){
+            if (this.activeElement.equals(this.activeTree.getItem(i))){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     public long getActiveSubjectInnerID() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActiveSubjectInnerID'");
+        return this.activeElement.getInnerID();
     }
 
     @Override
     public String getInfo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getInfo'");
+        return this.activeElement.getInfo();
     }    
 
 }

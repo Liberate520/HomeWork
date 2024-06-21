@@ -22,8 +22,7 @@ public class HumanPresenter extends Presenter {
     private TreeManager<Human> manager;
 
 
-    public HumanPresenter(HumanView humanView){
-        this.view = humanView;
+    public HumanPresenter(){        
         this.activeTree = null;
         this.level = ActionLevel.NoLevel;
         this.activeSubject = null;
@@ -31,20 +30,22 @@ public class HumanPresenter extends Presenter {
         this.manager = new TreeManager<Human>();
     }
 
+    public void setView(HumanView value) {
+        this.view = value;
+    }
+
+    
+
     @Override
     public String selectTree(int index) {
-        boolean boo = this.manager.setActiveTree(index);
-        model.setActiveTree(manager.getActiveTree());
-        if (boo){
+        boolean boo = this.manager.isEmpty();        
+        if (!boo){
+            model.setActiveTree(manager.getActiveTree());
             this.level = ActionLevel.TreeLevel;
             return "OK";
         }
         return "Древо не найдено";
-    }
-
-    private LocalDate dayFromText(String value){
-        return LocalDate.parse(value, DateTimeFormatter.ofPattern("d.MM.yyyy"));
-    }
+      }    
 
     @Override
     public String setDeathDate(String text) {
@@ -88,6 +89,7 @@ public class HumanPresenter extends Presenter {
                 return "OK";
             }}           
             catch (Exception e) {
+                System.out.println(e);
                 return "Ошибка записи";
             }
         }
@@ -173,20 +175,29 @@ public class HumanPresenter extends Presenter {
 
     @Override
     public String removeTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeTree'");
+        try {
+            this.manager.deleteTree(this.activeTree);
+            this.activeSubject = null;
+            this.activeTree = null;
+            this.level = ActionLevel.NoLevel;
+            return "OK";
+        } catch (Exception e) {
+            return "Ошибка удаления";
+        }
+        
     }
 
     @Override
     public String showSubjectList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'showSubjectList'");
+        return this.activeSubject.getInfo();
     }
 
     @Override
     public String getTreeList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTreeList'");
+        if (this.manager.isEmpty()){
+            return "Список древ пуст";
+        }
+        return this.manager.showList();
     }
 
     
@@ -200,13 +211,33 @@ public class HumanPresenter extends Presenter {
     }
 
     public String setMarriage(int id1, int id2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setMarriage'");
+        Human male, female;        
+            male = this.activeTree.getItem(id1);
+            female = this.activeTree.getItem(id2);        
+        if (male == null || female == null){
+            return "Субъекты не обнаружены";
+        }
+        if (male.setSpouse(female) && female.setSpouse(female)){
+            return "OK";
+        }
+        return "Ошибка регистрации";
     }
 
     public String delMarriage(int id1, int id2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delMarriage'");
+        Human male = this.activeTree.getItem(id1);
+        Human female = this.activeTree.getItem(id2);
+        if (male.setSpouse(null) && female.setSpouse(null)){
+            return "OK";
+        }
+        return "Ошибка регистрации";
+    }
+
+    public TreeManager<Human> getTreeModel(){
+        return this.manager;
+    }
+
+    public ActionLevel getActionLevel(){
+        return this.level;
     }
 
     

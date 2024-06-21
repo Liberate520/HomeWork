@@ -223,5 +223,17 @@ public class TreeManager<T extends Endothermal> implements TreeManagment<T> {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public String showList() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++){
+            sb.append(i);
+            sb.append(" ");
+            sb.append(this.list.get(i));
+            sb.append("\n");
+        }
+        return sb.toString();
     } 
 }

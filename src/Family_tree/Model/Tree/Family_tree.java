@@ -55,14 +55,23 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
         return result;
     }
 
-    public List<T> searchByPattern(String pattern){
-        String str1 = pattern.toLowerCase();
-        List<T> result = new ArrayList<>();
-        for (T element : this.list) {
-            if (element.toString().toLowerCase().contains(str1)){
-                result.add(element);
+    public T searchByInnerID(long id){
+        for (T t : list) {
+            if (t.getInnerID() == id){
+                return t;
             }
         }
+        return null;
+    }
+
+    public Map<Integer, T> searchByPattern(String pattern){
+        String str1 = pattern.toLowerCase();
+        Map<Integer, T> result = new HashMap<>();
+        for(int i = 0; i < this.list.size(); i++){
+            if (this.list.get(i).getName().toLowerCase().contains(str1)){
+                result.put(i, this.list.get(i));
+            }
+        }        
         return result;
     }  
     public T getItem(int id){        

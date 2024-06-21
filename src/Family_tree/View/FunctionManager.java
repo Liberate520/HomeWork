@@ -1,84 +1,74 @@
 package Family_tree.View;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import Family_tree.CommandsInterface;
 import Family_tree.Model.Humans.Endothermal;
 import Family_tree.Presenter.Presenter;
 
 public abstract class FunctionManager<T extends Endothermal> implements CommandsInterface {
-    private Map<String, String> elementDependentNames;
-    private Map<String, String> treeDependentNames;
-    private Map<String, String> inDependentNames;
-    private Map<String, String> elementDependentDesc;
-    private Map<String, String> treeDependentDesc;
-    private Map<String, String> inDependentDesc;
+    private Map<String, String> elementDependentNames = new HashMap<String, String>() {
+        {
+            put("/im", "getSubjectInfo");
+            put("/rd", "setDeathDate");
+            put("/dm", "removeSubject");
+        }
+    };
+    private Map<String, String> treeDependentNames = new HashMap<String, String>() {
+        {
+            put("/st", "saveTree");
+            put("/dt", "removeTree");
+            put("/am", "addSubject");
+            put("/cr", "addChild");
+            put("/sm", "searchSubject");
+            put("/lm", "getSubjectsList");
+        }
+    };
+    private Map<String, String> inDependentNames = new HashMap<String, String>() {
+        {
+            put("/lt", "getTreeList");
+            put("/ct", "addTree");
+            put("/rt", "loadTree");
+            put("/se", "selectTree");
+            put("/la", "getActionList");                
+            put("/ex", "exit");
+        }
+    };
+    private Map<String, String> elementDependentDesc = new HashMap<String, String>() {
+        {
+            put("/im", "Информация о субъекте");
+            put("/rd", "Зарегистрировать дату смерти");
+            put("/dm", "Удалить субъект");
+        }
+    };
+    private Map<String, String> treeDependentDesc = new HashMap<String, String>() {
+        {
+            put("/st", "Сохранить древо");
+            put("/dt", "Удалить древо");
+            put("/am", "Добавить субъект");
+            put("/cr", "Зарегистрировать ребёнка");
+            put("/sm", "Найти субъект");
+            put("/lm", "Список субъектов");
+        }
+    };
+    private Map<String, String> inDependentDesc = new HashMap<String, String>() {
+        {
+            put("/lt", "Список древ");
+            put("/ct", "Создать древо");
+            put("/rt", "Загрузить древо");
+            put("/se", "Выбрать древо");
+            put("/la", "Список команд");
+            put("/ex", "Выход");
+        }
+    };
     private Presenter presenter;
-    private Scanner sc;
+    private View<T> view;
+    //private Scanner sc;
 
-    public FunctionManager(Presenter presenter, Scanner sc) {
-        this.sc = sc;
-        this.presenter = presenter;
-        elementDependentDesc = new HashMap<String, String>() {
-            {
-                put("/im", "Информация о субъекте");
-                put("/rd", "Зарегистрировать дату смерти");
-                put("/dm", "Удалить субъект");
-            }
-        };
-        treeDependentDesc = new HashMap<String, String>() {
-            {
-                put("/st", "Сохранить древо");
-                put("/dt", "Удалить древо");
-                put("/am", "Добавить субъект");
-                put("/cr", "Зарегистрировать ребёнка");
-                put("/sm", "Найти субъект");
-                put("/lm", "Список субъектов");
-            }
-        };
-        inDependentDesc = new HashMap<String, String>() {
-            {
-                put("/lt", "Список древ");
-                put("/ct", "Создать древо");
-                put("/rt", "Загрузить древо");
-                put("/se", "Выбрать древо");
-                put("/la", "Список команд");
-                put("/ex", "Выход");
-            }
-        };
-
-        elementDependentNames = new HashMap<String, String>() {
-            {
-                put("/im", "getSubjectInfo");
-                put("/rd", "setDeathDate");
-                put("/dm", "removeSubject");
-            }
-        };
-        treeDependentNames = new HashMap<String, String>() {
-            {
-                put("/st", "saveTree");
-                put("/dt", "removeTree");
-                put("/am", "addSubject");
-                put("/cr", "addChild");
-                put("/sm", "searchSubject");
-                put("/lm", "getSubjectsList");
-            }
-        };
-        inDependentNames = new HashMap<String, String>() {
-            {
-                put("/lt", "getTreeList");
-                put("/ct", "addTree");
-                put("/rt", "loadTree");
-                put("/se", "selectTree");
-                put("/la", "getActionList");                
-                put("/ex", "exit");
-            }
-        };
-    }
+    
 
     public Map<String, String> getIndependentMap() {
         return this.inDependentDesc;
@@ -135,42 +125,26 @@ public abstract class FunctionManager<T extends Endothermal> implements Commands
         return mapToString(full);
     }
 
-    public String getSubjectInfo() {
-        return presenter.showActiveSubjectInfo();
-    }
+    public abstract String getSubjectInfo(); 
 
     public abstract String setDeathDate() ;
 
-    public String removeSubject() {
-        return (presenter.removeMember());
-    }    
+    public abstract String removeSubject(); 
 
-    public String removeTree(){
-        return presenter.removeTree();
-    }    
+    public abstract String removeTree();
 
-    public String getSubjectsList() {
-        return presenter.showSubjectList();
-    }
+    public abstract String getSubjectsList(); 
 
-    public String getTreeList() {
-        return presenter.getTreeList();
-    }    
+    public abstract String getTreeList(); 
   
     public void exit() {
         System.out.println("Good bye");
         System.exit(0);
     }
     
-    public void fireFunction(String action, Map<String, String> map) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException{       
-        if (map.containsKey(action)){
-            Method method = FunctionManager.class.getMethod(map.get(action));
-            method.setAccessible(true);
-            Object[] o = null;
-            System.out.println(method.invoke(this, o));
-        }
+    
         
-    }
+    
 
 
 }

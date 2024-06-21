@@ -21,4 +21,5 @@ public interface TreeManagment<T extends Endothermal> {
   /*boolean divide(); Разделение древа по веткам. Пока идей как это сделать - нет */
     String getInfo(); //для ActiveTree
     String searchByPattern(String pattern); //для ActiveTree
+    String showList();
 }
