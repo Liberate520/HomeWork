@@ -1,11 +1,10 @@
 package family_tree;
 
-import family_tree.family_tree.FamilyTree;
-import family_tree.family_tree.TreeRoot;
-import family_tree.human.Human;
-import family_tree.human.Sex;
-import family_tree.save_read.FileHandler;
-import family_tree.save_read.WriteRead;
+import family_tree.model.family_tree.FamilyTree;
+import family_tree.model.human.Human;
+import family_tree.model.human.Sex;
+import family_tree.model.save_read.FileHandler;
+import family_tree.model.save_read.WriteRead;
 
 import java.time.LocalDate;
 
