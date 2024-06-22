@@ -2,11 +2,12 @@ package ru.gb.FamilyTree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Human implements Serializable {
+public class Human implements  Serializable, Iterable<Human>,TreeMyTop {
     private long id;
     private String name;
     private Gender gender;
@@ -85,6 +86,16 @@ public class Human implements Serializable {
         return null;
     }
 
+    @Override
+    public boolean addChildren(Object human) {
+        return false;
+    }
+
+    @Override
+    public boolean addParent(Object human) {
+        return false;
+    }
+
     public int getAge(){
         if (deathDate == null) {
             return getPeriod(birthDate, LocalDate.now());
@@ -103,7 +114,22 @@ public class Human implements Serializable {
 
     public Human getSpouse() {return spouse; }
 
+    @Override
+    public void setSpouse(Object human) {
+
+    }
+
+    @Override
+    public void getSpouse(Object human2) {
+
+    }
+
     public String getName() {return name; }
+
+    @Override
+    public void setId(long id) {
+
+    }
 
     public long getId() {return id; }
 
@@ -214,6 +240,11 @@ public class Human implements Serializable {
     }
 
     public Object getSpouse(Human human2) {
+        return null;
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
         return null;
     }
 }
