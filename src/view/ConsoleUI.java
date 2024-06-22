@@ -19,7 +19,7 @@ public class ConsoleUI implements View {
 
     public ConsoleUI(Service service) {
         this.service = service;
-        this.presenter = new Presenter(this);
+        this.presenter = new Presenter(this, service);
         this.scanner = new Scanner(System.in);
         this.isWorking = true;
         this.mainMenu = new MainMenu(this, service); // Передаем service

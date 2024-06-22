@@ -1,10 +1,11 @@
 import model.service.Service;
 import view.ConsoleUI;
-
+import model.writer.FileHandler;
 
 public class Main {
     public static void main(String[] args) {
-        Service service = new Service(); // Создаем экземпляр Service
+
+        Service service = new Service(new FileHandler()); // Создаем экземпляр Service
         ConsoleUI consoleUI = new ConsoleUI(service); // Передаем service в ConsoleUI
         consoleUI.start(); // Запускаем консольный интерфейс
     }

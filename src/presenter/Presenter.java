@@ -13,22 +13,21 @@ import java.time.LocalDate;
 public class Presenter {
     private View view;
     private Service service;
-    private Writable fileHandler;
+//    private Writable fileHandler;
 
-    public Presenter(View view) {
+    public Presenter(View view, Service service) {
         this.view = view;
-        this.service = new Service();
-        this.fileHandler = new FileHandler();
+        this.service = service;
+//        this.fileHandler = new FileHandler();
     }
 
     public void loadTree(String filePath) {
-        FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.read(filePath);
-        service.loadTree(loadedTree);
+        service.loadTree(filePath);
         view.printAnswer("Дерево загружено.");
     }
 
     public void saveTree(String filePath) {
-        service.saveTree(fileHandler, filePath);
+        service.saveTree(filePath);
         view.printAnswer("Дерево сохранено.");
     }
 
@@ -36,10 +35,7 @@ public class Presenter {
         service.addHuman(name, gender, birthDate);
         view.printAnswer("Человек добавлен: " + name);
     }
-//    public void addMember(String name, Gender gender, LocalDate birthDate) {
-//        service.addHuman(name, gender, birthDate);
-//        view.printAnswer("Человек успешно добавлен.");
-//    }
+
 
     public void setWedding(long id1, long id2) {
         if (service.setWedding(id1, id2)) {
@@ -82,12 +78,5 @@ public class Presenter {
         }
     }
 
-//    public void addParent(long childId, long parentId) {
-//        boolean added = service.addParent(childId, parentId);
-//        if (added) {
-//            view.printAnswer("Родитель успешно добавлен.");
-//        } else {
-//            view.printAnswer("Не удалось добавить родителя.");
-//        }
-//    }
+
 }

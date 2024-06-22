@@ -9,23 +9,38 @@ import java.time.LocalDate;
 
 public class Service {
     private FamilyTree<Human> tree;
+    private Writable fileHandler;
 
-    public Service() {
-        tree = new FamilyTree<>();
+    public Service(Writable fileHandler) {
+        this.tree = new FamilyTree<>();
+        this.fileHandler = fileHandler; // инициализируем поле
     }
 
-    public void loadTree(FamilyTree<Human> loadedTree) {
-        this.tree = loadedTree;
+//    public Service() {
+//        tree = new FamilyTree<>();
+//    }
+
+    public void loadTree(String filePath) {
+        FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.read(filePath);
+        if (loadedTree != null) {
+            this.tree = loadedTree;
+        }
     }
+//    public void loadTree(FamilyTree<Human> loadedTree) {
+//        this.tree = loadedTree;
+//    }
+
 
     public FamilyTree<Human> getTree() {
         return tree;
     }
 
-    public void saveTree(Writable fileHandler, String filePath) {
-        fileHandler.save(tree, filePath);
+//    public void saveTree(Writable fileHandler, String filePath) {
+//        fileHandler.save(tree, filePath);
+//    }
+    public void saveTree(String filePath) {
+        fileHandler.save(tree, filePath); // использование поля fileHandler
     }
-
     public void addHuman(String name, Gender gender, LocalDate birthDate) {
         Human human = new Human(name, gender, birthDate);
         tree.add(human);
