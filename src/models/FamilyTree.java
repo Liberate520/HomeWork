@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,8 +16,9 @@ import java.util.List;
  * @param <T> тип объектов, которые будут храниться в генеалогическом древе
  */
 public class FamilyTree<T extends Serializable & Comparable<T>> implements Iterable<T>, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private List<T> familyMembers;
+    private final List<T> familyMembers;
 
     /**
      * Конструктор класса FamilyTree.
@@ -35,15 +37,6 @@ public class FamilyTree<T extends Serializable & Comparable<T>> implements Itera
     }
 
     /**
-     * Возвращает список объектов в генеалогическом древе.
-     *
-     * @return список объектов
-     */
-    public List<T> getFamilyMembers() {
-        return familyMembers;
-    }
-
-    /**
      * Возвращает итератор для перебора объектов в генеалогическом древе.
      * Реализация интерфейса Iterable позволяет использовать древо в циклах for-each.
      *
@@ -58,13 +51,13 @@ public class FamilyTree<T extends Serializable & Comparable<T>> implements Itera
      * Сортирует объекты в генеалогическом древе по имени в алфавитном порядке.
      */
     public void sortByName() {
-        familyMembers.sort(Comparator.comparing(T::toString));
+        familyMembers.sort(Comparator.comparing((T t) -> ((Human)t).getName()));
     }
 
     /**
      * Сортирует объекты в генеалогическом древе по дате рождения.
      */
     public void sortByBirthDate() {
-        familyMembers.sort(Comparator.comparing((T t) -> ((Comparable<T>)t).toString()));
+        familyMembers.sort(Comparator.comparing((T t) -> ((Human)t).getBirthDate()));
     }
 }
