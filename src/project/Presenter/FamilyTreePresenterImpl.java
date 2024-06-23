@@ -72,4 +72,3 @@ public class FamilyTreePresenterImpl implements FamilyTreePresenter {
         view.displayMemberDescriptions(service.getMemberDescriptions());
     }
 }
-

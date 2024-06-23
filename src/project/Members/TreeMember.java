@@ -100,7 +100,7 @@ public class TreeMember implements Serializable {
 
     public TreeMember getMother() {
         for (TreeMember parent : parents) {
-            if (parent.getGender() == Gender.Female) {
+            if (parent.getGender() == Gender.female) {
                 return parent;
             }
         }
@@ -109,7 +109,7 @@ public class TreeMember implements Serializable {
 
     public TreeMember getFather() {
         for (TreeMember parent : parents) {
-            if (parent.getGender() == Gender.Male) {
+            if (parent.getGender() == Gender.male) {
                 return parent;
             }
         }

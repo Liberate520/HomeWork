@@ -16,7 +16,7 @@ public class FamilyTreeService {
 
     public FamilyTreeService() {
         this.familyTree = new FamilyTreeIMPL<>();
-        this.fileHandler = new FileHandler();
+        this.fileHandler = fileHandler;
     }
 
     public void loadFamilyTree(String filename) throws IOException, ClassNotFoundException {
