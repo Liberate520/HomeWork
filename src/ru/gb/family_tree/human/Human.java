@@ -1,18 +1,24 @@
 package ru.gb.family_tree.human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Human {
+public class Human implements Serializable {
+    private static int idCounter = 0;
+
+    private long id;
     private String name;
     private Human mother, father;
-    private List<String> child;
+    private List<Human> child;
     private LocalDate birthDate, deathDate;
     private Gender gender;
 
     /**
-     * Конструктор
+     * Конструктор full
      * @param name собственное имя
      * @param mother имя матери или null
      * @param father имя отца или null
@@ -21,6 +27,7 @@ public class Human {
      * @param gender пол объекта (M-male, F-Female)
      */
     public Human(String name, Human mother, Human father, LocalDate birthDate, LocalDate deathDate, Gender gender) {
+        this.id = ++idCounter;
         this.name = name;
         this.mother = mother;
         this.father = father;
@@ -29,11 +36,21 @@ public class Human {
         this.deathDate = deathDate;
         this.gender = gender;
         if (this.mother != null) {
-            this.mother.child.add(name);
+            this.mother.child.add(this);
         }
         if (this.father != null) {
-            this.father.child.add(name);
+            this.father.child.add(this);
         }
+    }
+
+    /**
+     * Конструктор short
+     * @param name собственное имя
+     * @param birthDate дата рождения
+     * @param gender пол объекта (M-male, F-Female)
+     */
+    public Human(String name, LocalDate birthDate, Gender gender) {
+        this(name,null, null, birthDate,null, gender);
     }
 
     public String getParents(){
@@ -43,14 +60,27 @@ public class Human {
         sb.append("Father: " + father + "\n");
         return sb.toString();
     }
+    //найти возраст человека
+    public int getAge(){
+        if(deathDate== null){
+            return getPeriod(birthDate, LocalDate.now());
+        }
+        return getPeriod(birthDate, deathDate);
+    }
+    //вспомогательный метод для поиска возраста.
+    private int getPeriod(LocalDate start, LocalDate finish){
+        Period diff = Period.between(start, finish);
+        return diff.getYears();
+    }
 
     @Override
     public String toString() {
         return "Human{" +
+                "ID ='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", mother=" + toStrHelper(mother) +
                 ", father=" + toStrHelper(father) +
-                ", child=" + child +
+                ", child=" + toStrHelperList(child) +
                 ", birthDate=" + birthDate +
                 ", deathDate=" + deathDate +
                 ", gender=" + gender +
@@ -62,5 +92,31 @@ public class Human {
             return human.name;
         }
         else return null;
+    }
+    //вместо объекта в печать возвращаем только имена детей
+    private String toStrHelperList(List<Human> list){
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        for (Human human: list){
+            if (sb.length() > 1){
+                sb.append(", ");
+            }
+            sb.append(human.name);
+        }
+        sb.append(")");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return id == human.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
