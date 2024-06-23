@@ -1,11 +1,12 @@
 package family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     int id;
     private static int sumId=0; // чтобы id не повторялось
     private String name;
