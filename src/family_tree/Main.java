@@ -5,6 +5,8 @@ import family_tree.model.human.Human;
 import family_tree.model.human.Sex;
 import family_tree.model.save_read.FileHandler;
 import family_tree.model.save_read.WriteRead;
+import family_tree.view.ConsoleUI;
+import family_tree.view.View;
 
 import java.time.LocalDate;
 
@@ -30,19 +32,8 @@ public class Main {
     private static FamilyTree tryTree() {
         FamilyTree newTree = new FamilyTree();
 
-        Human sergey = new Human("Сергей", "Попов",
-                LocalDate.of(1976, 4, 6), Sex.male);
-        Human julia = new Human("Юлия", "Попова",
-                LocalDate.of(1976, 4, 6), Sex.female);
-
-        newTree.add(sergey);
-        newTree.add(julia);
-
-        Human liza = new Human("Елизавета", "Попова",
-                LocalDate.of(2011, 7, 3), Sex.female, sergey, julia);
-
-        newTree.add(liza);
-
+        View view = new ConsoleUI();
+        view.Start();
         return newTree;
     }
 }
