@@ -14,12 +14,11 @@ public class FamilyTreeFileHandler<T extends Serializable & Comparable<T>> {
      *
      * @param familyTree генеалогическое древо
      * @param filename   имя файла
+     * @throws IOException если возникает ошибка ввода-вывода при сохранении файла
      */
-    public void saveFamilyTree(FamilyTree<T> familyTree, String filename) {
+    public void saveFamilyTree(FamilyTree<T> familyTree, String filename) throws IOException {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
             outputStream.writeObject(familyTree);
-        } catch (IOException e) {
-            System.out.println("Ошибка при сохранении файла: " + e.getMessage());
         }
     }
 
@@ -28,14 +27,13 @@ public class FamilyTreeFileHandler<T extends Serializable & Comparable<T>> {
      *
      * @param filename имя файла
      * @return загруженное генеалогическое древо
+     * @throws IOException            если возникает ошибка ввода-вывода при загрузке файла
+     * @throws ClassNotFoundException если возникает ошибка при десериализации объекта
      */
     @SuppressWarnings("unchecked")
-    public FamilyTree<T> loadFamilyTree(String filename) {
+    public FamilyTree<T> loadFamilyTree(String filename) throws IOException, ClassNotFoundException {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename))) {
             return (FamilyTree<T>) inputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Ошибка при загрузке файла: " + e.getMessage());
-            return new FamilyTree<>();
         }
     }
 }
