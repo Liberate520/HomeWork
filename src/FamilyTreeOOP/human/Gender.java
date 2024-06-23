@@ -1,4 +1,4 @@
-package FamilyThreeOOP.Family.Human;
+package FamilyTreeOOP.human;
 
 public enum Gender {
     Male, Female;
