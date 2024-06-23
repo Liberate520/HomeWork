@@ -1,7 +1,8 @@
 import models.Human;
-import models.FamilyTree;
-import services.FamilyTreeFileHandler;
-import enums.Gender;
+import models.Gender;
+import presenters.Presenter;
+import views.ConsoleView;
+import views.View;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,21 +19,22 @@ public class Main {
         Human anna = new Human("Анна Иоанновна Романова", "07.02.1693", "28.10.1740", Gender.FEMALE);
         Human praskovyaIoannovna = new Human("Прасковья Иоанновна Романова", "04.10.1694", "19.10.1731", Gender.FEMALE);
 
-        // Создание объекта класса FamilyTree
-        FamilyTree<Human> familyTree = new FamilyTree<>();
+        // Создание объекта класса Presenter
+        View view = new ConsoleView();
+        Presenter presenter = new Presenter(view);
 
-        // Добавление объектов в дерево
-        familyTree.add(ioann);
-        familyTree.add(alexey);
-        familyTree.add(maria);
-        familyTree.add(dmitry);
-        familyTree.add(evdokia);
-        familyTree.add(praskovya);
-        familyTree.add(mariaIvanovna);
-        familyTree.add(feodosia);
-        familyTree.add(ekaterina);
-        familyTree.add(anna);
-        familyTree.add(praskovyaIoannovna);
+        // Добавление объектов в генеалогическое древо
+        presenter.addHuman(ioann);
+        presenter.addHuman(alexey);
+        presenter.addHuman(maria);
+        presenter.addHuman(dmitry);
+        presenter.addHuman(evdokia);
+        presenter.addHuman(praskovya);
+        presenter.addHuman(mariaIvanovna);
+        presenter.addHuman(feodosia);
+        presenter.addHuman(ekaterina);
+        presenter.addHuman(anna);
+        presenter.addHuman(praskovyaIoannovna);
 
         // Установка родственных связей
         ioann.setMother(maria);
@@ -53,36 +55,18 @@ public class Main {
         praskovyaIoannovna.setFather(ioann);
 
         // Вывод неотсортированных данных
-        System.out.println("Родственные связи:");
-        for (Human human : familyTree) {
-            System.out.println(human);
-        }
+        presenter.displayFamilyTree();
 
         // Вывод сортированных данных по имени
-        System.out.println("\nСортированный по имени:");
-        familyTree.sortByName();
-        for (Human human : familyTree) {
-            System.out.println(human);
-        }
+        presenter.sortByName();
 
         // Вывод сортированных данных по дате рождения
-        System.out.println("\nСортированный по дате рождения:");
-        familyTree.sortByBirthDate();
-        for (Human human : familyTree) {
-            System.out.println(human);
-        }
+        presenter.sortByBirthDate();
 
         // Сохранение данных в файл
-        FamilyTreeFileHandler<Human> fileHandler = new FamilyTreeFileHandler<>();
-        fileHandler.saveFamilyTree(familyTree, "family_tree.txt");
+        presenter.saveToFile("family_tree.txt");
 
         // Чтение данных из файла
-        FamilyTree<Human> loadedFamilyTree = fileHandler.loadFamilyTree("family_tree.txt");
-
-        // Вывод загруженных данных
-        System.out.println("\nЗагруженные данные:");
-        for (Human human : loadedFamilyTree) {
-            System.out.println(human);
-        }
+        presenter.loadFromFile("family_tree.txt");
     }
 }
