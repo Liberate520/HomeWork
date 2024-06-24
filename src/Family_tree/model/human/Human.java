@@ -1,6 +1,6 @@
-package Family_tree.human;
+package Family_tree.model.human;
 
-import ru.gb.Family_tree.family_tree.TreeTop;
+import ru.gb.Family_tree.model.family_tree.TreeTop;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,13 +10,14 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Human implements Serializable, Iterable<Human>, TreeTop {
-    private long id;
 
     @Override
     public Iterator<Human> iterator() {
+
         return null;
     }
 
+    private long id;
     private String name;
     private Gender gender;
     private LocalDate birthDate;
@@ -25,8 +26,8 @@ public class Human implements Serializable, Iterable<Human>, TreeTop {
     private List<Human> children;
     private Human spouse;
 
-    public Human(long id, String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
-        this.id = id;
+    public Human( String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
+        id = -1;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
@@ -41,23 +42,28 @@ public class Human implements Serializable, Iterable<Human>, TreeTop {
         children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate) {
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deathDate = null;
-        this.parents = new ArrayList<>();
-        this.children = new ArrayList<>(); {
-        }
-    }
-
-    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
+    public Human(String name, String gender, String birthDate) {
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = null;
         this.parents = null;
+
     }
+
+   public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
+       this.name = name;
+       this.gender = gender;
+       this.birthDate = birthDate;;
+       parents = new ArrayList<>();
+       if (father != null) {
+           parents.add(father);
+       }
+       if (mother != null) {
+           parents.add(mother);
+       }
+       children = new ArrayList<>();
+   }
 
     public void addChild(Human child) {
         if (!children.contains(child)) {
@@ -101,7 +107,7 @@ public class Human implements Serializable, Iterable<Human>, TreeTop {
 
     @Override
     public void setSpouse(Object human) {
-
+        this.spouse = spouse;
     }
 
     public void setSpouse(Human spouse) {
@@ -140,12 +146,16 @@ public class Human implements Serializable, Iterable<Human>, TreeTop {
 
     @Override
     public void addChild(Object child) {
-
+        if (!children.contains(child)) {
+            children.add((Human) child);
+        }
     }
 
     @Override
     public void addParent(Object parent) {
-
+        if (!parents.contains(parent)) {
+            parents.add((Human) parent);
+        }
     }
 
     private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
@@ -179,25 +189,24 @@ public class Human implements Serializable, Iterable<Human>, TreeTop {
     }
 
     public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("id: ");
-        sb.append(id);
-        sb.append(", имя: ");
-        sb.append(name);
-        sb.append(", пол: ");
-        sb.append(getGender());
-        sb.append(", возраст: ");
-        sb.append(getAge());
-        sb.append(", ");
-        sb.append(getSpouseInfo());
-        sb.append(", ");
-        sb.append(getFatherInfo());
-        sb.append(", ");
-        sb.append(getMotherInfo());
-        sb.append(", ");
-        sb.append(getChildrenInfo());
-        sb.append(", ");
-        return sb.toString();
+        String sb = "id: " +
+                id +
+                ", имя: " +
+                name +
+                ", пол: " +
+                getGender() +
+                ", возраст: " +
+                getAge() +
+                ", " +
+                getSpouseInfo() +
+                ", " +
+                getFatherInfo() +
+                ", " +
+                getMotherInfo() +
+                ", " +
+                getChildrenInfo() +
+                ", ";
+        return sb;
     }
 
     public String getSpouseInfo() {
@@ -250,11 +259,12 @@ public class Human implements Serializable, Iterable<Human>, TreeTop {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Human)) {
+        if (!(obj instanceof Human human)) {
             return false;
         }
-        Human human = (Human) obj;
         return human.getId() == getId();
     }
 
+    public void Human(String name, String gender, String birthDate, String father, String mother, String children) {
+    }
 }

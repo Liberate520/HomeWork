@@ -1,9 +1,9 @@
-package Family_tree.family_tree;
+package Family_tree.model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Iterator;
 
 
 public class Family_tree <E extends TreeTop<E>> implements Serializable, Iterable<E> {
@@ -19,9 +19,9 @@ public class Family_tree <E extends TreeTop<E>> implements Serializable, Iterabl
         this.humanList = humanList;
     }
 
-    public boolean add(E human) {
+    public void add(E human) {
         if (human == null) {
-            return false;
+            return;
         }
         if (!humanList.contains(human)) {
             humanList.add(human);
@@ -30,9 +30,7 @@ public class Family_tree <E extends TreeTop<E>> implements Serializable, Iterabl
             addToParents(human);
             addToChildren(human);
 
-            return true;
         }
-        return false;
     }
 
     private void addToParents(E human) {
@@ -40,6 +38,8 @@ public class Family_tree <E extends TreeTop<E>> implements Serializable, Iterabl
             parent.addChild(human);
         }
     }
+
+
 
 
     private void addToChildren(E human) {
