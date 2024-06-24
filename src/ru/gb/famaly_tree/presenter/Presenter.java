@@ -31,8 +31,8 @@ public class Presenter {
         return service.isFirstHumanInFamalyTreeM();
     }
 
-    public boolean addPersonInFamalyTree(Human h1){
-        return service.addPersonInFamalyTree(h1);
+    public void addPersonInFamalyTree(Human h1){
+        service.addPersonInFamalyTree(h1);
     }
 
     public void addPersonInFamalyTree(Human h1, Human h2){

@@ -13,11 +13,12 @@ import java.util.List;
 public class Service {
     private Famaly_tree famalyTree;
     private Writable writable;
-    private boolean isFirstHumanInFamalyTree = true;
+    private boolean isFirstHumanInFamalyTree;
 
     public Service(){
         famalyTree = new Famaly_tree<>();
         writable = new FileHandler();
+        isFirstHumanInFamalyTree = (famalyTree.GetFounder()==null);
     }
 
     public Human createHuman(String name,Gender gender, LocalDate birthDate, LocalDate deathDate){
@@ -29,14 +30,10 @@ public class Service {
     }
 
 
-    public boolean addPersonInFamalyTree(Human h1){
+    public void addPersonInFamalyTree(Human h1){
         if(isFirstHumanInFamalyTree) {
             famalyTree.addFounder(h1);
             isFirstHumanInFamalyTree = false;
-            return true;
-        }
-        else{
-            return false;
         }
     }
 
@@ -45,7 +42,7 @@ public class Service {
     }
 
     public void addPersonInFamalyTree(Human h1, Human h2){
-        famalyTree.addThisInThis(h1,h2);
+        famalyTree.addChildToParent(h1,h2);
     }
 
     public String outputHumanInfo(Human human){
@@ -89,5 +86,6 @@ public class Service {
 
     public void download() throws IOException, ClassNotFoundException {
         famalyTree = writable.download();
+        isFirstHumanInFamalyTree = (famalyTree.GetFounder()==null);
     }
 }

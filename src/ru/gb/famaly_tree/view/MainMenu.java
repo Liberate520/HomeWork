@@ -23,6 +23,7 @@ public class MainMenu {
         commandList.add(new CommandSortByName(consoleUI));
         commandList.add(new CommandSave(consoleUI));
         commandList.add(new CommandDownload(consoleUI));
+        commandList.add(new CommandFinish(consoleUI));
     }
 
     public String outputMenuInfo(){

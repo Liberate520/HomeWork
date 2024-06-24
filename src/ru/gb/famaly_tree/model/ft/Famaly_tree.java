@@ -14,13 +14,23 @@ public class Famaly_tree<T extends DutiesOfTheCreature<T>> implements Serializab
     private List<List<T>> couplList = new ArrayList<>();
 
     //добваление ребенка к родителю
-    public void addThisInThis(T child, T parent){
+    public void addChildToParent(T child, T parent){
         parent.addChild(child);
         if (parent.getGender() == Gender.male){
             child.addFather(parent);
+            T mother = findSpouse(parent);
+            if(mother!=null){
+                child.addMother(mother);
+                mother.addChild(child);
+            }
         }
         else{
             child.addMother(parent);
+            T father = findSpouse(parent);
+            if(father!=null){
+                child.addMother(father);
+                father.addChild(child);
+            }
         }
         addUniqueHuman(child);
         addUniqueHuman(parent);
