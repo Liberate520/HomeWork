@@ -1,12 +1,14 @@
 package human;
 
+import family_tree.TreeNode;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class  Human implements Serializable, TreeNode<Human> {
     private String name;
     private Gender gender;
     private LocalDate birthDate;
@@ -77,6 +79,11 @@ public class Human implements Serializable {
 
     public LocalDate getDeathDate() {
         return deathDate;
+    }
+
+    @Override
+    public List<Human> getChildren() {
+        return null;
     }
 
     public void setDeathDate(LocalDate deathDate) {

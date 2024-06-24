@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.List;
 
 import family_tree.FamilyTree;
 import family_tree.TreeNode;
@@ -11,8 +12,8 @@ public class Main {
     public static void main(String[] args) {
 
         String file = "src/save_and_load/tree.txt";
-        FamilyTree tree = finalTree();
-//        FamilyTree tree = load(file);
+        FamilyTree<Human> tree = finalTree();
+//        FamilyTree<Human> tree = load(file);
         tree.sortByName();
         System.out.println(tree.getHumansInfo());
         tree.sortByBirthDate();
@@ -21,18 +22,18 @@ public class Main {
         save(tree, file);
     }
 
-    private static FamilyTree load(String file) {
+    private static FamilyTree<Human> load(String file) {
         Writable writable = new FileHandler();
         return (FamilyTree) writable.read(file);
     }
 
-    private static void save(FamilyTree tree, String file) {
+    private static void save(FamilyTree<Human> tree, String file) {
         Writable writable = new FileHandler();
         writable.save(tree, file);
     }
 
-    private static FamilyTree finalTree() {
-        FamilyTree tree = new FamilyTree();
+    private static FamilyTree<Human> finalTree() {
+        FamilyTree <Human> tree = new FamilyTree<>();
 
         Human petya = new Human("Петя", Gender.Male, LocalDate.of(1993, 9, 24));
         Human ira = new Human("Ира", Gender.Female, LocalDate.of(1992, 2, 12));
@@ -50,8 +51,7 @@ public class Main {
         tree.addHuman(kolya);
         tree.addHuman(sonya);
         tree.addHuman(egor);
-        tree.addHuman(ira);
-        tree.addHuman(kolya);
+
 
         return tree;
 

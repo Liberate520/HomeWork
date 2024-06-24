@@ -9,7 +9,7 @@ public interface TreeNode<T> extends Serializable {
     LocalDate getBirthDate();
     LocalDate getDeathDate();
     List<T> getChildren();
-    boolean addChild(T human);
+    void addChild(T human);
     T getMother();
     T getFather();
     T getSpouse();

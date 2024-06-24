@@ -8,6 +8,8 @@ import java.util.List;
 
 import family_tree.Comparator.HumanComparatorByBirthDate;
 import family_tree.Comparator.HumanComparatorByName;
+import human.Human;
+import save_and_load.Writable;
 
 public class FamilyTree<E extends TreeNode<E>>  implements Serializable, Iterable<E> {
     private List<E> humans;
