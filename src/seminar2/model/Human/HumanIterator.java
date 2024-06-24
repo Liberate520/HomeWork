@@ -1,14 +1,12 @@
-package seminar2.Human;
-
-import seminar2.Human.Human;
+package seminar2.model.Human;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class HumanIterator<T> implements Iterator<T> {
 
-    private int index;
     private final List<T> humanList;
+    private int index;
 
     public HumanIterator(List<T> humanList) {
         this.humanList = humanList;

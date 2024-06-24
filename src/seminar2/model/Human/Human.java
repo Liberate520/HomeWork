@@ -1,12 +1,11 @@
-package seminar2.Human;
+package seminar2.model.Human;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human extends TreeCreature<Human> implements Serializable, Comparable<Human>, Creature {
+public class Human extends TreeCreature<Human> implements Comparable<Human>, Creature<Human> {
 
     /**
      * id            - идентификатор
@@ -18,7 +17,7 @@ public class Human extends TreeCreature<Human> implements Serializable, Comparab
      * parents       - родители
      * children      - дети
      * spouse        - супруг(а)
-     *
+     * <p>
      * placeOfLiving - место проживания
      * placeOfBirth  - место рождения
      */
@@ -31,7 +30,7 @@ public class Human extends TreeCreature<Human> implements Serializable, Comparab
     private LocalDate dateOfDeath;
 
     public Human(String name, String surname, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath,
-                 Human partner, Human father, Human mother){
+                 Human partner, Human father, Human mother) {
         id = -1;  // -1 - родственник ещё не в дереве
         this.name = name;
         this.surname = surname;
@@ -42,34 +41,34 @@ public class Human extends TreeCreature<Human> implements Serializable, Comparab
         parents = new ArrayList<>();
         children = new ArrayList<>();
 
-        if(father != null){
+        if (father != null) {
             super.parents.add(father);
         }
-        if (mother != null){
+        if (mother != null) {
             parents.add(mother);
         }
 
 
     }
 
-    public Human(String name, String surname, Gender gender, LocalDate dateOfBirth){
+    public Human(String name, String surname, Gender gender, LocalDate dateOfBirth) {
         this(name, surname, gender, dateOfBirth, null, null, null, null);
     }
 
 
-    public Human(String name, String surname, Gender gender, LocalDate dateOfBirth, Human father, Human mother){
+    public Human(String name, String surname, Gender gender, LocalDate dateOfBirth, Human father, Human mother) {
         this(name, surname, gender, dateOfBirth, null, null, father, mother);
     }
 
-    public int getAge(){
-        if(dateOfDeath == null){
+    public int getAge() {
+        if (dateOfDeath == null) {
             return getPeriod(dateOfBirth, LocalDate.now());
-        }else{
+        } else {
             return getPeriod(dateOfBirth, dateOfDeath);
         }
     }
 
-    private int getPeriod(LocalDate dateOfBirth, LocalDate dateOfDeath){
+    private int getPeriod(LocalDate dateOfBirth, LocalDate dateOfDeath) {
         Period difference = Period.between(dateOfBirth, dateOfDeath);
         return difference.getYears();
     }
@@ -138,57 +137,57 @@ public class Human extends TreeCreature<Human> implements Serializable, Comparab
     }
 //-----------------------------------------------------------------------------------------------------------------
 
-    public String getMotherInfo(){
+    public String getMotherInfo() {
         String result = "мать: ";
         Human mother = getMother();
-        if(mother != null){
+        if (mother != null) {
             result += mother.getName();
             result += " ";
             result += mother.getSurname();
-        }else{
+        } else {
             result += "нет данных";
         }
 
         return result;
     }
 
-    public String getFatherInfo(){
+    public String getFatherInfo() {
         String result = "отец: ";
         Human father = getFather();
-        if(father != null){
+        if (father != null) {
             result += father.getName();
             result += " ";
             result += father.getSurname();
-        }else{
+        } else {
             result += "нет данных";
         }
 
         return result;
     }
 
-    public String getChildrenInfo(){
+    public String getChildrenInfo() {
         StringBuilder result = new StringBuilder();
         result.append("дети: ");
-        if(children.size() != 0){
+        if (children.size() != 0) {
             result.append(children.get(0).getName());
             result.append(" " + children.get(0).getSurname());
-            for(int i = 1; i < children.size(); i++){
+            for (int i = 1; i < children.size(); i++) {
                 result.append(", ");
                 result.append(children.get(i).getName());
                 result.append(" " + children.get(i).getSurname());
             }
-        }else{
+        } else {
             result.append("отсутствуют");
         }
         return result.toString();
     }
 
-    public String getSpouseInfo(){
+    public String getSpouseInfo() {
         String result = "супруг(а): ";
 
-        if(partner == null){
+        if (partner == null) {
             result += "нет, ";
-        }else{
+        } else {
             result += partner.getName();
             result += " ";
             result += partner.getSurname();
@@ -203,7 +202,7 @@ public class Human extends TreeCreature<Human> implements Serializable, Comparab
         return getInfo();
     }
 
-    public String getInfo(){
+    public String getInfo() {
         StringBuilder info = new StringBuilder();
         info.append("id: ");
         info.append(id);
@@ -226,7 +225,8 @@ public class Human extends TreeCreature<Human> implements Serializable, Comparab
         return info.toString();
 
     }
-    public String getBriefInfo(){
+
+    public String getBriefInfo() {
         StringBuilder info = new StringBuilder();
 
         info.append(surname);
@@ -239,11 +239,11 @@ public class Human extends TreeCreature<Human> implements Serializable, Comparab
     }
 
     @Override
-    public boolean equals(Object obj){
-        if(this == obj){
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if(!(obj instanceof Human)){
+        if (!(obj instanceof Human)) {
             return false;
         }
         Human human = (Human) obj;

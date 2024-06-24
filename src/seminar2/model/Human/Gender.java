@@ -1,8 +1,8 @@
-package seminar2.Human;
+package seminar2.model.Human;
 
 public enum Gender {
-    Male ("Мужской"),
-    Female ("Женский");
+    Male("Мужской"),
+    Female("Женский");
 
     private String title;
 

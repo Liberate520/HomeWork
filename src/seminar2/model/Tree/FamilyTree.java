@@ -1,19 +1,19 @@
-package seminar2.Tree;
+package seminar2.model.Tree;
 
-import seminar2.Human.Creature;
-import seminar2.Human.Human;
-import seminar2.Human.HumanIterator;
-import seminar2.Comparators.HumanComparatorByAge;
-import seminar2.Comparators.HumanComparatorByChildren;
-import seminar2.Comparators.HumanComparatorByName;
-import seminar2.Comparators.HumanComparatorBySurname;
+import seminar2.model.Human.Creature;
+import seminar2.model.Human.Human;
+import seminar2.model.Human.HumanIterator;
+import seminar2.model.Comparators.HumanComparatorByAge;
+import seminar2.model.Comparators.HumanComparatorByChildren;
+import seminar2.model.Comparators.HumanComparatorByName;
+import seminar2.model.Comparators.HumanComparatorBySurname;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
+public class FamilyTree<E extends Creature<E>> implements Serializable, Iterable<E> {
     private long humansId;
     private List<E> humanList;
     private int index;
@@ -44,13 +44,13 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     }
 
     private void addToParents(E human){
-        for (Human parent: human.getParents()){
+        for (E parent: human.getParents()){
             parent.addChild(human);
         }
     }
 
     private void addToChildren(E human){
-        for(Human child: human.getChildren()){
+        for(E child: human.getChildren()){
             child.addParent(human);
         }
     }
@@ -101,7 +101,7 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
         info.append("В дереве ");
         info.append(humanList.size());
         info.append(" объекта(ов): \n");
-        for(Human human: humanList){
+        for(E human: humanList){
             info.append(human);
             info.append("\n");
         }
@@ -113,25 +113,25 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     // ----------- методы сортировки ----------------
     public void sortByName(){
         index = 1;
-        humanList.sort(new HumanComparatorByName());
+        humanList.sort(new HumanComparatorByName<>());
 
     }
 
     public void sortBySurname(){
         index = 2;
-        humanList.sort(new HumanComparatorBySurname());
+        humanList.sort(new HumanComparatorBySurname<>());
 
     }
 
     public void sortByAge(){
         index = 3;
-        humanList.sort(new HumanComparatorByAge());
+        humanList.sort(new HumanComparatorByAge<>());
     }
 
 
     public void sortByChildren(){
         index = 4;
-        humanList.sort(new HumanComparatorByChildren());
+        humanList.sort(new HumanComparatorByChildren<>());
     }
 
     // ---------- методы вывода информации при сортировке --------
@@ -139,7 +139,7 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     public String getInfoSortByName(){
         StringBuilder infoSort = new StringBuilder();
         infoSort.append("Отсортировано по имени: \n");
-        for(Human human: humanList){
+        for(E human: humanList){
             infoSort.append(human.getName());
             infoSort.append(" " + human.getSurname());
             infoSort.append(" " + human.getDateOfBirth());
@@ -154,7 +154,7 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     public String getInfoSortBySurname(){
         StringBuilder infoSort = new StringBuilder();
         infoSort.append("Отсортировано по фамилии: \n");
-        for(Human human: humanList){
+        for(E human: humanList){
             infoSort.append(human.getSurname());
             infoSort.append(" " + human.getName());
             infoSort.append(" " + human.getDateOfBirth());
@@ -168,7 +168,7 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     public String getInfoSortByAge(){
         StringBuilder infoSort = new StringBuilder();
         infoSort.append("Отсортировано по возрасту: \n");
-        for(Human human: humanList){
+        for(E human: humanList){
             infoSort.append(human.getAge() + " год(а)/лет");
             infoSort.append(" " + human.getSurname());
             infoSort.append(" " + human.getName());
@@ -183,7 +183,7 @@ public class FamilyTree<E extends Human> implements Serializable, Iterable<E> {
     public String getInfoSortByChildren(){
         StringBuilder infoSort = new StringBuilder();
         infoSort.append("Отсортировано по количеству детей в семье: \n");
-        for(Human human: humanList){
+        for(E human: humanList){
             infoSort.append(human.getSurname() + " " + human.getName() + ", "+ human.getChildrenInfo());
 
             infoSort.append("\n");
