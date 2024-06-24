@@ -1,17 +1,15 @@
 import java.time.LocalDate;
-import java.util.List;
 
-import family_tree.FamilyTree;
-import family_tree.TreeNode;
-import human.Gender;
-import human.Human;
-import save_and_load.FileHandler;
-import save_and_load.Writable;
+import model.family_tree.FamilyTree;
+import model.human.Gender;
+import model.human.Human;
+import model.save_and_load.FileHandler;
+import model.save_and_load.Writable;
 
 public class Main {
     public static void main(String[] args) {
 
-        String file = "src/save_and_load/tree.txt";
+        String file = "src/model.save_and_load/tree.txt";
         FamilyTree<Human> tree = finalTree();
 //        FamilyTree<Human> tree = load(file);
         tree.sortByName();
