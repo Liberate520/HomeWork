@@ -1,11 +1,12 @@
 package family_tree.presenter;
 
 import family_tree.model.family_tree.FamilyTree;
+import family_tree.model.family_tree.TreeRoot;
 import family_tree.model.human.Human;
 import family_tree.view.View;
 
-public class Presenter {
-    private View view;
+public class Presenter<T extends TreeRoot<T>> {
+    private final View view;
     private FamilyTree newTree;
 
     public Presenter(View view) {

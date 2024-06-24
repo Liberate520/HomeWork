@@ -22,7 +22,7 @@ public class ConsoleUI implements View{
     }
 
     @Override
-    public void Start() {
+    public void start() {
         System.out.println("Добро пожаловать в семейное древо!");
 
         while (work) {

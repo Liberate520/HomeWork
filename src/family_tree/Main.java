@@ -1,14 +1,10 @@
 package family_tree;
 
 import family_tree.model.family_tree.FamilyTree;
-import family_tree.model.human.Human;
-import family_tree.model.human.Sex;
 import family_tree.model.save_read.FileHandler;
 import family_tree.model.save_read.WriteRead;
 import family_tree.view.ConsoleUI;
 import family_tree.view.View;
-
-import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,7 +29,7 @@ public class Main {
         FamilyTree newTree = new FamilyTree();
 
         View view = new ConsoleUI();
-        view.Start();
+        view.start();
         return newTree;
     }
 }
