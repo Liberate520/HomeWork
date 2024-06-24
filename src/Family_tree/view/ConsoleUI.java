@@ -1,6 +1,5 @@
 package Family_tree.view;
 
-import ru.gb.Family_tree.model.human.Gender;
 import ru.gb.Family_tree.presenter.Presenter;
 
 import java.util.Scanner;
@@ -9,10 +8,12 @@ public class ConsoleUI implements View{
     private Scanner scanner;
     private Presenter presenter = new Presenter(this);
     private boolean work;
+    private MainMenu mainMenu;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         work = true;
+        mainMenu = new MainMenu(this);
     }
 
     @Override
@@ -20,32 +21,10 @@ public class ConsoleUI implements View{
         System.out.println("Доброго времени суток!");
 
         while (work) {
-            System.out.println("1. Добавить человека в семейное древо");
-            System.out.println("2. Получить текущую информацию о семейном древе");
-            System.out.println("3. Отсортировать по имени");
-            System.out.println("4. Отсортировать по возрасту");
-            System.out.println("5. Окончание работы");
-
-            String choice = scanner.nextLine();
-            switch (choice) {
-                case "1":
-                    add();
-                    break;
-                case "2":
-                    getInfo();
-                    break;
-                case "3":
-                    sortName();
-                    break;
-                case "4":
-                    sortBirthDate();
-                    break;
-                case "5":
-                    finish();
-                    break;
-                default:
-                    System.out.println("Некорректные данные! Попробуйте еще раз.");
-            }
+            System.out.println(mainMenu.menu());
+            String choiceStr = scanner.nextLine();
+            int choice = Integer.parseInt(choiceStr);
+            mainMenu.execute(choice);
         }
 
     }

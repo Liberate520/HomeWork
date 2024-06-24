@@ -23,9 +23,18 @@ public class MainMenu {
         for (int i = 0; i < commands.size(); i++) {
             stringBuilder.append(i+1);
             stringBuilder.append(". ");
-            stringBuilder.append(commands.get(i).getDescription();
+            stringBuilder.append(commands.get(i).getDescription());
             stringBuilder.append("\n");
         }
-        return stringBuilder
+        return stringBuilder.toString();
+    }
+
+    public void execute(int choice){
+        Command command = commands.get(choice - 1);
+        command.execute();
+    }
+
+    public int size(){
+        return commands.size();
     }
 }

@@ -2,8 +2,8 @@ package Family_tree.model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class Family_tree <E extends TreeTop<E>> implements Serializable, Iterable<E> {
