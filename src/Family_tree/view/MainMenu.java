@@ -26,6 +26,11 @@ public class MainMenu {
             stringBuilder.append(commands.get(i).getDescription();
             stringBuilder.append("\n");
         }
-        return stringBuilder
+        return stringBuilder.toString();
     }
+
+    public void execute(int choise){
+        Command command = commands.get(choise-1);
+        command.execute();
+    }    
 }
