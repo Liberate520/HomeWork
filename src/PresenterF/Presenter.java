@@ -5,6 +5,7 @@ import Model.Human.Human;
 import Model.Service.Service;
 import View.IView;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Presenter {
@@ -25,32 +26,8 @@ public class Presenter {
 
     }
 
-    public void printFamilyTree(){
-        System.out.println(service.printFamilyTree());
-    }
-
-    public void printMother(Human human){
-        service.printMother(human);
-    }
-
-    public void printFather(Human human){
-        service.printFather(human);
-    }
-
-    public void getInfo(Human human){
-        service.getInfo(human);
-    }
-
-    public void printChildren(Human human){
-        service.printChildren(human);
-    }
-
-    public void getSisters(Human human){
-        service.printSisters(human);
-    }
-
-    public void getBrothers(Human human){
-        service.printBrothers(human);
+    public String printFamilyTree(){
+        return service.printFamilyTree();
     }
 
     public void sortByName(){
@@ -64,4 +41,54 @@ public class Presenter {
     public void sortByCountOfChildren(){
         service.sortByCountOfChildren();
     }
+
+    public int getFamilyTreeSize(){
+        return service.getFamilyTreeSize();
+    }
+
+    public Human getCreatureById(String id){
+        return service.getCreatureById(id);
+    }
+
+    public void addMother(Human child, Human mother){
+        service.addMother(child, mother);
+    }
+
+    public void addFather(Human child, Human father){
+        service.addFather(child, father);
+    }
+
+    public void removeMother(Human child) {
+        service.removeMother(child);
+    }
+
+    public void removeFather(Human child) {
+        service.removeFather(child);
+    }
+
+    public void addChild(Human parent, Human child) {
+        service.addChild(parent, child);
+    }
+
+    public void removeChild(Human parent, Human child) {
+        service.removeChild(parent,child);
+    }
+
+    public void setSpouse(Human human1, Human human2) {
+        service.setSpouse(human1, human2);
+    }
+
+    public void setDivorce(Human human) {
+        service.setDivorce(human);
+    }
+
+    public void writeObjectToFile() throws IOException {
+        service.writeObjectToFile();
+    }
+
+    public void recoverObjectFromFile() throws IOException, ClassNotFoundException{
+        service.recoverObjectFromFile();
+    }
+
+
 }

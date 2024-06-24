@@ -14,9 +14,4 @@ public class sortByName extends Command{
     public void execute(){
         consoleUI.sortByName();
     }
-
-    @Override
-    public void execute(Human human) {
-
-    }
 }

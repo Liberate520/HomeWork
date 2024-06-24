@@ -5,7 +5,7 @@ import Model.Human.Human;
 import java.io.Serializable;
 import java.util.List;
 
-public interface FamilyTreeItem<T> extends Comparable<T>, Serializable {
+public interface FamilyTreeItem<T> extends Comparable<T>,Serializable {
     List<T> getFamilyTree();
     void addCreatureToFamilyTree();
     int getAge();

@@ -14,10 +14,4 @@ public class sortByChildrenAmount extends Command{
     public void execute(){
         consoleUI.sortByCountChildren();
     }
-
-    @Override
-    public void execute(Human human) {
-
-    }
-
 }

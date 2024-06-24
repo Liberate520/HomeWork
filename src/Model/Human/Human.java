@@ -139,8 +139,10 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
     }
 
     public void addMother(Human mother) {
-        if (this.mother != mother) {
-            removeMother();
+        if (this.mother != null) {
+            System.out.println("У человека уже есть мать");
+        }
+        else{
             this.mother = mother;
             if (mother != null) {
                 mother.addChild(this);
@@ -149,14 +151,17 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
     }
 
     public void addFather(Human father) {
-        if (this.father != father) {
-            removeFather();
-            this.father = father;
-            if (father != null) {
-                father.addChild(this);
+        if (this.father != null) {
+            System.out.println("У человека уже есть отец");
+        }
+        else{
+                this.father = father;
+                if (father != null) {
+                    father.addChild(this);
+                }
             }
         }
-    }
+
 
     public void removeMother() {
         if (this.mother != null) {
@@ -189,6 +194,7 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
     public String getInfo() {
         String motherName = (this.mother != null) ? this.mother.name : "Неизвестно";
         String fatherName = (this.father != null) ? this.father.name : "Неизвестно";
+        String spouse = (this.spouse != null) ? this.spouse.name : "Не замужем";
         String info = "Id - " + this.id + "\nИмя - " + this.name + "\nПол - " + this.gender + "\nДети: \n";
         for (Human child : children) {
             info += child.name + "\n";
@@ -199,9 +205,8 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
         info += "Сёстры: \n";
         for (Human human : this.getSisters())
             info += human.name + "\n";
-        info += "Мать - " + motherName + "\nОтец - " + fatherName + "\nВозраст - " + this.calculateAge();
-        if (this.spouse != null)
-            info += "Супруг: \n" + this.spouse;
+        info += "Мать - " + motherName + "\nОтец - " + fatherName + "\nВозраст - " + this.calculateAge() + "\n";
+        info += "Супруг: " + spouse;
         info += "\n......................................\n";
 
         return info;
@@ -209,6 +214,7 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
 
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
+        spouse.spouse = this;
         for (Human child : this.children) {
             spouse.addChild(child);
         }
@@ -262,4 +268,6 @@ public class Human implements Serializable, FamilyTreeItem<Human>{
         }
         return sisters;
     }
+
+
 }

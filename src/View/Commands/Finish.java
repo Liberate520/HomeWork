@@ -9,12 +9,8 @@ public class Finish extends Command{
         description = "Закончить работу";
     }
 
+    @Override
     public void execute(){
         consoleUI.finish();
-    }
-
-    @Override
-    public void execute(Human human) {
-
     }
 }

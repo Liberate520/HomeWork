@@ -14,9 +14,4 @@ public class sortByAge extends Command{
     public void execute(){
         consoleUI.sortByAge();
     }
-
-    @Override
-    public void execute(Human human) {
-
-    }
 }

@@ -6,15 +6,11 @@ import View.ConsoleUI;
 public class addCreature extends Command{
     public addCreature(ConsoleUI consoleUI){
         super(consoleUI);
-        description = "Добавить Существо";
-    }
-
-    public void execute(){
-        consoleUI.addCreature();
+        description = "Добавить Человека";
     }
 
     @Override
-    public void execute(Human human) {
-
+    public void execute(){
+        consoleUI.addCreature();
     }
 }
