@@ -1,6 +1,4 @@
-package ru.gb.family_tree.tree;
-
-import ru.gb.family_tree.human.Human;
+package ru.gb.family_tree.model.tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +23,7 @@ public class FamilyTree<E extends FamTreeItem<E>> implements Iterable<E>, Serial
             }
             else {
                 fam.setId(emptyIds.get(0));
+//                emptyIds.remove(0);
             }
         }
     }
@@ -36,12 +35,6 @@ public class FamilyTree<E extends FamTreeItem<E>> implements Iterable<E>, Serial
         }
     }
 
-
-    public void removeHumanFromFamTree(E... human){
-        for (E fam: human) {
-            familyTreeList.remove(fam);
-        }
-    }
 
     public E findHuman(String firstName){
         for (E el : familyTreeList) {

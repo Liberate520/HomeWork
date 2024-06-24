@@ -1,16 +1,16 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.model;
 
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.service.Service;
-import ru.gb.family_tree.tree.FamilyTree;
-import ru.gb.family_tree.tree.FileHandler;
-import ru.gb.family_tree.tree.Writeable;
+import ru.gb.family_tree.model.human.Human;
+import ru.gb.family_tree.model.service.Service;
+import ru.gb.family_tree.model.tree.FamilyTree;
+import ru.gb.family_tree.model.tree.FileHandler;
+import ru.gb.family_tree.model.tree.Writeable;
 
 
 import java.time.LocalDate;
 
-import static ru.gb.family_tree.human.Gender.Female;
-import static ru.gb.family_tree.human.Gender.Male;
+import static ru.gb.family_tree.model.human.Gender.Female;
+import static ru.gb.family_tree.model.human.Gender.Male;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +18,7 @@ public class Main {
         Service service = new Service();
         String filePath = "src\\ru\\gb\\family_tree\\tree\\tree.txt";
 
+//        Human human1 = (Human) service.createElement("Maria", "Pushkin", LocalDate.of(1700, 2, 25), LocalDate.of(1790, 5, 3), Female);
         Human human1 = new Human("Maria", "Pushkin", LocalDate.of(1700, 2, 25), LocalDate.of(1790, 5, 3), Female);
         Human human2 = new Human("Pavel", "Pushkin", LocalDate.of(1695, 8, 15), LocalDate.of(1790, 5, 3), Male);
         Human human3 = new Human("Alexander", "Pushkin", LocalDate.of(1730, 5, 21), LocalDate.of(1767, 11, 4), Male, human1, human2);
@@ -36,13 +37,13 @@ public class Main {
         human6.addChilds(human8, human9);
 
 
-        familyTree.addHumansInFamTree(human1, human2, human3, human4
+        service.addHumansInFamTree(human1, human2, human3, human4
                 , human5, human6, human7, human8, human9);
 
         // Пустые id запоминаются после удаления.
         // Так удобно редактировать любого человека с нуля и не допускать пустых id при добавлении новых людей.
 
-        familyTree.removeHumansFromFamTree(human8);  // В данном случае освободится id 7.
+        service.removeHumansFromFamTree(human8);  // В данном случае освободится id 7.
 
         //Теперь human10 займёт освободившийся id 7, а все остальные останутся на своих местах.
         // Пока есть пустые id, все новые люди будут их себе присваивать, только потом новые.
@@ -51,7 +52,7 @@ public class Main {
         human4.addChilds(human10);
         human6.addChilds(human10);
 
-        familyTree.addHumansInFamTree(human10);
+        service.addHumansInFamTree(human10);
 
 //        familyTree = load(filePath);
 

@@ -1,6 +1,6 @@
-package ru.gb.family_tree.tree;
+package ru.gb.family_tree.model.tree;
 
-import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.model.human.Gender;
 
 import java.time.LocalDate;
 
