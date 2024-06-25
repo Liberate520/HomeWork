@@ -58,8 +58,6 @@ public class TreeGenerator {
 
         int startID = 0, endID = humansArrayList.size();
 
-
-
         for(int g = 1; g < 8; g++){ // цикл поколений
             for(int h = startID; h < endID; h++){ //проходим по людям в поколении. для каждой женщины генерирует детей
                 if(getFertilePeriod(humansArrayList.get(h)) != 0 && humansArrayList.get(h).getGender() == Gender.Female) { // усли девушка и дожила до репродуктивного возраста

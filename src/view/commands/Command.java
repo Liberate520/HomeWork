@@ -12,13 +12,11 @@ public abstract class Command {
         this.consoleUI = consoleUI;
         this.description = description;
     }
-
     public String getDescription() {
         return description;
     }
     ConsoleUI getConsoleUI(){
         return consoleUI;
     }
-
     public abstract void execute();
 }

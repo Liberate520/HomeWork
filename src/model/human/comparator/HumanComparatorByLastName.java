@@ -9,5 +9,4 @@ public class HumanComparatorByLastName<T extends TreeItem>  implements Comparato
     public int compare(T o1, T o2) {
         return o1.getLastName().compareTo(o2.getLastName());
     }
-
 }

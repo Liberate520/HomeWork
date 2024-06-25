@@ -100,7 +100,6 @@ public class Human implements Serializable, TreeItem<Human> {
             return (int) ChronoUnit.YEARS.between(dateOfBirth, LocalDate.now());
         }
     }
-
     public Gender getGender() {
         return gender;
     }

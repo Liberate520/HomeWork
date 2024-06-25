@@ -9,5 +9,4 @@ public class HumanComparatorByDateOfBirth<T extends TreeItem>  implements Compar
     public int compare(T o1, T o2) {
         return o1.getDateOfBirth().compareTo(o2.getDateOfBirth());
     }
-
 }

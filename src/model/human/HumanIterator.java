@@ -13,7 +13,6 @@ public class HumanIterator<T extends TreeItem> implements Iterator<T>{
         this.humanList = humanList;
     }
 
-
     @Override
     public boolean hasNext() {
         return humanList.size() > currentId;

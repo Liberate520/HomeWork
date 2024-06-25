@@ -8,6 +8,7 @@ public class AddHuman extends  Command{
     }
     @Override
     public void execute(){
+
         getConsoleUI().addHuman();
     }
 

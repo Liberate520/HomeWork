@@ -9,7 +9,6 @@ public class MainMenu {
     private List<Command> commands;
     public MainMenu(ConsoleUI consoleUI){
         commands = new ArrayList<>();
-
         commands.add(new Finish(consoleUI));
         commands.add(new AddHuman(consoleUI));
         commands.add(new GetHumanListInfo(consoleUI));
@@ -37,3 +36,4 @@ public class MainMenu {
         return commands.size();
     }
 }
+

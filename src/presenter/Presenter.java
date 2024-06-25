@@ -19,7 +19,6 @@ public class Presenter {
         service.addHuman(name, lastName, dateOfBirth,gender);
         getHumanListInfo();
     }
-
     public void getHumanListInfo() {
         String answer =  service.getHumanListInfo();
         view.printAnswer(answer);
@@ -38,6 +37,4 @@ public class Presenter {
         service.sortByAge();
         getHumanListInfo();
     }
-
-
 }

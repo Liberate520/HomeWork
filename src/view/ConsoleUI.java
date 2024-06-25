@@ -18,7 +18,6 @@ public class ConsoleUI implements View{
         active = true;
         mainMenu = new MainMenu(this);
     }
-
     @Override
     public void start() {
         System.out.println("Приветствую %username%");
@@ -32,7 +31,6 @@ public class ConsoleUI implements View{
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -89,7 +87,6 @@ public class ConsoleUI implements View{
     public void sortByAge() {
         presenter.sortByAge();
     }
-
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);

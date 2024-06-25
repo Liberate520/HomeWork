@@ -4,7 +4,6 @@ import model.human.Gender;
 
 import java.time.LocalDate;
 import java.util.List;
-
 public interface TreeItem<T> extends Comparable<T> {
     LocalDate getDateOfBirth();
     LocalDate getDateOfDeath();
@@ -29,9 +28,4 @@ public interface TreeItem<T> extends Comparable<T> {
     String getInfo();
     String getChildInfo();
     String getHTML();
-
-
-
-
-
 }

@@ -9,5 +9,4 @@ public class HumanComparatorById<T extends TreeItem>  implements Comparator<T> {
     public int compare(T o1, T o2) {
         return Integer.compare((int)o1.getId(), (int)o2.getId());
     }
-
 }
