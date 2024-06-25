@@ -5,13 +5,17 @@ import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.tree.FamilyTree;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Service {
     private FamilyTree<Human> familyTreeList;
+    private FamilyTree<Human> everyHuman;
 
     public Service(){
         familyTreeList = new FamilyTree<>();
+        everyHuman = new FamilyTree<>();
     }
+
 
 
 
@@ -33,20 +37,30 @@ public class Service {
 
 
 
-
     public void addHumansInFamTree(Human... humans) {
         familyTreeList.addHumansInFamTree(humans);
     }
 
+    public void addHumansInEveryHuman(Human... humans) {
+        everyHuman.addHumansInFamTree(humans);
+    }
+
+
     public void removeHumansFromFamTree(Human... humans) {
         familyTreeList.removeHumansFromFamTree(humans);
     }
+    public void removeHumansFromEveryHuman (Human... humans) {
+        everyHuman.removeHumansFromFamTree(humans);
+    }
+
 
 
     public Human findHuman(String firstName) {
         return familyTreeList.findHuman(firstName);
     }
-
+    public Human findEveryHuman(String firstName) {
+        return everyHuman.findHuman(firstName);
+    }
 
 
     public void sortByFirstName(){
