@@ -95,6 +95,8 @@ public class ConsoleUI implements View {
         System.out.println("2. Удалить шаблон");
         System.out.println("3. Дополнить шаблон");
         System.out.println("4. Посмотреть список шаблонов");
+        System.out.println("5. Назад");
+
     }
 
     private void menu1case(String choice) {
@@ -131,10 +133,26 @@ public class ConsoleUI implements View {
                         anyHuman.addChilds(presenter.findHuman(ch));
                     }
                 }
-                System.out.println("Шаблон" + " №" + firstName + "Успешно создан!");
+                System.out.println("Шаблон" + firstName + "Успешно создан!");
             case "2":
+                clearConsole();
+                System.out.println("Напишите имя шаблона для удаления ('стоп для завершения':");
+                String nameDel = scanner.nextLine();
+                while (!(nameDel = scanner.nextLine().trim()).equalsIgnoreCase("стоп")) {
+                    if (presenter.findEveryHuman(nameDel) != null) {
+                        presenter.removeHumansFromEveryHuman(presenter.findEveryHuman(nameDel));
+                        System.out.println("Шаблон был найден и удален!");
+                    }
+                    else {
+                        System.out.println("Шаблон не найден!");
+                    }
+            }
             case "3":
+                //TODO использовать имеющиеся методы, чтобы спросить снова и добавить родителей и детей
             case "4":
+                //TODO отображение списка всех шаблонов
+            case "5":
+                // TODO сделать первое меню вызовом метода, чтобы перескакивать в него
         }
     }
 
