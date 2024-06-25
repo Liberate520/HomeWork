@@ -3,8 +3,8 @@ package view.commands;
 
 import view.ConsoleUI;
 
-    public class SortByBirthDay extends Command {
-        public SortByBirthDay(ConsoleUI consoleUI) {
+    public class SortByBirthDate extends Command {
+        public SortByBirthDate(ConsoleUI consoleUI) {
             super(consoleUI);
             description = "Отсортировать список по возрасту";
         }

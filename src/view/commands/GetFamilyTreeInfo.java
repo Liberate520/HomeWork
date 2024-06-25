@@ -9,6 +9,6 @@ public class GetFamilyTreeInfo extends Command {
     }
 
     public void execute(){
-        consoleUI.getStudentsListInfo();
+        consoleUI.getFamilyTreeInfo();
     }
 }

@@ -11,9 +11,9 @@ public class MainMenu {
     public MainMenu(ConsoleUI consoleUI) {
         commandList = new ArrayList<>();
         commandList.add(new AddHuman(consoleUI));
-        commandList.add(new getFamilyTreeInfo(consoleUI));
+        commandList.add(new GetFamilyTreeInfo(consoleUI));
         commandList.add(new SortByName(consoleUI));
-        commandList.add(new sortByBirthDate(consoleUI));
+        commandList.add(new SortByBirthDate(consoleUI));
         commandList.add(new Finish(consoleUI));
     }
 

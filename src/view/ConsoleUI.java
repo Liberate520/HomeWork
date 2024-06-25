@@ -46,20 +46,16 @@ public class ConsoleUI implements View {
         presenter.sortByName();
     }
 
-    public void getStudentsListInfo() {
-        presenter.getFamilyTreeInfo();
-    }
+    public void getFamilyTreeInfo() { presenter.getFamilyTreeInfo();}
 
-    public void addStudent() {
+    public void addHuman() {
         System.out.println("Введите имя ");
         String name = scanner.nextLine();
-        System.out.println("Укажите пол");
-        String gender = scanner.nextLine();
-        System.out.println("Укажите дату рождения");
-        String bDString = scanner.nextLine();
+        System.out.println("Введите дату рождения");
+        String BDString = scanner.nextLine();
 
-        System.out.println("Укажите дату смерти");
-        String dDString = scanner.nextLine();
+        System.out.println("Введите дату смерти");
+        String DDString = scanner.nextLine();
 
         presenter.addHuman();
     }
