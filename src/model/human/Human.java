@@ -50,6 +50,8 @@ public class  Human implements Serializable, TreeNode<Human> {
     }
 
 
+
+
     public int calculateAge() {
         if (deathDate == null){
             return getPeriod(birthDate, LocalDate.now());

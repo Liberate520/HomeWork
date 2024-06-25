@@ -12,7 +12,7 @@ import presenter.Presenter;
 
 
 
-public class ConsoleUI  implements View {
+public class ConsoleUI<Human>  implements View {
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
@@ -36,7 +36,7 @@ public class ConsoleUI  implements View {
         }
     }
 
-    public void addHuman() {
+    public void addHuman () {
         System.out.println("Введите имя");
         String name = scanner.nextLine();
         System.out.println("Укажите пол: М/Ж");
@@ -45,7 +45,7 @@ public class ConsoleUI  implements View {
         if(Objects.equals(gen, "м")){
             gender = Gender.Male;
         }
-        if(Objects.equals(gen, "ж")){
+        else if (Objects.equals(gen, "ж")){
             gender = Gender.Female;
         }
         else{
@@ -56,8 +56,6 @@ public class ConsoleUI  implements View {
         LocalDate birthDate = LocalDate.parse(BDString, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
 //
 //        System.out.println("Введите имя матери");
-//        Human mother = Human.valueOf(scanner.nextLine().toUpperCase());
-
 
 
 //        Human mother = (Human)scanner.nextLine();
@@ -73,7 +71,6 @@ public class ConsoleUI  implements View {
         presenter.addHuman(name, gender, birthDate);
     }
 
-
     public void sortByBirthDate() {
         presenter.sortByBirthDate();
     }
@@ -84,6 +81,9 @@ public class ConsoleUI  implements View {
 
     public void getFamilyTreeInfo() { presenter.getFamilyTreeInfo();}
 
+    public void saveTree(){presenter.saveTree();}
+
+    public void loadTree(){presenter.loadTree();}
 
 
     private void hello(){
@@ -103,12 +103,4 @@ public class ConsoleUI  implements View {
     private void error(){
         System.out.println("Вы ввели некорректные данные");
     }
-
-
-
-
-//TODO Доделать
-
-//    public void saveTree(){presenter.saveTree();}
-//    public void loadTree(){presenter.loadTree();}
 }

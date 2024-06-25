@@ -4,6 +4,7 @@ import model.family_tree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
 import model.save_and_load.FileHandler;
+import model.save_and_load.Writable;
 import view.View;
 
 import java.io.Serializable;
@@ -38,12 +39,18 @@ public class Presenter implements Serializable{
         getFamilyTreeInfo();
     }
 
+    public void saveTree() {
+        String file = "src/model/save_and_load/tree.txt";
+        String tree = familyTree.getHumansInfo();
+            Writable writable = new FileHandler();
+            writable.save(tree, file);
+    }
 
-    //TODO Доделать
-//
-//    public void saveTree() {
-//
-//    }
-//    public void loadTree() {
-//    }
+    public void loadTree() {
+        String file = "src/model/save_and_load/tree.txt";
+        Writable writable = new FileHandler();
+        String info = (String) writable.read(file);
+        view.printAnswer(info);
+    }
+
 }

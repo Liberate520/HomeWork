@@ -1,6 +1,5 @@
 public class old {
 
-        String file = "src/model.save_and_load/tree.txt";
         FamilyTree<Human> tree = finalTree();
 //        FamilyTree<Human> tree = load(file);
         tree.sortByName();
