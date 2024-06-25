@@ -29,10 +29,14 @@ public class  Human implements Serializable, TreeNode<Human> {
         this.spouse = spouse;
     }
 
+    public Human(String name, Gender gender) {
+
+        this(name, gender,null, null, null, null, null);
+    }
+
     public Human(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate, null, null, null, null);
     }
-
     public Human(String name, Gender gender, LocalDate birthDate, Human mother) {
         this(name, gender, birthDate, mother, null, null, null);
     }
@@ -40,14 +44,11 @@ public class  Human implements Serializable, TreeNode<Human> {
     public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father) {
         this(name, gender, birthDate, mother, father, null, null);
     }
-    
+
     public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father, Human spouse) {
         this(name, gender, birthDate, mother, father, spouse, null);
     }
 
-    public Human() {
-
-    }
 
     public int calculateAge() {
         if (deathDate == null){

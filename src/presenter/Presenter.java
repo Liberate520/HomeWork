@@ -3,27 +3,24 @@ package presenter;
 import model.family_tree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
+import model.save_and_load.FileHandler;
 import view.View;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Presenter {
+public class Presenter implements Serializable{
     private View view;
     private FamilyTree familyTree;
-    private Human human;
-    private Gender gender;
-    private LocalDate birthDate;
-
 
 
     public Presenter(View view){
         this.view = view;
-        familyTree = new FamilyTree();
-        human = new Human();
+        familyTree = new FamilyTree<>();
     }
-    public void addHuman() {
-        familyTree.addHuman(human);
-        getFamilyTreeInfo();
+    public void addHuman(String name, Gender gender, LocalDate birthDate) {
+        familyTree.addHuman(new Human(name, gender, birthDate));
+        System.out.println("Добавлен(а) "+ name);
     }
 
     public void getFamilyTreeInfo() {
@@ -40,4 +37,13 @@ public class Presenter {
         familyTree.sortByName();
         getFamilyTreeInfo();
     }
+
+
+    //TODO Доделать
+//
+//    public void saveTree() {
+//
+//    }
+//    public void loadTree() {
+//    }
 }

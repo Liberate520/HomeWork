@@ -6,7 +6,7 @@ import view.ConsoleUI;
     public class SortByBirthDate extends Command {
         public SortByBirthDate(ConsoleUI consoleUI) {
             super(consoleUI);
-            description = "Отсортировать список по возрасту";
+            description = "Отсортировать по возрасту";
         }
 
         public void execute(){

@@ -14,11 +14,14 @@ public class MainMenu {
         commandList.add(new GetFamilyTreeInfo(consoleUI));
         commandList.add(new SortByName(consoleUI));
         commandList.add(new SortByBirthDate(consoleUI));
+//        commandList.add(new SaveTree(consoleUI));
+//        commandList.add(new LoadTree(consoleUI));
         commandList.add(new Finish(consoleUI));
     }
 
-    public String menu(){
+    public String getMenu(){
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Меню:\n");
         for (int i = 0; i < commandList.size(); i++) {
             stringBuilder.append(i+1);
             stringBuilder.append(". ");
@@ -33,7 +36,4 @@ public class MainMenu {
         command.execute();
     }
 
-    public int getSize(){
-        return commandList.size();
-    }
 }
