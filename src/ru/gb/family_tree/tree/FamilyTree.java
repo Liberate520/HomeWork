@@ -1,13 +1,16 @@
 package ru.gb.family_tree.tree;
 
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.human.HumanComparatorByAge;
+import ru.gb.family_tree.human.HumanComparatorByName;
+import ru.gb.family_tree.human.HumanComparatorByNumberOfChild;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private List<Human> tree;
 
     public FamilyTree(){
@@ -18,15 +21,14 @@ public class FamilyTree implements Serializable {
         tree.add(human);
     }
     //поиск любого упоминания имени человека
-    public String findHuman(String name){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Результат поиска:\n");
+    public List<Human> findHuman(String name){
+        List<Human> list = new ArrayList<>();
         for (Human human: tree){
             if (human.toString().contains(name)){
-                sb.append(human + "\n");
+                list.add(human);
             }
         }
-        return sb.toString();
+        return list;
     }
 
     public String getFullTree(){
@@ -37,5 +39,19 @@ public class FamilyTree implements Serializable {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public void sortByName(){
+        tree.sort(new HumanComparatorByName());
+    }
+    public void sortByAge(){
+        tree.sort(new HumanComparatorByAge());
+    }
+    public void sortByChild(){
+        tree.sort(new HumanComparatorByNumberOfChild());
+    }
+    @Override
+    public Iterator<Human> iterator() {
+        return new FTiterator(tree);
     }
 }

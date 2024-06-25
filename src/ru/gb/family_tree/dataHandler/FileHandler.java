@@ -2,7 +2,7 @@ package ru.gb.family_tree.dataHandler;
 
 import java.io.*;
 
-public class FileHandler implements Writeble, Serializable {
+public class FileHandler implements Writeble {
 
     @Override
     public void writeData(Object object, String filename) throws IOException {

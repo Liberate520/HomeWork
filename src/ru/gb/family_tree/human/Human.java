@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private static int idCounter = 0;
 
     private long id;
@@ -52,6 +52,9 @@ public class Human implements Serializable {
     public Human(String name, LocalDate birthDate, Gender gender) {
         this(name,null, null, birthDate,null, gender);
     }
+    public List<Human> getChild(){
+        return child;
+    }
 
     public String getParents(){
         StringBuilder sb = new StringBuilder();
@@ -60,6 +63,10 @@ public class Human implements Serializable {
         sb.append("Father: " + father + "\n");
         return sb.toString();
     }
+    public String getName(){
+        return this.name;
+    }
+
     //найти возраст человека
     public int getAge(){
         if(deathDate== null){
@@ -118,5 +125,11 @@ public class Human implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 }

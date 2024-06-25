@@ -27,19 +27,33 @@ public class Main {
         Human Dau2 = new Human("Eve", LocalDate.of(2066, 12, 12), Gender.F);
         ft.addHuman(Dau2);
 
-        System.out.println(ft);
-        System.out.println(Eve);
-        System.out.println(Eve.getAge());
-        System.out.println(Son1.getParents());
+//        System.out.println(ft);
+//        System.out.println(Eve);
+//        System.out.println(Eve.getAge());
+//        System.out.println(Son1.getParents());
+//        System.out.println(ft.getFullTree());
+//        System.out.println(ft.findHuman("Eve"));
+//
+//        Writeble writeble = new FileHandler();
+//        writeble.writeData(ft, "ft");
+//        //создаем новый объект FamilyTree на основе файла:
+//        FamilyTree ft_restored = (FamilyTree) writeble.readData("ft");
+//        System.out.println("Данные из файла:");
+//        System.out.println(ft_restored.getFullTree());
+
+        //проверка Iterable
+        for(Human human: ft){
+            System.out.println(human);
+        }
+
+        System.out.println("\nСортировка по возрасту");
+        ft.sortByAge();
         System.out.println(ft.getFullTree());
-        System.out.println(ft.findHuman("Eve"));
-
-        Writeble writeble = new FileHandler();
-        writeble.writeData(ft, "ft");
-        //создаем новый объект FamilyTree на основе файла:
-        FamilyTree ft_restored = (FamilyTree) writeble.readData("ft");
-        System.out.println("Данные из файла:");
-        System.out.println(ft_restored.getFullTree());
-
+        System.out.println("Сортировка по имени");
+        ft.sortByName();
+        System.out.println(ft.getFullTree());
+        System.out.println("Сортировка по кол-ву детей");
+        ft.sortByChild();
+        System.out.println(ft.getFullTree());
     }
 }
