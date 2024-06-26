@@ -8,29 +8,31 @@ import java.util.List;
 import ru.gb.family_tree.model.builder.ItemBuilder;
 import ru.gb.family_tree.model.item.FamilyTreeItem;
 import ru.gb.family_tree.model.item.Gender;
-import ru.gb.family_tree.model.item.Human;
 import ru.gb.family_tree.model.saving_data.*;
 import ru.gb.family_tree.model.tree.FamilyTree;
 
-public class Service {
+public class Service_OLD<E extends FamilyTreeItem<E>> {
     private String name;
     private Gender gender;
     private LocalDate birthDate;
-    private FamilyTree<Human> tree;
-    private ItemBuilder<Human> itemBuilder;
-    private FamilyTreeItem<Human> human;
+    private FamilyTree<E> tree;
+    private ItemBuilder<E> itemBuilder;
+    private E item;
     private String storage;
     private Writable writable;
 
-    public Service() {
+    public Service_OLD() {
         tree = new FamilyTree<>();
-        itemBuilder = new ItemBuilder<>();
-        human = itemBuilder.build(name, gender, birthDate);
-        storage = "src/family_tree.out";
+        itemBuilder = new ItemBuilder<E>();
+        item = itemBuilder.build(name, gender, birthDate);
+        // storage = "I:/000 Geek Brains/ОСНОВНОЙ КУРС
+        // ПРОГРАММИРОВАНИЕ/Объектно-ориентированное
+        // программирование/homeWork/family_tree.out";
+        storage = "src/family_tree.out"; //"../../../../../family_tree.out";
         writable = new FileHandler();
     }
 
-    public void addItem(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
+    public void addItem(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, E father, E mother) {
         tree.add(itemBuilder.build(name, gender, birthDate, deathDate, father, mother));
     }
 
@@ -51,16 +53,16 @@ public class Service {
     }
 
     @SuppressWarnings("unchecked")
-    public FamilyTree<Human> loadTree() throws FileNotFoundException, ClassNotFoundException, IOException {
-        tree = (FamilyTree<Human>) writable.read_object(storage);
+    public FamilyTree<E> loadTree() throws FileNotFoundException, ClassNotFoundException, IOException {
+        tree = (FamilyTree<E>) writable.read_object(storage);
         return tree;
     }
 
-    public List<Human> getSiblings(long id) { // Поиск братьев и сестёр...
+    public List<E> getSiblings(long id) { // Поиск братьев и сестёр...
         return tree.getSiblings(id);
     }
 
-    public List<Human> getByName(String name) {
+    public List<E> getByName(String name) {
         return tree.getByName(name);
     }
 
@@ -76,12 +78,12 @@ public class Service {
         return tree.remove(id);
     }
 
-    public Human getById(long id) {
+    public E getById(long id) {
         return tree.getById(id);
     }
 
     public long getId() {
-        return human.getId();
+        return item.getId();
     }
 
     @Override

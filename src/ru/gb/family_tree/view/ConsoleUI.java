@@ -9,20 +9,20 @@ import java.util.Scanner;
 
 import ru.gb.family_tree.model.item.FamilyTreeItem;
 import ru.gb.family_tree.model.item.Gender;
+import ru.gb.family_tree.model.item.Human;
 import ru.gb.family_tree.presenter.Presenter;
 
-public class ConsoleUI<E extends FamilyTreeItem<E>> implements View {
+public class ConsoleUI implements View {
 
     private static final String INPUT_ERROR = "Вы ввели неверное значение!\n";
     private Scanner scanner;
-    @SuppressWarnings("rawtypes")
     private Presenter presenter;
     private boolean work;
     private MainMenu menu;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
-        presenter = new Presenter<>(this);
+        presenter = new Presenter(this);
         work = true;
         menu = new MainMenu(this);
     }
@@ -70,7 +70,6 @@ public class ConsoleUI<E extends FamilyTreeItem<E>> implements View {
         presenter.getTreeInfo();
     }
 
-    @SuppressWarnings("unchecked")
     public void addTreeItem() {
         System.out.println("Введите имя:");
         String name = scanner.nextLine();
@@ -121,8 +120,8 @@ public class ConsoleUI<E extends FamilyTreeItem<E>> implements View {
         // System.out.println("Укажите дату рождения:");
         // String ageString = scanner.nextLine();   
 
-        E father = null;
-        E mother = null;
+        Human father = null;
+        Human mother = null;
         presenter.addItem(name, gender, birthDate, deathDate, father, mother);
     }
 
@@ -140,7 +139,7 @@ public class ConsoleUI<E extends FamilyTreeItem<E>> implements View {
         }
     }
 
-    private boolean checkTextForInt(String text){
+    private boolean checkDateString(String text){
         if (text.matches("[0-9]*")){
             return true;
         } else {
@@ -148,6 +147,15 @@ public class ConsoleUI<E extends FamilyTreeItem<E>> implements View {
             return false;
         }
     }
+
+    private boolean checkTextForInt(String text){
+        if (text.matches("[0-9]*")){
+            return true;
+        } else {
+            inputError();
+            return false;
+        }
+    }    
 
     private boolean checkCommand(int numCommand){
         if (numCommand <= menu.getSize()){

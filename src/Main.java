@@ -94,7 +94,6 @@ public class Main {
         tree.sortBySpouse();
         System.out.println("ПОСЛЕ СОРТИРОВКИ ПО СЕМЕЙНОМУ ПОЛОЖЕНИЮ:\n" + tree); */
 
-        @SuppressWarnings("rawtypes")
         View view = new ConsoleUI();
         view.start();        
 

@@ -2,24 +2,25 @@ package ru.gb.family_tree.presenter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+// import java.security.Provider.Service;
 import java.time.LocalDate;
 
-import ru.gb.family_tree.model.item.FamilyTreeItem;
 import ru.gb.family_tree.model.item.Gender;
+import ru.gb.family_tree.model.item.Human;
 import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.view.View;
 
-public class Presenter<E extends FamilyTreeItem<E>> {
+public class Presenter {
 
     private View view;
-    private Service<E> service;
+    private Service service;
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service<>();
+        service = new Service();
     }    
 
-    public void addItem(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, E father, E mother) {
+    public void addItem(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         service.addItem(name, gender, birthDate, deathDate, father, mother);
         //какой-то ответ
         getTreeInfo();

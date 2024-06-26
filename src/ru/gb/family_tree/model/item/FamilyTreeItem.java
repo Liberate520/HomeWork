@@ -17,13 +17,13 @@ public class FamilyTreeItem<E> implements Serializable {
     protected E father;
     protected E mother;
 
-    public FamilyTreeItem(long id,
-            String name,
-            Gender gender,
-            LocalDate birthDate,
-            LocalDate deathDate,
-            E father,
-            E mother) {
+    public FamilyTreeItem(  long id,
+                            String name,
+                            Gender gender,
+                            LocalDate birthDate,
+                            LocalDate deathDate,
+                            E father,
+                            E mother) {
 
         this.id = id;
         this.name = name;
@@ -40,20 +40,20 @@ public class FamilyTreeItem<E> implements Serializable {
         children = new ArrayList<>();
     }
 
-    public FamilyTreeItem(long id,
-            String name,
-            Gender gender,
-            LocalDate birthDate) {
+    public FamilyTreeItem(  long id,
+                            String name,
+                            Gender gender,
+                            LocalDate birthDate) {
 
         this(id, name, gender, birthDate, null, null, null);
     }
 
-    public FamilyTreeItem(long id,
-            String name,
-            Gender gender,
-            LocalDate birthDate,
-            E father,
-            E mother) {
+    public FamilyTreeItem(  long id,
+                            String name,
+                            Gender gender,
+                            LocalDate birthDate,
+                            E father,
+                            E mother) {
 
         this(id, name, gender, birthDate, null, father, mother);
     }
