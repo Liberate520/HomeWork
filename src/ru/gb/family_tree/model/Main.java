@@ -54,7 +54,7 @@ public class Main {
 
         service.addHumansInFamTree(human10);
 
-//        familyTree = load(filePath);
+        familyTree = load(filePath);
 //        save(familyTree, filePath);
 
         service.sortByFirstName();

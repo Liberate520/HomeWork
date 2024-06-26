@@ -90,8 +90,17 @@ public class Human implements FamTreeItem<Human>, Serializable {
 
 
     }
+    public boolean withoutParents(){
+            return parentsArray.isEmpty();
+    }
+    public boolean withoutChilds(){
+        return childsArray.isEmpty();
+    }
+
+
+
     public void addParent(Human parent) {
-        this.childsArray.add(parent);
+        this.parentsArray.add(parent);
     }
 
 

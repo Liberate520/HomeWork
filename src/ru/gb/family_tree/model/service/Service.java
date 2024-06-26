@@ -3,21 +3,17 @@ package ru.gb.family_tree.model.service;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.tree.FamilyTree;
+import ru.gb.family_tree.model.tree.FileHandler;
+import ru.gb.family_tree.model.tree.Writeable;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Service {
     private FamilyTree<Human> familyTreeList;
-    private FamilyTree<Human> everyHuman;
 
-    public Service(){
+    public Service() {
         familyTreeList = new FamilyTree<>();
-        everyHuman = new FamilyTree<>();
     }
-
-
-
 
 
     public Human createElement(String firstName, String lastName, LocalDate dob, LocalDate dod, Gender gender) {
@@ -36,56 +32,53 @@ public class Service {
     }
 
 
-
     public void addHumansInFamTree(Human... humans) {
         familyTreeList.addHumansInFamTree(humans);
     }
 
-    public void addHumansInEveryHuman(Human... humans) {
-        everyHuman.addHumansInFamTree(humans);
-    }
-
-
     public void removeHumansFromFamTree(Human... humans) {
         familyTreeList.removeHumansFromFamTree(humans);
     }
-    public void removeHumansFromEveryHuman (Human... humans) {
-        everyHuman.removeHumansFromFamTree(humans);
-    }
-
-
 
     public Human findHuman(String firstName) {
         return familyTreeList.findHuman(firstName);
     }
-    public Human findEveryHuman(String firstName) {
-        return everyHuman.findHuman(firstName);
-    }
 
 
-    public void sortByFirstName(){
+    public void sortByFirstName() {
         familyTreeList.sortByFirstName();
     }
 
-    public void sortById(){
+    public void sortById() {
         familyTreeList.sortById();
     }
 
-    public void sortByGender(){
+    public void sortByGender() {
         familyTreeList.sortByGender();
     }
 
-    public void sortByDob(){
+    public void sortByDob() {
         familyTreeList.sortByDob();
     }
 
-    public void sortByDod(){
+    public void sortByDod() {
         familyTreeList.sortByDod();
     }
 
 
-
-    public FamilyTree<Human> ShowTree(){
+    public FamilyTree<Human> ShowTree() {
         return familyTreeList;
+    }
+
+
+    public static FamilyTree load(String filePath) {
+        Writeable writeable = new FileHandler();
+        return (FamilyTree) writeable.read(filePath);
+    }
+
+
+    public static void save(FamilyTree familyTree, String filePath) {
+        Writeable writeable = new FileHandler();
+        writeable.save(familyTree, filePath);
     }
 }

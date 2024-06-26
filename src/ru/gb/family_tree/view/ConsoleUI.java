@@ -3,8 +3,8 @@ package ru.gb.family_tree.view;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.presenter.Presenter;
-
 import java.awt.*;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,48 +14,472 @@ import java.util.Scanner;
 public class ConsoleUI implements View {
     private Scanner scanner;
     private Presenter presenter;
+    private boolean work;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
+        work = true;
     }
 
     @Override
     public void start() {
         clearConsole();
         userHourHi();
-        String choice1, choice2;
-        do {
-            menuMain();
-            choice1 = scanner.nextLine();
-            switch (choice1) {
-                case "1":
-                    clearConsole();
-                    menu1();
-                    choice2 = scanner.nextLine();
-                    menu1case(choice2);
-                    break;
-                case "2":
-                    clearConsole();
-                    showTreeMenu();
-                    choice2 = scanner.nextLine();
-                    handleTreeMenuChoice(choice2);
-                    break;
-                case "3":
-                    clearConsole();
-                    userHourBye();
-                    break;
-                default:
-                    System.out.println("Некорректный выбор, попробуйте ещё раз!");
-            }
-        } while (!"3".equals(choice1));
+        caseMain();
     }
 
+    @Override
+    public void printAnswer(String answer) {
+        System.out.println(answer);
+    }
+
+
+    //---------Главный кейс-----------
+    private void caseMain() {
+       while (work){
+           menuMain();
+           String choice;
+           choice = scanner.nextLine();
+           switch (choice) {
+               case "1": // Работа с элементами
+                   clearConsole();
+                   case_Main_1_RedactElem();
+                   break;
+               case "2": // Работа с  деревом
+                   clearConsole();
+                   case_Main_2_TreeWork();
+                   break;
+               case "3": // Загрузить дерево
+                   clearConsole();
+                   loadTree();
+                   break;
+               case "4": // Сохранить дерево
+                   clearConsole();
+                   saveTree();
+                   break;
+               case "5": // Посмотреть текущее древо
+                   clearConsole();
+                   showCurrentTree();
+                   caseMain();
+                   break;
+               case "6": // Завершить работу
+                   clearConsole();
+                   userHourBye();
+                   exit();
+                   break;
+               default: // Ошибка ввода, повтор кейса
+                   clearConsole();
+                   wrongInput();
+                   caseMain();
+           }
+       }
+    }
+
+    private void menuMain() {
+        System.out.println("Выберите раздел:");
+        System.out.println("1. Работа с элементами");
+        System.out.println("2. Работа с  деревом");
+        System.out.println("3. Загрузить дерево");
+        System.out.println("4. Сохранить дерево");
+        System.out.println("5. Посмотреть текущее древо");
+        System.out.println("6. Завершить работу");
+    }
+
+    //--------Вложенные кейсы----------------
+    private void case_Main_1_RedactElem() {
+        menu_Main_1_RedactElem();
+        String choice;
+        choice = scanner.nextLine();
+        switch (choice) {
+            case "1": // Создать элемент
+                clearConsole();
+                createNewElement();
+                case_Main_1_RedactElem();
+                break;
+            case "2": // Найти элемент
+                clearConsole();
+                findElement();
+                case_Main_1_RedactElem();
+                break;
+            case "3": // Удалить элемент
+                clearConsole();
+                deleteElement();
+                case_Main_1_RedactElem();
+            case "4": // Дополнить элемент
+                clearConsole();
+                addNewInfoAboutElement();
+                case_Main_1_RedactElem();
+            case "5": // Посмотреть текущее древо
+                clearConsole();
+                showCurrentTree();
+                case_Main_1_RedactElem();
+            case "6": // Назад
+                caseMain();
+                break;
+            default:
+                clearConsole();
+                wrongInput();
+                case_Main_1_RedactElem();
+        }
+    }
+
+    private void menu_Main_1_RedactElem() {
+        System.out.println("Выберите команду:");
+        System.out.println("1. Создать элемент");
+        System.out.println("2. Найти элемент");
+        System.out.println("3. Удалить элемент");
+        System.out.println("4. Дополнить элемент");
+        System.out.println("5. Посмотреть текущее древо");
+        System.out.println("6. Назад");
+    }
+
+    private void case_Main_2_TreeWork() {
+        menu_Main_2_TreeWork();
+        String choice;
+        choice = scanner.nextLine();
+        switch (choice) {
+            case "1": // ...имени
+                clearConsole();
+                sortByName();
+                case_Main_2_TreeWork();
+                break;
+            case "2": // ...id
+                clearConsole();
+                sortById();
+                case_Main_2_TreeWork();
+
+                break;
+            case "3": // ...полу
+                clearConsole();
+                sortByGender();
+                case_Main_2_TreeWork();
+
+            case "4": // ...дате рождения
+                clearConsole();
+                sortByDob();
+                case_Main_2_TreeWork();
+            case "5": // ...дате смерти
+                clearConsole();
+                sortByDod();
+                case_Main_2_TreeWork();
+            case "6": // Посмотреть текущее дерево
+                clearConsole();
+                showCurrentTree();
+                case_Main_2_TreeWork();
+            case "7": // Назад
+                clearConsole();
+                caseMain();
+                break;
+            default:
+                clearConsole();
+                System.out.println("Некорректный выбор, попробуйте ещё раз!");
+                case_Main_2_TreeWork();
+        }
+    }
+
+    private void menu_Main_2_TreeWork() {
+        System.out.println("Выберите команду:");
+        System.out.println("\nСортировать по...");
+        System.out.println("1. ...имени");
+        System.out.println("2. ...id");
+        System.out.println("3. ...полу");
+        System.out.println("4. ...дате рождения");
+        System.out.println("5. ...дате смерти");
+        System.out.println("6. Посмотреть текущее дерево");
+        System.out.println("7. Назад");
+    }
+
+
+    //-----------Методы редактирования элементов--------------------
+    public void createNewElement() {
+        clearConsole();
+        String firstName = askFirstName();
+        clearConsole();
+        String lastName = askLastName();
+        clearConsole();
+        LocalDate dob = askDob();
+        clearConsole();
+        LocalDate dod = askDod();
+        clearConsole();
+        Gender gender = Gender.valueOf(askGender());
+        clearConsole();
+
+        Human father = null, mother = null;
+        ArrayList<String> childs = null;
+        if (askParents().equals("Да")) {
+            father = askFather();
+            mother = askMother();
+        }
+        if (askChilds().equals("Да")) {
+            childs = childsForHum();
+        }
+
+        Human anyHuman = presenter.createHuman(firstName, lastName, dob, dod, gender, father, mother);
+        presenter.addElementInTree(anyHuman);
+        if (childs.get(0) != null) {
+            for (String ch : childs) {
+                anyHuman.addChilds(presenter.findHuman(ch));
+            }
+        }
+        System.out.println("Элемент " + anyHuman.getId() + " Успешно создан!");
+    } // Программа создания метода
+    public String askFirstName() {
+        System.out.println("Введите имя:");
+        String firstName = scanner.nextLine();
+        if (firstName == null) {
+            System.out.println("Введено пустое значение, попробуйте ещё раз:");
+            askFirstName();
+        }
+        return firstName;
+    } // Спрашиваем имя
+    public String askLastName() {
+        System.out.println("Введите фамилию:");
+        String lastName = scanner.nextLine();
+        if (lastName == null) {
+            System.out.println("Введено пустое значение, попробуйте ещё раз:");
+            askFirstName();
+        }
+        return lastName;
+    } // Спрашиваем фамилию
+    public LocalDate askDob() {
+        System.out.println("Введите дату рождения (формат дд-мм-гггг):");
+        String dobInput = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate dob = LocalDate.parse(dobInput, formatter);
+            return dob;
+        } catch (Exception e) {
+            System.out.println("Неверный формат даты. Попробуйте еще раз.");
+            return askDob();
+        }
+    } // Спрашиваем дату рождения
+    public LocalDate askDod() {
+        System.out.println("Введите дату смерти (формат дд-мм-гггг):");
+        String dobInput = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate dod = LocalDate.parse(dobInput, formatter);
+            return dod;
+        } catch (Exception e) {
+            System.out.println("Неверный формат даты. Попробуйте еще раз.");
+            return askDob();
+        }
+    } // Спрашиваем дату смерти
+    public String askGender() {
+        System.out.println("Введите ваш пол (Male/Female):");
+        String genderIn = scanner.nextLine();
+        if (!genderIn.equals("Male") && !genderIn.equals("Female")) {
+            System.out.println("Неверный ввод. Пожалуйста, введите 'Male' для мужского или 'Female' для женского.");
+            return askGender();
+        }
+        return genderIn;
+    } // Спрашиваем пол
+    public String askParents() {
+        System.out.println("Известен ли сейчас родители? (Да/Нет)\nБудет произведён поиск среди шаблонов. Родителей также можно будет добавить позднее:");
+        String answerYorN = scanner.nextLine();
+        if (!answerYorN.equals("Да") && !answerYorN.equals("Нет")) {
+            System.out.println("Неверный ввод. Пожалуйста, введите 'Да', если родители известены или 'Нет', если это не так.");
+            return askParents();
+        } else {
+            return answerYorN;
+        }
+    } // Спрашиваем известны ли родители
+    public Human askFather() {
+        System.out.println("Введите имя отца:");
+        String fatherName = scanner.nextLine();
+        Human father = presenter.findHuman(fatherName);
+        if (father != null) {
+            System.out.println("Отец найден среди шаблонов и добавлен в качестве родителя для текущего шаблона.");
+            return father;
+        } else {
+            System.out.println("Отец не найден.");
+            return null;
+        }
+    } // Спрашиваем и проверяем папу по имени, если есть то добавляем
+    public Human askMother() {
+        System.out.println("Введите имя матери:");
+        String motherName = scanner.nextLine();
+        Human mother = presenter.findHuman(motherName);
+        String a;
+        if (mother != null) {
+            System.out.println("Мама найдена среди шаблонов и добавлена в качестве родителя для текущего шаблона.");
+            return mother;
+        } else {
+            System.out.println("Мама не найдена.");
+            return null;
+        }
+    } // Спрашиваем и проверяем маму по имени, если есть то добавляем
+    public String askChilds() {
+        System.out.println("Известы ли сейчас дети? (Да/Нет)\nБудет произведён поиск среди шаблонов. Детей также можно будет добавить позднее:");
+        String answerYorN = scanner.nextLine();
+        if (!answerYorN.equals("Да") && !answerYorN.equals("Нет")) {
+            System.out.println("Неверный ввод. Пожалуйста, введите 'Да', если родители известены или 'Нет', если это не так.");
+            return askChilds();
+        } else {
+            return answerYorN;
+        }
+    } // Спрашиваем известны ли дети
+    public ArrayList<String> childsForHum() {
+        ArrayList<String> children = new ArrayList<>();
+        System.out.println("Введите имена детей (введите 'стоп' для завершения):");
+        String childName;
+        while (!(childName = scanner.nextLine().trim()).equalsIgnoreCase("стоп")) {
+            if (presenter.findHuman(childName) != null) {
+                children.add(childName);
+            }
+        }
+        if (children.isEmpty()) {
+            System.out.println("Детей не найдено среди шаблонов");
+            return children;
+        }
+        return children;
+    } // Спрашиваем и проверяем детей по имени, если есть то верем их
+    public String findElement() {
+        System.out.println("Введите имя элемента для поиска (или стоп для отмены): ");
+        String nameOfElement = scanner.nextLine();
+        if ("стоп".equals(nameOfElement)) {
+            case_Main_1_RedactElem();
+            return null;
+        }
+        if (presenter.findHuman(nameOfElement) != null) {
+            clearConsole();
+            System.out.println("Элемент найден: ");
+            System.out.println(presenter.findHuman(nameOfElement));
+            findElement();
+        } else {
+            System.out.println("Такой элемент не найден!");
+            findElement();
+        }
+        return null;
+    } // Метод поиска человека и отображения найденного
+    public String deleteElement() {
+        System.out.println("Введите имя элемента (или стоп для отмены): ");
+        String nameOfElement = scanner.nextLine();
+        if ("стоп".equals(nameOfElement)) {
+            case_Main_1_RedactElem();
+            return null;
+        }
+        if (presenter.findHuman(nameOfElement) != null) {
+            clearConsole();
+            System.out.println("Элемент найден и удалён! ");
+            presenter.deleteElementFromTree(presenter.findHuman(nameOfElement));
+            deleteElement();
+        } else {
+            System.out.println("Такой элемент не найден!");
+            deleteElement();
+        }
+        return null;
+    } // Метод поиска человека и удаления найденного
+    public String addNewInfoAboutElement() {
+        System.out.println("Введите имя элемента, к которому нужно добавить данные (или стоп для отмены): ");
+        String nameOfElement = scanner.nextLine();
+        if ("стоп".equals(nameOfElement)) {
+            case_Main_1_RedactElem();
+            return null;
+        }
+        if (presenter.findHuman(nameOfElement) != null) {
+            clearConsole();
+            System.out.println("Элемент найден: ");
+            if (presenter.findHuman(nameOfElement).withoutParents()) {
+                Human father = null;
+                Human mother = null;
+                if (askParents().equals("Да")) {
+                    father = askFather();
+                    mother = askMother();
+                    presenter.findHuman(nameOfElement).addParent(father);
+                    presenter.findHuman(nameOfElement).addParent(mother);
+                    System.out.println("Родители успешно добавлены!");
+                }
+            }
+            ArrayList<String> childs = null;
+
+            if (askChilds() == "Да") {
+                childs = childsForHum();
+            }
+
+            if (childs.get(0) != null) {
+                for (String ch : childs) {
+                    presenter.findHuman(nameOfElement).addChilds(presenter.findHuman(ch));
+                }
+                System.out.println("Дети успешно добавлены!");
+            }
+
+            addNewInfoAboutElement();
+        } else {
+            System.out.println("Такой элемент не найден!");
+            addNewInfoAboutElement();
+        }
+        return null;
+    } // Проверяем, есть ли родители, если нет, то можно найти и добавить их,
+
+    // потом ищем детей и добавляем
+
+
+    //------------------Сортировки----------------------------------------------------------------
+    public void sortByName() {
+        presenter.sortByFirstName();
+        System.out.println("Дерево отсортировано по имени!");
+    }
+    public void sortById() {
+        presenter.sortById();
+        System.out.println("Дерево отсортировано по id!");
+    }
+    public void sortByDod() {
+        presenter.sortByDod();
+        System.out.println("Дерево отсортировано по дате рождения!");
+    }
+    public void sortByDob() {
+        presenter.sortByDob();
+        System.out.println("Дерево отсортировано по дате смерти!");
+    }
+    public void sortByGender() {
+        presenter.sortByGender();
+        System.out.println("Дерево отсортировано по полу!");
+    }
+
+
+    //-----------Сохранение и загрузка дерева-----------------------------------------
+    public void saveTree() {
+        System.out.println("Введите путь для сохранения дерева (или 'стоп' для отмены): ");
+        String filePath = scanner.nextLine();
+        if ("стоп".equals(filePath)) {
+            clearConsole();
+            caseMain();
+            return;
+        }
+        try {
+            presenter.saveTree(presenter.getTree(), filePath);
+            System.out.println("Дерево успешно сохранено по пути: " + filePath);
+        } catch (Exception e) {
+            System.out.println("Произошла ошибка при сохранении дерева! Попробуйте еще раз.");
+            saveTree();
+        }
+    }
+    public void loadTree() {
+        System.out.println("Введите путь к имеющемуся дереву (или 'стоп' для отмены): ");
+        String filePath = scanner.nextLine();
+        if ("стоп".equals(filePath)) {
+            clearConsole();
+            caseMain();
+            return;
+        }
+        File file = new File(filePath);
+        if (file.exists() && !file.isDirectory()) {
+            presenter.loadTree(filePath);
+            System.out.println("Дерево успешно найдено и загружено!");
+        } else {
+            System.out.println("Дерево по указанному пути не найдено. Попробуйте еще раз: ");
+            loadTree();
+        }
+    }
+
+
+    //--------Специальные методы-----------------------------------------------------
     private void clearConsole() {
         System.out.println("\033[H\033[2J");
         System.out.flush();
-    }
-
+    } // Очистка консоли
     private void userHourHi() {
         int hour = LocalDateTime.now().getHour();
         if (hour >= 5 && hour < 12) {
@@ -67,8 +491,7 @@ public class ConsoleUI implements View {
         } else {
             System.out.println("Добрая ночь!");
         }
-    }
-
+    }  //Приветствие
     private void userHourBye() {
         int hour = LocalDateTime.now().getHour();
         if (hour >= 5 && hour < 12) {
@@ -80,203 +503,25 @@ public class ConsoleUI implements View {
         } else {
             System.out.println("Доброй ночи!");
         }
+    } //Прощание
+    private void showCurrentTree() {
+        System.out.println("Обзор текущего дерева: ");
+        presenter.showTree();
+    }// Посмотреть дерево
+    private void exit() {
+        System.out.println("\\nЗавершение работы...");
+        try {
+            Thread.sleep(3000); // Задержка на 3 сек
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Восстановление
+            e.printStackTrace();
+        }
+        work = false;
+//        System.exit(0);
+    } // Выход через 3 секунды
+    private void wrongInput() { // "Некорректный выбор, попробуйте ещё раз!"
+        System.out.println("Некорректный выбор, попробуйте ещё раз!");
     }
-
-    private void menuMain() {
-        System.out.println("Выберите раздел:");
-        System.out.println("1. Редактирование элементов");
-        System.out.println("2. Редактирование дерева");
-        System.out.println("3. Завершить работу");
-    }
-
-    private void menu1() {
-        System.out.println("Выберите команду:");
-        System.out.println("1. Создать шаблон");
-        System.out.println("2. Удалить шаблон");
-        System.out.println("3. Дополнить шаблон");
-        System.out.println("4. Посмотреть список шаблонов");
-        System.out.println("5. Назад");
-
-    }
-
-    private void menu1case(String choice) {
-        switch (choice){
-            case "1":
-                clearConsole();
-                System.out.println("Введите имя:");
-                String firstName = scanner.nextLine();
-                clearConsole();
-                System.out.println("Введите фамилию:");
-                String lastName = scanner.nextLine();
-                clearConsole();
-                LocalDate dob = askDob();
-                clearConsole();
-                LocalDate dod = askDod();
-                clearConsole();
-                Gender gender = Gender.valueOf(askGender());
-                clearConsole();
-                Human father = null;
-                Human mother = null;
-                ArrayList<String> childs = null;
-                if (askParents() == "Да"){
-                    father = askFather();
-                    mother = askMother();
-                }
-                if (askChilds() == "Да"){
-                    childs = childsForHum();
-                }
-
-                Human anyHuman = presenter.createHuman(firstName, lastName, dob, dod, gender, father, mother);
-                presenter.addHumansInEveryHuman(anyHuman);
-                if (childs.get(0) != null){
-                    for (String ch: childs) {
-                        anyHuman.addChilds(presenter.findHuman(ch));
-                    }
-                }
-                System.out.println("Шаблон" + firstName + "Успешно создан!");
-            case "2":
-                clearConsole();
-                System.out.println("Напишите имя шаблона для удаления ('стоп для завершения':");
-                String nameDel = scanner.nextLine();
-                while (!(nameDel = scanner.nextLine().trim()).equalsIgnoreCase("стоп")) {
-                    if (presenter.findEveryHuman(nameDel) != null) {
-                        presenter.removeHumansFromEveryHuman(presenter.findEveryHuman(nameDel));
-                        System.out.println("Шаблон был найден и удален!");
-                    }
-                    else {
-                        System.out.println("Шаблон не найден!");
-                    }
-            }
-            case "3":
-                //TODO использовать имеющиеся методы, чтобы спросить снова и добавить родителей и детей
-            case "4":
-                //TODO отображение списка всех шаблонов
-            case "5":
-                // TODO сделать первое меню вызовом метода, чтобы перескакивать в него
-        }
-    }
-
-    public String askParents(){
-        System.out.println("Известен ли сейчас родители? (Да/Нет)\nБудет произведён поиск среди шаблонов. Родителей также можно будет добавить позднее:");
-        String answerYorN = scanner.nextLine();
-        if (!answerYorN.equals("Да") && !answerYorN.equals("Нет")) {
-            System.out.println("Неверный ввод. Пожалуйста, введите 'Да', если родители известены или 'Нет', если это не так.");
-            return askParents();
-        }
-        else {
-            return answerYorN;
-        }
-    }
-    public String askChilds(){
-        System.out.println("Известы ли сейчас дети? (Да/Нет)\nБудет произведён поиск среди шаблонов. Родителей также можно будет добавить позднее:");
-        String answerYorN = scanner.nextLine();
-        if (!answerYorN.equals("Да") && !answerYorN.equals("Нет")) {
-            System.out.println("Неверный ввод. Пожалуйста, введите 'Да', если родители известены или 'Нет', если это не так.");
-            return askChilds();
-        }
-        else {
-            return answerYorN;
-        }
-    }
-
-    public ArrayList<String> childsForHum() {
-        ArrayList<String> children = new ArrayList<>();
-        System.out.println("Введите имена детей (введите 'стоп' для завершения):");
-        String childName;
-        while (!(childName = scanner.nextLine().trim()).equalsIgnoreCase("стоп")) {
-            if (presenter.findHuman(childName) != null) {
-                children.add(childName);
-            }
-        }
-        if (children.isEmpty()){
-            System.out.println("Детей не найдено среди шаблонов");
-            return children;
-
-        }
-        return children;
-    }
-
-    public Human askFather() {
-        clearConsole();
-        System.out.println("Введите имя отца:");
-        String fatherName = scanner.nextLine();
-        Human father = presenter.findHuman(fatherName);
-        String a;
-        if (father != null) {
-            a = "Отец найден среди шаблонов и добавлен в качестве родителя для текущего шаблона.";
-            return father;
-        } else {
-            a = "Отец не найден";
-            return null;
-        }
-    }
-
-
-    public Human askMother() {
-        clearConsole();
-        System.out.println("Введите имя матери:");
-        String fatherName = scanner.nextLine();
-        Human father = presenter.findHuman(fatherName);
-        String a;
-        if (father != null){
-            a = "Матерь найдена среди шаблонов и добавлен в качестве родителя для текущего шаблона.";
-            return father;
-        }
-        else {
-            a = "Матерь не найден";
-            return null;
-        }
-    }
-
-        public String askGender () {
-            System.out.println("Введите ваш пол (Male/Female):");
-            String genderIn = scanner.nextLine();
-            if (!genderIn.equals("Male") && !genderIn.equals("Female")) {
-                System.out.println("Неверный ввод. Пожалуйста, введите 'Male' для мужского или 'Female' для женского.");
-                return askGender();
-            }
-            return genderIn;
-        }
-        public LocalDate askDob () {
-            System.out.println("Введите дату рождения (формат дд-мм-гггг):");
-            String dobInput = scanner.nextLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            try {
-                LocalDate dob = LocalDate.parse(dobInput, formatter);
-                return dob;
-            } catch (Exception e) {
-                System.out.println("Неверный формат даты. Попробуйте еще раз.");
-                return askDob();
-            }
-        }
-
-        public LocalDate askDod () {
-            System.out.println("Введите дату смерти (формат дд-мм-гггг):");
-            String dobInput = scanner.nextLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            try {
-                LocalDate dod = LocalDate.parse(dobInput, formatter);
-                return dod;
-            } catch (Exception e) {
-                System.out.println("Неверный формат даты. Попробуйте еще раз.");
-                return askDob();
-            }
-        }
-
-        private void showTreeMenu () {
-            System.out.println("Выберите команду:");
-            System.out.println("1. Добавить шаблон в дерево");
-            System.out.println("2. Удалить шаблон из дерева");
-            System.out.println("3. Выбрать метод сортировки");
-            System.out.println("4. Посмотреть текущее дерево");
-        }
-
-        private void handleTreeMenuChoice (String choice){
-            // Здесь должна быть логика обработки выбора пользователя
-        }
-
-        @Override
-        public void printAnswer (String answer){
-            System.out.println(answer);
-        }
+    //--------------------------------------------------------------------------------------------------
 }
+
