@@ -34,11 +34,8 @@ public class Presenter {
     public void getFamilyTree() {
         FamilyTree<Human> familyTree = service.getFamilyTree();
         List<Human> humanList = new ArrayList<>(familyTree.getHumanList());
-        System.out.println("Текущий состав членов семьи: ");
-        for (Human human : humanList){
-            System.out.println(human);
-        }
-        view.printAnswer(humanList.toString());
+
+    view.printAnswer(humanList.toString());
     }
 
     public void sortByBirthDate() {

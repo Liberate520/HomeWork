@@ -16,7 +16,7 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private boolean work;
     private MainMenu menu;
-    private FamilyTree<Human> familyTree;
+    private FamilyTree familyTree;
     private FileHandler fileHandler;
     private String filePath = "familyTree.txt";
 
@@ -26,11 +26,12 @@ public class ConsoleUI implements View {
         menu = new MainMenu(this);
         fileHandler = new FileHandler();
         try {
-            familyTree = fileHandler.loadFamilyTree(filePath);
+            familyTree = fileHandler.<Human>loadFamilyTree(filePath);
             System.out.println("Загруженное семейное древо: ");
             System.out.println(familyTree);
         } catch (IOException | ClassNotFoundException e) {
             familyTree = new FamilyTree<>();
+            System.err.println("Ошибка загрузки FamilyTree из файла:");
             e.printStackTrace();
         }
 
@@ -63,9 +64,8 @@ public class ConsoleUI implements View {
         LocalDate birthDate = LocalDate.parse(birthDateInput);
 
         presenter.addHuman(lastName, name, gender, birthDate);
-        getFamilyTree();
         saveFamilyTree();
-        System.out.println("Человек добавлен в семейное древо: " + familyTree);
+
     }
 
     public void findHumanByName() {
@@ -113,4 +113,7 @@ public class ConsoleUI implements View {
             e.printStackTrace();
         }
     }
+
+
+
 }

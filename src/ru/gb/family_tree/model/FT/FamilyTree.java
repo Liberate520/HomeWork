@@ -20,6 +20,7 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
 
     public void addHuman(T human){
         humanList.add(human);
+        System.out.println("Human added: " + human.getName());
     }
 
     public List<T> getHumanList() {
