@@ -4,13 +4,14 @@ import ru.gb.family_tree.model.FT.FamilyTree;
 import ru.gb.family_tree.model.FT.FileHandler;
 import ru.gb.family_tree.model.Human.Gender;
 import ru.gb.family_tree.model.Human.Human;
+import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.presenter.Presenter;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI implements View{
+public class ConsoleUI implements View {
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
@@ -21,7 +22,6 @@ public class ConsoleUI implements View{
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this, familyTree);
         work = true;
         menu = new MainMenu(this);
         fileHandler = new FileHandler();
@@ -33,8 +33,10 @@ public class ConsoleUI implements View{
             familyTree = new FamilyTree<>();
             e.printStackTrace();
         }
-    }
 
+        Service<Human> service = new Service<>(familyTree);
+        presenter = new Presenter(this, service);
+    }
 
     @Override
     public void start() {
@@ -48,23 +50,25 @@ public class ConsoleUI implements View{
         }
     }
 
-    public void addHuman(){
+    public void addHuman() {
         System.out.println("Введите фамилию: ");
         String lastName = scanner.nextLine();
         System.out.println("Введите имя: ");
         String name = scanner.nextLine();
         System.out.println("Укажите пол (мужской/женский): ");
-        String genderInput = scanner.nextLine().toLowerCase();;
+        String genderInput = scanner.nextLine().toLowerCase();
         Gender gender = Gender.valueOf(genderInput);
         System.out.println("Введите дату рождения (ГГГГ-ММ-ДД): ");
         String birthDateInput = scanner.nextLine();
         LocalDate birthDate = LocalDate.parse(birthDateInput);
 
         presenter.addHuman(lastName, name, gender, birthDate);
+        getFamilyTree();
         saveFamilyTree();
+        System.out.println("Человек добавлен в семейное древо: " + familyTree);
     }
 
-    public void findHumanByName(){
+    public void findHumanByName() {
         System.out.println("Введите имя человека для поиска: ");
         String nameHuman = scanner.nextLine();
         Human human = presenter.findHumanByName(nameHuman);
@@ -76,11 +80,11 @@ public class ConsoleUI implements View{
         getFamilyTree();
     }
 
-    public void getFamilyTree(){
+    public void getFamilyTree() {
         presenter.getFamilyTree();
     }
 
-    public void sortByBirthDate(){
+    public void sortByBirthDate() {
         presenter.sortByBirthDate();
         getFamilyTree();
     }
@@ -91,6 +95,7 @@ public class ConsoleUI implements View{
     }
 
     public void finish() {
+        saveFamilyTree();
         System.out.println("До новых встреч!");
         work = false;
     }

@@ -11,8 +11,8 @@ public class Service<T extends Human> {
     private FamilyTree<Human> familyTree;
     private HumanBuilder humanBuilder;
 
-    public Service() {
-        familyTree = new FamilyTree<>();
+    public Service(FamilyTree<Human> familyTree) {
+        this.familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
     }
 

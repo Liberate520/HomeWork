@@ -1,16 +1,10 @@
 package ru.gb.family_tree;
 
-import ru.gb.family_tree.model.FT.FamilyTree;
 import ru.gb.family_tree.model.FT.FamilyTreeItem;
-import ru.gb.family_tree.model.FT.FileHandler;
-import ru.gb.family_tree.model.Human.Gender;
-import ru.gb.family_tree.model.Human.Human;
-import ru.gb.family_tree.model.service.Service;
+
 import ru.gb.family_tree.view.ConsoleUI;
 import ru.gb.family_tree.view.View;
 
-import java.io.IOException;
-import java.time.LocalDate;
 
 public class Main {
     public static <T extends FamilyTreeItem<T>> void main(String[] args) {

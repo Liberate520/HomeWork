@@ -15,10 +15,9 @@ public class Presenter {
     private Service service;
     private FamilyTree<Human> familyTree;
 
-    public Presenter(View view, FamilyTree<Human> familyTree){
+    public Presenter(View view, Service<Human> service){
         this.view = view;
-        this.familyTree = this.familyTree;
-        service = new Service();
+        this.service = service;
     }
 
     public void addHuman(String lastName, String name, Gender gender, LocalDate birthDate) {
@@ -35,6 +34,10 @@ public class Presenter {
     public void getFamilyTree() {
         FamilyTree<Human> familyTree = service.getFamilyTree();
         List<Human> humanList = new ArrayList<>(familyTree.getHumanList());
+        System.out.println("Текущий состав членов семьи: ");
+        for (Human human : humanList){
+            System.out.println(human);
+        }
         view.printAnswer(humanList.toString());
     }
 
