@@ -7,6 +7,7 @@ import Family_tree.Model.Humans.ComparatorByAge;
 import Family_tree.Model.Humans.ComparatorByID;
 import Family_tree.Model.Humans.ComparatorByName;
 import Family_tree.Model.Humans.Endothermal;
+import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Recorder.Recorder;
 
 
@@ -140,7 +141,18 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
         System.out.println(recorder.save(this, path));
     }
     public long getInnerID(){return this.innerID;}
+    public int getIndex() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getIndex'");
+    }
+    public int getHumanIndex(Human human) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHumanIndex'");
+    }
     
+    public int compareTo(Family_tree<T> o){
+        return (int) (this.innerID - o.getInnerID());
+    }
 
     
     

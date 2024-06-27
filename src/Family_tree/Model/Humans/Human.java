@@ -20,6 +20,7 @@ public class Human implements Endothermal{
     private Family_tree<Human> tree; 
     private List<String> oldNames;
     private boolean changedName;
+    
    
    
     public Human (String name, Gender gender, LocalDate birthDate, Human father, Human mother){
@@ -197,6 +198,9 @@ public class Human implements Endothermal{
     public long getTreeID() {
         return this.tree.getInnerID();
     }
+    public int getTreeIndex(){
+        return this.tree.getIndex();
+    }
     public Family_tree<Human> getTree(){
         return this.tree;
     }
@@ -228,6 +232,10 @@ public class Human implements Endothermal{
     @Override
     public LocalDate getDeatdDate() {
         return this.deathDate;
+    }
+
+    public int getIndex(){
+        return this.tree.getHumanIndex(this);
     }
    
 }
