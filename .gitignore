@@ -2,3 +2,8 @@
 out/
 *.dat
 *.class
+*.7z
+*.zip
+*.html
+
+/out/

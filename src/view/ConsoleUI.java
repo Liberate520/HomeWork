@@ -12,6 +12,22 @@ public class ConsoleUI implements View{
     private Presenter presenter;
     private boolean active;
     private MainMenu mainMenu;
+    private Gender checkGenderInput(String input)
+    {
+        //Gender gender = null;
+        switch (input) {
+            case "М":
+            case "м":
+                return Gender.Male;
+                //return true;
+            case "Ж":
+            case "ж":
+                return Gender.Female;
+                //return true;
+            default:
+                return null;
+        }
+    }
     public ConsoleUI(){
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
@@ -45,36 +61,37 @@ public class ConsoleUI implements View{
         String name  = scanner.nextLine();
         System.out.println("Укажите фамилию");
         String lastName  = scanner.nextLine();
-        System.out.println("Укажите дату рождения yyyy-mm-dd");
+        String pattern = "yyyy MM dd";
+        System.out.println("Укажите дату рождения " + pattern);
         //TODO реализовать проверку на валидность.
-        String pattern = "yyyy-MM-dd";
-        String input = scanner.nextLine();
+        LocalDate dateOfBirth = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        LocalDate dateOfBirth = LocalDate.parse(input, formatter);
+        while(dateOfBirth==null) {
+            dateOfBirth = checkDateValidInput(scanner.nextLine(), formatter);
+            if(dateOfBirth==null){
+                System.out.println("Неверно указана дата. Ввведите дату в формате " + pattern);
+            }
+        }
         //TODO Сделать возможным опционально ввести дату смерти
-
         System.out.println("Укажите пол (м\\ж)");
-        input = scanner.nextLine();
-        boolean invalidInput = true;
         Gender gender = null;
-        while(invalidInput) {
-            switch (input) {
-                case "М":
-                case "м":
-                    gender = Gender.Male;
-                    invalidInput = false;
-                    break;
-                case "Ж":
-                case "ж":
-                    gender = Gender.Female;
-                    invalidInput = false;
-                    break;
-                default:
-                    System.out.println("Неверно указан пол. Укажите М или Ж");
+        while(gender==null) {
+            gender = checkGenderInput(scanner.nextLine());
+            if(gender==null) {
+                System.out.println("Неверно указан пол. Укажите М или Ж");
             }
         }
         presenter.addHuman(name, lastName, dateOfBirth, gender);
     }
+
+    private LocalDate checkDateValidInput(String input, DateTimeFormatter formatter) {
+        try {
+            return LocalDate.parse(input, formatter);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     public void getHumanListInfo() {
         presenter.getHumanListInfo();
     }
