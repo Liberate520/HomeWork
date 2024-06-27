@@ -12,7 +12,7 @@ public class ConsoleView implements View {
     private final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Отображает генеалогическое древо в консоли.
+     * Отображает генеалогическое древо в консоли в указанном порядке сортировки.
      *
      * @param familyTree генеалогическое древо для отображения
      * @param sortOrder  порядок сортировки для отображения
