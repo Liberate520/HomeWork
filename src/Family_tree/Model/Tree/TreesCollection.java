@@ -63,13 +63,10 @@ public class TreesCollection<T extends Endothermal> {
         return this.activeTree;
     }
 
-    public int getActiveTreeIndex(){
-        if (this.activeTree == null){
-            return -1;
-        }
+    public int getIndex(Family_tree<T> value){
         try{
             for (int i = 0; i < this.list.size(); i++){
-                if (this.activeTree.equals(this.list.get(i))){
+                if (value.equals(this.list.get(i))){
                     return i;
                 }
             }
@@ -78,6 +75,13 @@ public class TreesCollection<T extends Endothermal> {
             System.out.println(e);
             return -1;
         }
+    }
+
+    public int getActiveTreeIndex(){
+        if (this.activeTree == null){
+            return -1;
+        }
+        return getIndex(activeTree);
     }
 
     public long getActiveTreeID(){

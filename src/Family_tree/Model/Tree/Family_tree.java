@@ -16,6 +16,8 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
     private List<T> list;    
     private String family;
     private long innerID;
+    private T activeSubject;
+    private TreesCollection parent;
 
     public Family_tree(String family){
         long nameValue = 0;
@@ -43,7 +45,8 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
     public void add(T value){
         if (value != null && !this.list.contains(value)){            
             list.add(value);            
-        }        
+        }  
+        this.activeSubject = value;      
     }      
 
     public List<T> searchByName(String name){
@@ -140,20 +143,54 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
         Recorder recorder = new Recorder();
         System.out.println(recorder.save(this, path));
     }
+
     public long getInnerID(){return this.innerID;}
+
+    @SuppressWarnings("unchecked")
     public int getIndex() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIndex'");
+        return parent.getIndex(this);
     }
-    public int getHumanIndex(Human human) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHumanIndex'");
+
+    public int getItemIndex(T value) {
+        try{
+            for (int i = 0; i < this.list.size(); i++){
+                if (value.equals(this.list.get(i))){
+                    return i;
+                }
+            }
+            return -1;
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
     }
     
-    public int compareTo(Family_tree<T> o){
-        return (int) (this.innerID - o.getInnerID());
+   public T getActiveItem() {
+    return this.activeSubject;
+   } 
+
+   public boolean setActiveItem (int index){
+    try{
+        this.activeSubject = this.list.get(index);
+        return true;
+    } catch (Exception e) {
+        System.out.println(e);
+        return false;
     }
+   }
+
+   public boolean setActiveItem(long ID){
+    try{
+        T element = this.getItemByInnerID(ID);
+        this.activeSubject = element;
+        return true;
+    } catch (Exception e) {
+        System.out.println(e);
+        return false;
+    }
+   }
+}
 
     
     
-}
+
