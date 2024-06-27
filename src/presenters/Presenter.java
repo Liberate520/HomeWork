@@ -2,26 +2,26 @@ package presenters;
 
 import models.Human;
 import models.FamilyTree;
-import services.FamilyTreeFileHandler;
+import services.FamilyTreeService;
 import views.View;
+import views.SortOrder;
 
 /**
- * Класс Presenter связывает модель и представление, обрабатывая команды пользователя и обновляя модель данных.
+ * Класс Presenter связывает представление и сервис, обрабатывая команды пользователя.
  */
 public class Presenter {
     private final View view;
-    private final FamilyTree<Human> familyTree;
-    private final FamilyTreeFileHandler<Human> fileHandler;
+    private final FamilyTreeService familyTreeService;
 
     /**
      * Конструктор класса Presenter.
      *
-     * @param view объект представления, реализующий интерфейс View
+     * @param view              объект представления, реализующий интерфейс View
+     * @param familyTreeService объект сервиса для работы с генеалогическим древом
      */
-    public Presenter(View view) {
+    public Presenter(View view, FamilyTreeService familyTreeService) {
         this.view = view;
-        this.familyTree = new FamilyTree<>();
-        this.fileHandler = new FamilyTreeFileHandler<>();
+        this.familyTreeService = familyTreeService;
     }
 
     /**
@@ -30,23 +30,23 @@ public class Presenter {
      * @param human человек, который добавляется в древо
      */
     public void addHuman(Human human) {
-        familyTree.add(human);
+        familyTreeService.addHuman(human);
     }
 
     /**
      * Сортирует генеалогическое древо по имени и отображает результат.
      */
     public void sortByName() {
-        familyTree.sortByName();
-        view.displaySortedByName(familyTree);
+        familyTreeService.sortByName();
+        view.displayFamilyTree(familyTreeService.getFamilyTree(), SortOrder.NAME);
     }
 
     /**
      * Сортирует генеалогическое древо по дате рождения и отображает результат.
      */
     public void sortByBirthDate() {
-        familyTree.sortByBirthDate();
-        view.displaySortedByBirthDate(familyTree);
+        familyTreeService.sortByBirthDate();
+        view.displayFamilyTree(familyTreeService.getFamilyTree(), SortOrder.BIRTH_DATE);
     }
 
     /**
@@ -55,31 +55,23 @@ public class Presenter {
      * @param filename имя файла для сохранения
      */
     public void saveToFile(String filename) {
-        try {
-            fileHandler.saveFamilyTree(familyTree, filename);
-        } catch (Exception e) {
-            view.displayError("Ошибка при сохранении файла: " + e.getMessage());
-        }
+        familyTreeService.saveToFile(filename);
     }
 
     /**
-     * Загружает генеалогическое древо из файла.
+     * Загружает генеалогическое древо из файла и отображает результат.
      *
      * @param filename имя файла для загрузки
      */
     public void loadFromFile(String filename) {
-        try {
-            FamilyTree<Human> loadedFamilyTree = fileHandler.loadFamilyTree(filename);
-            view.displayLoadedFamilyTree(loadedFamilyTree);
-        } catch (Exception e) {
-            view.displayError("Ошибка при загрузке файла: " + e.getMessage());
-        }
+        familyTreeService.loadFromFile(filename);
+        view.displayFamilyTree(familyTreeService.getFamilyTree(), SortOrder.LOADED);
     }
 
     /**
      * Отображает генеалогическое древо.
      */
     public void displayFamilyTree() {
-        view.displayFamilyTree(familyTree);
+        view.displayFamilyTree(familyTreeService.getFamilyTree(), SortOrder.UNSORTED);
     }
 }
