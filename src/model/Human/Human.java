@@ -1,7 +1,7 @@
-package Human;
+package model.Human;
 
-import FamilyTree.FamilyItem;
-import Gender.Gender;
+import model.FamilyTree.FamilyItem;
+import model.Gender.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,16 +15,20 @@ public class Human implements Serializable, FamilyItem {
     private LocalDate birthDate, deathDate;
     private Gender gender;
 
-    public Human(String name, Human parent1, Human parent2, Gender gender, LocalDate birthDate, LocalDate deathDate){
+    private int idFamilyItem;
+
+    public Human(int id, String name, Gender gender, LocalDate birthDate){
         this.children = new ArrayList<>();
         this.parents = new ArrayList<>();
         this.name = name;
-        this.parents.add(parent1);
-        this.parents.add(parent2);
         this.gender = gender;
         this.birthDate = birthDate;
-        this.deathDate = deathDate;
+        this.idFamilyItem = id;
 
+    }
+
+    public int getIdFamilyItem() {
+        return idFamilyItem;
     }
 
     public int getAge(){
@@ -50,8 +54,8 @@ public class Human implements Serializable, FamilyItem {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("name: "+name+"; gender: "+gender+"; birthDate: "+birthDate+"; deathDate: "+deathDate); //+"; parents: "+getParents()+"; children: "+getChildren());
-        if (parents.size()>1){
+        stringBuilder.append("id: "+idFamilyItem+" name: "+name+"; gender: "+gender+"; birthDate: "+birthDate+"; deathDate: "+deathDate); //+"; parents: "+getParents()+"; children: "+getChildren());
+        if (!parents.isEmpty()){
             stringBuilder.append("; "+getParents());
         }
         if (children.size()!=0){

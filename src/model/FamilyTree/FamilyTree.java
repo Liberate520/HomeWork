@@ -1,6 +1,4 @@
-package FamilyTree;
-
-import Human.Human;
+package model.FamilyTree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,6 +32,25 @@ public class FamilyTree<T extends FamilyItem> implements Serializable, Iterable<
         return stringBuilder.toString();
     }
 
+    public T findFamilyItemById(int id){
+        if (checkId(id)) {
+            for (T human : familyTree) {
+                if (human.getIdFamilyItem() == id) {
+                    return human;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean checkId(int id) {
+        if(id>=0 && id<familyTree.size()){
+            return true;
+        }
+        return false;
+
+    }
+
     public void sortByName(){
         familyTree.sort(new FamilyItemComparatorByName<T>());
     }
@@ -41,6 +58,7 @@ public class FamilyTree<T extends FamilyItem> implements Serializable, Iterable<
     public void sortByAge(){
         familyTree.sort(new FamilyItemComparatorByAge<T>());
     }
+
 
 
     @Override

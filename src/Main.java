@@ -1,22 +1,29 @@
 
-import FamilyTree.FamilyTree;
-import FileHandler_and_Writable.FileHandler;
-import Gender.Gender;
-import Human.Human;
+import model.FamilyTree.FamilyTree;
+import model.FamilyTree.Service;
+import model.FileHandler_and_Writable.FileHandler;
+import model.Gender.Gender;
+import model.Human.Human;
+import view.ConsoleUI;
+import view.View;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        FamilyTree familyTree = read("/Users/ksyul/Desktop/homeWork/src/familytree.txt");
-        System.out.println(familyTree);
+        View view = new ConsoleUI();
+        view.start();
 
-        familyTree.sortByName();
-        System.out.println(familyTree);
-
-        familyTree.sortByAge();
-        System.out.println(familyTree);
+//        FamilyTree familyTree = read("/Users/ksyul/Desktop/homeWork/src/familytree.txt");
+//        System.out.println(familyTree);
+//
+//        familyTree.sortByName();
+//        System.out.println(familyTree);
+//
+//        familyTree.sortByAge();
+//        System.out.println(familyTree);
 
 //        Human sergey = new Human("Sergey", null, null, Gender.Male, LocalDate.of(1981, 7, 17), null);
 //        System.out.println(sergey.getAge());
