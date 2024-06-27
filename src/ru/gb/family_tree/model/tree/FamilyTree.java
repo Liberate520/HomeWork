@@ -23,7 +23,7 @@ public class FamilyTree<E extends FamTreeItem<E>> implements Iterable<E>, Serial
             }
             else {
                 fam.setId(emptyIds.get(0));
-//                emptyIds.remove(0);
+                emptyIds.remove(0);
             }
         }
     }
@@ -33,6 +33,10 @@ public class FamilyTree<E extends FamTreeItem<E>> implements Iterable<E>, Serial
             familyTreeList.remove(fam);
             emptyIds.add(fam.getId());
         }
+    }
+
+    public boolean treeIsEmpty(){
+        return familyTreeList.isEmpty();
     }
 
 
@@ -64,6 +68,7 @@ public class FamilyTree<E extends FamTreeItem<E>> implements Iterable<E>, Serial
     public void sortByDod(){
         familyTreeList.sort((a1, a2) -> (a1.getDod().compareTo(a2.getDod())));
     }
+
 
     @Override
     public String toString() {

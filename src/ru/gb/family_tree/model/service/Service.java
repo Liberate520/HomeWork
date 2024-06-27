@@ -69,6 +69,8 @@ public class Service {
     public FamilyTree<Human> ShowTree() {
         return familyTreeList;
     }
+    public boolean treeIsEmpty(){
+        return familyTreeList.treeIsEmpty();    }
 
 
     public static FamilyTree load(String filePath) {
@@ -80,5 +82,9 @@ public class Service {
     public static void save(FamilyTree familyTree, String filePath) {
         Writeable writeable = new FileHandler();
         writeable.save(familyTree, filePath);
+    }
+
+    public void updateTree(FamilyTree newTree) {
+        this.familyTreeList = newTree;
     }
 }

@@ -3,7 +3,6 @@ package ru.gb.family_tree.view;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.presenter.Presenter;
-import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +25,8 @@ public class ConsoleUI implements View {
     public void start() {
         clearConsole();
         userHourHi();
+        delayAnyMs(1500);
+        clearConsole();
         caseMain();
     }
 
@@ -66,6 +67,8 @@ public class ConsoleUI implements View {
                case "6": // Завершить работу
                    clearConsole();
                    userHourBye();
+                   delayAnyMs(1500);
+                   clearConsole();
                    exit();
                    break;
                default: // Ошибка ввода, повтор кейса
@@ -115,6 +118,7 @@ public class ConsoleUI implements View {
                 showCurrentTree();
                 case_Main_1_RedactElem();
             case "6": // Назад
+                clearConsole();
                 caseMain();
                 break;
             default:
@@ -135,6 +139,12 @@ public class ConsoleUI implements View {
     }
 
     private void case_Main_2_TreeWork() {
+        if (presenter.treeIsEmpty()){
+            clearConsole();
+            System.out.println("Текущее древо пустое!\n");
+            caseMain();
+            return;
+        }
         menu_Main_2_TreeWork();
         String choice;
         choice = scanner.nextLine();
@@ -211,17 +221,19 @@ public class ConsoleUI implements View {
             father = askFather();
             mother = askMother();
         }
+        clearConsole();
         if (askChilds().equals("Да")) {
             childs = childsForHum();
         }
 
         Human anyHuman = presenter.createHuman(firstName, lastName, dob, dod, gender, father, mother);
         presenter.addElementInTree(anyHuman);
-        if (childs.get(0) != null) {
+        if (childs != null && !childs.isEmpty()) {
             for (String ch : childs) {
                 anyHuman.addChilds(presenter.findHuman(ch));
             }
         }
+        clearConsole();
         System.out.println("Элемент " + anyHuman.getId() + " Успешно создан!");
     } // Программа создания метода
     public String askFirstName() {
@@ -286,6 +298,9 @@ public class ConsoleUI implements View {
         }
     } // Спрашиваем известны ли родители
     public Human askFather() {
+        if (!presenter.treeIsEmpty()){
+            presenter.showTree();
+        }
         System.out.println("Введите имя отца:");
         String fatherName = scanner.nextLine();
         Human father = presenter.findHuman(fatherName);
@@ -298,6 +313,9 @@ public class ConsoleUI implements View {
         }
     } // Спрашиваем и проверяем папу по имени, если есть то добавляем
     public Human askMother() {
+        if (!presenter.treeIsEmpty()){
+            presenter.showTree();
+        }
         System.out.println("Введите имя матери:");
         String motherName = scanner.nextLine();
         Human mother = presenter.findHuman(motherName);
@@ -321,6 +339,9 @@ public class ConsoleUI implements View {
         }
     } // Спрашиваем известны ли дети
     public ArrayList<String> childsForHum() {
+        if (!presenter.treeIsEmpty()){
+            presenter.showTree();
+        }
         ArrayList<String> children = new ArrayList<>();
         System.out.println("Введите имена детей (введите 'стоп' для завершения):");
         String childName;
@@ -339,6 +360,7 @@ public class ConsoleUI implements View {
         System.out.println("Введите имя элемента для поиска (или стоп для отмены): ");
         String nameOfElement = scanner.nextLine();
         if ("стоп".equals(nameOfElement)) {
+            clearConsole();
             case_Main_1_RedactElem();
             return null;
         }
@@ -441,13 +463,30 @@ public class ConsoleUI implements View {
 
     //-----------Сохранение и загрузка дерева-----------------------------------------
     public void saveTree() {
-        System.out.println("Введите путь для сохранения дерева (или 'стоп' для отмены): ");
+        if (presenter.treeIsEmpty()){
+            clearConsole();
+            System.out.println("Текущее древо пустое!\n");
+            caseMain();
+            return;
+        }
+        System.out.println("Введите путь для сохранения дерева (включая имя файла и расширение '.txt', или 'стоп' для отмены): ");
         String filePath = scanner.nextLine();
         if ("стоп".equals(filePath)) {
             clearConsole();
             caseMain();
             return;
         }
+        if (!filePath.endsWith(".txt")) {
+            System.out.println("Пожалуйста, убедитесь, что путь к файлу включает имя файла и расширение '.txt'.");
+            saveTree();
+            return;
+        }
+        File file = new File(filePath);
+        // проверка, что файл существует и это не каталог, и он может быть перезаписан
+        if (file.exists() && !file.isDirectory()) {
+            // можно добавить запрос на подтверждение перезаписи файла
+        }
+
         try {
             presenter.saveTree(presenter.getTree(), filePath);
             System.out.println("Дерево успешно сохранено по пути: " + filePath);
@@ -457,20 +496,58 @@ public class ConsoleUI implements View {
         }
     }
     public void loadTree() {
-        System.out.println("Введите путь к имеющемуся дереву (или 'стоп' для отмены): ");
-        String filePath = scanner.nextLine();
-        if ("стоп".equals(filePath)) {
-            clearConsole();
-            caseMain();
-            return;
-        }
-        File file = new File(filePath);
-        if (file.exists() && !file.isDirectory()) {
-            presenter.loadTree(filePath);
-            System.out.println("Дерево успешно найдено и загружено!");
-        } else {
-            System.out.println("Дерево по указанному пути не найдено. Попробуйте еще раз: ");
-            loadTree();
+        while (true) {
+            System.out.println("Введите путь к директории для загрузки файла (или 'стоп' для отмены): ");
+            String directoryPath = scanner.nextLine();
+
+            if ("стоп".equals(directoryPath)) {
+                return;
+            }
+
+            File directory = new File(directoryPath);
+            if (!directory.exists() || !directory.isDirectory()) {
+                System.out.println("Указанный путь ошибочный или не существует. Попробуйте еще раз.");
+                continue;
+            }
+
+            File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
+            if (files == null || files.length == 0) {
+                System.out.println("Файлов древ (с расширением '.txt') в директории не обнаружено. Попробуйте еще раз.");
+                continue;
+            } else if (files.length == 1) {
+                System.out.println("Найден 1 файл: " + files[0].getName());
+                System.out.println("Хотите загрузить этот файл? (введите 'Да' или 'Нет')");
+                String response = scanner.nextLine();
+                if ("Да".equalsIgnoreCase(response)) {
+                    presenter.updateTree(presenter.loadTree(files[0].getPath()));
+                    System.out.println("Файл успешно загружен.");
+                    return;
+                } else if ("стоп".equalsIgnoreCase(response)) {
+                    return;
+                }
+            } else {
+                System.out.println("Выберите файл для загрузки:");
+                for (int i = 0; i < files.length; i++) {
+                    System.out.println((i + 1) + ": " + files[i].getName());
+                }
+                System.out.println("Введите номер файла или 'стоп' для отмены:");
+                String fileChoice = scanner.nextLine();
+                if ("стоп".equalsIgnoreCase(fileChoice)) {
+                    return;
+                }
+                try {
+                    int index = Integer.parseInt(fileChoice) - 1;
+                    if (index >= 0 && index < files.length) {
+                        presenter.updateTree(presenter.loadTree(files[index].getPath()));
+                        System.out.println("Файл успешно загружен.");
+                        return;
+                    } else {
+                        wrongInput();
+                    }
+                } catch (NumberFormatException e) {
+                    wrongInput();
+                }
+            }
         }
     }
 
@@ -479,6 +556,9 @@ public class ConsoleUI implements View {
     private void clearConsole() {
         System.out.println("\033[H\033[2J");
         System.out.flush();
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
     } // Очистка консоли
     private void userHourHi() {
         int hour = LocalDateTime.now().getHour();
@@ -491,6 +571,7 @@ public class ConsoleUI implements View {
         } else {
             System.out.println("Добрая ночь!");
         }
+
     }  //Приветствие
     private void userHourBye() {
         int hour = LocalDateTime.now().getHour();
@@ -507,21 +588,26 @@ public class ConsoleUI implements View {
     private void showCurrentTree() {
         System.out.println("Обзор текущего дерева: ");
         presenter.showTree();
+        if (presenter.getTree().treeIsEmpty()){
+            System.out.println("Текущее древо пустое!\n");
+        }
+
     }// Посмотреть дерево
     private void exit() {
-        System.out.println("\\nЗавершение работы...");
-        try {
-            Thread.sleep(3000); // Задержка на 3 сек
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Восстановление
-            e.printStackTrace();
-        }
         work = false;
 //        System.exit(0);
     } // Выход через 3 секунды
     private void wrongInput() { // "Некорректный выбор, попробуйте ещё раз!"
         System.out.println("Некорректный выбор, попробуйте ещё раз!");
     }
+    private void delayAnyMs(int ms){
+        try {
+            Thread.sleep(ms); // Задержка на 3 сек
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Восстановление
+            e.printStackTrace();
+        }
+    } // Задержка на мс
     //--------------------------------------------------------------------------------------------------
 }
 

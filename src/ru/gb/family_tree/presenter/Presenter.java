@@ -24,8 +24,13 @@ public class Presenter {
     public void showTree() {
         System.out.println(service.ShowTree());
     }
+
     public FamilyTree getTree(){
         return service.ShowTree();
+    }
+
+    public boolean treeIsEmpty(){
+        return service.treeIsEmpty();
     }
 
     public Human findHuman(String firstName) {
@@ -73,12 +78,16 @@ public class Presenter {
         service.sortByDod();
     }
 
-    public void loadTree(String filePath){
-        service.load(filePath);
+    public static FamilyTree loadTree(String filePath){
+        return Service.load(filePath);
     }
 
     public void saveTree(FamilyTree tree, String filePath){
         service.save(tree, filePath);
+    }
+
+    public void updateTree(FamilyTree newTree) {
+        service.updateTree(newTree);
     }
 }
 
