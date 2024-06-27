@@ -8,32 +8,12 @@ import models.FamilyTree;
  */
 public interface View {
     /**
-     * Отображает генеалогическое древо.
+     * Отображает генеалогическое древо в указанном порядке сортировки.
      *
      * @param familyTree генеалогическое древо для отображения
+     * @param sortOrder  порядок сортировки для отображения
      */
-    void displayFamilyTree(FamilyTree<Human> familyTree);
-
-    /**
-     * Отображает генеалогическое древо, отсортированное по имени.
-     *
-     * @param familyTree генеалогическое древо для отображения
-     */
-    void displaySortedByName(FamilyTree<Human> familyTree);
-
-    /**
-     * Отображает генеалогическое древо, отсортированное по дате рождения.
-     *
-     * @param familyTree генеалогическое древо для отображения
-     */
-    void displaySortedByBirthDate(FamilyTree<Human> familyTree);
-
-    /**
-     * Отображает загруженное генеалогическое древо.
-     *
-     * @param familyTree загруженное генеалогическое древо
-     */
-    void displayLoadedFamilyTree(FamilyTree<Human> familyTree);
+    void displayFamilyTree(FamilyTree<Human> familyTree, SortOrder sortOrder);
 
     /**
      * Отображает сообщение об ошибке.
@@ -41,4 +21,11 @@ public interface View {
      * @param errorMessage сообщение об ошибке
      */
     void displayError(String errorMessage);
+
+    /**
+     * Запрашивает у пользователя информацию о новом человеке и возвращает его.
+     *
+     * @return новый человек
+     */
+    Human addHuman();
 }
