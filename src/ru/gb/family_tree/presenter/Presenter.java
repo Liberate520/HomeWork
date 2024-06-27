@@ -26,16 +26,13 @@ public class Presenter {
     }
 
     public Human findHumanByName(String nameHuman){
-        familyTree.findHumanByName(nameHuman);
-        getFamilyTree();
-        return null;
+        return service.findHumanByName(nameHuman);
     }
 
     public void getFamilyTree() {
         FamilyTree<Human> familyTree = service.getFamilyTree();
-        List<Human> humanList = new ArrayList<>(familyTree.getHumanList());
-
-    view.printAnswer(humanList.toString());
+        List<Human> humanList = familyTree.getHumanList();
+        view.printAnswer(humanList.toString());
     }
 
     public void sortByBirthDate() {
@@ -47,8 +44,4 @@ public class Presenter {
         service.sortByName();
         getFamilyTree();
     }
-
-
 }
-
-

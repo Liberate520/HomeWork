@@ -12,8 +12,8 @@ public class Service<T extends Human> {
     private HumanBuilder humanBuilder;
 
     public Service(FamilyTree<Human> familyTree) {
-        this.familyTree = new FamilyTree<>();
-        humanBuilder = new HumanBuilder();
+        this.familyTree = familyTree;
+        this.humanBuilder = new HumanBuilder();
     }
 
     public void addHuman(String lastName, String name, Gender gender, LocalDate birthDate){
@@ -21,6 +21,9 @@ public class Service<T extends Human> {
         familyTree.addHuman(human);
     }
 
+    public Human findHumanByName(String nameHuman) {
+        return familyTree.findHumanByName(nameHuman);
+    }
 
     public void sortByName(){
         familyTree.sortByName();
@@ -34,5 +37,6 @@ public class Service<T extends Human> {
         return familyTree;
     }
 
-
 }
+
+

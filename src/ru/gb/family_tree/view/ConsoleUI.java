@@ -4,6 +4,7 @@ import ru.gb.family_tree.model.FT.FamilyTree;
 import ru.gb.family_tree.model.FT.FileHandler;
 import ru.gb.family_tree.model.Human.Gender;
 import ru.gb.family_tree.model.Human.Human;
+import ru.gb.family_tree.model.builder.HumanBuilder;
 import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.presenter.Presenter;
 
@@ -16,7 +17,7 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private boolean work;
     private MainMenu menu;
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
     private FileHandler fileHandler;
     private String filePath = "familyTree.txt";
 
@@ -65,7 +66,6 @@ public class ConsoleUI implements View {
 
         presenter.addHuman(lastName, name, gender, birthDate);
         saveFamilyTree();
-
     }
 
     public void findHumanByName() {
@@ -107,7 +107,7 @@ public class ConsoleUI implements View {
 
     public void saveFamilyTree() {
         try {
-            fileHandler.saveFamilyTree(familyTree, "familyTree.txt");
+            fileHandler.saveFamilyTree(familyTree, filePath);
             System.out.println("FamilyTree сохранено в файл " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
