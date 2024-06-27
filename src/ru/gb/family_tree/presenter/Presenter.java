@@ -13,10 +13,11 @@ import java.util.List;
 public class Presenter {
     private View view;
     private Service service;
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
 
-    public Presenter(View view){
+    public Presenter(View view, FamilyTree<Human> familyTree){
         this.view = view;
+        this.familyTree = this.familyTree;
         service = new Service();
     }
 
@@ -25,9 +26,10 @@ public class Presenter {
         getFamilyTree();
     }
 
-    public void findHumanByName(String nameHuman){
+    public Human findHumanByName(String nameHuman){
         familyTree.findHumanByName(nameHuman);
         getFamilyTree();
+        return null;
     }
 
     public void getFamilyTree() {
@@ -45,5 +47,8 @@ public class Presenter {
         service.sortByName();
         getFamilyTree();
     }
+
+
 }
+
 

@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Gender implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final Gender Male = new Gender("Мужской");
-    public static final Gender Female = new Gender("Женский");
+    public static final Gender Male = new Gender("мужской");
+    public static final Gender Female = new Gender("женский");
 
     private String gender;
 

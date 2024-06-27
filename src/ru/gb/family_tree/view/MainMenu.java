@@ -15,6 +15,7 @@ public class MainMenu {
         commands.add(new GetFamilyTree(consoleUI));
         commands.add(new SortByBirthDate(consoleUI));
         commands.add(new SortByName(consoleUI));
+        commands.add(new Finish(consoleUI));
     }
 
     public String menu(){

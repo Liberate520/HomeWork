@@ -22,7 +22,6 @@ public class Service<T extends Human> {
     }
 
 
-
     public void sortByName(){
         familyTree.sortByName();
     }
@@ -34,4 +33,6 @@ public class Service<T extends Human> {
     public FamilyTree<Human> getFamilyTree() {
         return familyTree;
     }
+
+
 }
