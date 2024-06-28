@@ -1,6 +1,5 @@
 package models;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,9 +15,8 @@ import java.util.List;
  * @param <T> тип объектов, которые будут храниться в генеалогическом древе
  */
 public class FamilyTree<T extends Serializable & Comparable<T>> implements Iterable<T>, Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
-    private final List<T> familyMembers;
+    private List<T> familyMembers;
 
     /**
      * Конструктор класса FamilyTree.
@@ -37,6 +35,31 @@ public class FamilyTree<T extends Serializable & Comparable<T>> implements Itera
     }
 
     /**
+     * Добавляет все объекты из списка в генеалогическое древо.
+     *
+     * @param members список объектов для добавления
+     */
+    public void addAll(List<T> members) {
+        familyMembers.addAll(members);
+    }
+
+    /**
+     * Очищает генеалогическое древо.
+     */
+    public void clear() {
+        familyMembers.clear();
+    }
+
+    /**
+     * Возвращает список объектов в генеалогическом древе.
+     *
+     * @return список объектов
+     */
+    public List<T> getFamilyMembers() {
+        return familyMembers;
+    }
+
+    /**
      * Возвращает итератор для перебора объектов в генеалогическом древе.
      * Реализация интерфейса Iterable позволяет использовать древо в циклах for-each.
      *
@@ -51,13 +74,13 @@ public class FamilyTree<T extends Serializable & Comparable<T>> implements Itera
      * Сортирует объекты в генеалогическом древе по имени в алфавитном порядке.
      */
     public void sortByName() {
-        familyMembers.sort(Comparator.comparing((T t) -> ((Human)t).getName()));
+        familyMembers.sort(Comparator.comparing(Human::getName));
     }
 
     /**
      * Сортирует объекты в генеалогическом древе по дате рождения.
      */
     public void sortByBirthDate() {
-        familyMembers.sort(Comparator.comparing((T t) -> ((Human)t).getBirthDate()));
+        familyMembers.sort(Comparator.comparing(Human::getBirthDate));
     }
 }
