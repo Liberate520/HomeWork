@@ -1,5 +1,7 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.tree.FamileTreeItems;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, FamileTreeItems<Human> {
     private static int idCounter = 0;
 
     private long id;

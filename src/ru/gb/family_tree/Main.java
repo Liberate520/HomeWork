@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        FamilyTree ft = new FamilyTree();
+        FamilyTree ft = new FamilyTree<>();
 
         Human Adam = new Human("Adam", null, null, LocalDate.of(2000, 1, 1 ), LocalDate.of(3000, 12, 30 ), Gender.M);
         ft.addHuman(Adam);
@@ -42,7 +42,7 @@ public class Main {
 //        System.out.println(ft_restored.getFullTree());
 
         //проверка Iterable
-        for(Human human: ft){
+        for(Object human: ft){
             System.out.println(human);
         }
 
