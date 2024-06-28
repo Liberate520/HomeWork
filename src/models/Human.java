@@ -1,36 +1,35 @@
 package models;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Класс Human представляет человека в генеалогическом древе.
  * Он содержит информацию о человеке, такую как имя, дата рождения, дата смерти и пол.
- * Класс реализует интерфейсы Serializable и Comparable, что позволяет использовать его в качестве
- * элемента генеалогического древа и сохранять/загружать данные в/из файла.
+ * Класс реализует интерфейсы Serializable и Comparable для сериализации и сортировки.
  */
 public class Human implements Serializable, Comparable<Human> {
     private static final long serialVersionUID = 1L;
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private String name;
-    private String birthDate;
-    private String deathDate;
+    private LocalDate birthDate;
+    private LocalDate deathDate;
     private Gender gender;
-    private Human mother;
-    private Human father;
 
     /**
      * Конструктор класса Human.
      *
      * @param name       имя человека
-     * @param birthDate  дата рождения человека
-     * @param deathDate  дата смерти человека
+     * @param birthDate  дата рождения человека в формате "дд.мм.гггг"
+     * @param deathDate  дата смерти человека в формате "дд.мм.гггг"
      * @param gender     пол человека
      */
     public Human(String name, String birthDate, String deathDate, Gender gender) {
         this.name = name;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
+        this.birthDate = LocalDate.parse(birthDate, dateFormatter);
+        this.deathDate = LocalDate.parse(deathDate, dateFormatter);
         this.gender = gender;
     }
 
@@ -48,7 +47,7 @@ public class Human implements Serializable, Comparable<Human> {
      *
      * @return дата рождения человека
      */
-    public String getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
@@ -57,7 +56,7 @@ public class Human implements Serializable, Comparable<Human> {
      *
      * @return дата смерти человека
      */
-    public String getDeathDate() {
+    public LocalDate getDeathDate() {
         return deathDate;
     }
 
@@ -71,21 +70,14 @@ public class Human implements Serializable, Comparable<Human> {
     }
 
     /**
-     * Устанавливает мать человека.
+     * Сравнивает двух людей по имени.
      *
-     * @param mother мать человека
+     * @param other другой человек для сравнения
+     * @return результат сравнения (-1, 0, 1)
      */
-    public void setMother(Human mother) {
-        this.mother = mother;
-    }
-
-    /**
-     * Устанавливает отца человека.
-     *
-     * @param father отец человека
-     */
-    public void setFather(Human father) {
-        this.father = father;
+    @Override
+    public int compareTo(Human other) {
+        return this.name.compareTo(other.name);
     }
 
     /**
@@ -95,44 +87,6 @@ public class Human implements Serializable, Comparable<Human> {
      */
     @Override
     public String toString() {
-        return name + ", " + birthDate + " - " + deathDate + ", " + gender;
-    }
-
-    /**
-     * Сравнивает двух людей по их имени.
-     *
-     * @param other другой человек для сравнения
-     * @return результат сравнения
-     */
-    @Override
-    public int compareTo(Human other) {
-        return this.name.compareTo(other.name);
-    }
-
-    /**
-     * Определяет, равны ли два человека.
-     *
-     * @param o другой объект для сравнения
-     * @return true, если люди равны, false в противном случае
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Human human = (Human) o;
-        return Objects.equals(name, human.name) &&
-                Objects.equals(birthDate, human.birthDate) &&
-                Objects.equals(deathDate, human.deathDate) &&
-                gender == human.gender;
-    }
-
-    /**
-     * Возвращает хэш-код человека.
-     *
-     * @return хэш-код человека
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, birthDate, deathDate, gender);
+        return name + " (" + birthDate.format(dateFormatter) + " - " + deathDate.format(dateFormatter) + "), " + gender;
     }
 }
