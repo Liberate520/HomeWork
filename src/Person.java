@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements Serializable {
     private String name;
     private String birthDate;
     private Gender gender;
@@ -16,23 +17,6 @@ public class Person {
         this.children = new ArrayList<>();
     }
 
-    public void addChild(Person child) {
-        children.add(child);
-        if (this.gender == Gender.MALE) {
-            child.setFather(this);
-        } else if (this.gender == Gender.FEMALE) {
-            child.setMother(this);
-        }
-    }
-
-    public void setFather(Person father) {
-        this.father = father;
-    }
-
-    public void setMother(Person mother) {
-        this.mother = mother;
-    }
-
     public String getName() {
         return name;
     }
@@ -45,28 +29,49 @@ public class Person {
         return gender;
     }
 
-    public String getFatherName() {
-        return father != null ? father.getName() : "no";
+    public Person getFather() {
+        return father;
     }
 
-    public String getMotherName() {
-        return mother != null ? mother.getName() : "no";
+    public void setFather(Person father) {
+        this.father = father;
     }
 
-    public String getChildrenNames() {
-        if (children.isEmpty()) {
-            return "no";
+    public Person getMother() {
+        return mother;
+    }
+
+    public void setMother(Person mother) {
+        this.mother = mother;
+    }
+
+    public List<Person> getChildren() {
+        return children;
+    }
+
+    public void addChild(Person child) {
+        children.add(child);
+        if (this.gender == Gender.MALE) {
+            child.setFather(this);
+        } else if (this.gender == Gender.FEMALE) {
+            child.setMother(this);
         }
-        StringBuilder childrenNames = new StringBuilder();
-        for (Person child : children) {
-            childrenNames.append(child.getName()).append(", ");
-        }
-        return childrenNames.substring(0, childrenNames.length() - 2); 
     }
 
     @Override
     public String toString() {
-        return "Имя: " + name + ", Дата рождения: " + birthDate + ", Пол: " + (gender == Gender.MALE ? "Мужской" : "Женский") + 
-               ", Папа: " + getFatherName() + ", Мама: " + getMotherName() + ", Дети: " + getChildrenNames();
+        String fatherName = (father != null) ? father.getName() : "no";
+        String motherName = (mother != null) ? mother.getName() : "no";
+        StringBuilder childrenNames = new StringBuilder();
+        if (children.isEmpty()) {
+            childrenNames.append("no");
+        } else {
+            for (Person child : children) {
+                childrenNames.append(child.getName()).append(" ");
+            }
+        }
+
+        return "Имя: " + name + ", Дата рождения: " + birthDate + ", Пол: " + gender + 
+               ", Отец: " + fatherName + ", Мать: " + motherName + ", Дети: " + childrenNames;
     }
 }

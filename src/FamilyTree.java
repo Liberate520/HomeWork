@@ -1,19 +1,20 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
-    private List<Person> persons;
+public class FamilyTree implements Serializable {
+    private List<Person> people;
 
     public FamilyTree() {
-        this.persons = new ArrayList<>();
+        this.people = new ArrayList<>();
     }
 
     public void addPerson(Person person) {
-        persons.add(person);
+        people.add(person);
     }
 
     public Person findPersonByName(String name) {
-        for (Person person : persons) {
+        for (Person person : people) {
             if (person.getName().equalsIgnoreCase(name)) {
                 return person;
             }
@@ -21,9 +22,12 @@ public class FamilyTree {
         return null;
     }
 
-    public void printFamilyTree() {
-        for (Person person : persons) {
-            System.out.println(person);
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Person person : people) {
+            sb.append(person).append("\n");
         }
+        return sb.toString();
     }
 }
