@@ -2,7 +2,6 @@ package ru.gb.family_tree.presenter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-// import java.security.Provider.Service;
 import java.time.LocalDate;
 
 import ru.gb.family_tree.model.item.Gender;
@@ -22,8 +21,16 @@ public class Presenter {
 
     public void addItem(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         service.addItem(name, gender, birthDate, deathDate, father, mother);
-        //какой-то ответ
         getTreeInfo();
+    }
+
+    public void addToChildren(Human child) {
+        service.addToChildren(child);
+        getTreeInfo();        
+    }
+
+    public void getById(Integer id) {
+        service.getById(id);
     }
 
     public void getTreeInfo() {
@@ -35,6 +42,11 @@ public class Presenter {
         service.sortByAge();
         getTreeInfo();
     }
+
+    public void sortById() {
+        service.sortById();
+        getTreeInfo();
+    }    
 
     public void sortByName() {
         service.sortByName();

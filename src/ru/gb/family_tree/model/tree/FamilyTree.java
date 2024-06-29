@@ -7,6 +7,7 @@ import java.util.List;
 
 import ru.gb.family_tree.model.item.FamilyTreeItem;
 import ru.gb.family_tree.model.item.comparators.ItemComparatorByAge;
+import ru.gb.family_tree.model.item.comparators.ItemComparatorById;
 import ru.gb.family_tree.model.item.comparators.ItemComparatorByName;
 import ru.gb.family_tree.model.item.comparators.ItemComparatorBySpouse;
 import ru.gb.family_tree.model.tree.iterators.ItemIterator;
@@ -17,36 +18,65 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
 
     public FamilyTree() {
         this(new ArrayList<>());
-    }    
+    }
 
     public FamilyTree(List<E> itemList) {
         this.itemList = itemList;
     }
 
+    private boolean isEquals(E e1, E e2) {
+        String info1 = e1.getInfo().substring(e1.getInfo().indexOf(","));
+        String info2 = e2.getInfo().substring(e2.getInfo().indexOf(","));
+        return /*(e1.getId() == e2.getId()) && */
+                // (e1.getName().equals(e2.getName())) &&
+                // (e1.getBirthDate().equals(e2.getBirthDate())) &&
+                // ((e1.getDeathDate() == e2.getDeathDate()) ||
+                // (e1.getDeathDate().equals(e2.getDeathDate()))) &&
+                // (e1.getGender() == e2.getGender()) &&
+                // (e1.getChildren().equals(e2.getChildren())) &&
+                // (e1.getFather() == e2.getFather()) &&
+                // (e1.getMother() == e2.getMother()) &&
+                // (e1.getParents() == e2.getParents()) &&
+                // (e1.getSpouse().equals(e2.getSpouse()));
+                (info1 == info2) || (info1.equals(info2));
+    }
+
+
     public boolean add(E familyTreeItem) {
         if (familyTreeItem == null) {
             return false;
         }
-        if (!itemList.contains(familyTreeItem)) { // Не очень удачное решение, потому что id присваивается ниже
-            itemList.add(familyTreeItem);
-            familyTreeItem.setId(itemID++);
 
-            addToParents(familyTreeItem);
-            addToChildren(familyTreeItem);
+        // familyTreeItem.setId(itemID++);
 
-            return true;
+        // if (!itemList.contains(familyTreeItem)) { // Не очень удачное решение, потому
+        // // что id присваивается ниже
+
+        for (E e : itemList) {
+            if (isEquals(e, familyTreeItem)) {
+                return false;
+            }
         }
-        return false;
+        
+        itemList.add(familyTreeItem);
+        familyTreeItem.setId(itemID++);
+
+        addToParents(familyTreeItem);
+        addToChildren(familyTreeItem);
+
+        return true;
+
+        // return false;
     }
 
-    private void addToParents(E e) {
+    public void addToParents(E e) {
         for (E parent : e.getParents()) {
-            parent.addChild(e);
+            parent.addParent(e);
         }
     }
 
-    private void addToChildren(E e) {
-        for (E child : e.getParents()) {
+    public void addToChildren(E e) {
+        for (E child : e.getChildren()) {
             child.addChild(e);
         }
     }
@@ -149,6 +179,10 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
     public void sortByName() {
         itemList.sort(new ItemComparatorByName<>());
     }
+
+    public void sortById() {
+        itemList.sort(new ItemComparatorById<>());
+    }    
 
     public void sortByAge() {
         itemList.sort(new ItemComparatorByAge<>());

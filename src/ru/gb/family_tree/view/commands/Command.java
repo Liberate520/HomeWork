@@ -7,10 +7,8 @@ import ru.gb.family_tree.view.ConsoleUI;
 
 public abstract class Command {
     private String description;
-    @SuppressWarnings("rawtypes")
     private ConsoleUI consoleUI;
 
-    @SuppressWarnings("rawtypes")
     public Command(String description, ConsoleUI consoleUI) {
         this.description = description;
         this.consoleUI = consoleUI;
@@ -20,7 +18,6 @@ public abstract class Command {
         return description;
     }
 
-    @SuppressWarnings("rawtypes")
     ConsoleUI getConsoleUI() {
         return consoleUI;
     }

@@ -7,7 +7,7 @@ import ru.gb.family_tree.view.ConsoleUI;
 
 public class LoadTree extends Command{
 
-    public LoadTree(@SuppressWarnings("rawtypes") ConsoleUI consoleUI) {
+    public LoadTree(ConsoleUI consoleUI) {
         super("Загрузить семейное древо из файла", consoleUI);
     }
 

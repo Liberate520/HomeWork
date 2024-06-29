@@ -9,11 +9,11 @@ public class Human extends FamilyTreeItem<Human> {
         super(id, name, gender, birthDate, deathDate, father, mother);
     }
 
-    public Human(long id, String name, Gender gender, LocalDate birthDate) {
-        super(id, name, gender, birthDate, null, null, null);
-    }
-
     public Human(long id, String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
         super(id, name, gender, birthDate, null, father, mother);
+    }
+
+    public Human(long id, String name, Gender gender, LocalDate birthDate) {
+        super(id, name, gender, birthDate, null, null, null);
     }
 }

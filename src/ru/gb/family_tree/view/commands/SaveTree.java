@@ -7,7 +7,7 @@ import ru.gb.family_tree.view.ConsoleUI;
 
 public class SaveTree extends Command{
     
-    public SaveTree (@SuppressWarnings("rawtypes") ConsoleUI consoleUI) {
+    public SaveTree (ConsoleUI consoleUI) {
         super("Сохранить семейное древо в файл", consoleUI);
     }
 

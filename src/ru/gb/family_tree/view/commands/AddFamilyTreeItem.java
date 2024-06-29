@@ -4,7 +4,7 @@ import ru.gb.family_tree.view.ConsoleUI;
 
 public class AddFamilyTreeItem extends Command {
 
-    public AddFamilyTreeItem(@SuppressWarnings("rawtypes") ConsoleUI consoleUI) {
+    public AddFamilyTreeItem(ConsoleUI consoleUI) {
         super("Добавить нового члена семейного древа", consoleUI);        
     }
 

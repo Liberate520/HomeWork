@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-import ru.gb.family_tree.model.builder.ItemBuilder;
-import ru.gb.family_tree.model.item.FamilyTreeItem;
+import ru.gb.family_tree.model.builder.HumanBuilder;
 import ru.gb.family_tree.model.item.Gender;
 import ru.gb.family_tree.model.item.Human;
 import ru.gb.family_tree.model.saving_data.*;
@@ -17,26 +16,39 @@ public class Service {
     private Gender gender;
     private LocalDate birthDate;
     private FamilyTree<Human> tree;
-    private ItemBuilder<Human> itemBuilder;
-    private FamilyTreeItem<Human> human;
+    private HumanBuilder humanBuilder;
+    private Human human;
+    // private Human child;    
     private String storage;
     private Writable writable;
 
     public Service() {
         tree = new FamilyTree<>();
-        itemBuilder = new ItemBuilder<>();
-        human = itemBuilder.build(name, gender, birthDate);
+        humanBuilder = new HumanBuilder();
+        human = humanBuilder.build(name, gender, birthDate);
         storage = "src/family_tree.out";
         writable = new FileHandler();
     }
 
     public void addItem(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
-        tree.add(itemBuilder.build(name, gender, birthDate, deathDate, father, mother));
+        tree.add(humanBuilder.build(name, gender, birthDate, deathDate, father, mother));
+    }
+
+    public void addToChildren(Human child) {
+        tree.addToChildren(child);
+    }
+
+    public void getById(Integer id) {
+        tree.getById(id);
     }
 
     public void sortByName() {
         tree.sortByName();
     }
+
+    public void sortById() {
+        tree.sortById();
+    }    
 
     public void sortByAge() {
         tree.sortByAge();

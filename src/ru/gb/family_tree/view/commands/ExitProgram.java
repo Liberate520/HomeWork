@@ -4,7 +4,7 @@ import ru.gb.family_tree.view.ConsoleUI;
 
 public class ExitProgram extends Command {
 
-    public ExitProgram(@SuppressWarnings("rawtypes") ConsoleUI consoleUI) {
+    public ExitProgram(ConsoleUI consoleUI) {
         super("Завершить работу", consoleUI);
     }
 

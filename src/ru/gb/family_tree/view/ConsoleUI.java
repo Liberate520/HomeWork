@@ -7,14 +7,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-import ru.gb.family_tree.model.item.FamilyTreeItem;
 import ru.gb.family_tree.model.item.Gender;
 import ru.gb.family_tree.model.item.Human;
 import ru.gb.family_tree.presenter.Presenter;
 
 public class ConsoleUI implements View {
 
-    private static final String INPUT_ERROR = "Вы ввели неверное значение!\n";
+    private static final String INPUT_ERROR = "Вы ввели неверное значение!\nНеобходимо ввести целое число от 1 до";
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
@@ -35,7 +34,7 @@ public class ConsoleUI implements View {
     @Override
     public void start() throws FileNotFoundException, ClassNotFoundException, IOException {
         hello();
-        while (work){
+        while (work) {
             printMenu();
             execute();
         }
@@ -46,6 +45,9 @@ public class ConsoleUI implements View {
         work = false;
     }
 
+    public void sortById() {
+        presenter.sortById();
+    }
     public void sortByAge() {
         presenter.sortByAge();
     }
@@ -56,15 +58,15 @@ public class ConsoleUI implements View {
 
     public void sortBySpouse() {
         presenter.sortBySpouse();
-    }  
+    }
 
     public void loadTree() throws FileNotFoundException, ClassNotFoundException, IOException {
         presenter.loadTree();
-    }       
+    }
 
     public void saveTree() throws FileNotFoundException, IOException {
         presenter.saveTree();
-    }     
+    }
 
     public void getTreeInfo() {
         presenter.getTreeInfo();
@@ -75,72 +77,94 @@ public class ConsoleUI implements View {
         String name = scanner.nextLine();
         System.out.println("Укажите пол (1 - мужской, 2 - женский):");
         String genderString = scanner.nextLine();
-        Gender gender = null;
+        Gender gender = setGender(genderString);
+        LocalDate birthDate = setDate("рождения");
+        LocalDate deathDate = setDate("смерти");        
 
-        if (genderString.equals("1")) {
-            gender = Gender.Male;
-        } else if (genderString.equals("2")) {
-            gender = Gender.Female;
-        } else {
-            System.out.println("Пол не определён)))");
-        }
-
-        System.out.println("Укажите дату рождения в формате \"гггг-ММ-дд\":");
-        String birthDateString = scanner.nextLine();
-        LocalDate birthDate = null;        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        try {
-            birthDate = formatter.parse(birthDateString, LocalDate::from);
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Укажите дату смерти (если неизвестна - нажмите Enter):");
-        String deathDateString = scanner.nextLine();
-        LocalDate deathDate = null;
-
-        if (deathDateString != "") {
-            try {
-                deathDate = formatter.parse(deathDateString, LocalDate::from);
-            } catch (DateTimeParseException e) {
-                e.printStackTrace();
-            }
-        } else {
-            deathDate = null;
-        }
-
-
-        /*****   TODO ДОБАВИТЬ МЕТОДЫ СОЗДАНИЯ РОДСТВЕННЫХ СВЯЗЕЙ   ******/
+        /***** TODO ДОБАВИТЬ МЕТОДЫ СОЗДАНИЯ РОДСТВЕННЫХ СВЯЗЕЙ ******/
 
         // System.out.println("Укажите дату рождения:");
         // String ageString = scanner.nextLine();
         // System.out.println("Укажите дату рождения:");
         // String ageString = scanner.nextLine();
         // System.out.println("Укажите дату рождения:");
-        // String ageString = scanner.nextLine();   
+        // String ageString = scanner.nextLine();
 
         Human father = null;
         Human mother = null;
         presenter.addItem(name, gender, birthDate, deathDate, father, mother);
     }
 
+    // private void addRelative() {
+
+    //     System.out.println("Выберите из списка id члена древа, которому будем добавлять родственников:");
+    //     String line = scanner.nextLine();
+    //     if (checkTextForInt(line)) {
+    //         int id = Integer.parseInt(line);
+    //         Human human = presenter.getById(id);
+    //         if (checkCommand(numCommand)) {
+    //             menu.execute(numCommand);
+    //         }
+    //     }        
+    // }
+
+    private void addToChildren(Human child) {
+        presenter.addToChildren(child);
+    }
+
     private void hello() {
-        System.out.println("Доброго времени суток!");
+        System.out.println("Вас приветствует мастер создания генеалогического древа!");
     }
 
     private void execute() throws FileNotFoundException, ClassNotFoundException, IOException {
         String line = scanner.nextLine();
-        if (checkTextForInt(line)){
+        if (checkTextForInt(line)) {
             int numCommand = Integer.parseInt(line);
-            if (checkCommand(numCommand)){
+            if (checkCommand(numCommand)) {
                 menu.execute(numCommand);
             }
         }
     }
 
-    private boolean checkDateString(String text){
-        if (text.matches("[0-9]*")){
+    private Gender setGender(String text) {
+        Gender gender;
+        if (text.equals("1")) {
+            gender = Gender.Male;
+        } else if (text.equals("2")) {
+            gender = Gender.Female;
+        } else {
+            System.out.println("Пол не определён)))");
+            return null;
+        }
+        return gender;
+    }
+
+    private LocalDate setDate(String st) {
+        String text;
+        LocalDate result = null;
+        boolean notDate = true;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        while (notDate) {
+            System.out.print("Укажите дату " + st + " в формате \"гггг-ММ-дд\":");
+            if (st.equals("смерти"))
+                System.out.println("\n(если неизвестна - нажмите Enter)");
+            text = scanner.nextLine();
+            if (text != "") {
+                try {
+                    result = formatter.parse(text, LocalDate::from);
+                    notDate = false;
+                } catch (DateTimeParseException e) {
+                    System.out.println("Вы ввели некорректную дату!");
+                }
+            } else if (st.equals("смерти")) {
+                return null;
+            }
+        }
+        return result;
+    }
+
+    private boolean checkTextForInt(String text) {
+        if (!(text == "") && text.matches("[0-9]*")) {
             return true;
         } else {
             inputError();
@@ -148,17 +172,8 @@ public class ConsoleUI implements View {
         }
     }
 
-    private boolean checkTextForInt(String text){
-        if (text.matches("[0-9]*")){
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }    
-
-    private boolean checkCommand(int numCommand){
-        if (numCommand <= menu.getSize()){
+    private boolean checkCommand(int numCommand) {
+        if (numCommand <= menu.getSize()) {
             return true;
         } else {
             inputError();
@@ -166,11 +181,11 @@ public class ConsoleUI implements View {
         }
     }
 
-    private void printMenu(){
+    private void printMenu() {
         System.out.println(menu.menu());
     }
 
-    private void inputError(){
-        System.out.println(INPUT_ERROR);
+    private void inputError() {
+        System.out.println(INPUT_ERROR + " " + menu.getSize() + "\n");
     }
 }
