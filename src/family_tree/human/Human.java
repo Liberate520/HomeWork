@@ -1,4 +1,4 @@
-package family_tree;
+package family_tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable ,Comparable<Human>{
     int id;
     private static int sumId=0; // чтобы id не повторялось
     private String name;
@@ -16,16 +16,20 @@ public class Human implements Serializable {
     private LocalDate birghDate,deathDate;
     private Gender gender;
 
-    public Human(String name, LocalDate birghDate,LocalDate deathDate, Gender gender) {
+    public Human() {
+    }
+
+    public Human(String name, LocalDate birghDate, LocalDate deathDate, Gender gender, int id) {
         this.name = name;
         this.birghDate = birghDate;
         this.deathDate=deathDate;
         this.gender = gender;
-        sumId++;
-        id=sumId;
+        this.id=id;
+//        sumId++;
+//        id=sumId;
     }
-    public Human(String name, LocalDate birghDate, Gender gender){  //перегрузка конструктора
-        this(name,birghDate,null,gender);
+    public Human(String name, LocalDate birghDate, Gender gender,int id){  //перегрузка конструктора
+        this(name,birghDate,null,gender,id);
     }
     public void addChild(Human child){  //добавить ребёнка
         if (!children.contains(child))
@@ -50,13 +54,16 @@ public class Human implements Serializable {
         }
     }
 
-    public int getAge(Human human){  //возвращает возраст либо годы жизни
-        if (human.deathDate==null){
+    public int getAge(){  //возвращает возраст либо годы жизни
+        if (deathDate==null){
             return Period.between(birghDate,LocalDate.now()).getYears();//метод возвращает разницу в годах между двумя датами
         }
         else  return Period.between(birghDate,deathDate).getYears();
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -108,6 +115,10 @@ public class Human implements Serializable {
         return list;
     }
 
+    public LocalDate getBirghDate() {
+        return birghDate;
+    }
+
     @Override
     public String toString() { //метод доработан
         return "Human{" +
@@ -121,5 +132,10 @@ public class Human implements Serializable {
                 ", deathDate=" + deathDate +
                 ", gender=" + gender +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Human h) {
+        return name.compareTo(h.getName());
     }
 }

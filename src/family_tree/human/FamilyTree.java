@@ -1,11 +1,10 @@
-package family_tree;
+package family_tree.human;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class FamilyTree implements Serializable {
-    private List<Human> humanList;
+public class FamilyTree implements Serializable,Iterable<Human>{
+    public List<Human> humanList;
 
     public FamilyTree() {
         humanList=new ArrayList<>();
@@ -33,7 +32,8 @@ public class FamilyTree implements Serializable {
     }
     private void addParentsToChild(Human human){  //К детям родителя
         if(human.getGender()==Gender.FEMALE)
-          human.getChildren().forEach((ch)->ch.addMother(human)) ;
+           human.getChildren().forEach((ch)->ch.addMother(human)) ;
+
 
         if(human.getGender()==Gender.MALE)
             human.getChildren().forEach((ch)->ch.addFather(human)) ;
@@ -52,7 +52,7 @@ public class FamilyTree implements Serializable {
         }
         return humans;
     }
-    public  List<Human> getSiblings(int id){
+    public  List<Human> getSiblings(int id){   //найти братьев и сестёр
         Human humanId=getById(id);
         if (humanId==null)return null;
 
@@ -67,10 +67,26 @@ public class FamilyTree implements Serializable {
         else return null;
     }
 
+    public void sortByName(){
+        Collections.sort(humanList);
+    }
+    public void sortByData(){
+        Collections.sort(humanList, new HumanComporator());
+
+    }
+
+
+
     @Override
     public String toString() {
         return "FamilyTree{" +
                 "humanList=" + humanList +
                 '}';
     }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(humanList);
+    }
+
 }
