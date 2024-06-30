@@ -12,16 +12,18 @@ public class Human implements Serializable {
     private String name;
     private LocalDate birth;
     private LocalDate death;
+    private int age;
     private Gender gender;
     private List<Human> parents;
     private List<Human> children;
 
-    public Human (String name, LocalDate birth, LocalDate death, Gender gender, Human father, Human mother){
+    public Human (String name, LocalDate birth, LocalDate death, int age, Gender gender, Human father, Human mother){
         id = -1;
         this.name = name;
         this.birth = birth;
         this.death = death;
         this.gender = gender;
+        this.age = age;
         children = new ArrayList<>();
         parents = new ArrayList<>();
         if (father != null){
@@ -32,13 +34,13 @@ public class Human implements Serializable {
         }
     }
 
-    public Human (String name, LocalDate birth, Gender gender) {
-        this(name, birth, null, gender, null, null);
+    public Human (String name, int age, Gender gender) {
+        this(name, null, null, age, gender, null, null);
     }
 
-    public Human (String name, LocalDate birth, Gender gender, Human father, Human mother) {
-        this(name, birth, null, gender, father, mother);
-    }
+//    public Human (String name, LocalDate birth, int age, Gender gender, Human father, Human mother) {
+//        this(name, birth, null, null, gender, father, mother);
+//    }
 
     public boolean addChild(Human child) {
         if(!children.contains(child)){
@@ -79,13 +81,13 @@ public class Human implements Serializable {
         return date.getYears();
     }
 
-    public int getAge(){
-        if(death == null){
-            return getDate(birth, LocalDate.now());
-        } else {
-            return getDate(birth, death);
-        }
-    }
+//    public int getAge(){
+//        if(death == null){
+//            return getDate(birth, LocalDate.now());
+//        } else {
+//            return getDate(birth, death);
+//        }
+//    }
 
     public long getId() {
         return id;
@@ -127,6 +129,14 @@ public class Human implements Serializable {
         this.gender = gender;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public List<Human> getParents() {
         return parents;
     }
@@ -157,7 +167,7 @@ public class Human implements Serializable {
         sb.append(", пол: ");
         sb.append(gender);
         sb.append(", возраст: ");
-        sb.append(getAge());
+        sb.append(age);
         sb.append(", ");
         sb.append(getMotherInfo());
         sb.append(", ");

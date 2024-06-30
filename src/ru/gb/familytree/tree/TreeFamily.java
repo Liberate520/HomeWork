@@ -1,17 +1,21 @@
 package ru.gb.familytree.tree;
 
 import ru.gb.familytree.human.Human;
+import ru.gb.familytree.human.HumanComparatorByAge;
+import ru.gb.familytree.human.HumanComparatorByName;
+import ru.gb.studygroup.student.Student;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class TreeFamily implements Serializable {
+public class TreeFamily implements Serializable, Iterable<Human> {
     private long humansId;
     private List<Human> humanList;
 
     public TreeFamily() {
-        this(new ArrayList<>());
+        this.humanList = new ArrayList<>();
     }
 
     public TreeFamily(List<Human> humanList) {
@@ -25,7 +29,6 @@ public class TreeFamily implements Serializable {
 
             addToParents(human);
             addToChildren(human);
-
         }
     }
 
@@ -56,5 +59,29 @@ public class TreeFamily implements Serializable {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public void sortTreeByName() {
+        humanList.sort(new HumanComparatorByName());
+    }
+
+    public void sortTreeByAge() {
+        humanList.sort(new HumanComparatorByAge());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        //return studentList.iterator(); //простой вариант
+        return new TreeFamilyIterator(humanList);
+    }
+
+    public String getListOfHumans() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Список людей:\n");
+        for (Human human : humanList) {
+            stringBuilder.append(human);
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 }
