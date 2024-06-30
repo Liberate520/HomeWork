@@ -10,12 +10,12 @@ import java.util.List;
 
 public class Servis {
     private Human human;
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
     private HumanBuilder humanBuilder;
 
     public Servis() {
         human=new Human();
-        familyTree=new FamilyTree();
+        familyTree=new FamilyTree<Human>();
         humanBuilder=new HumanBuilder();
     }
 
@@ -53,7 +53,7 @@ public class Servis {
     public  List<Human> getSiblings(int id) {   //найти братьев и сестёр
         return familyTree.getSiblings(id);
     }
-    public FamilyTree getFamilyTree(){
+    public FamilyTree<Human> getFamilyTree(){
         return familyTree;
     }
     public void printNameFamiliTree(){

@@ -1,12 +1,14 @@
 package family_tree.human;
 
+import family_tree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable ,Comparable<Human>{
+public class Human implements FamilyTreeItem<Human>, Serializable {
     int id;
     private static int sumId=0; // чтобы id не повторялось
     private String name;
@@ -25,8 +27,6 @@ public class Human implements Serializable ,Comparable<Human>{
         this.deathDate=deathDate;
         this.gender = gender;
         this.id=id;
-//        sumId++;
-//        id=sumId;
     }
     public Human(String name, LocalDate birghDate, Gender gender,int id){  //перегрузка конструктора
         this(name,birghDate,null,gender,id);

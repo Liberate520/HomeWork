@@ -4,6 +4,7 @@ import family_tree.handler.FileHandler;
 import family_tree.handler.Writable;
 import family_tree.human.FamilyTree;
 import family_tree.human.Gender;
+import family_tree.human.Human;
 import family_tree.servis.Servis;
 
 import java.io.IOException;
@@ -47,7 +48,8 @@ public class Main {
         Writable writable=new FileHandler();
         writable.save(servis.getFamilyTree(),"familyTree.out");
 
-        FamilyTree familyTreeSave= (FamilyTree) writable.read("familyTree.out");
+//        FamilyTree familyTreeSave= (FamilyTree) writable.read("familyTree.out");
+        Object familyTreeSave=writable.read("familyTree.out");
         System.out.println(familyTreeSave);
 
         servis.printNameFamiliTree();
