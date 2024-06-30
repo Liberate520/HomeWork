@@ -24,4 +24,8 @@ public class FamilyTree {
         }
         return null;
     }
+
+    public List<Human> getParentsOf(Human human) {
+        return human.getParents();
+    }
 }

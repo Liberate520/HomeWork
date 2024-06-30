@@ -9,10 +9,12 @@ public class Main {
         // Найти человека по имени и получить его детей
         Human person = familyTree.findHumanByName("Иван");
         if (person != null) {
+            printHumanDetails(person);
+
             List<Human> children = familyTree.getChildrenOf(person);
             System.out.println("Children of " + person.getName() + ":");
             for (Human child : children) {
-                System.out.println(child.getName() + ", Age: " + child.getAge());
+                printHumanDetails(child);
             }
         } else {
             System.out.println("Person not found.");
@@ -27,6 +29,9 @@ public class Main {
         Human mikhail = new Human("Михаил", LocalDate.of(2004, 11, 30), Gender.MALE);
         Human anna = new Human("Анна", LocalDate.of(2006, 5, 25), Gender.FEMALE);
 
+        // Устанавливаем дату смерти (для демонстрации)
+        maria.setDeathDate(LocalDate.of(2023, 4, 10));
+
         ivan.addChild(mikhail);
         ivan.addChild(anna);
 
@@ -36,5 +41,22 @@ public class Main {
         familyTree.addHuman(anna);
 
         return familyTree;
+    }
+
+    private static void printHumanDetails(Human human) {
+        System.out.print(human.getName() + ", Born: " + human.getBirthDate());
+        if (human.isAlive()) {
+            System.out.println(", Age: " + human.getAge());
+        } else {
+            System.out.println(", Died: " + human.getDeathDate() + ", Age: " + human.getAge());
+        }
+        List<Human> parents = human.getParents();
+        if (!parents.isEmpty()) {
+            System.out.print("Parents: ");
+            for (Human parent : parents) {
+                System.out.print(parent.getName() + " ");
+            }
+            System.out.println();
+        }
     }
 }
