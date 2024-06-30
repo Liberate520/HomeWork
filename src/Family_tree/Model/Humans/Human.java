@@ -235,7 +235,7 @@ public class Human implements Endothermal{
     }
 
     public int getIndex(){
-        return this.tree.getHumanIndex(this);
+        return this.tree.getItemIndex(this);
     }
    
 }

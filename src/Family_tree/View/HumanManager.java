@@ -86,6 +86,7 @@ public class HumanManager implements CommandsInterface { //консольная 
         this.level = ActionLevel.NoLevel;
         this.view = humanView;
         this.scanner = scanner;
+        this.presenter = new HumanPresenter();
         
     }
 

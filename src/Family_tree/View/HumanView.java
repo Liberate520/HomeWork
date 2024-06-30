@@ -2,30 +2,21 @@ package Family_tree.View;
 
 
 import java.util.*;
-import Family_tree.Model.Humans.Human;
+
 import Family_tree.Presenter.HumanPresenter;
-import Family_tree.Presenter.Presenter;
 
-public class HumanView extends View<Human> {
 
-    private ActionLevel level;
-    private HumanPresenter presenter;
+public class HumanView extends View {
+
+    private ActionLevel level;   
     private HumanManager manager;
     private Scanner scanner;
 
     public HumanView(){
         this.level = ActionLevel.NoLevel;
-        this.scanner = new Scanner(System.in);
-        this.presenter = new HumanPresenter();
-        this.presenter.setView(this);
-        this.manager = new HumanManager( scanner, this);
-        this.manager.setPresenter(presenter);
-    }   
-
-    @Override
-    public Presenter getPresenter() {
-        return this.presenter;
-    } 
+        this.scanner = new Scanner(System.in);        
+        this.manager = new HumanManager( scanner, this);        
+    }      
        
     public HumanManager getManager() {
         return this.manager;

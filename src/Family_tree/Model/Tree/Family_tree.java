@@ -7,7 +7,6 @@ import Family_tree.Model.Humans.ComparatorByAge;
 import Family_tree.Model.Humans.ComparatorByID;
 import Family_tree.Model.Humans.ComparatorByName;
 import Family_tree.Model.Humans.Endothermal;
-import Family_tree.Model.Humans.Human;
 import Family_tree.Model.Recorder.Recorder;
 
 
@@ -17,7 +16,7 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
     private String family;
     private long innerID;
     private T activeSubject;
-    private TreesCollection parent;
+    private TreesCollection<T> parent;
 
     public Family_tree(String family){
         long nameValue = 0;
@@ -146,7 +145,7 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
 
     public long getInnerID(){return this.innerID;}
 
-    @SuppressWarnings("unchecked")
+    
     public int getIndex() {
         return parent.getIndex(this);
     }
@@ -188,6 +187,14 @@ public class Family_tree<T extends Endothermal>   implements  Iterable<T>, Seria
         System.out.println(e);
         return false;
     }
+   }
+
+   public TreesCollection<T> getParentCollection(){
+    return this.parent;
+   }
+
+   public void setParentCollection(TreesCollection<T> value){
+    this.parent = value;
    }
 }
 

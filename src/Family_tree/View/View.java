@@ -1,12 +1,10 @@
 package Family_tree.View;
 
-import Family_tree.Model.Humans.Endothermal;
-import Family_tree.Presenter.Presenter;
 
-public abstract class View<T extends Endothermal> {
+
+public abstract class View{
     private ActionLevel level = ActionLevel.TreeLevel;
-    public abstract void start();
-    public abstract Presenter getPresenter(); 
+    public abstract void start();    
     public ActionLevel getActionLevel(){
         return level;
     }  
