@@ -147,7 +147,7 @@ public class ConsoleUI implements View {
         System.out.println("Введите ФИО или его часть: ");
         name = scanner.nextLine();
         if (presenter.findHuman(name)) {
-            Menu actionFindMenu = new АctionFindMenu(this);
+            Menu actionFindMenu = new ActionFindMenu(this);
             launchingMenu(actionFindMenu);
         } else {
             System.out.println("Человек не найден");
@@ -181,7 +181,6 @@ public class ConsoleUI implements View {
      * Принимает строку
      * проверяет состоит ли строка только из цифр
      *
-     * @param choiceStr
      * @return boolean
      */
     private boolean checkingIsDigital(String choiceStr) {
@@ -191,8 +190,6 @@ public class ConsoleUI implements View {
     /**
      * Печатает ошибку с указанием диапазона допустимых значений
      *
-     * @param min
-     * @param max
      */
     private void printError(int min, int max) {
         System.out.printf("Вы ввели не коретные данные \nВведите число от %d до %d\n", min, max);
@@ -232,7 +229,7 @@ public class ConsoleUI implements View {
      * Вызвает в presenter метод getParents
      */
     public void getParents() {
-        presenter.getParents();
+        presenter.printParents();
     }
 
     /**
@@ -271,7 +268,7 @@ public class ConsoleUI implements View {
      * Печаате краткое дерево через обращение в presenter методом shortPrintTree
      */
     public void sortAge() {
-        presenter.sortAge();
+        presenter.sortByAge();
         System.out.println("соритровка по возрасту");
         System.out.println(presenter.shortPrintTree());
     }
@@ -307,9 +304,6 @@ public class ConsoleUI implements View {
      * если да то пребразует в int если нет то печатает ошибку через printError и возращает -1
      * проверчяет число на нахождение в диапазоне
      * сли да то возращает его int если нет то печатает ошибку через printError и возращает -1
-     * @param min
-     * @param max
-     * @return
      */
     private int chekingCoice(int min, int max) {
         String choiceStr = scanner.nextLine();
@@ -379,7 +373,6 @@ public class ConsoleUI implements View {
      * запрашивает день в промежутке от 1 до 31 значения меньше 10 дополняются 0 перед числом
      * возвращает отформатированную строку или null
      * @param allowNull boolean
-     * @return
      */
     private String enteringDataStr(boolean allowNull) {
         StringBuilder date = new StringBuilder();
@@ -406,7 +399,7 @@ public class ConsoleUI implements View {
             temp = scanner.nextLine();
             if (checkingIsDigital(temp) && Integer.parseInt(temp) < 13 && Integer.parseInt(temp) > 0) {
                 date.append("-");
-                if (Integer.parseInt(temp) < 10) {
+                if (temp.length() < 2) {
                     date.append(0);
                 }
                 date.append(temp);
@@ -422,7 +415,7 @@ public class ConsoleUI implements View {
             temp = scanner.nextLine();
             if (checkingIsDigital(temp) && Integer.parseInt(temp) < 32 && Integer.parseInt(temp) > 0) {
                 date.append("-");
-                if (Integer.parseInt(temp) < 10) {
+                if (temp.length() < 2) {
                     date.append(0);
                 }
                 date.append(temp);

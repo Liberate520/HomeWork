@@ -5,9 +5,9 @@ import view.commands.*;
 
 import java.util.ArrayList;
 
-public class АctionFindMenu extends Menu {
+public class ActionFindMenu extends Menu {
 
-    public АctionFindMenu(ConsoleUI consoleUI) {
+    public ActionFindMenu(ConsoleUI consoleUI) {
         menuName = "Меню дейсвия:";
         commands = new ArrayList<>();
         commands.add(new Help(consoleUI));

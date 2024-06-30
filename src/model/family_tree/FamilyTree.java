@@ -3,6 +3,7 @@ package model.family_tree;
 import model.Creatures.Creature;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,10 +12,9 @@ public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable
 
     /**
      * Основной консруктор класса
-     * @param familyList Arraylist<T>
      */
-    public FamilyTree(List<T> familyList) {
-        this.familyList = familyList;
+    public FamilyTree() {
+        familyList = new ArrayList<T>();
     }
 
     /**
