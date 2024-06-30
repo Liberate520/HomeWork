@@ -3,7 +3,7 @@ package Family_tree.View;
 
 import java.util.*;
 
-import Family_tree.Presenter.HumanPresenter;
+
 
 
 public class HumanView extends View {
