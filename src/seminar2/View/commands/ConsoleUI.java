@@ -1,8 +1,10 @@
 package seminar2.View.commands;
 
 import seminar2.model.Human.Gender;
+import seminar2.model.Service.Service;
 import seminar2.presenter.Presenter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -140,5 +142,14 @@ public class ConsoleUI implements View{
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
+    }
+
+    public void save() throws IOException {
+        presenter.save();
+    }
+
+    String path = "src/seminar2/output.txt";
+    public void load() throws IOException, ClassNotFoundException {
+        var load = presenter.load(path);
     }
 }

@@ -15,12 +15,13 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        String path = "src/seminar2/output.txt";
-
         View view = new ConsoleUI();
         view.start();
 
 
+
+
+//       String path = "src/seminar2/output.txt";
 //       FamilyTree tree = new FamilyTree();
         //FamilyTree tree = load(path);
 
@@ -114,15 +115,15 @@ public class Main {
 
     }
 
-    private static void save(FamilyTree tree, String path) throws IOException {
-        Writable file = new FileHandler();
-        file.save((Serializable) tree, path);
-    }
-
-    private static FamilyTree load(String path) throws IOException, ClassNotFoundException {
-        Writable file = new FileHandler();
-        return (FamilyTree) file.load(path);
-    }
+//    private static void save(FamilyTree tree, String path) throws IOException {
+//        Writable file = new FileHandler();
+//        file.save((Serializable) tree, path);
+//    }
+//
+//    private static FamilyTree load(String path) throws IOException, ClassNotFoundException {
+//        Writable file = new FileHandler();
+//        return (FamilyTree) file.load(path);
+//    }
 
 
     private static void show(){

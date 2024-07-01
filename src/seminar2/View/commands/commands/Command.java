@@ -2,6 +2,8 @@ package seminar2.View.commands.commands;
 
 import seminar2.View.commands.ConsoleUI;
 
+import java.io.IOException;
+
 public abstract class Command {
     private String description;
     private ConsoleUI consoleUI;
@@ -19,5 +21,5 @@ public abstract class Command {
         return consoleUI;
     }
 
-    public abstract void execute();
+    public abstract void execute() throws IOException, ClassNotFoundException;
 }

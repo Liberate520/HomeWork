@@ -2,6 +2,7 @@ package seminar2.View.commands;
 
 import seminar2.View.commands.commands.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class MainMenu {
         commands.add(new SortByName(consoleUI));
         commands.add(new SortBySurname(consoleUI));
         commands.add(new Finish(consoleUI));
+        commands.add(new Save(consoleUI));
+        commands.add(new Load(consoleUI));
 
     }
 
@@ -34,7 +37,7 @@ public class MainMenu {
         return stringBuilder.toString();
     }
 
-    public void execute(int choice){
+    public void execute(int choice) throws IOException, ClassNotFoundException {
         Command command = commands.get(choice - 1);
         command.execute();
     }
