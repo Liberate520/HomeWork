@@ -1,10 +1,10 @@
-package familyTree;
+package form.familyTree;
 
-import human.Human;
+import form.forming.Create;
 
 import java.util.Comparator;
 
-public class HumanComparatorByBirthDate<T extends TreeNode<T>> implements Comparator<T> {
+public class HumanComparatorByBirthDate<T extends Create> implements Comparator<T> {
     @Override
     public int compare(T h1, T h2){return h1.getBirthDate().compareTo(h2.getBirthDate());}
 }

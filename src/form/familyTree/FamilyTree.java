@@ -1,13 +1,13 @@
-package familyTree;
+package form.familyTree;
 
-import human.Human;
+import form.forming.Create;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
+public class FamilyTree<E extends Create<E>> implements Serializable, Iterable<E> {
     public long humansId;
     public List<E> humanList;
 
@@ -70,6 +70,9 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         }
         return res;
     }
+    public void addCreature(E creature) {
+        this.humanList.add(creature);
+    }
 
     public void setWedding(long humanId1, long humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
@@ -82,6 +85,14 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         }
     }
 
+    public E findFirsIn(String text) {
+        for (E creature: humanList) {
+            if (creature.getName().toLowerCase().contains(text.toLowerCase())){
+                return creature;
+            }
+        }
+        return null;
+    }
     public boolean setDivorce(long humanId1, long humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
             E human1 = getById(humanId1);
@@ -155,6 +166,10 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         humanList.sort(new HumanComparatorByName<>());
     }
 
+    public void sortByAge() {
+        humanList.sort(new HumanComparatorByBirthDate<>());
+    }
+
     public void sortByBirthDate(){
         humanList.sort(new HumanComparatorByBirthDate<>());
     }
@@ -166,5 +181,24 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     @Override
     public Iterator<E> iterator(){
         return new FamilyTreeIterator<>(humanList);
+    }
+
+    public List<E> findFirsAll(String text) {
+        List<E> result = new ArrayList<>();
+        for (E creature: humanList) {
+            if (creature.getName().toLowerCase().contains(text.toLowerCase())){
+                result.add(creature);
+            }
+        }
+        return result;
+    }
+
+    public List<E> getFamilyList() {
+        return humanList;
+    }
+
+    public int getSize() {return humanList.size(); }
+
+    public void sortByNumberChildren() {humanList.sort(new HumanComparatorByNumberChildren<>());
     }
 }

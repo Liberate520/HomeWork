@@ -1,10 +1,11 @@
-package familyTree;
+package form.familyTree;
 
-import human.Human;
+import form.forming.Create;
+
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator<T extends TreeNode<T>> implements Iterator<T> {
+public class FamilyTreeIterator<T extends Create<T>> implements Iterator<T> {
     private List<T> list;
     private int index;
 

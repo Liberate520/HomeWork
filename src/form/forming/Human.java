@@ -1,6 +1,4 @@
-package human;
-
-import familyTree.TreeNode;
+package form.forming;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,16 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human<T extends TreeNode<T>> implements Serializable {
+public class Human implements Serializable, Create<Human> {
     private long id;
-    private final String name;
-    private final Gender gender;
+    private String name;
+    private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private final List<Human> parents;
-    private final List<Human> children;
+    private List<Human> parents;
+    private List<Human> children;
     private Human spouse;
 
+    public Human (String name, Gender gender, String birthDate, String deathDate) {
+        this.name = name;
+        this.birthDate = LocalDate.parse(birthDate);
+        if (deathDate != null) {
+            this.deathDate = LocalDate.parse(deathDate);
+        } else {
+            this.deathDate = null;
+        }
+        this.gender = gender;
+        this.children = new ArrayList<>();
+    }
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         id = -1;
@@ -37,11 +46,15 @@ public class Human<T extends TreeNode<T>> implements Serializable {
     }
 
     public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
-        this(name, gender, birthDate, null, father, mother);
+        this(name, gender, birthDate, null, null, null);
     }
 
     public Human(String name, Gender gender, LocalDate birthDate) {
-        this(name, gender, birthDate, null, null, null);
+        this(name, gender, birthDate, (LocalDate) null, null, null);
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+        this(name, gender, null, null, null, null);
     }
 
     public boolean addChild(Human child) {
@@ -52,33 +65,41 @@ public class Human<T extends TreeNode<T>> implements Serializable {
         return false;
     }
 
-    public void addParents(Human parent) {
+    public boolean addParents(Human parent) {
         if (!parents.contains(parent)) {
             parents.add(parent);
         }
+        return false;
     }
 
-    public Human getFather() {
-        for (Human parent : parents) {
-            {
-                return parent;
-            }
-        }
-        return null;
-    }
+//    public Human getFather() {
+//        for (Human parent : parents) {
+//            {
+//                return parent;
+//            }
+//        }
+//        return null;
+//    }
 
-    public Human getMother() {
-        for (Human parent : parents) {
-            {
-                return parent;
-            }
-        }
-        return null;
-    }
+//    public Human getMother() {
+//        for (Human parent : parents) {
+//            {
+//                return parent;
+//            }
+//        }
+//        return null;
+//    }
 
     public int getAge() {
         return getPeriod(birthDate, Objects.requireNonNullElseGet(deathDate, LocalDate::now));
     }
+//    public int getAge() {
+//        if (deathDate == null) {
+//            LocalDate today = LocalDate.now();
+//            return Period.between(birthDate, today).getYears();
+//        }
+//        return Period.between(birthDate, deathDate).getYears();
+//    }
 
     private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
         Period diff = Period.between(birthDate, deathDate);
@@ -89,12 +110,13 @@ public class Human<T extends TreeNode<T>> implements Serializable {
         this.spouse = spouse;
     }
 
-    public Human getSpouse() {
-        return spouse;
-    }
-
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getSpouse() {
+        return null;
     }
 
     public long getId() {
@@ -115,6 +137,21 @@ public class Human<T extends TreeNode<T>> implements Serializable {
 
     public List<Human> getParents() {
         return parents;
+    }
+
+    @Override
+    public List<Human> getGrandparents() {
+        return null;
+    }
+
+    @Override
+    public List<Human> getGrandsons() {
+        return null;
+    }
+
+    @Override
+    public boolean alive() {
+        return false;
     }
 
     public List<Human> getChildren() {
@@ -138,6 +175,16 @@ public class Human<T extends TreeNode<T>> implements Serializable {
         return getInfo();
     }
 
+    @Override
+    public void setParents(Human mother, Human father) {
+
+    }
+
+    @Override
+    public void setChildren(Human child) {
+
+    }
+
     public String getInfo() {
         return "id: " +
                 id +
@@ -149,11 +196,8 @@ public class Human<T extends TreeNode<T>> implements Serializable {
                 getAge() +
                 ", " +
                 getSpouseInfo() +
-                ", " +
-                getMotherInfo() +
-                ", " +
-                getFatherInfo() +
-                ", " +
+                ", "
+                +
                 getChildrenInfo();
     }
 
@@ -167,27 +211,27 @@ public class Human<T extends TreeNode<T>> implements Serializable {
         return res;
     }
 
-    public String getMotherInfo() {
-        String res = "мать: ";
-        Human mother = getMother();
-        if (mother != null) {
-            res += mother.getName();
-        } else {
-            res += "неизвестна";
-        }
-        return res;
-    }
+//    public String getMotherInfo() {
+//        String res = "мать: ";
+//        Human mother = getMother();
+//        if (mother != null) {
+//            res += mother.getName();
+//        } else {
+//            res += "неизвестна";
+//        }
+//        return res;
+//    }
 
-    public String getFatherInfo() {
-        String res = "отец: ";
-        Human father = getFather();
-        if (father != null) {
-            res += father.getName();
-        } else {
-            res += "неизвестен";
-        }
-        return res;
-    }
+//    public String getFatherInfo() {
+//        String res = "отец: ";
+//        Human father = getFather();
+//        if (father != null) {
+//            res += father.getName();
+//        } else {
+//            res += "неизвестен";
+//        }
+//        return res;
+//    }
 
     public String getChildrenInfo() {
         StringBuilder res = new StringBuilder();
