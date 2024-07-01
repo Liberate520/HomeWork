@@ -6,15 +6,14 @@ import ru.gb.family_tree.model.tree.FamilyTree;
 import ru.gb.family_tree.model.tree.FileHandler;
 import ru.gb.family_tree.model.tree.Writeable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Service {
     private FamilyTree<Human> familyTreeList;
-    private FileHandler fileHandler;
 
     public Service() {
         familyTreeList = new FamilyTree<>();
-        fileHandler = new FileHandler();
     }
 
 
@@ -71,18 +70,20 @@ public class Service {
     public FamilyTree<Human> ShowTree() {
         return familyTreeList;
     }
+
+
     public boolean treeIsEmpty(){
         return familyTreeList.treeIsEmpty();    }
 
 
     public FamilyTree load(String filePath) {
-        Writeable writeable = fileHandler;
+        Writeable writeable = new FileHandler();
         return (FamilyTree) writeable.read(filePath);
     }
 
 
     public void save(FamilyTree familyTree, String filePath) {
-        Writeable writeable = fileHandler;
+        Writeable writeable = new FileHandler();
         writeable.save(familyTree, filePath);
     }
 

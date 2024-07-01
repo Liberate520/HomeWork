@@ -299,7 +299,7 @@ public class ConsoleUI implements View {
     } // Спрашиваем известны ли родители
     public Human askFather() {
         if (!presenter.treeIsEmpty()){
-            presenter.showTree();
+            System.out.println(presenter.getTree());
         }
         System.out.println("Введите имя отца:");
         String fatherName = scanner.nextLine();
@@ -314,7 +314,7 @@ public class ConsoleUI implements View {
     } // Спрашиваем и проверяем папу по имени, если есть то добавляем
     public Human askMother() {
         if (!presenter.treeIsEmpty()){
-            presenter.showTree();
+            System.out.println(presenter.getTree());
         }
         System.out.println("Введите имя матери:");
         String motherName = scanner.nextLine();
@@ -340,7 +340,7 @@ public class ConsoleUI implements View {
     } // Спрашиваем известны ли дети
     public ArrayList<String> childsForHum() {
         if (!presenter.treeIsEmpty()){
-            presenter.showTree();
+            System.out.println(presenter.getTree());
         }
         ArrayList<String> children = new ArrayList<>();
         System.out.println("Введите имена детей (введите 'стоп' для завершения):");
@@ -587,7 +587,7 @@ public class ConsoleUI implements View {
     } //Прощание
     private void showCurrentTree() {
         System.out.println("Обзор текущего дерева: ");
-        presenter.showTree();
+        System.out.println(presenter.getTree());
         if (presenter.getTree().treeIsEmpty()){
             System.out.println("Текущее древо пустое!\n");
         }

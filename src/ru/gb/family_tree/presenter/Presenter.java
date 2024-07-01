@@ -20,17 +20,12 @@ public class Presenter {
         service = new Service();
     }
 
-
-    public void showTree() {
-        System.out.println(service.ShowTree());
-    }
-
     public FamilyTree getTree(){
         return service.ShowTree();
     }
 
     public boolean treeIsEmpty(){
-        return service.treeIsEmpty();
+       return service.treeIsEmpty();
     }
 
     public Human findHuman(String firstName) {
