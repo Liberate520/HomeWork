@@ -1,11 +1,15 @@
 import FamilyTree.FamilyTree;
 import Human.Human;
 import Human.Gender;
+import Writer.FileHandler;
+
+
+import java.io.*;
 import java.time.LocalDate;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         FamilyTree humanTree = new FamilyTree();
 
         Human human1 = new Human("Иван", Gender.Male, LocalDate.of(1928, 5, 15));
@@ -32,8 +36,16 @@ public class Main {
         humanTree.addHumantoTree(human8);
         humanTree.addHumantoTree(human9);
 
-        System.out.println(humanTree);
 
-        System.out.println(human1.getHumansChildrenList());
+        System.out.println(humanTree.getbyId(8));
+
+        FileHandler newFileHandler = new FileHandler();
+        if (newFileHandler.writeObjecttoFile(humanTree)){
+            System.out.println("Объект успешно сериализован в файл ");
+        }
+        FamilyTree newFamilyTree = (FamilyTree) newFileHandler.readObjectfromFile();
+        System.out.println("Объект успешно десериализован из файла");
+        System.out.println(newFamilyTree);
+
     }
 }

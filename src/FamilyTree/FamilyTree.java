@@ -1,9 +1,10 @@
 package FamilyTree;
 
+import java.io.Serializable;
 import java.util.*;
 import Human.Human;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private final List<Human> ListOfFamily;
 
     public FamilyTree(){
@@ -29,6 +30,15 @@ public class FamilyTree {
         for(Human parent: human.getParentsofHuman()){
             parent.addChildrentoHuman(human);
         }
+    }
+    public Human getbyId(Integer id) {
+        for (Human member: ListOfFamily){
+            if (member.getId()==id){
+                return member;
+            }
+        }
+        System.out.println("Члена семьи с таким id нет");
+        return null;
     }
 
     @Override

@@ -1,10 +1,11 @@
 package Human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
 
-public class Human {
+public class Human implements Serializable {
     private int id;
     private String name;
     private LocalDate dob, dod;
@@ -63,7 +64,6 @@ public class Human {
     public List<Human> getParentsofHuman(){
         return this.parentsList;
     }
-
 
 
     //методы добавления и получения супруга(и) у человека
