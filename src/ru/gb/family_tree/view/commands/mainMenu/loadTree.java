@@ -11,6 +11,5 @@ public class loadTree extends Command {
     public void execute(){
         getConsoleUI().clearConsole();
         getConsoleUI().loadTree();
-        getConsoleUI().clearConsole();
     }
 }

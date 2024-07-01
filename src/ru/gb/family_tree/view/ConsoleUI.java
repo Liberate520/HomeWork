@@ -38,7 +38,9 @@ public class ConsoleUI implements View {
         userHourHi();
         delayAnyMs(1500);
         clearConsole();
-        caseMain();
+        while (work){
+            choiseMainMenu();
+        }
     }
 
     @Override
@@ -47,59 +49,44 @@ public class ConsoleUI implements View {
     }
 
 
-    //---------Главный кейс-----------
-    public void caseMain() {
-       while (work){
-           choiseMainMenu();
-//           switch (choice) {
-//               case "1": // Работа с элементами
-//
-//                   case_Main_1_RedactElem();
-//                   break;
-//               case "2": // Работа с  деревом
-//                   clearConsole();
-//                   case_Main_2_TreeWork();
-//                   break;
-//               case "3": // Загрузить дерево
-//                   clearConsole();
-//                   loadTree();
-//                   break;
-//               case "4": // Сохранить дерево
-//                   clearConsole();
-//                   saveTree();
-//                   break;
-//               case "5": // Посмотреть текущее древо
-//                   clearConsole();
-//                   showCurrentTree();
-//                   caseMain();
-//                   break;
-//               case "6": // Завершить работу
-//                   clearConsole();
-//                   userHourBye();
-//                   delayAnyMs(1500);
-//                   clearConsole();
-//                   exit();
-//                   break;
-//               default: // Ошибка ввода, повтор кейса
-//                   clearConsole();
-//                   wrongInput();
-//                   caseMain();
-//           }
-       }
-    }
-
     public void choiseMainMenu(){
         System.out.println(menuMain.menu());
         String choiseStr = scanner.nextLine();
-        //TODO метод проверки на валидность menuMain.size
-        int choise = Integer.parseInt(choiseStr);
+        int choise;
+        try {
+            choise = Integer.parseInt(choiseStr);
+            if (choise < 1 || choise > menuMain.size()) {
+                clearConsole();
+                wrongInput();
+                choiseMainMenu();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            clearConsole();
+            wrongInput();
+            choiseMainMenu();
+            return;
+        }
         menuMain.execute(choise);
     }
     public void choiseRedactElement(){
         System.out.println(menuRedactElement.menu());
         String choiseStr = scanner.nextLine();
-        //TODO метод проверки на валидность menuRedactElement.size
-        int choise = Integer.parseInt(choiseStr);
+        int choise;
+        try {
+            choise = Integer.parseInt(choiseStr);
+            if (choise < 1 || choise > menuRedactElement.size()) {
+                clearConsole();
+                wrongInput();
+                choiseRedactElement();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            clearConsole();
+            wrongInput();
+            choiseRedactElement();
+            return;
+        }
         menuRedactElement.execute(choise);
     }
     public void choiseRedactTree(){
@@ -112,11 +99,23 @@ public class ConsoleUI implements View {
         }
         System.out.println(menuRedactTree.menu());
         String choiseStr = scanner.nextLine();
-        //TODO метод проверки на валидность menuRedactElement.size
-        int choise = Integer.parseInt(choiseStr);
+        int choise;
+        try {
+            choise = Integer.parseInt(choiseStr);
+            if (choise < 1 || choise > menuRedactTree.size()) {
+                clearConsole();
+                wrongInput();
+                choiseRedactTree();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            clearConsole();
+            wrongInput();
+            choiseRedactTree();
+            return;
+        }
         menuRedactTree.execute(choise);
     }
-
 
     public void choiseFinish(){
         clearConsole();
@@ -125,106 +124,6 @@ public class ConsoleUI implements View {
         clearConsole();
         exit();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //--------Вложенные кейсы----------------
-//    public void case_Main_1_RedactElem() {
-//        menu_Main_1_RedactElem();
-//        String choice;
-//        choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1": // Создать элемент
-//                clearConsole();
-//                createNewElement();
-//                case_Main_1_RedactElem();
-//                break;
-//            case "2": // Найти элемент
-//                clearConsole();
-//                findElement();
-//                case_Main_1_RedactElem();
-//                break;
-//            case "3": // Удалить элемент
-//                clearConsole();
-//                deleteElement();
-//                case_Main_1_RedactElem();
-//            case "4": // Дополнить элемент
-//                clearConsole();
-//                addNewInfoAboutElement();
-//                case_Main_1_RedactElem();
-//            case "5": // Посмотреть текущее древо
-//                clearConsole();
-//                showCurrentTree();
-//                case_Main_1_RedactElem();
-//            case "6": // Назад
-//                clearConsole();
-//                caseMain();
-//                break;
-//            default:
-//                clearConsole();
-//                wrongInput();
-//                case_Main_1_RedactElem();
-//        }
-//    }
-//
-//
-//    public void case_Main_2_TreeWork() {
-//
-//        menu_Main_2_TreeWork();
-//        String choice;
-//        choice = scanner.nextLine();
-//        switch (choice) {
-//            case "1": // ...имени
-//
-//                sortByName();
-//                case_Main_2_TreeWork();
-//                break;
-//            case "2": // ...id
-//                clearConsole();
-//                sortById();
-//                case_Main_2_TreeWork();
-//
-//                break;
-//            case "3": // ...полу
-//                clearConsole();
-//                sortByGender();
-//                case_Main_2_TreeWork();
-//
-//            case "4": // ...дате рождения
-//                clearConsole();
-//                sortByDob();
-//                case_Main_2_TreeWork();
-//            case "5": // ...дате смерти
-//                clearConsole();
-//                sortByDod();
-//                case_Main_2_TreeWork();
-//            case "6": // Посмотреть текущее дерево
-//                clearConsole();
-//                showCurrentTree();
-//                case_Main_2_TreeWork();
-//            case "7": // Назад
-//                clearConsole();
-//                caseMain();
-//                break;
-//            default:
-//                clearConsole();
-//                System.out.println("Некорректный выбор, попробуйте ещё раз!");
-//                case_Main_2_TreeWork();
-//        }
-//    }
-
-
 
 
     //-----------Методы редактирования элементов--------------------
@@ -498,14 +397,14 @@ public class ConsoleUI implements View {
         if (presenter.treeIsEmpty()){
             clearConsole();
             System.out.println("Текущее древо пустое!\n");
-            caseMain();
+            choiseMainMenu();
             return;
         }
         System.out.println("Введите путь для сохранения дерева (включая имя файла и расширение '.txt', или 'стоп' для отмены): ");
         String filePath = scanner.nextLine();
         if ("стоп".equals(filePath)) {
             clearConsole();
-            caseMain();
+            choiseMainMenu();
             return;
         }
         if (!filePath.endsWith(".txt")) {
@@ -521,8 +420,10 @@ public class ConsoleUI implements View {
 
         try {
             presenter.saveTree(presenter.getTree(), filePath);
+            clearConsole();
             System.out.println("Дерево успешно сохранено по пути: " + filePath);
         } catch (Exception e) {
+            clearConsole();
             System.out.println("Произошла ошибка при сохранении дерева! Попробуйте еще раз.");
             saveTree();
         }
@@ -552,6 +453,7 @@ public class ConsoleUI implements View {
                 String response = scanner.nextLine();
                 if ("Да".equalsIgnoreCase(response)) {
                     presenter.updateTree(presenter.loadTree(files[0].getPath()));
+                    clearConsole();
                     System.out.println("Файл успешно загружен.");
                     return;
                 } else if ("стоп".equalsIgnoreCase(response)) {
@@ -571,6 +473,7 @@ public class ConsoleUI implements View {
                     int index = Integer.parseInt(fileChoice) - 1;
                     if (index >= 0 && index < files.length) {
                         presenter.updateTree(presenter.loadTree(files[index].getPath()));
+                        clearConsole();
                         System.out.println("Файл успешно загружен.");
                         return;
                     } else {

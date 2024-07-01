@@ -11,6 +11,5 @@ public class saveTree extends Command {
     public void execute(){
         getConsoleUI().clearConsole();
         getConsoleUI().saveTree();
-        getConsoleUI().clearConsole();
     }
 }
