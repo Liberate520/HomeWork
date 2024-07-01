@@ -1,10 +1,16 @@
-package ru.gb.family_tree;
+package family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Human {
+public class Human implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private static int idCounter = 0;
+
+    private final int id;
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
@@ -14,6 +20,7 @@ public class Human {
 
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender,
                  Human father, Human mother, List<Human> children) {
+        this.id = ++idCounter;
         this.name = name;
         this.dob = dob;
         this.dod = dod;
@@ -22,6 +29,10 @@ public class Human {
         this.mother = mother;
         this.children = children;
 
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -82,30 +93,11 @@ public class Human {
 
     @Override
     public String toString() {
-        return "Имя: " + name + ", дата рождения: " + dob +
+        return "ID: " + id + ", Имя: " + name + ", дата рождения: " + dob +
                 (dod != null ? ", дата смерти: " + dod : "") +
                 (gender != null ? ", пол: " + gender : "") +
                 (father != null ? ", отец: " + father.getName() : "") +
                 (mother != null ? ", мать: " + mother.getName() : "") +
                 (children != null && !children.isEmpty() ? ", дети: " + children.size() : "");
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Human human = (Human) o;
-//        return Objects.equals(name, human.name) &&
-//                Objects.equals(dob, human.dob) &&
-//                Objects.equals(dod, human.dod) &&
-//                gender == human.gender &&
-//                Objects.equals(father, human.father) &&
-//                Objects.equals(mother, human.mother) &&
-//                Objects.equals(children, human.children);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(name, dob, dod, gender, father, mother, children);
-//    }
 }

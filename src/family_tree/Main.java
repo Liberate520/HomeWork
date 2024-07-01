@@ -1,5 +1,9 @@
-package ru.gb.family_tree;
+package family_tree;
 
+import family_tree.writer.FileHandler;
+import family_tree.writer.Writer;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,19 +74,54 @@ public class Main {
 
 //        System.out.println(familyTree);
 
+
         // Используем Scanner для ввода имени для поиска
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите имя для поиска: ");
-        String searchName = scanner.nextLine();
+        System.out.println("Введите имя или ID для поиска:");
+        String searchInput = scanner.nextLine();
 
-        List<Human> foundHumans = familyTree.findHumansByName(searchName);
-        if (!foundHumans.isEmpty()) {
-            System.out.println("Найденные люди:");
-            for (Human human : foundHumans) {
-                System.out.println(human);
+        try {
+            int searchId = Integer.parseInt(searchInput);
+            Human foundHuman = familyTree.findHumanById(searchId);
+            if (foundHuman != null) {
+                System.out.println("Найденный человек по ID:");
+                System.out.println(foundHuman);
+            } else {
+                System.out.println("Человек с ID " + searchId + " не найден.");
             }
-        } else {
-            System.out.println("Человек с именем " + searchName + " не найден.");
+        } catch (NumberFormatException e) {
+            List<Human> foundHumans = familyTree.findHumansByName(searchInput);
+            if (!foundHumans.isEmpty()) {
+                System.out.println("Найденные люди по имени:");
+                for (Human human : foundHumans) {
+                    System.out.println(human);
+                }
+            } else {
+                System.out.println("Человек с именем " + searchInput + " не найден.");
+            }
         }
+
+
+        // Запись семейного дерева в файл
+        Writer fileWriter = new FileHandler();
+        String filePath = "familyTree.ser";
+        try {
+            fileWriter.save(filePath, familyTree);
+            System.out.println("Семейное дерево записано в файл: " + filePath);
+        } catch (IOException e) {
+            System.out.println("Ошибка записи в файл: " + e.getMessage());
+        }
+
+        // Чтение семейного дерева из файла
+        try {
+            FamilyTree loadedFamilyTree = fileWriter.load(filePath);
+            System.out.println("Семейное дерево загружено из файла:");
+            System.out.println(loadedFamilyTree);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Ошибка чтения из файла: " + e.getMessage());
+        }
+
+        scanner.close();
+
     }
 }

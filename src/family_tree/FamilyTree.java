@@ -1,27 +1,25 @@
-package ru.gb.family_tree;
+package family_tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable{
+    private static final long serialVersionUID = 1L;
 
-    private List<Human> humans;
+    private List<Human> members;
 
     public FamilyTree() {
-        humans = new ArrayList<>();
+        members = new ArrayList<>();
     }
 
     public void addHuman (Human human) {
-        humans.add(human);
-    }
-
-    public List<Human> getHumans() {
-        return humans;
+        members.add(human);
     }
 
     public List<Human> findHumansByName(String name) {
         List<Human> foundHumans = new ArrayList<>();
-        for (Human human : humans) {
+        for (Human human : members) {
             if (human.getName().equalsIgnoreCase(name)) {
                 foundHumans.add(human);
             }
@@ -29,10 +27,19 @@ public class FamilyTree {
         return foundHumans;
     }
 
+    public Human findHumanById(int id) {
+        for (Human human : members) {
+            if (human.getId() == id) {
+                return human;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "FamilyTree{" +
-                "humans=" + humans +
+                "humans=" + members +
                 '}';
     }
 }
