@@ -10,9 +10,11 @@ import java.time.LocalDate;
 
 public class Service {
     private FamilyTree<Human> familyTreeList;
+    private FileHandler fileHandler;
 
     public Service() {
         familyTreeList = new FamilyTree<>();
+        fileHandler = new FileHandler();
     }
 
 
@@ -73,14 +75,14 @@ public class Service {
         return familyTreeList.treeIsEmpty();    }
 
 
-    public static FamilyTree load(String filePath) {
-        Writeable writeable = new FileHandler();
+    public FamilyTree load(String filePath) {
+        Writeable writeable = fileHandler;
         return (FamilyTree) writeable.read(filePath);
     }
 
 
-    public static void save(FamilyTree familyTree, String filePath) {
-        Writeable writeable = new FileHandler();
+    public void save(FamilyTree familyTree, String filePath) {
+        Writeable writeable = fileHandler;
         writeable.save(familyTree, filePath);
     }
 

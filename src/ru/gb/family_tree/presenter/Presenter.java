@@ -78,8 +78,8 @@ public class Presenter {
         service.sortByDod();
     }
 
-    public static FamilyTree loadTree(String filePath){
-        return Service.load(filePath);
+    public FamilyTree loadTree(String filePath){
+        return service.load(filePath);
     }
 
     public void saveTree(FamilyTree tree, String filePath){
