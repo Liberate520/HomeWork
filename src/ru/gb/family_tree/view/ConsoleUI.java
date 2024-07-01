@@ -3,6 +3,10 @@ package ru.gb.family_tree.view;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.presenter.Presenter;
+import ru.gb.family_tree.view.commands.elementRedact.MenuRedactElement;
+import ru.gb.family_tree.view.commands.mainMenu.MenuMain;
+import ru.gb.family_tree.view.commands.treeRedact.MenuRedactTree;
+
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,10 +19,17 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private boolean work;
 
+    private MenuRedactElement menuRedactElement;
+    private MenuMain menuMain;
+    private MenuRedactTree menuRedactTree;
+
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
         work = true;
+        menuRedactElement = new MenuRedactElement(this);
+        menuRedactTree = new MenuRedactTree(this);
+        menuMain = new MenuMain(this);
     }
 
     @Override
@@ -37,168 +48,183 @@ public class ConsoleUI implements View {
 
 
     //---------Главный кейс-----------
-    private void caseMain() {
+    public void caseMain() {
        while (work){
-           menuMain();
-           String choice;
-           choice = scanner.nextLine();
-           switch (choice) {
-               case "1": // Работа с элементами
-                   clearConsole();
-                   case_Main_1_RedactElem();
-                   break;
-               case "2": // Работа с  деревом
-                   clearConsole();
-                   case_Main_2_TreeWork();
-                   break;
-               case "3": // Загрузить дерево
-                   clearConsole();
-                   loadTree();
-                   break;
-               case "4": // Сохранить дерево
-                   clearConsole();
-                   saveTree();
-                   break;
-               case "5": // Посмотреть текущее древо
-                   clearConsole();
-                   showCurrentTree();
-                   caseMain();
-                   break;
-               case "6": // Завершить работу
-                   clearConsole();
-                   userHourBye();
-                   delayAnyMs(1500);
-                   clearConsole();
-                   exit();
-                   break;
-               default: // Ошибка ввода, повтор кейса
-                   clearConsole();
-                   wrongInput();
-                   caseMain();
-           }
+           choiseMainMenu();
+//           switch (choice) {
+//               case "1": // Работа с элементами
+//
+//                   case_Main_1_RedactElem();
+//                   break;
+//               case "2": // Работа с  деревом
+//                   clearConsole();
+//                   case_Main_2_TreeWork();
+//                   break;
+//               case "3": // Загрузить дерево
+//                   clearConsole();
+//                   loadTree();
+//                   break;
+//               case "4": // Сохранить дерево
+//                   clearConsole();
+//                   saveTree();
+//                   break;
+//               case "5": // Посмотреть текущее древо
+//                   clearConsole();
+//                   showCurrentTree();
+//                   caseMain();
+//                   break;
+//               case "6": // Завершить работу
+//                   clearConsole();
+//                   userHourBye();
+//                   delayAnyMs(1500);
+//                   clearConsole();
+//                   exit();
+//                   break;
+//               default: // Ошибка ввода, повтор кейса
+//                   clearConsole();
+//                   wrongInput();
+//                   caseMain();
+//           }
        }
     }
 
-    private void menuMain() {
-        System.out.println("Выберите раздел:");
-        System.out.println("1. Работа с элементами");
-        System.out.println("2. Работа с  деревом");
-        System.out.println("3. Загрузить дерево");
-        System.out.println("4. Сохранить дерево");
-        System.out.println("5. Посмотреть текущее древо");
-        System.out.println("6. Завершить работу");
+    public void choiseMainMenu(){
+        System.out.println(menuMain.menu());
+        String choiseStr = scanner.nextLine();
+        //TODO метод проверки на валидность menuMain.size
+        int choise = Integer.parseInt(choiseStr);
+        menuMain.execute(choise);
     }
-
-    //--------Вложенные кейсы----------------
-    private void case_Main_1_RedactElem() {
-        menu_Main_1_RedactElem();
-        String choice;
-        choice = scanner.nextLine();
-        switch (choice) {
-            case "1": // Создать элемент
-                clearConsole();
-                createNewElement();
-                case_Main_1_RedactElem();
-                break;
-            case "2": // Найти элемент
-                clearConsole();
-                findElement();
-                case_Main_1_RedactElem();
-                break;
-            case "3": // Удалить элемент
-                clearConsole();
-                deleteElement();
-                case_Main_1_RedactElem();
-            case "4": // Дополнить элемент
-                clearConsole();
-                addNewInfoAboutElement();
-                case_Main_1_RedactElem();
-            case "5": // Посмотреть текущее древо
-                clearConsole();
-                showCurrentTree();
-                case_Main_1_RedactElem();
-            case "6": // Назад
-                clearConsole();
-                caseMain();
-                break;
-            default:
-                clearConsole();
-                wrongInput();
-                case_Main_1_RedactElem();
-        }
+    public void choiseRedactElement(){
+        System.out.println(menuRedactElement.menu());
+        String choiseStr = scanner.nextLine();
+        //TODO метод проверки на валидность menuRedactElement.size
+        int choise = Integer.parseInt(choiseStr);
+        menuRedactElement.execute(choise);
     }
-
-    private void menu_Main_1_RedactElem() {
-        System.out.println("Выберите команду:");
-        System.out.println("1. Создать элемент");
-        System.out.println("2. Найти элемент");
-        System.out.println("3. Удалить элемент");
-        System.out.println("4. Дополнить элемент");
-        System.out.println("5. Посмотреть текущее древо");
-        System.out.println("6. Назад");
-    }
-
-    private void case_Main_2_TreeWork() {
+    public void choiseRedactTree(){
+        clearConsole();
         if (presenter.treeIsEmpty()){
             clearConsole();
             System.out.println("Текущее древо пустое!\n");
-            caseMain();
+            choiseMainMenu();
             return;
         }
-        menu_Main_2_TreeWork();
-        String choice;
-        choice = scanner.nextLine();
-        switch (choice) {
-            case "1": // ...имени
-                clearConsole();
-                sortByName();
-                case_Main_2_TreeWork();
-                break;
-            case "2": // ...id
-                clearConsole();
-                sortById();
-                case_Main_2_TreeWork();
-
-                break;
-            case "3": // ...полу
-                clearConsole();
-                sortByGender();
-                case_Main_2_TreeWork();
-
-            case "4": // ...дате рождения
-                clearConsole();
-                sortByDob();
-                case_Main_2_TreeWork();
-            case "5": // ...дате смерти
-                clearConsole();
-                sortByDod();
-                case_Main_2_TreeWork();
-            case "6": // Посмотреть текущее дерево
-                clearConsole();
-                showCurrentTree();
-                case_Main_2_TreeWork();
-            case "7": // Назад
-                clearConsole();
-                caseMain();
-                break;
-            default:
-                clearConsole();
-                System.out.println("Некорректный выбор, попробуйте ещё раз!");
-                case_Main_2_TreeWork();
-        }
+        System.out.println(menuRedactTree.menu());
+        String choiseStr = scanner.nextLine();
+        //TODO метод проверки на валидность menuRedactElement.size
+        int choise = Integer.parseInt(choiseStr);
+        menuRedactTree.execute(choise);
     }
 
-    private void menu_Main_2_TreeWork() {
-        System.out.println("Выберите команду:");
-        System.out.println("\nСортировать по...");
-        System.out.println("1. ...имени");
-        System.out.println("2. ...id");
-        System.out.println("3. ...полу");
-        System.out.println("4. ...дате рождения");
-        System.out.println("5. ...дате смерти");
-        System.out.println("6. Посмотреть текущее дерево");
-        System.out.println("7. Назад");
+
+    public void choiseFinish(){
+        clearConsole();
+        userHourBye();
+        delayAnyMs(1500);
+        clearConsole();
+        exit();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //--------Вложенные кейсы----------------
+//    public void case_Main_1_RedactElem() {
+//        menu_Main_1_RedactElem();
+//        String choice;
+//        choice = scanner.nextLine();
+//        switch (choice) {
+//            case "1": // Создать элемент
+//                clearConsole();
+//                createNewElement();
+//                case_Main_1_RedactElem();
+//                break;
+//            case "2": // Найти элемент
+//                clearConsole();
+//                findElement();
+//                case_Main_1_RedactElem();
+//                break;
+//            case "3": // Удалить элемент
+//                clearConsole();
+//                deleteElement();
+//                case_Main_1_RedactElem();
+//            case "4": // Дополнить элемент
+//                clearConsole();
+//                addNewInfoAboutElement();
+//                case_Main_1_RedactElem();
+//            case "5": // Посмотреть текущее древо
+//                clearConsole();
+//                showCurrentTree();
+//                case_Main_1_RedactElem();
+//            case "6": // Назад
+//                clearConsole();
+//                caseMain();
+//                break;
+//            default:
+//                clearConsole();
+//                wrongInput();
+//                case_Main_1_RedactElem();
+//        }
+//    }
+//
+//
+//    public void case_Main_2_TreeWork() {
+//
+//        menu_Main_2_TreeWork();
+//        String choice;
+//        choice = scanner.nextLine();
+//        switch (choice) {
+//            case "1": // ...имени
+//
+//                sortByName();
+//                case_Main_2_TreeWork();
+//                break;
+//            case "2": // ...id
+//                clearConsole();
+//                sortById();
+//                case_Main_2_TreeWork();
+//
+//                break;
+//            case "3": // ...полу
+//                clearConsole();
+//                sortByGender();
+//                case_Main_2_TreeWork();
+//
+//            case "4": // ...дате рождения
+//                clearConsole();
+//                sortByDob();
+//                case_Main_2_TreeWork();
+//            case "5": // ...дате смерти
+//                clearConsole();
+//                sortByDod();
+//                case_Main_2_TreeWork();
+//            case "6": // Посмотреть текущее дерево
+//                clearConsole();
+//                showCurrentTree();
+//                case_Main_2_TreeWork();
+//            case "7": // Назад
+//                clearConsole();
+//                caseMain();
+//                break;
+//            default:
+//                clearConsole();
+//                System.out.println("Некорректный выбор, попробуйте ещё раз!");
+//                case_Main_2_TreeWork();
+//        }
+//    }
+
+
 
 
     //-----------Методы редактирования элементов--------------------
@@ -234,6 +260,7 @@ public class ConsoleUI implements View {
             }
         }
         clearConsole();
+
         System.out.println("Элемент " + anyHuman.getId() + " Успешно создан!");
     } // Программа создания метода
     public String askFirstName() {
@@ -361,7 +388,7 @@ public class ConsoleUI implements View {
         String nameOfElement = scanner.nextLine();
         if ("стоп".equals(nameOfElement)) {
             clearConsole();
-            case_Main_1_RedactElem();
+            choiseRedactElement();
             return null;
         }
         if (presenter.findHuman(nameOfElement) != null) {
@@ -379,7 +406,7 @@ public class ConsoleUI implements View {
         System.out.println("Введите имя элемента (или стоп для отмены): ");
         String nameOfElement = scanner.nextLine();
         if ("стоп".equals(nameOfElement)) {
-            case_Main_1_RedactElem();
+            choiseRedactElement();
             return null;
         }
         if (presenter.findHuman(nameOfElement) != null) {
@@ -397,7 +424,7 @@ public class ConsoleUI implements View {
         System.out.println("Введите имя элемента, к которому нужно добавить данные (или стоп для отмены): ");
         String nameOfElement = scanner.nextLine();
         if ("стоп".equals(nameOfElement)) {
-            case_Main_1_RedactElem();
+            choiseRedactElement();
             return null;
         }
         if (presenter.findHuman(nameOfElement) != null) {
@@ -440,22 +467,27 @@ public class ConsoleUI implements View {
 
     //------------------Сортировки----------------------------------------------------------------
     public void sortByName() {
+        clearConsole();
         presenter.sortByFirstName();
         System.out.println("Дерево отсортировано по имени!");
     }
     public void sortById() {
+        clearConsole();
         presenter.sortById();
         System.out.println("Дерево отсортировано по id!");
     }
     public void sortByDod() {
+        clearConsole();
         presenter.sortByDod();
         System.out.println("Дерево отсортировано по дате рождения!");
     }
     public void sortByDob() {
+        clearConsole();
         presenter.sortByDob();
         System.out.println("Дерево отсортировано по дате смерти!");
     }
     public void sortByGender() {
+        clearConsole();
         presenter.sortByGender();
         System.out.println("Дерево отсортировано по полу!");
     }
@@ -553,14 +585,14 @@ public class ConsoleUI implements View {
 
 
     //--------Специальные методы-----------------------------------------------------
-    private void clearConsole() {
+    public void clearConsole() {
         System.out.println("\033[H\033[2J");
         System.out.flush();
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
     } // Очистка консоли
-    private void userHourHi() {
+    public void userHourHi() {
         int hour = LocalDateTime.now().getHour();
         if (hour >= 5 && hour < 12) {
             System.out.println("Доброе утро!");
@@ -573,7 +605,7 @@ public class ConsoleUI implements View {
         }
 
     }  //Приветствие
-    private void userHourBye() {
+    public void userHourBye() {
         int hour = LocalDateTime.now().getHour();
         if (hour >= 5 && hour < 12) {
             System.out.println("Доброго утра!");
@@ -585,22 +617,22 @@ public class ConsoleUI implements View {
             System.out.println("Доброй ночи!");
         }
     } //Прощание
-    private void showCurrentTree() {
+    public void showCurrentTree() {
         System.out.println("Обзор текущего дерева: ");
         System.out.println(presenter.getTree());
         if (presenter.getTree().treeIsEmpty()){
-            System.out.println("Текущее древо пустое!\n");
+            System.out.println("\nТекущее древо пустое!\n");
         }
 
     }// Посмотреть дерево
-    private void exit() {
+    public void exit() {
         work = false;
 //        System.exit(0);
     } // Выход через 3 секунды
-    private void wrongInput() { // "Некорректный выбор, попробуйте ещё раз!"
+    public void wrongInput() { // "Некорректный выбор, попробуйте ещё раз!"
         System.out.println("Некорректный выбор, попробуйте ещё раз!");
     }
-    private void delayAnyMs(int ms){
+    public void delayAnyMs(int ms){
         try {
             Thread.sleep(ms); // Задержка на 3 сек
         } catch (InterruptedException e) {
