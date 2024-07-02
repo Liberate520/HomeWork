@@ -15,7 +15,9 @@ public class Human implements Serializable {
     private final List<Human> childrenList;
     private final List<Human> parentsList;
 
-    public Human(String name, Gender gender, LocalDate dob, LocalDate dod, Human father, Human mother){
+
+    public Human(int id, String name, Gender gender, LocalDate dob, LocalDate dod, Human father, Human mother){
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.dob=dob;
@@ -23,8 +25,7 @@ public class Human implements Serializable {
         this.mother=mother;
         childrenList = new ArrayList<>();
         parentsList = new ArrayList<>();
-        NumerateHuman numerateHuman = new NumerateHuman();
-        id = numerateHuman.gethumanId();
+
         if (father != null) {
             father.addChildrentoHuman(this);
         }
@@ -33,12 +34,12 @@ public class Human implements Serializable {
         }
     }
 
-    public Human(String name, Gender gender, LocalDate dob, Human father, Human mother) {
-        this(name, gender, dob,null, father, mother);
+    public Human(int id, String name, Gender gender, LocalDate dob, Human father, Human mother) {
+        this(id, name, gender, dob,null, father, mother);
     }
 
-    public Human(String name, Gender gender, LocalDate dob) {
-        this(name, gender, dob, null, null, null);
+    public Human(int id, String name, Gender gender, LocalDate dob) {
+        this(id, name, gender, dob, null, null, null);
     }
 
     //методы добавления и получения списка детей у человека
