@@ -111,6 +111,7 @@ public class Main {
         Human human = new Human();
         System.out.println("Введите имя человека:");
         String humanName = scanner.next().trim();
+        scanner.nextLine();
         human.setName(humanName);
 
         System.out.println("Укажите пол человека (м/ж):");
