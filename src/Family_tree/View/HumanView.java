@@ -8,12 +8,12 @@ import java.util.*;
 
 public class HumanView extends View {
 
-    private ActionLevel level;   
+    //private ActionLevel level;   
     private HumanManager manager;
     private Scanner scanner;
 
     public HumanView(){
-        this.level = ActionLevel.NoLevel;
+        //this.level = ActionLevel.NoLevel;
         this.scanner = new Scanner(System.in);        
         this.manager = new HumanManager( scanner, this);        
     }      
@@ -23,7 +23,11 @@ public class HumanView extends View {
     }
 
     public void setActionLevel (ActionLevel value){
-        this.level = value;
+        this.manager.setLevel(value);
+    }
+
+    public ActionLevel getActionLevel(){
+        return this.manager.getLevel();
     }
     
     //________________________________________________________________________________________________
@@ -45,9 +49,9 @@ public class HumanView extends View {
     }
 
     public void selectAction(){
-        if (this.level == ActionLevel.NoLevel){
+        if (getActionLevel() == ActionLevel.NoLevel){
             noLevelDo();
-        } else if (this.level == ActionLevel.TreeLevel) {
+        } else if (getActionLevel() == ActionLevel.TreeLevel) {
             treeLevelDo();
         } else {
             humanLevelDo();
@@ -78,9 +82,9 @@ public class HumanView extends View {
     private void getCommand(){
         String commString = scanner.nextLine();
         Map<String, String> map;
-        if (this.level == ActionLevel.NoLevel){
+        if (getActionLevel() == ActionLevel.NoLevel){
             map = manager.getIndependentActions();
-        } else if (this.level == ActionLevel.TreeLevel) {
+        } else if (getActionLevel() == ActionLevel.TreeLevel) {
             map = manager.getIndependentActions();
             map.putAll(manager.getTreedependentActions());
         } else {
@@ -93,8 +97,5 @@ public class HumanView extends View {
         } catch (Exception e) {            
             e.printStackTrace();
         } 
-    }
-
-
-   
+    }   
 }

@@ -7,7 +7,7 @@ import Family_tree.Model.Tree.Family_tree;
 
 public interface ElementManagment<T extends Endothermal> {
     boolean ActiveTreeIsEmpty();
-    boolean newSubject(String name, String gender, String bd);
+    boolean addToTree(String name, String gender, String bd);
     boolean addToTree(T subject); //для ActiveTree
     boolean addToTree(T subject, Family_tree<T> tree);
     boolean setActiveSubject(int id);
@@ -22,7 +22,7 @@ public interface ElementManagment<T extends Endothermal> {
     //boolean setChild(long subject, long father, long mother); зарезервировано
     int getActiveSubjectIndex();
     long getActiveSubjectInnerID();
-    String getInfo(); //для ActiveSubject
+    String getItemInfo(); //для ActiveSubject
     boolean setDeathDate(String date);
     String getDeathDate();
     boolean removeSubject(); //для ActiveSubject

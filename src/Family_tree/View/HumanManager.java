@@ -72,8 +72,7 @@ public class HumanManager implements CommandsInterface { //консольная 
 
     
     private HumanPresenter presenter;
-    private Scanner scanner;
-    private ActionLevel level;
+    private Scanner scanner;    
     private HumanView view;
 
     public HumanManager(Scanner scanner, HumanView humanView) {
@@ -82,16 +81,15 @@ public class HumanManager implements CommandsInterface { //консольная 
         this.treeDependentDesc.put("/dd", "Расторгнуть брак");
         this.treeDependentNames.put("/mm", "setMarriage");
         this.treeDependentNames.put("/dd", "delMarriage");
-        // end changing
-        this.level = ActionLevel.NoLevel;
+        // end changing        
         this.view = humanView;
         this.scanner = scanner;
-        this.presenter = new HumanPresenter();
+        this.presenter = new HumanPresenter(humanView);
         
     }
 
     public String removeSubject() {
-        this.view.setActionLevel(ActionLevel.TreeLevel);
+        this.setLevel(ActionLevel.TreeLevel);
         return (presenter.removeMember());
     } 
 
@@ -100,7 +98,7 @@ public class HumanManager implements CommandsInterface { //консольная 
     }
 
     public String removeTree(){
-        this.view.setActionLevel(ActionLevel.NoLevel);
+        this.setLevel(ActionLevel.NoLevel);
         return presenter.removeTree();
     } 
 
@@ -137,7 +135,7 @@ public class HumanManager implements CommandsInterface { //консольная 
     @Override
     public String addSubject() {
         String[] s = subjectString(); 
-        view.setActionLevel(ActionLevel.SubjectLevel)    ;   
+        this.setLevel(ActionLevel.SubjectLevel)    ;   
         return presenter.addToTree(s[0], s[1], s[2]);
     }
     private String[] subjectString(){
@@ -158,7 +156,7 @@ public class HumanManager implements CommandsInterface { //консольная 
         int ID1 = Integer.parseInt(scanner.nextLine());
         System.out.println("Укажите ID матери");
         int ID2 = Integer.parseInt(scanner.nextLine());
-        view.setActionLevel(ActionLevel.SubjectLevel)    ; 
+        this.setLevel(ActionLevel.SubjectLevel)    ; 
         return presenter.newChild(s[0], s[1], s[2], ID1, ID2);
     }
 
@@ -171,33 +169,28 @@ public class HumanManager implements CommandsInterface { //консольная 
     @Override
     public String addTree() {
         System.out.println("Введите название");
-        view.setActionLevel(ActionLevel.TreeLevel)    ; 
+        this.setLevel(ActionLevel.TreeLevel)    ; 
         return presenter.createActiveTree(scanner.nextLine());
     }
 
     @Override
     public String loadTree() {
         System.out.println("Укажите путь");
-        view.setActionLevel(ActionLevel.TreeLevel)    ; 
+        this.setLevel(ActionLevel.TreeLevel)    ; 
         return presenter.loadTree(scanner.nextLine());
     }
 
     @Override
     public String selectTree() {
-        System.out.println(this.presenter.getTreeList());
-        System.out.println("Укажите номер");
-        String s;
-        try {
-            s = presenter.selectTree(Integer.parseInt(scanner.nextLine()) );
-            //this.presenter.
-            view.setActionLevel(presenter.getActionLevel());
-            return s;
-        } catch (Exception e) {
-            return "Ничего не выбрано";
+        String string = (this.presenter.getTreeList());
+        System.out.println(string);
+        if (string.equals("Список древ пуст")){
+            return "";
         }
-        
-        
-    };
+        System.out.println("Ваш выбор:");
+        int index = Integer.parseInt(scanner.nextLine());
+        return this.presenter.setActiveTree(index);
+    }
 
     public String setMarriage(){
         System.out.println("Укажите номер для жениха");
@@ -216,7 +209,7 @@ public class HumanManager implements CommandsInterface { //консольная 
     }
 
     public void setLevel(ActionLevel level){
-        this.level = level;
+        this.presenter.setActionLevel(level);
     }
 
     public void fireFunction(String action, Map<String, String> map) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException{       
@@ -231,7 +224,7 @@ public class HumanManager implements CommandsInterface { //консольная 
         }
 
     public ActionLevel getLevel(){
-        return this.level;
+        return this.presenter.getActionLevel();
     }
 
     private String mapToString(Map<String, String> value) {

@@ -10,23 +10,32 @@ public class HumanPresenter extends Presenter {
    
 
 
-    public HumanPresenter(){                 
+    public HumanPresenter(HumanView value){                 
         this.service = new HumanService();        
-        
+        this.view = value;
     }
 
     public ActionLevel getActionLevel(){
-        return view.getActionLevel();
+        return service.getActionLevel();
     }
 
     public void setActionLevel(ActionLevel level){
         service.setActionLevel(level);        
-        view.setActionLevel(level);
+        //view.setActionLevel(level);
     }
    
 
-    public void setActiveTree(int tree){
-        service.setActiveTree(tree);
+    public String setActiveTree(int tree){
+        try{
+            service.setActiveTree(tree);
+            this.setActionLevel(ActionLevel.TreeLevel);
+            return String.format("Активно древо %s", this.service.getActiveTree().toString());
+        } catch (Exception e) {
+            System.out.println(e);
+            this.setActionLevel(ActionLevel.NoLevel);
+            return "Ошибка выбора";
+        }
+        
         
     }
 
@@ -45,14 +54,13 @@ public class HumanPresenter extends Presenter {
     
 
     @Override
-    public String selectTree(int index) {
-        boolean boo = this.service.isEmpty();        
-        if (!boo){
-            this.setActiveTree(service.selectTree(index)) ;
-            this.setActionLevel(ActionLevel.TreeLevel);
-            return "OK";
-        }
-        return "Древо не найдено";
+    public String selectTree(int index) { 
+        if (this.service.getCollection().isEmpty()){
+            return "Коллекция пуста";
+        }       
+        System.out.println(this.service.showList());
+        System.out.println("Ваш выбор");
+        return "";
       }    
 
     @Override
@@ -125,7 +133,6 @@ public class HumanPresenter extends Presenter {
     public String createActiveTree(String text) {        
         boolean boo = service.newTree(text);
         if (boo){            
-            this.setActiveTree(service.getActiveTree());
             this.setActionLevel(ActionLevel.TreeLevel);
             return "OK";
         }

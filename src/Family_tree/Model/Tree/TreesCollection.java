@@ -25,6 +25,10 @@ public class TreesCollection<T extends Endothermal> {
         }        
     }
 
+    public List<Family_tree<T>> getList(){
+        return this.list;
+    }
+
     public int size(){
         return list.size();
     }
@@ -111,6 +115,10 @@ public class TreesCollection<T extends Endothermal> {
         } catch (Exception e) {
             return false;
         }        
+    }
+
+    public boolean isEmpty() {
+        return this.list.isEmpty();
     }
 
     

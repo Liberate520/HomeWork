@@ -111,7 +111,7 @@ public class Human implements Endothermal{
         sb.append(name);
         sb.append("\n");
         sb.append(this.getNameInfo()); //я ещё пожалею об этом
-        sb.append("non: "); 
+        sb.append("noл: "); 
         sb.append(getGender()); 
         sb.append(", возраст: ");
         sb.append(getAge()); 
@@ -121,7 +121,7 @@ public class Human implements Endothermal{
         sb.append(getMotherlnfo());
         sb.append(", ");
         sb.append(getFatherlnfo()); 
-        sb.append(", ");
+        sb.append("\n");
         sb. append(getChildrenlnfo()); 
         return sb.toString();
     }
@@ -157,18 +157,14 @@ public class Human implements Endothermal{
     }
 
     public String getChildrenlnfo(){
-        StringBuilder sb = new StringBuilder(); 
+        StringBuilder sb = new StringBuilder();
+        if (children.isEmpty()){
+            return "Детей нет";
+        } 
+        sb.append("Дети:\n");
         for (Human human : children) {
             sb.append(human);
-            if (human.getMother() != null){
-                sb.append(", мать: ");            
-                sb.append(human.getMother().getName());
-            }
-            if (human.getFather() != null){
-                sb.append(", отец: ");
-                sb.append(human.getFather().getName());
-            }
-            sb.append("\n");
+            sb.append("\n")  ;          
         }
         return sb.toString();
     }
