@@ -1,9 +1,10 @@
 package Formating;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.TreeMap;
 
-public class MyDate {
+public class MyDate implements Serializable {
     private static final TreeMap<Integer, Integer> dayInMonth =  new TreeMap<>();
 
     static {

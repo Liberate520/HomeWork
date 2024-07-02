@@ -1,14 +1,14 @@
+package Tree;
+
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.TreeMap;
+import Human.Human;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private static int lastID = 0;
-    private final int ID = lastID;
+    private final int ID = lastID++;
     private final TreeMap<Integer, Human> familyTree= new TreeMap<>();
-
-    public FamilyTree(){
-        lastID++;
-    }
 
     public void addHuman(Human human) {
         if (!this.familyTree.containsValue(human) && human != null) {

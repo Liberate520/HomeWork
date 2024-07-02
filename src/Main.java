@@ -1,8 +1,17 @@
 import Formating.Gender;
 import Formating.MyDate;
+import Human.Human;
+import Tree.FamilyTree;
+import Writer.FileHandler;
+
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    private static final FileHandler fileHandler = new FileHandler();
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+        /*
         FamilyTree familyTree = new FamilyTree();
 
         Human Lilia = new Human("Lilia", "Kornaval", Gender.Female, new MyDate(2000, 9, 15));
@@ -21,12 +30,17 @@ public class Main {
 
         familyTree.addHuman(Nastya);
 
-        System.out.println(familyTree);
-
-        System.out.println("-------------------------------------------------------------------");
-
         Lilia.setMather(Olga);
 
         System.out.println(familyTree);
+
+        fileHandler.writeFile(familyTree);
+
+
+         */
+
+        FamilyTree familyTree = fileHandler.readFile("FamilyTree_0.data");
+
+        System.out.println(familyTree.getHuman(0).getChildren());
     }
 }

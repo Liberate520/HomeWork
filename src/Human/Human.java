@@ -1,10 +1,13 @@
+package Human;
+
 import Formating.Gender;
 import Formating.MyDate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Human {
+public class Human implements Serializable {
     private static int lastID = 0;
     private final int ID = lastID;
     private MyDate dateOfBirth;
