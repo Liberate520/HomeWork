@@ -34,7 +34,5 @@
 Тихон, Male
 Серафим, Male
 Лев, Male
-Марк, MaleВадим, Male
-Antony, MaleИгорь, Male
 Юрий, Male
 Владислав, Male
