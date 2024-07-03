@@ -1,4 +1,7 @@
-package ru.gb.oop;
+package ru.gb.oop.family_tree;
+
+import ru.gb.oop.family_tree.human.Human;
+
 import java.util.*;
 
 public class FamilyTree {

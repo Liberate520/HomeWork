@@ -1,7 +1,6 @@
-package ru.gb.oop;
+package ru.gb.oop.family_tree.human;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class MyArrayList extends ArrayList<Map.Entry<Human, Integer>> {
