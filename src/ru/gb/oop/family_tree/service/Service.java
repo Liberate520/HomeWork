@@ -64,4 +64,12 @@ public class Service {
 
         return familyTree;
     }
+
+    public FamilyTree getTree() {
+        return tree;
+    }
+
+    public void setTree(FamilyTree tree) {
+        this.tree = tree;
+    }
 }

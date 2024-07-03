@@ -2,9 +2,10 @@ package ru.gb.oop.family_tree;
 
 import ru.gb.oop.family_tree.human.Human;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private final List<Human> tree;
 
     public FamilyTree() {
@@ -110,22 +111,22 @@ public class FamilyTree {
             }
         }
 
-        Human human = tree.getFirst();
-
-        Set<Human> visited = new HashSet<>();
-        Stack<Human> stack = new Stack<>();
-        Set<Human> ancestors = new HashSet<>();
-        try {
-            dfs(human, visited, stack, ancestors);
-        } catch (Exception e) {
-            Main.logger.warning("Error: " + e.getMessage());
-            return false;
-        }
+//        Human human = tree.getFirst();
+//
+//        Set<Human> visited = new HashSet<>();
+//        Stack<Human> stack = new Stack<>();
+//        Set<Human> ancestors = new HashSet<>();
+//        try {
+//            dfs(human, visited, stack, ancestors);
+//        } catch (Exception e) {
+//            Main.logger.warning("Error: " + e.getMessage());
+//            return false;
+//        }
 
         return true;
     }
 
-    private static void dfs(Human current, Set<Human> visited, Stack<Human> stack, Set<Human> ancestors) throws Exception {
+    private static void dfs(Human current, Set<Human> visited, Stack<Human> stack, Set<Human> ancestors) {
        //todo: реализовать рекурсивный обход дерева, при нахождении замкнутого цикла выбрасывать исключение
     }
 
@@ -134,12 +135,12 @@ public class FamilyTree {
         StringBuilder sb = new StringBuilder("FamilyTree: \n");
         for (Human human : tree) {
             if (!human.getParents().isEmpty()) {
-                sb.append("\nParent1\n" + human.getParents().get(0) + "\n\nParent2\n" + human.getParents().get(1) + "\n");
+                sb.append("\nParent1\n").append(human.getParents().get(0)).append("\n\nParent2\n").append(human.getParents().get(1)).append("\n");
             }
-            sb.append("\nHuman\n" + human + "\n");
+            sb.append("\nHuman\n").append(human).append("\n");
             if (!human.getChildren().isEmpty()) {
                 for (Human child : human.getChildren()) {
-                    sb.append("\nChild\n"+ child + "\n");
+                    sb.append("\nChild\n").append(child).append("\n");
                 }
             }
             sb.append("----------------------------------\n");
