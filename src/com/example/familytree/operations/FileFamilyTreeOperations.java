@@ -1,7 +1,11 @@
+package com.example.familytree.operations;
+
+import com.example.familytree.FamilyTree;
+
 import java.io.*;
 
 // Класс для операций с файлами, реализующий интерфейс FileOperations
-class FileFamilyTreeOperations implements FileOperations {
+public class FileFamilyTreeOperations implements FileOperations {
 
     @Override
     public void saveToFile(String filename, FamilyTree tree) {

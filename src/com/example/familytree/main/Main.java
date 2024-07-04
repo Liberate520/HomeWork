@@ -1,3 +1,9 @@
+package com.example.familytree.main;
+
+import com.example.familytree.FamilyTree;
+import com.example.familytree.model.Person;
+import com.example.familytree.operations.FileFamilyTreeOperations;
+
 import java.time.LocalDate;
 
 public class Main {
@@ -31,6 +37,16 @@ public class Main {
 
         // Демонстрация дерева
         System.out.println("Фамильное древо:");
+        familyTree.displayTree();
+
+        // Сортировка по имени
+        System.out.println("\nФамильное древо, отсортированное по имени:");
+        familyTree.sortByName();
+        familyTree.displayTree();
+
+        // Сортировка по дате рождения
+        System.out.println("\nФамильное древо, отсортированное по дате рождения:");
+        familyTree.sortByBirthDate();
         familyTree.displayTree();
 
         // Создание объекта для операций с файлами
