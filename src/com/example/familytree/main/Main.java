@@ -53,7 +53,7 @@ public class Main {
         FileFamilyTreeOperations fileOps = new FileFamilyTreeOperations();
 
         // Сохранение генеалогического древа в файл
-        fileOps.saveToFile("family_tree.dat", familyTree);
+        fileOps.saveToFile("family_tree.txt", familyTree);
 
         // Очистка текущего дерева для демонстрации загрузки
         familyTree = new FamilyTree();
