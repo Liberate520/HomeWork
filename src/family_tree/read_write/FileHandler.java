@@ -6,32 +6,31 @@ import java.io.*;
 
 public class FileHandler implements Writer {
 
-    @Override
-    public FamilyTree read(String filename) throws IOException, ClassNotFoundException {
-        File file = new File(filename);
-        if (!file.exists()) {
-            return null; // Файл не найден, возвращаем null
-        }
-
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename))) {
-            return (FamilyTree) objectInputStream.readObject();
-        } catch (IOException e) {
-            // Обработка IOException
-            System.err.println("Ошибка чтения файла: " + e.getMessage());
-            return null;
-        } catch (ClassNotFoundException e) {
-            // Обработка ClassNotFoundException
-            System.err.println("Ошибка чтения файла: " + e.getMessage());
-            return null;
-        }
-    }
+    private String filePath = "src/family_tree/read_write";
 
     @Override
-    public void write(String filename, FamilyTree tree) throws IOException {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
+    public void write(Serializable serializable) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(tree);
         } catch (IOException e) {
-            System.err.println("Ошибка записи файла: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
+    @Override
+    public Object read()  {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+            Object object = objectInputStream.readObject();
+            return object;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void setPath(String filePath){
+        this.filePath = filePath;
+    }
+    
 }
