@@ -1,6 +1,4 @@
-import java.util.List;
-
 interface FileOperations {
-    void saveToFile(String filename, List<Person> members); // Метод для сохранения в файл
-    List<Person> loadFromFile(String filename); // Метод для загрузки из файла
+    void saveToFile(String filename, FamilyTree tree); // Метод для сохранения всего дерева в файл
+    FamilyTree loadFromFile(String filename); // Метод для загрузки дерева из файла
 }

@@ -1,14 +1,15 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-// Класс FamilyTree представляет генеалогическое древо
-class FamilyTree {
+// Класс FamilyTree представляет генеалогическое древо и реализует Serializable
+class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private List<Person> members;
-    private FileOperations fileOperations; // Добавлено поле для операций с файлами
 
     public FamilyTree() {
         this.members = new ArrayList<>();
-        this.fileOperations = new FileFamilyTreeOperations(); // Инициализация объекта для операций с файлами
     }
 
     // Добавление человека в генеалогическое древо
@@ -50,15 +51,5 @@ class FamilyTree {
                 System.out.println("  Дети: " + children);
             }
         }
-    }
-
-    // Сохранение генеалогического древа в файл
-    public void saveToFile(String filename) {
-        fileOperations.saveToFile(filename, members);
-    }
-
-    // Загрузка генеалогического древа из файла
-    public void loadFromFile(String filename) {
-        this.members = fileOperations.loadFromFile(filename);
     }
 }

@@ -1,17 +1,17 @@
-import java.util.List;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
         // Создание генеалогического древа
         FamilyTree familyTree = new FamilyTree();
 
-        // Создание людей
-        Person anastasiya = new Person("Анастасия", 35, "Жен");
-        Person mihail = new Person("Михаил", 40, "Муж");
-        Person anton = new Person("Антон", 10, "Муж");
-        Person diana = new Person("Диана", 8, "Жен");
-        Person varvara = new Person("Варвара", 60, "Жен");
-        Person nikola = new Person("Николай", 65, "Муж");
+        // Создание людей с использованием LocalDate для даты рождения
+        Person anastasiya = new Person("Анастасия", LocalDate.of(1988, 3, 15), "Жен");
+        Person mihail = new Person("Михаил", LocalDate.of(1983, 7, 22), "Муж");
+        Person anton = new Person("Антон", LocalDate.of(2013, 1, 5), "Муж");
+        Person diana = new Person("Диана", LocalDate.of(2015, 11, 30), "Жен");
+        Person varvara = new Person("Варвара", LocalDate.of(1963, 5, 10), "Жен");
+        Person nikola = new Person("Николай", LocalDate.of(1958, 9, 18), "Муж");
 
         // Установка родственных связей
         anastasiya.addChild(anton);
@@ -33,14 +33,17 @@ public class Main {
         System.out.println("Фамильное древо:");
         familyTree.displayTree();
 
+        // Создание объекта для операций с файлами
+        FileFamilyTreeOperations fileOps = new FileFamilyTreeOperations();
+
         // Сохранение генеалогического древа в файл
-        familyTree.saveToFile("family_tree.dat");
+        fileOps.saveToFile("family_tree.dat", familyTree);
 
         // Очистка текущего дерева для демонстрации загрузки
         familyTree = new FamilyTree();
 
         // Загрузка генеалогического древа из файла
-        familyTree.loadFromFile("family_tree.dat");
+        familyTree = fileOps.loadFromFile("family_tree.dat");
 
         // Демонстрация дерева после загрузки
         System.out.println("\nФамильное древо после загрузки из файла:");
@@ -48,8 +51,7 @@ public class Main {
 
         // Получение всех детей выбранного человека
         System.out.println("\nДети Анастасии:");
-        List<Person> childrenOfAnastasiya = familyTree.getChildrenOf("Анастасия");
-        for (Person child : childrenOfAnastasiya) {
+        for (Person child : familyTree.getChildrenOf("Анастасия")) {
             System.out.println(child);
         }
 

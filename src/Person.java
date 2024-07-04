@@ -1,19 +1,22 @@
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+// Класс Person представляет человека
 class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private int age;
+    private LocalDate birthDate;
     private String gender;
     private List<Person> parents;
     private List<Person> children;
 
-    public Person(String name, int age, String gender) {
+    public Person(String name, LocalDate birthDate, String gender) {
         this.name = name;
-        this.age = age;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.parents = new ArrayList<>();
         this.children = new ArrayList<>();
@@ -24,14 +27,19 @@ class Person implements Serializable {
         return name;
     }
 
-    // Получение возраста человека
-    public int getAge() {
-        return age;
+    // Получение даты рождения человека
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     // Получение пола человека
     public String getGender() {
         return gender;
+    }
+
+    // Получение возраста человека, вычисленного на основе текущей даты
+    public int getAge() {
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     // Получение списка родителей
@@ -57,6 +65,6 @@ class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Имя='" + name + '\'' + ", Возраст=" + age + ", Пол='" + gender + '\'';
+        return "Имя='" + name + '\'' + ", Возраст=" + getAge() + ", Пол='" + gender + '\'';
     }
 }

@@ -1,29 +1,27 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 // Класс для операций с файлами, реализующий интерфейс FileOperations
 class FileFamilyTreeOperations implements FileOperations {
 
     @Override
-    public void saveToFile(String filename, List<Person> members) {
+    public void saveToFile(String filename, FamilyTree tree) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(members);
-            System.out.println("Файл сохранен: " + filename);
+            oos.writeObject(tree);
+            System.out.println("Дерево сохранено в файл: " + filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public List<Person> loadFromFile(String filename) {
-        List<Person> members = new ArrayList<>();
+    public FamilyTree loadFromFile(String filename) {
+        FamilyTree tree = null;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            members = (List<Person>) ois.readObject();
-            System.out.println("Файл загружен: " + filename);
+            tree = (FamilyTree) ois.readObject();
+            System.out.println("Дерево загружено из файла: " + filename);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return members;
+        return tree;
     }
 }
