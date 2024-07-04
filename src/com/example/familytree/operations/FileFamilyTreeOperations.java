@@ -5,7 +5,7 @@ import com.example.familytree.FamilyTree;
 import java.io.*;
 
 // Класс для операций с файлами, реализующий интерфейс FileOperations
-public class FileFamilyTreeOperations implements FileOperations {
+public class FileFamilyTreeOperations implements com.example.familytree.operations.FileOperations {
 
     @Override
     public void saveToFile(String filename, FamilyTree tree) {
