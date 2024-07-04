@@ -59,7 +59,7 @@ public class Main {
         familyTree = new FamilyTree();
 
         // Загрузка генеалогического древа из файла
-        familyTree = fileOps.loadFromFile("family_tree.dat");
+        familyTree = fileOps.loadFromFile("family_tree.txt");
 
         // Демонстрация дерева после загрузки
         System.out.println("\nФамильное древо после загрузки из файла:");
