@@ -1,5 +1,3 @@
-package main;
-
 import presenters.Presenter;
 import services.FamilyTreeService;
 import services.FamilyTreeServiceImpl;
