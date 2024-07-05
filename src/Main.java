@@ -1,3 +1,5 @@
+package main;
+
 import presenters.Presenter;
 import services.FamilyTreeService;
 import services.FamilyTreeServiceImpl;
@@ -6,7 +8,7 @@ import views.View;
 
 /**
  * Класс Main является точкой входа в приложение для работы с генеалогическим древом.
- * В классе Main реализован паттерн MVP, где View запускается и пользователь взаимодействует с ней.
+ * Он создает объекты представления, сервиса и презентера и запускает приложение.
  */
 public class Main {
     /**
