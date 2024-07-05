@@ -1,118 +1,46 @@
 package utils;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 /**
- * Класс ArrayList реализует интерфейс List и представляет динамический массив объектов.
- * Он обеспечивает базовые операции для работы со списком, такие как добавление, удаление, получение и сортировка элементов.
+ * Класс ListIterator реализует итератор для перебора элементов списка.
+ * Он предоставляет методы для проверки наличия следующего элемента и получения следующего элемента.
  *
- * @param <T> тип объектов, которые будут храниться в списке
+ * @param <T> тип элементов списка
  */
-public class ArrayList<T> implements List<T> {
-    private static final int DEFAULT_CAPACITY = 10;
-    private T[] array;
-    private int size;
+public class ListIterator<T> {
+    private final T[] array;
+    private int index;
 
     /**
-     * Конструктор класса ArrayList.
+     * Конструктор класса ListIterator.
+     *
+     * @param list список, для которого создается итератор
      */
-    public ArrayList() {
-        this.array = (T[]) new Object[DEFAULT_CAPACITY];
-        this.size = 0;
+    public ListIterator(List<T> list) {
+        this.array = (T[]) list.toArray();
+        this.index = 0;
     }
 
     /**
-     * Добавляет объект в конец списка.
+     * Проверяет наличие следующего элемента в итераторе.
      *
-     * @param element объект, который добавляется в список
+     * @return true, если есть следующий элемент, false в противном случае
      */
-    @Override
-    public void add(T element) {
-        if (size == array.length) {
-            increaseCapacity();
+    public boolean hasNext() {
+        return index < array.length;
+    }
+
+    /**
+     * Возвращает следующий элемент в итераторе.
+     *
+     * @return следующий элемент
+     * @throws NoSuchElementException если нет следующего элемента
+     */
+    public T next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
-        array[size++] = element;
-    }
-
-    /**
-     * Увеличивает емкость массива, если он заполнен.
-     */
-    private void increaseCapacity() {
-        int newCapacity = array.length * 2;
-        array = Arrays.copyOf(array, newCapacity);
-    }
-
-    /**
-     * Добавляет все объекты из другого списка в конец текущего списка.
-     *
-     * @param list список объектов для добавления
-     */
-    @Override
-    public void addAll(List<T> list) {
-        for (T element : list) {
-            add(element);
-        }
-    }
-
-    /**
-     * Удаляет все элементы из списка.
-     */
-    @Override
-    public void clear() {
-        Arrays.fill(array, null);
-        size = 0;
-    }
-
-    /**
-     * Возвращает объект по указанному индексу.
-     *
-     * @param index индекс объекта для получения
-     * @return объект по указанному индексу
-     */
-    @Override
-    public T get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне границ списка: " + index);
-        }
-        return array[index];
-    }
-
-    /**
-     * Возвращает количество элементов в списке.
-     *
-     * @return количество элементов в списке
-     */
-    @Override
-    public int size() {
-        return size;
-    }
-
-    /**
-     * Сортирует элементы списка в соответствии с указанным компаратором.
-     *
-     * @param comparator компаратор для сортировки элементов
-     */
-    @Override
-    public void sort(Comparator<? super T> comparator) {
-        Arrays.sort(array, 0, size, comparator);
-    }
-
-    /**
-     * Возвращает строковое представление списка.
-     *
-     * @return строковое представление списка
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < size; i++) {
-            sb.append(array[i]);
-            if (i < size - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
+        return array[index++];
     }
 }

@@ -70,7 +70,7 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
     @Override
     public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
         familyTree.clear();
-        List<Human> loadedHumans = fileHandler.loadFamilyTree(filename);
+        List<Human> loadedHumans = (List<Human>) fileHandler.loadFamilyTree(filename);
         familyTree.addAll(loadedHumans);
     }
 
