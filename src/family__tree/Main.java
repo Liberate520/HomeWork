@@ -1,5 +1,6 @@
 package family__tree;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -7,7 +8,6 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
 
-        // Создаем людей
         Human sergey = new Human("Сергей", LocalDate.of(1920, 1, 1), Gender.Male);
         Human lena = new Human("Лена", LocalDate.of(1925, 2, 2), Gender.Female);
         Human toma = new Human("Тома", LocalDate.of(1950, 3, 3), Gender.Female);
@@ -24,7 +24,6 @@ public class Main {
         Human valera = new Human("Валера", LocalDate.of(1948, 2, 2), Gender.Male);
         Human katya = new Human("Катя", LocalDate.of(2070, 3, 3), Gender.Female);
 
-        // Устанавливаем родственные связи
         sergey.addChild(toma);
         sergey.addChild(lida);
         sergey.addChild(vitalya);
@@ -48,11 +47,9 @@ public class Main {
         tanya.addChild(katya);
         valera.addChild(katya);
 
-        // Добавляем всех людей в дерево одной кучей
         familyTree.addHumans(Arrays.asList(sergey, lena, toma, lida, vitalya, alexander, masha, anya, kolya, vasya, klava, petr, tanya, valera, katya));
 
-        // Тестируем вывод детей
-        System.out.println("Дети Сергея: " + familyTree.getAllChildren(sergey));
+        /* System.out.println("Дети Сергея: " + familyTree.getAllChildren(sergey));
         System.out.println("Дети Лены: " + familyTree.getAllChildren(lena));
         System.out.println("Дети Томы: " + familyTree.getAllChildren(toma));
         System.out.println("Дети Александра: " + familyTree.getAllChildren(alexander));
@@ -61,7 +58,6 @@ public class Main {
         System.out.println("Дети Тани: " + familyTree.getAllChildren(tanya));
         System.out.println("Дети Валеры: " + familyTree.getAllChildren(valera));
 
-        // Тестируем вывод родителей
         System.out.println("Родители Маши: " + masha.getParents());
         System.out.println("Родители Ани: " + anya.getParents());
         System.out.println("Родители Васи: " + vasya.getParents());
@@ -69,7 +65,30 @@ public class Main {
         System.out.println("Родители Томы: " + toma.getParents());
         System.out.println("Родители Кати: " + katya.getParents());
 
-        // Выводим семейное древо целиком
-        System.out.println(familyTree);
+        System.out.println(familyTree);*/
+
+        // Запись
+        FileHandler fileHandler = new FileHandler();
+        try {
+            fileHandler.writeToFile(familyTree, "familyTree.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Чтение
+        FamilyTree loadedFamilyTree = null;
+        try {
+            loadedFamilyTree = fileHandler.readFromFile("familyTree.txt");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Вывод
+        if (loadedFamilyTree != null) {
+            System.out.println(loadedFamilyTree);
+        } else {
+            System.out.println("Не удалось загрузить семейное древо.");
+        }
+
     }
 }

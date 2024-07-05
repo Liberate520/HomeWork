@@ -1,10 +1,14 @@
 package family__tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private LocalDate birth;
     private LocalDate death;
