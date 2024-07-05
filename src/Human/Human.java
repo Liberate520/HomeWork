@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private int id;
     private String name;
     private LocalDate dob, dod;
@@ -205,4 +205,8 @@ public class Human implements Serializable {
     }
 
 
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
+    }
 }
