@@ -41,6 +41,7 @@ public class FileHandler implements Writer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public Map<Integer, Human> readMap(String fileName) {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName))) {
             return (Map<Integer, Human>) objectInputStream.readObject();
