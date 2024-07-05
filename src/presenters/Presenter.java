@@ -3,11 +3,13 @@ package presenters;
 import models.Human;
 import models.FamilyTree;
 import services.FamilyTreeService;
-import views.View;
 import views.SortOrder;
+import views.View;
 
 /**
- * Класс Presenter связывает представление и сервис, обрабатывая команды пользователя.
+ * Класс Presenter отвечает за связь между представлением (View) и сервисом (FamilyTreeService).
+ * Он обрабатывает команды пользователя, полученные от View, и передает их в FamilyTreeService.
+ * Также Presenter вызывает соответствующие методы View для отображения информации.
  */
 public class Presenter {
     private final View view;
@@ -16,8 +18,8 @@ public class Presenter {
     /**
      * Конструктор класса Presenter.
      *
-     * @param view              объект представления, реализующий интерфейс View
-     * @param familyTreeService объект сервиса для работы с генеалогическим древом
+     * @param view                представление для взаимодействия с пользователем
+     * @param familyTreeService   сервис для управления генеалогическим древом
      */
     public Presenter(View view, FamilyTreeService familyTreeService) {
         this.view = view;
@@ -34,7 +36,7 @@ public class Presenter {
     }
 
     /**
-     * Сортирует генеалогическое древо по имени и отображает результат.
+     * Сортирует генеалогическое древо по имени и отображает его в представлении.
      */
     public void sortByName() {
         familyTreeService.sortByName();
@@ -42,7 +44,7 @@ public class Presenter {
     }
 
     /**
-     * Сортирует генеалогическое древо по дате рождения и отображает результат.
+     * Сортирует генеалогическое древо по дате рождения и отображает его в представлении.
      */
     public void sortByBirthDate() {
         familyTreeService.sortByBirthDate();
@@ -55,21 +57,29 @@ public class Presenter {
      * @param filename имя файла для сохранения
      */
     public void saveToFile(String filename) {
-        familyTreeService.saveToFile(filename);
+        try {
+            familyTreeService.saveToFile(filename);
+        } catch (IOException e) {
+            view.displayError("Ошибка при сохранении файла: " + e.getMessage());
+        }
     }
 
     /**
-     * Загружает генеалогическое древо из файла и отображает результат.
+     * Загружает генеалогическое древо из файла и отображает его в представлении.
      *
      * @param filename имя файла для загрузки
      */
     public void loadFromFile(String filename) {
-        familyTreeService.loadFromFile(filename);
-        view.displayFamilyTree(familyTreeService.getFamilyTree(), SortOrder.LOADED);
+        try {
+            familyTreeService.loadFromFile(filename);
+            view.displayFamilyTree(familyTreeService.getFamilyTree(), SortOrder.LOADED);
+        } catch (IOException | ClassNotFoundException e) {
+            view.displayError("Ошибка при загрузке файла: " + e.getMessage());
+        }
     }
 
     /**
-     * Отображает генеалогическое древо.
+     * Отображает генеалогическое древо в представлении без сортировки.
      */
     public void displayFamilyTree() {
         view.displayFamilyTree(familyTreeService.getFamilyTree(), SortOrder.UNSORTED);
