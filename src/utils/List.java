@@ -1,69 +1,52 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
+import java.util.Comparator;
 
 /**
- * Класс List обеспечивает работу со списком объектов типа T.
- * Он реализует интерфейс Iterable<T>, что позволяет использовать его в циклах for-each.
+ * Интерфейс List определяет методы для работы со списком объектов.
+ * Он обеспечивает базовые операции для добавления, удаления, получения и сортировки элементов.
  *
  * @param <T> тип объектов, которые будут храниться в списке
  */
-public class List<T> implements Iterable<T> {
-    private java.util.List<T> list;
-
+public interface List<T> {
     /**
-     * Конструктор класса List.
-     */
-    public List() {
-        this.list = new ArrayList<>();
-    }
-
-    /**
-     * Добавляет объект в список.
+     * Добавляет объект в конец списка.
      *
-     * @param element объект для добавления
+     * @param element объект, который добавляется в список
      */
-    public void add(T element) {
-        list.add(element);
-    }
+    void add(T element);
 
     /**
-     * Возвращает список объектов.
+     * Добавляет все объекты из другого списка в конец текущего списка.
      *
-     * @return список объектов
+     * @param list список объектов для добавления
      */
-    public java.util.List<T> getElements() {
-        return list;
-    }
+    void addAll(List<T> list);
 
     /**
-     * Возвращает итератор для списка объектов.
-     *
-     * @return итератор для списка объектов
+     * Удаляет все элементы из списка.
      */
-    @Override
-    public Iterator<T> iterator() {
-        return list.iterator();
-    }
+    void clear();
 
     /**
-     * Возвращает листовой итератор для списка объектов.
+     * Возвращает объект по указанному индексу.
      *
-     * @return листовой итератор для списка объектов
+     * @param index индекс объекта для получения
+     * @return объект по указанному индексу
      */
-    public ListIterator<T> listIterator() {
-        return list.listIterator();
-    }
+    T get(int index);
 
     /**
-     * Возвращает листовой итератор для списка объектов, начиная с указанной позиции.
+     * Возвращает количество элементов в списке.
      *
-     * @param index начальная позиция для листового итератора
-     * @return листовой итератор для списка объектов
+     * @return количество элементов в списке
      */
-    public ListIterator<T> listIterator(int index) {
-        return list.listIterator(index);
-    }
+    int size();
+
+    /**
+     * Сортирует элементы списка в соответствии с указанным компаратором.
+     *
+     * @param comparator компаратор для сортировки элементов
+     */
+    void sort(Comparator<? super T> comparator);
 }
