@@ -33,7 +33,7 @@ public class FamilyTree<T extends FamilyItem> implements Serializable, Iterable<
     }
 
     public T findFamilyItemById(int id){
-        if (checkId(id)) {
+        if (id>=0 && id<familyTree.size()) {
             for (T human : familyTree) {
                 if (human.getIdFamilyItem() == id) {
                     return human;
@@ -43,13 +43,6 @@ public class FamilyTree<T extends FamilyItem> implements Serializable, Iterable<
         return null;
     }
 
-    public boolean checkId(int id) {
-        if(id>=0 && id<familyTree.size()){
-            return true;
-        }
-        return false;
-
-    }
 
     public void sortByName(){
         familyTree.sort(new FamilyItemComparatorByName<T>());
@@ -58,7 +51,6 @@ public class FamilyTree<T extends FamilyItem> implements Serializable, Iterable<
     public void sortByAge(){
         familyTree.sort(new FamilyItemComparatorByAge<T>());
     }
-
 
 
     @Override

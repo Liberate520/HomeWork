@@ -2,6 +2,7 @@ package view;
 
 import model.Gender.Gender;
 import presenter.Presenter;
+import view.check.Check;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,12 +14,14 @@ public class ConsoleUI implements View{
     private Presenter presenter;
     private  boolean work;
     private  MainMenu menu;
+    private Check check;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
         work = true;
         menu = new MainMenu(this);
+        check = new Check(menu);
     }
 
     @Override
@@ -27,7 +30,7 @@ public class ConsoleUI implements View{
         while (work){
             System.out.println(menu.menu());
             String choiceStr = scanner.nextLine();
-            if (checkChoice(choiceStr)) {
+            if (check.checkChoice(choiceStr)) {
                 int choice = Integer.parseInt(choiceStr);
                 menu.execute(choice);
             }
@@ -36,6 +39,7 @@ public class ConsoleUI implements View{
     }
 
     public void finish() {
+        Save();
         System.out.println("До встречи!");
         work = false;
     }
@@ -85,24 +89,28 @@ public class ConsoleUI implements View{
 
     }
 
+    public void Save() {
+        presenter.Save();
+        System.out.println("Семейное дерево успешно сохранено!");
+    }
 
     private ArrayList<Integer> getId(){
         ArrayList<Integer> ids = new ArrayList<>();
         showFamilyTree();
-        System.out.println("Введите индекс ребёнка");
+        System.out.println("Введите id ребёнка");
         String idChildStr = scanner.nextLine();
-        if (!checkIntId(idChildStr)) {
-            System.out.println("Неверный индекс. Попробуйте ещё раз");
+        if (!check.checkIntId(idChildStr)) {
+            System.out.println("Неверный id. Попробуйте ещё раз");
             return null;
         }
         int idChild = Integer.parseInt(idChildStr);
         ids.add(idChild);
 
 
-        System.out.println("Введите индекс родителя");
+        System.out.println("Введите id родителя");
         String idParentStr = scanner.nextLine();
-        if (!checkIntId(idChildStr) || Objects.equals(idParentStr, idChildStr)) {
-            System.out.println("Неверный индекс. Попробуйте ещё раз");
+        if (!check.checkIntId(idParentStr) || Objects.equals(idParentStr, idChildStr)) {
+            System.out.println("Неверный id. Попробуйте ещё раз");
             return null;
         }
         int idParent = Integer.parseInt(idParentStr);
@@ -116,21 +124,8 @@ public class ConsoleUI implements View{
         System.out.println(answer);
     }
 
-    public boolean checkChoice(String choiceStr){
-        if (choiceStr.matches("[0-9]*")){
-            int choice = Integer.parseInt(choiceStr);
-            return choice >= 1 && choice <= menu.size();
-        }
-        return false;
+    public void ReadFamilyTree() {
+        presenter.ReadFamilyTree();
+        System.out.println("Семейное дерево загружено");
     }
-
-
-    public boolean checkIntId(String idStr){
-        if (idStr.matches("[0-9]*")){
-            return true;
-        }
-        return false;
-    }
-
-
 }

@@ -47,4 +47,12 @@ public class Presenter {
         showFamilyTree();
     }
 
+    public void Save() {
+        service.Save();
+    }
+
+    public void ReadFamilyTree() {
+        service.ReadFamilyTree();
+        showFamilyTree();
+    }
 }

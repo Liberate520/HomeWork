@@ -16,6 +16,8 @@ public class MainMenu {
         commands.add(new SortByAge(consoleUI));
         commands.add(new ShowFamilyTree(consoleUI));
         commands.add(new AddParentOrChild(consoleUI));
+        commands.add(new Save(consoleUI));
+        commands.add(new ReadFamilyTree(consoleUI));
         commands.add(new Finish(consoleUI));
 
     }

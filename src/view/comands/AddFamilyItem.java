@@ -1,7 +1,6 @@
 package view.comands;
 
 import view.ConsoleUI;
-import view.MainMenu;
 
 public class AddFamilyItem extends Command {
 
