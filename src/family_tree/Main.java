@@ -4,30 +4,34 @@ import family_tree.family_tree.FamilyTree;
 import family_tree.human.Gender;
 import family_tree.human.Human;
 import family_tree.read_write.FileHandler;
-import family_tree.read_write.Writer;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Map<Integer, Human> humanMap = new TreeMap<>();
-        Writer fileHandler = new FileHandler();
-        FamilyTree tree = fileHandler.read("tree.txt");
-
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        FileHandler fileHandler = new FileHandler();
+        FamilyTree tree = (FamilyTree) fileHandler.read();
+
+        Map<Integer, Human> humanMap = fileHandler.readMap("humanMap.txt");
+        if (humanMap == null) {
+            humanMap = new TreeMap<>();
+        }
+
         while (true) {
             menu();
             int criterion = scanner.nextInt();
+            scanner.nextLine();
             if (criterion == 6) {
                 System.out.println("До свидания!");
-                fileHandler.write("tree.txt", tree);
+                fileHandler.write(tree);
+                ((FileHandler) fileHandler).writeMap(humanMap, "humanMap.txt");
                 break;
             }
             switch (criterion) {
                 case 1:
-                    createNewHuman(scanner, humanMap);
+                    addHumanToMap(scanner, humanMap);
                     break;
                 case 2:
                     System.out.println("Укажите имя человека, которого хотите добавить:");
@@ -62,8 +66,9 @@ public class Main {
         if (foundHumans.isEmpty()) {
             System.out.println("Не найдено ни одного человека.");
         } else if (foundHumans.size() == 1) {
-            foundHumans.getFirst().setId(tree.getHumanList().size());
-            tree.add(foundHumans.getFirst());
+            Human foundHuman = foundHumans.get(0);
+            foundHuman.setId(tree.getHumanList().size());
+            tree.add(foundHuman);
             System.out.println("Человек по имени " + humanName + " был добавлен в дерево.");
         } else {
             System.out.println("Введите ID человека, которого хотите добавить в дерево:");
@@ -74,14 +79,17 @@ public class Main {
             while (true) {
                 try {
                     int choisenId = scanner.nextInt();
+                    scanner.nextLine();
                     for (Human foundHuman : foundHumans) {
                         if (foundHuman.getId() == choisenId) {
                             foundHuman.setId(tree.getHumanList().size());
                             tree.add(foundHuman);
                             System.out.println("Человек с ID + " + choisenId + " добавлен в дерево.");
+                            return;
                         }
                     }
-                    break;
+                    System.out.println("Человек с таким ID не найден.");
+                    return;
                 } catch (NumberFormatException e) {
                     System.out.println("Неверный формат ID. Пожалуйста, введите число.");
                 }
@@ -107,7 +115,7 @@ public class Main {
         }
     }
 
-    private static void createNewHuman(Scanner scanner, Map<Integer, Human> humanMap) {
+    private static void addHumanToMap(Scanner scanner, Map<Integer, Human> humanMap) {
         Human human = new Human();
         System.out.println("Введите имя человека:");
         String humanName = scanner.next().trim();
@@ -145,10 +153,10 @@ public class Main {
                 System.out.println("Неверный формат даты рождения.");
             }
         }
-        System.out.println("Человек по имени " + humanName + " был создан.");
-        // id людей будет равняться текущему размеру humanMap
+
         human.setId(humanMap.size());
         humanMap.put(humanMap.size(), human);
+        System.out.println("Человек по имени " + humanName + " был создан.");
     }
 
     // Метод для будущей реализации создания нового дерева
