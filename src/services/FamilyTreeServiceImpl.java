@@ -5,6 +5,7 @@ import models.FamilyTree;
 import services.FamilyTreeService;
 import services.FamilyTreeFileHandler;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Класс FamilyTreeServiceImpl реализует интерфейс FamilyTreeService.
@@ -69,7 +70,8 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
     @Override
     public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
         familyTree.clear();
-        familyTree.addAll(fileHandler.loadFamilyTree(filename));
+        List<Human> loadedHumans = fileHandler.loadFamilyTree(filename);
+        familyTree.addAll(loadedHumans);
     }
 
     /**
