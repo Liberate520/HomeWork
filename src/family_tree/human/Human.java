@@ -1,13 +1,12 @@
-package family_tree;
+package family_tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Human implements Serializable {
-    private static int idCounter = 0;
+public class Human implements Serializable, Comparable<Human> {
 
-    private final int id;
+    private int id;
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
@@ -17,7 +16,6 @@ public class Human implements Serializable {
 
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender,
                  Human father, Human mother, List<Human> children) {
-        this.id = ++idCounter;
         this.name = name;
         this.dob = dob;
         this.dod = dod;
@@ -26,6 +24,13 @@ public class Human implements Serializable {
         this.mother = mother;
         this.children = children;
 
+    }
+
+    public Human(int id, String name, LocalDate dob, Gender gender) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -96,5 +101,10 @@ public class Human implements Serializable {
                 (father != null ? ", отец: " + father.getName() : "") +
                 (mother != null ? ", мать: " + mother.getName() : "") +
                 (children != null && !children.isEmpty() ? ", дети: " + children.size() : "");
+    }
+
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
     }
 }

@@ -1,6 +1,6 @@
 package family_tree.writer;
 
-import family_tree.FamilyTree;
+import family_tree.family_tree1.FamilyTree;
 
 import java.io.IOException;
 
