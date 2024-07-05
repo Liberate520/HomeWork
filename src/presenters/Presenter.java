@@ -5,6 +5,7 @@ import models.FamilyTree;
 import services.FamilyTreeService;
 import views.SortOrder;
 import views.View;
+import java.io.IOException;
 
 /**
  * Класс Presenter отвечает за связь между представлением (View) и сервисом (FamilyTreeService).
