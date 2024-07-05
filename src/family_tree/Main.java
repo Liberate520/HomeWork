@@ -160,6 +160,7 @@ public class Main {
     }
 
     // Метод для будущей реализации создания нового дерева
+    @SuppressWarnings("unused")
     private static void createNewTree(Scanner scanner, Map<String, FamilyTree> familyTreeMap) {
         FamilyTree tree = new FamilyTree();
         System.out.println("Введите название название нового дерева:");
