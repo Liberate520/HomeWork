@@ -1,4 +1,4 @@
-package Formating;
+package Human;
 
 public enum Gender {
     Male, Female

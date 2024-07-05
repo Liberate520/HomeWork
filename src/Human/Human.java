@@ -1,13 +1,12 @@
 package Human;
 
-import Formating.Gender;
 import Formating.MyDate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class Human implements Serializable{
     private static int lastID = 0;
     private final int ID = lastID;
     private MyDate dateOfBirth;
@@ -83,11 +82,17 @@ public class Human implements Serializable {
     }
 
     public void setFather(Human father) {
-        if (!this.equals(father)) this.father = father;
+        if (!this.equals(father)) {
+            this.father = father;
+            this.father.addChildren(this);
+        }
     }
 
     public void setMather(Human mather) {
-        if (!this.equals(mather)) this.mather = mather;
+        if (!this.equals(mather)) {
+            this.mather = mather;
+            this.mather.addChildren(this);
+        }
     }
 
     public void setSpouse(Human spouse) {
