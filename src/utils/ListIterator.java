@@ -1,98 +1,118 @@
 package utils;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
- * Класс ListIterator обеспечивает итерацию по списку объектов типа T.
- * Он реализует интерфейс Iterator<T>, что позволяет использовать его в циклах for-each.
+ * Класс ArrayList реализует интерфейс List и представляет динамический массив объектов.
+ * Он обеспечивает базовые операции для работы со списком, такие как добавление, удаление, получение и сортировка элементов.
  *
- * @param <T> тип объектов, по которым выполняется итерация
+ * @param <T> тип объектов, которые будут храниться в списке
  */
-public class ListIterator<T> implements Iterator<T> {
-    private java.util.ListIterator<T> listIterator;
+public class ArrayList<T> implements List<T> {
+    private static final int DEFAULT_CAPACITY = 10;
+    private T[] array;
+    private int size;
 
     /**
-     * Конструктор класса ListIterator.
-     *
-     * @param listIterator листовой итератор для списка объектов
+     * Конструктор класса ArrayList.
      */
-    public ListIterator(java.util.ListIterator<T> listIterator) {
-        this.listIterator = listIterator;
+    public ArrayList() {
+        this.array = (T[]) new Object[DEFAULT_CAPACITY];
+        this.size = 0;
     }
 
     /**
-     * Возвращает true, если итератор содержит следующий элемент.
+     * Добавляет объект в конец списка.
      *
-     * @return true, если итератор содержит следующий элемент, false в противном случае
+     * @param element объект, который добавляется в список
      */
     @Override
-    public boolean hasNext() {
-        return listIterator.hasNext();
-    }
-
-    /**
-     * Возвращает следующий элемент в итерации.
-     *
-     * @return следующий элемент в итерации
-     * @throws NoSuchElementException если нет следующего элемента
-     */
-    @Override
-    public T next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException("Нет следующего элемента");
-        }
-        return listIterator.next();
-    }
-
-    /**
-     * Удаляет последний элемент, возвращенный методом next().
-     *
-     * @throws IllegalStateException если метод next() еще не был вызван или элемент уже был удален
-     */
-    @Override
-    public void remove() {
-        listIterator.remove();
-    }
-
-    /**
-     * Возвращает true, если итератор содержит предыдущий элемент.
-     *
-     * @return true, если итератор содержит предыдущий элемент, false в противном случае
-     */
-    public boolean hasPrevious() {
-        return listIterator.hasPrevious();
-    }
-
-    /**
-     * Возвращает предыдущий элемент в итерации.
-     *
-     * @return предыдущий элемент в итерации
-     * @throws NoSuchElementException если нет предыдущего элемента
-     */
-    public T previous() {
-        if (!hasPrevious()) {
-            throw new NoSuchElementException("Нет предыдущего элемента");
-        }
-        return listIterator.previous();
-    }
-
-    /**
-     * Заменяет элемент, на который указывает итератор, на указанный элемент.
-     *
-     * @param element новый элемент
-     * @throws IllegalStateException если метод next() или previous() еще не был вызван или элемент уже был удален
-     */
-    public void set(T element) {
-        listIterator.set(element);
-    }
-
-    /**
-     * Добавляет элемент в список на текущую позицию итератора.
-     *
-     * @param element элемент, который нужно добавить
-     */
     public void add(T element) {
-        listIterator.add(element);
+        if (size == array.length) {
+            increaseCapacity();
+        }
+        array[size++] = element;
+    }
+
+    /**
+     * Увеличивает емкость массива, если он заполнен.
+     */
+    private void increaseCapacity() {
+        int newCapacity = array.length * 2;
+        array = Arrays.copyOf(array, newCapacity);
+    }
+
+    /**
+     * Добавляет все объекты из другого списка в конец текущего списка.
+     *
+     * @param list список объектов для добавления
+     */
+    @Override
+    public void addAll(List<T> list) {
+        for (T element : list) {
+            add(element);
+        }
+    }
+
+    /**
+     * Удаляет все элементы из списка.
+     */
+    @Override
+    public void clear() {
+        Arrays.fill(array, null);
+        size = 0;
+    }
+
+    /**
+     * Возвращает объект по указанному индексу.
+     *
+     * @param index индекс объекта для получения
+     * @return объект по указанному индексу
+     */
+    @Override
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Индекс вне границ списка: " + index);
+        }
+        return array[index];
+    }
+
+    /**
+     * Возвращает количество элементов в списке.
+     *
+     * @return количество элементов в списке
+     */
+    @Override
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Сортирует элементы списка в соответствии с указанным компаратором.
+     *
+     * @param comparator компаратор для сортировки элементов
+     */
+    @Override
+    public void sort(Comparator<? super T> comparator) {
+        Arrays.sort(array, 0, size, comparator);
+    }
+
+    /**
+     * Возвращает строковое представление списка.
+     *
+     * @return строковое представление списка
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            sb.append(array[i]);
+            if (i < size - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
