@@ -74,13 +74,13 @@ public class FamilyTree<T extends Serializable & Comparable<T>> implements Itera
      * Сортирует объекты в генеалогическом древе по имени в алфавитном порядке.
      */
     public void sortByName() {
-        familyMembers.sort(Comparator.comparing(Human::getName));
+        familyMembers.sort((Comparator<? super T>) Comparator.comparing(Human::getName));
     }
 
     /**
      * Сортирует объекты в генеалогическом древе по дате рождения.
      */
     public void sortByBirthDate() {
-        familyMembers.sort(Comparator.comparing(Human::getBirthDate));
+        familyMembers.sort((Comparator<? super T>) Comparator.comparing(Human::getBirthDate));
     }
 }
