@@ -1,24 +1,19 @@
-package family_tree.human;
+package family_tree.creators.human;
+
+import family_tree.creators.Creators;
+import family_tree.creators.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
-    private long id;
-    private String name;
-    private Gender gender;
-    private LocalDate birthDate, deathDate;
+public class Human extends Creators implements Serializable {
     private Human father, mother, spouse;
     private List<Human> children;
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
+        super(name, gender, birthDate, deathDate);
         this.father = father;
         this.mother = mother;
         children = new ArrayList<>();
@@ -34,46 +29,6 @@ public class Human implements Serializable {
 
     public Human(){
         this(null, null, null, null, null, null);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public LocalDate getDeathDate() {
-        return deathDate;
-    }
-
-    public void setDeathDate(LocalDate deathDate) {
-        this.deathDate = deathDate;
     }
 
     public Human getFather() {
@@ -136,45 +91,6 @@ public class Human implements Serializable {
         return list;
     }
 
-    public int getAge() {
-        if (deathDate == null) {
-            return getPeriod(birthDate, LocalDate.now());
-        } else {
-            return getPeriod(birthDate, deathDate);
-        }
-    }
-
-    private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
-        Period diff = Period.between(birthDate, deathDate);
-        return diff.getYears();
-    }
-
-    @Override
-    public String toString() {
-        return getInfo();
-    }
-
-    public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ID: ");
-        sb.append(id);
-        sb.append(", имя: ");
-        sb.append(name);
-        sb.append(", пол: ");
-        sb.append(getGender());
-        sb.append(", возраст: ");
-        sb.append(getAge());
-        sb.append(", ");
-        sb.append(getSpouseInfo());
-        sb.append(", ");
-        sb.append(getFatherInfo());
-        sb.append(", ");
-        sb.append(getMotherInfo());
-        sb.append(", ");
-        sb.append(getChildrenInfo());
-        return sb.toString();
-    }
-
     public String getSpouseInfo() {
         String res = "супруг(а): ";
         if (spouse == null) {
@@ -223,13 +139,28 @@ public class Human implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Human human)) {
-            return false;
-        }
-        return human.getId() == getId();
+    public String toString() {
+        return getInfo();
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ");
+        sb.append(getId());
+        sb.append(", имя: ");
+        sb.append(getName());
+        sb.append(", пол: ");
+        sb.append(getGender());
+        sb.append(", возраст: ");
+        sb.append(getAge());
+        sb.append(", ");
+        sb.append(getSpouseInfo());
+        sb.append(", ");
+        sb.append(getFatherInfo());
+        sb.append(", ");
+        sb.append(getMotherInfo());
+        sb.append(", ");
+        sb.append(getChildrenInfo());
+        return sb.toString();
     }
 }

@@ -1,14 +1,40 @@
 package family_tree.family_tree;
 
-import family_tree.human.Human;
+import family_tree.creators.Creators;
+import family_tree.creators.IDGenerator;
+import family_tree.creators.human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree implements Serializable {
-    private long humanId;
+    private final int id;
+    private int humanId;
+    private String name;
     private List<Human> humanList;
+
+    public FamilyTree(String name, List<Human> humanList) {
+        this.id = IDGenerator.generateID();
+        this.name = name;
+        this.humanList = humanList;
+    }
+
+    public FamilyTree() {
+        this(null, new ArrayList<>());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public List<Human> getHumanList() {
         return humanList;
@@ -18,14 +44,6 @@ public class FamilyTree implements Serializable {
         this.humanList = humanList;
     }
 
-    public FamilyTree(List<Human> humanList) {
-        this.humanList = humanList;
-    }
-
-    public FamilyTree() {
-        this(new ArrayList<>());
-    }
-
     public boolean add(Human human) {
         if (human == null) {
             return false;
@@ -33,7 +51,6 @@ public class FamilyTree implements Serializable {
 
         if (!humanList.contains(human)) {
             humanList.add(human);
-            human.setId(humanId++);
 
             addToParents(human);
             addToChildren(human);
@@ -81,7 +98,7 @@ public class FamilyTree implements Serializable {
         return res;
     }
 
-    public boolean setWedding(long humanId1, long humanId2) {
+    public boolean setWedding(int humanId1, int humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
             Human human1 = getById(humanId1);
             Human human2 = getById(humanId2);
@@ -100,7 +117,7 @@ public class FamilyTree implements Serializable {
         }
     }
 
-    public boolean setDivorce(long humanId1, long humanId2) {
+    public boolean setDivorce(int humanId1, int humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
             Human human1 = getById(humanId1);
             Human human2 = getById(humanId2);
@@ -119,7 +136,7 @@ public class FamilyTree implements Serializable {
         }
     }
 
-    public boolean remove(long humanId) {
+    public boolean remove(int humanId) {
         if (checkId(humanId)) {
             Human human = getById(humanId);
             return humanList.remove(human);
@@ -127,7 +144,7 @@ public class FamilyTree implements Serializable {
         return false;
     }
 
-    private boolean checkId(long id) {
+    private boolean checkId(int id) {
         return id < humanId && id >= 0;
     }
 
@@ -147,6 +164,11 @@ public class FamilyTree implements Serializable {
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        sb.append("ID дерева: ");
+        sb.append(getId());
+        sb.append(", имя дерева: ");
+        sb.append(getName());
         sb.append("\n");
         sb.append("В дереве ");
         sb.append(humanList.size());

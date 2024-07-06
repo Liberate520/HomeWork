@@ -1,8 +1,8 @@
 package family_tree;
 
+import family_tree.creators.human.Human;
 import family_tree.family_tree.FamilyTree;
-import family_tree.human.Gender;
-import family_tree.human.Human;
+import family_tree.creators.Gender;
 import family_tree.read_write.FileHandler;
 
 import java.time.LocalDate;
@@ -13,23 +13,27 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         FileHandler fileHandler = new FileHandler();
-        FamilyTree tree = (FamilyTree) fileHandler.read();
-        String treePath = "src/family_tree/read_write/tree.txt";
         String humanMapPath = "src/family_tree/read_write/humanMap.txt";
+        String familyTreeMapPath = "src/family_tree/read_write/familyTreeMap.txt";
 
         Map<Integer, Human> humanMap = fileHandler.readMap(humanMapPath);
         if (humanMap == null) {
             humanMap = new TreeMap<>();
         }
 
+        Map<Integer, FamilyTree> familyTreeMap = fileHandler.readMap(familyTreeMapPath);
+        if (familyTreeMap == null) {
+            familyTreeMap = new TreeMap<>();
+        }
+
         while (true) {
             menu();
             int criterion = scanner.nextInt();
             scanner.nextLine();
-            if (criterion == 6) {
+            if (criterion == 8) {
                 System.out.println("До свидания!");
-                fileHandler.write(tree);
                 ((FileHandler) fileHandler).writeMap(humanMap, humanMapPath);
+                ((FileHandler) fileHandler).writeMap(familyTreeMap, familyTreeMapPath);
                 break;
             }
             switch (criterion) {
@@ -38,30 +42,68 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Укажите имя человека, которого хотите добавить:");
-                    addHumanToTree(scanner, tree, humanMap);
+                    addHumanToTree(scanner, familyTreeMap, humanMap);
                     break;
                 case 3:
                     System.out.println("Укажите имя человека, которого хотите найти:");
                     findHuman(scanner, humanMap);
                     break;
                 case 4:
-                    System.out.println(tree);
+                    System.out.println("Укажите имя дерева, которого хотите найти:");
+                    findFamilyTree(scanner, familyTreeMap);
                     break;
                 case 5:
-                    for (Human human : humanMap.values()){
+                    for (Human human : humanMap.values()) {
                         System.out.println(human);
                     }
+                    break;
+                case 6:
+                    for (FamilyTree familyTree : familyTreeMap.values()) {
+                        System.out.println(familyTree);
+                    }
+                    break;
+                case 7:
+                    addFamilyTreeToMap(scanner, familyTreeMap);
                     break;
             }
         }
         scanner.close();
     }
 
-    //TODO создать клас human builder и айди,
-    // исправить дублированный вывод хуманов в хуманмап, после их добавления в дерево, пример ниже закомментил,
-    // добавить обобщение в файлхэндлер, класс сервис, преобразовать фэмили три в фэмили мэп
+    // Меню для навигации
+    public static void menu() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Добро пожаловать в программу семейного древа. Введите цифру из меню:").append("\n");
+        sb.append("1 - Создать нового человека").append("\n");
+        sb.append("2 - Добавить человека в дерево").append("\n");
+        sb.append("3 - Найти человека").append("\n");
+        sb.append("4 - Найти дерево").append("\n");
+        sb.append("5 - Вывести всех людей в терминал").append("\n");
+        sb.append("6 - Вывести все деревья в терминал").append("\n");
+        sb.append("7 - Создать новое дерево").append("\n");
+        sb.append("8 - Выйти из программы").append("\n");
+        System.out.println(sb);
+    }
 
-    private static void addHumanToTree(Scanner scanner, FamilyTree tree, Map<Integer, Human> humanMap) {
+    private static void findFamilyTree(Scanner scanner, Map<Integer, FamilyTree> familyTreeMap) {
+        String familyTreeName = scanner.next().trim();
+        List<FamilyTree> foundFamilyTrees = new ArrayList<>();
+        for (FamilyTree familyTree : familyTreeMap.values()) {
+            if (familyTreeName.equalsIgnoreCase(familyTree.getName())) {
+                foundFamilyTrees.add(familyTree);
+            }
+        }
+
+        if (foundFamilyTrees.isEmpty()) {
+            System.out.println("Не найдено ни одного дерево.");
+        } else {
+            for (FamilyTree foundFamilyTree : foundFamilyTrees) {
+                System.out.println(foundFamilyTree);
+            }
+        }
+    }
+
+    private static void addHumanToTree(Scanner scanner, Map<Integer, FamilyTree> familyTreeMap, Map<Integer, Human> humanMap) {
         String humanName = scanner.next().trim();
         List<Human> foundHumans = new ArrayList<>();
         for (Human human : humanMap.values()) {
@@ -70,84 +112,128 @@ public class Main {
             }
         }
 
-        if (foundHumans.isEmpty()) {
+        System.out.println("Укажите название дерева, в которое хотите добавить человека:");
+        String familyTreeName = scanner.next().trim();
+        List<FamilyTree> foundFamilyTrees = new ArrayList<>();
+        for (FamilyTree familyTree : familyTreeMap.values()) {
+            if (familyTreeName.equalsIgnoreCase(familyTree.getName())) {
+                foundFamilyTrees.add(familyTree);
+            }
+        }
+
+        if (foundHumans.isEmpty() && foundFamilyTrees.isEmpty()) {
+            System.out.println("Не найдено ни одного человека и дерева.");
+        } else if (foundHumans.isEmpty()) {
             System.out.println("Не найдено ни одного человека.");
-        } else if (foundHumans.size() == 1) {
+        } else if (foundFamilyTrees.isEmpty()) {
+            System.out.println("Не найдено ни одного дерева.");
+        } else if (foundHumans.size() == 1 && foundFamilyTrees.size() == 1) {
             Human foundHuman = foundHumans.get(0);
-            foundHuman.setId(tree.getHumanList().size());
-            tree.add(foundHuman);
-            System.out.println("Человек по имени " + humanName + " был добавлен в дерево.");
-        } else {
-            System.out.println("Введите ID человека, которого хотите добавить в дерево:");
+            FamilyTree foundTree = foundFamilyTrees.get(0);
+            foundTree.add(foundHuman);
+            System.out.println("Человек по имени " + foundHumans.get(0).getName() + " был добавлен в дерево " + foundFamilyTrees.get(0) + ".");
+        } else if (foundFamilyTrees.size() > 1 && foundHumans.size() == 1) {
+            for (FamilyTree foundTree : foundFamilyTrees) {
+                System.out.println(foundTree);
+            }
+            while (true) {
+                try {
+                    System.out.println("Введите ID дерева в которое хотите добавить человека:");
+                    int choisenId = Integer.parseInt(scanner.nextLine().trim());
+                    boolean found = false;
+                    for (FamilyTree foundTree : foundFamilyTrees) {
+                        if (foundTree.getId() == choisenId) {
+                            Human foundHuman = foundHumans.get(0);
+                            foundTree.add(foundHuman);
+                            System.out.println("Человек по имени " + foundHumans.get(0) + " добавлен в дерево с ID: " + foundTree.getId() + ".");
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Дерево с таким ID не найдено.");
+                    }
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Неверный формат ID. Пожалуйста, введите число.");
+                }
+            }
+
+        } else if (foundFamilyTrees.size() == 1) {
             for (Human foundHuman : foundHumans) {
                 System.out.println(foundHuman);
             }
 
             while (true) {
                 try {
-                    int choisenId = scanner.nextInt();
-                    scanner.nextLine();
+                    System.out.println("Введите ID человека, которого хотите добавить в дерево:");
+                    int choisenId = Integer.parseInt(scanner.nextLine().trim());
+                    boolean found = false;
                     for (Human foundHuman : foundHumans) {
                         if (foundHuman.getId() == choisenId) {
-                            foundHuman.setId(tree.getHumanList().size());
-                            tree.add(foundHuman);
-                            System.out.println("Человек с ID " + choisenId + " добавлен в дерево.");
-                            return;
+                            foundFamilyTrees.get(0).add(foundHuman);
+                            System.out.println("Человек с ID " + choisenId + " добавлен в дерево " + foundFamilyTrees.get(0) + ".");
+                            found = true;
+                            break;
                         }
                     }
-                    System.out.println("Человек с таким ID не найден.");
-                    return;
+                    if (!found) {
+                        System.out.println("Человек с таким ID не найден.");
+                    }
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Неверный формат ID. Пожалуйста, введите число.");
+                }
+            }
+        } else {
+            for (FamilyTree foundTree : foundFamilyTrees) {
+                System.out.println(foundTree);
+            }
+
+            for (Human foundHuman : foundHumans) {
+                System.out.println(foundHuman);
+            }
+
+            while (true) {
+                try {
+                    System.out.println("Введите ID дерева в которое хотите добавить человека:");
+                    int choisenTreeId = Integer.parseInt(scanner.nextLine().trim());
+                    System.out.println("Введите ID человека, которого хотите добавить в дерево:");
+                    int choisenHumanId = Integer.parseInt(scanner.nextLine().trim());
+
+                    boolean isTreeFound = false;
+                    boolean isHumanFound = false;
+
+                    for (FamilyTree foundTree : foundFamilyTrees) {
+                        if (foundTree.getId() == choisenTreeId) {
+                            for (Human foundHuman : foundHumans) {
+                                if (foundHuman.getId() == choisenHumanId) {
+                                    foundTree.add(foundHuman);
+                                    System.out.println("Человек с ID " + choisenHumanId + " добавлен в дерево с ID " + choisenTreeId + ".");
+                                    isHumanFound = true;
+                                    break;
+                                }
+                            }
+                            isTreeFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!isTreeFound) {
+                        System.out.println("Дерево с таким ID не найдено.");
+                    }
+
+                    if (!isHumanFound) {
+                        System.out.println("Человек с таким ID не найден.");
+                    }
+
+                    break;
                 } catch (NumberFormatException e) {
                     System.out.println("Неверный формат ID. Пожалуйста, введите число.");
                 }
             }
         }
     }
-    /*private static void addHumanToTree(Scanner scanner, FamilyTree tree, Map<Integer, Human> humanMap) {
-    String humanName = scanner.next().trim();
-    List<Human> foundHumans = new ArrayList<>();
-    for (Human human : humanMap.values()) {
-        if (humanName.equalsIgnoreCase(human.getName())) {
-            foundHumans.add(human);
-        }
-    }
-
-    if (foundHumans.isEmpty()) {
-        System.out.println("Не найдено ни одного человека.");
-    } else if (foundHumans.size() == 1) {
-        Human foundHuman = foundHumans.get(0);
-        Human newHuman = new Human(foundHuman); // Создаем новый объект Human на основе найденного
-        newHuman.setId(tree.getHumanList().size());
-        tree.add(newHuman); // Добавляем новый объект в дерево
-        System.out.println("Человек по имени " + humanName + " был добавлен в дерево.");
-    } else {
-        System.out.println("Введите ID человека, которого хотите добавить в дерево:");
-        for (Human foundHuman : foundHumans) {
-            System.out.println(foundHuman);
-        }
-
-        while (true) {
-            try {
-                int chosenId = scanner.nextInt();
-                scanner.nextLine();
-                for (Human foundHuman : foundHumans) {
-                    if (foundHuman.getId() == chosenId) {
-                        Human newHuman = new Human(foundHuman); // Создаем новый объект Human на основе найденного
-                        newHuman.setId(tree.getHumanList().size());
-                        tree.add(newHuman); // Добавляем новый объект в дерево
-                        System.out.println("Человек с ID " + chosenId + " добавлен в дерево.");
-                        return;
-                    }
-                }
-                System.out.println("Человек с таким ID не найден.");
-                return;
-            } catch (NumberFormatException e) {
-                System.out.println("Неверный формат ID. Пожалуйста, введите число.");
-            }
-        }
-    }
-}
-*/
 
     private static void findHuman(Scanner scanner, Map<Integer, Human> humanMap) {
         String humanName = scanner.next().trim();
@@ -216,30 +302,16 @@ public class Main {
             }
         }
 
-        human.setId(humanMap.size());
-        humanMap.put(humanMap.size(), human);
+        humanMap.put(human.getId(), human);
         System.out.println("Человек по имени " + humanName + " был создан.");
     }
 
-    // Метод для будущей реализации создания нового дерева
-    @SuppressWarnings("unused")
-    private static void createNewTree(Scanner scanner, Map<String, FamilyTree> familyTreeMap) {
+    private static void addFamilyTreeToMap(Scanner scanner, Map<Integer, FamilyTree> familyTreeMap) {
         FamilyTree tree = new FamilyTree();
-        System.out.println("Введите название название нового дерева:");
+        System.out.println("Введите название нового дерева:");
         String familyTreeName = scanner.next().trim();
-        familyTreeMap.put(familyTreeName, tree);
-    }
-
-    // Меню для навигации
-    public static void menu() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Добро пожаловать в программу семейного древа. Введите цифру из меню:").append("\n");
-        sb.append("1 - Создать нового человека").append("\n");
-        sb.append("2 - Добавить человека в дерево").append("\n");
-        sb.append("3 - Найти человека").append("\n");
-        sb.append("4 - Вывести дерево в терминал").append("\n");
-        sb.append("5 - Вывести всех людей в терминал").append("\n");
-        sb.append("6 - Выйти из программы").append("\n");
-        System.out.println(sb);
+        tree.setName(familyTreeName);
+        familyTreeMap.put(tree.getId(), tree);
+        System.out.println("Дерево по имени " + familyTreeName + " было создано.");
     }
 }
