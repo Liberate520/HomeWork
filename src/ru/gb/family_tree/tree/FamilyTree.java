@@ -1,31 +1,30 @@
 package ru.gb.family_tree.tree;
 
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.human.HumanComparatorByAge;
-import ru.gb.family_tree.human.HumanComparatorByName;
-import ru.gb.family_tree.human.HumanComparatorByNumberOfChild;
+import ru.gb.family_tree.member_comparator.MemberComparatorByAge;
+import ru.gb.family_tree.member_comparator.MemberComparatorByName;
+import ru.gb.family_tree.member_comparator.MemberComparatorByNumberOfChild;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> tree;
+public class FamilyTree<T extends FamileTreeItems<T>> implements Serializable, Iterable<T> {
+    private List<T> tree;
 
     public FamilyTree(){
         tree = new ArrayList<>();
     }
 
-    public void addHuman(Human human){
-        tree.add(human);
+    public void addHuman(T member){
+        tree.add(member);
     }
     //поиск любого упоминания имени человека
-    public List<Human> findHuman(String name){
-        List<Human> list = new ArrayList<>();
-        for (Human human: tree){
-            if (human.toString().contains(name)){
-                list.add(human);
+    public List<T> findHuman(String name){
+        List<T> list = new ArrayList<>();
+        for (T member: tree){
+            if (member.toString().contains(name)){
+                list.add(member);
             }
         }
         return list;
@@ -34,24 +33,24 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     public String getFullTree(){
         StringBuilder sb = new StringBuilder();
         sb.append("Древо: \n");
-        for (Human human: tree){
-            sb.append(human);
+        for (T member: tree){
+            sb.append(member);
             sb.append("\n");
         }
         return sb.toString();
     }
 
     public void sortByName(){
-        tree.sort(new HumanComparatorByName());
+        tree.sort(new MemberComparatorByName<>());
     }
     public void sortByAge(){
-        tree.sort(new HumanComparatorByAge());
+        tree.sort(new MemberComparatorByAge<>());
     }
     public void sortByChild(){
-        tree.sort(new HumanComparatorByNumberOfChild());
+        tree.sort(new MemberComparatorByNumberOfChild<>());
     }
     @Override
-    public Iterator<Human> iterator() {
-        return new FTiterator(tree);
+    public Iterator<T> iterator() {
+        return new FTiterator<>(tree);
     }
 }
