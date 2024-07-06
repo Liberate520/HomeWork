@@ -1,8 +1,9 @@
-package ru.gb.family_tree.tree;
+package ru.gb.family_tree.model.tree;
 
-import ru.gb.family_tree.member_comparator.MemberComparatorByAge;
-import ru.gb.family_tree.member_comparator.MemberComparatorByName;
-import ru.gb.family_tree.member_comparator.MemberComparatorByNumberOfChild;
+import ru.gb.family_tree.model.member.Member;
+import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByAge;
+import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByName;
+import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByNumberOfChild;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,11 +17,11 @@ public class FamilyTree<T extends FamileTreeItems<T>> implements Serializable, I
         tree = new ArrayList<>();
     }
 
-    public void addHuman(T member){
+    public void addMember(T member){
         tree.add(member);
     }
     //поиск любого упоминания имени человека
-    public List<T> findHuman(String name){
+    public List<T> findAllInfoByName(String name){
         List<T> list = new ArrayList<>();
         for (T member: tree){
             if (member.toString().contains(name)){
@@ -28,6 +29,14 @@ public class FamilyTree<T extends FamileTreeItems<T>> implements Serializable, I
             }
         }
         return list;
+    }
+    public T findMember(String name){
+        for (T member: tree){
+            if (member.getName().contains(name)){
+                return member;
+            }
+        }
+        return null;
     }
 
     public String getFullTree(){

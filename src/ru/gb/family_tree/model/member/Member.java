@@ -1,6 +1,6 @@
-package ru.gb.family_tree.human;
+package ru.gb.family_tree.model.member;
 
-import ru.gb.family_tree.tree.FamileTreeItems;
+import ru.gb.family_tree.model.tree.FamileTreeItems;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human>, FamileTreeItems<Human> {
+/*
+Общий абстрактный класc
+ */
+public abstract class Member implements Serializable, Comparable<Member>, FamileTreeItems<Member> {
     private static int idCounter = 0;
 
     private long id;
     private String name;
-    private Human mother, father;
-    private List<Human> child;
+    private Member mother, father;
+    private List<Member> child;
     private LocalDate birthDate, deathDate;
     private Gender gender;
 
@@ -28,7 +31,7 @@ public class Human implements Serializable, Comparable<Human>, FamileTreeItems<H
      * @param deathDate дата смерти или null
      * @param gender пол объекта (M-male, F-Female)
      */
-    public Human(String name, Human mother, Human father, LocalDate birthDate, LocalDate deathDate, Gender gender) {
+    public Member(String name, Member mother, Member father, LocalDate birthDate, LocalDate deathDate, Gender gender) {
         this.id = ++idCounter;
         this.name = name;
         this.mother = mother;
@@ -51,10 +54,11 @@ public class Human implements Serializable, Comparable<Human>, FamileTreeItems<H
      * @param birthDate дата рождения
      * @param gender пол объекта (M-male, F-Female)
      */
-    public Human(String name, LocalDate birthDate, Gender gender) {
+    public Member(String name, LocalDate birthDate, Gender gender) {
         this(name,null, null, birthDate,null, gender);
     }
-    public List<Human> getChild(){
+
+    public List<Member> getChild(){
         return child;
     }
 
@@ -84,7 +88,7 @@ public class Human implements Serializable, Comparable<Human>, FamileTreeItems<H
 
     @Override
     public String toString() {
-        return "Human{" +
+        return "{" + this.getClass().getSimpleName() + "; " +
                 "ID ='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", mother=" + toStrHelper(mother) +
@@ -96,21 +100,21 @@ public class Human implements Serializable, Comparable<Human>, FamileTreeItems<H
                 '}';
     }
     //вместо объекта в печать возвращаем только его имя для матери и отца
-    private String toStrHelper(Human human){
-        if (human != null){
-            return human.name;
+    private String toStrHelper(Member member){
+        if (member != null){
+            return member.name;
         }
         else return null;
     }
     //вместо объекта в печать возвращаем только имена детей
-    private String toStrHelperList(List<Human> list){
+    private String toStrHelperList(List<Member> list){
         StringBuilder sb = new StringBuilder();
         sb.append("(");
-        for (Human human: list){
+        for (Member member: list){
             if (sb.length() > 1){
                 sb.append(", ");
             }
-            sb.append(human.name);
+            sb.append(member.name);
         }
         sb.append(")");
         return sb.toString();
@@ -120,8 +124,8 @@ public class Human implements Serializable, Comparable<Human>, FamileTreeItems<H
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Human human = (Human) o;
-        return id == human.id;
+        Member member = (Member) o;
+        return id == member.id;
     }
 
     @Override
@@ -131,7 +135,7 @@ public class Human implements Serializable, Comparable<Human>, FamileTreeItems<H
 
 
     @Override
-    public int compareTo(Human o) {
+    public int compareTo(Member o) {
         return this.name.compareTo(o.name);
     }
 }

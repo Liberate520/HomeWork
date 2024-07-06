@@ -1,4 +1,4 @@
-package ru.gb.family_tree.dataHandler;
+package ru.gb.family_tree.model.dataHandler;
 
 import java.io.*;
 
