@@ -6,7 +6,7 @@ import ru.gb.family_tree.model.item.FamilyTreeItem;
 import ru.gb.family_tree.model.item.Gender;
 
 public class ItemBuilder<E extends FamilyTreeItem<E>> {
-    private long maxId;
+    private int maxId;
 
     public FamilyTreeItem<E> build( String name,
                                     Gender gender,

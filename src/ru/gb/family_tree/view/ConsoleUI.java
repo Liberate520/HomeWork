@@ -17,13 +17,15 @@ public class ConsoleUI implements View {
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
-    private MainMenu menu;
+    private boolean play;
+    private MenuMain menuMain;
+    private int idRelative;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
         work = true;
-        menu = new MainMenu(this);
+        menuMain = new MenuMain(this);
     }
 
     @Override
@@ -35,19 +37,103 @@ public class ConsoleUI implements View {
     public void start() throws FileNotFoundException, ClassNotFoundException, IOException {
         hello();
         while (work) {
-            printMenu();
-            execute();
+            playMenu(menuMain);
+        }
+    }
+
+    public void startSubMenu() throws FileNotFoundException, ClassNotFoundException, IOException {
+        System.out.println("Добавляем родственные связи...");
+        Menu menu = new MenuAddRelative(this);
+        play = true;
+        while (play) {
+            playMenu(menu);
+        }
+    }
+
+    void playMenu(Menu menu) throws FileNotFoundException, ClassNotFoundException, IOException {
+        printMenu(menu);
+        execute(menu);
+    }
+
+    private void hello() {
+        System.out.println("Вас приветствует мастер создания генеалогического древа!");
+    }
+
+    private boolean checkTextForInt(String text) {
+        if (!(text == "") && text.matches("[0-9]*")) {
+            return true;
+            // } else {
+            // inputError(menu);
+            // return false;
+        }
+        return false;
+    }
+
+    // private boolean checkId(int id) {
+    // if (!(text == "") && text.matches("[0-9]*")) {
+    // return true;
+    // } else {
+    // inputError(menu);
+    // return false;
+    // }
+    // }
+
+    private boolean checkCommand(Menu menu, int numCommand) {
+        if ((numCommand > 0) && (numCommand <= menu.getSize())) {
+            return true;
+        } else {
+            inputError(menu);
+            return false;
+        }
+    }
+
+    private boolean checkId(int id) {
+        int size = presenter.getSizeOfTree();
+        if (id <= size - 1) {
+            return true;
+        } else {
+            System.out.println("Введите целое число от 0 до " + size);
+            return false;
+        }
+    }
+
+    private void printMenu(Menu menu) {
+        System.out.println(menu.menu());
+    }
+
+    private void inputError(Menu menu) {
+        System.out.println(INPUT_ERROR + " " + menu.getSize() + "\n");
+    }
+
+    private void execute(Menu menu) throws FileNotFoundException, ClassNotFoundException, IOException {
+        String line = scanner.nextLine();
+        if (checkTextForInt(line)) {
+            int numCommand = Integer.parseInt(line);
+            if (checkCommand(menu, numCommand)) {
+                menu.execute(numCommand);
+            }
+        } else {
+            inputError(menu);
         }
     }
 
     public void finish() {
-        System.out.println("До встречи!\n");
+        System.out.println("Работа с древом завершена!\n" +
+                "Вы хотите сохранить его в файл?\n" +
+                "Если да - нажмите Enter,\n" +
+                "для выхода - любую клавишу.");
+        // ТОDO Enter - сохранение, любая клавиша - выход
         work = false;
+    }
+
+    public void exitMenu() {
+        play = false;
     }
 
     public void sortById() {
         presenter.sortById();
     }
+
     public void sortByAge() {
         presenter.sortByAge();
     }
@@ -72,14 +158,14 @@ public class ConsoleUI implements View {
         presenter.getTreeInfo();
     }
 
-    public void addTreeItem() {
+    public void addTreeItem() throws FileNotFoundException, ClassNotFoundException, IOException {
         System.out.println("Введите имя:");
         String name = scanner.nextLine();
         System.out.println("Укажите пол (1 - мужской, 2 - женский):");
         String genderString = scanner.nextLine();
         Gender gender = setGender(genderString);
         LocalDate birthDate = setDate("рождения");
-        LocalDate deathDate = setDate("смерти");        
+        LocalDate deathDate = setDate("смерти");
 
         /***** TODO ДОБАВИТЬ МЕТОДЫ СОЗДАНИЯ РОДСТВЕННЫХ СВЯЗЕЙ ******/
 
@@ -93,38 +179,74 @@ public class ConsoleUI implements View {
         Human father = null;
         Human mother = null;
         presenter.addItem(name, gender, birthDate, deathDate, father, mother);
+
+        // addRelative();
+
     }
 
-    // private void addRelative() {
-
-    //     System.out.println("Выберите из списка id члена древа, которому будем добавлять родственников:");
-    //     String line = scanner.nextLine();
-    //     if (checkTextForInt(line)) {
-    //         int id = Integer.parseInt(line);
-    //         Human human = presenter.getById(id);
-    //         if (checkCommand(numCommand)) {
-    //             menu.execute(numCommand);
-    //         }
-    //     }        
-    // }
-
-    private void addToChildren(Human child) {
-        presenter.addToChildren(child);
-    }
-
-    private void hello() {
-        System.out.println("Вас приветствует мастер создания генеалогического древа!");
-    }
-
-    private void execute() throws FileNotFoundException, ClassNotFoundException, IOException {
-        String line = scanner.nextLine();
-        if (checkTextForInt(line)) {
-            int numCommand = Integer.parseInt(line);
-            if (checkCommand(numCommand)) {
-                menu.execute(numCommand);
+    public void addRelative() throws FileNotFoundException, ClassNotFoundException, IOException {
+        if (presenter.getSizeOfTree() > 1) {
+            // MenuAddRelative menu = new MenuAddRelative(this);
+            System.out.println("Выберите из списка id члена древа, которому будем добавлять родственников:");
+            // TODO если check Norm, вызов меню добавления родственников, иначе - возврат в
+            // основное меню.
+            String line = scanner.nextLine();
+            if (checkTextForInt(line)) {
+                idRelative = Integer.parseInt(line);
+                if (checkId(idRelative)) {
+                    startSubMenu();
+                    // Human human = presenter.getById(id);
+                    // menuAddRelative.execute(numCommand);
+                }
             }
         }
     }
+
+    public void addChild() {
+        // Human human;
+        // Human child;
+        // System.out.println("Выберите ID родителя в семейном древе:");
+        // String strId = scanner.nextLine();
+        // if (checkTextForInt(strId)) {
+        // int idParent = Integer.parseInt(strId);
+        // if (checkId(idParent)) {
+        System.out.println("Выберите ID ребёнка в семейном древе:");
+        String strId = scanner.nextLine();
+        if (checkTextForInt(strId)) {
+            int idChild = Integer.parseInt(strId);
+            if (checkId(idChild)) {
+                presenter.addChild(idRelative, idChild);
+                presenter.getTreeInfo();
+                return;
+            }
+        }
+        System.out.println("Необходимо ввести челое число от 0 до " + presenter.getSizeOfTree());
+    }
+
+    public void addParent() {
+        System.out.println("Выберите ID родителя в семейном древе:");
+        String strId = scanner.nextLine();
+        if (checkTextForInt(strId)) {
+            int idParent = Integer.parseInt(strId);
+            if (checkId(idParent)) {
+                presenter.addParent(idRelative, idParent);
+                // presenter.getTreeInfo();
+                return;
+            }
+        }
+        System.out.println("Необходимо ввести челое число от 0 до " + presenter.getSizeOfTree());
+    }     
+
+    public void addSpouse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addSpouse'");
+    }
+
+    public void addSibling() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addSibling'");
+    }
+   
 
     private Gender setGender(String text) {
         Gender gender;
@@ -163,29 +285,4 @@ public class ConsoleUI implements View {
         return result;
     }
 
-    private boolean checkTextForInt(String text) {
-        if (!(text == "") && text.matches("[0-9]*")) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
-
-    private boolean checkCommand(int numCommand) {
-        if (numCommand <= menu.getSize()) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
-
-    private void printMenu() {
-        System.out.println(menu.menu());
-    }
-
-    private void inputError() {
-        System.out.println(INPUT_ERROR + " " + menu.getSize() + "\n");
-    }
 }

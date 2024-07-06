@@ -5,14 +5,14 @@ import java.io.IOException;
 
 import ru.gb.family_tree.view.ConsoleUI;
 
-public class AddFamilyTreeItem extends Command {
+public class AddRelative extends Command {
 
-    public AddFamilyTreeItem(ConsoleUI consoleUI) {
-        super("Добавить нового члена семейного древа", consoleUI);        
+    public AddRelative(ConsoleUI consoleUI) {
+        super("Создать родственную связь", consoleUI);        
     }
 
     @Override
     public void execute() throws FileNotFoundException, ClassNotFoundException, IOException {
-        getConsoleUI().addTreeItem();
+        getConsoleUI().addRelative();
     }
 }

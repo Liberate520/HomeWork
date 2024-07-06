@@ -6,7 +6,7 @@ import ru.gb.family_tree.model.item.Gender;
 import ru.gb.family_tree.model.item.Human;
 
 public class HumanBuilder {
-    private long maxId;
+    private int maxId;
 
     public Human build( String name,
                                     Gender gender,

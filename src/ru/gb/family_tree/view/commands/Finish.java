@@ -2,9 +2,9 @@ package ru.gb.family_tree.view.commands;
 
 import ru.gb.family_tree.view.ConsoleUI;
 
-public class ExitProgram extends Command {
+public class Finish extends Command {
 
-    public ExitProgram(ConsoleUI consoleUI) {
+    public Finish(ConsoleUI consoleUI) {
         super("Завершить работу", consoleUI);
     }
 

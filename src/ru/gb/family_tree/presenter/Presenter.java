@@ -24,13 +24,13 @@ public class Presenter {
         getTreeInfo();
     }
 
-    public void addToChildren(Human child) {
-        service.addToChildren(child);
+    public void addChild(int idParent, int idChild) {
+        service.addChild(idParent, idChild);
         getTreeInfo();        
     }
 
-    public void getById(Integer id) {
-        service.getById(id);
+    public Human getById(int id) {
+        return service.getById(id);
     }
 
     public void getTreeInfo() {
@@ -66,5 +66,14 @@ public class Presenter {
     public void loadTree() throws FileNotFoundException, ClassNotFoundException, IOException {
         service.loadTree();
         getTreeInfo();
-    }      
+    }  
+    
+    public int getSizeOfTree() {
+        return service.getSizeOfTree();
+    }
+
+    public void addParent(int idRelative, int idParent) {
+        service.addParent(idRelative, idParent);
+        getTreeInfo();  
+    }
 }

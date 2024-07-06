@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTreeItem<E> implements Serializable {
-    protected long id;
+    protected int id;
     protected String name;
     protected List<E> parents;
     protected List<E> children;
@@ -17,7 +17,7 @@ public class FamilyTreeItem<E> implements Serializable {
     protected E father;
     protected E mother;
 
-    public FamilyTreeItem(  long id,
+    public FamilyTreeItem(  int id,
                             String name,
                             Gender gender,
                             LocalDate birthDate,
@@ -40,7 +40,7 @@ public class FamilyTreeItem<E> implements Serializable {
         children = new ArrayList<>();
     }
 
-    public FamilyTreeItem(  long id,
+    public FamilyTreeItem(  int id,
                             String name,
                             Gender gender,
                             LocalDate birthDate) {
@@ -48,7 +48,7 @@ public class FamilyTreeItem<E> implements Serializable {
         this(id, name, gender, birthDate, null, null, null);
     }
 
-    public FamilyTreeItem(  long id,
+    public FamilyTreeItem(  int id,
                             String name,
                             Gender gender,
                             LocalDate birthDate,
@@ -67,7 +67,7 @@ public class FamilyTreeItem<E> implements Serializable {
     }
 
     public boolean addParent(E parent) {
-        if (!parents.contains(parent) && parents.size() < 2) { /// && parents.size() < 2 ДОБАВИЛ Я
+        if (!parents.contains(parent) && (parents.size() < 2)) { /// && parents.size() < 2 ДОБАВИЛ Я
             parents.add(parent);
             return true;
         }
@@ -120,6 +120,9 @@ public class FamilyTreeItem<E> implements Serializable {
 
     @SuppressWarnings("rawtypes")
     public String getMotherInfo() {
+
+        mother = getMother();
+
         String res = "мать: ";
         if (mother == null) {
             res += "неизвестна";
@@ -131,6 +134,9 @@ public class FamilyTreeItem<E> implements Serializable {
 
     @SuppressWarnings("rawtypes")
     public String getFatherInfo() {
+
+        father = getFather();
+        
         String res = "отец: ";
         if (father == null) {
             res += "неизвестен";
@@ -168,11 +174,11 @@ public class FamilyTreeItem<E> implements Serializable {
         return name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
