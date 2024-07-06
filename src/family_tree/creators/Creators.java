@@ -22,7 +22,7 @@ public abstract class Creators implements Serializable {
         this(name, gender, birthDate, null);
     }
 
-    public Creators(){
+    public Creators() {
         this(null, null, null, null);
     }
 

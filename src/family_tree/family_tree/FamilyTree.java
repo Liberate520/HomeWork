@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree<T extends Creators> implements Serializable  {
+public class FamilyTree<T extends Creators> implements Serializable {
     private final int id;
     private int creatorId;
     private String name;
