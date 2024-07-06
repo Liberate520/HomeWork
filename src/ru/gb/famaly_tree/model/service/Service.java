@@ -2,6 +2,7 @@ package ru.gb.famaly_tree.model.service;
 
 import ru.gb.famaly_tree.model.filehandler.FileHandler;
 import ru.gb.famaly_tree.model.filehandler.Writable;
+import ru.gb.famaly_tree.model.ft.Famaly_Tree_Abstract;
 import ru.gb.famaly_tree.model.ft.Famaly_tree;
 import ru.gb.famaly_tree.model.human.Gender;
 import ru.gb.famaly_tree.model.human.Human;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Service {
-    private Famaly_tree famalyTree;
+    private Famaly_Tree_Abstract famalyTree;
     private Writable writable;
     private boolean isFirstHumanInFamalyTree;
 
@@ -81,7 +82,7 @@ public class Service {
         return famalyTree.searchByName(name);
     }
     public void save() throws IOException {
-        writable.saved(famalyTree);
+        writable.saved((Famaly_tree) famalyTree);
     }
 
     public void download() throws IOException, ClassNotFoundException {
