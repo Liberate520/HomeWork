@@ -16,7 +16,6 @@ public class Main {
         FamilyTree tree = (FamilyTree) fileHandler.read();
         String treePath = "src/family_tree/read_write/tree.txt";
         String humanMapPath = "src/family_tree/read_write/humanMap.txt";
-//        check
 
         Map<Integer, Human> humanMap = fileHandler.readMap(humanMapPath);
         if (humanMap == null) {
