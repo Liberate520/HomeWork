@@ -80,9 +80,9 @@ public abstract class Creators implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Creators human)) {
+        if (!(obj instanceof Creators creator)) {
             return false;
         }
-        return human.getId() == getId();
+        return creator.getId() == getId();
     }
 }

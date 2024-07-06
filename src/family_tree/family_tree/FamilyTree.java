@@ -8,16 +8,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree<T extends Creators> implements Serializable  {
     private final int id;
-    private int humanId;
+    private int creatorId;
     private String name;
-    private List<Human> humanList;
+    private List<T> creatorList;
 
-    public FamilyTree(String name, List<Human> humanList) {
+    public FamilyTree(String name, List<T> creatorList) {
         this.id = IDGenerator.generateID();
         this.name = name;
-        this.humanList = humanList;
+        this.creatorList = creatorList;
     }
 
     public FamilyTree() {
@@ -33,28 +33,33 @@ public class FamilyTree implements Serializable {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
-    public List<Human> getHumanList() {
-        return humanList;
+    public List<T> getCreatorList() {
+        return creatorList;
     }
 
-    public void setHumanList(List<Human> humanList) {
-        this.humanList = humanList;
+    public void setCreatorList(List<T> creatorList) {
+        this.creatorList = creatorList;
     }
 
-    public boolean add(Human human) {
-        if (human == null) {
+    public boolean add(T creator) {
+        if (creator == null) {
             return false;
         }
 
-        if (!humanList.contains(human)) {
-            humanList.add(human);
+        if (!creatorList.contains(creator)) {
+            creatorList.add(creator);
 
-            addToParents(human);
-            addToChildren(human);
+            if (creator.getId() > this.creatorId) {
+                this.creatorId = creator.getId();
+            }
 
+            if (creator instanceof Human) {
+                addToParents((Human) creator);
+                addToChildren((Human) creator);
+            }
             return true;
         }
         return false;
@@ -72,8 +77,8 @@ public class FamilyTree implements Serializable {
         }
     }
 
-    public List<Human> getSiblings(int id) {
-        Human human = getById(id);
+    public List<Human> getSiblings(int sibId) {
+        Human human = (Human) getById(sibId);
         if (human == null) {
             return null;
         }
@@ -88,11 +93,11 @@ public class FamilyTree implements Serializable {
         return res;
     }
 
-    public List<Human> getByName(String name) {
-        List<Human> res = new ArrayList<>();
-        for (Human human : humanList) {
-            if (human.getName().equals(name)) {
-                res.add(human);
+    public List<T> getByName(String name) {
+        List<T> res = new ArrayList<>();
+        for (T creator : creatorList) {
+            if (creator.getName().equals(name)) {
+                res.add(creator);
             }
         }
         return res;
@@ -100,8 +105,8 @@ public class FamilyTree implements Serializable {
 
     public boolean setWedding(int humanId1, int humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
-            Human human1 = getById(humanId1);
-            Human human2 = getById(humanId2);
+            Human human1 = (Human) getById(humanId1);
+            Human human2 = (Human) getById(humanId2);
             return setWedding(human1, human2);
         }
         return false;
@@ -119,8 +124,8 @@ public class FamilyTree implements Serializable {
 
     public boolean setDivorce(int humanId1, int humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
-            Human human1 = getById(humanId1);
-            Human human2 = getById(humanId2);
+            Human human1 = (Human) getById(humanId1);
+            Human human2 = (Human) getById(humanId2);
             return setDivorce(human1, human2);
         }
         return false;
@@ -136,22 +141,32 @@ public class FamilyTree implements Serializable {
         }
     }
 
-    public boolean remove(int humanId) {
-        if (checkId(humanId)) {
-            Human human = getById(humanId);
-            return humanList.remove(human);
+    public boolean remove(int creatorId) {
+        if (checkId(creatorId)) {
+            T creator = getById(creatorId);
+            return creatorList.remove(creator);
         }
         return false;
     }
 
-    private boolean checkId(int id) {
-        return id < humanId && id >= 0;
+    private int calculateMaxId(List<T> creatorList) {
+        int maxId = 0;
+        for (T creator : creatorList) {
+            if (creator.getId() > maxId) {
+                maxId = creator.getId();
+            }
+        }
+        return maxId;
     }
 
-    public Human getById(long id) {
-        for (Human human : humanList) {
-            if (human.getId() == id) {
-                return human;
+    private boolean checkId(int idForCheck) {
+        return idForCheck < creatorId && idForCheck >= 0;
+    }
+
+    public T getById(int idForGet) {
+        for (T creator : creatorList) {
+            if (creator.getId() == idForGet) {
+                return creator;
             }
         }
         return null;
@@ -171,11 +186,11 @@ public class FamilyTree implements Serializable {
         sb.append(getName());
         sb.append("\n");
         sb.append("В дереве ");
-        sb.append(humanList.size());
+        sb.append(creatorList.size());
         sb.append(" объектов: ");
         sb.append("\n");
-        for (Human human : humanList) {
-            sb.append(human);
+        for (T creator : creatorList) {
+            sb.append(creator);
             sb.append("\n");
         }
         return sb.toString();

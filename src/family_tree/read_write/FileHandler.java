@@ -7,13 +7,6 @@ import java.util.Map;
 
 public class FileHandler<K, V extends Serializable> implements Writer<K, V> {
 
-    private String filePath = "src/family_tree/read_write/tree.txt";
-
-    @Override
-    public void setPath(String filePath) {
-        this.filePath = filePath;
-    }
-
     @Override
     public void writeMap(Map<K, V> map, String fileName) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
