@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        FamilyTree tree = new FamilyTree();
+        FamilyTree <Human> tree = new FamilyTree<Human>();
 
         Human Molly = new Human("Molly", LocalDate.of(1949,10,30), Gender.Female);
         Human Artur = new Human("Artur", LocalDate.of(1950,2,6), Gender.Male);
@@ -23,7 +23,7 @@ public class Main {
         System.out.println(tree);
 
         writeToFileTree(tree);
-        FamilyTree tree1 = readTreeInFile();
+        FamilyTree<Human> tree1 = readTreeInFile();
 
         System.out.println(tree1);
 
@@ -35,16 +35,16 @@ public class Main {
         System.out.println(tree1);
     }
 
-    private static void writeToFileTree(FamilyTree tree) throws IOException {
+    private static void writeToFileTree(FamilyTree <Human> tree) throws IOException {
         FileHandler fileHandler = new FileHandler();
         if (fileHandler.writeToFileObject(tree)) {
             System.out.println("Файл записан");
         }
     }
 
-    private static FamilyTree readTreeInFile() throws IOException, ClassNotFoundException {
+    private static FamilyTree <Human> readTreeInFile() throws IOException, ClassNotFoundException {
         FileHandler fileHandler = new FileHandler();
-        return (FamilyTree) fileHandler.readObjectInFile();
+        return (FamilyTree <Human>) fileHandler.readObjectInFile();
     }
 
 }

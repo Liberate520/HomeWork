@@ -1,11 +1,13 @@
 package Human;
 
+import FamilyTree.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human>, ItemFamilyTree<Human> {
     private String name;
     private LocalDate dateBrith;
     private LocalDate dateDeath;
@@ -188,5 +190,10 @@ public class Human implements Serializable {
         }
         Human human = (Human) obj;
         return human.getId() == getId();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return (int) (this.id - o.getId());
     }
 }
