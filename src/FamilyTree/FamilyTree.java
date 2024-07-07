@@ -1,9 +1,17 @@
+package FamilyTree;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
 
-public class FamilyTree {
+import Human.Human;
+
+import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
+// import writer.FamilyTreeFileHandler;
+
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Map<Integer, Human> humans;
 
     // Конструктор класса FamilyTree
@@ -26,7 +34,7 @@ public class FamilyTree {
         Human human = humans.get(id);
         return (human != null) ? human.getChildren() : new ArrayList<>();
     }
-  
+
     public void printTree() {
         for (Human human : humans.values()) {
             System.out.println(human);

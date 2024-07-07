@@ -1,12 +1,14 @@
+package Human;
 
-// import java.lang.reflect.GenericDeclaration;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Human {
+public class Human implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private int id;
     private String name;
@@ -50,24 +52,6 @@ public class Human {
     public void addChild(Human child) { 
         this.children.add(child); 
     }
-
-    // public boolean addChild(Human child){
-    // if (!children.contains(child)) {
-    // children.add(child);
-    // return true;
-    // }
-    // return false;
-    // }
-
-    // public boolean addParents(Human parent){
-    // if (parent.getGender().equals(Gender.Male)) {
-    // setFather(parent);
-    // }
-    // else if (parent.getGender().equals(Gender.Famale)) {
-    // setMother(parent);
-    // }
-    // return true;
-    // }
 
     // Метод для расчета возраста
     public int getAge() {

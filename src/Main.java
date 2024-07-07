@@ -1,4 +1,13 @@
+// import java.io.IOException;
+
 import java.time.LocalDate;
+
+import FamilyTree.FamilyTree;
+import Human.Gender;
+import Human.Human;
+import Writer.FamilyTreeFileHandler;
+import Writer.Writer;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -56,5 +65,59 @@ public class Main {
 
         // Печать всего дерева
         familyTree.printTree();
+
+        // FamilyTreeFileHandler fileHandler = new FamilyTreeFileHandler();
+        // fileHandler.setPath("Wrirer/familyTree.txt");
+
+
+        // // Сохранение дерева в файл
+        //     fileHandler.save(familyTree);
+
+
+        //     // Загрузка дерева из файла
+        //     FamilyTree loadedTree = (FamilyTree) fileHandler.read();
+
+
+        //     if (loadedTree != null) {
+        //         System.out.println("Загружено семейное дерево: ");
+        //         loadedTree.printTree();
+                
+        //     }else{
+        //         System.out.println("Не удалось загрузить файл: ");
+        //     }
+        
+        // try {
+        //     // Сохранение дерева в файл
+        //     fileHandler.saveToFile(familyTree, "wrirer/familyTree.txt");
+            
+        //     // Загрузка дерева из файла
+        //     FamilyTree loadedTree = fileHandler.loadFromFile("wrirer/familyTree.txt");
+            
+        //     // Вывод загруженного дерева
+        //     loadedTree.printTree();
+        // } catch (IOException | ClassNotFoundException e) {
+        //     e.printStackTrace();
+        // }
+
+        Writer fileHandler = new FamilyTreeFileHandler();
+        String filename = "familyTree.txt";
+        fileHandler.setPath(filename);
+
+        // Сохранение дерева в файл
+        fileHandler.save(familyTree);
+        System.out.println("Дерево сохранено в файл: " + filename);
+
+        // Загрузка дерева из файла
+        FamilyTree loadedTree = (FamilyTree) fileHandler.read();
+        System.out.println("Дерево загружено из файла:");
+
+        // Вывод загруженного дерева
+        if (loadedTree != null) {
+            loadedTree.printTree();
+        } else {
+            System.out.println("Не удалось загрузить дерево.");
+        }
+
+
     }
 }
