@@ -17,6 +17,7 @@ public class Human implements Serializable {
     private List<Human> parents;
     private List<Human> children;
 
+
     public Human (String name, LocalDate birth, LocalDate death, int age, Gender gender, Human father, Human mother){
         id = -1;
         this.name = name;

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class StudyGroup implements Iterable<Student> {
+public class StudyGroup<T extends StudyGroupItem<T>> implements Iterable<T> {
 
-    private List<Student> studentList;
+    private List<T> studentList;
 
-    public List<Student> getStudentList() {
+    public List<T> getStudentList() {
         return studentList;
     }
 
@@ -20,23 +20,23 @@ public class StudyGroup implements Iterable<Student> {
         studentList = new ArrayList<>();
     }
 
-    public void addStudent(Student student) {
+    public void add(T student) {
         studentList.add(student);
     }
 
     public void sortByName() {
         //Collections.sort(studentList, new StudentComparatorByName());
-        studentList.sort(new StudentComparatorByName());
+        studentList.sort(new StudentComparatorByName<>());
     }
 
     public void sortByAge() {
         //Collections.sort(studentList, new StudentComparatorByAge());
-        studentList.sort(new StudentComparatorByAge());
+        studentList.sort(new StudentComparatorByAge<>());
     }
 
     @Override
-    public Iterator<Student> iterator() {
+    public Iterator<T> iterator() {
         //return studentList.iterator(); //простой вариант
-        return new StudentIterator(studentList);
+        return new StudentIterator<>(studentList);
     }
 }

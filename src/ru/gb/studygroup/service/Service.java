@@ -6,17 +6,17 @@ import ru.gb.studygroup.studygroup.StudyGroup;
 
 public class Service {
 
-    private StudyGroup studyGroup;
+    private StudyGroup<Student> studyGroup;
     private StudentBuilder studentBuilder;
 
     public Service() {
-        studyGroup = new StudyGroup();
+        studyGroup = new StudyGroup<>();
         studentBuilder = new StudentBuilder();
     }
 
     public void addStudent(String name, int age) {
         Student student = studentBuilder.build(name, age);
-        studyGroup.addStudent(student);
+        studyGroup.add(student);
     }
 
     public String getListOfStudents() {

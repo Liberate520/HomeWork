@@ -1,6 +1,8 @@
 package ru.gb.studygroup.student;
 
-public class Student implements Comparable<Student> {
+import ru.gb.studygroup.studygroup.StudyGroupItem;
+
+public class Student implements StudyGroupItem<Student> {
 
     private long id;
     private String name;

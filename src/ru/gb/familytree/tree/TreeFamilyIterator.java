@@ -5,12 +5,12 @@ import ru.gb.familytree.human.Human;
 import java.util.Iterator;
 import java.util.List;
 
-public class TreeFamilyIterator implements Iterator<Human> {
+public class TreeFamilyIterator<T extends Human> implements Iterator<T> {
 
     private int index;
-    private List<Human> humanList;
+    private List<T> humanList;
 
-    public TreeFamilyIterator(List<Human> humanList) {
+    public TreeFamilyIterator(List<T> humanList) {
         this.humanList = humanList;
     }
 
@@ -20,7 +20,7 @@ public class TreeFamilyIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return humanList.get(index);
     }
 }
