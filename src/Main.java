@@ -1,11 +1,33 @@
+import ru.gb.family_tree.FileHandler;
+import ru.gb.family_tree.Writable;
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.humen.Gender;
 import ru.gb.family_tree.humen.Human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        String filePath = "src/ru/gb/family_tree/tree.txt";
+        //FamilyTree tree = testTree();
+        FamilyTree tree = load(filePath);
+        System.out.println(tree);
+
+        save(tree, filePath);
+    }
+
+    public static FamilyTree load(String filePath){
+        Writable writable = new FileHandler();
+        return (FamilyTree) writable.read(filePath);
+    }
+
+    private static void save(FamilyTree tree, String filePath){
+        Writable writable = new FileHandler();
+        writable.save((Serializable) tree, filePath);
+    }
+
+    private static FamilyTree testTree(){
         FamilyTree tree = new FamilyTree();
 
         Human harry = new Human("Harry", Gender.Male, LocalDate.of(1967,7,6));
@@ -27,5 +49,6 @@ public class Main {
         tree.add(grandMother);
 
         System.out.println(tree);
+        return tree;
     }
 }
