@@ -1,102 +1,85 @@
-package Human;
-
-import FamilyTree.FamilyMember;
-import FamilyTree.FamilyTree;
+package Dogs;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
-public class Human implements Serializable, Comparable<Human>, FamilyMember<Human> {
+public class Dog implements Serializable, Comparable<Dog> {
     private int id;
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
-    private Human father, mother;
-    private Human spouse;
-    private final List<Human> childrenList;
-    private final List<Human> parentsList;
+    private Dog father, mother;
+    private Dog spouse;
+    private final List<Dog> puppiesList;
+    private final List<Dog> parentsList;
 
 
-    public Human(int id, String name, Gender gender, LocalDate dob, LocalDate dod, Human father, Human mother){
+    public Dog(int id, String name, Gender gender, LocalDate dob, LocalDate dod, Dog father, Dog mother){
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.dob=dob;
         this.father= father;
         this.mother=mother;
-        childrenList = new ArrayList<>();
+        puppiesList = new ArrayList<>();
         parentsList = new ArrayList<>();
 
         if (father != null) {
-            father.addChildrentoFamilyMember(this);
+            father.addPuppytoDog(this);
         }
         if (mother != null) {
-            mother.addChildrentoFamilyMember(this);
+            mother.addPuppytoDog(this);
         }
     }
 
-    public Human(int id, String name, Gender gender, LocalDate dob, Human father, Human mother) {
+    public Dog(int id, String name, Gender gender, LocalDate dob, Dog father, Dog mother) {
         this(id, name, gender, dob,null, father, mother);
     }
 
-    public Human(int id, String name, Gender gender, LocalDate dob) {
+    public Dog(int id, String name, Gender gender, LocalDate dob) {
         this(id, name, gender, dob, null, null, null);
     }
 
     //методы добавления и получения списка детей у человека
-    @Override
-    public void addChildrentoFamilyMember(Human child){
-        if(!childrenList.contains(child)){
-            childrenList.add(child);
+    public void addPuppytoDog(Dog puppy){
+        if(!puppiesList.contains(puppy)){
+            puppiesList.add(puppy);
             if(!parentsList.contains(this)) {
-                child.addParentstoFamilyMember(this);
+                puppy.addParentstoDog(this);
             }
         }
     }
-    @Override
-    public void addParentstoFamilyMember(Human parent) {
+    public List<Dog> getDogsPuppiesList()
+    {
+        return this.puppiesList;
+    }
+    //методы добавления и получения списка родителей у человека
+    public void addParentstoDog(Dog parent) {
         if(!this.parentsList.contains(parent)){
             this.parentsList.add(parent);
         }
     }
 
-    @Override
-    public List<Human> getChildrensList()
-    {
-        return this.childrenList;
-    }
-
-
-    @Override
-    public List<Human> getParentsofFamilyMember(){
+    public List<Dog> getParentsofDog(){
         return this.parentsList;
     }
 
 
-
-    //методы добавления и получения списка родителей у человека
-
-
-
-
-
-
-
     //методы добавления и получения супруга(и) у человека
-    public void addSpouse (Human human) {
-        spouse=human;
+    public void addSpouse (Dog dog) {
+        spouse= dog;
     }
 
-    public Human getSpouse () {
+    public Dog getSpouse () {
         return this.spouse;
     }
 
-
-
     //метод добавления и получения id у человека
-    public Integer getId(){
+    public int getId(){
         return id;
     }
 
@@ -125,16 +108,16 @@ public class Human implements Serializable, Comparable<Human>, FamilyMember<Huma
     public Gender getGender() {
         return gender;
     }
-    public void setMother(Human mother) {
+    public void setMother(Dog mother) {
         this.mother = mother;
     }
-    public Human getMother() {
+    public Dog getMother() {
         return mother;
     }
-    public void setFather(Human father) {
+    public void setFather(Dog father) {
         this.father = father;
     }
-    public Human getFather() {
+    public Dog getFather() {
         return father;
     }
 
@@ -149,7 +132,7 @@ public class Human implements Serializable, Comparable<Human>, FamilyMember<Huma
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Human other = (Human) obj;
+        Dog other = (Dog) obj;
         return Objects.equals(this.getId(), other.getId());
 
     }
@@ -212,8 +195,8 @@ public class Human implements Serializable, Comparable<Human>, FamilyMember<Huma
             sb.append("____").append("\n");
         }
         sb.append("Дети: "+"\n");
-        if (childrenList != null && !childrenList.isEmpty()) {
-            for (Human unit : childrenList) {
+        if (puppiesList != null && !puppiesList.isEmpty()) {
+            for (Dog unit : puppiesList) {
                 sb.append("id=").append(unit.getId()).append(",").append(unit.getName()).append("\n");
             }
         }
@@ -225,7 +208,7 @@ public class Human implements Serializable, Comparable<Human>, FamilyMember<Huma
 
 
     @Override
-    public int compareTo(Human anotherHuman) {
-        return this.name.compareTo(anotherHuman.name);
+    public int compareTo(Dog anotherDog) {
+        return this.name.compareTo(anotherDog.name);
     }
 }
