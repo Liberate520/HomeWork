@@ -1,3 +1,6 @@
+import writer.FileHandler;
+import writer.Writer;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -6,12 +9,18 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = createFamilyTree();
 
+        // Сохранение дерева в файл
+        saveTree(familyTree);
+
+        // Чтение дерева из файла
+        FamilyTree loadedTree = readTree();
+
         // Найти человека по имени и получить его детей
-        Human person = familyTree.findHumanByName("Иван");
+        Human person = loadedTree.findHumanByName("Иван");
         if (person != null) {
             printHumanDetails(person);
 
-            List<Human> children = familyTree.getChildrenOf(person);
+            List<Human> children = loadedTree.getChildrenOf(person);
             System.out.println("Children of " + person.getName() + ":");
             for (Human child : children) {
                 printHumanDetails(child);
@@ -19,6 +28,16 @@ public class Main {
         } else {
             System.out.println("Person not found.");
         }
+    }
+
+    private static FamilyTree readTree() {
+        Writer fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static void saveTree(FamilyTree tree) {
+        Writer fileHandler = new FileHandler();
+        fileHandler.save(tree);
     }
 
     private static FamilyTree createFamilyTree() {
