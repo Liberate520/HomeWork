@@ -29,4 +29,8 @@ public class FamilyTree {
         return new ArrayList<>(); //ДЛя ситуаций когда человек не найден или у него нет детей
     }
 
+    public List<HumanInfo> getPeople() {
+        return people;
+    }
+
 }

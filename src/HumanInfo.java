@@ -1,14 +1,15 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HumanInfo {
-    private String name;
-    private LocalDate dob;
-    private LocalDate dod;
-    private Gender gender;
-    private HumanInfo father, mother;
-    private List<HumanInfo> children;
+    String name;
+    LocalDate dob;
+    LocalDate dod;
+    Gender gender;
+    HumanInfo father, mother;
+    List<HumanInfo> children;
 
     public HumanInfo(String name, LocalDate dob, Gender gender) {
         this.name = name;
@@ -45,20 +46,20 @@ public class HumanInfo {
         return father;
     }
 
-    public HumanInfo getMother() {
-        return mother;
-    }
-
-    public List<HumanInfo> getChildren() {
-        return new ArrayList<>(children);
-    }
-
     public void setFather(HumanInfo father) {
         this.father = father;
     }
 
+    public HumanInfo getMother() {
+        return mother;
+    }
+
     public void setMother(HumanInfo mother) {
         this.mother = mother;
+    }
+
+    public List<HumanInfo> getChildren() {
+        return children;
     }
 
     public void addChild(HumanInfo child) {

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -42,12 +43,55 @@ public class Main {
         tree.addPerson(aemond);
         tree.addPerson(helaena);
 
-        List<HumanInfo> childrenOfViserys = tree.getChildrenOfPerson("Viserys");
+        //List<HumanInfo> childrenOfViserys = tree.getChildrenOfPerson("Viserys");
 
         // Вывод результатов исследования
-        System.out.println("Children of Viserys:");
-        for (HumanInfo child : childrenOfViserys) {
-            System.out.println(child.getName() + ", DOB: " + child.getDob() + ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") + ", Gender: " + child.getGender());
+        //System.out.println("Children of Viserys:");
+        //for (HumanInfo child : childrenOfViserys) {
+        //    System.out.println(child.getName() + ", DOB: " + child.getDob() + ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") + ", Gender: " + child.getGender());
+        //}
+
+        // Сохранение семейного древа в файл
+        Writer writer = new FileHandler();
+        try {
+            writer.save(tree.getPeople(), "familyTree.txt");
+            System.out.println("Family tree saved successfully.");
+        } catch (IOException e) {
+            System.out.println("Failed to save family tree: " + e.getMessage());
+        }
+
+        // Загрузка семейного древа из файла
+        List<HumanInfo> loadedPeople = null;
+        try {
+            loadedPeople = writer.load("familyTree.txt");
+            System.out.println("Family tree loaded successfully.");
+        } catch (IOException e) {
+            System.out.println("Failed to load family tree: " + e.getMessage());
+        }
+
+        if (loadedPeople != null) {
+            // Построение дерева из загруженных людей
+            FamilyTree loadedTree = new FamilyTree();
+            for (HumanInfo person : loadedPeople) {
+                loadedTree.addPerson(person);
+                if (person.getFather() != null) {
+                    person.getFather().addChild(person);
+                }
+                if (person.getMother() != null) {
+                    person.getMother().addChild(person);
+                }
+            }
+
+            // Проведение исследования: получение всех детей Viserys
+            List<HumanInfo> childrenOfViserys = loadedTree.getChildrenOfPerson("Viserys");
+
+            // Вывод результатов
+            System.out.println("Children of Viserys:");
+            for (HumanInfo child : childrenOfViserys) {
+                System.out.println(child.getName() + ", DOB: " + child.getDob() +
+                        ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") +
+                        ", Gender: " + child.getGender());
+            }
         }
     }
 }
