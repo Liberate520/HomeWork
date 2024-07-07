@@ -7,7 +7,7 @@ import family_tree.creators.pet.Pet;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Dog extends Pet implements Serializable {
+public class Dog extends Pet {
     public Dog(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, String breed, Creators owner) {
         super(name, gender, birthDate, deathDate, breed, owner);
     }

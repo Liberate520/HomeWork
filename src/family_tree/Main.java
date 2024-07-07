@@ -43,16 +43,16 @@ public class Main {
                     familyTreeManager.addHumanToMap(scanner, humanMap);
                     break;
                 case 2:
-                    System.out.println("Укажите имя человека, которого хотите добавить:");
+//                    System.out.println("Укажите имя человека, которого хотите добавить:");
                     familyTreeManager.addHumanToTree(scanner, familyTreeMap, humanMap);
                     break;
                 case 3:
-                    System.out.println("Укажите имя человека, которого хотите найти:");
-                    familyTreeManager.findHuman(scanner, humanMap);
+                    System.out.println();
+                    familyTreeManager.findEntity(scanner, humanMap, "Укажите имя человека, которого хотите найти:", "Не найдено ни одного чнловека");
                     break;
                 case 4:
-                    System.out.println("Укажите имя дерева, которого хотите найти:");
-                    familyTreeManager.findFamilyTree(scanner, familyTreeMap);
+                    System.out.println();
+                    familyTreeManager.findEntity(scanner, familyTreeMap, "Укажите название дерева, которого хотите найти:", "Не найдено ни одно дерево");
                     break;
                 case 5:
                     for (Human human : humanMap.values()) {

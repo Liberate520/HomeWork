@@ -3,12 +3,11 @@ package family_tree.creators.human;
 import family_tree.creators.Creators;
 import family_tree.creators.Gender;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human extends Creators implements Serializable {
+public class Human extends Creators {
     private Human father, mother, spouse;
     private List<Human> children;
 
@@ -27,7 +26,7 @@ public class Human extends Creators implements Serializable {
         this(name, gender, birthDate, null, father, mother);
     }
 
-    public Human(){
+    public Human() {
         this(null, null, null, null, null, null);
     }
 

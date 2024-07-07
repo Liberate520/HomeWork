@@ -6,7 +6,7 @@ import family_tree.creators.Gender;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Pet extends Creators implements Serializable {
+public abstract class Pet extends Creators {
     private String breed;
     private Creators owner;
 

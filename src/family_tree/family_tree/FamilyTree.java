@@ -1,5 +1,8 @@
 package family_tree.family_tree;
 
+import family_tree.interfaces.Addable;
+import family_tree.interfaces.Identifiable;
+import family_tree.interfaces.Nameable;
 import family_tree.creators.Creators;
 import family_tree.creators.IDGenerator;
 import family_tree.creators.human.Human;
@@ -8,7 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree<T extends Creators> implements Serializable {
+public class FamilyTree<T extends Creators> implements Serializable, Addable<T>, Nameable, Identifiable {
     private final int id;
     private int creatorId;
     private String name;
@@ -19,6 +22,7 @@ public class FamilyTree<T extends Creators> implements Serializable {
         this.name = name;
         this.creatorList = creatorList;
     }
+
 
     public FamilyTree() {
         this(null, new ArrayList<>());
@@ -44,6 +48,7 @@ public class FamilyTree<T extends Creators> implements Serializable {
         this.creatorList = creatorList;
     }
 
+    @Override
     public boolean add(T creator) {
         if (creator == null) {
             return false;
@@ -195,4 +200,6 @@ public class FamilyTree<T extends Creators> implements Serializable {
         }
         return sb.toString();
     }
+
+
 }

@@ -1,10 +1,13 @@
 package family_tree.creators;
 
+import family_tree.interfaces.Identifiable;
+import family_tree.interfaces.Nameable;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
-public abstract class Creators implements Serializable {
+public abstract class Creators implements Serializable, Identifiable, Nameable {
     private final int id;
     private String name;
     private Gender gender;
