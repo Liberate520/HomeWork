@@ -56,10 +56,6 @@ public class Main {
         human3.addChild(human6);
         human4.addChild(human5);
         human4.addChild(human6);
-        human1.addGrandChild(human5);
-        human1.addGrandChild(human6);
-        human2.addGrandChild(human5);
-        human2.addGrandChild(human6);
         human3.addParent(human1);
         human4.addParent(human1);
         human3.addParent(human2);
@@ -67,12 +63,7 @@ public class Main {
         human5.addParent(human3);
         human6.addParent(human3);
         human5.addParent(human4);
-        human6.addParent(human4);
-        human5.addGrandParent(human1);
-        human5.addGrandParent(human2);
-        human6.addGrandParent(human1);
-        human6.addGrandParent(human2);
-        
+        human6.addParent(human4);      
         
         //Простите, но я не понимаю, почему выводит дубли детей и внуков (возможно, из-за того, что я решил не использовать концепцию с ID, 
         // но тогда, если убрать первое добавление human3 в список детей, то он должен выводиться только 1 раз, но он всё равно выводится в списке 2 раза, я не нашёл ошибку,

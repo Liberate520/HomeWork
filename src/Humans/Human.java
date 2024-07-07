@@ -11,9 +11,7 @@ public class Human {
     private LocalDate dateOfBorn, dateOfDeath;
     private Gender gender;
     private Human father, mother;
-    private Human grandFather, grandMother;
-    private List<Human> children;
-    private List<Human> grandchildren; 
+    private List<Human> children; 
 
     public Human(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender, Human father, Human mother,
             Human grandFather, Human grandMother) {
@@ -24,10 +22,8 @@ public class Human {
         this.gender = gender;
         this.father = father;
         this.mother = mother;
-        this.grandFather = grandFather;
-        this.grandMother = grandMother;
         children = new ArrayList<>();
-        grandchildren = new ArrayList<>();
+        
     }
 
     public Human(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender) {
@@ -46,28 +42,11 @@ public class Human {
         return false;
     }
 
-    public boolean addGrandChild(Human grandChild){
-        if(!grandchildren.contains(grandChild)){
-            grandchildren.add(grandChild);
-            return true;
-        }
-        return false;
-    }
-
     public boolean addParent(Human parent){
         if (parent.getGender().equals(Gender.Male)) {
             setFather(parent);
         } else if (parent.getGender().equals(Gender.Female)) {
             setMother(parent);
-        }
-        return true;
-    }
-
-    public boolean addGrandParent(Human grandParent){
-        if (grandParent.getGender().equals(Gender.Male)) {
-            setGrandFather(grandParent);
-        } else if (grandParent.getGender().equals(Gender.Female)) {
-            setGrandMother(grandParent);
         }
         return true;
     }
@@ -79,17 +58,6 @@ public class Human {
         }
         if (mother != null) {
             list.add(mother);
-        }
-        return list;
-    }
-
-    public List<Human> getGrandParents(){
-        List<Human> list = new ArrayList<>(2);
-        if (grandFather != null) {
-            list.add(grandFather);
-        }
-        if (grandMother != null) {
-            list.add(grandMother);
         }
         return list;
     }
@@ -130,31 +98,13 @@ public class Human {
     public void setMother(Human mother) {
         this.mother = mother;
     }
-    public Human getGrandFather() {
-        return grandFather;
-    }
-    public void setGrandFather(Human grandFather) {
-        this.grandFather = grandFather;
-    }
-    public Human getGrandMother() {
-        return grandMother;
-    }
-    public void setGrandMother(Human grandMother) {
-        this.grandMother = grandMother;
-    }
     public List<Human> getChildren() {
         return children;
     }
     public void setChildren(List<Human> children) {
         this.children = children;
     }
-    public List<Human> getGrandchildren() {
-        return grandchildren;
-    }
-    public void setGrandchildren(List<Human> grandchildren) {
-        
-        this.grandchildren = grandchildren;
-    }
+
     // public int getID() {
     //     return ID;
     // }
@@ -193,10 +143,7 @@ public class Human {
         sb.append(getGender() + ";");
         sb.append(getFatherInfo());
         sb.append(getMotherInfo());
-        sb.append(getGrandFatherInfo());
-        sb.append(getGrandMotherInfo());
         sb.append(getChildrenInfo());
-        sb.append(getGrandChildrenInfo());
         return sb.toString();
     }
 
@@ -222,28 +169,6 @@ public class Human {
         return res;
     }
 
-    public String getGrandFatherInfo(){
-        String res = " дедушка: ";
-        Human grandfather = getGrandFather();
-        if (grandfather != null) {
-            res += grandfather.getName();
-        } else {
-            res += " нет данных; ";
-        }
-        return res;
-    }
-
-    public String getGrandMotherInfo(){
-        String res = " бабушка: ";
-        Human grandmother = getGrandMother();
-        if (grandmother != null) {
-            res += grandmother.getName();
-        } else {
-            res += " нет данных; ";
-        }
-        return res;
-    }
-
     public String getChildrenInfo(){
         StringBuilder res = new StringBuilder();
         res.append(" дети: ");
@@ -255,21 +180,6 @@ public class Human {
             }
         } else {
             res.append(" детей нет; ");
-        }
-        return res.toString();
-    }
-
-    public String getGrandChildrenInfo(){
-        StringBuilder res = new StringBuilder();
-        res.append(" внуки: ");
-        if (grandchildren.size() != 0) {
-            res.append(grandchildren.get(0).getName());
-            for (int i = 0; i < grandchildren.size(); i++) {
-                res.append(", ");
-                res.append(grandchildren.get(i).getName());
-            }
-        } else {
-            res.append(" внуков нет. ");
         }
         return res.toString();
     }
