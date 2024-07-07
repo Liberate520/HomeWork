@@ -26,6 +26,13 @@ public class Main {
         FamilyTree tree1 = readTreeInFile();
 
         System.out.println(tree1);
+
+        tree1.sortByBirthDay();
+        System.out.println();
+        System.out.println(tree1);
+        tree1.sortByName();
+        System.out.println();
+        System.out.println(tree1);
     }
 
     private static void writeToFileTree(FamilyTree tree) throws IOException {

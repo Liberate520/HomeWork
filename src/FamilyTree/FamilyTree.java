@@ -1,12 +1,15 @@
 package FamilyTree;
 
 import Human.Human;
-
+import Human.HumanIterator;
+import Human.HumanByAgeComparator;
+import Human.HumanByNameComparator;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long humanId;
     private List<Human> humanList;
 
@@ -89,5 +92,18 @@ public class FamilyTree implements Serializable {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<Human> iterator(){
+        return new HumanIterator(humanList);
+    }
+
+    public void sortByBirthDay(){
+        humanList.sort(new HumanByAgeComparator());
+    }
+
+    public void sortByName(){
+        humanList.sort(new HumanByNameComparator());
     }
 }
