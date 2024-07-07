@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
@@ -6,36 +7,47 @@ public class Main {
         FamilyTree tree = new FamilyTree(); //Тут создается семеное древо
 
         //Далее создаем людей
-        HumanInfo Viseris = new HumanInfo("Viseris", 50);
-        HumanInfo Aemma = new HumanInfo("Aema", 40);
-        HumanInfo Alisanta = new HumanInfo("Alisanta", 20);
-        HumanInfo Rhaenyra = new HumanInfo("Rhanyra", 20);
-        HumanInfo Aegon = new HumanInfo("Aegon", 5);
-        HumanInfo Aemond = new HumanInfo("Aemond", 3);
-        HumanInfo Helaena = new HumanInfo("Helaena", 2);
+        HumanInfo viserys = new HumanInfo("Viserys", LocalDate.of(1770, 1, 1), Gender.MALE);
+        HumanInfo aemma = new HumanInfo("Aemma", LocalDate.of(1775, 2, 15), LocalDate.of(1810, 5, 5), Gender.FEMALE);
+        HumanInfo alisanta = new HumanInfo("Alisanta", LocalDate.of(1795, 3, 10), Gender.FEMALE);
+        HumanInfo rhaenyra = new HumanInfo("Rhaenyra", LocalDate.of(1796, 4, 20), Gender.FEMALE);
+        HumanInfo aegon = new HumanInfo("Aegon", LocalDate.of(1800, 5, 25), Gender.MALE);
+        HumanInfo aemond = new HumanInfo("Aemond", LocalDate.of(1802, 6, 30), Gender.MALE);
+        HumanInfo helaena = new HumanInfo("Helaena", LocalDate.of(1804, 7, 15), Gender.FEMALE);
 
-        Viseris.addChild(Rhaenyra); //тут и далее установка родительских связей
-        Viseris.addChild(Aegon);
-        Viseris.addChild(Aemond);
-        Viseris.addChild(Helaena);
-        Aemma.addChild(Rhaenyra);
-        Alisanta.addChild(Aegon);
-        Alisanta.addChild(Aemond);
-        Alisanta.addChild(Helaena);
+        viserys.addChild(rhaenyra);
+        viserys.addChild(aegon);
+        viserys.addChild(aemond);
+        viserys.addChild(helaena);
+        aemma.addChild(rhaenyra);
+        alisanta.addChild(aegon);
+        alisanta.addChild(aemond);
+        alisanta.addChild(helaena);
 
-        tree.addPerson(Viseris); //тут и далее добавление людей в древо
-        tree.addPerson(Aemma);
-        tree.addPerson(Alisanta);
-        tree.addPerson(Rhaenyra);
-        tree.addPerson(Aegon);
-        tree.addPerson(Aemond);
-        tree.addPerson(Helaena);
+        rhaenyra.setFather(viserys);
+        rhaenyra.setMother(aemma);
+        aegon.setFather(viserys);
+        aegon.setMother(alisanta);
+        aemond.setFather(viserys);
+        aemond.setMother(alisanta);
+        helaena.setFather(viserys);
+        helaena.setMother(alisanta);
 
-        List<HumanInfo> childrenOfViseris = tree.getChildrenOfPerson("Viseris");
+        // Добавление людей в дерево
+        tree.addPerson(viserys);
+        tree.addPerson(aemma);
+        tree.addPerson(alisanta);
+        tree.addPerson(rhaenyra);
+        tree.addPerson(aegon);
+        tree.addPerson(aemond);
+        tree.addPerson(helaena);
 
-        System.out.println("Children of Viseris: ");
-        for (HumanInfo child : childrenOfViseris) {
-            System.out.println(child.getName() + ", Age: " + child.getAge());
+        List<HumanInfo> childrenOfViserys = tree.getChildrenOfPerson("Viserys");
+
+        // Вывод результатов исследования
+        System.out.println("Children of Viserys:");
+        for (HumanInfo child : childrenOfViserys) {
+            System.out.println(child.getName() + ", DOB: " + child.getDob() + ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") + ", Gender: " + child.getGender());
         }
     }
 }
