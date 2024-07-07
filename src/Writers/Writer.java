@@ -1,10 +1,11 @@
 package Writers;
 
-import java.io.IOException;
+import java.io.Serializable;
 
-import FamilyTree.FamilyTree;
+
 
 public interface Writer {
-    FamilyTree read(String path) throws IOException, ClassNotFoundException;
-    void write(String path, FamilyTree familyTree) throws IOException;
+    void save(Serializable serializable);
+    Object read();
+    void setPath(String path);
 }

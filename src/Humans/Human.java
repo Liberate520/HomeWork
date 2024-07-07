@@ -1,11 +1,12 @@
 package Humans;
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable{
     // private int ID;
     private String name;
     private LocalDate dateOfBorn, dateOfDeath;
@@ -13,8 +14,7 @@ public class Human {
     private Human father, mother;
     private List<Human> children; 
 
-    public Human(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender, Human father, Human mother,
-            Human grandFather, Human grandMother) {
+    public Human(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender, Human father, Human mother) {
         // ID = -1;
         this.name = name;
         this.dateOfBorn = dateOfBorn;
@@ -27,11 +27,7 @@ public class Human {
     }
 
     public Human(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender) {
-        this(name, dateOfBorn, dateOfDeath, gender, null, null, null, null);
-    }
-
-    public Human(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender, Human father, Human mother) {
-        this(name, dateOfBorn, dateOfDeath, gender, father, mother, null, null);
+        this(name, dateOfBorn, dateOfDeath, gender, null, null);
     }
 
     public boolean addChild(Human child){

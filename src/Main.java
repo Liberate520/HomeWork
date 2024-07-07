@@ -1,6 +1,3 @@
-
-
-import java.io.IOException;
 import java.time.LocalDate;
 // import java.util.ArrayList;
 // import java.util.List;
@@ -8,15 +5,25 @@ import FamilyTree.FamilyTree;
 import Humans.FamilyFriend;
 import Humans.Gender;
 import Humans.Human;
-import Writers.Writer;
 import Writers.FileHandler;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException{
+    public static void main(String[] args) {
+        
+        FamilyTree familyTree = testTree();
+        saveTree(familyTree);
+        System.out.println(familyTree);
+    }
 
-        Writer fileHandler = new FileHandler();
-       
+    private static void saveTree(FamilyTree familyTree){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree);
+    }
+
+    private static FamilyTree testTree(){
         FamilyTree familyTree = new FamilyTree();
+        
+        // FamilyTree familyTree = new FamilyTree();
 
         Human human1 = new Human("Павлов Александр Иванович", LocalDate.of(1955, 12, 1),
         LocalDate.of(2022, 1, 20), Gender.Male);
@@ -31,10 +38,10 @@ public class Main {
         null, Gender.Female, null, null);
 
         Human human5 = new Human("Павлов Василий Иванович", LocalDate.of(2012, 3, 2),
-        null, Gender.Male, null, null, null, null);
+        null, Gender.Male, null, null);
 
         Human human6 = new Human("Федорова Оксана Андреевна", LocalDate.of(2015, 7, 18),
-        null, Gender.Female, null, null, null, null);
+        null, Gender.Female, null, null);
 
         Human human7 = new FamilyFriend("Черенков Аркадий Борисович", null, null, Gender.Male,
         null, null, null, LocalDate.of(1975, 6, 19)); // друг семьи добавлен просто интереса ради, чтобы посмотреть как это работает.
@@ -65,13 +72,13 @@ public class Main {
         human5.addParent(human4);
         human6.addParent(human4);      
         
+
+
         //Простите, но я не понимаю, почему выводит дубли детей и внуков (возможно, из-за того, что я решил не использовать концепцию с ID, 
         // но тогда, если убрать первое добавление human3 в список детей, то он должен выводиться только 1 раз, но он всё равно выводится в списке 2 раза, я не нашёл ошибку,
         // Константин, подскажите пожалуйста, что не так?).
         System.out.println(familyTree);
-        familyTree = fileHandler.read("familyTree.txt");
-
-
-
+        familyTree.sortByGender();
+        return familyTree;
     }
 }
