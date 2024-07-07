@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable{
+import FamilyTree.ItemFamilyTree;
+
+public class Human implements Serializable, ItemFamilyTree{
     // private int ID;
     private String name;
     private LocalDate dateOfBorn, dateOfDeath;

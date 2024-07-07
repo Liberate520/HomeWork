@@ -10,18 +10,18 @@ import Writers.FileHandler;
 public class Main {
     public static void main(String[] args) {
         
-        FamilyTree familyTree = testTree();
+        FamilyTree<Human> familyTree = testTree();
         saveTree(familyTree);
         System.out.println(familyTree);
     }
 
-    private static void saveTree(FamilyTree familyTree){
+    private static void saveTree(FamilyTree<Human> familyTree){
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(familyTree);
     }
 
-    private static FamilyTree testTree(){
-        FamilyTree familyTree = new FamilyTree();
+    private static FamilyTree<Human> testTree(){
+        FamilyTree<Human> familyTree = new FamilyTree<Human>();
         
         // FamilyTree familyTree = new FamilyTree();
 

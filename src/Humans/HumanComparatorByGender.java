@@ -2,10 +2,12 @@ package Humans;
 
 import java.util.Comparator;
 
-public class HumanComparatorByGender implements Comparator<Human>{
+import FamilyTree.ItemFamilyTree;
+
+public class HumanComparatorByGender<U extends ItemFamilyTree> implements Comparator<U>{
 
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(U o1, U o2) {
         return o1.getGender().compareTo(o2.getGender());
     }
     
