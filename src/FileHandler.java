@@ -22,7 +22,7 @@ public class FileHandler implements Writer {
                 for (HumanInfo child : person.getChildren()) {
                     writer.println(child.getName());
                 }
-                writer.println("---"); // Разделитель между людьми
+                writer.println("---"); // Разделитель между людьми в файле
             }
         }
     }
@@ -34,7 +34,7 @@ public class FileHandler implements Writer {
             while (scanner.hasNextLine()) {
                 String name = scanner.nextLine();
                 if (name.equals("---")) {
-                    continue; // Пропускаем разделитель
+                    continue;
                 }
                 LocalDate dob = LocalDate.parse(scanner.nextLine());
                 String dodLine = scanner.nextLine();
