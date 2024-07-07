@@ -1,9 +1,4 @@
 package Human;
-// public enum Gender {
-//     Male, Famale
-// }
-
-
 
 public enum Gender {
     Male("мужской"),

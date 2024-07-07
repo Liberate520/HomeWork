@@ -63,42 +63,10 @@ public class Main {
         //      System.out.println(child.getName());
         //  }
 
-        // Печать всего дерева
-        familyTree.printTree();
+        // // Печать всего дерева
+        // familyTree.printTree();
 
-        // FamilyTreeFileHandler fileHandler = new FamilyTreeFileHandler();
-        // fileHandler.setPath("Wrirer/familyTree.txt");
-
-
-        // // Сохранение дерева в файл
-        //     fileHandler.save(familyTree);
-
-
-        //     // Загрузка дерева из файла
-        //     FamilyTree loadedTree = (FamilyTree) fileHandler.read();
-
-
-        //     if (loadedTree != null) {
-        //         System.out.println("Загружено семейное дерево: ");
-        //         loadedTree.printTree();
-                
-        //     }else{
-        //         System.out.println("Не удалось загрузить файл: ");
-        //     }
         
-        // try {
-        //     // Сохранение дерева в файл
-        //     fileHandler.saveToFile(familyTree, "wrirer/familyTree.txt");
-            
-        //     // Загрузка дерева из файла
-        //     FamilyTree loadedTree = fileHandler.loadFromFile("wrirer/familyTree.txt");
-            
-        //     // Вывод загруженного дерева
-        //     loadedTree.printTree();
-        // } catch (IOException | ClassNotFoundException e) {
-        //     e.printStackTrace();
-        // }
-
         Writer fileHandler = new FamilyTreeFileHandler();
         String filename = "familyTree.txt";
         fileHandler.setPath(filename);
