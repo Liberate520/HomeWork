@@ -1,10 +1,13 @@
 package ru.gb.family_tree.view;
 
+import ru.gb.family_tree.model.dataHandler.FileHandler;
+import ru.gb.family_tree.model.dataHandler.Writeble;
 import ru.gb.family_tree.model.member.Gender;
 import ru.gb.family_tree.model.member.Member;
 import ru.gb.family_tree.presenter.Presenter;
 
 import javax.xml.transform.Source;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,15 +20,15 @@ public class ConsoleUI implements View{
     private boolean work;
     private MainMenu menu;
 
-    public ConsoleUI(){
+    public ConsoleUI(Writeble writeble){
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+        presenter = new Presenter(this, writeble);
         work = true;
         menu = new MainMenu(this);
     }
 
     @Override
-    public void start() {
+    public void start() throws IOException, ClassNotFoundException {
         hello();
         while (work){
             printMenu();
@@ -33,7 +36,7 @@ public class ConsoleUI implements View{
         }
     }
 
-    private void execute() {
+    private void execute() throws IOException, ClassNotFoundException {
         String line = scanner.nextLine();
         if (checkTextForInt(line)){
             int numCommang = Integer.parseInt(line);
@@ -106,6 +109,15 @@ public class ConsoleUI implements View{
 
     public void getFullTree() {
         System.out.println(presenter.getFullTree());
+    }
+
+    public void writeFile() throws IOException {
+        System.out.println("Введите название файла для сохранения: ");
+        presenter.writeData(scanner.nextLine());
+    }
+    public void readData() throws IOException, ClassNotFoundException {
+        System.out.println("Введите название файла для загрузки: ");
+        presenter.readData(scanner.nextLine());
     }
 
 }

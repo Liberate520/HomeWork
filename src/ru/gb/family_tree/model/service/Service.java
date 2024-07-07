@@ -1,5 +1,7 @@
 package ru.gb.family_tree.model.service;
 
+import ru.gb.family_tree.model.dataHandler.FileHandler;
+import ru.gb.family_tree.model.dataHandler.Writeble;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.member.Gender;
 import ru.gb.family_tree.model.member.Member;
@@ -8,14 +10,16 @@ import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByName;
 import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByNumberOfChild;
 import ru.gb.family_tree.model.tree.FamilyTree;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Service {
-    private int idMember;
     private FamilyTree<Member> ft;
+    private Writeble writeble;
 
-    public Service() {
+    public Service(Writeble writeble) {
         ft = new FamilyTree<>();
+        this.writeble = writeble;
     }
 
     public void addMember(String name, Member mother, Member father, LocalDate birthDate, LocalDate deathDate, Gender gender) {
@@ -37,4 +41,13 @@ public class Service {
     public void sortByChild(){
         ft.sortByChild();
     }
+
+    public void writeData(String filename) throws IOException {
+        writeble.writeData(this.ft, filename);
+    }
+    public void readData(String filename) throws IOException, ClassNotFoundException {
+        this.ft = (FamilyTree<Member>) writeble.readData(filename);
+    }
+
+
 }

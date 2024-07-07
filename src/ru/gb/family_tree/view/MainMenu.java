@@ -1,9 +1,8 @@
 package ru.gb.family_tree.view;
 
-import ru.gb.family_tree.view.commands.AddMember;
-import ru.gb.family_tree.view.commands.Commands;
-import ru.gb.family_tree.view.commands.GetFullTree;
+import ru.gb.family_tree.view.commands.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +14,8 @@ public class MainMenu {
         commandsList = new ArrayList<>();
         commandsList.add(new GetFullTree(consoleUI));
         commandsList.add(new AddMember(consoleUI));
+        commandsList.add(new WriteFile(consoleUI));
+        commandsList.add(new ReadFile(consoleUI));
     }
 
     public String menu(){
@@ -27,7 +28,7 @@ public class MainMenu {
         }
         return sb.toString();
     }
-    public void execute(int choice){
+    public void execute(int choice) throws IOException, ClassNotFoundException {
         Commands command = commandsList.get(choice-1);
         command.execute();
     }
