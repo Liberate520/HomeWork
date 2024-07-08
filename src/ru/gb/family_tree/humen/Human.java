@@ -1,12 +1,14 @@
 package ru.gb.family_tree.humen;
 
+import ru.gb.family_tree.family_tree.TreeNode;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, TreeNode {
     private long id;
     private String name;
     private Gender  gender;
@@ -96,6 +98,16 @@ public class Human implements Serializable {
         return null;
     }
 
+    @Override
+    public boolean addChild(Object human) {
+        return false;
+    }
+
+    @Override
+    public boolean addParent(Object human) {
+        return false;
+    }
+
     public int getAge(){
         if (deathDate == null){
             return getPeriod(birthDate, LocalDate.now());
@@ -169,6 +181,11 @@ public class Human implements Serializable {
 
     public Human getSpouse() {
         return spouse;
+    }
+
+    @Override
+    public void setSpouse(Object human) {
+
     }
 
     @Override
