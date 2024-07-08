@@ -3,20 +3,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HumanInfo {
-    String name;
-    LocalDate dob;
-    LocalDate dod;
-    Gender gender;
-    HumanInfo father, mother;
-    List<HumanInfo> children;
-
-    public HumanInfo(String name, LocalDate dob, Gender gender) {
-        this.name = name;
-        this.dob = dob;
-        this.gender = gender;
-        this.children = new ArrayList<>();
-    }
+public class HumanInfo implements Serializable {
+    private String name;
+    private LocalDate dob; // дата рождения
+    private LocalDate dod; // дата смерти
+    private Gender gender;
+    private HumanInfo father;
+    private HumanInfo mother;
+    private List<HumanInfo> children;
 
     public HumanInfo(String name, LocalDate dob, LocalDate dod, Gender gender) {
         this.name = name;
@@ -26,6 +20,7 @@ public class HumanInfo {
         this.children = new ArrayList<>();
     }
 
+    // Геттеры и сеттеры
     public String getName() {
         return name;
     }
