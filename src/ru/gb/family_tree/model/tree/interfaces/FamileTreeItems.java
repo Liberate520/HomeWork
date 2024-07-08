@@ -1,4 +1,4 @@
-package ru.gb.family_tree.model.tree;
+package ru.gb.family_tree.model.tree.interfaces;
 
 import java.util.List;
 

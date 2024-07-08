@@ -1,16 +1,19 @@
 package ru.gb.family_tree.model.tree;
 
-import ru.gb.family_tree.model.member.Member;
 import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByAge;
 import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByName;
 import ru.gb.family_tree.model.member.member_comparator.MemberComparatorByNumberOfChild;
+import ru.gb.family_tree.model.tree.interfaces.FamileTreeItems;
+import ru.gb.family_tree.model.tree.interfaces.Searchable;
+import ru.gb.family_tree.model.tree.interfaces.Sortable;
+import ru.gb.family_tree.model.tree.interfaces.TreeDescriptionable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends FamileTreeItems<T>> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends FamileTreeItems<T>> implements Serializable, Iterable<T>, Sortable, Searchable {
     private List<T> tree;
 
     public FamilyTree(){
@@ -40,13 +43,15 @@ public class FamilyTree<T extends FamileTreeItems<T>> implements Serializable, I
     }
 
     public String getFullTree(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Древо: \n");
-        for (T member: tree){
-            sb.append(member);
-            sb.append("\n");
-        }
-        return sb.toString();
+        TreeDescriptionable df = new TreeDescription();
+        return df.getFullTree(tree);
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Древо: \n");
+//        for (T member: tree){
+//            sb.append(member);
+//            sb.append("\n");
+//        }
+//        return sb.toString();
     }
 
     public void sortByName(){

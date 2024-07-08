@@ -1,6 +1,8 @@
 package ru.gb.family_tree.model.member;
 
-import ru.gb.family_tree.model.tree.FamileTreeItems;
+import ru.gb.family_tree.model.member.descriptionFormation.MemberDescription;
+import ru.gb.family_tree.model.member.descriptionFormation.JsonType;
+import ru.gb.family_tree.model.tree.interfaces.FamileTreeItems;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -21,6 +23,8 @@ public abstract class Member implements Serializable, Comparable<Member>, Famile
     private List<Member> child;
     private LocalDate birthDate, deathDate;
     private Gender gender;
+
+    private MemberDescription df;
 
     /**
      * Конструктор full
@@ -58,9 +62,14 @@ public abstract class Member implements Serializable, Comparable<Member>, Famile
         this(name,null, null, birthDate,null, gender);
     }
 
-    public List<Member> getChild(){
-        return child;
-    }
+    public long getId(){return this.id;}
+    public String getName(){return this.name;}
+    public Member getMother(){return this.mother;}
+    public Member getFather(){return this.father;}
+    public LocalDate getBirthDate(){return this.birthDate;}
+    public LocalDate getDeathDate(){return this.deathDate;}
+    public Gender getGender(){return this.gender;}
+    public List<Member> getChild(){return child;}
 
     public String getParents(){
         StringBuilder sb = new StringBuilder();
@@ -68,9 +77,6 @@ public abstract class Member implements Serializable, Comparable<Member>, Famile
         sb.append("Mother: " + mother + "\n");
         sb.append("Father: " + father + "\n");
         return sb.toString();
-    }
-    public String getName(){
-        return this.name;
     }
 
     //найти возраст человека
@@ -88,37 +94,40 @@ public abstract class Member implements Serializable, Comparable<Member>, Famile
 
     @Override
     public String toString() {
-        return "{" + this.getClass().getSimpleName() + "; " +
-                "ID ='" + id + '\'' +
-                "name='" + name + '\'' +
-                ", mother=" + toStrHelper(mother) +
-                ", father=" + toStrHelper(father) +
-                ", child=" + toStrHelperList(child) +
-                ", birthDate=" + birthDate +
-                ", deathDate=" + deathDate +
-                ", gender=" + gender +
-                '}';
+        MemberDescription df = new JsonType();
+        return df.DescriptionFormation(this);
     }
-    //вместо объекта в печать возвращаем только его имя для матери и отца
-    private String toStrHelper(Member member){
-        if (member != null){
-            return member.name;
-        }
-        else return null;
-    }
-    //вместо объекта в печать возвращаем только имена детей
-    private String toStrHelperList(List<Member> list){
-        StringBuilder sb = new StringBuilder();
-        sb.append("(");
-        for (Member member: list){
-            if (sb.length() > 1){
-                sb.append(", ");
-            }
-            sb.append(member.name);
-        }
-        sb.append(")");
-        return sb.toString();
-    }
+//        return "{" + this.getClass().getSimpleName() + "; " +
+//                "ID ='" + id + '\'' +
+//                "name='" + name + '\'' +
+//                ", mother=" + toStrHelper(mother) +
+//                ", father=" + toStrHelper(father) +
+//                ", child=" + toStrHelperList(child) +
+//                ", birthDate=" + birthDate +
+//                ", deathDate=" + deathDate +
+//                ", gender=" + gender +
+//                '}';
+//    }
+//    //вместо объекта в печать возвращаем только его имя для матери и отца
+//    private String toStrHelper(Member member){
+//        if (member != null){
+//            return member.name;
+//        }
+//        else return null;
+//    }
+//    //вместо объекта в печать возвращаем только имена детей
+//    private String toStrHelperList(List<Member> list){
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("(");
+//        for (Member member: list){
+//            if (sb.length() > 1){
+//                sb.append(", ");
+//            }
+//            sb.append(member.name);
+//        }
+//        sb.append(")");
+//        return sb.toString();
+//    }
 
     @Override
     public boolean equals(Object o) {
