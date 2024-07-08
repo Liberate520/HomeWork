@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final String name;
     private final Gender gender;
     private final int age;
@@ -9,7 +11,6 @@ public class Human {
     private Human father;
     private Human mother;
     private final List<Human> children;
-    // Создаем Конструктор.
 
     public Human(String name, Gender gender, int age) {
         this.name = name;
@@ -62,5 +63,18 @@ public class Human {
         this.children.add(child);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Human human = (Human) o;
+
+        return name.equals(human.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
