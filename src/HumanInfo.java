@@ -60,4 +60,22 @@ public class HumanInfo implements Serializable {
     public void addChild(HumanInfo child) {
         children.add(child);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(name)
+                .append(", DOB: ").append(dob)
+                .append(", DOD: ").append(dod != null ? dod : "N/A")
+                .append(", Gender: ").append(gender);
+        return builder.toString();
+    }
+
+    public List<String> getChildrenNames() {
+        List<String> names = new ArrayList<>();
+        for (HumanInfo child : children) {
+            names.add(child.getName());
+        }
+        return names;
+    }
 }

@@ -64,14 +64,19 @@ public class Main {
             System.out.println("Family tree loaded successfully.");
 
             // Проведение исследования: получение всех детей Viserys
-            List<HumanInfo> childrenOfViserys = loadedTree.getChildrenOfPerson("Viserys");
+            HumanInfo viserysLoaded = loadedTree.findPersonByName("Viserys");
+            if (viserysLoaded != null) {
+                System.out.println("Information about Viserys:");
+                System.out.println(viserysLoaded);
+                List<HumanInfo> childrenOfViserys = viserysLoaded.getChildren();
 
-            // Вывод результатов исследования
-            System.out.println("Children of Viserys:");
-            for (HumanInfo child : childrenOfViserys) {
-                System.out.println(child.getName() + ", DOB: " + child.getDob() +
-                        ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") +
-                        ", Gender: " + child.getGender());
+                // Вывод результатов исследования
+                System.out.println("Children of Viserys:");
+                for (HumanInfo child : childrenOfViserys) {
+                    System.out.println(child.getName() + ", DOB: " + child.getDob() +
+                            ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") +
+                            ", Gender: " + child.getGender());
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Failed to load family tree: " + e.getMessage());
