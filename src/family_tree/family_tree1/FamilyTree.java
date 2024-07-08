@@ -1,38 +1,34 @@
 package family_tree.family_tree1;
 
-import family_tree.human.Human;
 import family_tree.human.comparators.HumanComparatorByDateBirth;
 import family_tree.human.comparators.HumanComparatorByName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human>{
+public class FamilyTree<E extends ItemFamilyTree> implements Serializable, Iterable<E>{
 
-    private final List<Human> humans;
+    private final List<E> humans;
 
     public FamilyTree() {
         humans = new ArrayList<>();
     }
 
-    public void addHuman (Human human) {
+    public void addHuman (E human) {
         humans.add(human);
     }
 
-    public List<Human> findHumansByName(String name) {
-        List<Human> foundHumans = new ArrayList<>();
-        for (Human human : humans) {
-            if (human.getName().equalsIgnoreCase(name)) {
-                foundHumans.add(human);
-            }
-        }
-        return foundHumans;
+    public void sortByName () {
+        humans.sort(new HumanComparatorByName<>());
     }
 
-    public Human findHumanById(int id) {
-        for (Human human : humans) {
+    public void sortByDateBirth () {
+        humans.sort(new HumanComparatorByDateBirth<>());
+    }
+
+    public E findHumanById(int id) {
+        for (E human : humans) {
             if (human.getId() == id) {
                 return human;
             }
@@ -40,19 +36,21 @@ public class FamilyTree implements Serializable, Iterable<Human>{
         return null;
     }
 
-    public void sortByName () {
-        humans.sort(new HumanComparatorByName());
-    }
-
-    public void sortByDateBirth () {
-        humans.sort(new HumanComparatorByDateBirth());
+    public List<E> findHumansByName(String name) {
+        List<E> foundHumans = new ArrayList<>();
+        for (E human : humans) {
+            if (human.getName().equalsIgnoreCase(name)) {
+                foundHumans.add(human);
+            }
+        }
+        return foundHumans;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("FamilyTree{humans=[\n");
-        for (Human human : humans) {
+        for (E human : humans) {
             sb.append(human.toString()).append("\n");
         }
         sb.append("]}");
@@ -60,7 +58,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(humans);
+    public Iterator<E> iterator() {
+        return new HumanIterator<>(humans);
     }
 }

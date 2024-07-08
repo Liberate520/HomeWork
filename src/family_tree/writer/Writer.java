@@ -1,10 +1,11 @@
 package family_tree.writer;
 
 import family_tree.family_tree1.FamilyTree;
+import family_tree.human.Human;
 
 import java.io.IOException;
 
 public interface Writer {
-    void save(String path, FamilyTree familyTree) throws IOException;
-    FamilyTree load(String path) throws IOException, ClassNotFoundException;
+    void save(FamilyTree<?> familyTree) throws IOException;
+    FamilyTree<Human> load() throws IOException, ClassNotFoundException;
 }

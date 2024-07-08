@@ -1,12 +1,15 @@
 package family_tree.human;
 
+import family_tree.family_tree1.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
-
-    private int id;
+public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
+    private static int idCounter = 0;
+    private final int id;
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
@@ -16,21 +19,15 @@ public class Human implements Serializable, Comparable<Human> {
 
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender,
                  Human father, Human mother, List<Human> children) {
+        this.id = ++idCounter;
         this.name = name;
         this.dob = dob;
         this.dod = dod;
         this.gender = gender;
         this.father = father;
         this.mother = mother;
-        this.children = children;
+        this.children = children == null ? new ArrayList<>() : children;
 
-    }
-
-    public Human(int id, String name, LocalDate dob, Gender gender) {
-        this.id = id;
-        this.name = name;
-        this.dob = dob;
-        this.gender = gender;
     }
 
     public int getId() {
