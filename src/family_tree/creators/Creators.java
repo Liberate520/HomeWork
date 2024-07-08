@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
-public abstract class Creators implements Serializable, Identifiable, Nameable {
+public abstract class Creators implements Serializable, Identifiable, Nameable, Comparable<Creators> {
     private final int id;
     private String name;
     private Gender gender;
@@ -87,5 +87,10 @@ public abstract class Creators implements Serializable, Identifiable, Nameable {
             return false;
         }
         return creator.getId() == getId();
+    }
+
+    @Override
+    public int compareTo(Creators anotherCreator){
+        return this.name.compareTo(anotherCreator.name);
     }
 }

@@ -3,7 +3,6 @@ package family_tree.creators.pet;
 import family_tree.creators.Creators;
 import family_tree.creators.Gender;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 public abstract class Pet extends Creators {

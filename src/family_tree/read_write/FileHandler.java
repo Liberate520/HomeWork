@@ -1,8 +1,11 @@
 package family_tree.read_write;
 
-import family_tree.creators.human.Human;
-
-import java.io.*;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Map;
 
 public class FileHandler<K, V extends Serializable> implements Writer<K, V> {

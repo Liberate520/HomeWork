@@ -4,7 +4,6 @@ import family_tree.creators.Creators;
 import family_tree.creators.Gender;
 import family_tree.creators.pet.Pet;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Dog extends Pet {

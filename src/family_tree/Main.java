@@ -1,16 +1,49 @@
 package family_tree;
 
+import family_tree.creators.Gender;
 import family_tree.creators.IDGenerator;
 import family_tree.creators.human.Human;
 import family_tree.family_tree.FamilyTree;
 import family_tree.family_tree.FamilyTreeManager;
 import family_tree.read_write.FileHandler;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
+
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        FamilyTree<Human> ft = new FamilyTree<>();
+        Human azer = new Human("Azer", Gender.Male, LocalDate.of(1995, 5, 3));
+        Human azer1 = new Human("Elvin", Gender.Female, LocalDate.of(1999, 5, 3));
+        Human azer2 = new Human("Anar", Gender.Male, LocalDate.of(1997, 5, 3));
+        Human azer3 = new Human("Samir", Gender.Male, LocalDate.of(1998, 5, 3));
+        Human azer4 = new Human("Azer", Gender.Female, LocalDate.of(1993, 5, 3));
+        Human azer5 = new Human("Ali", Gender.Male, LocalDate.of(2000, 5, 3));
+
+        ft.add(azer);
+        ft.add(azer1);
+        ft.add(azer2);
+        ft.add(azer3);
+        ft.add(azer4);
+        ft.add(azer5);
+
+        System.out.println(ft.getCreatorsListInfo());
+        ft.sortByName();
+        System.out.println(ft.getCreatorsListInfo());
+        ft.sortByAge();
+        System.out.println(ft.getCreatorsListInfo());
+
+
+
+
+
+
+
+
+        /*Scanner scanner = new Scanner(System.in);
         FileHandler fileHandler = new FileHandler();
         FamilyTreeManager familyTreeManager = new FamilyTreeManager();
 
@@ -43,7 +76,6 @@ public class Main {
                     familyTreeManager.addHumanToMap(scanner, humanMap);
                     break;
                 case 2:
-//                    System.out.println("Укажите имя человека, которого хотите добавить:");
                     familyTreeManager.addHumanToTree(scanner, familyTreeMap, humanMap);
                     break;
                 case 3:
@@ -69,7 +101,7 @@ public class Main {
                     break;
             }
         }
-        scanner.close();
+        scanner.close();*/
     }
 
     // Меню для навигации

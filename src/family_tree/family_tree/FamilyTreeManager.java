@@ -1,5 +1,6 @@
 package family_tree.family_tree;
 
+import family_tree.creators.Creators;
 import family_tree.interfaces.Addable;
 import family_tree.interfaces.Identifiable;
 import family_tree.interfaces.Nameable;
@@ -13,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class FamilyTreeManager<T extends Nameable & Addable<T>> {
+public class FamilyTreeManager<T extends Nameable & Addable<T> > {
+
     public void addHumanToTree(Scanner scanner, Map<Integer, T> familyTreeMap, Map<Integer, T> humanMap) {
         List<T> foundHumans = findEntities(scanner, humanMap, "Введите имя человека:");
         if (foundHumans.isEmpty()) {

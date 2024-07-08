@@ -1,17 +1,19 @@
 package family_tree.family_tree;
 
+import family_tree.comparator.CreatorComparatorByAge;
+import family_tree.comparator.CreatorComparatorByName;
 import family_tree.interfaces.Addable;
 import family_tree.interfaces.Identifiable;
 import family_tree.interfaces.Nameable;
 import family_tree.creators.Creators;
 import family_tree.creators.IDGenerator;
 import family_tree.creators.human.Human;
+import family_tree.iterator.CreatorIterator;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class FamilyTree<T extends Creators> implements Serializable, Addable<T>, Nameable, Identifiable {
+public class FamilyTree<T extends Creators> implements Serializable, Addable<T>, Nameable, Identifiable, Iterable<T> {
     private final int id;
     private int creatorId;
     private String name;
@@ -201,5 +203,25 @@ public class FamilyTree<T extends Creators> implements Serializable, Addable<T>,
         return sb.toString();
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new CreatorIterator<>(creatorList);
+    }
 
+    public void sortByName(){
+        creatorList.sort(new CreatorComparatorByName());
+    }
+
+    public void sortByAge(){
+        creatorList.sort(new CreatorComparatorByAge());
+    }
+
+    public String getCreatorsListInfo() {
+        StringBuilder sb = new StringBuilder();
+        for (T creator : creatorList) {
+            sb.append(creator.toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }
