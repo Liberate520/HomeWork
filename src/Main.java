@@ -10,8 +10,9 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         String filePath = "src/ru/gb/family_tree/tree.txt";
-        //FamilyTree tree = testTree();
-        FamilyTree tree = load(filePath);
+        FamilyTree tree = testTree();
+        // FamilyTree tree = load(filePath);
+        tree.sortByName();
         System.out.println(tree);
 
         save(tree, filePath);
@@ -48,7 +49,6 @@ public class Main {
 
         tree.add(grandMother);
 
-        System.out.println(tree);
         return tree;
     }
 }
