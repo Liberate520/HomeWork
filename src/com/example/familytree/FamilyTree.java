@@ -8,39 +8,29 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-// Класс FamilyTree представляет генеалогическое древо и реализует Serializable и Iterable<Person>
-public class FamilyTree implements Serializable, Iterable<Person> {
+// Класс FamilyTree представляет генеалогическое древо и реализует Serializable и Iterable<T>
+public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
 
-    private List<Person> members;
+    private List<T> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
-    // Добавление человека в генеалогическое древо
-    public void addPerson(Person person) {
+    // Добавление объекта в генеалогическое древо
+    public void addPerson(T person) {
         this.members.add(person);
     }
 
-    // Получение всех детей выбранного человека
-    public List<Person> getChildrenOf(String name) {
-        for (Person person : members) {
-            if (person.getName().equals(name)) {
-                return person.getChildren();
-            }
-        }
-        return new ArrayList<>();
-    }
-
-    // Получение всех людей в генеалогическом древе
-    public List<Person> getAllMembers() {
+    // Получение всех объектов в генеалогическом древе
+    public List<T> getAllMembers() {
         return members;
     }
 
     // Поиск человека по имени
-    public Person findPersonByName(String name) {
-        for (Person person : members) {
+    public T findPersonByName(String name) {
+        for (T person : members) {
             if (person.getName().equals(name)) {
                 return person;
             }
@@ -48,14 +38,19 @@ public class FamilyTree implements Serializable, Iterable<Person> {
         return null;
     }
 
-    // Демонстрация всех членов дерева и их детей
+    // Получение всех детей выбранного человека
+    public List<T> getChildrenOf(String name) {
+        T person = findPersonByName(name);
+        if (person != null) {
+            return (List<T>) person.getChildren();
+        }
+        return new ArrayList<>();
+    }
+
+    // Демонстрация всех членов дерева
     public void displayTree() {
-        for (Person person : members) {
+        for (T person : members) {
             System.out.println(person);
-            List<Person> children = person.getChildren();
-            if (!children.isEmpty()) {
-                System.out.println("  Дети: " + children);
-            }
         }
     }
 
@@ -70,7 +65,7 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     }
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<T> iterator() {
         return members.iterator();
     }
 }

@@ -8,7 +8,7 @@ import java.io.*;
 public class FileFamilyTreeOperations implements com.example.familytree.operations.FileOperations {
 
     @Override
-    public void saveToFile(String filename, FamilyTree tree) {
+    public void saveToFile(String filename, FamilyTree<?> tree) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(tree);
             System.out.println("Дерево сохранено в файл: " + filename);
@@ -18,10 +18,10 @@ public class FileFamilyTreeOperations implements com.example.familytree.operatio
     }
 
     @Override
-    public FamilyTree loadFromFile(String filename) {
-        FamilyTree tree = null;
+    public FamilyTree<?> loadFromFile(String filename) {
+        FamilyTree<?> tree = null;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            tree = (FamilyTree) ois.readObject();
+            tree = (FamilyTree<?>) ois.readObject();
             System.out.println("Дерево загружено из файла: " + filename);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

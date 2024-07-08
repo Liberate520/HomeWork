@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         // Создание генеалогического древа
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Person> familyTree = new FamilyTree<>();
 
         // Создание людей с использованием LocalDate для даты рождения
         Person anastasiya = new Person("Анастасия", LocalDate.of(1988, 3, 15), "Жен");
@@ -56,10 +56,10 @@ public class Main {
         fileOps.saveToFile("family_tree.txt", familyTree);
 
         // Очистка текущего дерева для демонстрации загрузки
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
 
         // Загрузка генеалогического древа из файла
-        familyTree = fileOps.loadFromFile("family_tree.txt");
+        familyTree = (FamilyTree<Person>) fileOps.loadFromFile("family_tree.txt");
 
         // Демонстрация дерева после загрузки
         System.out.println("\nФамильное древо после загрузки из файла:");
