@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
 
