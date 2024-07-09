@@ -1,8 +1,9 @@
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
 
     private long humansId;
     private List<Human> humanList;
@@ -82,6 +83,34 @@ public class FamilyTree {
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
             human2.setSpouse(human1);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean setFatherChild(Human human1, Human human2) {
+        if (human2.getFather() == null) {
+            for (Human child : human1.getChildren()) {
+                if(!child.equals(human2)){
+                    human1.getChildren().add(human2);
+                }
+            }
+            human2.setFather(human1);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean setMotherChild(Human human1, Human human2) {
+        if (human2.getMother() == null) {
+            for (Human child : human1.getChildren()) {
+                if(!child.equals(human2)){
+                    human1.getChildren().add(human2);
+                }
+            }
+            human2.setMother(human1);
             return true;
         } else {
             return false;
