@@ -4,30 +4,22 @@ import model.FamilyTree;
 
 import java.io.*;
 
-public class FileHandlerImpl implements FileHandler, Writer {
-    @Override
-    public void saveFamilyTree(FamilyTree tree, String filename) {
-        writeToFile(filename, tree);
-    }
+public class FileHandlerImpl implements FileHandler {
 
     @Override
-    public FamilyTree loadFamilyTree(String filename) {
-        return (FamilyTree) readFromFile(filename);
-    }
-
-    @Override
-    public void writeToFile(String filename, Object obj) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(obj);
+    public <T> void writeToFile(String fileName, FamilyTree<T> tree) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(tree);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object readFromFile(String filename) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            return ois.readObject();
+    public <T> FamilyTree<T> readFromFile(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (FamilyTree<T>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;

@@ -3,31 +3,30 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Person>, Serializable {
-    private List<Person> people;
+public class FamilyTree<T> implements Serializable, Iterable<T> {
+    private List<T> members;
 
     public FamilyTree() {
-        this.people = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
-    public void addPerson(Person person) {
-        people.add(person);
+    public void addMember(T member) {
+        members.add(member);
     }
 
-    public void sortByName() {
-        Collections.sort(people, Comparator.comparing(Person::getName));
+    public void sortByName(java.util.function.Function<T, String> nameExtractor) {
+        Collections.sort(members, (m1, m2) -> nameExtractor.apply(m1).compareTo(nameExtractor.apply(m2)));
     }
 
-    public void sortByBirthDate() {
-        Collections.sort(people, Comparator.comparing(Person::getBirthDate));
+    public void sortByBirthDate(java.util.function.Function<T, Comparable> birthDateExtractor) {
+        Collections.sort(members, (m1, m2) -> birthDateExtractor.apply(m1).compareTo(birthDateExtractor.apply(m2)));
     }
 
     @Override
-    public Iterator<Person> iterator() {
-        return people.iterator();
+    public Iterator<T> iterator() {
+        return members.iterator();
     }
 }
