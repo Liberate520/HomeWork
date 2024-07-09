@@ -1,6 +1,9 @@
 package family__tree;
 
-import java.io.IOException;
+import family__tree.family_tree.FamilyTree;
+import family__tree.human.Gender;
+import family__tree.human.Human;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -63,32 +66,36 @@ public class Main {
         System.out.println("Родители Васи: " + vasya.getParents());
         System.out.println("Родители Александра: " + alexander.getParents());
         System.out.println("Родители Томы: " + toma.getParents());
-        System.out.println("Родители Кати: " + katya.getParents());
+        System.out.println("Родители Кати: " + katya.getParents()); */
 
-        System.out.println(familyTree);*/
+        System.out.println(familyTree);
+        familyTree.sortByName();
+        System.out.println(familyTree);
+        familyTree.sortByAge();
+        System.out.println(familyTree);
 
         // Запись
-        FileHandler fileHandler = new FileHandler();
-        try {
-            fileHandler.writeToFile(familyTree, "familyTree.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Чтение
-        FamilyTree loadedFamilyTree = null;
-        try {
-            loadedFamilyTree = fileHandler.readFromFile("familyTree.txt");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Вывод
-        if (loadedFamilyTree != null) {
-            System.out.println(loadedFamilyTree);
-        } else {
-            System.out.println("Не удалось загрузить семейное древо.");
-        }
+//        FileHandler fileHandler = new FileHandler();
+//        try {
+//            fileHandler.writeToFile(familyTree, "familyTree.txt");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Чтение
+//        FamilyTree loadedFamilyTree = null;
+//        try {
+//            loadedFamilyTree = fileHandler.readFromFile("familyTree.txt");
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Вывод
+//        if (loadedFamilyTree != null) {
+//            System.out.println(loadedFamilyTree);
+//        } else {
+//            System.out.println("Не удалось загрузить семейное древо.");
+//        }
 
     }
 }

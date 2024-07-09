@@ -1,11 +1,11 @@
-package family__tree;
+package family__tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,13 @@ public class Human implements Serializable {
         this.children = new ArrayList<>();
     }
 
-    // Getters and setters
+    public int getAge() {
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int birthYear = birth.getYear();
+        int age = currentYear - birthYear;
+        return age;
+    }
 
     public String getName() {
         return name;
@@ -84,5 +90,12 @@ public class Human implements Serializable {
     @Override
     public String toString() {
         return "Имя: " + name + ". Год рождения: " + birth + ". Пол: " + gender + ".";
+    }
+
+    @Override
+    public int compareTo(Human o) {
+
+        return this.name.compareTo(o.name);
+
     }
 }
