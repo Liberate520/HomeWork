@@ -1,9 +1,8 @@
-package ru.gb.family_tree.family_tree;
+package ru.gb.family_tree.model.family_tree.comparators;
 
-import ru.gb.family_tree.humen.Human;
+import ru.gb.family_tree.model.family_tree.TreeNode;
 
 import java.util.Comparator;
-import java.util.TreeMap;
 
 public class HumanComparatorByName<T extends TreeNode<T>> implements Comparator<T> {
     @Override

@@ -1,6 +1,8 @@
-package ru.gb.family_tree.family_tree;
+package ru.gb.family_tree.model.family_tree;
 
-import ru.gb.family_tree.humen.Human;
+import ru.gb.family_tree.model.family_tree.Iterators.FamilyTreeIterator;
+import ru.gb.family_tree.model.family_tree.comparators.HumanComparatorByBirthDate;
+import ru.gb.family_tree.model.family_tree.comparators.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         this.humanList = humanList;
     }
 
-    public boolean add(E human){
+    public boolean addHuman(E human){
         if (!humanList.contains(human)){
             humanList.add(human);
             human.setId(humanId++);
@@ -131,9 +133,9 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     public String getInfo(){
         StringBuilder sb = new StringBuilder();
-        sb.append("in the tree ");
+        sb.append("в дереве ");
         sb.append(humanList.size());
-        sb.append(" object's: \n");
+        sb.append(" объектов: \n");
         for (E human: humanList){
             sb.append(human);
             sb.append("\n");
@@ -152,9 +154,3 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         return new FamilyTreeIterator(humanList);
     }
 }
-
-
-
-
-
-

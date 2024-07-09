@@ -1,4 +1,4 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.model;
 
 import java.io.*;
 public class FileHandler implements Writable {

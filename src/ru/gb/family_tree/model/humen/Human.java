@@ -1,6 +1,6 @@
-package ru.gb.family_tree.humen;
+package ru.gb.family_tree.model.humen;
 
-import ru.gb.family_tree.family_tree.TreeNode;
+import ru.gb.family_tree.model.family_tree.TreeNode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -46,6 +46,9 @@ public class Human implements Serializable, TreeNode {
 
     public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother){
         this(name, gender, birthDate, null, father, mother );
+    }
+
+    public Human(String fatherName) {
     }
 
 //    public boolean addChild(Human child){
@@ -99,13 +102,11 @@ public class Human implements Serializable, TreeNode {
     }
 
     @Override
-    public boolean addChild(Object human) {
-        return false;
+    public void addChild(Object human) {
     }
 
     @Override
-    public boolean addParent(Object human) {
-        return false;
+    public void addParent(Object human) {
     }
 
     public int getAge(){

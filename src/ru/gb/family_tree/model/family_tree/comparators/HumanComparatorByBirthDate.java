@@ -1,7 +1,9 @@
-package ru.gb.family_tree.family_tree;
+package ru.gb.family_tree.model.family_tree.comparators;
 
-import ru.gb.family_tree.humen.Human;
+import ru.gb.family_tree.model.family_tree.TreeNode;
+
 import java.util.Comparator;
+
 public class HumanComparatorByBirthDate<T extends TreeNode<T>> implements Comparator<T> {
     @Override
     public int compare(T o1, T o2) {
