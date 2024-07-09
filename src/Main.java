@@ -1,22 +1,60 @@
 import java.time.LocalDate;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree romanovFamilyTree = new FamilyTree();
 
-        Human human1 = new Human("Иван", LocalDate.of(1985,5,14), Gender.Male);
-        Human human2 = new HumanWithSpouse("Мария", LocalDate.of(1986,8,5), Gender.Female, human1);
-        Human human3 = new HumanWithParents("Павел",LocalDate.of(2015, 1, 2), Gender.Male, human1, human2);
+        Human ivan = new Human("Иван", Gender.Male, LocalDate.of(1940,5,14));
+        Human mariya = new Human("Мария", Gender.Female, LocalDate.of(1940,8,5));
 
-        romanovFamilyTree.addHuman(human1);
-        romanovFamilyTree.addHuman(human2);
-        romanovFamilyTree.addHuman(human3);
+        romanovFamilyTree.addHuman(ivan);
+        romanovFamilyTree.addHuman(mariya);
 
-        System.out.println(human1);
-        System.out.println(human2);
-        System.out.println(human3);
+        romanovFamilyTree.setWedding(ivan, mariya);
 
-        System.out.println(romanovFamilyTree);
+        Human pavel = new Human("Павел", Gender.Male, LocalDate.of(1970, 1, 2), ivan, mariya);
+        Human aleksei = new Human("Алексей", Gender.Male, LocalDate.of(1972, 7, 4), ivan, mariya);
+        Human anna = new Human("Анна", Gender.Female, LocalDate.of(1974, 5, 3), ivan, mariya);
+
+        romanovFamilyTree.addHuman(pavel);
+        romanovFamilyTree.addHuman(aleksei);
+        romanovFamilyTree.addHuman(anna);
+
+        Human ekaterina = new Human("Екатерина", Gender.Female, LocalDate.of(1972,8,5));
+        romanovFamilyTree.addHuman(ekaterina);
+        romanovFamilyTree.setWedding(ekaterina, pavel);
+
+        Human elena = new Human("Елена", Gender.Female, LocalDate.of(1972, 9, 5));
+        romanovFamilyTree.addHuman(elena);
+        romanovFamilyTree.setWedding(elena, aleksei);
+
+        Human petr = new Human("Петр", Gender.Male, LocalDate.of(1972, 1, 5));
+        romanovFamilyTree.addHuman(petr);
+        romanovFamilyTree.setWedding(petr, anna);
+
+        Human mihail = new Human("Михаил", Gender.Male, LocalDate.of(1995, 5, 3), pavel, ekaterina);
+        romanovFamilyTree.addHuman(mihail);
+
+        Human aleksandra = new Human("Александра", Gender.Female, LocalDate.of(1995, 5, 3));
+        romanovFamilyTree.addHuman(aleksandra);
+        romanovFamilyTree.setWedding(mihail, aleksandra);
+
+        Human anastasiya = new Human("Анастасия", Gender.Female, LocalDate.of(2020, 5, 3), mihail, aleksandra);
+        romanovFamilyTree.addHuman(anastasiya);
+
+        romanovFamilyTree.setDivorce(3, 6);
+        romanovFamilyTree.remove(6);
+
+
+        System.out.println(romanovFamilyTree.getByName("Мария")); // поиск человека по имени
+        System.out.println(romanovFamilyTree.getSiblings(2)); // поиск братьев/сестер
+
+        System.out.println(pavel.getParents()); // поиск родителей
+        System.out.println(pavel.getChildren()); // поиск детей
+
+        System.out.println(anastasiya.getFather().getFather().getFather()); // поиск прадеда
+
+
+        System.out.println(romanovFamilyTree); // Показать всех членов семьи
     }
 }

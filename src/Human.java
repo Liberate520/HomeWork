@@ -1,39 +1,254 @@
-
-
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Human {
-
-    private final String name;
-    private LocalDate dateOfBirth;
+    private long id;
+    private String name;
     private Gender gender;
+    private LocalDate birthDate;
+    private LocalDate deathDate;
+    private Human father;
+    private Human mother;
+    private Human spouse;
+    private List<Human> children;
 
-    //Конструктор
 
-    public Human(String name, LocalDate dateOfBirth, Gender gender) {
+    //Конструкторы
+
+    public Human(String name, Gender gender, LocalDate birthDate,
+                 LocalDate deathDate, Human father, Human mother) {
+
+        id = -1;
         this.name = name;
-        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-
+        this.birthDate = birthDate;
+        this.deathDate = deathDate;
+        this.father = father;
+        this.mother = mother;
+        children = new ArrayList<>();
     }
+
+    public Human(String name, Gender gender, LocalDate birthDate) {
+        this(name, gender, birthDate, null, null, null);
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
+        this(name, gender, birthDate, null, father, mother);
+    }
+
 
     // Геттеры
-    public String getName() {
-        return name;
+
+    public long getId() {
+        return id;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getName() {
+        return name;
     }
 
     public Gender getGender() {
         return gender;
     }
 
-    // Ещё методы
-    @Override
-    public String toString(){
-        return  "Имя: " + name + "\n" +
-                "Дата рождения: " + dateOfBirth + "\n" +
-                "Пол:  " + gender + "\n";
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public Human getFather() {
+        return father;
+    }
+
+    public Human getMother() {
+        return mother;
+    }
+
+    public Human getSpouse() {
+        return spouse;
+    }
+
+    public List<Human> getChildren() {
+        return children;
+    }
+
+    public List<Human> getParents() {
+        List<Human> list = new ArrayList<>(2);
+        if (father != null) {
+            list.add(father);
+        }
+        if (mother != null) {
+            list.add(mother);
+        }
+        return list;
+    }
+
+    public int getAge() {
+        if (deathDate == null) {
+            LocalDate now = LocalDate.now();
+            return getPeriod(birthDate, now);
+        } else {
+            return getPeriod(birthDate, deathDate);
+        }
+    }
+
+    private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
+        Period diff = Period.between(birthDate, deathDate);
+        return diff.getYears();
+    }
+
+    //Сеттеры
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+
+    public void setFather(Human father) {
+        this.father = father;
+    }
+
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+
+    public void setChildren(List<Human> children) {
+        this.children = children;
+    }
+
+
+    // Ещё методы
+
+    public boolean addChild(Human child) {
+        if (!children.contains(child)) {
+            children.add(child);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addParent(Human parent) {
+        if (parent.getGender().equals(Gender.Male) && (father == null)) {
+            setFather(parent); // сделать еще проверку, чтобы выдавало ошибку, если поле занято.
+        } else if (parent.getGender().equals(Gender.Female) && (mother == null)) {
+            setMother(parent);
+        }
+        return true;
+    }
+
+
+    // Переопределение
+    @Override
+    public String toString() {
+        return getInfo();
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id: ");
+        sb.append(id);
+        sb.append(", имя: ");
+        sb.append(name);
+        sb.append(", пол: ");
+        sb.append(getGender());
+        sb.append(", возраст: ");
+        sb.append(getAge());
+        sb.append(", ");
+        sb.append(getFatherInfo());
+        sb.append(", ");
+        sb.append(getMotherInfo());
+        sb.append(", ");
+        sb.append(getSpouseInfo());
+        sb.append(", ");
+        sb.append(getChildrenInfo());
+        return sb.toString();
+    }
+
+
+    public String getFatherInfo() {
+        String res = "отец: ";
+        Human father = getFather();
+        if (father == null) {
+            res += "неизвестен";
+        } else {
+            res += father.getName();
+        }
+        return res;
+    }
+
+    public String getMotherInfo() {
+        String res = "мать: ";
+        Human mother = getMother();
+        if (mother == null) {
+            res += "неизвестна";
+        } else {
+            res += mother.getName();
+        }
+        return res;
+    }
+
+    public String getSpouseInfo() {
+        String res = "супруг(а) ";
+        Human spouse = getSpouse();
+        if (spouse == null) {
+            res += "нет";
+        } else {
+            res += spouse.getName();
+        }
+        return res;
+    }
+
+    public String getChildrenInfo() {
+        StringBuilder res = new StringBuilder();
+        res.append("дети: ");
+        if (children.size() != 0) {
+            res.append(children.get(0).getName());
+            for (int i = 1; i < children.size(); i++) {
+                res.append(", ");
+                res.append(children.get(i).getName());
+            }
+        } else {
+            res.append("отсутствуют");
+        }
+        return res.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Human)) {
+            return false;
+        }
+        Human human = (Human) obj;
+        return human.getId() == getId();
+    }
+
 }
+
+
