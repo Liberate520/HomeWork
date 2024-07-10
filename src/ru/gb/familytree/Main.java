@@ -1,3 +1,10 @@
+package ru.gb.familytree;
+
+import ru.gb.familytree.familytree.FamilyTree;
+import ru.gb.familytree.human.Gender;
+import ru.gb.familytree.human.HumanInfo;
+import ru.gb.familytree.writer.FileHandler;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +34,18 @@ public class Main {
         alisanta.addChild(aemond);
         alisanta.addChild(helaena);
 
+        rhaenyra.setFather(viserys);
+        rhaenyra.setMother(aemma);
+
+        aegon.setFather(viserys);
+        aegon.setMother(alisanta);
+
+        aemond.setFather(viserys);
+        aemond.setMother(alisanta);
+
+        helaena.setFather(viserys);
+        helaena.setMother(alisanta);
+
         // Добавление людей в дерево
         tree.addPerson(viserys);
         tree.addPerson(aemma);
@@ -36,17 +55,17 @@ public class Main {
         tree.addPerson(aemond);
         tree.addPerson(helaena);
 
-        //List<HumanInfo> childrenOfViserys = tree.getChildrenOfPerson("Viserys");
+        //List<ru.gb.familytree.human.HumanInfo> childrenOfViserys = tree.getChildrenOfPerson("Viserys");
 
         // Вывод результатов исследования
         //System.out.println("Children of Viserys:");
-        //for (HumanInfo child : childrenOfViserys) {
-        //    System.out.println(child.getName() + ", DOB: " + child.getDob() + ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") + ", Gender: " + child.getGender());
+        //for (ru.gb.familytree.human.HumanInfo child : childrenOfViserys) {
+        //    System.out.println(child.getName() + ", DOB: " + child.getDob() + ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") + ", ru.gb.familytree.human.Gender: " + child.getGender());
         //}
 
         // Сохранение семейного древа в файл
         FileHandler fileHandler = new FileHandler();
-        String filePath = "FamilyTree.txt";
+        String filePath = "ru.gb.familytree.familytree.FamilyTree.txt";
         try {
             fileHandler.save(tree.getPeople(), filePath);
             System.out.println("Family tree saved successfully.");
@@ -64,20 +83,35 @@ public class Main {
             System.out.println("Family tree loaded successfully.");
 
             // Проведение исследования: получение всех детей Viserys
-            HumanInfo viserysLoaded = loadedTree.findPersonByName("Viserys");
-            if (viserysLoaded != null) {
-                System.out.println("Information about Viserys:");
-                System.out.println(viserysLoaded);
-                List<HumanInfo> childrenOfViserys = viserysLoaded.getChildren();
+            //HumanInfo viserysLoaded = loadedTree.findPersonByName("Viserys");
+            //if (viserysLoaded != null) {
+            //    System.out.println("Information about Viserys:");
+            //    System.out.println(viserysLoaded);
+            //    List<HumanInfo> childrenOfViserys = viserysLoaded.getChildren();
 
                 // Вывод результатов исследования
-                System.out.println("Children of Viserys:");
-                for (HumanInfo child : childrenOfViserys) {
-                    System.out.println(child.getName() + ", DOB: " + child.getDob() +
-                            ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") +
-                            ", Gender: " + child.getGender());
-                }
+            //    System.out.println("Children of Viserys:");
+            //    for (HumanInfo child : childrenOfViserys) {
+            //        System.out.println(child.getName() + ", DOB: " + child.getDob() +
+            //                ", DOD: " + (child.getDod() != null ? child.getDod() : "N/A") +
+            //                ", ru.gb.familytree.human.Gender: " + child.getGender());
+            //    }
+            //}
+
+            // Сортировка и вывод всех людей по имени
+            loadedTree.sortByName();
+            System.out.println("\nPeople sorted by name:");
+            for (HumanInfo person : loadedTree) {
+                System.out.println(person);
             }
+
+            // Сортировка и вывод всех людей по дате рождения
+            loadedTree.sortByDob();
+            System.out.println("\nPeople sorted by date of birth:");
+            for (HumanInfo person : loadedTree) {
+                System.out.println(person);
+            }
+
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Failed to load family tree: " + e.getMessage());
         }

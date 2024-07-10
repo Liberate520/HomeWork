@@ -1,3 +1,7 @@
+package ru.gb.familytree.writer;
+
+import ru.gb.familytree.human.HumanInfo;
+
 import java.io.IOException;
 import java.util.List;
 
