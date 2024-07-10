@@ -1,12 +1,13 @@
 package family_tree.human;
 
-import java.io.Serializable;
+import family_tree.vending_tree.TreeNode;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements TreeNode<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -98,6 +99,12 @@ public class Human implements Serializable {
     public Human getSpouse() { return spouse; }
 
     public String getName() { return name; }
+
+    @Override
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
     public List<Human> getChildren() { return children; }
