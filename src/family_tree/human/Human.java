@@ -68,6 +68,7 @@ public class Human implements Serializable {
     public void setFather(Human father) { this.father = father; }
     public Human getMother() { return mother; }
     public Human getFather() { return father; }
+    public LocalDate getBirthDate() { return birthDate; }
 
     public List<Human> getParents() {
         List<Human> list = new ArrayList<>(2);
