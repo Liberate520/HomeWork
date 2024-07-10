@@ -1,7 +1,8 @@
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         FamilyTree familyTree = new FamilyTree();
 
@@ -20,12 +21,20 @@ public class Main {
         child_1.setFather(progenitor);
         child_2.setFather(progenitor);
 
-        System.out.println(familyTree.getPerson("Alice").getFather());
+        //System.out.println(familyTree.getPerson("Alice").getFather());
 
-        System.out.println(familyTree.getPerson("GreatDaddy").getChildren());
+        //System.out.println(familyTree.getPerson("GreatDaddy").getChildren());
 
-        System.out.println(familyTree.getPerson("GreatDaddy"));
+        //System.out.println(familyTree.getPerson("GreatDaddy"));
 
-        System.out.println(familyTree);
+        //System.out.println(familyTree);
+
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.WriteObject(familyTree, "1st write");
+
+        FamilyTree restoredTree = new FamilyTree();
+        restoredTree = fileHandler.ReadObject("1st write");
+
+        System.out.println(restoredTree);
     }
 }
