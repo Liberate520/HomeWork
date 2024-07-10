@@ -25,14 +25,10 @@ public class Presenter<E extends TreeNode<E>> {
 
         // Добавляем обработчики команд
         commands.put(1, new AddHumanCommand((FamilyTreeService<TreeNodeImpl>) familyTreeService, consoleUI.getView()));
-        commands.put(2, new GetSiblingsCommand<>(familyTreeService, consoleUI.getView()));
-        commands.put(3, new GetByNameCommand<>(familyTreeService, consoleUI.getView()));
-        commands.put(4, new SetWeddingCommand<>(familyTreeService, consoleUI.getView()));
-        commands.put(5, new SetDivorceCommand<>(familyTreeService, consoleUI.getView()));
-        commands.put(6, new RemoveHumanCommand<>(familyTreeService, consoleUI.getView()));
-        commands.put(7, new SortByNameCommand<>(familyTreeService, consoleUI.getView()));
-        commands.put(8, new SortByBirthDateCommand<>(familyTreeService, consoleUI.getView()));
-        commands.put(9, new PrintFamilyTreeInfoCommand<>(familyTreeService, consoleUI.getView()));
+        commands.put(2, new RemoveHumanCommand<>(familyTreeService, consoleUI.getView()));
+        commands.put(3, new SortByNameCommand<>(familyTreeService, consoleUI.getView()));
+        commands.put(4, new SortByBirthDateCommand<>(familyTreeService, consoleUI.getView()));
+        commands.put(5, new PrintFamilyTreeInfoCommand<>(familyTreeService, consoleUI.getView()));
     }
 
     public void start() {

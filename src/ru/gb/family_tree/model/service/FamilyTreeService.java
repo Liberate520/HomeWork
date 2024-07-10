@@ -16,22 +16,6 @@ public class FamilyTreeService<E extends TreeNode<E>> {
         return familyTree.addHuman(human);
     }
 
-    public List<E> getSiblings(int id) {
-        return familyTree.getSiblings(id);
-    }
-
-    public List<E> getByName(String name) {
-        return familyTree.getByName(name);
-    }
-
-    public boolean setWedding(long humanId1, long humanId2) {
-        return familyTree.setWedding(humanId1, humanId2);
-    }
-
-    public boolean setDivorce(long humanId1, long humanId2) {
-        return familyTree.setDivorce(humanId1, humanId2);
-    }
-
     public boolean removeHuman(long humanId) {
         return familyTree.remove(humanId);
     }
@@ -46,5 +30,18 @@ public class FamilyTreeService<E extends TreeNode<E>> {
 
     public String getInfo() {
         return familyTree.getInfo();
+    }
+
+    public E getById(long id) {
+        return familyTree.getById(id);
+    }
+
+    public E getByName(String name) {
+        for (E human : familyTree) {
+            if (human.getName().equalsIgnoreCase(name)) {
+                return human;
+            }
+        }
+        return null; // Если человек с таким именем не найден
     }
 }

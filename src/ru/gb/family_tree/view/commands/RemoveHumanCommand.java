@@ -15,7 +15,7 @@ public class RemoveHumanCommand<E extends TreeNode<E>> implements Command {
 
     @Override
     public void execute() {
-        long id = view.getLongInput("Введите ID человека: ");
+        long id = view.promptForInt("Введите ID человека: ");
         if (familyTreeService.removeHuman(id)) {
             view.displayMessage("Человек удален.");
         } else {

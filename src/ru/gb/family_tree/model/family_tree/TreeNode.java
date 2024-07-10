@@ -7,8 +7,6 @@ public interface TreeNode<E> {
     long getId();
     void setId(long id);
     String getName();
-    E getSpouse();
-    void setSpouse(E spouse);
     List<E> getParents();
     List<E> getChildrens();
     void addParent(E parent);

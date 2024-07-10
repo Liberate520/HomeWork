@@ -1,10 +1,12 @@
 package ru.gb.family_tree.view.commands;
 
 import ru.gb.family_tree.model.family_tree.TreeNodeImpl;
+import ru.gb.family_tree.model.humen.Gender;
 import ru.gb.family_tree.model.service.FamilyTreeService;
 import ru.gb.family_tree.view.View;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class AddHumanCommand implements Command {
     private final FamilyTreeService<TreeNodeImpl> familyTreeService;
@@ -18,8 +20,16 @@ public class AddHumanCommand implements Command {
     @Override
     public void execute() {
         String name = view.promptForString("Введите имя человека:");
-        String gender = view.promptForString("Введите пол человека (мужской/женский):");
-        int age = view.promptForInt("Введите возраст человека:");
+        String genderStr = view.promptForString("Введите пол человека (мужской/женский):");
+        Gender gender = genderStr.equalsIgnoreCase("мужской") ? Gender.Male : Gender.Female;
+
+        LocalDate birthDate = promptForDate("Введите дату рождения человека (yyyy-MM-dd):");
+
+        LocalDate deathDate = null;
+        boolean hasDeathDate = view.promptForBoolean("Есть ли у человека дата смерти? (да/нет)");
+        if (hasDeathDate) {
+            deathDate = promptForDate("Введите дату смерти человека (yyyy-MM-dd):");
+        }
 
         TreeNodeImpl father = null;
         TreeNodeImpl mother = null;
@@ -27,27 +37,38 @@ public class AddHumanCommand implements Command {
         boolean hasParents = view.promptForBoolean("Есть ли у человека отец и мать? (да/нет)");
         if (hasParents) {
             String fatherName = view.promptForString("Введите имя отца:");
+            father = familyTreeService.getByName(fatherName);
+            if (father == null) {
+                father = new TreeNodeImpl(fatherName, null, null, null);
+                familyTreeService.addHuman(father);
+            }
+
             String motherName = view.promptForString("Введите имя матери:");
-            father = new TreeNodeImpl(fatherName); // Исправлено на TreeNodeImpl
-            mother = new TreeNodeImpl(motherName); // Исправлено на TreeNodeImpl
+            mother = familyTreeService.getByName(motherName);
+            if (mother == null) {
+                mother = new TreeNodeImpl(motherName, null, null, null);
+                familyTreeService.addHuman(mother);
+            }
         }
 
-        LocalDate birthDate = LocalDate.now().minusYears(age); // Предполагаем, что возраст приводится к дате рождения
-
-        TreeNodeImpl human;
-
-        if (hasParents) {
-            human = new TreeNodeImpl(name, gender, birthDate, father, mother);
-        } else {
-            human = new TreeNodeImpl(name);
-        }
-
+        TreeNodeImpl human = new TreeNodeImpl(name, gender, birthDate, deathDate, father, mother);
         boolean added = familyTreeService.addHuman(human);
 
         if (added) {
             view.displayMessage("Человек успешно добавлен в семейное дерево.");
         } else {
             view.displayMessage("Ошибка при добавлении человека в семейное дерево.");
+        }
+    }
+
+    private LocalDate promptForDate(String message) {
+        while (true) {
+            try {
+                String dateStr = view.promptForString(message);
+                return LocalDate.parse(dateStr);
+            } catch (DateTimeParseException e) {
+                view.displayMessage("Ошибка: Введите дату в формате yyyy-MM-dd.");
+            }
         }
     }
 }

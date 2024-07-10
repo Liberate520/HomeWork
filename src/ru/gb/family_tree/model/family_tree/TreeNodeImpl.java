@@ -1,61 +1,64 @@
 package ru.gb.family_tree.model.family_tree;
 
+import ru.gb.family_tree.model.humen.Gender;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
 
 public class TreeNodeImpl implements TreeNode<TreeNodeImpl> {
     private long id;
     private String name;
-    private String gender;
+    private Gender gender;
     private LocalDate birthDate;
-    private TreeNodeImpl spouse;
-    private List<TreeNodeImpl> parents = new ArrayList<>();
-    private List<TreeNodeImpl> children = new ArrayList<>();
+    private LocalDate deathDate;
+    private TreeNodeImpl father;
+    private TreeNodeImpl mother;
+    private List<TreeNodeImpl> parents;
+    private List<TreeNodeImpl> children;
 
-    public TreeNodeImpl(String name, String gender, LocalDate birthDate) {
+    public TreeNodeImpl(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, TreeNodeImpl father, TreeNodeImpl mother) {
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
+        this.deathDate = deathDate;
+        this.father = father;
+        this.mother = mother;
+        this.parents = new ArrayList<>();
+        if (father != null) this.parents.add(father);
+        if (mother != null) this.parents.add(mother);
+        this.children = new ArrayList<>();
     }
 
-    public TreeNodeImpl(String name, String gender, LocalDate birthDate, TreeNodeImpl father, TreeNodeImpl mother) {
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        if (father != null) {
-            this.parents.add(father);
+    public TreeNodeImpl(String name, Gender gender, LocalDate birthDate) {
+        this(name, gender, birthDate, null, null, null);
+    }
+
+    public TreeNodeImpl(String name) {
+        this(name, null, null, null, null, null);
+    }
+
+    public TreeNodeImpl(String motherName, Object o, Object o1, Object o2) {
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(id)
+                .append(", Имя: ").append(name)
+                .append(", Пол: ").append(gender)
+                .append(", Дата рождения: ").append(birthDate)
+                .append(", Дата смерти: ").append(deathDate)
+                .append(", Родители: [");
+        for (TreeNodeImpl parent : parents) {
+            sb.append(parent.getName()).append(" ");
         }
-        if (mother != null) {
-            this.parents.add(mother);
+        sb.append("], Дети: [");
+        for (TreeNodeImpl child : children) {
+            sb.append(child.getName()).append(" ");
         }
-    }
-
-    @Override
-    public long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public TreeNodeImpl getSpouse() {
-        return spouse;
-    }
-
-    @Override
-    public void setSpouse(TreeNodeImpl spouse) {
-        this.spouse = spouse;
+        sb.append("]");
+        return sb.toString();
     }
 
     @Override
@@ -78,42 +81,27 @@ public class TreeNodeImpl implements TreeNode<TreeNodeImpl> {
         this.children.add(child);
     }
 
-    @Override
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    @Override
-    public String toString() {
-        return toString(new HashSet<>());
-    }
-
-    private String toString(Set<TreeNodeImpl> visited) {
-        if (visited.contains(this)) {
-            return ""; // Предотвращаем бесконечный цикл
-        }
-        visited.add(this);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("TreeNodeImpl{id=").append(id)
-                .append(", name='").append(name).append('\'')
-                .append(", gender='").append(gender).append('\'')
-                .append(", birthDate=").append(birthDate);
-
-        if (spouse != null) {
-            sb.append(", spouse=").append(spouse.getName());
-        }
-
-        sb.append(", parents=[");
-        for (TreeNodeImpl parent : parents) {
-            sb.append(parent.getName()).append(", ");
-        }
-        sb.append("], children=[");
-        for (TreeNodeImpl child : children) {
-            sb.append(child.getName()).append(", ");
-        }
-        sb.append("]}");
-
-        return sb.toString();
+    public LocalDate getDeathDate() {
+        return deathDate;
     }
 }

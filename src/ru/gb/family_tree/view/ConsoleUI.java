@@ -22,16 +22,13 @@ public class ConsoleUI<E extends TreeNode<E>> {
     }
 
     private void initializeCommands() {
-        // Инициализация команд
         commands.put(1, new AddHumanCommand((FamilyTreeService<TreeNodeImpl>) familyTreeService, view));
-        commands.put(2, new GetSiblingsCommand<>(familyTreeService, view));
-        commands.put(3, new GetByNameCommand<>(familyTreeService, view));
-        commands.put(4, new SetWeddingCommand<>(familyTreeService, view));
-        commands.put(5, new SetDivorceCommand<>(familyTreeService, view));
-        commands.put(6, new RemoveHumanCommand<>(familyTreeService, view));
-        commands.put(7, new SortByNameCommand<>(familyTreeService, view));
-        commands.put(8, new SortByBirthDateCommand<>(familyTreeService, view));
-        commands.put(9, new PrintFamilyTreeInfoCommand<>(familyTreeService, view));
+        commands.put(2, new RemoveHumanCommand<>(familyTreeService, view));
+        commands.put(3, new SortByNameCommand<>(familyTreeService, view));
+        commands.put(4, new SortByBirthDateCommand<>(familyTreeService, view));
+        commands.put(5, new PrintFamilyTreeInfoCommand<>(familyTreeService, view));
+        commands.put(6, new AddParentCommand((FamilyTreeService<TreeNodeImpl>) familyTreeService, view));
+        commands.put(7, new AddChildCommand((FamilyTreeService<TreeNodeImpl>) familyTreeService, view));
     }
 
     public void start() {

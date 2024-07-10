@@ -1,6 +1,9 @@
 package ru.gb.family_tree.view;
 
-import java.util.List;
+import ru.gb.family_tree.model.humen.Gender;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class View {
@@ -11,87 +14,72 @@ public class View {
     }
 
     public int displayMenuAndGetChoice() {
-        System.out.println("Система управления семейным деревом");
+        System.out.println("Меню:");
         System.out.println("1. Добавить человека");
-        System.out.println("2. Получить братьев и сестер");
-        System.out.println("3. Найти по имени");
-        System.out.println("4. Установить брак");
-        System.out.println("5. Развестись");
-        System.out.println("6. Удалить человека");
-        System.out.println("7. Сортировать по имени");
-        System.out.println("8. Сортировать по дате рождения");
-        System.out.println("9. Показать информацию о семейном дереве");
-        System.out.println("0. Выйти");
+        System.out.println("2. Удалить человека");
+        System.out.println("3. Сортировать по имени");
+        System.out.println("4. Сортировать по дате рождения");
+        System.out.println("5. Показать информацию о семейном дереве");
+        System.out.println("6. Добавить родителя к человеку");
+        System.out.println("7. Добавить ребенка к человеку");
+        System.out.println("0. Выход");
         System.out.print("Введите ваш выбор: ");
-        return Integer.parseInt(scanner.nextLine());
+
+        while (!scanner.hasNextInt()) {
+            System.out.println("Ошибка: Введите корректный номер.");
+            scanner.next(); // очистка некорректного ввода
+        }
+
+        return scanner.nextInt();
     }
 
-    public String getInput(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextLine();
+    public String promptForString(String message) {
+        System.out.print(message + " ");
+        return scanner.next();
     }
 
-    public long getLongInput(String prompt) {
-        System.out.print(prompt);
-        return Long.parseLong(scanner.nextLine());
+    public int promptForInt(String message) {
+        System.out.print(message + " ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Ошибка: Введите корректное число.");
+            scanner.next(); // очистка некорректного ввода
+        }
+        return scanner.nextInt();
     }
 
-    public int getIntInput(String prompt) {
-        System.out.print(prompt);
-        return Integer.parseInt(scanner.nextLine());
+    public boolean promptForBoolean(String message) {
+        System.out.print(message + " ");
+        String input = scanner.next().toLowerCase();
+        return input.equals("да") || input.equals("yes");
+    }
+
+    public Gender promptForGender(String message) {
+        System.out.print(message + " ");
+        String input = scanner.next().toLowerCase();
+        while (!input.equals("мужской") && !input.equals("женский")) {
+            System.out.println("Ошибка: Введите 'мужской' или 'женский'.");
+            input = scanner.next().toLowerCase();
+        }
+        return input.equals("мужской") ? Gender.Male : Gender.Female;
+    }
+
+    public LocalDate promptForDate(String message) {
+        System.out.print(message + " ");
+        while (true) {
+            try {
+                String input = scanner.next();
+                return LocalDate.parse(input);
+            } catch (DateTimeParseException e) {
+                System.out.println("Ошибка: Введите корректную дату (гггг-мм-дд).");
+            }
+        }
     }
 
     public void displayMessage(String message) {
         System.out.println(message);
     }
 
-    public <E> void displayList(List<E> list, String message) {
-        System.out.println(message);
-        for (E item : list) {
-            System.out.println(item);
-        }
-    }
-
     public void close() {
         scanner.close();
-    }
-    public String promptForString(String prompt) {
-        System.out.print(prompt + " ");
-        return scanner.nextLine();
-    }
-    public int promptForInt(String prompt) {
-        int input = 0;
-        boolean validInput = false;
-
-        do {
-            try {
-                System.out.print(prompt + " ");
-                input = Integer.parseInt(scanner.nextLine());
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Неверный формат числа. Попробуйте снова.");
-            }
-        } while (!validInput);
-
-        return input;
-    }
-    public boolean promptForBoolean(String prompt) {
-        boolean input = false;
-        boolean validInput = false;
-
-        do {
-            String userInput = promptForString(prompt + " (да/нет)").toLowerCase();
-            if (userInput.equals("да") || userInput.equals("yes")) {
-                input = true;
-                validInput = true;
-            } else if (userInput.equals("нет") || userInput.equals("no")) {
-                input = false;
-                validInput = true;
-            } else {
-                System.out.println("Неверный ввод. Введите 'да' или 'нет'.");
-            }
-        } while (!validInput);
-
-        return input;
     }
 }
