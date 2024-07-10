@@ -16,10 +16,10 @@ public class Main {
         FamilyTree familyTree = createFamilyTree();
 
         // Сохранение дерева в файл
-        saveTree(familyTree);
+        familyTree.save("src/familytree/writer/tree.txt");
 
         // Чтение дерева из файла
-        FamilyTree loadedTree = readTree();
+        FamilyTree loadedTree = FamilyTree.read("src/familytree/writer/tree.txt");
 
         // Сортировка и вывод по имени
         Sorter.sortByName(loadedTree.getPeople());
@@ -30,16 +30,6 @@ public class Main {
         Sorter.sortByBirthDate(loadedTree.getPeople());
         System.out.println("Sorted by birth date:");
         printFamilyTree(loadedTree);
-    }
-
-    private static FamilyTree readTree() {
-        Writer fileHandler = new FileHandler();
-        return (FamilyTree) fileHandler.read();
-    }
-
-    private static void saveTree(FamilyTree tree) {
-        Writer fileHandler = new FileHandler();
-        fileHandler.save(tree);
     }
 
     private static FamilyTree createFamilyTree() {

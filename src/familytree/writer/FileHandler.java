@@ -7,8 +7,12 @@ public class FileHandler implements Writer {
 
     @Override
     public void save(Serializable serializable) {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
-            objectOutputStream.writeObject(serializable);
+        try {
+            File file = new File(filePath);
+            file.getParentFile().mkdirs(); // Создает директории, если они не существуют
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
+                objectOutputStream.writeObject(serializable);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -16,18 +20,23 @@ public class FileHandler implements Writer {
 
     @Override
     public Object read(String path) {
-        setPath(path);
-        return read();
-    }
-
-    @Override
-    public Object read() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-            return objectInputStream.readObject();
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                return null;
+            }
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+                return objectInputStream.readObject();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public Object read() {
+        return read(filePath);
     }
 
     @Override

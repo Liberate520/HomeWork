@@ -1,4 +1,6 @@
 package familytree.model;
+import familytree.writer.FileHandler;
+import familytree.writer.Writer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,5 +42,19 @@ public class FamilyTree implements Iterable<Human>, Serializable {
     @Override
     public Iterator<Human> iterator() {
         return people.iterator();
+    }
+
+    // Методы для сохранения и чтения дерева
+    public void save(String filePath) {
+        Writer fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(this);
+    }
+
+    public static FamilyTree read(String filePath) {
+        Writer fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        FamilyTree tree = (FamilyTree) fileHandler.read();
+        return tree != null ? tree : new FamilyTree(); // Возвращаем пустое дерево, если файл не существует
     }
 }
