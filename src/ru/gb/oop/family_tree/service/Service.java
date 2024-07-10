@@ -1,6 +1,7 @@
 package ru.gb.oop.family_tree.service;
 
-import ru.gb.oop.family_tree.FamilyTree;
+import org.w3c.dom.ls.LSOutput;
+import ru.gb.oop.family_tree.tree.FamilyTree;
 import ru.gb.oop.family_tree.human.Human;
 import ru.gb.oop.family_tree.human.HumanBuilder;
 import ru.gb.oop.family_tree.human.Sex;
@@ -21,7 +22,22 @@ public class Service {
         showFinding();
         showGetAncestors();
         showFindSiblings();
+        System.out.println("Не отсортированное дерево: ");
         System.out.println(tree);
+        sortByName();
+        System.out.println("Отсортированное по имени дерево: ");
+        System.out.println(tree);
+        sortByAge();
+        System.out.println("Отсортированное по возрасту дерево: ");
+        System.out.println(tree);
+    }
+
+    public void sortByName() {
+        tree.sortByName();
+    }
+
+    public void sortByAge() {
+        tree.sortByAge();
     }
 
     private void showFinding() {
@@ -44,12 +60,13 @@ public class Service {
 
     private FamilyTree getTestedTree() {
         FamilyTree familyTree = new FamilyTree();
-        Human ivan = humanBuilder.newHuman("Ivan", Sex.Male, new Date(2002, 1, 1));
-        Human olga = humanBuilder.newHuman("Olga", Sex.Female, new Date(2000, 1, 1));
-        Human roman = humanBuilder.newHuman("Roman", Sex.Male, new Date(2000, 1, 1));
-        Human petr = humanBuilder.newHuman("Petr", Sex.Male, new Date(2000, 1, 1));
-        Human vika = humanBuilder.newHuman("Vika", Sex.Female, new Date(2000, 1, 1));
-        Human misha = humanBuilder.newHuman("Misha", Sex.Male, new Date(2000, 1, 1));
+        Human ivan = humanBuilder.newHuman("Ivan", Sex.Male, new Date(102, 1, 1));
+        ivan.setDeathDate(new Date(2010, 1, 1));
+        Human olga = humanBuilder.newHuman("Olga", Sex.Female, new Date(100, 1, 1));
+        Human roman = humanBuilder.newHuman("Roman", Sex.Male, new Date(100, 1, 1));
+        Human petr = humanBuilder.newHuman("Petr", Sex.Male, new Date(100, 1, 1));
+        Human vika = humanBuilder.newHuman("Vika", Sex.Female, new Date(100, 1, 1));
+        Human misha = humanBuilder.newHuman("Misha", Sex.Male, new Date(100, 1, 1));
 
         roman.setParents(List.of(ivan, olga));
         petr.setParents(List.of(ivan, olga));

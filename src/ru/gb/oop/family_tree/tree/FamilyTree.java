@@ -1,11 +1,15 @@
-package ru.gb.oop.family_tree;
+package ru.gb.oop.family_tree.tree;
 
+import ru.gb.oop.family_tree.Main;
 import ru.gb.oop.family_tree.human.Human;
+import ru.gb.oop.family_tree.human.HumanComparatorByAge;
+import ru.gb.oop.family_tree.human.HumanComparatorByName;
+import ru.gb.oop.family_tree.human.HumanIterator;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private final List<Human> tree;
 
     public FamilyTree() {
@@ -126,6 +130,14 @@ public class FamilyTree implements Serializable {
         return true;
     }
 
+    public void sortByName() {
+        tree.sort(new HumanComparatorByName());
+    }
+
+    public void sortByAge() {
+        tree.sort(new HumanComparatorByAge());
+    }
+
     private static void dfs(Human current, Set<Human> visited, Stack<Human> stack, Set<Human> ancestors) {
        //todo: реализовать рекурсивный обход дерева, при нахождении замкнутого цикла выбрасывать исключение
     }
@@ -146,6 +158,11 @@ public class FamilyTree implements Serializable {
             sb.append("----------------------------------\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(tree);
     }
 
     public static class MyArrayList extends ArrayList<Map.Entry<Human, Integer>> {
