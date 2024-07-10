@@ -1,5 +1,6 @@
 package familytree;
 
+import familytree.model.FamilyMember;
 import familytree.model.FamilyTree;
 import familytree.model.Gender;
 import familytree.model.Human;
@@ -13,27 +14,27 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        FamilyTree familyTree = createFamilyTree();
+        FamilyTree<Human> familyTree = createFamilyTree();
 
         // Сохранение дерева в файл
         familyTree.save("src/familytree/writer/tree.txt");
 
         // Чтение дерева из файла
-        FamilyTree loadedTree = FamilyTree.read("src/familytree/writer/tree.txt");
+        FamilyTree<Human> loadedTree = FamilyTree.read("src/familytree/writer/tree.txt");
 
         // Сортировка и вывод по имени
-        Sorter.sortByName(loadedTree.getPeople());
+        Sorter.sortByName(loadedTree.getMembers());
         System.out.println("Sorted by name:");
         printFamilyTree(loadedTree);
 
         // Сортировка и вывод по дате рождения
-        Sorter.sortByBirthDate(loadedTree.getPeople());
+        Sorter.sortByBirthDate(loadedTree.getMembers());
         System.out.println("Sorted by birth date:");
         printFamilyTree(loadedTree);
     }
 
-    private static FamilyTree createFamilyTree() {
-        FamilyTree familyTree = new FamilyTree();
+    private static FamilyTree<Human> createFamilyTree() {
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         Human ivan = new Human("Иван", LocalDate.of(1974, 6, 1), Gender.MALE);
         Human maria = new Human("Мария", LocalDate.of(1979, 8, 15), Gender.FEMALE);
@@ -46,15 +47,15 @@ public class Main {
         ivan.addChild(mikhail);
         ivan.addChild(anna);
 
-        familyTree.addHuman(ivan);
-        familyTree.addHuman(maria);
-        familyTree.addHuman(mikhail);
-        familyTree.addHuman(anna);
+        familyTree.addMember(ivan);
+        familyTree.addMember(maria);
+        familyTree.addMember(mikhail);
+        familyTree.addMember(anna);
 
         return familyTree;
     }
 
-    private static void printFamilyTree(FamilyTree familyTree) {
+    private static void printFamilyTree(FamilyTree<Human> familyTree) {
         for (Human person : familyTree) {
             printHumanDetails(person);
         }
@@ -67,10 +68,10 @@ public class Main {
         } else {
             System.out.println(", Died: " + human.getDeathDate() + ", Age: " + human.getAge());
         }
-        List<Human> parents = human.getParents();
+        List<FamilyMember> parents = human.getParents();
         if (!parents.isEmpty()) {
             System.out.print("Parents: ");
-            for (Human parent : parents) {
+            for (FamilyMember parent : parents) {
                 System.out.print(parent.getName() + " ");
             }
             System.out.println();

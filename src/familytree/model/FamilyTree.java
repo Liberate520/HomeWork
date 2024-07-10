@@ -1,4 +1,5 @@
 package familytree.model;
+
 import familytree.writer.FileHandler;
 import familytree.writer.Writer;
 
@@ -7,41 +8,41 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Human>, Serializable {
-    private List<Human> people;
+public class FamilyTree<T extends FamilyMember> implements Iterable<T>, Serializable {
+    private List<T> members;
 
     public FamilyTree() {
-        this.people = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
-    public void addHuman(Human human) {
-        this.people.add(human);
+    public void addMember(T member) {
+        this.members.add(member);
     }
 
-    public List<Human> getPeople() {
-        return people;
+    public List<T> getMembers() {
+        return members;
     }
 
-    public List<Human> getChildrenOf(Human human) {
-        return human.getChildren();
+    public List<T> getChildrenOf(T member) {
+        return (List<T>) member.getChildren();
     }
 
-    public Human findHumanByName(String name) {
-        for (Human human : people) {
-            if (human.getName().equals(name)) {
-                return human;
+    public T findMemberByName(String name) {
+        for (T member : members) {
+            if (member.getName().equals(name)) {
+                return member;
             }
         }
         return null;
     }
 
-    public List<Human> getParentsOf(Human human) {
-        return human.getParents();
+    public List<T> getParentsOf(T member) {
+        return (List<T>) member.getParents();
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return people.iterator();
+    public Iterator<T> iterator() {
+        return members.iterator();
     }
 
     // Методы для сохранения и чтения дерева
@@ -51,10 +52,10 @@ public class FamilyTree implements Iterable<Human>, Serializable {
         fileHandler.save(this);
     }
 
-    public static FamilyTree read(String filePath) {
+    public static <T extends FamilyMember> FamilyTree<T> read(String filePath) {
         Writer fileHandler = new FileHandler();
         fileHandler.setPath(filePath);
-        FamilyTree tree = (FamilyTree) fileHandler.read();
-        return tree != null ? tree : new FamilyTree(); // Возвращаем пустое дерево, если файл не существует
+        FamilyTree<T> tree = (FamilyTree<T>) fileHandler.read();
+        return tree != null ? tree : new FamilyTree<>(); // Возвращаем пустое дерево, если файл не существует
     }
 }

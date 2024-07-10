@@ -6,29 +6,20 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
-    private String name;
+public class Human extends FamilyMember {
     private LocalDate birthDate;
     private LocalDate deathDate;
     private Gender gender;
-    private List<Human> children;
-    private List<Human> parents;
 
     public Human(String name, LocalDate birthDate, Gender gender) {
-        this.name = name;
+        super(name);
         this.birthDate = birthDate;
         this.gender = gender;
-        this.children = new ArrayList<>();
-        this.parents = new ArrayList<>();
     }
 
     public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender) {
         this(name, birthDate, gender);
         this.deathDate = deathDate;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public LocalDate getBirthDate() {
@@ -45,23 +36,6 @@ public class Human implements Serializable {
 
     public Gender getGender() {
         return gender;
-    }
-
-    public List<Human> getChildren() {
-        return children;
-    }
-
-    public void addChild(Human child) {
-        this.children.add(child);
-        child.addParent(this);
-    }
-
-    public List<Human> getParents() {
-        return parents;
-    }
-
-    public void addParent(Human parent) {
-        this.parents.add(parent);
     }
 
     public boolean isAlive() {
