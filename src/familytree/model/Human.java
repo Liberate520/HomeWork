@@ -1,3 +1,5 @@
+package familytree.model;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -27,11 +29,6 @@ public class Human implements Serializable {
 
     public String getName() {
         return name;
-    }
-
-    public int getAge() {
-        LocalDate endDate = (deathDate != null) ? deathDate : LocalDate.now();
-        return Period.between(birthDate, endDate).getYears();
     }
 
     public LocalDate getBirthDate() {
@@ -69,5 +66,10 @@ public class Human implements Serializable {
 
     public boolean isAlive() {
         return deathDate == null;
+    }
+
+    public int getAge() {
+        LocalDate endDate = (deathDate != null) ? deathDate : LocalDate.now();
+        return Period.between(birthDate, endDate).getYears();
     }
 }

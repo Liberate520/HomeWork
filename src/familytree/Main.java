@@ -1,5 +1,11 @@
-import writer.FileHandler;
-import writer.Writer;
+package familytree;
+
+import familytree.model.FamilyTree;
+import familytree.model.Gender;
+import familytree.model.Human;
+import familytree.writer.FileHandler;
+import familytree.writer.Writer;
+import familytree.sort.Sorter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,19 +21,15 @@ public class Main {
         // Чтение дерева из файла
         FamilyTree loadedTree = readTree();
 
-        // Найти человека по имени и получить его детей
-        Human person = loadedTree.findHumanByName("Иван");
-        if (person != null) {
-            printHumanDetails(person);
+        // Сортировка и вывод по имени
+        Sorter.sortByName(loadedTree.getPeople());
+        System.out.println("Sorted by name:");
+        printFamilyTree(loadedTree);
 
-            List<Human> children = loadedTree.getChildrenOf(person);
-            System.out.println("Children of " + person.getName() + ":");
-            for (Human child : children) {
-                printHumanDetails(child);
-            }
-        } else {
-            System.out.println("Person not found.");
-        }
+        // Сортировка и вывод по дате рождения
+        Sorter.sortByBirthDate(loadedTree.getPeople());
+        System.out.println("Sorted by birth date:");
+        printFamilyTree(loadedTree);
     }
 
     private static FamilyTree readTree() {
@@ -60,6 +62,12 @@ public class Main {
         familyTree.addHuman(anna);
 
         return familyTree;
+    }
+
+    private static void printFamilyTree(FamilyTree familyTree) {
+        for (Human person : familyTree) {
+            printHumanDetails(person);
+        }
     }
 
     private static void printHumanDetails(Human human) {

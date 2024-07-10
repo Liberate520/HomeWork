@@ -1,8 +1,11 @@
+package familytree.model;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Iterable<Human>, Serializable {
     private List<Human> people;
 
     public FamilyTree() {
@@ -11,6 +14,10 @@ public class FamilyTree implements Serializable {
 
     public void addHuman(Human human) {
         this.people.add(human);
+    }
+
+    public List<Human> getPeople() {
+        return people;
     }
 
     public List<Human> getChildrenOf(Human human) {
@@ -28,5 +35,10 @@ public class FamilyTree implements Serializable {
 
     public List<Human> getParentsOf(Human human) {
         return human.getParents();
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return people.iterator();
     }
 }

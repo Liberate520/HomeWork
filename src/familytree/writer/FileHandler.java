@@ -1,9 +1,9 @@
-package writer;
+package familytree.writer;
 
 import java.io.*;
 
 public class FileHandler implements Writer {
-    private String filePath = "src/writer/tree.txt";
+    private String filePath = "src/familytree/writer/tree.txt";
 
     @Override
     public void save(Serializable serializable) {
