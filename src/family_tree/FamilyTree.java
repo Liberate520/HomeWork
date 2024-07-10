@@ -1,8 +1,13 @@
+package family_tree;
+
+import human.Human;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {private long humansId;
+ public class FamilyTree {private long humansId;
     private List<Human> humans;
+
 
     public FamilyTree(List<Human> humanList) {
         this.humans = humanList;
@@ -91,6 +96,8 @@ public class FamilyTree {private long humansId;
             return false;
         }
     }
+
+
     @Override
     public String toString() {
         return getInfo();

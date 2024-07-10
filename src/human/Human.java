@@ -1,8 +1,10 @@
+package human;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {private String name;
+ public class Human {private String name;
     private Gender sex;
     private LocalDate brthDate;
     private LocalDate dthDate;
