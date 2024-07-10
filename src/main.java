@@ -1,5 +1,10 @@
 import java.time.LocalDate;
 
+import family_tree.FamilyTree;
+import human.Gender;
+import human.Human;
+import writer.FileHandler;
+
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
@@ -26,6 +31,12 @@ public class Main {
         familyTree.addHuman(human2);
         familyTree.addHuman(human3);
         familyTree.addHuman(human4);
+
+        FileHandler file = new FileHandler();
+        file.write(human4);
+
+        Human human = (Human) file.read();
+        System.out.println(human);
 
         System.out.println("Семейное древо: " + "\n" + human4);
         System.out.println();
