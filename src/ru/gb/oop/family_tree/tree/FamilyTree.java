@@ -144,18 +144,21 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("FamilyTree: \n");
+        StringBuilder sb = new StringBuilder();
+//        for (Human human : tree) {
+//            if (!human.getParents().isEmpty()) {
+//                sb.append("\nParent1\n").append(human.getParents().get(0)).append("\n\nParent2\n").append(human.getParents().get(1)).append("\n");
+//            }
+//            sb.append("\nHuman\n").append(human).append("\n");
+//            if (!human.getChildren().isEmpty()) {
+//                for (Human child : human.getChildren()) {
+//                    sb.append("\nChild\n").append(child).append("\n");
+//                }
+//            }
+//            sb.append("----------------------------------\n");
+//        }
         for (Human human : tree) {
-            if (!human.getParents().isEmpty()) {
-                sb.append("\nParent1\n").append(human.getParents().get(0)).append("\n\nParent2\n").append(human.getParents().get(1)).append("\n");
-            }
-            sb.append("\nHuman\n").append(human).append("\n");
-            if (!human.getChildren().isEmpty()) {
-                for (Human child : human.getChildren()) {
-                    sb.append("\nChild\n").append(child).append("\n");
-                }
-            }
-            sb.append("----------------------------------\n");
+            sb.append(human).append("\n");
         }
         return sb.toString();
     }

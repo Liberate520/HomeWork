@@ -22,6 +22,7 @@ public class Service {
         showFinding();
         showGetAncestors();
         showFindSiblings();
+
         System.out.println("Не отсортированное дерево: ");
         System.out.println(tree);
         sortByName();
@@ -61,12 +62,12 @@ public class Service {
     private FamilyTree getTestedTree() {
         FamilyTree familyTree = new FamilyTree();
         Human ivan = humanBuilder.newHuman("Ivan", Sex.Male, new Date(102, 1, 1));
-        ivan.setDeathDate(new Date(2010, 1, 1));
-        Human olga = humanBuilder.newHuman("Olga", Sex.Female, new Date(100, 1, 1));
-        Human roman = humanBuilder.newHuman("Roman", Sex.Male, new Date(100, 1, 1));
-        Human petr = humanBuilder.newHuman("Petr", Sex.Male, new Date(100, 1, 1));
-        Human vika = humanBuilder.newHuman("Vika", Sex.Female, new Date(100, 1, 1));
-        Human misha = humanBuilder.newHuman("Misha", Sex.Male, new Date(100, 1, 1));
+        ivan.setDeathDate(new Date(130, 1, 1));
+        Human olga = humanBuilder.newHuman("Olga", Sex.Female, new Date(101, 1, 1));
+        Human roman = humanBuilder.newHuman("Roman", Sex.Male, new Date(105, 1, 1));
+        Human petr = humanBuilder.newHuman("Petr", Sex.Male, new Date(90, 1, 1));
+        Human vika = humanBuilder.newHuman("Vika", Sex.Female, new Date(120, 1, 1));
+        Human misha = humanBuilder.newHuman("Misha", Sex.Male, new Date(111, 1, 1));
 
         roman.setParents(List.of(ivan, olga));
         petr.setParents(List.of(ivan, olga));
