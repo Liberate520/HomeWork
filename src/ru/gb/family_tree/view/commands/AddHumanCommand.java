@@ -34,22 +34,22 @@ public class AddHumanCommand implements Command {
         TreeNodeImpl father = null;
         TreeNodeImpl mother = null;
 
-        boolean hasParents = view.promptForBoolean("Есть ли у человека отец и мать? (да/нет)");
-        if (hasParents) {
-            String fatherName = view.promptForString("Введите имя отца:");
-            father = familyTreeService.getByName(fatherName);
-            if (father == null) {
-                father = new TreeNodeImpl(fatherName, null, null, null);
-                familyTreeService.addHuman(father);
-            }
-
-            String motherName = view.promptForString("Введите имя матери:");
-            mother = familyTreeService.getByName(motherName);
-            if (mother == null) {
-                mother = new TreeNodeImpl(motherName, null, null, null);
-                familyTreeService.addHuman(mother);
-            }
-        }
+//        boolean hasParents = view.promptForBoolean("Есть ли у человека отец и мать? (да/нет)");
+//        if (hasParents) {
+//            String fatherName = view.promptForString("Введите имя отца:");
+//            father = familyTreeService.getByName(fatherName);
+//            if (father == null) {
+//                father = new TreeNodeImpl(fatherName, null, null, null);
+//                familyTreeService.addHuman(father);
+//            }
+//
+//            String motherName = view.promptForString("Введите имя матери:");
+//            mother = familyTreeService.getByName(motherName);
+//            if (mother == null) {
+//                mother = new TreeNodeImpl(motherName, null, null, null);
+//                familyTreeService.addHuman(mother);
+//            }
+//        }
 
         TreeNodeImpl human = new TreeNodeImpl(name, gender, birthDate, deathDate, father, mother);
         boolean added = familyTreeService.addHuman(human);
