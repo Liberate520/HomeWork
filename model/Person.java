@@ -1,41 +1,25 @@
 package model;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Person implements Serializable {
+    private static int idCounter = 0;
+    private int id;
     private String name;
-    private Date birthDate;
+    private String birthDate;
     private Gender gender;
     private Person father;
     private Person mother;
     private List<Person> children;
 
     public Person(String name, String birthDate, Gender gender) {
+        this.id = idCounter++;
         this.name = name;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.children = new ArrayList<>();
-        try {
-            this.birthDate = new SimpleDateFormat("dd.MM.yyyy").parse(birthDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public Gender getGender() {
-        return gender;
     }
 
     public void addChild(Person child) {
@@ -47,22 +31,52 @@ public class Person implements Serializable {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public Person getFather() {
+        return father;
+    }
+
     public void setFather(Person father) {
         this.father = father;
+    }
+
+    public Person getMother() {
+        return mother;
     }
 
     public void setMother(Person mother) {
         this.mother = mother;
     }
 
+    public List<Person> getChildren() {
+        return children;
+    }
+
     @Override
     public String toString() {
-        String fatherName = (father != null) ? father.getName() : "no";
-        String motherName = (mother != null) ? mother.getName() : "no";
-        String childrenNames = (children.isEmpty()) ? "no" : "";
-        for (Person child : children) {
-            childrenNames += child.getName() + " ";
-        }
-        return "Имя: " + name + ", Дата рождения: " + new SimpleDateFormat("dd.MM.yyyy").format(birthDate) + ", Пол: " + gender + ", Папа: " + fatherName + ", Мама: " + motherName + ", Дети: " + childrenNames;
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", gender=" + gender +
+                ", father=" + (father != null ? father.getName() : "no") +
+                ", mother=" + (mother != null ? mother.getName() : "no") +
+                ", children=" + (children.isEmpty() ? "no" : children) +
+                '}';
     }
 }

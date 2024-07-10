@@ -2,11 +2,10 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
     private List<T> members;
 
     public FamilyTree() {
@@ -17,16 +16,30 @@ public class FamilyTree<T> implements Serializable, Iterable<T> {
         members.add(member);
     }
 
-    public void sortByName(java.util.function.Function<T, String> nameExtractor) {
-        Collections.sort(members, (m1, m2) -> nameExtractor.apply(m1).compareTo(nameExtractor.apply(m2)));
+    public T getMemberById(int id) {
+        for (T member : members) {
+            if (member.getId() == id) {
+                return member;
+            }
+        }
+        return null;
     }
 
-    public void sortByBirthDate(java.util.function.Function<T, Comparable> birthDateExtractor) {
-        Collections.sort(members, (m1, m2) -> birthDateExtractor.apply(m1).compareTo(birthDateExtractor.apply(m2)));
+    public List<T> getMembers() {
+        return members;
     }
 
     @Override
     public Iterator<T> iterator() {
         return members.iterator();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (T member : members) {
+            sb.append(member).append("\n");
+        }
+        return sb.toString();
     }
 }
