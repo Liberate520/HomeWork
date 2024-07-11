@@ -1,9 +1,10 @@
+import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException{
         Human mariya = new Human("Mariya", Gender.FEMALE, LocalDate.of(1980, 1, 1));
         Human pyotr = new Human("Pyotr", Gender.MALE, LocalDate.of(1981, 2, 2));
         Human alisa = new Human("Alisa", Gender.FEMALE, LocalDate.of(2005, 3, 3));
@@ -39,6 +40,57 @@ public class Main {
         System.out.println("Parents of Alisa:");
         List<Human> alisaParents = tree.getParentsOf("Alisa");
         for (Human parent : alisaParents) {
+            System.out.println(parent);
+        }
+
+        // Сериализация в файл с помощью класса ObjectOutputStream
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+                new FileOutputStream("human.out"));
+        objectOutputStream.writeObject(mariya);
+        objectOutputStream.writeObject(pyotr);
+        objectOutputStream.writeObject(alisa);
+        objectOutputStream.writeObject(vladimir);
+        objectOutputStream.close();
+
+        //Восстановление из файла с помощью класса ObjectInputStream
+        ObjectInputStream objectInputStream = new ObjectInputStream(
+                new FileInputStream("human.out"));
+        Human mariyaRestored = (Human) objectInputStream.readObject();
+        Human pyotrRestored = (Human) objectInputStream.readObject();
+        Human alisaRestored = (Human) objectInputStream.readObject();
+        Human vladimirRestored = (Human) objectInputStream.readObject();
+        objectInputStream.close();
+
+        FamilyTree treeRestored = new FamilyTree();
+        treeRestored.addMember(mariyaRestored);
+        treeRestored.addMember(pyotrRestored);
+        treeRestored.addMember(alisaRestored);
+        treeRestored.addMember(vladimirRestored);
+
+        pyotrRestored.addChild(alisaRestored);
+        pyotrRestored.addChild(vladimirRestored);
+
+        mariyaRestored.addChild(alisaRestored);
+        mariyaRestored.addChild(vladimirRestored);
+
+        System.out.println("Family Tree Restored:");
+        System.out.println(treeRestored);
+
+        System.out.println("Children of Pyotr Restored:");
+        List<Human> pyotrRestoredChildren = treeRestored.getChildrenOf("Pyotr");
+        for (Human child : pyotrRestoredChildren) {
+            System.out.println(child);
+        }
+
+        System.out.println("Children of Mariya Restored:");
+        List<Human> mariyaRestoredChildren = treeRestored.getChildrenOf("Mariya");
+        for (Human child : mariyaRestoredChildren) {
+            System.out.println(child);
+        }
+
+        System.out.println("Parents of Alisa Restored:");
+        List<Human> alisaRestoredParents = treeRestored.getParentsOf("Alisa");
+        for (Human parent : alisaRestoredParents) {
             System.out.println(parent);
         }
 
