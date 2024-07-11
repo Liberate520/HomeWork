@@ -45,13 +45,6 @@ public class FamilyTree<T extends FamileTreeItems<T>> implements Serializable, I
     public String getFullTree(){
         TreeDescriptionable df = new TreeDescription();
         return df.getFullTree(tree);
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Древо: \n");
-//        for (T member: tree){
-//            sb.append(member);
-//            sb.append("\n");
-//        }
-//        return sb.toString();
     }
 
     public void sortByName(){

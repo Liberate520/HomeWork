@@ -9,6 +9,7 @@ import ru.gb.family_tree.model.tree.FamilyTree;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Service {
     private FamilyTree<Member> ft;
@@ -28,9 +29,8 @@ public class Service {
     public Member findMember(String name) {
         return ft.findMember(name);
     }
-    public String getFullTree() {
-        return ft.getFullTree();
-    }
+    public List<Member> findAllInfoByName(String name) {return ft.findAllInfoByName(name);}
+    public String getFullTree() {return ft.getFullTree();}
     public void sortByName(){
         ft.sortByName();
     }

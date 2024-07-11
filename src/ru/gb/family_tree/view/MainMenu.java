@@ -15,6 +15,7 @@ public class MainMenu {
         commandsList.add(new AddMember(consoleUI));
         commandsList.add(new WriteFile(consoleUI));
         commandsList.add(new ReadFile(consoleUI));
+        commandsList.add(new FindAllInfoByName(consoleUI));
     }
 
     public String menu(){

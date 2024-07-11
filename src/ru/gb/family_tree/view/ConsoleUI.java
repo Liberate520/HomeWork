@@ -2,11 +2,14 @@ package ru.gb.family_tree.view;
 
 import ru.gb.family_tree.model.dataHandler.Readable;
 import ru.gb.family_tree.model.dataHandler.Writeble;
+import ru.gb.family_tree.model.member.Member;
 import ru.gb.family_tree.model.member.descriptionFormation.MemberDescription;
 import ru.gb.family_tree.presenter.Presenter;
+import ru.gb.family_tree.view.commands.FindAllInfoByName;
 import ru.gb.family_tree.view.descriptionFormation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
@@ -96,5 +99,8 @@ public class ConsoleUI implements View {
         ReadableData rd = new FileReadData();
         rd.readData(scanner, presenter);
     }
-
+    public void findAllInfoByName() {
+        FindInfoByName faibm = new FindInfoByNameScaner();
+        System.out.println(faibm.FindInfoByName(scanner, presenter));
+    }
 }

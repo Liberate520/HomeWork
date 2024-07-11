@@ -9,6 +9,7 @@ import ru.gb.family_tree.view.View;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Presenter {
     private View view;
@@ -37,6 +38,7 @@ public class Presenter {
     public Member findMember(String name) {
         return service.findMember(name);
     }
+    public List<Member> findAllInfoByName(String name) {return service.findAllInfoByName(name);}
     public void writeData(String filename) throws IOException {
         service.writeData(filename);
     }
