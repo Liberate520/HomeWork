@@ -2,10 +2,11 @@ package com.github.pahanuchek.family_tree.family_tree;
 
 import com.github.pahanuchek.family_tree.human.Human;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<Long> checkHumanId;
     private List<Human> listHumans;
 
@@ -24,19 +25,19 @@ public class FamilyTree {
         }
     }
 
-    public void searchAndAddChildrenFather(Human human) {
+    private void searchAndAddChildrenFather(Human human) {
         if (human.getFather() != null) {
             human.getFather().addChildren(human);
         }
     }
 
-    public void searchAndAddChildrenMother(Human human) {
+    private void searchAndAddChildrenMother(Human human) {
         if (human.getMother() != null) {
             human.getMother().addChildren(human);
         }
     }
 
-    public void searchAndAddParentChildren(Human human) {
+    private void searchAndAddParentChildren(Human human) {
         if (human.getChildren() != null && human.getChildren().isEmpty()) {
             for (Human child: human.getChildren()) {
                 child.addParents(human);
