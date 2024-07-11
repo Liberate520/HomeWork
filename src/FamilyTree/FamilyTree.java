@@ -1,9 +1,11 @@
 package FamilyTree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
     private List<Person> people;
 
     public FamilyTree() {
@@ -35,4 +37,3 @@ public class FamilyTree {
         return new ArrayList<>(people);
     }
 }
-

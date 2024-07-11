@@ -1,15 +1,19 @@
-package FamilyTree;
-
+import FamilyTree.FamilyTree;
+import FamilyTree.Person;
+import Interfaces.TreeIO;
+import Interfaces.TreeIOImpl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class Main {
     private static FamilyTree familyTree = new FamilyTree();
     private static Scanner scanner = new Scanner(System.in);
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static TreeIO treeIO = new TreeIOImpl();
 
     public static void main(String[] args) {
         while (true) {
@@ -18,7 +22,9 @@ public class Main {
             System.out.println("3. Получить всех детей выбранного человека");
             System.out.println("4. Создать новое дерево");
             System.out.println("5. Показать всех людей в дереве");
-            System.out.println("6. Выход");
+            System.out.println("6. Сохранить дерево в файл");
+            System.out.println("7. Загрузить дерево из файла");
+            System.out.println("8. Выход");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
 
@@ -39,6 +45,12 @@ public class Main {
                     showAllPeople();
                     break;
                 case 6:
+                    saveTreeToFile();
+                    break;
+                case 7:
+                    loadTreeFromFile();
+                    break;
+                case 8:
                     System.exit(0);
                 default:
                     System.out.println("Неверный выбор. Пожалуйста, выберите снова.");
@@ -133,6 +145,28 @@ public class Main {
             for (Person person : people) {
                 System.out.println(person);
             }
+        }
+    }
+
+    private static void saveTreeToFile() {
+        System.out.print("Введите имя файла для сохранения: ");
+        String filename = scanner.nextLine();
+        try {
+            treeIO.saveToFile(familyTree, filename);
+            System.out.println("Дерево сохранено в файл " + filename);
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении дерева в файл: " + e.getMessage());
+        }
+    }
+
+    private static void loadTreeFromFile() {
+        System.out.print("Введите имя файла для загрузки: ");
+        String filename = scanner.nextLine();
+        try {
+            familyTree = treeIO.loadFromFile(filename);
+            System.out.println("Дерево загружено из файла " + filename);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Ошибка при загрузке дерева из файла: " + e.getMessage());
         }
     }
 }
