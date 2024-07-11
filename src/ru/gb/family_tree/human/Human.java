@@ -1,12 +1,12 @@
 package ru.gb.family_tree.human;
 
-import ru.gb.family_tree.gender.Gender;
+import java.io.Serializable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private LocalDate dateOfBirth, dateOfDeath;
     private Gender gender;
