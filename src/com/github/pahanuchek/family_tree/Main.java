@@ -37,7 +37,7 @@ public class Main {
                 LocalDate.of(1965, 2, 5));
         Human svetlana = new Human("Svetlana", Gender.Female,
                 LocalDate.of(1970, 12, 11));
-        Human anastasiya = new Human("Anastasiya", Gender.Female,
+        Human anastasiya = new Human("Anastasiya ", Gender.Female,
                 LocalDate.of(1990, 5, 22), yuriy, svetlana);
 
         family.addHuman(yuriy);
