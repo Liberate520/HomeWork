@@ -3,6 +3,8 @@ package com.github.pahanuchek.family_tree;
 import com.github.pahanuchek.family_tree.family_tree.FamilyTree;
 import com.github.pahanuchek.family_tree.human.Gender;
 import com.github.pahanuchek.family_tree.human.Human;
+import com.github.pahanuchek.family_tree.writer.FileHandler;
+import com.github.pahanuchek.family_tree.writer.Writer;
 
 import java.time.LocalDate;
 
@@ -45,6 +47,12 @@ public class Main {
         family.addHuman(anastasiya);
 
         System.out.println(family);
+//
+//        Writer fw = new FileHandler();
+//        fw.writeDoc(family);
+//        Writer fr = new FileHandler();
+//        FamilyTree family = (FamilyTree) fr.readDoc();
+//        System.out.println(family);
 
 
     }
