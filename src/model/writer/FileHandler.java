@@ -3,7 +3,7 @@ package model.writer;
 import java.io.*;
 
 public class FileHandler implements Writer {
-    private String filePath = "src/model/writer/data.ser";
+    private String filePath = "src/model/writer/serialized_files/data.ser";
 
     @Override
     public void save(Serializable serializable) {

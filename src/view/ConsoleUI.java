@@ -22,6 +22,7 @@ public class ConsoleUI implements View {
     @Override
     public void start() {
         greetings();
+        presenter.readTree();
         selectItemFromMenu();
     }
 
@@ -128,5 +129,3 @@ public class ConsoleUI implements View {
         }
     }
 }
-
-//TODO реализовать возможность считывания сохранённого дерева из файла

@@ -28,7 +28,7 @@ public class Service {
     }
 
     private static void setGenderFromStr(String genderStr, Human human) {
-        if (genderStr.equalsIgnoreCase("м")){
+        if (genderStr.equalsIgnoreCase("м")) {
             human.setGender(Gender.Male);
         } else if (genderStr.equalsIgnoreCase("ж")) {
             human.setGender(Gender.Female);
@@ -55,7 +55,9 @@ public class Service {
         fileHandler.save(familyTree);
     }
 
-    public FamilyTree readTree() {
-        return (FamilyTree) fileHandler.read();
+    public void readTree() {
+        if (fileHandler.read() != null) {
+            familyTree = (FamilyTree) fileHandler.read();
+        }
     }
 }

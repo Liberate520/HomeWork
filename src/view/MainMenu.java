@@ -30,8 +30,8 @@ public class MainMenu {
         return sb.toString();
     }
 
-    public void execute(int choise) {
-        Command command = commands.get(choise - 1);
+    public void execute(int choice) {
+        Command command = commands.get(choice - 1);
         command.execute();
     }
 
