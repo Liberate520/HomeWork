@@ -1,3 +1,5 @@
+package human;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,5 +78,10 @@ public class Human implements Serializable {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    public <U> U getBirthDate() {
+
+        return null;
     }
 }

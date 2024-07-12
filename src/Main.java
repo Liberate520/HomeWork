@@ -1,9 +1,13 @@
+import family_tree.FamilyTree;
+import human.Gender;
+import human.Human;
+
 import java.io.*;
 
 public class Main {
         public static void main(String[] args) {
                 FamilyTree readTree;
-                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/FamilyTree/Writer/tree.txt"))) {
+                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/family_tree.FamilyTree/Writer/tree.txt"))) {
                         readTree = (FamilyTree) ois.readObject();
                         System.out.println(readTree);
                 } catch (IOException | ClassNotFoundException e) {
