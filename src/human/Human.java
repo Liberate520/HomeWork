@@ -3,12 +3,13 @@ package human;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
- public class Human {private String name;
+import java.io.Serializable;
+ public class Human implements Serializable,Comparable<Human>{
+     private String name;
     private Gender sex;
     private LocalDate brthDate;
     private LocalDate dthDate;
-    private long id;
+    private int id;
     private List<Human> children;
     private Human father;
     private Human mother;
@@ -16,7 +17,8 @@ import java.util.List;
 
 
 
-    public Human(String name, Gender sex, LocalDate brthDate, LocalDate dthDate, Human father, Human mother) {
+
+    public Human( String name, Gender sex, LocalDate brthDate, LocalDate dthDate, Human father, Human mother) {
         id = -1;
         this.name = name;
         this.sex = sex;
@@ -37,7 +39,9 @@ import java.util.List;
         this(name, sex, brthDate, null, father, mother);
     }
 
-    public boolean addChild(Human child) {
+
+
+     public boolean addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
             return true;
@@ -46,11 +50,11 @@ import java.util.List;
     }
 
 
-    public long getId() {
-        return id;
-    }
+     public int getId() {
+         return id;
+     }
 
-    public void setId(long id) {
+     public void setId(int id) {
         this.id = id;
     }
 
@@ -66,18 +70,15 @@ import java.util.List;
         this.mother = mother;
     }
 
-    public boolean addParent(Human parent) {
-        if (parent == null) {
-            if (parent.getSex().equals(Gender.Male)) {
-                setFather(parent);
-            } else if (parent.getSex().equals(Gender.Female)) {
-                setMother(parent);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+     public boolean addParent(Human parent) {
+         if (parent.getSex().equals(Gender.Male)) {
+             setFather(parent);
+         } else if (parent.getSex().equals(Gender.Female)) {
+             setMother(parent);
+         }
+         return true;
+     }
+
 
     public Human getFather() {
         return father;
@@ -124,7 +125,15 @@ import java.util.List;
         return children;
     }
 
-    public void setBrthDate(LocalDate brthDate) {
+     public void setSex(Gender sex) {
+         this.sex = sex;
+     }
+
+     public void setName(String name) {
+         this.name = name;
+     }
+
+     public void setBrthDate(LocalDate brthDate) {
         this.brthDate = brthDate;
     }
 
@@ -140,6 +149,7 @@ import java.util.List;
     public String getInfo() {
         StringBuilder info = new StringBuilder();
         info.append("id: ");
+        info.append(id);
         info.append(", ");
         info.append("имя: ");
         info.append(name);
@@ -184,7 +194,7 @@ import java.util.List;
 
     public String getMotherInfo() {
         String infoSprous = "мать: ";
-        Human mather = getFather();
+        Human mather = getMother();
         if (mather == null) {
             infoSprous += "отсутствует";
         } else {
@@ -193,20 +203,20 @@ import java.util.List;
         return infoSprous;
     }
 
-    public String getChildrenInfo() {
-        String infoSprous = "дети:";
-        Human mather = getFather();
-        if (children.isEmpty()) {
-            infoSprous += "отсутствуют";
-        } else {
-            for (Human human : children) {
-                infoSprous += " ";
-                infoSprous += children;
-            }
-
-        }
-        return infoSprous;
-    }
+     public String getChildrenInfo() {
+         StringBuilder res = new StringBuilder();
+         res.append("дети: ");
+         if (!children.isEmpty()) {
+             res.append(children.getFirst().getName());
+             for (int i = 1; i < children.size(); i++) {
+                 res.append(", ");
+                 res.append(children.get(i).getName());
+             }
+         } else {
+             res.append("отсутствуют");
+         }
+         return res.toString();
+     }
 
     @Override
     public boolean equals(Object obj) {
@@ -221,4 +231,8 @@ import java.util.List;
         return human.getId()==getId();
     }
 
-}
+     @Override
+     public int compareTo(Human o) {
+         return this.name.compareTo(o.name);
+     }
+ }
