@@ -1,83 +1,94 @@
 package com.example.familytree.main;
 
-import com.example.familytree.FamilyTree;
-import com.example.familytree.model.Person;
+import com.example.familytree.mvp.FamilyTreePresenterImpl;
+import com.example.familytree.mvp.FamilyTreeView;
 import com.example.familytree.operations.FileFamilyTreeOperations;
+import com.example.familytree.operations.FileOperations;
 
-import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Создание генеалогического древа
-        FamilyTree<Person> familyTree = new FamilyTree<>();
+        FamilyTreeView view = new FamilyTreeView();
+        FileOperations fileOps = new FileFamilyTreeOperations();
+        FamilyTreePresenterImpl presenter = new FamilyTreePresenterImpl(view, fileOps);
 
-        // Создание людей с использованием LocalDate для даты рождения
-        Person anastasiya = new Person("Анастасия", LocalDate.of(1988, 3, 15), "Жен");
-        Person mihail = new Person("Михаил", LocalDate.of(1983, 7, 22), "Муж");
-        Person anton = new Person("Антон", LocalDate.of(2013, 1, 5), "Муж");
-        Person diana = new Person("Диана", LocalDate.of(2015, 11, 30), "Жен");
-        Person varvara = new Person("Варвара", LocalDate.of(1963, 5, 10), "Жен");
-        Person nikola = new Person("Николай", LocalDate.of(1958, 9, 18), "Муж");
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
 
-        // Установка родственных связей
-        anastasiya.addChild(anton);
-        anastasiya.addChild(diana);
-        mihail.addChild(anton);
-        mihail.addChild(diana);
-        varvara.addChild(anastasiya);
-        nikola.addChild(anastasiya);
+        while (running) {
+            System.out.println("\nВыберите команду:");
+            System.out.println("1. Добавление человека");
+            System.out.println("2. Сортировка по имени");
+            System.out.println("3. Сортировка по дате рождения");
+            System.out.println("4. Демонстрация фамильного дерева");
+            System.out.println("5. Сохранение фамильного дерева в файл");
+            System.out.println("6. Загрузка фамильного дерева из файла");
+            System.out.println("7. Удаление человека по ID");
+            System.out.println("8. Изменение ID человека");
+            System.out.println("9. Установить связь родитель-ребенок");
+            System.out.println("10. Выход из программы");
 
-        // Добавление людей в генеалогическое древо
-        familyTree.addPerson(anastasiya);
-        familyTree.addPerson(mihail);
-        familyTree.addPerson(anton);
-        familyTree.addPerson(diana);
-        familyTree.addPerson(varvara);
-        familyTree.addPerson(nikola);
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
 
-        // Демонстрация дерева
-        System.out.println("Фамильное древо:");
-        familyTree.displayTree();
-
-        // Сортировка по имени
-        System.out.println("\nФамильное древо, отсортированное по имени:");
-        familyTree.sortByName();
-        familyTree.displayTree();
-
-        // Сортировка по дате рождения
-        System.out.println("\nФамильное древо, отсортированное по дате рождения:");
-        familyTree.sortByBirthDate();
-        familyTree.displayTree();
-
-        // Создание объекта для операций с файлами
-        FileFamilyTreeOperations fileOps = new FileFamilyTreeOperations();
-
-        // Сохранение генеалогического древа в файл
-        fileOps.saveToFile("family_tree.txt", familyTree);
-
-        // Очистка текущего дерева для демонстрации загрузки
-        familyTree = new FamilyTree<>();
-
-        // Загрузка генеалогического древа из файла
-        familyTree = (FamilyTree<Person>) fileOps.loadFromFile("family_tree.txt");
-
-        // Демонстрация дерева после загрузки
-        System.out.println("\nФамильное древо после загрузки из файла:");
-        familyTree.displayTree();
-
-        // Получение всех детей выбранного человека
-        System.out.println("\nДети Анастасии:");
-        for (Person child : familyTree.getChildrenOf("Анастасия")) {
-            System.out.println(child);
+            switch (choice) {
+                case 1:
+                    try {
+                        int id = view.getPersonIdInput();
+                        String name = view.getPersonNameInput();
+                        String birthDate = view.getPersonBirthDateInput();
+                        String gender = view.getPersonGenderInput();
+                        presenter.addPerson(id, name, birthDate, gender);
+                    } catch (NumberFormatException e) {
+                        view.displayMessage("Ошибка: ID должен быть числовым значением.");
+                    }
+                    break;
+                case 2:
+                    presenter.sortByName();
+                    break;
+                case 3:
+                    presenter.sortByBirthDate();
+                    break;
+                case 4:
+                    presenter.displayTree();
+                    break;
+                case 5:
+                    System.out.print("Введите имя файла: ");
+                    String saveFilename = scanner.nextLine();
+                    presenter.saveToFile(saveFilename);
+                    break;
+                case 6:
+                    System.out.print("Введите имя файла: ");
+                    String loadFilename = scanner.nextLine();
+                    presenter.loadFromFile(loadFilename);
+                    break;
+                case 7:
+                    int removeId = view.getPersonIdInput();
+                    presenter.removePersonById(removeId);
+                    break;
+                case 8:
+                    System.out.print("Введите старый ID: ");
+                    int oldId = scanner.nextInt();
+                    scanner.nextLine(); // consume newline
+                    System.out.print("Введите новый ID: ");
+                    int newId = scanner.nextInt();
+                    scanner.nextLine(); // consume newline
+                    presenter.changePersonId(oldId, newId);
+                    break;
+                case 9:
+                    int parentId = view.getParentIdInput();
+                    int childId = view.getChildIdInput();
+                    presenter.setParentChildRelation(parentId, childId);
+                    break;
+                case 10:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Неверная команда. Попробуйте еще раз.");
+            }
         }
 
-        // Пример поиска человека по имени
-        System.out.println("\nНайти человека по имени 'Михаил':");
-        Person foundPerson = familyTree.findPersonByName("Михаил");
-        if (foundPerson != null) {
-            System.out.println(foundPerson);
-        } else {
-            System.out.println("Человек не найден");
-        }
+        scanner.close();
     }
 }

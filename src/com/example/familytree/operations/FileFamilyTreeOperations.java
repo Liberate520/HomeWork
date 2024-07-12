@@ -1,14 +1,13 @@
 package com.example.familytree.operations;
 
 import com.example.familytree.FamilyTree;
+import com.example.familytree.model.Person;
 
 import java.io.*;
 
-// Класс для операций с файлами, реализующий интерфейс FileOperations
-public class FileFamilyTreeOperations implements com.example.familytree.operations.FileOperations {
-
+public class FileFamilyTreeOperations implements FileOperations {
     @Override
-    public void saveToFile(String filename, FamilyTree<?> tree) {
+    public void saveToFile(String filename, FamilyTree<Person> tree) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(tree);
             System.out.println("Дерево сохранено в файл: " + filename);
@@ -18,10 +17,10 @@ public class FileFamilyTreeOperations implements com.example.familytree.operatio
     }
 
     @Override
-    public FamilyTree<?> loadFromFile(String filename) {
-        FamilyTree<?> tree = null;
+    public FamilyTree<Person> loadFromFile(String filename) {
+        FamilyTree<Person> tree = null;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            tree = (FamilyTree<?>) ois.readObject();
+            tree = (FamilyTree<Person>) ois.readObject();
             System.out.println("Дерево загружено из файла: " + filename);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

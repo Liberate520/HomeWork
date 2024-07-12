@@ -10,13 +10,15 @@ import java.util.List;
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private int id;
     private String name;
     private LocalDate birthDate;
     private String gender;
     private List<Person> parents;
     private List<Person> children;
 
-    public Person(String name, LocalDate birthDate, String gender) {
+    public Person(int id, String name, LocalDate birthDate, String gender) {
+        this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
@@ -24,49 +26,53 @@ public class Person implements Serializable {
         this.children = new ArrayList<>();
     }
 
-    // Получение имени человека
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    // Получение даты рождения человека
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    // Получение пола человека
     public String getGender() {
         return gender;
     }
 
-    // Получение возраста человека, вычисленного на основе текущей даты
     public int getAge() {
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
-    // Получение списка родителей
     public List<Person> getParents() {
         return parents;
     }
 
-    // Получение списка детей
     public List<Person> getChildren() {
         return children;
     }
 
-    // Добавление родителя
     public void addParent(Person parent) {
-        this.parents.add(parent);
+        if (!this.parents.contains(parent)) {
+            this.parents.add(parent);
+        }
     }
 
-    // Добавление ребенка
     public void addChild(Person child) {
-        this.children.add(child);
-        child.addParent(this);
+        if (!this.children.contains(child)) {
+            this.children.add(child);
+            child.addParent(this);
+        }
     }
 
     @Override
     public String toString() {
-        return "Имя='" + name + '\'' + ", Возраст=" + getAge() + ", Пол='" + gender + '\'';
+        return "ID=" + id + ", Имя='" + name + '\'' + ", Возраст=" + getAge() + ", Пол='" + gender + '\'';
     }
 }
