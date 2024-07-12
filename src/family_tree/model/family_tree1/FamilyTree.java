@@ -1,7 +1,7 @@
-package family_tree.family_tree1;
+package family_tree.model.family_tree1;
 
-import family_tree.human.comparators.HumanComparatorByDateBirth;
-import family_tree.human.comparators.HumanComparatorByName;
+import family_tree.model.human.comparators.HumanComparatorByDateBirth;
+import family_tree.model.human.comparators.HumanComparatorByName;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,6 +44,10 @@ public class FamilyTree<E extends ItemFamilyTree> implements Serializable, Itera
             }
         }
         return foundHumans;
+    }
+
+    public List<E> getHumans() {
+        return humans;
     }
 
     @Override

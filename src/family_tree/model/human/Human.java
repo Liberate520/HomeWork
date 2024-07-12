@@ -1,13 +1,13 @@
-package family_tree.human;
+package family_tree.model.human;
 
-import family_tree.family_tree1.ItemFamilyTree;
-
+import family_tree.model.family_tree1.ItemFamilyTree;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
+
     private static int idCounter = 0;
     private final int id;
     private String name;
@@ -27,9 +27,13 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         this.father = father;
         this.mother = mother;
         this.children = children == null ? new ArrayList<>() : children;
-
     }
 
+    public static void resetIdCounter(int newCounter) {
+        idCounter = newCounter;
+    }
+
+    @Override
     public int getId() {
         return id;
     }
