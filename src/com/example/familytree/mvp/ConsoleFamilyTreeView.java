@@ -13,7 +13,7 @@ public class ConsoleFamilyTreeView extends FamilyTreeView {
     }
 
     @Override
-    public void displayTree(List<?> members) {
+    public void displayTree(List<Person> members) {
         for (Object member : members) {
             System.out.println(member);
         }
