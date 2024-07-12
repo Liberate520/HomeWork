@@ -1,14 +1,9 @@
 package human;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Objects;
 
-public class FileHandler implements Writer {
+public class FileHandler extends Writer {
     private String filePath = "src/FamilyTree1/Writer/tree.txt";
 
     public void save(Serializable serializable) {
@@ -30,5 +25,20 @@ public class FileHandler implements Writer {
 
     public void setPath(String filePath) {
         this.filePath = filePath;
+    }
+
+    @Override
+    public void write(char[] cbuf, int off, int len) throws IOException {
+
+    }
+
+    @Override
+    public void flush() throws IOException {
+
+    }
+
+    @Override
+    public void close() throws IOException {
+
     }
 }
