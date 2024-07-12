@@ -1,11 +1,13 @@
 package family__tree.human;
 
+import family__tree.family_tree.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
 
     private static final long serialVersionUID = 1L;
 
@@ -60,10 +62,6 @@ public class Human implements Serializable, Comparable<Human> {
         return mother;
     }
 
-    public List<Human> getChildren() {
-        return children;
-    }
-
     public void addChild(Human child) {
         this.children.add(child);
         if (this.gender == Gender.Male) {
@@ -94,8 +92,10 @@ public class Human implements Serializable, Comparable<Human> {
 
     @Override
     public int compareTo(Human o) {
-
         return this.name.compareTo(o.name);
+    }
 
+    public List<Human> getChildren() {
+        return children;
     }
 }

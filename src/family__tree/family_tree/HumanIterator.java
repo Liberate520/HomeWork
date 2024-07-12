@@ -1,17 +1,15 @@
 package family__tree.family_tree;
 
-import family__tree.human.Human;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class HumanIterator implements Iterator<Human> {
-    private List<Human> humans;
+public class HumanIterator<T> implements Iterator<T> {
+    private List<T> humans;
 
     private int currentPosition;
 
-    public HumanIterator(List<Human> humans) {
+    public HumanIterator(List<T> humans) {
         this.humans = humans;
         this.currentPosition = 0;
     }
@@ -22,7 +20,7 @@ public class HumanIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public T next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }

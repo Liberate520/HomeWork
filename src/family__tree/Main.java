@@ -3,13 +3,18 @@ package family__tree;
 import family__tree.family_tree.FamilyTree;
 import family__tree.human.Gender;
 import family__tree.human.Human;
+import family__tree.presenter.Presenter;
+import family__tree.view.UserInterface;
+import family__tree.writer.FileHandler;
+import family__tree.writer.Writer;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
+
 
         Human sergey = new Human("Сергей", LocalDate.of(1920, 1, 1), Gender.Male);
         Human lena = new Human("Лена", LocalDate.of(1925, 2, 2), Gender.Female);
@@ -25,7 +30,7 @@ public class Main {
         Human petr = new Human("Петр", LocalDate.of(1921, 12, 12), Gender.Male);
         Human tanya = new Human("Таня", LocalDate.of(1947, 1, 1), Gender.Female);
         Human valera = new Human("Валера", LocalDate.of(1948, 2, 2), Gender.Male);
-        Human katya = new Human("Катя", LocalDate.of(2070, 3, 3), Gender.Female);
+        Human katya = new Human("Катя", LocalDate.of(2010, 3, 3), Gender.Female);
 
         sergey.addChild(toma);
         sergey.addChild(lida);
@@ -52,27 +57,39 @@ public class Main {
 
         familyTree.addHumans(Arrays.asList(sergey, lena, toma, lida, vitalya, alexander, masha, anya, kolya, vasya, klava, petr, tanya, valera, katya));
 
-        /* System.out.println("Дети Сергея: " + familyTree.getAllChildren(sergey));
-        System.out.println("Дети Лены: " + familyTree.getAllChildren(lena));
-        System.out.println("Дети Томы: " + familyTree.getAllChildren(toma));
-        System.out.println("Дети Александра: " + familyTree.getAllChildren(alexander));
-        System.out.println("Дети Клавы: " + familyTree.getAllChildren(klava));
-        System.out.println("Дети Петра: " + familyTree.getAllChildren(petr));
-        System.out.println("Дети Тани: " + familyTree.getAllChildren(tanya));
-        System.out.println("Дети Валеры: " + familyTree.getAllChildren(valera));
+        Writer writer = new FileHandler();
 
-        System.out.println("Родители Маши: " + masha.getParents());
-        System.out.println("Родители Ани: " + anya.getParents());
-        System.out.println("Родители Васи: " + vasya.getParents());
-        System.out.println("Родители Александра: " + alexander.getParents());
-        System.out.println("Родители Томы: " + toma.getParents());
-        System.out.println("Родители Кати: " + katya.getParents()); */
+        // Создаем Presenter с FamilyTree и Writer
+        Presenter presenter = new Presenter(familyTree, writer);
 
-        System.out.println(familyTree);
-        familyTree.sortByName();
-        System.out.println(familyTree);
-        familyTree.sortByAge();
-        System.out.println(familyTree);
+        // Создаем UserInterface с Presenter
+        UserInterface userInterface = new UserInterface(presenter);
+
+        // Запускаем пользовательский интерфейс
+        userInterface.start();
+
+//        System.out.println("Дети Сергея: " + familyTree.getChildren(sergey));
+//        System.out.println("Дети Лены: " + familyTree.getChildren(lena));
+//        System.out.println("Дети Томы: " + familyTree.getChildren(toma));
+//        System.out.println("Дети Александра: " + familyTree.getChildren(alexander));
+//        System.out.println("Дети Клавы: " + familyTree.getChildren(klava));
+//        System.out.println("Дети Петра: " + familyTree.getChildren(petr));
+//        System.out.println("Дети Тани: " + familyTree.getChildren(tanya));
+//        System.out.println("Дети Валеры: " + familyTree.getChildren(valera));
+//
+//        System.out.println("Родители Маши: " + masha.getParents());
+//        System.out.println("Родители Ани: " + anya.getParents());
+//        System.out.println("Родители Васи: " + vasya.getParents());
+//        System.out.println("Родители Александра: " + alexander.getParents());
+//        System.out.println("Родители Томы: " + toma.getParents());
+//        System.out.println("Родители Кати: " + katya.getParents());
+//
+//        System.out.println(familyTree);
+//        familyTree.sortByName();
+//        System.out.println(familyTree);
+//        familyTree.sortByAge();
+//        System.out.println(familyTree);
+
 
         // Запись
 //        FileHandler fileHandler = new FileHandler();
