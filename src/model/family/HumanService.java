@@ -96,8 +96,8 @@ public class HumanService {
         rw.write(this.path, tree);
     }
 
-    public FamilyTree load(String path) throws IOException, ClassNotFoundException {
-        return rw.read(path);
+    public void load(String path) throws IOException, ClassNotFoundException {
+        this.tree = rw.read(path);
     }
     public FamilyTree load() throws IOException, ClassNotFoundException {
         return rw.read(this.path);
