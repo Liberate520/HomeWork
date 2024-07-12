@@ -1,24 +1,19 @@
 package view;
 
-import model.family_tree.FamilyTree;
-import model.human.Gender;
 import presenter.Presenter;
 
-import java.awt.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
     private MainMenu menu;
-    private FamilyTree familyTree;
     private Presenter presenter;
     private Scanner scanner;
     private boolean work;
 
     public ConsoleUI() {
         menu = new MainMenu(this);
-        familyTree = new FamilyTree<>();
         presenter = new Presenter(this);
         scanner = new Scanner(System.in);
         work = true;
@@ -86,12 +81,12 @@ public class ConsoleUI implements View {
         String name = scanner.nextLine();
 
         System.out.println("Укажите пол человека м/ж:");
-        Gender gender = getGenderFromInput();
+        String genderStr = getGenderFromInput();
 
         System.out.println("Укажите дату рождения человека через пробел в формате ДД ММ ГГГГ:");
         LocalDate birthDate = getBirthDateFromInput();
 
-        presenter.addHuman(name, gender, birthDate);
+        presenter.addHuman(name, genderStr, birthDate);
     }
 
     @Override
@@ -99,13 +94,13 @@ public class ConsoleUI implements View {
         System.out.println(answer);
     }
 
-    private Gender getGenderFromInput() {
+    private String getGenderFromInput() {
         while (true) {
-            String gender = scanner.nextLine().trim();
-            if (gender.equalsIgnoreCase("м")) {
-                return Gender.Male;
-            } else if (gender.equalsIgnoreCase("ж")) {
-                return Gender.Female;
+            String genderStr = scanner.nextLine().trim();
+            if (genderStr.equalsIgnoreCase("м")) {
+                return "м";
+            } else if (genderStr.equalsIgnoreCase("ж")) {
+                return "ж";
             } else {
                 System.out.println("Введен неправильный пол, попробуйте заново (м/ж):");
             }

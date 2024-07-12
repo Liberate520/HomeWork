@@ -19,12 +19,20 @@ public class Service {
         fileHandler = new FileHandler();
     }
 
-    public void addHuman(String name, Gender gender, LocalDate birthDate) {
+    public void addHuman(String name, String genderStr, LocalDate birthDate) {
         Human human = humanBuilder.build();
         human.setName(name);
-        human.setGender(gender);
+        setGenderFromStr(genderStr, human);
         human.setBirthDate(birthDate);
         familyTree.add(human);
+    }
+
+    private static void setGenderFromStr(String genderStr, Human human) {
+        if (genderStr.equalsIgnoreCase("м")){
+            human.setGender(Gender.Male);
+        } else if (genderStr.equalsIgnoreCase("ж")) {
+            human.setGender(Gender.Female);
+        }
     }
 
     public void sortByName() {

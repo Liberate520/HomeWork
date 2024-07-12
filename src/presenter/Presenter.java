@@ -1,6 +1,5 @@
 package presenter;
 
-import model.human.Gender;
 import model.service.Service;
 import view.View;
 
@@ -15,8 +14,8 @@ public class Presenter {
         service = new Service();
     }
 
-    public void addHuman(String name, Gender gender, LocalDate birthDate) {
-        service.addHuman(name, gender, birthDate);
+    public void addHuman(String name, String genderStr, LocalDate birthDate) {
+        service.addHuman(name, genderStr, birthDate);
         getHumanListInfo();
     }
 
