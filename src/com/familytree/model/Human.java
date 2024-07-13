@@ -35,7 +35,6 @@ public class Human implements FamilyMember<Human> {
         return deathDate;
     }
 
-    @Override
     public Gender getGender() {
         return gender;
     }

@@ -8,9 +8,6 @@ public interface FamilyMember<T> extends Serializable {
     String getName();
     LocalDate getBirthDate();
     LocalDate getDeathDate();
-
-    Gender getGender();
-
     T getFather();
     T getMother();
     void setMother(T mother);

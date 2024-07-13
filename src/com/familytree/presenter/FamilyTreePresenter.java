@@ -16,8 +16,8 @@ public class FamilyTreePresenter {
         this.familyTree = new FamilyTree<>();
     }
 
-    public void addPerson(String name, LocalDate birthDate, String gender) {
-        familyTree.addPerson(new Human(name, birthDate, Gender.valueOf(gender)));
+    public void addPerson(String name, LocalDate birthDate, Gender gender) {
+        familyTree.addPerson(new Human(name, birthDate, gender));
     }
 
     public void setParents(String childName, String motherName, String fatherName) {
