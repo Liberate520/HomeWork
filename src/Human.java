@@ -1,26 +1,34 @@
+import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Human {
+public class Human implements Serializable {
+    private static int humanNumber;
     private String name;
-    private String dateBirth;
-    private String dateDiet;
+    private LocalDate dateBirth;
+    private LocalDate dateDiet;
     private Human whoSpouse;
-    private String dateOfMarriage;
-    Gender gender;
-    FamilyStatus familyStatus;
-
+    private LocalDate dateOfMarriage;
+    private Gender gender;
+    private FamilyStatus familyStatus;
     private ArrayList<Human> amountOfChildren = new ArrayList<>();
     private ArrayList<Human> parents = new ArrayList<>();
 
-    public Human(String name) {
-        this.name = name;
+
+    static {
+        Human.humanNumber = 0;
     }
-    public Human(String name, String dateBirth, String dateDiet, Gender gender, FamilyStatus familyStatus) {
+    
+    public Human(String name, LocalDate dateBirth, LocalDate dateDiet, Gender gender, FamilyStatus familyStatus) {
         this.name = name;
         this.dateBirth = dateBirth;
         this.dateDiet = dateDiet;
         this.gender = gender;
         this.familyStatus = familyStatus;
+    }
+
+    public String getInfo() {
+        return String.format("Name: %s, Date of Birt %s",this.name, this.dateBirth);
     }
 
     public void setName(String name) {
@@ -30,17 +38,17 @@ public class Human {
         return name;
     }
 
-    public void setDateBirth(String dateBirth) {
+    public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
-    public String getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateDiet(String dateDiet) {
+    public void setDateDiet(LocalDate dateDiet) {
         this.dateDiet = dateDiet;
     }
-    public String getDateDiet() {
+    public LocalDate getDateDiet() {
         return dateDiet;
     }
 
@@ -58,10 +66,10 @@ public class Human {
         return gender;
     }
 
-    public void setDateOfMarriage(String dateOfMarriage) {
+    public void setDateOfMarriage(LocalDate dateOfMarriage) {
         this.dateOfMarriage = dateOfMarriage;
     }
-    public String getDateOfMarriage() {
+    public LocalDate getDateOfMarriage() {
         return dateOfMarriage;
     }
 
@@ -75,6 +83,7 @@ public class Human {
     @Override
     public String toString() {
         return "Human{" +
+                "id=" + ++humanNumber + '\'' +
                 "name='" + name + '\'' +
                 ", dateBirth='" + dateBirth + '\'' +
                 ", dateDiet='" + dateDiet + '\'' +
@@ -102,5 +111,26 @@ public class Human {
     public void printParents(){
         System.out.printf("%s's parents: %s and %s.\n", getName(), parents.get(0).getName(), parents.get(1).getName());
     }
+    public void writeHuman(Human anyHuman){
+        try{
+            FileOutputStream fs = new FileOutputStream("Human.ser");
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(anyHuman);
+            os.close();
+        } catch (IOException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
+    }
 
+    public void readHuman(){
+        try {
+            FileInputStream fileInputStream = new FileInputStream("Human.ser");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Object objHuman = objectInputStream.readObject();
+            Human human = (Human) objHuman;
+            System.out.println(human.getInfo());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
