@@ -1,12 +1,11 @@
 package com.familytree;
 
 import com.familytree.model.FamilyMember;
+
 import java.io.Serializable;
 import java.util.*;
 
 public class FamilyTree<T extends FamilyMember<T>> implements Serializable, Iterable<T> {
-    private static final long serialVersionUID = 1L;
-
     private Map<String, T> people;
 
     public FamilyTree() {

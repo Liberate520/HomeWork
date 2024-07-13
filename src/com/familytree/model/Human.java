@@ -1,13 +1,10 @@
 package com.familytree.model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements FamilyMember<Human>, Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class Human implements FamilyMember<Human> {
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
