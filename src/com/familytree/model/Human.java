@@ -5,9 +5,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements FamilyMember<Human>, Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -23,42 +23,52 @@ public class Human implements Serializable {
         this.children = new ArrayList<>();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
+    @Override
     public LocalDate getDeathDate() {
         return deathDate;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
 
+    @Override
     public Human getFather() {
         return father;
     }
 
+    @Override
     public Human getMother() {
         return mother;
     }
 
+    @Override
     public void setMother(Human mother) {
         this.mother = mother;
     }
 
+    @Override
     public void setFather(Human father) {
         this.father = father;
     }
 
+    @Override
     public void addChild(Human child) {
         this.children.add(child);
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }

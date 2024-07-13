@@ -1,38 +1,30 @@
 package com.familytree;
 
-import com.familytree.model.Gender;
-import com.familytree.model.Human;
-
+import com.familytree.model.FamilyMember;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.*;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<T extends FamilyMember<T>> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
-    
-    private Map<String, Human> people;
+
+    private Map<String, T> people;
 
     public FamilyTree() {
         this.people = new HashMap<>();
     }
 
-    public Human addPerson(String name, LocalDate dob, Gender gender) {
-        if (!people.containsKey(name)) {
-            Human person = new Human(name, dob, gender);
-            people.put(name, person);
-            return person;
-        }
-        return people.get(name);
+    public void addPerson(T person) {
+        people.put(person.getName(), person);
     }
 
-    public Human getPerson(String name) {
+    public T getPerson(String name) {
         return people.get(name);
     }
 
     public void setParents(String childName, String motherName, String fatherName) {
-        Human child = getPerson(childName);
-        Human mother = getPerson(motherName);
-        Human father = getPerson(fatherName);
+        T child = getPerson(childName);
+        T mother = getPerson(motherName);
+        T father = getPerson(fatherName);
 
         if (child != null && mother != null) {
             child.setMother(mother);
@@ -45,31 +37,28 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         }
     }
 
-    // Метод для получения всех детей выбранного человека
-    public List<Human> getChildren(String personName) {
-        Human person = people.get(personName);
+    public List<T> getChildren(String personName) {
+        T person = people.get(personName);
         if (person != null) {
             return person.getChildren();
         }
         return new ArrayList<>();
     }
 
-    // Реализация интерфейса Iterable
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<T> iterator() {
         return people.values().iterator();
     }
 
-    // Методы сортировки
-    public List<Human> getPeopleSortedByName() {
-        List<Human> sortedPeople = new ArrayList<>(people.values());
-        sortedPeople.sort(Comparator.comparing(Human::getName));
+    public List<T> getPeopleSortedByName() {
+        List<T> sortedPeople = new ArrayList<>(people.values());
+        sortedPeople.sort(Comparator.comparing(T::getName));
         return sortedPeople;
     }
 
-    public List<Human> getPeopleSortedByBirthDate() {
-        List<Human> sortedPeople = new ArrayList<>(people.values());
-        sortedPeople.sort(Comparator.comparing(Human::getBirthDate));
+    public List<T> getPeopleSortedByBirthDate() {
+        List<T> sortedPeople = new ArrayList<>(people.values());
+        sortedPeople.sort(Comparator.comparing(T::getBirthDate));
         return sortedPeople;
     }
 }
