@@ -33,13 +33,13 @@ public class FamilyTree {
         return false;
     }
 
-    public void addToParents(Human human) {
+    private void addToParents(Human human) {
         for (Human parent : human.getParents()) {
             parent.addChild(human);
         }
     }
 
-    public void addToChildren(Human human) {
+    private void addToChildren(Human human) {
         for (Human child: human.getChildren()) {
             child.addParent(human);
         }
