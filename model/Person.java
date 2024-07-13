@@ -1,34 +1,27 @@
 package model;
 
-import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable {
-    private static int idCounter = 0;
+public class Person implements TreeNode<Person> {
+    private static final long serialVersionUID = 1L;
+    private static int idCounter = 1;
+
     private int id;
     private String name;
-    private String birthDate;
+    private LocalDate birthDate;
     private Gender gender;
-    private Person father;
-    private Person mother;
     private List<Person> children;
+    private Person father; // Для хранения ссылки на отца
+    private Person mother; // Для хранения ссылки на мать
 
     public Person(String name, String birthDate, Gender gender) {
         this.id = idCounter++;
         this.name = name;
-        this.birthDate = birthDate;
+        this.birthDate = LocalDate.parse(birthDate);
         this.gender = gender;
         this.children = new ArrayList<>();
-    }
-
-    public void addChild(Person child) {
-        children.add(child);
-        if (this.gender == Gender.MALE) {
-            child.setFather(this);
-        } else if (this.gender == Gender.FEMALE) {
-            child.setMother(this);
-        }
     }
 
     public int getId() {
@@ -39,12 +32,16 @@ public class Person implements Serializable {
         return name;
     }
 
-    public String getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
     public Gender getGender() {
         return gender;
+    }
+
+    public List<Person> getChildren() {
+        return children;
     }
 
     public Person getFather() {
@@ -63,20 +60,15 @@ public class Person implements Serializable {
         this.mother = mother;
     }
 
-    public List<Person> getChildren() {
-        return children;
+    @Override
+    public void addChild(Person child) {
+        children.add(child);
     }
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", gender=" + gender +
-                ", father=" + (father != null ? father.getName() : "no") +
-                ", mother=" + (mother != null ? mother.getName() : "no") +
-                ", children=" + (children.isEmpty() ? "no" : children) +
-                '}';
+        return "ID: " + id + ", Name: " + name + ", Birth Date: " + birthDate + ", Gender: " + gender + 
+               ", Father ID: " + (father != null ? father.getId() : "Unknown") + 
+               ", Mother ID: " + (mother != null ? mother.getId() : "Unknown");
     }
 }

@@ -2,36 +2,29 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends Person> implements Serializable {
+    private static final long serialVersionUID = 1L;
     private List<T> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
-    public void addMember(T member) {
-        members.add(member);
+    public void addMember(T person) {
+        members.add(person);
     }
 
     public T getMemberById(int id) {
-        for (T member : members) {
-            if (member.getId() == id) {
-                return member;
-            }
-        }
-        return null;
+        return members.stream()
+                .filter(member -> member.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public List<T> getMembers() {
         return members;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return members.iterator();
     }
 
     @Override

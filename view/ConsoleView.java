@@ -15,7 +15,9 @@ public class ConsoleView implements View {
         System.out.println("2. Показать дерево");
         System.out.println("3. Сортировать по имени");
         System.out.println("4. Сортировать по дате рождения");
-        System.out.println("5. Выйти");
+        System.out.println("5. Сохранить дерево");
+        System.out.println("6. Загрузить дерево");
+        System.out.println("7. Выйти");
         System.out.print("Выберите опцию: ");
     }
 
@@ -29,19 +31,15 @@ public class ConsoleView implements View {
         System.err.println(errorMessage);
     }
 
-    public int getUserChoice() {
-        while (!scanner.hasNextInt()) {
-            scanner.next();  // Очистка неверного ввода
-            System.out.print("Пожалуйста, введите номер опции: ");
-        }
-        return scanner.nextInt();
-    }
-
-    public String getUserInput() {
+    @Override
+    public String getUserInput(String prompt) { // SRP: добавлен метод для получения ввода пользователя
+        System.out.print(prompt);
         return scanner.next();
     }
 
-    public int getUserIntInput() {
+    @Override
+    public int getUserIntInput(String prompt) { // SRP: добавлен метод для получения ввода пользователя
+        System.out.print(prompt);
         while (!scanner.hasNextInt()) {
             scanner.next();  // Очистка неверного ввода
             System.out.print("Пожалуйста, введите число: ");

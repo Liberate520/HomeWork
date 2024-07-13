@@ -1,9 +1,7 @@
 package presenter;
 
-import model.Gender;
 import model.Person;
 import model.services.FamilyTreeService;
-import view.ConsoleView;
 import view.View;
 
 public class FamilyTreePresenter {
@@ -19,54 +17,27 @@ public class FamilyTreePresenter {
         boolean exit = false;
         while (!exit) {
             view.showMenu();
-            int choice = ((ConsoleView) view).getUserChoice();
+            int choice = view.getUserIntInput("");
             switch (choice) {
-                case 1:
-                    addPerson();
-                    break;
-                case 2:
-                    showTree();
-                    break;
-                case 3:
-                    sortByName();
-                    showTree();
-                    break;
-                case 4:
-                    sortByBirthDate();
-                    showTree();
-                    break;
-                case 5:
-                    exit = true;
-                    break;
-                default:
-                    view.displayError("Неверная опция, попробуйте снова.");
+                case 1 -> addPerson();
+                case 2 -> showTree();
+                case 3 -> sortByName();
+                case 4 -> sortByBirthDate();
+                case 5 -> saveTree();
+                case 6 -> loadTree();
+                case 7 -> exit = true;
+                default -> view.displayError("Неверный выбор. Пожалуйста, попробуйте снова.");
             }
         }
     }
 
     private void addPerson() {
-        ConsoleView consoleView = (ConsoleView) view;
-        consoleView.display("Введите имя:");
-        String name = consoleView.getUserInput();
-        consoleView.display("Введите дату рождения (в формате yyyy-mm-dd):");
-        String birthDate = consoleView.getUserInput();
-        consoleView.display("Введите пол (MALE или FEMALE):");
-        String genderStr = consoleView.getUserInput();
-        consoleView.display("Введите ID отца (или -1, если неизвестно):");
-        int fatherId = consoleView.getUserIntInput();
-        consoleView.display("Введите ID матери (или -1, если неизвестно):");
-        int motherId = consoleView.getUserIntInput();
-
-        try {
-            Gender gender = Gender.valueOf(genderStr.toUpperCase());
-            Integer fatherIdObj = fatherId != -1 ? fatherId : null;
-            Integer motherIdObj = motherId != -1 ? motherId : null;
-            Person person = new Person(name, birthDate, gender);
-            service.addPerson(person, fatherIdObj, motherIdObj);
-            view.display("Человек добавлен с ID: " + person.getId());
-        } catch (IllegalArgumentException e) {
-            view.displayError("Неверный ввод пола. Пожалуйста, используйте MALE или FEMALE.");
-        }
+        String name = view.getUserInput("Введите имя: ");
+        String birthDate = view.getUserInput("Введите дату рождения (в формате yyyy-mm-dd): ");
+        String genderStr = view.getUserInput("Введите пол (MALE или FEMALE): ");
+        Integer fatherId = view.getUserIntInput("Введите ID отца (или 0, если нет): ");
+        Integer motherId = view.getUserIntInput("Введите ID матери (или 0, если нет): ");
+        service.addPerson(name, birthDate, genderStr, fatherId != 0 ? fatherId : null, motherId != 0 ? motherId : null);
     }
 
     private void showTree() {
@@ -75,9 +46,23 @@ public class FamilyTreePresenter {
 
     private void sortByName() {
         service.sortByName();
+        view.display("Дерево отсортировано по имени.");
     }
 
     private void sortByBirthDate() {
         service.sortByBirthDate();
+        view.display("Дерево отсортировано по дате рождения.");
+    }
+
+    private void saveTree() {
+        String filename = view.getUserInput("Введите имя файла для сохранения: ");
+        service.saveTree(filename);
+        view.display("Дерево сохранено в файл " + filename);
+    }
+
+    private void loadTree() {
+        String filename = view.getUserInput("Введите имя файла для загрузки: ");
+        service.loadTree(filename);
+        view.display("Дерево загружено из файла " + filename);
     }
 }
