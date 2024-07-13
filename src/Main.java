@@ -1,117 +1,51 @@
+import familyTreeSrc.FamilyTree;
+import person.Human;
+import person.Gender;
+
+import java.time.LocalDate;
+
+import static person.Gender.Female;
+import static person.Gender.Male;
+
 public class Main {
     public static void main(String[] args) {
         // Создаем генеалогическое древо
-        FamilyTree familyTree1 = new FamilyTree();
+        FamilyTree familyTree = new FamilyTree();
 
         // Создаем родителей без указания их родителей
-        Person harry = new Person("Harry", "Male", 88);
-        Person emily = new Person("Emily", "Female", 81);
+        Human harry = new Human("Harry", Male, LocalDate.of(1941, 2, 22), LocalDate.of(2018, 11, 16));
+        Human emily = new Human("Emily", Female, LocalDate.of(1946, 6, 10), LocalDate.of(2023, 2, 5));
 
-        Person charlie = new Person("Charlie", "Male", 83);
-        Person ella = new Person("Ella", "Female", 77);
+        familyTree.addHuman(harry);
+        familyTree.addHuman(emily);
+        familyTree.setWedding(harry, emily);
 
-        // Создаем детей, указывая их родителей
-        Person james = new Person("James", "Male", 39, harry, emily);
-        Person jane = new Person("Jane", "Female", 34, charlie, ella);
+        Human charlie = new Human("Charlie", Male, LocalDate.of(1944, 1, 8), LocalDate.of(2020, 12, 4));
+        Human ella = new Human("Ella", Female, LocalDate.of(1952, 10, 17));
 
-        // Указываем отца и мать для James
-        james.setFather(harry);
-        james.setMother(emily);
-
-        // Указываем отца и мать для Jane
-        jane.setFather(charlie);
-        jane.setMother(ella);
+        familyTree.addHuman(charlie);
+        familyTree.addHuman(ella);
+        familyTree.setWedding(charlie, ella);
 
         // Создаем детей, указывая их родителей
-        Person emma = new Person("Emma", "Female", 7, james, jane);
-        Person michael  = new Person("Michael", "Male", 9, james, jane);
-        Person thomas  = new Person("Thomas", "Male", 10, james, jane);
+        Human james = new Human("James", Male, LocalDate.of(1985, 7, 30), harry, emily);
+        Human jane = new Human("Jane", Female, LocalDate.of(1990, 8, 2), charlie, ella);
 
-        // Добавляем ребенка к родителям(Harry, Emily)
-        harry.addChild(james);
-        emily.addChild(james);
+        familyTree.addHuman(james);
+        familyTree.addHuman(jane);
+        familyTree.setWedding(james, jane);
 
-        // Добавляем ребенка к родителям(Charlie, Ella)
-        charlie.addChild(jane);
-        ella.addChild(jane);
+        // Создаем детей, указывая их родителей
+        Human emma = new Human("Emma", Female, LocalDate.of(2018, 3, 3), james, jane);
+        Human michael  = new Human("Michael", Male, LocalDate.of(2016, 1, 19), james, jane);
+        Human thomas  = new Human("Thomas", Male, LocalDate.of(2020, 4, 19), james, jane);
 
-        // Добавляем детей к родителям(James, Jane)
-        james.addChild(emma);
-        james.addChild(michael);
-        james.addChild(thomas);
-        jane.addChild(emma);
-        jane.addChild(michael);
-        jane.addChild(thomas);
+        familyTree.addHuman(emma);
+        familyTree.addHuman(michael);
+        familyTree.addHuman(thomas);
 
-        // Добавляем людей в familyTree
-        familyTree1.addPerson(harry); // Отец James'a
-        familyTree1.addPerson(emily); // Мать James'a
+        System.out.println(familyTree);
 
-        familyTree1.addPerson(charlie);  // Отец Jane
-        familyTree1.addPerson(ella);     // Мать Jane
-
-        familyTree1.addPerson(james); // Отец Emma, Michael
-        familyTree1.addPerson(jane); // Мать Emma, Michael
-
-        familyTree1.addPerson(emma); // Ребенок James, Jane
-        familyTree1.addPerson(michael); // Ребенок James, Jane
-        familyTree1.addPerson(thomas); // Ребенок James, Jane
-
-        // Все дети James'a
-        System.out.println("All children of James:");
-        for (Person child : familyTree1.getAllChildren(james)) {
-            System.out.println(child);
-        }
-
-        System.out.println();
-
-        // Все дети Jane
-        System.out.println("All children of Jane:");
-        for (Person child : familyTree1.getAllChildren(jane)) {
-            System.out.println(child);
-        }
-
-        // Поиск человека
-        System.out.println(familyTree1.findPersonByName("William"));
-        System.out.println();
-        System.out.println(familyTree1.findPersonByName("James"));
-        System.out.println();
-        System.out.println(familyTree1.findPersonByName("Michael"));
-        System.out.println();
-        System.out.println(familyTree1.findPersonByName("Liam"));
-
-        System.out.println();
-
-        // Вывод матери James и отца Jane
-        System.out.println(james.getMother());
-        System.out.println(jane.getFather());
-
-        System.out.println();
-
-        // Вывод пола Michael и Jane
-        System.out.println(michael.getGender());
-        System.out.println(jane.getGender());
-
-        System.out.println();
-
-        // Вывод возраста James и Thomas
-        System.out.println(james.getAge());
-        System.out.println(thomas.getAge());
-
-        System.out.println();
-
-        // Вывод всех людей в familyTree
-        System.out.println(familyTree1);
-
-        System.out.println();
-
-        // Вывод детей Harry
-        System.out.println("Дети Harry - " + harry.getChildren());
-
-        // Вывод детей Ella
-        System.out.println("Дети Ella - " + ella.getChildren());
-
-        // Вывод имени Michael
-        System.out.println(michael.getName());
+        System.out.println(familyTree.findPersonByName("Vsevolod"));
     }
 }
