@@ -1,14 +1,24 @@
-import writer.FileHandler;
+package family_tree;
 
-import java.io.*;
+import family_tree.family_tree.FamilyTree;
+import family_tree.human.Gender;
+import family_tree.human.Human;
+import family_tree.writer.FileHandler;
+
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree tree = testTree();
-        //FamilyTree tree = readTree();
+        //family_tree.family_tree.FamilyTree tree = readTree();
         saveTree(tree);
 
+        System.out.println(tree);
+
+        tree.sortByName();
+        System.out.println(tree);
+
+        tree.sortByBirthDate();
         System.out.println(tree);
 
     }
@@ -72,16 +82,16 @@ public class Main {
             romanovFamilyTree.setMotherChild(anna,dmitriy); // Внесение данных о матери
 
 
-            System.out.println(romanovFamilyTree.getByName("Мария")); // поиск человека по имени
-            System.out.println(romanovFamilyTree.getSiblings(2)); // поиск братьев/сестер
+           // System.out.println(romanovFamilyTree.getByName("Мария")); // поиск человека по имени
+          //  System.out.println(romanovFamilyTree.getSiblings(2)); // поиск братьев/сестер
 
-            System.out.println(pavel.getParents()); // поиск родителей
-            System.out.println(pavel.getChildren()); // поиск детей
+           // System.out.println(pavel.getParents()); // поиск родителей
+           // System.out.println(pavel.getChildren()); // поиск детей
 
-            System.out.println(anastasiya.getFather().getFather().getFather()); // поиск прадеда
+           // System.out.println(anastasiya.getFather().getFather().getFather()); // поиск прадеда
 
 
-            System.out.println(romanovFamilyTree); // Показать всех членов семьи
+           // System.out.println(romanovFamilyTree); // Показать всех членов семьи
 
             return romanovFamilyTree;
         }
