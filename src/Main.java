@@ -1,3 +1,4 @@
+import Gender.Gender;
 import Tree.FamilyTree;
 import Writer.FileHandler;
 import Human.*;
@@ -10,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         Human Lilia = new Human("Lilia", "Kornaval", Gender.Female, new MyDate(2000, 9, 15));
         Human Nastya = new Human("Nastya", "Kornaval", Gender.Female, new MyDate(2022, 4, 30));
@@ -24,7 +25,7 @@ public class Main {
         Lilia.setSpouse(Nicolay);
         Lilia.addChildren(Kiril);
 
-        familyTree.addHuman(Nastya);
+        familyTree.addCreature(Nastya);
 
         Lilia.setMather(Olga);
 

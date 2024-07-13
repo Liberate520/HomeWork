@@ -22,6 +22,11 @@ public class FileHandler implements Writer{
     @Override
     public FamilyTree readFile(String name) throws IOException, ClassNotFoundException {
         ObjectInputStream object = new ObjectInputStream(new FileInputStream(create_name(name)));
-        return (FamilyTree) object.readObject();
+
+        FamilyTree familyTree = (FamilyTree) object.readObject();
+
+        object.close();
+
+        return familyTree;
     }
 }

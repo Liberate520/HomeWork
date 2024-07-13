@@ -1,4 +1,4 @@
-package Human;
+package Gender;
 
 public enum Gender {
     Male, Female

@@ -3,51 +3,48 @@ package Tree;
 import java.io.Serializable;
 import java.util.*;
 
-import Human.Comparator.HumanComparatorByChildren;
-import Human.Comparator.HumanComparatorByID;
-import Human.Comparator.HumanComparatorByName;
-import Human.Comparator.HumanComparatorBySurname;
-import Human.Human;
-import Human.Iterator.HumanIterator;
+import Creature.Creature;
+import Iterator.CreatureIterator;
+import Comparators.*;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable<T> {
     private static int lastID = 0;
     private final int ID = lastID++;
-    private final ArrayList<Human> familyTree = new ArrayList<>();
+    private final ArrayList<T> familyTree = new ArrayList<>();
 
-    public void addHuman(Human human) {
-        if (!this.familyTree.contains(human) && human != null) {
+    public void addCreature(T creature) {
+        if (!this.familyTree.contains(creature) && creature != null) {
 
-            this.familyTree.add(human);
-            addHuman(human.getSpouse());
-            addHuman(human.getMather());
-            addHuman(human.getFather());
+            this.familyTree.add(creature);
+            addCreature(creature.getSpouse());
+            addCreature(creature.getMather());
+            addCreature(creature.getFather());
 
-            for (Human kid: human.getChildren()) addHuman(kid);
+            for (T kid: creature.getChildren()) addCreature(kid);
         }
     }
 
     public void updateTree(){
-        ArrayList<Human> copyFamilyTree = new ArrayList<>(this.familyTree);
+        ArrayList<T> copyFamilyTree = new ArrayList<>(this.familyTree);
 
-        for (Human human: copyFamilyTree){
+        for (T creature: copyFamilyTree){
 
-            addHuman(human.getFather());
-            addHuman(human.getMather());
-            addHuman(human.getSpouse());
+            addCreature(creature.getFather());
+            addCreature(creature.getMather());
+            addCreature(creature.getSpouse());
 
-            for (Human kid: human.getChildren()) addHuman(kid);
+            for (T kid: creature.getChildren()) addCreature(kid);
         }
     }
 
-    public void removeHuman(int ID){
+    public void removeCreature(int ID){
         this.familyTree.remove(ID);
     }
 
-    public Human getHuman(int ID){
-        for(Human human: this.familyTree){
-            if (human.getID() == ID){
-                return human;
+    public T getCreature(int ID){
+        for(T creature: this.familyTree){
+            if (creature.getID() == ID){
+                return creature;
             }
         }
         return null;
@@ -58,32 +55,32 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     public void sortBySurname(){
-        this.familyTree.sort(new HumanComparatorBySurname());
+        this.familyTree.sort(new ComparatorBySurname<T>());
     }
 
     public void sortByID(){
-        this.familyTree.sort(new HumanComparatorByID());
+        this.familyTree.sort(new ComparatorByID<T>());
     }
 
     public void sortByChildren(){
-        this.familyTree.sort(new HumanComparatorByChildren());
+        this.familyTree.sort(new ComparatorByChildren<T>());
     }
 
     public void sortByName(){
-        this.familyTree.sort(new HumanComparatorByName());
+        this.familyTree.sort(new ComparatorByName<T>());
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(this.familyTree);
+    public Iterator<T> iterator() {
+        return new CreatureIterator<T>(this.familyTree);
     }
 
     @Override
     public String toString() {
         StringBuilder info = new StringBuilder();
 
-        for (Human human: this.familyTree){
-            info.append(human);
+        for (T creature: this.familyTree){
+            info.append(creature);
         }
 
         return info.toString();
@@ -95,7 +92,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
         if (obj == null || getClass() == obj.getClass()) return false;
 
-        return this.ID == ((FamilyTree) obj).getID();
+        return this.ID == ((FamilyTree<?>) obj).getID();
     }
 
     @Override
