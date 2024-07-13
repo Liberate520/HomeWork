@@ -2,10 +2,11 @@ package ru.gb.family.tree;
 
 import ru.gb.family.human.Human;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private long humansId; // переменная для присваивания идентифткатора
     private List<Human> humanList; //список людей
 
@@ -35,77 +36,82 @@ public class FamilyTree {
         return false;
     }
 
-    private  void addToParents(Human human){
-        for (Human parent: human.getParents()){
+    private void addToParents(Human human) {
+        for (Human parent : human.getParents()) {
             parent.addChild(human);
         }
     }
 
-    private  void addToChildren(Human human){
-        for (Human child: human.getChildren()){
+    private void addToChildren(Human human) {
+        for (Human child : human.getChildren()) {
             child.addParent(human);
         }
     }
-//методы поиска братьев сестер
-    public List<Human> getSiblings(int id){
+
+    //методы поиска братьев сестер
+    public List<Human> getSiblings(int id) {
         Human human = getById(id);
-        if(human == null){
+        if (human == null) {
             return null;
         }
         List<Human> res = new ArrayList<>();
-        for (Human parent: human.getParents()){
-            for (Human child: parent.getChildren()){
-                if (!child.equals(human)){
+        for (Human parent : human.getParents()) {
+            for (Human child : parent.getChildren()) {
+                if (!child.equals(human)) {
                     res.add(child);
                 }
             }
         }
-        return  res;
+        return res;
     }
 
-    public  List<Human> getByName(String name){ // поиск по имени
+    public List<Human> getByName(String name) { // поиск по имени
         List<Human> res = new ArrayList<>();
-        for (Human human: humanList){
-            if (human.getName().equals(name)){
+        for (Human human : humanList) {
+            if (human.getName().equals(name)) {
                 res.add(human);
             }
         }
         return res;
     }
-//метод создания супружеской связи
-    public  boolean setWedding(long humansId1, long humansId2){
-        if (checkId(humansId1) && checkId(humansId2)){
+
+    //метод создания супружеской связи
+    public boolean setWedding(long humansId1, long humansId2) {
+        if (checkId(humansId1) && checkId(humansId2)) {
             Human human1 = getById(humansId1);
             Human human2 = getById(humansId2);
-            return  setWedding(human1, human2);
+            return setWedding(human1, human2);
         }
         return false;
     }
-//развод
-    public  boolean setWedding(Human human1, Human human2){
-        if (human1.getSpouse() == null && human2.getSpouse() ==null){
+
+    //развод
+    public boolean setWedding(Human human1, Human human2) {
+        if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
             human2.setSpouse(human1);
-            return  true;
+            return true;
         } else {
-            return  false;
+            return false;
         }
     }
-    public boolean remove(long humansId){
-        if (checkId(humansId)){
+
+    public boolean remove(long humansId) {
+        if (checkId(humansId)) {
             Human human = getById(humansId);
             return humanList.remove(human);
         }
-        return  false;
-    }
-//проверяет id в нужном диапозоне
-    private  boolean checkId(long id){
-        return  id < humansId && id >= 0;
+        return false;
     }
 
-    public Human getById(long id){
-        for (Human human: humanList){
-            if (human.getId() == id){
+    //проверяет id в нужном диапозоне
+    private boolean checkId(long id) {
+        return id < humansId && id >= 0;
+    }
+
+    public Human getById(long id) {
+        for (Human human : humanList) {
+            if (human.getId() == id) {
                 return human;
             }
         }
@@ -122,7 +128,7 @@ public class FamilyTree {
         sb.append("В дереве");
         sb.append(humanList.size());
         sb.append(" объектов: \n");
-        for (Human human: humanList){
+        for (Human human : humanList) {
             sb.append(human);
             sb.append("\n");
         }

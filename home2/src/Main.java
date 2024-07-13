@@ -1,13 +1,30 @@
-package ru.gb.family;
-
 import ru.gb.family.human.Gender;
-import ru.gb.family.human.Human;
 import ru.gb.family.tree.FamilyTree;
+import ru.gb.family.human.Human;
+import ru.gb.family.writer.FileHandler;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+//       FamilyTree tree = readTree();
+        FamilyTree tree = testTree();
+
+//        saveTree(tree);
+        System.out.println(tree);
+    }
+
+    private static FamilyTree readTree() {
+        FileHandler fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static void saveTree(FamilyTree tree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(tree);
+    }
+
+    private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
         Human adam = new Human("Adam", Gender.Male, LocalDate.of(1976, 2, 1));
@@ -26,8 +43,6 @@ public class Main {
         grandMother.addChild(adam);
 
         tree.add(grandMother);
-
-
-        System.out.println(tree);
+        return tree;
     }
 }

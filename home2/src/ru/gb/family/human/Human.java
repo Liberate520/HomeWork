@@ -1,11 +1,14 @@
 package ru.gb.family.human;
 
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+
+public class Human implements Serializable {
     private long id;
     private String name;
     private Gender gender;
@@ -69,6 +72,7 @@ public class Human {
     public void setMother(Human mother) {
         this.mother = mother;
     }
+
     public void setFather(Human father) {
         this.father = father;
     }
@@ -86,7 +90,7 @@ public class Human {
         if (father != null) {
             list.add(father);
         }
-        if (mother != null){
+        if (mother != null) {
             list.add(mother);
         }
         return list;
@@ -195,6 +199,7 @@ public class Human {
         }
         return res;
     }
+
     public String getMotherInfo() {
         String res = "мать: ";
         Human mother = getMother();
