@@ -1,5 +1,7 @@
 package human;
 
-public enum Gender {
+import family_tree.Item;
+
+public enum Gender  {
     Male, Female
 }

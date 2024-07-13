@@ -1,11 +1,13 @@
 package human;
 
+import family_tree.Item;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
- public class Human implements Serializable,Comparable<Human>{
-     private String name;
+
+public  class Human implements Item<Human>,Comparable<Human> {
+    private String name;
     private Gender sex;
     private LocalDate brthDate;
     private LocalDate dthDate;
@@ -41,7 +43,7 @@ import java.io.Serializable;
 
 
 
-     public boolean addChild(Human child) {
+    public boolean addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
             return true;
@@ -50,11 +52,11 @@ import java.io.Serializable;
     }
 
 
-     public int getId() {
-         return id;
-     }
+    public int getId() {
+        return id;
+    }
 
-     public void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -70,14 +72,14 @@ import java.io.Serializable;
         this.mother = mother;
     }
 
-     public boolean addParent(Human parent) {
-         if (parent.getSex().equals(Gender.Male)) {
-             setFather(parent);
-         } else if (parent.getSex().equals(Gender.Female)) {
-             setMother(parent);
-         }
-         return true;
-     }
+    public boolean addParent(Human parent) {
+        if (parent.getSex().equals(Gender.Male)) {
+            setFather(parent);
+        } else if (parent.getSex().equals(Gender.Female)) {
+            setMother(parent);
+        }
+        return true;
+    }
 
 
     public Human getFather() {
@@ -125,15 +127,15 @@ import java.io.Serializable;
         return children;
     }
 
-     public void setSex(Gender sex) {
-         this.sex = sex;
-     }
+    public void setSex(Gender sex) {
+        this.sex = sex;
+    }
 
-     public void setName(String name) {
-         this.name = name;
-     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-     public void setBrthDate(LocalDate brthDate) {
+    public void setBrthDate(LocalDate brthDate) {
         this.brthDate = brthDate;
     }
 
@@ -160,7 +162,7 @@ import java.io.Serializable;
         info.append("дата рождения: ");
         info.append(brthDate);
         info.append(", ");
-        info.append(getSprousInfo());
+        info.append(getSpousInfo());
         info.append(", ");
         info.append(getFatherInfo());
         info.append(", ");
@@ -171,52 +173,52 @@ import java.io.Serializable;
 
     }
 
-    public String getSprousInfo() {
-        String infoSprous = "супруг(а): ";
+    public String getSpousInfo() {
+        String infoSpous = "супруг(а): ";
         if (spouse == null) {
-            infoSprous += "отсутствует";
+            infoSpous += "отсутствует";
         } else {
-            infoSprous += spouse.getName();
+            infoSpous += spouse.getName();
         }
-        return infoSprous;
+        return infoSpous;
     }
 
     public String getFatherInfo() {
-        String infoSprous = "отец: ";
+        String infoSpous = "отец: ";
         Human father = getFather();
         if (father == null) {
-            infoSprous += "отсутствует";
+            infoSpous += "отсутствует";
         } else {
-            infoSprous += father.getName();
+            infoSpous += father.getName();
         }
-        return infoSprous;
+        return infoSpous;
     }
 
     public String getMotherInfo() {
-        String infoSprous = "мать: ";
+        String infoSpous = "мать: ";
         Human mather = getMother();
         if (mather == null) {
-            infoSprous += "отсутствует";
+            infoSpous += "отсутствует";
         } else {
-            infoSprous += mather.getName();
+            infoSpous += mather.getName();
         }
-        return infoSprous;
+        return infoSpous;
     }
 
-     public String getChildrenInfo() {
-         StringBuilder res = new StringBuilder();
-         res.append("дети: ");
-         if (!children.isEmpty()) {
-             res.append(children.getFirst().getName());
-             for (int i = 1; i < children.size(); i++) {
-                 res.append(", ");
-                 res.append(children.get(i).getName());
-             }
-         } else {
-             res.append("отсутствуют");
-         }
-         return res.toString();
-     }
+    public String getChildrenInfo() {
+        StringBuilder res = new StringBuilder();
+        res.append("дети: ");
+        if (!children.isEmpty()) {
+            res.append(children.getFirst().getName());
+            for (int i = 1; i < children.size(); i++) {
+                res.append(", ");
+                res.append(children.get(i).getName());
+            }
+        } else {
+            res.append("отсутствуют");
+        }
+        return res.toString();
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -231,8 +233,9 @@ import java.io.Serializable;
         return human.getId()==getId();
     }
 
-     @Override
-     public int compareTo(Human o) {
-         return this.name.compareTo(o.name);
-     }
- }
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
+    }
+}
+

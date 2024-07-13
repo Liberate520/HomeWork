@@ -40,7 +40,7 @@ public class Servise {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("На данный момент в дереве:\n");
 
-        for (Human human : familyTree) {
+        for (Object human : familyTree) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
 

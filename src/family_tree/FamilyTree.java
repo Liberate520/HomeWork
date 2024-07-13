@@ -13,9 +13,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
- public class FamilyTree implements Serializable,Iterable<Human>{
+ public class FamilyTree<C extends Item<C>> implements Serializable,Iterable<C>{
 
-    private List<Human> humans;
+    private List<C> humans;
     private int humansId;
 
 
@@ -23,7 +23,7 @@ import java.util.List;
 
 
 
-    public FamilyTree(List<Human> humanList) {
+    public FamilyTree(List<C> humanList) {
         this.humans = humanList;
 
 
@@ -39,7 +39,7 @@ import java.util.List;
     }
 
 
-     public boolean add(Human human){
+     public boolean add(C human){
 
          if (human==null){
              return false;
@@ -53,31 +53,31 @@ import java.util.List;
          return false;
      }
 
-     public List<Human> getHumans() {
+     public List<C> getHumans() {
          return humans;
      }
 
-     private void addToParents(Human human){
-        for (Human parent :human.getParents()){
+     private void addToParents(C human){
+        for (C parent :human.getParents()){
             parent.addChild(human);
         }
 
     }
-    private  void  addToChildren(Human human){
-        for (Human child :human.getChildren()){
+    private  void  addToChildren(C human){
+        for (C child :human.getChildren()){
             child.addParent(human);
         }
     }
-    public List<Human> getSiblings(int id){
-        Human human = getById(id);
+    public List<C> getSiblings(int id){
+        C human = getById(id);
 
         if (human==null){
             return null;
         }
-        List<Human> siblings = new ArrayList<>();
-        for (Human parent: human.getParents())
+        List<C> siblings = new ArrayList<>();
+        for (C parent: human.getParents())
         {
-            for (Human child: human.getChildren()){
+            for (C child: human.getChildren()){
                 if (!child.equals(human)){
                     siblings.add(child);
                 }
@@ -86,8 +86,8 @@ import java.util.List;
 
         return siblings;
     }
-    public Human getById(int id) {
-        for (Human human : humans) {
+    public C getById(int id) {
+        for (C human : humans) {
             if (human.getId() == id) {
                 return human;
             }
@@ -95,7 +95,7 @@ import java.util.List;
         return null;
     }
 
-    public boolean setWedding(Human human1, Human human2) {
+    public boolean setWedding(C human1, C human2) {
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
             human2.setSpouse(human1);
@@ -108,8 +108,8 @@ import java.util.List;
 
 
      public boolean setFamily(int id1, int id2) {
-        Human human1 = getById(id1);
-        Human human2 = getById(id2);
+        C human1 = getById(id1);
+        C human2 = getById(id2);
         if (!human2.getParents().contains(human1)) {
 
             human1.addChild(human2);
@@ -121,14 +121,14 @@ import java.util.List;
         }
     }
     public void SortByName(){
-        Collections.sort(humans,new Comparator2());
+        Collections.sort(humans,new Comparator2<>());
     }
      public void SortByBrthDate(){
-         Collections.sort(humans,new Comparator1());
+         Collections.sort(humans,new Comparator1<>());
      }
 
      @Override
-     public Iterator<Human> iterator() {
+     public Iterator<C> iterator() {
          return humans.iterator();
      }
 
@@ -145,7 +145,7 @@ import java.util.List;
         sb.append(humans.size());
         sb.append(" объектa: ");
         sb.append("\n");
-        for (Human human : humans) {
+        for (C human : humans) {
             sb.append(human);
             sb.append("\n");
         }
