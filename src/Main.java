@@ -1,7 +1,9 @@
 import familyTreeSrc.FamilyTree;
 import person.Human;
 import person.Gender;
+import writer.FileHandler;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import static person.Gender.Female;
@@ -9,6 +11,25 @@ import static person.Gender.Male;
 
 public class Main {
     public static void main(String[] args) {
+        //FamilyTree tree = familyTreeTest();
+        FamilyTree tree = readTree();
+
+        saveTree(tree);
+
+        System.out.println(tree);
+    }
+
+    private static void saveTree(FamilyTree tree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(tree);
+    }
+
+    private static FamilyTree readTree() {
+        FileHandler fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static FamilyTree familyTreeTest() {
         // Создаем генеалогическое древо
         FamilyTree familyTree = new FamilyTree();
 
@@ -44,16 +65,6 @@ public class Main {
         familyTree.addHuman(michael);
         familyTree.addHuman(thomas);
 
-        System.out.println(familyTree);
-
-        System.out.println(familyTree.findPersonByName("Vsevolod"));
-        System.out.println(familyTree.findPersonByName("Ella"));
-
-        System.out.println();
-
-        System.out.println("ДР Harry - " + harry.getBirthDate());
-        System.out.println("Дата смерти Harry - " + harry.getDeathDate());
-        System.out.println("ДР James - " + james.getBirthDate());
-        System.out.println("Дата смерти James - " + james.getDeathDate());
+        return familyTree;
     }
 }
