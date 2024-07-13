@@ -47,5 +47,13 @@ public class Main {
         System.out.println(familyTree);
 
         System.out.println(familyTree.findPersonByName("Vsevolod"));
+        System.out.println(familyTree.findPersonByName("Ella"));
+
+        System.out.println();
+
+        System.out.println("ДР Harry - " + harry.getBirthDate());
+        System.out.println("Дата смерти Harry - " + harry.getDeathDate());
+        System.out.println("ДР James - " + james.getBirthDate());
+        System.out.println("Дата смерти James - " + james.getDeathDate());
     }
 }
