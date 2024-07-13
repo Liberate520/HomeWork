@@ -1,3 +1,5 @@
+package ru.gb.family;
+
 import ru.gb.family.human.Gender;
 import ru.gb.family.tree.FamilyTree;
 import ru.gb.family.human.Human;
