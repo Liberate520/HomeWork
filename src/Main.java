@@ -71,9 +71,9 @@ public class Main {
         String filename = "familyTree.txt";
         fileHandler.setPath(filename);
 
-        // Сохранение дерева в файл
-        fileHandler.save(familyTree);
-        System.out.println("Дерево сохранено в файл: " + filename);
+        // // Сохранение дерева в файл
+        // fileHandler.save(familyTree);
+        // System.out.println("Дерево сохранено в файл: " + filename);
 
         // Загрузка дерева из файла
         FamilyTree loadedTree = (FamilyTree) fileHandler.read();
@@ -81,11 +81,17 @@ public class Main {
 
         // Вывод загруженного дерева
         if (loadedTree != null) {
+            // Сортировка по имени
+            loadedTree.sortByName();
+            System.out.println("Сортировка по имени:");
+            loadedTree.printTree();
+
+            // Сортировка по дате рождения
+            loadedTree.sortByBirthDate();
+            System.out.println("Сортировка по дате рождения:");
             loadedTree.printTree();
         } else {
             System.out.println("Не удалось загрузить дерево.");
         }
-
-
     }
 }

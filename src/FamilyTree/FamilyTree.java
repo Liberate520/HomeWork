@@ -1,14 +1,10 @@
 package FamilyTree;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 import Human.Human;
-
-import java.util.List;
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class FamilyTree implements Serializable {
+
+public class FamilyTree implements Serializable, Iterable<Human>  {
     private static final long serialVersionUID = 1L;
 
     private Map<Integer, Human> humans;
@@ -37,6 +33,29 @@ public class FamilyTree implements Serializable {
     public void printTree() {
         for (Human human : humans.values()) {
             System.out.println(human);
+        }
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return humans.values().iterator();
+    }
+
+    public void sortByName() {
+        List<Human> humanList = new ArrayList<>(humans.values());
+        humanList.sort(Comparator.comparing(Human::getName));
+        humans.clear();
+        for (Human human : humanList) {
+            humans.put(human.getId(), human);
+        }
+    }
+
+    public void sortByBirthDate() {
+        List<Human> humanList = new ArrayList<>(humans.values());
+        humanList.sort(Comparator.comparing(Human::getBirthDate));
+        humans.clear();
+        for (Human human : humanList) {
+            humans.put(human.getId(), human);
         }
     }
 }
