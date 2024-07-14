@@ -3,29 +3,24 @@ package family_tree.model.service;
 import family_tree.model.family_tree1.FamilyTree;
 import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
-import family_tree.model.writer.FileHandler;
-import family_tree.model.writer.Writer;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Service {
+public class Service implements FamilyTreeService{
     private FamilyTree<Human> familyTree;
-    private Writer fileHandler;
-    private final String FILE_PATH = "src/family_tree/model/writer/familyTree.ser";
-
+    private FileFamilyTreeService fileFamilyTreeService;
 
     public Service () {
+        this.fileFamilyTreeService = new FileFamilyTreeService();
         this.familyTree = new FamilyTree<>();
-        this.fileHandler = new FileHandler();
-        this.familyTree = loadFamilyTree();
+        this.familyTree = fileFamilyTreeService.loadFamilyTree();
     }
 
     public Human addHuman(String name, LocalDate dob, Gender gender) {
         Human human = new Human(name, dob, null, gender, null, null, new ArrayList<>());
         familyTree.addHuman(human);
-        saveFamilyTree();
+        fileFamilyTreeService.saveFamilyTree();
         return human;
     }
 
@@ -45,7 +40,7 @@ public class Service {
                 mother.getChildren().add(child);
             }
 
-            saveFamilyTree();
+            fileFamilyTreeService.saveFamilyTree();
         }
     }
 
@@ -76,39 +71,7 @@ public class Service {
         return familyTree.findHumansByName(searchInput);
     }
 
-    private void saveFamilyTree() {
-        try {
-            fileHandler.save(FILE_PATH, familyTree);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private FamilyTree<Human> loadFamilyTree() {
-        try {
-            FamilyTree<Human> loadedTree = fileHandler.load(FILE_PATH);
-            if (loadedTree != null) {
-                familyTree = loadedTree;
-
-                // Код для определения максимального ID
-                int maxId = 0;
-                for (Human human : familyTree.getHumans()) {
-                    if (human.getId() > maxId) {
-                        maxId = human.getId();
-                    }
-                }
-                Human.resetIdCounter(maxId);
-
-                return loadedTree;
-            }
-            return new FamilyTree<>();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return new FamilyTree<>();
-        }
-    }
-
     public void finish() {
-        saveFamilyTree();
+        fileFamilyTreeService.saveFamilyTree();
     }
 }

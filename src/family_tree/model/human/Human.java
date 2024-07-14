@@ -16,7 +16,6 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
     private Human father, mother;
     private List<Human> children;
 
-
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender,
                  Human father, Human mother, List<Human> children) {
         this.id = ++idCounter;

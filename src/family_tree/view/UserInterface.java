@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface implements View {
-    private Scanner scanner;
+    private final Scanner scanner;
     private boolean work;
     private Presenter presenter;
     private MainMenu menu;
@@ -39,7 +39,7 @@ public class UserInterface implements View {
         System.out.print("Введите пол (MALE/FEMALE): ");
         Gender gender = Gender.valueOf(scanner.nextLine().toUpperCase());
         presenter.addHuman(name, dob, gender);
-        System.out.println("Человек добавлен: ");
+        System.out.println("Человек добавлен! :)");
     }
 
     public void setParents() {
