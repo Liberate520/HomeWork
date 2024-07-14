@@ -148,7 +148,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return null;
     }
 
-    //SORT
+    // SORT 3 METHODS \\
     public void sortByName() {
         people.sort(new HumanComparatorByName());
     }
@@ -178,6 +178,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return res.toString();
     }
 
+    // ITERATOR \\
     @Override
     public Iterator<Human> iterator() {
         return people.iterator();

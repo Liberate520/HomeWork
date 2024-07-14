@@ -3,6 +3,7 @@ package service;
 import familyTreeSrc.FamilyTree;
 import person.Human;
 import writer.FileHandler;
+import writer.Writer;
 
 import java.time.LocalDate;
 
@@ -16,19 +17,6 @@ public class Service {
         familyTree = familyTreeTest();
     }
 
-    public String getListOfStudents() {
-        FamilyTree tree = familyTreeTest();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Список студентов:\n");
-
-        for (Human student : tree) {
-            sb.append(student);
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-
     public void saveTree(FamilyTree tree) {
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(tree);
@@ -39,6 +27,12 @@ public class Service {
         return (FamilyTree) fileHandler.read();
     }
 
+    // Метод для установки пути к файлу
+    private static void setFilePath(Writer writer, String path) {
+        writer.setPath(path);
+    }
+
+    // Метод для создания тестового FamilyTree
     public FamilyTree familyTreeTest() {
         // Создаем генеалогическое древо
         FamilyTree familyTree = new FamilyTree();

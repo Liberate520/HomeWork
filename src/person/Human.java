@@ -127,9 +127,9 @@ public class Human implements Serializable, Comparable<Human> {
         return children;
     }
 
-    public String getChildrenQuantity() {
-        int res = children.size();
-        return Integer.toString(res);
+    // ПОЛУЧЕНИЕ КОЛИЧЕСТВА ДЕТЕЙ \\
+    public Integer getChildrenQuantity() {
+        return children.size();
     }
 
     public LocalDate getDeathDate() {

@@ -13,11 +13,13 @@ public class FamilyTreeIterator implements Iterator<Human> {
         this.people = people;
     }
 
+    // Метод проверки, есть ли следующий элемент в списке
     @Override
     public boolean hasNext() {
         return currentId < people.size();
     }
 
+    // Метод для получения следующего элемента в списке
     @Override
     public Human next() {
         return people.get(currentId++);
