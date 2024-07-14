@@ -4,7 +4,7 @@ import java.io.*;
 
 public class FileHandler implements Writer {
 
-    private String filePath =  "C:\\Users\\Татьяна\\IdeaProjects\\homeWork\\src/tree1.txt";
+    private String filePath =  "C:\\Users\\Татьяна\\IdeaProjects\\homeWork\\homeWork\\familyTree2\\writer/tree1.txt";
 //"C:\\Users\\Татьяна\\IdeaProjects\\homeWork\\src/tree1.txt";
 
     @Override
