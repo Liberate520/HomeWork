@@ -11,7 +11,7 @@ import static person.Gender.Male;
 
 public class Main {
     public static void main(String[] args) {
-        //FamilyTree tree = familyTreeTest();
+//        FamilyTree tree = familyTreeTest();
         FamilyTree tree = readTree();
 
         saveTree(tree);

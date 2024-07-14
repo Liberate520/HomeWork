@@ -5,7 +5,7 @@ import java.io.*;
 
 public class FileHandler implements Writer {
     // Поле для хранения пути к файлу
-    private String filePath = "src/writer/tree.out";
+    private String filePath = "src/writer/testFiles/testTree.out";
 
     // Метод для сохранения объекта в файл
     @Override
