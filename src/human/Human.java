@@ -1,28 +1,38 @@
 package human;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import tree_node.TreeNode;
 
-public class Human implements Serializable {
+public class Human implements TreeNode<Human>, Serializable {
     private static final long serialVersionUID = 1L;
-    private final String name;
-    private final Gender gender;
-    private final int age;
+    private String name;
+    private Gender gender;
+    private int age;
+    private LocalDate birthDate;
     private Human spouse;
     private Human father;
     private Human mother;
     private final List<Human> children;
 
-    public Human(String name, Gender gender, int age) {
+    public Human(String name, Gender gender, int age, LocalDate birthDate) {
         this.name = name;
         this.gender = gender;
         this.age = age;
+        this.birthDate = birthDate;
         this.children = new ArrayList<>();
     }
 
+    @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Gender getGender() {
@@ -31,6 +41,38 @@ public class Human implements Serializable {
 
     public int getAge() {
         return age;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    @Override
+    public Human getParent() {
+        if (father != null) {
+            return father;
+        } else {
+            return mother;
+        }
+    }
+
+    @Override
+    public void setParent(Human parent) {
+        if (parent.getGender() == Gender.MALE) {
+            this.father = parent;
+        } else {
+            this.mother = parent;
+        }
+    }
+
+    @Override
+    public List<Human> getChildren() {
+        return children;
+    }
+
+    @Override
+    public void addChild(Human child) {
+        this.children.add(child);
     }
 
     public Human getSpouse() {
@@ -55,33 +97,5 @@ public class Human implements Serializable {
 
     public void setMother(Human mother) {
         this.mother = mother;
-    }
-
-    public List<Human> getChildren() {
-        return children;
-    }
-
-    public void addChild(Human child) {
-        this.children.add(child);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Human human = (Human) o;
-
-        return name.equals(human.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
-
-    public <U> U getBirthDate() {
-
-        return null;
     }
 }
