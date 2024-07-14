@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenu {
-    private List<Command> commands;
+    private final List<Command> commands;
 
     public MainMenu (UserInterface userInterface) {
         commands = new ArrayList<>();

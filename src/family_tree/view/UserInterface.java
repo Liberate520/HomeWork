@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class UserInterface implements View {
     private final Scanner scanner;
     private boolean work;
-    private Presenter presenter;
-    private MainMenu menu;
+    private final Presenter presenter;
+    private final MainMenu menu;
 
 
     public UserInterface() {

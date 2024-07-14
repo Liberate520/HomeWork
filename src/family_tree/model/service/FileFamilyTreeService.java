@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class FileFamilyTreeService {
     private FamilyTree<Human> familyTree;
-    private FileHandler fileHandler;
+    private final FileHandler fileHandler;
     private final String FILE_PATH = "src/family_tree/model/writer/familyTree.ser";
 
     public FileFamilyTreeService() {

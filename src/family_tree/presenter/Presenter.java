@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Presenter {
-    private View view;
-    private Service service;
+    private final View view;
+    private final Service service;
 
     public Presenter(View view) {
         this.view = view;

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Service implements FamilyTreeService{
     private FamilyTree<Human> familyTree;
-    private FileFamilyTreeService fileFamilyTreeService;
+    private final FileFamilyTreeService fileFamilyTreeService;
 
     public Service () {
         this.fileFamilyTreeService = new FileFamilyTreeService();
