@@ -1,8 +1,9 @@
-package family_tree;
+package family_tree.family;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     ArrayList<Human> family_tree;
 
     public FamilyTree(){
@@ -50,5 +51,19 @@ public class FamilyTree {
             ancestors.addAll(getAncestors(human.getMother()));
         }
         return ancestors;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for (Human human : family_tree){
+            if (first == true){
+                sb.append(human.toString());
+                first = !first;
+            }
+            else sb.append(", ").append(human.toString());
+        }
+        return sb.toString();
     }
 }

@@ -1,10 +1,11 @@
-package family_tree;
+package family_tree.family;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Human {
+public class Human implements Serializable {
     private String first_name;
     private String last_name;
     private String patronymic;
@@ -13,26 +14,19 @@ public class Human {
     private ArrayList<Human> children;
     private Gender gender;
 
-    public Human(String first_name, String last_name, String patronymic, LocalDate birthday, Human father, Human mother, ArrayList<Human> children, Gender gender) {
+    public Human(String first_name, String last_name, String patronymic, LocalDate birthday, Human father, Human mother, Gender gender) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.patronymic = patronymic;
         this.birthday = birthday;
         this.father = father;
         this.mother = mother;
-        this.children = children;
+        this.children = new ArrayList<Human>();
         this.gender = gender;
     }
 
     public Human(String first_name, String last_name, String patronymic, LocalDate dayofdeath, LocalDate birthday, Human father, Human mother, ArrayList<Human> children, Gender gender) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.patronymic = patronymic;
-        this.birthday = birthday;
-        this.father = father;
-        this.mother = mother;
-        this.children = children;
-        this.gender = gender;
+        this(first_name, last_name, patronymic, birthday, father, mother, gender);
         this.dayofdeath = dayofdeath;
     }
 
