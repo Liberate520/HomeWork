@@ -1,52 +1,39 @@
 import java.time.LocalDate;
 
-import family_tree.FamilyTree;
 import human.Gender;
-import human.Human;
-import writer.FileHandler;
+import service.Service;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        Service service = new Service();
 
-        Human human1 = new Human("Иванов Алексей Васильевич", Gender.Male, LocalDate.of(1957, 6, 30));
-        Human human2 = new Human("Иванова Маргарита Степановна", Gender.Female, LocalDate.of(1958, 3, 10));
-        Human human3 = new Human("Иванова Светлана Алексеевна", Gender.Female, LocalDate.of(1992, 2, 21));
-        Human human4 = new Human("Иванов Матвей Алексеевич", Gender.Male, LocalDate.of(1993, 4, 12));
+        service.addHuman("Иванов Алексей Васильевич", Gender.Male, LocalDate.of(1957, 6, 30));
+        service.addHuman("Иванова Маргарита Степановна", Gender.Female, LocalDate.of(1958, 3, 10));
+        service.addHuman("Иванова Светлана Алексеевна", Gender.Female, LocalDate.of(1992, 2, 21));
+        service.addHuman("Иванов Матвей Алексеевич", Gender.Male, LocalDate.of(1993, 4, 12));
 
-        human1.setDateOfDeath(LocalDate.of(2000, 8, 5));
-        human1.setChildren(human3);
-        human1.setChildren(human4);
+        service.setDateOfDeath(0, LocalDate.of(2000, 4, 15));
 
-        human2.setChildren(human3);
-        human2.setChildren(human4);
+        service.setMother(2, 1);
+        service.setFather(2, 0);
 
-        human3.setFather(human1);
-        human3.setMother(human2);
-        
-        human4.setFather(human1);
-        human4.setMother(human2);
+        service.setMother(3, 1);
+        service.setFather(3, 0);
 
-        familyTree.addHuman(human1);
-        familyTree.addHuman(human2);
-        familyTree.addHuman(human3);
-        familyTree.addHuman(human4);
+        service.setChildren(0, 2);
+        service.setChildren(0, 2);
+        service.setChildren(1, 3);
+        service.setChildren(1, 3);
 
-        FileHandler file = new FileHandler();
-        file.write(human4);
+        System.out.println(service.getHumansListInfo());
 
-        Human human = (Human) file.read();
-        System.out.println(human);
+        System.out.println("Сортировка по имени:");
+        service.sortByName();
+        System.out.println(service.getHumansListInfo());
 
-        System.out.println("Семейное древо: " + "\n" + human4);
-        System.out.println();
-        System.out.println("Мать: " + "\n" + human4.getMother());
-        System.out.println();
-        System.out.println("Отец: " + "\n" + human4.getFather());
-        System.out.println();
-        System.out.println("Дети: " + "\n" + human4.getChildren());
-        System.out.println();
-        System.out.println(familyTree);
+        System.out.println("Сортировка по возрасту:");
+        service.sortByAge();
+        System.out.println(service.getHumansListInfo());
 
     }
 
