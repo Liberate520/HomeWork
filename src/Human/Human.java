@@ -6,10 +6,11 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import FamilyTree.HasId;
+import FamilyTree.HasChildren;
 
-public class Human implements Serializable{
+public class Human implements HasId, HasChildren<Human>, Serializable {
     private static final long serialVersionUID = 1L;
-
     private int id;
     private String name;
     private LocalDate birthDate;
@@ -20,8 +21,6 @@ public class Human implements Serializable{
     private List<Human> children;
 
     public Human(int id, String name, LocalDate birthDate, LocalDate deathDate, Gender gender, Human father, Human mother) {
-        
-        // int id = -1;
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -61,19 +60,18 @@ public class Human implements Serializable{
 
     @Override
     public String toString() {
-        String childrenNames = children.isEmpty() ? "нет" : children.stream() 
+        String childrenNames = children.isEmpty() ? "нет" : children.stream()
                 .map(Human::getName)
                 .collect(Collectors.joining(", "));
 
         return "Human{" +
                 "id: " + id +
                 ", Имя: '" + name + '\'' +
-                ", Возраст : " + getAge() +
+                ", Возраст: " + getAge() +
                 ", Пол: " + gender +
                 ", Отец: " + (father != null ? father.getName() : "неизвестен") +
-                ", Мать: " + (mother != null ? mother.getName() : "неизвестена") +
+                ", Мать: " + (mother != null ? mother.getName() : "неизвестна") +
                 ", Дети: " + childrenNames +
                 '}';
     }
-
 }

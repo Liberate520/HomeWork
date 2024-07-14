@@ -1,63 +1,64 @@
 package FamilyTree;
-import java.util.*;
-import Human.Human;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.io.Serializable;
 
-
-public class FamilyTree implements Serializable, Iterable<Human>  {
+public class FamilyTree<T extends HasId & HasChildren<T>> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
-
-    private Map<Integer, Human> humans;
+    private Map<Integer, T> elements;
 
     // Конструктор класса FamilyTree
     public FamilyTree() {
-        this.humans = new HashMap<>();
+        this.elements = new HashMap<>();
     }
 
-    // Метод для добавления человека в дерево
-    public void addHuman(Human human) {
-        humans.put(human.getId(), human);
+    // Метод для добавления элемента в дерево
+    public void addElement(T element) {
+        elements.put(element.getId(), element);
     }
 
-    // Метод для получения человека по ID
-    public Human getHuman(int id) {
-        return humans.get(id);
+    // Метод для получения элемента по ID
+    public T getElement(int id) {
+        return elements.get(id);
     }
 
-    // Метод для получения детей человека по ID
-    public List<Human> getChildren(int id) {
-        Human human = humans.get(id);
-        return (human != null) ? human.getChildren() : new ArrayList<>();
+    // Метод для получения детей элемента по ID
+    public List<T> getChildren(int id) {
+        T element = elements.get(id);
+        return (element != null) ? element.getChildren() : new ArrayList<>();
     }
 
     public void printTree() {
-        for (Human human : humans.values()) {
-            System.out.println(human);
+        for (T element : elements.values()) {
+            System.out.println(element);
         }
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return humans.values().iterator();
+    public Iterator<T> iterator() {
+        return elements.values().iterator();
     }
 
     public void sortByName() {
-        List<Human> humanList = new ArrayList<>(humans.values());
-        humanList.sort(Comparator.comparing(Human::getName));
-        humans.clear();
-        for (Human human : humanList) {
-            humans.put(human.getId(), human);
+        List<T> elementList = new ArrayList<>(elements.values());
+        elementList.sort(Comparator.comparing(T::getName));
+        elements.clear();
+        for (T element : elementList) {
+            elements.put(element.getId(), element);
         }
     }
 
     public void sortByBirthDate() {
-        List<Human> humanList = new ArrayList<>(humans.values());
-        humanList.sort(Comparator.comparing(Human::getBirthDate));
-        humans.clear();
-        for (Human human : humanList) {
-            humans.put(human.getId(), human);
+        List<T> elementList = new ArrayList<>(elements.values());
+        elementList.sort(Comparator.comparing(T::getBirthDate));
+        elements.clear();
+        for (T element : elementList) {
+            elements.put(element.getId(), element);
         }
     }
 }
-
-

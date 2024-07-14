@@ -2,7 +2,7 @@ package Human;
 
 public enum Gender {
     Male("мужской"),
-    Famale("женский");
+    Female("женский");
 
     private final String displayName;
 
