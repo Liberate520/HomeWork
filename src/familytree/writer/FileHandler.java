@@ -9,7 +9,7 @@ public class FileHandler implements Writer {
     public void save(Serializable serializable) {
         try {
             File file = new File(filePath);
-            file.getParentFile().mkdirs(); // Создает директории, если они не существуют
+            file.getParentFile().mkdirs();
             try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
                 objectOutputStream.writeObject(serializable);
             }

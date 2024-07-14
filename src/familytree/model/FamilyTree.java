@@ -1,6 +1,4 @@
 package familytree.model;
-import familytree.writer.FileHandler;
-import familytree.writer.Writer;
 
 import familytree.writer.FileHandler;
 import familytree.writer.Writer;
@@ -10,58 +8,43 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends FamilyMember> implements Iterable<T>, Serializable {
-    private List<T> members;
+public class FamilyTree implements Iterable<Human>, Serializable {
+    private List<Human> people;
 
     public FamilyTree() {
-        this.members = new ArrayList<>();
+        this.people = new ArrayList<>();
     }
 
-    public void addMember(T member) {
-        this.members.add(member);
+    public void addHuman(Human human) {
+        this.people.add(human);
     }
 
-    public List<T> getMembers() {
-        return members;
+    public List<Human> getPeople() {
+        return people;
     }
 
-    public List<T> getChildrenOf(T member) {
-        return (List<T>) member.getChildren();
+    public List<Human> getChildrenOf(Human human) {
+        return human.getChildren();
     }
 
-    public T findMemberByName(String name) {
-        for (T member : members) {
-            if (member.getName().equals(name)) {
-                return member;
+    public Human findHumanByName(String name) {
+        for (Human human : people) {
+            if (human.getName().equals(name)) {
+                return human;
             }
         }
         return null;
     }
 
-    public List<T> getParentsOf(T member) {
-        return (List<T>) member.getParents();
+    public List<Human> getParentsOf(Human human) {
+        return human.getParents();
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return members.iterator();
+    public Iterator<Human> iterator() {
+        return people.iterator();
     }
 
-    // Методы для сохранения и чтения дерева
-    public void save(String filePath) {
-        Writer fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        fileHandler.save(this);
-    }
-
-    public static <T extends FamilyMember> FamilyTree<T> read(String filePath) {
-        Writer fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        FamilyTree<T> tree = (FamilyTree<T>) fileHandler.read();
-        return tree != null ? tree : new FamilyTree<>(); // Возвращаем пустое дерево, если файл не существует
-    }
-
-    // Методы для сохранения и чтения дерева
     public void save(String filePath) {
         Writer fileHandler = new FileHandler();
         fileHandler.setPath(filePath);
@@ -72,6 +55,6 @@ public class FamilyTree<T extends FamilyMember> implements Iterable<T>, Serializ
         Writer fileHandler = new FileHandler();
         fileHandler.setPath(filePath);
         FamilyTree tree = (FamilyTree) fileHandler.read();
-        return tree != null ? tree : new FamilyTree(); // Возвращаем пустое дерево, если файл не существует
+        return tree != null ? tree : new FamilyTree();
     }
 }
