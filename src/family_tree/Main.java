@@ -13,11 +13,14 @@ public class Main {
         //family_tree.family_tree.FamilyTree tree = readTree();
         saveTree(tree);
 
+        System.out.println("Без сортировки");
         System.out.println(tree);
 
         tree.sortByName();
+        System.out.println("Сортировка по имени");
         System.out.println(tree);
 
+        System.out.println("Сортировка по возрасту");
         tree.sortByBirthDate();
         System.out.println(tree);
 
@@ -33,7 +36,7 @@ public class Main {
         }
 
         private static FamilyTree testTree(){
-            FamilyTree romanovFamilyTree = new FamilyTree();
+            FamilyTree<Human> romanovFamilyTree = new FamilyTree<>();
 
             Human ivan = new Human("Иван", Gender.Male, LocalDate.of(1940, 5, 14));
             Human mariya = new Human("Мария", Gender.Female, LocalDate.of(1940, 8, 5));
