@@ -1,4 +1,6 @@
 package familytree.model;
+import familytree.writer.FileHandler;
+import familytree.writer.Writer;
 
 import familytree.writer.FileHandler;
 import familytree.writer.Writer;
@@ -57,5 +59,19 @@ public class FamilyTree<T extends FamilyMember> implements Iterable<T>, Serializ
         fileHandler.setPath(filePath);
         FamilyTree<T> tree = (FamilyTree<T>) fileHandler.read();
         return tree != null ? tree : new FamilyTree<>(); // Возвращаем пустое дерево, если файл не существует
+    }
+
+    // Методы для сохранения и чтения дерева
+    public void save(String filePath) {
+        Writer fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(this);
+    }
+
+    public static FamilyTree read(String filePath) {
+        Writer fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        FamilyTree tree = (FamilyTree) fileHandler.read();
+        return tree != null ? tree : new FamilyTree(); // Возвращаем пустое дерево, если файл не существует
     }
 }
