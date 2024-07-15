@@ -3,13 +3,14 @@ package ru.gb.familytree;
 
 import ru.gb.familytree.human.Gender;
 import ru.gb.familytree.human.Human;
+import ru.gb.familytree.human.SomeBody;
 import ru.gb.familytree.saveload.FileHandler;
 import ru.gb.familytree.tree.TreeFamily;
 
 public class Main {
     public static void main(String[] args) {
 
-        TreeFamily<Human> treeFamily = new TreeFamily<>();
+        TreeFamily<SomeBody> treeFamily = new TreeFamily<>();
 
         Human irina = new Human("Ирина", 33, Gender.FEMALE);
         Human ivan = new Human("Иван", 37, Gender.MALE);
@@ -53,7 +54,7 @@ public class Main {
 
     }
 
-    static void save(TreeFamily<Human> treeFamily, String filePatch) {
+    static void save(TreeFamily<SomeBody> treeFamily, String filePatch) {
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(treeFamily, filePatch);
     }

@@ -1,11 +1,11 @@
 package ru.gb.familytree.tree;
 
-import ru.gb.familytree.human.Human;
+import ru.gb.familytree.human.SomeBody;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class TreeFamilyIterator<T extends Human> implements Iterator<T> {
+public class TreeFamilyIterator<T extends SomeBody> implements Iterator<T> {
 
     private int index;
     private List<T> humanList;

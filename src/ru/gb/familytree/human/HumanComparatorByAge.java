@@ -2,7 +2,7 @@ package ru.gb.familytree.human;
 
 import java.util.Comparator;
 
-public class HumanComparatorByAge<T extends Human> implements Comparator<T> {
+public class HumanComparatorByAge<T extends SomeBody> implements Comparator<T> {
 
     @Override
     public int compare(T o1, T o2) {

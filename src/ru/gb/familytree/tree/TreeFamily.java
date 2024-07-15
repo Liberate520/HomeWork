@@ -1,6 +1,6 @@
 package ru.gb.familytree.tree;
 
-import ru.gb.familytree.human.Human;
+import ru.gb.familytree.human.SomeBody;
 import ru.gb.familytree.human.HumanComparatorByAge;
 import ru.gb.familytree.human.HumanComparatorByName;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TreeFamily<T extends Human> implements Serializable, Iterable<T> {
+public class TreeFamily<T extends SomeBody> implements Serializable, Iterable<T> {
     private long humansId;
     private List<T> humanList;
 
@@ -31,14 +31,14 @@ public class TreeFamily<T extends Human> implements Serializable, Iterable<T> {
         }
     }
 
-//    private void addToParents(Human human) {
-//        for (Human parent : human.getParents()) {
+//    private void addToParents(T human) {
+//        for (SomeBody parent : human.getParents()) {
 //            parent.addChild(human);
 //        }
 //    }
 //
-//    private void addToChildren(Human human) {
-//        for (Human child : human.getChildren()) {
+//    private void addToChildren(T human) {
+//        for (SomeBody child : human.getChildren()) {
 //            child.addParent(human);
 //        }
 //    }
