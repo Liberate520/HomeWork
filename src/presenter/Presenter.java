@@ -1,19 +1,27 @@
 package presenter;
 
-import model.family.HumanService;
+import model.family.Alivable;
+import model.family.Service;
+import model.family.human.HumanService;
 import model.family.human.Gender;
+import model.rw.Writer;
 import view.View;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
-public class Presenter {
+public class Presenter<U extends Alivable<U>> {
     private View view;
-    private HumanService humanService;
+    private Service<U> humanService;
 //    String answer;
     String errMessage;
-    public Presenter(View view) {
+    public Presenter(View view, Service<U> service) {
+        // Можно менять вью и менять вид животного, указывая конкретный сервис.
+        // Сохранение через сеттер, так как это, мне кажется, более гибко, чтобы
+        // одно и то же дерево можно было сохранять в разные места
         this.view = view;
-        this.humanService = new HumanService();
+        this.humanService = service;
+
 //        answer = "";
         errMessage = "Что-то пошло не так";
     }
@@ -92,20 +100,41 @@ public class Presenter {
     }
 
     public void sortByName(){
-        String answer;
         humanService.sortByName();
-        answer = humanService.printTreeInfo();
-        view.answer(answer);
+        printTree();
     }
 
     public void sortByAge(){
-        String answer;
         humanService.sortByAge();
-        answer = humanService.printTreeInfo();
-        view.answer(answer);
+        printTree();
+    }
+
+    public void save(){
+        String answer = "";
+        try {
+            humanService.save();
+            answer = String.format("Файл сохранен в %s", humanService.getPath());
+        } catch (IOException e){
+            e.printStackTrace();
+            answer = errMessage;
+        } finally {
+            view.answer(answer);
+        }
+
+    }
+
+    public void load(String path){
+        try {
+            humanService.load(path);
+        }catch (IOException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException c){
+            c.printStackTrace();
+        }
     }
 
     private boolean isValid(int id){
         return (id >= 0 && id < humanService.size());
     }
+
 }

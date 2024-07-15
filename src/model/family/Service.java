@@ -11,18 +11,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Set;
 
-public class HumanService {
-    private FamilyTree<Human> tree;
-    private HumanBuilder builder;
-    private Writer rw;
-    private String path;
-
-    public HumanService(){
-        tree = new FamilyTree<>();
-        builder = new HumanBuilder();
-        rw = new FileHandler();
-        path = "tree.out";
-    }
+public abstract class Service<T extends Alivable<T>> {
+    protected FamilyTree<T> tree;
+    protected Builder<T> builder;
+    protected Writer rw;
+    protected String path;
 
     public int size(){
         return tree.size();
@@ -33,19 +26,19 @@ public class HumanService {
         return tree.getById(childId).setParent(tree.getById(parentId));
     }
 
-    public Human getById(int id){
+    public T getById(int id){
         return tree.getById(id);
     }
 
     // TREE
     public boolean addHumanToTree(String name, LocalDate birthDate, Gender gender){
-        Human human = builder.create(name, birthDate, gender);
+        T human = builder.create(name, birthDate, gender);
         return tree.add(human);
     }
 
     public String printTreeInfo(){
         StringBuilder sb = new StringBuilder();
-        for (Human human : tree){
+        for (T human : tree){
             sb.append(human).append(System.lineSeparator());
         }
         return sb.toString();
@@ -55,18 +48,18 @@ public class HumanService {
         tree.setAllRelationships();
     }
 
-    public Set<Human> getSiblings(int id){
-        Human human = tree.getById(id);
+    public Set<T> getSiblings(int id){
+        T human = tree.getById(id);
         return tree.getSiblings(human);
     }
 
-    public Set<Human> getDescendants(int id, int generation){
-        Human human = tree.getById(id);
+    public Set<T> getDescendants(int id, int generation){
+        T human = tree.getById(id);
         return tree.getDescendants(human, generation);
     }
 
-    public Set<Human> getAncestors (int id, int generation){
-        Human human = tree.getById(id);
+    public Set<T> getAncestors (int id, int generation){
+        T human = tree.getById(id);
         return tree.getAncestors(human, generation);
     }
 
@@ -75,7 +68,7 @@ public class HumanService {
         tree.sortById();
     }
 
-    public Set<Human> getChildren(int id){
+    public Set<T> getChildren(int id){
         return tree.getById(id).getChildren();
     }
 
@@ -99,8 +92,18 @@ public class HumanService {
     public void load(String path) throws IOException, ClassNotFoundException {
         this.tree = rw.read(path);
     }
-    public FamilyTree load() throws IOException, ClassNotFoundException {
-        return rw.read(this.path);
+    public void load() throws IOException, ClassNotFoundException {
+        this.tree = rw.read(this.path);
     }
+
+    public void setWriter(Writer writer) {
+        this.rw = writer;
+    }
+
+    public String getPath(){
+        return path;
+    }
+
+    // Этот класс нужен для реализации разных типов сервисов.
 
 }

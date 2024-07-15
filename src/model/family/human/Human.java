@@ -21,11 +21,13 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
     private Human mother, father;
     private Set<Human> children;
 
-    public Human(int id, String name, LocalDate birthDate, Gender gender, Human mother, Human father){
-        this(id, name, birthDate, gender);
-        setParent(mother);
-        setParent(father);
-    }
+
+    // Этот конструктор, по сути, не нужен
+//    public Human(int id, String name, LocalDate birthDate, Gender gender, Human mother, Human father){
+//        this(id, name, birthDate, gender);
+//        setParent(mother);
+//        setParent(father);
+//    }
 
     // Этот конструктор для корневых элементов дерева, для которых не указываются родители
     public Human(int id, String name, LocalDate birthDate, Gender gender){
@@ -90,9 +92,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         return null;
     }
 
-    // на случай, если родители не были указаны в конструкторе.
-    // может также понадобиться при продлении дерева вверх
-    // исправлено
     public boolean setParent(Human parent){
         if (parent.getAge() > this.getAge()) {
             parent.addChild(this);
@@ -145,7 +144,7 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
 //        return this.id == human.id;
     }
 
-    private int setSize(){
+    private int size(){
         if (children == null){
             return 0;
         } else return children.size();
@@ -153,7 +152,7 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, birthDate, mother, father, this.setSize());
+        return Objects.hash(id, name, birthDate, mother, father, this.size());
     }
 
     @Override
@@ -161,5 +160,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         return this.id - o.getId();
     }
 
-    // Поиск предков и потомков в n-ном поколении перенесены в FamilyTree
+    // В этом классе остались только геттеры и сеттеры полей, которые не нарушают принципов
+    // на мой взгляд, так как необходимы, и переопределения, которые также необходимы.
 }

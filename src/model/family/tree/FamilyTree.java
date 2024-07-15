@@ -6,7 +6,7 @@ import java.util.*;
 import model.family.Alivable;
 import model.family.human.comparators.ByAgeComparator;
 import model.family.human.comparators.ByNameComparator;
-import model.family.human.HumansIterator;
+import model.family.AlivableIterator;
 
 
 public class FamilyTree<U extends Alivable<U>> implements Serializable, Iterable<U> {
@@ -122,6 +122,6 @@ public class FamilyTree<U extends Alivable<U>> implements Serializable, Iterable
     }
     @Override
     public Iterator<U> iterator() {
-        return new HumansIterator(tree);
+        return new AlivableIterator(tree);
     }
 }

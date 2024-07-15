@@ -1,16 +1,18 @@
-import model.family.human.Gender;
-import model.family.HumanService;
-import model.family.tree.FamilyTree;
+import model.family.human.Human;
+import model.family.human.HumanService;
+import model.rw.FileHandler;
+import presenter.Presenter;
 import view.UIs.ConsoleUI;
 import view.View;
-
-import java.time.LocalDate;
-import java.time.Month;
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+        //TODO
+        //
+        //
 //        HumanService humanService = new HumanService();
 //
 //        humanService.addHumanToTree("Eva", LocalDate.of(1987, Month.NOVEMBER, 10), Gender.Female);
@@ -56,7 +58,14 @@ public class Main {
 //        System.out.println("=========================");
 //        System.out.println(tree.getById(0));
 
-        View view = new ConsoleUI();
+
+        View view = new ConsoleUI(new HumanService(new FileHandler()));
+
         view.start();
+        // Создаем нужную вьющку, указываем нужный сервис
+        // Это сделано для того, чтобы можно было работать
+        // с любыми сервисами, будь то люди или мышбы
+        // также указываем нужный хендлер
+
     }
 }
