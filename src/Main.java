@@ -1,7 +1,8 @@
-import FamilyTree.FamilyTree;
-import FamilyTree.Person;
-import Interfaces.TreeIO;
-import Interfaces.TreeIOImpl;
+import model.FamilyTree;
+import model.Person;
+import io.TreeIO;
+import io.TreeIOImpl;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,20 +12,23 @@ import java.io.IOException;
 
 public class Main {
     private static FamilyTree familyTree = new FamilyTree();
-    private static Scanner scanner = new Scanner(System.in);
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static TreeIO treeIO = new TreeIOImpl();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final TreeIO treeIO = new TreeIOImpl();
 
     public static void main(String[] args) {
         while (true) {
             System.out.println("1. Добавить человека");
             System.out.println("2. Найти человека по имени");
-            System.out.println("3. Получить всех детей выбранного человека");
-            System.out.println("4. Создать новое дерево");
-            System.out.println("5. Показать всех людей в дереве");
-            System.out.println("6. Сохранить дерево в файл");
-            System.out.println("7. Загрузить дерево из файла");
-            System.out.println("8. Выход");
+            System.out.println("3. Найти человека по ID");
+            System.out.println("4. Получить всех детей выбранного человека");
+            System.out.println("5. Создать новое дерево");
+            System.out.println("6. Показать всех людей в дереве");
+            System.out.println("7. Сохранить дерево в файл");
+            System.out.println("8. Загрузить дерево из файла");
+            System.out.println("9. Сортировать по имени");
+            System.out.println("10. Сортировать по дате рождения");
+            System.out.println("11. Выход");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
 
@@ -36,21 +40,30 @@ public class Main {
                     findPersonByName();
                     break;
                 case 3:
-                    getChildren();
+                    findPersonById();
                     break;
                 case 4:
-                    createNewTree();
+                    getChildren();
                     break;
                 case 5:
-                    showAllPeople();
+                    createNewTree();
                     break;
                 case 6:
-                    saveTreeToFile();
+                    showAllPeople();
                     break;
                 case 7:
-                    loadTreeFromFile();
+                    saveTreeToFile();
                     break;
                 case 8:
+                    loadTreeFromFile();
+                    break;
+                case 9:
+                    sortByName();
+                    break;
+                case 10:
+                    sortByBirthDate();
+                    break;
+                case 11:
                     System.exit(0);
                 default:
                     System.out.println("Неверный выбор. Пожалуйста, выберите снова.");
@@ -60,6 +73,7 @@ public class Main {
 
     private static void addPerson() {
         try {
+            int id = familyTree.generateId();
             System.out.print("Введите имя: ");
             String name = scanner.nextLine();
             System.out.print("Введите фамилию: ");
@@ -70,7 +84,7 @@ public class Main {
             String deathDateString = scanner.nextLine();
             Date deathDate = deathDateString.isEmpty() ? null : dateFormat.parse(deathDateString);
 
-            Person person = new Person(name, surname, birthDate, deathDate);
+            Person person = new Person(id, name, surname, birthDate, deathDate);
             familyTree.addPerson(person);
 
             System.out.print("Введите имя отца (если есть): ");
@@ -97,37 +111,48 @@ public class Main {
                 }
             }
         } catch (ParseException e) {
-            System.out.println("Неверный формат даты. Пожалуйста, используйте формат yyyy-MM-dd.");
+            System.out.println("Неверный формат даты.");
         }
     }
 
     private static void findPersonByName() {
-        System.out.print("Введите имя для поиска: ");
+        System.out.print("Введите имя: ");
         String name = scanner.nextLine();
         Person person = familyTree.findPersonByName(name);
         if (person != null) {
-            System.out.println("Человек найден: " + person);
+            System.out.println(person);
         } else {
-            System.out.println("Человек не найден.");
+            System.out.println("Человек с таким именем не найден.");
+        }
+    }
+
+    private static void findPersonById() {
+        System.out.print("Введите ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        Person person = familyTree.findPersonById(id);
+        if (person != null) {
+            System.out.println(person);
+        } else {
+            System.out.println("Человек с таким ID не найден.");
         }
     }
 
     private static void getChildren() {
-        System.out.print("Введите имя человека, чтобы получить всех его детей: ");
+        System.out.print("Введите имя человека: ");
         String name = scanner.nextLine();
         Person person = familyTree.findPersonByName(name);
         if (person != null) {
             List<Person> children = familyTree.getChildren(person);
-            if (children.isEmpty()) {
-                System.out.println("У этого человека нет детей.");
-            } else {
-                System.out.println("Дети " + person.getName() + ":");
+            if (!children.isEmpty()) {
                 for (Person child : children) {
                     System.out.println(child);
                 }
+            } else {
+                System.out.println("У этого человека нет детей.");
             }
         } else {
-            System.out.println("Человек не найден.");
+            System.out.println("Человек с таким именем не найден.");
         }
     }
 
@@ -137,15 +162,19 @@ public class Main {
     }
 
     private static void showAllPeople() {
-        List<Person> people = familyTree.getAllPeople();
-        if (people.isEmpty()) {
-            System.out.println("В дереве нет людей.");
-        } else {
-            System.out.println("Все люди в дереве:");
-            for (Person person : people) {
-                System.out.println(person);
-            }
+        for (Person person : familyTree) {
+            System.out.println(person);
         }
+    }
+
+    private static void sortByName() {
+        familyTree.sortByName();
+        System.out.println("Дерево отсортировано по имени.");
+    }
+
+    private static void sortByBirthDate() {
+        familyTree.sortByBirthDate();
+        System.out.println("Дерево отсортировано по дате рождения.");
     }
 
     private static void saveTreeToFile() {
@@ -170,4 +199,3 @@ public class Main {
         }
     }
 }
-
