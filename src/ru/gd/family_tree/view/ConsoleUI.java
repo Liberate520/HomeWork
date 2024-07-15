@@ -1,7 +1,6 @@
 package ru.gd.family_tree.view;
 
-import ru.gd.family_tree.model.commands.AddHuman;
-import ru.gd.family_tree.model.commands.MainMenu;
+import ru.gd.family_tree.view.commands.MainMenu;
 import ru.gd.family_tree.model.servis.Servis;
 import ru.gd.family_tree.model.gender.Gender;
 import ru.gd.family_tree.model.human.Human;
