@@ -1,6 +1,10 @@
+package service;
+
+import model.FamilyTree;
+
 import java.io.*;
 
-public class FileHandler implements Writer{
+public class FileHandler implements Writer {
 
     @Override
     public void save(String fileName, FamilyTree tree) throws IOException {

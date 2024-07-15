@@ -1,3 +1,7 @@
+package service;
+
+import model.FamilyTree;
+
 import java.io.IOException;
 
 public interface Writer {
