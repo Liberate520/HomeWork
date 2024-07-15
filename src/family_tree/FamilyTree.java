@@ -1,6 +1,5 @@
 package family_tree;
 
-import human.Human;
 import human.comparators.HumanComparatorByAge;
 import human.comparators.HumanComparatorByName;
 
@@ -9,15 +8,15 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human>{
-    private List<Human> humans;
+public class FamilyTree<E extends ItemFamilyTree> implements Serializable, Iterable<E>{
+    private List<E> humans;
 
     public FamilyTree() {
         humans = new ArrayList<>();
     }
 
-    public Human getReadName(String nameHuman){
-        for (Human human: humans){
+    public E getReadName(String nameHuman){
+        for (E human: humans){
             if (human.getName().equals(nameHuman)){
                 return human;
             }
@@ -25,12 +24,12 @@ public class FamilyTree implements Serializable, Iterable<Human>{
         return null;
     }
 
-    public void addHuman(Human human){
+    public void addHuman(E human){
         humans.add(human);
     }
 
-    public Human getHuman(int id){
-        for (Human human: humans){
+    public E getHuman(int id){
+        for (E human: humans){
             if (human.getId() == id){
                 return human;
             }
@@ -39,16 +38,16 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
 
     public void sortByName(){
-        humans.sort(new HumanComparatorByName());
+        humans.sort(new HumanComparatorByName<>());
     }
 
     public void sortByAge(){
-        humans.sort(new HumanComparatorByAge());
+        humans.sort(new HumanComparatorByAge<>());
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(humans);
+    public Iterator<E> iterator() {
+        return new HumanIterator<>(humans);
     }
 
 }

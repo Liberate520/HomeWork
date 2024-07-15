@@ -5,7 +5,9 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+import family_tree.ItemFamilyTree;
+
+public class Human implements Serializable, ItemFamilyTree {
     private int id;
     private String name;
     private LocalDate dateOfBirth, dateOfDeath;

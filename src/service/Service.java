@@ -9,10 +9,10 @@ import human.Human;
 
 public class Service {
     private HumanBuilder humanBuilder;
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
 
     public Service() {
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
     }
 
