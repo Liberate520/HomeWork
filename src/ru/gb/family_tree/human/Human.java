@@ -1,12 +1,12 @@
 package ru.gb.family_tree.human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.time.Period;
 import java.util.SplittableRandom;
-// import java.util.ArrayList;
 
-public class Human {
+public class Human implements Serializable {
     private long id;
     private String name;
     private LocalDate birthDate;
