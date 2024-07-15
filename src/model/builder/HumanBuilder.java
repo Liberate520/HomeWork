@@ -2,13 +2,11 @@ package model.builder;
 
 import model.human.Gender;
 import model.human.Human;
-import model.id_generator.IdGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class HumanBuilder implements Serializable {
-    private static final IdGenerator idGenerator = new IdGenerator();
     private String name;
     private Gender gender;
     private LocalDate birthDate;
@@ -53,9 +51,7 @@ public class HumanBuilder implements Serializable {
     }
 
     public Human build() {
-        int id = idGenerator.generateId();
         Human human = new Human(name, gender, birthDate, deathDate, father, mother);
-        human.setId(id);
         human.setSpouse(spouse);
         return human;
     }

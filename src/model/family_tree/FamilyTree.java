@@ -27,7 +27,8 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         }
         if (!humanList.contains(human)) {
             humanList.add(human);
-
+            int id = getMaxId();
+            human.setId(++id);
             addToParents(human);
             addToChildren(human);
 
