@@ -1,9 +1,12 @@
+package Human;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
@@ -114,7 +117,10 @@ public class Human implements Serializable {
         children.add(child);
     }
 
-
+    public int getAge(){
+        LocalDate now = LocalDate.now();
+        return Period.between(dob, now).getYears();
+    }
 
     @Override
     public String toString() {
@@ -146,4 +152,9 @@ public class Human implements Serializable {
         return stringBuilder.toString();
     }
 
+
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
+    }
 }

@@ -1,4 +1,7 @@
-import java.io.FileNotFoundException;
+package writer;
+
+import familyTree.FamilyTree;
+
 import java.io.IOException;
 
 public interface Writer {

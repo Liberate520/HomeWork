@@ -1,3 +1,6 @@
+import Human.Human;
+import familyTree.FamilyTree;
+
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -29,12 +32,32 @@ public class Main {
 
         //System.out.println(familyTree);
 
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.WriteObject(familyTree, "1st write");
+//        handler.FileHandler fileHandler = new handler.FileHandler();
+//        fileHandler.WriteObject(familyTree, "1st write");
+//
+//        familyTree.FamilyTree restoredTree = new familyTree.FamilyTree();
+//        restoredTree = fileHandler.ReadObject("1st write");
+//
+//        System.out.println(restoredTree);
 
-        FamilyTree restoredTree = new FamilyTree();
-        restoredTree = fileHandler.ReadObject("1st write");
 
-        System.out.println(restoredTree);
+        System.out.println("Исходыный список:");
+        for (Human human : familyTree){
+            System.out.println(human);
+        }
+
+        familyTree.sortByName();
+
+        System.out.println("Сортировка по имени:");
+        for (Human human : familyTree){
+            System.out.println(human);
+        }
+
+        familyTree.sortByAge();
+
+        System.out.println("Сортировка по возрасту:");
+        for (Human human : familyTree){
+            System.out.println(human);
+        }
     }
 }
