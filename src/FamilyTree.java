@@ -1,10 +1,7 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Iterable<Human>, Serializable {
 
     private final Map<String, Human> members;
 
@@ -28,6 +25,15 @@ public class FamilyTree implements Serializable {
     public List<Human> getParentsOf(String name) {
         Human child = getMember(name);
         return child != null ? child.getParents() : new ArrayList<>();
+    }
+
+    public List<Human> getMembers() {
+        return new ArrayList<>(members.values());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return members.values().iterator();
     }
 
     @Override
