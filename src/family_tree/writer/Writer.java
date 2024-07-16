@@ -1,10 +1,8 @@
 package family_tree.writer;
 
-import family_tree.family.FamilyTree;
-
-import java.io.IOException;
+import java.io.Serializable;
 
 public interface Writer {
-    void Save(FamilyTree ft, String way);
-    FamilyTree Input(String way);
+    void Save(Serializable ft, String way);
+    Object Input(String way);
 }

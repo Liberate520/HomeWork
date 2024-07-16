@@ -1,11 +1,9 @@
 package family_tree.writer;
 
-import family_tree.family.FamilyTree;
-
 import java.io.*;
 
 public class FileHandier implements Writer {
-    public void Save(FamilyTree ft, String way) {
+    public void Save(Serializable ft, String way) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(way))) {
             objectOutputStream.writeObject(ft);
         } catch (IOException e) {
@@ -13,9 +11,9 @@ public class FileHandier implements Writer {
         }
     }
 
-    public FamilyTree Input(String way) {
+    public Object Input(String way) {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(way))) {
-            return (FamilyTree) objectInputStream.readObject();
+            return objectInputStream.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

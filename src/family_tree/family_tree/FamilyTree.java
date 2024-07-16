@@ -1,9 +1,14 @@
-package family_tree.family;
+package family_tree.family_tree;
+
+import family_tree.comparators.ComparatorByDateOfBirthday;
+import family_tree.comparators.ComparatorByName;
+import family_tree.human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     ArrayList<Human> family_tree;
 
     public FamilyTree(){
@@ -53,6 +58,14 @@ public class FamilyTree implements Serializable {
         return ancestors;
     }
 
+    public void sortByDateOfBirthday(){
+        family_tree.sort(new ComparatorByDateOfBirthday());
+    }
+
+    public void sortByName(){
+        family_tree.sort(new ComparatorByName());
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -65,5 +78,10 @@ public class FamilyTree implements Serializable {
             else sb.append(", ").append(human.toString());
         }
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return family_tree.iterator();
     }
 }

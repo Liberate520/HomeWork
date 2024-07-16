@@ -1,13 +1,14 @@
-package family_tree.family;
+package family_tree;
 
-import family_tree.writer.FileHandier;
+import family_tree.family_tree.FamilyTree;
+import family_tree.human.Gender;
+import family_tree.human.Human;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Main {
-    public FamilyTree ft_create(){
+    public static FamilyTree ft_create(){
         Human paternalGrandfather = new Human(
                 "Petr", "Ivanov", "Sergeevich",
                 LocalDate.of(1940, 4, 18),
@@ -85,17 +86,23 @@ public class Main {
         ft.addHuman(child1);
         ft.addHuman(child2);
         ft.addHuman(child3);
-
-        System.out.println(ft.findHuman("Ivan", "Ivanov", "Petrovich"));
-        System.out.println(ft.getDescendants(ft.findHuman("Ivan", "Ivanov", "Petrovich")));
-        System.out.println(ft.getAncestors(ft.findHuman("Ivan", "Ivanov", "Petrovich")));
-        System.out.println(ft.getFamily_tree());
         return ft;
 
     }
     public static void main(String[] args) throws IOException {
-        FileHandier fh = new FileHandier();
-        FamilyTree ft = fh.Input("src/out.out");
-        System.out.println(ft);
+        FamilyTree ft = ft_create();
+        for (Human human : ft){
+            System.out.println(human);
+        }
+        ft.sortByDateOfBirthday();
+        System.out.println("Sorted");
+        for (Human human : ft){
+            System.out.println(human);
+        }
+        ft.sortByName();
+        System.out.println("Sorted");
+        for (Human human : ft){
+            System.out.println(human);
+        }
     }
 }
