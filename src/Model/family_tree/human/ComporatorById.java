@@ -4,7 +4,7 @@ import Model.family_tree.Item;
 
 import java.util.Comparator;
 
-public class Comporator3<T extends Item>implements Comparator<T> {
+public class ComporatorById<T extends Item>implements Comparator<T> {
 
     @Override
     public int compare(T o1, T o2) {

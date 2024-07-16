@@ -3,7 +3,7 @@ package Model.family_tree.human;
 import Model.family_tree.Item;
 
 import java.util.Comparator;
-public class Comparator1<T extends Item> implements Comparator<T> {
+public class ComparatorByBrthDate<T extends Item> implements Comparator<T> {
    @Override
     public int compare(T o1,T o2){
        return o1.getBrthDate().compareTo(o2.getBrthDate());

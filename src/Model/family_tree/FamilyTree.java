@@ -1,9 +1,9 @@
 package Model.family_tree;
 
 
-import Model.family_tree.human.Comparator1;
-import Model.family_tree.human.Comparator2;
-import Model.family_tree.human.Comporator3;
+import Model.family_tree.human.ComparatorByBrthDate;
+import Model.family_tree.human.ComparatorByName;
+import Model.family_tree.human.ComporatorById;
 
 import java.io.Serializable;
 
@@ -121,13 +121,13 @@ import java.util.List;
         }
     }
     public void SortByName(){
-        Collections.sort(humans,new Comparator2<>());
+        Collections.sort(humans,new ComparatorByName<>());
     }
      public void SortByBrthDate(){
-         Collections.sort(humans,new Comparator1<>());
+         Collections.sort(humans,new ComparatorByBrthDate<>());
      }
      public void sortById() {
-         Collections.sort(humans, new Comporator3<>());
+         Collections.sort(humans, new ComporatorById<>());
      }
 
      @Override
