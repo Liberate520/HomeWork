@@ -15,8 +15,7 @@ public class Presenter<U extends Alivable<U>> {
     String errMessage;
     public Presenter(View view, Service<U> service) {
         // Можно менять вью и менять вид животного, указывая конкретный сервис.
-        // Сохранение через сеттер, так как это, мне кажется, более гибко, чтобы
-        // одно и то же дерево можно было сохранять в разные места
+    
         this.view = view;
         this.service = service;
 
