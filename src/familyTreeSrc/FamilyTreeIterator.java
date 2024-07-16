@@ -4,6 +4,7 @@ package familyTreeSrc;
 import java.util.Iterator;
 import java.util.List;
 
+// сделал класс параметризированным и изменил типы в методах \\
 public class FamilyTreeIterator<T> implements Iterator<T> {
     private int currentId;
     private List<T> people;

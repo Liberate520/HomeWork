@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+// сделал класс параметризированным и изменил соответственно типы в методах
 public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, Iterable<E> {
     private long peopleId;
     private List<E> people;
@@ -146,6 +147,7 @@ public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, It
     }
 
     // SORT 3 METHODS \\
+    // Добавил дженерики \\
     public void sortByName() {
         people.sort(new HumanComparatorByName<>());
     }
@@ -176,6 +178,7 @@ public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, It
     }
 
     // ITERATOR \\
+    // Изменил итератор \\
     @Override
     public Iterator<E> iterator() {
         return new FamilyTreeIterator<>(people);

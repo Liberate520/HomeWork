@@ -5,6 +5,7 @@ import person.Gender;
 import java.time.LocalDate;
 import java.util.List;
 
+// добавил новый класс интерфейс и добавил нужные методы с типом <T>/(T) \\
 public interface ItemFamilyTree<T> {
     Integer getChildrenQuantity();
 

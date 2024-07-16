@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import static person.Gender.Female;
 import static person.Gender.Male;
 
+//  добавил в дженерики тип Human (FamilyTree<Human>)  \\
 public class Service {
     private FamilyTree<Human> familyTree;
 
@@ -35,7 +36,7 @@ public class Service {
     // Метод для создания тестового FamilyTree
     public FamilyTree<Human> familyTreeTest() {
         // Создаем генеалогическое древо
-        FamilyTree<Human> familyTree = new FamilyTree<Human>();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         // Создаем родителей без указания их родителей
         Human harry = new Human("Harry", Male, LocalDate.of(1941, 2, 22), LocalDate.of(2018, 11, 16));
