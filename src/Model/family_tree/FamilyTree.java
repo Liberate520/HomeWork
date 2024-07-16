@@ -1,10 +1,10 @@
-package family_tree;
+package Model.family_tree;
 
 
-import human.Comparator1;
-import human.Comparator2;
-import human.Gender;
-import human.Human;
+import Model.family_tree.human.Comparator1;
+import Model.family_tree.human.Comparator2;
+import Model.family_tree.human.Comporator3;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -125,6 +125,9 @@ import java.util.List;
     }
      public void SortByBrthDate(){
          Collections.sort(humans,new Comparator1<>());
+     }
+     public void sortById() {
+         Collections.sort(humans, new Comporator3<>());
      }
 
      @Override

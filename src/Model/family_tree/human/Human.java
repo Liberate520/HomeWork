@@ -1,6 +1,6 @@
-package human;
+package Model.family_tree.human;
 
-import family_tree.Item;
+import Model.family_tree.Item;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -237,5 +237,7 @@ public  class Human implements Item<Human>,Comparable<Human> {
     public int compareTo(Human o) {
         return this.name.compareTo(o.name);
     }
+
+
 }
 

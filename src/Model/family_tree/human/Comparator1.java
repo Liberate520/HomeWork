@@ -1,6 +1,6 @@
-package human;
+package Model.family_tree.human;
 
-import family_tree.Item;
+import Model.family_tree.Item;
 
 import java.util.Comparator;
 public class Comparator1<T extends Item> implements Comparator<T> {
