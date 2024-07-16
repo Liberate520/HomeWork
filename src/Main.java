@@ -1,11 +1,12 @@
 import familyTreeSrc.FamilyTree;
+import person.Human;
 import service.Service;
 
 public class Main {
     public static void main(String[] args) {
 
         Service service = new Service();
-        FamilyTree tree = service.familyTreeTest();
+        FamilyTree<Human> tree = service.familyTreeTest();
 
 //        FamilyTree tree = readTree();
 //

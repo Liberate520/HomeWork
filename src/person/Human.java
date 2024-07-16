@@ -1,12 +1,14 @@
 package person;
 
+import familyTreeSrc.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, ItemFamilyTree<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -112,7 +114,7 @@ public class Human implements Serializable, Comparable<Human> {
         return spouse;
     }
 
-    public List<Human>  getParents() {
+    public List<Human> getParents() {
         List<Human> list = new ArrayList<>(2);
         if (father != null) {
             list.add(father);

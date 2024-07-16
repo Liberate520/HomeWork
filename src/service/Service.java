@@ -11,18 +11,18 @@ import static person.Gender.Female;
 import static person.Gender.Male;
 
 public class Service {
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
 
     public Service() {
         familyTree = familyTreeTest();
     }
 
-    public void saveTree(FamilyTree tree) {
+    public void saveTree(FamilyTree<Human> tree) {
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(tree);
     }
 
-    public FamilyTree readTree() {
+    public FamilyTree<Human> readTree() {
         FileHandler fileHandler = new FileHandler();
         return (FamilyTree) fileHandler.read();
     }
@@ -33,9 +33,9 @@ public class Service {
     }
 
     // Метод для создания тестового FamilyTree
-    public FamilyTree familyTreeTest() {
+    public FamilyTree<Human> familyTreeTest() {
         // Создаем генеалогическое древо
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<Human>();
 
         // Создаем родителей без указания их родителей
         Human harry = new Human("Harry", Male, LocalDate.of(1941, 2, 22), LocalDate.of(2018, 11, 16));

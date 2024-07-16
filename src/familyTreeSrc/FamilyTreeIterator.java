@@ -1,15 +1,14 @@
 package familyTreeSrc;
 
-import person.Human;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator implements Iterator<Human> {
+public class FamilyTreeIterator<T> implements Iterator<T> {
     private int currentId;
-    private List<Human> people;
+    private List<T> people;
 
-    public FamilyTreeIterator(int currentId, List<Human> people) {
+    public FamilyTreeIterator(List<T> people) {
         this.people = people;
     }
 
@@ -21,7 +20,7 @@ public class FamilyTreeIterator implements Iterator<Human> {
 
     // Метод для получения следующего элемента в списке
     @Override
-    public Human next() {
+    public T next() {
         return people.get(currentId++);
     }
 }

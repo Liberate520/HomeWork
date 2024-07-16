@@ -1,6 +1,5 @@
 package familyTreeSrc;
 
-import person.Human;
 import person.comparators.*;
 
 import java.io.Serializable;
@@ -8,19 +7,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, Iterable<E> {
     private long peopleId;
-    private List<Human> people;
+    private List<E> people;
 
     public FamilyTree() {
         this(new ArrayList<>());
     }
 
-    public FamilyTree(List<Human> people) {
+    public FamilyTree(List<E> people) {
         this.people = people;
     }
 
-    public boolean addHuman(Human human) {
+    public boolean addHuman(E human) {
         if (human == null) {
             return false;
         }
@@ -36,30 +35,30 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return false;
     }
 
-    private void addToParents(Human human) {
-        for (Human parent : human.getParents()) {
+    private void addToParents(E human) {
+        for (E parent : human.getParents()) {
             parent.addChild(human);
         }
     }
 
-    private void addToChildren(Human human) {
-        for (Human child: human.getChildren()) {
+    private void addToChildren(E human) {
+        for (E child : human.getChildren()) {
             child.addParent(human);
         }
     }
 
-    public List<Human> getAllChildren(Human person) {
+    public List<E> getAllChildren(E person) {
         return person.getChildren();
     }
 
-    public List<Human> getSiblings(int id) {
-        Human human = getById(id);
+    public List<E> getSiblings(int id) {
+        E human = getById(id);
         if (human == null) {
             return null;
         }
-        List<Human> res = new ArrayList<>();
-        for (Human parent: human.getParents()) {
-            for (Human child: parent.getChildren()) {
+        List<E> res = new ArrayList<>();
+        for (E parent : human.getParents()) {
+            for (E child : parent.getChildren()) {
                 if (!child.equals(human)) {
                     res.add(child);
                 }
@@ -68,9 +67,9 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return res;
     }
 
-    public List<Human> getByName(String name) {
-        List<Human> res = new ArrayList<>();
-        for (Human human: people) {
+    public List<E> getByName(String name) {
+        List<E> res = new ArrayList<>();
+        for (E human : people) {
             if (human.getName().equalsIgnoreCase(name)) {
                 res.add(human);
             }
@@ -80,14 +79,14 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     public boolean setWedding(long humanId1, long humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
-            Human human1 = getById(humanId1);
-            Human human2 = getById(humanId2);
+            E human1 = getById(humanId1);
+            E human2 = getById(humanId2);
             return setWedding(human1, human2);
         }
         return false;
     }
 
-    public boolean setWedding(Human human1, Human human2) {
+    public boolean setWedding(E human1, E human2) {
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
             human2.setSpouse(human1);
@@ -99,14 +98,14 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     public boolean setDivorse(long humanId1, long humanId2) {
         if (checkId(humanId1) && checkId(humanId2)) {
-            Human human1 = getById(humanId1);
-            Human human2 = getById(humanId2);
+            E human1 = getById(humanId1);
+            E human2 = getById(humanId2);
             return setDivorse(human1, human2);
         }
         return false;
     }
 
-    public boolean setDivorse(Human human1, Human human2) {
+    public boolean setDivorse(E human1, E human2) {
         if (human1.getSpouse() != null && human2.getSpouse() != null) {
             human1.setSpouse(null);
             human2.setSpouse(null);
@@ -118,14 +117,14 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     public boolean remove(long humanId) {
         if (checkId(humanId)) {
-            Human human = getById(humanId);
+            E human = getById(humanId);
             return people.remove(human);
         }
         return false;
     }
 
-    public Human findPersonByName(String name) {
-        for (Human person : people) {
+    public E findPersonByName(String name) {
+        for (E person : people) {
             if (person.getName().equalsIgnoreCase(name)) {
                 return person;
             }
@@ -137,8 +136,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return id < peopleId && id >= 0;
     }
 
-    public Human getById(long id) {
-        for (Human human: people) {
+    public E getById(long id) {
+        for (E human : people) {
             if (human.getId() == id) {
                 return human;
             }
@@ -148,15 +147,15 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     // SORT 3 METHODS \\
     public void sortByName() {
-        people.sort(new HumanComparatorByName());
+        people.sort(new HumanComparatorByName<>());
     }
 
     public void sortByBirthDate() {
-        people.sort(new HumanComparatorByAge());
+        people.sort(new HumanComparatorByAge<>());
     }
 
     public void sortByChildrenQuantity() {
-        people.sort(new HumanComparatorByChildrenQuantity());
+        people.sort(new HumanComparatorByChildrenQuantity<E>());
     }
 
     @Override
@@ -169,7 +168,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         res.append("В дереве ");
         res.append(people.size());
         res.append(" объектов: \n");
-        for (Human human: people) {
+        for (E human : people) {
             res.append(human);
             res.append("\n");
         }
@@ -178,7 +177,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     // ITERATOR \\
     @Override
-    public Iterator<Human> iterator() {
-        return people.iterator();
+    public Iterator<E> iterator() {
+        return new FamilyTreeIterator<>(people);
     }
 }
