@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Human implements Serializable {
+public class Human implements TreeNode<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -37,6 +37,7 @@ public class Human implements Serializable {
 
     public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father) {
         this(name, gender, birthDate, null, mother, father);
+
 
     }
 
