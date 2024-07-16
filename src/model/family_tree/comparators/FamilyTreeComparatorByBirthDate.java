@@ -1,4 +1,6 @@
-package family_tree.vending_tree;
+package model.family_tree.comparators;
+
+import model.family_tree.TreeNode;
 
 import java.util.Comparator;
 

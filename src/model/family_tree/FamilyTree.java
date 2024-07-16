@@ -1,4 +1,7 @@
-package family_tree.vending_tree;
+package model.family_tree;
+
+import model.family_tree.comparators.FamilyTreeComparatorByBirthDate;
+import model.family_tree.comparators.FamilyTreeComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,9 +9,15 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
-    public FamilyTree() { this(new ArrayList<>()); }
+    public FamilyTree() {
+        this(new ArrayList<>());
+    }
+    private List<E> humanList;
+    private int humansId;
 
-    public FamilyTree(List<E> humanList) { this.humanList = humanList; }
+    public FamilyTree(List<E> humanList) {
+        this.humanList = humanList;
+    }
 
     public boolean add(E human) {
         if(human == null) {
@@ -145,6 +154,6 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     @Override
     public Iterator<E> iterator() {
-        return new FamilyTreeIterator<>(humanList);
+        return new FamilyTreeIterator<E>(humanList);
     }
 }

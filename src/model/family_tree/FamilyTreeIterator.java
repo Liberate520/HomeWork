@@ -1,12 +1,10 @@
-package family_tree.vending_tree;
+package model.family_tree;
 
-import family_tree.human.Human;
-
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator<E extends FamilyTree> implements Iterator<E> {
+public class FamilyTreeIterator<E> implements Iterator<E> {
+    // private List<E> list;
     private List<E> list;
     private int index;
 
