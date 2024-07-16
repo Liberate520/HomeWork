@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    List<Command> commands;
-    ConsoleUI view;
-    boolean flag;
-    Scanner scanner;
+    private List<Command> commands;
+    private ConsoleUI view;
+    private boolean flag;
+    private Scanner scanner;
 
     public Menu(ConsoleUI view) {
         this.commands = new ArrayList<>();
