@@ -1,9 +1,7 @@
 package familyTreeSrc;
 
 import person.Human;
-import person.comparators.HumanComparatorByChildrenQuantity;
-import person.comparators.HumanComparatorByName;
-import person.comparators.HumanComparatorByAge;
+import person.comparators.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
