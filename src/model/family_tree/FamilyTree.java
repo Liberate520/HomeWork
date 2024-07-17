@@ -1,5 +1,8 @@
 package model.family_tree;
 
+import model.family_tree.FamilyTreeManager.RelationshipManager;
+import model.family_tree.FamilyTreeManager.SiblingsManager;
+import model.family_tree.FamilyTreeManager.SpouseManager;
 import model.iterators.FamilyTreeIterator;
 import model.human.comparators.HumansComparatorByBirthDate;
 import model.human.comparators.HumansComparatorById;
@@ -11,137 +14,101 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
-    private List<E> humanList;
+    private List<E> nodeList;
+    private RelationshipManager<E> relationshipManager;
+    private SpouseManager<E> spouseManager;
+    private SiblingsManager<E> siblingsManager;
 
-    public FamilyTree(List<E> humanList) {
-        this.humanList = humanList;
+    public FamilyTree(List<E> nodeList) {
+        this.nodeList = nodeList;
+        this.relationshipManager = new RelationshipManager<>();
+        this.spouseManager = new SpouseManager<>();
+        this.siblingsManager = new SiblingsManager<>();
     }
 
     public FamilyTree() {
         this(new ArrayList<>());
     }
 
-    public boolean add(E human) {
-        if (human == null) {
+    public boolean add(E node) {
+        if (node == null) {
             return false;
         }
-        if (!humanList.contains(human)) {
-            humanList.add(human);
+        if (!nodeList.contains(node)) {
+            nodeList.add(node);
             int id = getMaxId();
-            human.setId(++id);
-            addToParents(human);
-            addToChildren(human);
-
+            node.setId(++id);
+            relationshipManager.updateRelationships(node);
             return true;
         }
         return false;
     }
 
-    private void addToParents(E human) {
-        for (E parent : human.getParents()) {
-            parent.addChild(human);
+    public boolean remove(int nodeId) {
+        if (checkId(nodeId)) {
+            E node = getById(nodeId);
+            return nodeList.remove(node);
         }
+        return false;
     }
 
-    private void addToChildren(E human) {
-        for (E child : human.getChildren()) {
-            child.addParent(human);
-        }
-    }
-
-    public List<E> getSiblings(int id) {
-        E human = getById(id);
-        if (human == null) {
-            return null;
-        }
-        List<E> res = new ArrayList<>();
-        for (E parent : human.getParents()) {
-            for (E child : parent.getChildren()) {
-                if (!child.equals(human)) {
-                    res.add(child);
-                }
+    public E getById(int id) {
+        for (E node : nodeList) {
+            if (node.getId() == id) {
+                return node;
             }
         }
-        return res;
+        return null;
     }
 
     public List<E> getByName(String name) {
         List<E> res = new ArrayList<>();
-        for (E human : humanList) {
-            if (human.getName().equals(name)) {
-                res.add(human);
+        for (E node : nodeList) {
+            if (node.getName().equals(name)) {
+                res.add(node);
             }
         }
         return res;
     }
 
-    public boolean setWedding(int humanId1, int humanId2) {
-        if (checkId(humanId1) && checkId(humanId2)) {
-            E human1 = getById(humanId1);
-            E human2 = getById(humanId2);
-            return setWedding(human1, human2);
+    public List<E> getSiblings(int id) {
+        E node = getById(id);
+        return siblingsManager.getSiblings(node);
+    }
+
+    public boolean setWedding(int nodeId1, int nodeId2) {
+        if (checkId(nodeId1) && checkId(nodeId2)) {
+            E node1 = getById(nodeId1);
+            E node2 = getById(nodeId2);
+            return spouseManager.setWedding(node1, node2);
         }
         return false;
     }
 
-    public boolean setWedding(E human1, E human2) {
-        if (human1.getSpouse() == null && human2.getSpouse() == null) {
-            human1.setSpouse(human2);
-            human2.setSpouse(human1);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean setDivorce(int humanId1, int humanId2) {
-        if (checkId(humanId1) && checkId(humanId2)) {
-            E human1 = getById(humanId1);
-            E human2 = getById(humanId2);
-            return setDivorce(human1, human2);
+    public boolean setDivorce(int nodeId1, int nodeId2) {
+        if (checkId(nodeId1) && checkId(nodeId2)) {
+            E node1 = getById(nodeId1);
+            E node2 = getById(nodeId2);
+            return spouseManager.setDivorce(node1, node2);
         }
         return false;
     }
 
-    public boolean setDivorce(E human1, E human2) {
-        if (human1.getSpouse() != null && human2.getSpouse() != null) {
-            human1.setSpouse(null);
-            human2.setSpouse(null);
-            return true;
-        } else {
-            return false;
-        }
+    public void sortByBirthDate() {
+        nodeList.sort(new HumansComparatorByBirthDate<>());
     }
 
-    public boolean removeHuman(int humansId) {
-        if (checkId(humansId)) {
-            E human = getById(humansId);
-            return humanList.remove(human);
-        }
-        return false;
+    public void sortByName() {
+        nodeList.sort(new HumansComparatorByName<>());
     }
 
-    private int getMaxId() {
-        int maxId = -1;
-        for (E human : humanList) {
-            if (human.getId() > maxId) {
-                maxId = human.getId();
-            }
-        }
-        return maxId;
+    public void sortById() {
+        nodeList.sort(new HumansComparatorById<>());
     }
 
-    private boolean checkId(int id) {
-        return id <= getMaxId() && id >= 0;
-    }
-
-    public E getById(int id) {
-        for (E human : humanList) {
-            if (human.getId() == id) {
-                return human;
-            }
-        }
-        return null;
+    @Override
+    public Iterator<E> iterator() {
+        return new FamilyTreeIterator<>(nodeList);
     }
 
     @Override
@@ -151,32 +118,24 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n")
-                .append("В дереве ")
-                .append(humanList.size())
-                .append(" объектов: ")
-                .append("\n");
-        for (E human : humanList) {
-            sb.append(human);
-            sb.append("\n");
+        sb.append("\nВ дереве ").append(nodeList.size()).append(" объектов:\n");
+        for (E node : nodeList) {
+            sb.append(node).append("\n");
         }
         return sb.toString();
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        return new FamilyTreeIterator<>(humanList);
+    private int getMaxId() {
+        int maxId = -1;
+        for (E node : nodeList) {
+            if (node.getId() > maxId) {
+                maxId = node.getId();
+            }
+        }
+        return maxId;
     }
 
-    public void sortByBirthDate() {
-        humanList.sort(new HumansComparatorByBirthDate<>());
-    }
-
-    public void sortByName() {
-        humanList.sort(new HumansComparatorByName<>());
-    }
-
-    public void sortById() {
-        humanList.sort(new HumansComparatorById<>());
+    private boolean checkId(int id) {
+        return id <= getMaxId() && id >= 0;
     }
 }
