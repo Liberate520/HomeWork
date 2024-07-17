@@ -3,10 +3,11 @@ package model.human.human_manager;
 import model.human.Gender;
 import model.human.Human;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HumanRelationshipManager {
+public class HumanRelationshipManager implements Serializable {
     private final Human human;
 
     public HumanRelationshipManager(Human human) {
