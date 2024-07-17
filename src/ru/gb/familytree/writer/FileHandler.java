@@ -1,25 +1,21 @@
 package ru.gb.familytree.writer;
 
-import ru.gb.familytree.human.HumanInfo;
+import ru.gb.familytree.familytree.FamilyMember;
 
 import java.io.*;
 import java.util.List;
 
-public class FileHandler implements Writer {
-
-    @Override
-    public void save(List<HumanInfo> people, String path) throws IOException {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {
-            out.writeObject(people);
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
+public class FileHandler {
+    public <T extends FamilyMember> void save(List<T> members, String filePath) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(members);
         }
     }
 
-    @Override
-    public List<HumanInfo> load(String path) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
-            return (List<HumanInfo>) in.readObject();
+    @SuppressWarnings("unchecked")
+    public <T extends FamilyMember> List<T> load(String filePath) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            return (List<T>) ois.readObject();
         }
     }
 }

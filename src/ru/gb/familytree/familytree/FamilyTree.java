@@ -9,48 +9,27 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<HumanInfo> {
-    private List<HumanInfo> people;
+public class FamilyTree<T extends FamilyMember> implements Serializable, Iterable<T> {
+    private List<T> members;
 
     public FamilyTree() {
-        people = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
-    public void addPerson(HumanInfo person) {
-        people.add(person);
+    public void addMember(T member) {
+        this.members.add(member);
     }
 
-    public HumanInfo findPersonByName(String name) {
-        for (HumanInfo person : people) {
-            if (person.getName().equals(name)) {
-                return person;
-            }
-        }
-        return null;
+    public List<T> getMembers() {
+        return members;
     }
 
-    public List<HumanInfo> getChildrenOfPerson(String name) {
-        HumanInfo person = findPersonByName(name);
-        if (person != null) {
-            return person.getChildren();
-        }
-        return new ArrayList<>();
-    }
-
-    public List<HumanInfo> getPeople() {
-        return people;
+    public void sortBy(Comparator<T> comparator) {
+        Collections.sort(members, comparator);
     }
 
     @Override
-    public Iterator<HumanInfo> iterator() {
-        return people.iterator();
-    }
-
-    public void sortByName() {
-        Collections.sort(people, Comparator.comparing(HumanInfo::getName));
-    }
-
-    public void sortByDob() {
-        Collections.sort(people, Comparator.comparing(HumanInfo::getDob));
+    public Iterator<T> iterator() {
+        return members.iterator();
     }
 }

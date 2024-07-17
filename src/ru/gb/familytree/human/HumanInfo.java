@@ -1,30 +1,26 @@
 package ru.gb.familytree.human;
 
+import ru.gb.familytree.familytree.FamilyMember;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HumanInfo implements Serializable {
-    String name;
-    LocalDate dob; // дата рождения
-    LocalDate dod; // дата смерти
-    Gender gender;
-    HumanInfo father;
-    HumanInfo mother;
-    List<HumanInfo> children;
+public class HumanInfo extends FamilyMember implements Serializable {
+    private LocalDate dob; // Date of Birth
+    private LocalDate dod; // Date of Death
+    private Gender gender;
+    private HumanInfo father;
+    private HumanInfo mother;
+    private List<HumanInfo> children;
 
     public HumanInfo(String name, LocalDate dob, LocalDate dod, Gender gender) {
-        this.name = name;
+        super(name);
         this.dob = dob;
         this.dod = dod;
         this.gender = gender;
         this.children = new ArrayList<>();
-    }
-
-    // Геттеры и сеттеры
-    public String getName() {
-        return name;
     }
 
     public LocalDate getDob() {
@@ -60,11 +56,11 @@ public class HumanInfo implements Serializable {
     }
 
     public void addChild(HumanInfo child) {
-        children.add(child);
+        this.children.add(child);
     }
 
     @Override
     public String toString() {
-        return name + ", DOB: " + dob + ", DOD: " + (dod != null ? dod : "N/A") + ", Gender: " + gender;
+        return super.toString() + ", DOB: " + dob + ", DOD: " + (dod != null ? dod : "N/A") + ", Gender: " + gender;
     }
 }
