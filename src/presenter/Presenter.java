@@ -43,4 +43,8 @@ public class Presenter {
     public void readTree() {
         service.readTree();
     }
+
+    public void findByName(String name) {
+        service.findByName(name);
+    }
 }

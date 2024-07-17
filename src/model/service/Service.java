@@ -8,6 +8,7 @@ import model.writer.FileHandler;
 import model.writer.Writer;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Service {
     private FamilyTree<Human> familyTree;
@@ -59,6 +60,18 @@ public class Service {
     public void readTree() {
         if (fileHandler.read() != null) {
             familyTree = (FamilyTree) fileHandler.read();
+        }
+    }
+
+    public void findByName(String name) {
+        List<Human> foundHumans = familyTree.getByName(name);
+        if(foundHumans.isEmpty()){
+            System.out.println("Не найдено ни одного человека.");
+        } else {
+            System.out.println("Список найденных людей:");
+            for(Human human : foundHumans){
+                System.out.println(human);
+            }
         }
     }
 }

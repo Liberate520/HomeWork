@@ -80,6 +80,12 @@ public class ConsoleUI implements View {
         presenter.addHuman(name, genderStr, birthDate);
     }
 
+    public void findByName() {
+        System.out.println("Укажите имя человека, которого хотите найти:");
+        String name = scanner.nextLine();
+        presenter.findByName(name);
+    }
+
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
@@ -124,7 +130,6 @@ public class ConsoleUI implements View {
             int choice = Integer.parseInt(choiceStr);
             return choice >= 1 && choice <= menuSize;
         } catch (NumberFormatException e) {
-
             return false;
         }
     }
