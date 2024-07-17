@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Human implements Serializable {
-    private static long idPre = 1;
-    private  long id;
+    private  int id;
     private String name;
     private Gender gender;
     private LocalDate birthDay;
@@ -18,9 +17,9 @@ public class Human implements Serializable {
     private Human mother;
     private List<Human> children;
 
-    public Human(String name, Gender gender, LocalDate birthDay, LocalDate deadDay,
+    public Human(int id, String name, Gender gender, LocalDate birthDay, LocalDate deadDay,
                  Human father, Human mother) {
-        this.id = idPre++;
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.birthDay = birthDay;
@@ -30,23 +29,23 @@ public class Human implements Serializable {
         this.children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate birthday, LocalDate deadDay) {
-        this(name, gender, birthday, deadDay, null, null);
+    public Human(int id, String name, Gender gender, LocalDate birthDay, LocalDate deadDay) {
+        this(id, name, gender, birthDay, deadDay, null, null);
     }
 
-    public Human(String name, Gender gender, LocalDate birthday) {
-        this(name, gender, birthday, null, null, null);
+    public Human(int id, String name, Gender gender, LocalDate birthDay) {
+        this(id, name, gender, birthDay, null, null, null);
     }
-    public Human(String name, Gender gender, LocalDate birthday, Human parent) {
-        this(name, gender, birthday, null, null, null);
+    public Human(int id, String name, Gender gender, LocalDate birthDay, Human parent) {
+        this(id, name, gender, birthDay, null, null, null);
         addParents(parent);
     }
 
-    public Human(String name, Gender gender, LocalDate birthday, Human father, Human mother) {
-        this(name, gender, birthday, null, father, mother);
+    public Human(int id, String name, Gender gender, LocalDate birthDay, Human father, Human mother) {
+        this(id, name, gender, birthDay, null, father, mother);
     }
 
-    public long getId() { return id; }
+    public int getId() { return id; }
 
     public String getName() {
         return name;
@@ -131,7 +130,7 @@ public class Human implements Serializable {
         return false;
     }
 
-    public int getAge(LocalDate birthDay, LocalDate deadDay) {
+    public int getAge() {
         if (deadDay == null) {
             return Period.between(birthDay, LocalDate.now()).getYears();
         } else {
@@ -157,13 +156,13 @@ public class Human implements Serializable {
         StringBuilder result = new StringBuilder();
         result.append("Id: " + id + ". ");
         result.append("My name is " + this.name + ". ");
-        result.append("I'm " + this.getAge(this.birthDay, this.deadDay) + " years old. ");
+        result.append("I'm " + this.getAge() + " years old. ");
         if (this.father == null && this.mother != null) {
             result.append("My mother's name is " + mother.getName() + ". ");
         } else if (this.father != null && this.mother == null) {
             result.append("My dad's name is " + father.getName() + ". ");
         } else if (this.father != null && this.mother != null) {
-            result.append("My parents' names are " + father.getName() + " dad and " + mother.getName() + " mom. ");
+            result.append("My parent's names are " + father.getName() + " dad and " + mother.getName() + " mom. ");
         }
         if (children != null && !children.isEmpty()) {
             if (children.size() == 1) {
@@ -181,5 +180,6 @@ public class Human implements Serializable {
         }
         return result.toString();
     }
+
 }
 
