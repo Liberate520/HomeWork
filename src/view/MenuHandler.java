@@ -5,10 +5,10 @@ import view.commands.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenu {
+public class MenuHandler {
     private List<Command> commands;
 
-    public MainMenu(ConsoleUI consoleUI) {
+    public MenuHandler(ConsoleUI consoleUI) {
         commands = new ArrayList<>();
         commands.add(new AddHuman(consoleUI));
         commands.add(new FindByName(consoleUI));
@@ -20,7 +20,7 @@ public class MainMenu {
         commands.add(new FinishWork(consoleUI));
     }
 
-    public String menu() {
+    public String getMenu() {
         StringBuilder sb = new StringBuilder();
         sb.append("Меню:\n");
         for (int i = 0; i < commands.size(); i++) {

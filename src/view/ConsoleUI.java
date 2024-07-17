@@ -2,21 +2,21 @@ package view;
 
 import presenter.Presenter;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
-    private MainMenu menu;
+    private MenuHandler menuHandler;
     private Presenter presenter;
-    private Scanner scanner;
+    private InputHandler inputHandler;
+    private HumanHandler humanHandler;
     private boolean work;
 
     public ConsoleUI() {
-        menu = new MainMenu(this);
+        Scanner scanner = new Scanner(System.in);
+        inputHandler = new InputHandler(scanner);
         presenter = new Presenter(this);
-        scanner = new Scanner(System.in);
+        menuHandler = new MenuHandler(this);
+        humanHandler = new HumanHandler(presenter, inputHandler);
         work = true;
     }
 
@@ -33,20 +33,19 @@ public class ConsoleUI implements View {
 
     private void selectItemFromMenu() {
         while (work) {
-            System.out.println(menu.menu());
-            String choiceStr = scanner.nextLine();
-            if (isValidMenuChoice(choiceStr, menu.size())) {
+            System.out.println(menuHandler.getMenu());
+            String choiceStr = inputHandler.getInput();
+            if (inputHandler.isValidMenuChoice(choiceStr, menuHandler.size())) {
                 int choice = Integer.parseInt(choiceStr);
-                menu.execute(choice);
+                menuHandler.execute(choice);
             } else {
-                System.out.println("Введён неверный пункт меню.\nВведите корректный номер из меню: от 1 до " + menu.size());
+                System.out.println("Введён неверный пункт меню.\nВведите корректный номер из меню: от 1 до " + menuHandler.size());
             }
         }
     }
 
     public void finishWork() {
         work = false;
-        scanner.close();
         System.out.println("До новых встреч!");
         presenter.sortById(); // Будет сохраняться дерево, отсортированное по ID
         presenter.saveTree();
@@ -69,100 +68,19 @@ public class ConsoleUI implements View {
     }
 
     public void addHuman() {
-        System.out.println("Укажите имя человека:");
-        String name = scanner.nextLine();
-
-        System.out.println("Укажите пол человека м/ж:");
-        String genderStr = getGenderFromInput();
-
-        System.out.println("Укажите дату рождения человека через пробел в формате ДД ММ ГГГГ:");
-        LocalDate birthDate = getBirthDateFromInput();
-
-        presenter.addHuman(name, genderStr, birthDate);
+        humanHandler.addHuman();
     }
 
     public void findByName() {
-        System.out.println("Укажите имя человека, которого хотите найти:");
-        String name = scanner.nextLine();
-        presenter.findByName(name);
+        humanHandler.findByName();
     }
 
     public void removeHuman() {
-        System.out.println("Укажите имя человека, которого хотите удалить:");
-        String name = scanner.nextLine();
-        presenter.findByName(name);
-        List<Integer> foundHumansId = presenter.foundHumansId(name);
-        if (foundHumansId.isEmpty()) {
-            return;
-        }
-        System.out.println("Укажите id человека, которого хотите удалить:");
-        boolean flag = true;
-        while (flag) {
-            String idStr = scanner.nextLine();
-            if (isValidIdChoice(idStr, foundHumansId)) {
-                int id = Integer.parseInt(idStr);
-                presenter.removeHuman(id);
-                flag = false;
-            } else {
-                System.out.println("Введён неверный id.\nВведите корректный id из списка: " + foundHumansId);
-            }
-        }
+        humanHandler.removeHuman();
     }
 
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
-    }
-
-    private String getGenderFromInput() {
-        while (true) {
-            String genderStr = scanner.nextLine().trim();
-            if (genderStr.equalsIgnoreCase("м")) {
-                return "м";
-            } else if (genderStr.equalsIgnoreCase("ж")) {
-                return "ж";
-            } else {
-                System.out.println("Введен неправильный пол, попробуйте заново (м/ж):");
-            }
-        }
-    }
-
-    private LocalDate getBirthDateFromInput() {
-        while (true) {
-            String input = scanner.nextLine().trim();
-            try {
-                String[] parts = input.split(" ");
-                int day = Integer.parseInt(parts[0]);
-                int month = Integer.parseInt(parts[1]);
-                int year = Integer.parseInt(parts[2]);
-
-                LocalDate birthDate = LocalDate.of(year, month, day);
-                if (birthDate.isAfter(LocalDate.now())) {
-                    System.out.println("Дата рождения не может быть больше текущей даты. Пожалуйста, введите корректную дату:");
-                } else {
-                    return birthDate;
-                }
-            } catch (DateTimeException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                System.out.println("Неверный формат даты рождения. Пожалуйста, введите дату в формате ДД ММ ГГГГ:");
-            }
-        }
-    }
-
-    private boolean isValidMenuChoice(String choiceStr, int menuSize) {
-        try {
-            int choice = Integer.parseInt(choiceStr);
-            return choice >= 1 && choice <= menuSize;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private boolean isValidIdChoice(String idStr, List<Integer> foundHumansId) {
-        try {
-            int id = Integer.parseInt(idStr);
-            return id >= 1 && foundHumansId.contains(id);
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 }
