@@ -1,14 +1,13 @@
-package family__tree.human;
+package family__tree.model.human;
 
-import family__tree.family_tree.ItemFamilyTree;
+import family__tree.model.family_tree_service.ItemFamilyTree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
-
+public class Human implements Serializable, Comparable<Human>, ItemFamilyTree<Human> {
     private static final long serialVersionUID = 1L;
 
     private String name;
@@ -30,8 +29,7 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
         int birthYear = birth.getYear();
-        int age = currentYear - birthYear;
-        return age;
+        return currentYear - birthYear;
     }
 
     public String getName() {
@@ -62,15 +60,6 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         return mother;
     }
 
-    public void addChild(Human child) {
-        this.children.add(child);
-        if (this.gender == Gender.Male) {
-            child.setFather(this);
-        } else if (this.gender == Gender.Female) {
-            child.setMother(this);
-        }
-    }
-
     public void setFather(Human father) {
         this.father = father;
     }
@@ -79,10 +68,14 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         this.mother = mother;
     }
 
-    public String getParents() {
-        String fatherName = (father != null) ? father.getName() : "отец неизвестен";
-        String motherName = (mother != null) ? mother.getName() : "мать неизвестна";
-        return "Отец: " + fatherName + ", Мать: " + motherName;
+    @Override
+    public void addChild(Human child) {
+        this.children.add(child);
+    }
+
+    @Override
+    public List<Human> getChildren() {
+        return children;
     }
 
     @Override
@@ -93,9 +86,5 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
     @Override
     public int compareTo(Human o) {
         return this.name.compareTo(o.name);
-    }
-
-    public List<Human> getChildren() {
-        return children;
     }
 }

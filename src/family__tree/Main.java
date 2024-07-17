@@ -1,19 +1,20 @@
 package family__tree;
 
-import family__tree.family_tree.FamilyTree;
-import family__tree.human.Gender;
-import family__tree.human.Human;
+import family__tree.model.family_tree_service.FamilyTreeService;
+import family__tree.model.human.Gender;
+import family__tree.model.human.Human;
+import family__tree.model.writer.FileHandler;
+import family__tree.model.writer.Writer;
 import family__tree.presenter.Presenter;
 import family__tree.view.UserInterface;
-import family__tree.writer.FileHandler;
-import family__tree.writer.Writer;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree<Human> familyTree = new FamilyTree<>();
+        FamilyTreeService<Human> familyTreeService = new FamilyTreeService<>();
 
 
         Human sergey = new Human("Сергей", LocalDate.of(1920, 1, 1), Gender.Male);
@@ -55,12 +56,12 @@ public class Main {
         tanya.addChild(katya);
         valera.addChild(katya);
 
-        familyTree.addHumans(Arrays.asList(sergey, lena, toma, lida, vitalya, alexander, masha, anya, kolya, vasya, klava, petr, tanya, valera, katya));
+        familyTreeService.addHumans(Arrays.asList(sergey, lena, toma, lida, vitalya, alexander, masha, anya, kolya, vasya, klava, petr, tanya, valera, katya));
 
         Writer writer = new FileHandler();
 
         // Создаем Presenter с FamilyTree и Writer
-        Presenter presenter = new Presenter(familyTree, writer);
+        Presenter presenter = new Presenter(familyTreeService, writer);
 
         // Создаем UserInterface с Presenter
         UserInterface userInterface = new UserInterface(presenter);
@@ -92,27 +93,27 @@ public class Main {
 
 
         // Запись
-//        FileHandler fileHandler = new FileHandler();
-//        try {
-//            fileHandler.writeToFile(familyTree, "familyTree.txt");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // Чтение
-//        FamilyTree loadedFamilyTree = null;
-//        try {
-//            loadedFamilyTree = fileHandler.readFromFile("familyTree.txt");
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // Вывод
-//        if (loadedFamilyTree != null) {
-//            System.out.println(loadedFamilyTree);
-//        } else {
-//            System.out.println("Не удалось загрузить семейное древо.");
-//        }
+        FileHandler fileHandler = new FileHandler();
+        try {
+            fileHandler.writeToFile(familyTreeService, "familyTree.dat");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Чтение
+        FamilyTreeService loadedFamilyTreeService = null;
+        try {
+            loadedFamilyTreeService = fileHandler.readFromFile("familyTree.dat");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Вывод
+        if (loadedFamilyTreeService != null) {
+            System.out.println(loadedFamilyTreeService);
+        } else {
+            System.out.println("Не удалось загрузить семейное древо.");
+        }
 
     }
 }

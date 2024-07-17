@@ -1,20 +1,19 @@
-package family__tree.family_tree;
+package family__tree.model.family_tree_service;
 
-import family__tree.human.HumanComparatorByBirth;
-import family__tree.human.HumanComparatorByName;
+import family__tree.model.human.HumanComparatorByBirth;
+import family__tree.model.human.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends ItemFamilyTree> implements Serializable, Iterable<E> {
-
+public class FamilyTreeService<E extends ItemFamilyTree<E>> implements Serializable, Iterable<E> {
     private static final long serialVersionUID = 1L;
 
     private List<E> humans;
 
-    public FamilyTree() {
+    public FamilyTreeService() {
         this.humans = new ArrayList<>();
     }
 
@@ -26,17 +25,36 @@ public class FamilyTree<E extends ItemFamilyTree> implements Serializable, Itera
         this.humans.addAll(humans);
     }
 
-    public List<E> getChildren(E person) {
-        return person.getChildren();
+    public void addChild(E parent, E child) {
+        parent.addChild(child);
     }
 
     public void removeHuman(E human) {
         humans.remove(human);
         for (E parent : humans) {
-            if (parent.getChildren().contains(human)) {
-                parent.getChildren().remove(human);
-            }
+            parent.getChildren().remove(human);
         }
+    }
+
+    public List<E> getChildren(E person) {
+        return person.getChildren();
+    }
+
+    public String getParents(E person) {
+        StringBuilder parentsInfo = new StringBuilder();
+        E father = person.getFather();
+        E mother = person.getMother();
+        if (father != null) {
+            parentsInfo.append("Отец: ").append(father.getName()).append(", ");
+        } else {
+            parentsInfo.append("Отец: неизвестен, ");
+        }
+        if (mother != null) {
+            parentsInfo.append("Мать: ").append(mother.getName());
+        } else {
+            parentsInfo.append("Мать: неизвестна");
+        }
+        return parentsInfo.toString();
     }
 
     public List<E> getAllHumans() {
