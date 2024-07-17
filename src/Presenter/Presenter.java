@@ -6,9 +6,9 @@ import View.View;
 
 import java.time.LocalDate;
 
-public class Presenter  {
-private View view;
-private Servise servise;
+public class Presenter {
+    private View view;
+    private Servise servise;
 
     public Presenter(View view) {
         this.view = view;
@@ -22,8 +22,8 @@ private Servise servise;
     }
 
     public void getTree() {
-       String answer = servise.GetInfoFamilyTree();
-       view.printAnswer(answer);
+        String answer = servise.GetInfoFamilyTree();
+        view.printAnswer(answer);
     }
 
     public void sortByAge() {
@@ -35,6 +35,7 @@ private Servise servise;
         servise.SortByName();
         getTree();
     }
+
     public void sortById() {
         servise.SortById();
         getTree();

@@ -10,14 +10,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class ConsoleUI implements View{
-private Scanner scanner;
-private boolean work;
-private Presenter presenter;
-private MainMenu menu;
+public class ConsoleUI implements View {
+    private Scanner scanner;
+    private boolean work;
+    private Presenter presenter;
+    private MainMenu menu;
 
     public ConsoleUI() {
-        scanner =new Scanner(System.in);
+        scanner = new Scanner(System.in);
         work = true;
         presenter = new Presenter(this);
         menu = new MainMenu(this);
@@ -112,12 +112,12 @@ private MainMenu menu;
         System.out.println(answer);
 
     }
+
     public void add() {
         System.out.println("Укажите имя ");
-    String name = scanner.nextLine();
-                    System.out.println("Укажите пол ");
-    String sexStr = scanner.nextLine();
-
+        String name = scanner.nextLine();
+        System.out.println("Укажите пол ");
+        String sexStr = scanner.nextLine();
 
 
         System.out.println("Укажите дату рождения человека через пробел в формате ГГГГ MM ДД: ");
@@ -127,6 +127,7 @@ private MainMenu menu;
         presenter.addHuman(name, sexStr, brthDate);
 
     }
+
     private LocalDate StrToLocalDate(String brthDateStr) {
         LocalDate brthDate = null; // Инициализируем переменную заранее
 

@@ -1,5 +1,5 @@
 package Model.family_tree.human;
 
-public enum Gender  {
+public enum Gender {
     Male, Female, Misgender
 }

@@ -1,9 +1,7 @@
 package Model.family_tree;
 
 
-import Model.family_tree.human.ComparatorByBrthDate;
-import Model.family_tree.human.ComparatorByName;
-import Model.family_tree.human.ComporatorById;
+import Model.family_tree.human.*;
 
 import java.io.Serializable;
 
@@ -13,24 +11,20 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
- public class FamilyTree<C extends Item<C>> implements Serializable,Iterable<C>{
+public class FamilyTree<C extends Item<C>> implements Iterable<C>, Serializable {
 
     private List<C> humans;
     private int humansId;
-
-
-
-
+    private CommunicationTree communicationTree;
+    private InformationTree informationTree;
+    private SortTree sortTree;
 
 
     public FamilyTree(List<C> humanList) {
         this.humans = humanList;
 
 
-
     }
-
-
 
 
     public FamilyTree() {
@@ -39,53 +33,40 @@ import java.util.List;
     }
 
 
-     public boolean add(C human){
+    public boolean add(C human) {
 
-         if (human==null){
-             return false;
-         }
-         if (!humans.contains(human)){
-             humans.add(human);
-             addToParents(human);
-             addToChildren(human);
-             return true;
-         }
-         return false;
-     }
-
-     public List<C> getHumans() {
-         return humans;
-     }
-
-     private void addToParents(C human){
-        for (C parent :human.getParents()){
-            parent.addChild(human);
+        if (human == null) {
+            return false;
         }
+        if (!humans.contains(human)) {
+            humans.add(human);
+            addToParents(human);
+            addToChildren(human);
+            return true;
+        }
+        return false;
+    }
+
+    public List<C> getHumans() {
+        return humans;
+    }
+
+
+    private void addToParents(C human) {
+        communicationTree.addToParents(human);
 
     }
-    private  void  addToChildren(C human){
-        for (C child :human.getChildren()){
-            child.addParent(human);
-        }
-    }
-    public List<C> getSiblings(int id){
-        C human = getById(id);
 
-        if (human==null){
-            return null;
-        }
-        List<C> siblings = new ArrayList<>();
-        for (C parent: human.getParents())
-        {
-            for (C child: human.getChildren()){
-                if (!child.equals(human)){
-                    siblings.add(child);
-                }
-            }
-        }
-
-        return siblings;
+    private void addToChildren(C human) {
+        communicationTree.addToChildren(human);
     }
+
+    public List<C> getSiblings(int id) {
+
+
+        return communicationTree.getSiblings(id);
+    }
+
     public C getById(int id) {
         for (C human : humans) {
             if (human.getId() == id) {
@@ -96,63 +77,43 @@ import java.util.List;
     }
 
     public boolean setWedding(C human1, C human2) {
-        if (human1.getSpouse() == null && human2.getSpouse() == null) {
-            human1.setSpouse(human2);
-            human2.setSpouse(human1);
-            return true;
-        } else {
-            return false;
-        }
+
+        return communicationTree.setWedding(human1, human2);
     }
 
 
+    public boolean setFamily(int id1, int id2) {
 
-     public boolean setFamily(int id1, int id2) {
-        C human1 = getById(id1);
-        C human2 = getById(id2);
-        if (!human2.getParents().contains(human1)) {
+        return communicationTree.setFamily(id1, id2);
 
-            human1.addChild(human2);
-            human2.addParent(human1);
-            return true;
-        }
-        else {
-            return false;
-        }
     }
-    public void SortByName(){
-        Collections.sort(humans,new ComparatorByName<>());
-    }
-     public void SortByBrthDate(){
-         Collections.sort(humans,new ComparatorByBrthDate<>());
-     }
-     public void sortById() {
-         Collections.sort(humans, new ComporatorById<>());
-     }
 
-     @Override
-     public Iterator<C> iterator() {
-         return humans.iterator();
-     }
+    public String getInfo() {
+        return informationTree.getInfo();
+    }
+
+    public void SortByName() {
+        sortTree.SortByName();
+    }
+
+    public void SortByBrthDate() {
+        sortTree.SortByBrthDate();
+    }
+
+    public void sortById() {
+        sortTree.sortById();
+    }
+
+    @Override
+    public Iterator<C> iterator() {
+        return humans.iterator();
+    }
 
 
     @Override
     public String toString() {
-        return getInfo();
+        return informationTree.getInfo();
     }
 
-    public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n");
-        sb.append("В дереве ");
-        sb.append(humans.size());
-        sb.append(" объектa: ");
-        sb.append("\n");
-        for (C human : humans) {
-            sb.append(human);
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
 
 }

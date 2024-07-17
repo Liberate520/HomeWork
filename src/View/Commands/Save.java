@@ -2,12 +2,13 @@ package View.Commands;
 
 import View.ConsoleUI;
 
-public class Save extends Command{
-    public Save( ConsoleUI consoleUI) {
+public class Save extends Command {
+    public Save(ConsoleUI consoleUI) {
         super("Сохранить", consoleUI);
     }
+
     @Override
-    public void execute(){
+    public void execute() {
         getConsoleUI().Save();
     }
 }

@@ -14,9 +14,10 @@ public abstract class Command {
     public String getDescripton() {
         return descripton;
     }
+
     public abstract void execute();
 
-     ConsoleUI getConsoleUI() {
+    ConsoleUI getConsoleUI() {
         return consoleUI;
     }
 }

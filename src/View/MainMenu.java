@@ -1,4 +1,5 @@
 package View;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,22 +23,25 @@ public class MainMenu {
         commands.add(new SetSpouse(consoleUI));
         commands.add(new Finish(consoleUI));
     }
-    public String menu(){
+
+    public String menu() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Меню:\n");
         for (int i = 0; i < commands.size(); i++) {
-            stringBuilder.append(i+1);
+            stringBuilder.append(i + 1);
             stringBuilder.append(". ");
             stringBuilder.append(commands.get(i).getDescripton());
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
-    public void execute(int choise){
-        Command command = commands.get(choise-1);
+
+    public void execute(int choise) {
+        Command command = commands.get(choise - 1);
         command.execute();
     }
-    public int size(){
+
+    public int size() {
         return commands.size();
     }
 
