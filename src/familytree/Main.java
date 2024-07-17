@@ -6,6 +6,8 @@ import familytree.model.Human;
 import familytree.presenter.FamilyTreePresenter;
 import familytree.view.FamilyTreeConsoleView;
 import familytree.view.FamilyTreeView;
+import familytree.writer.FileHandler;
+import familytree.writer.Writer;
 
 import java.time.LocalDate;
 
@@ -14,7 +16,8 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = createFamilyTree();
         FamilyTreeView view = new FamilyTreeConsoleView();
-        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view);
+        Writer writer = new FileHandler();
+        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view, writer);
 
         // Сохранение дерева в файл
         presenter.saveTree("src/familytree/writer/tree.txt");

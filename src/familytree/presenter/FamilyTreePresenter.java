@@ -4,25 +4,30 @@ import familytree.model.FamilyTree;
 import familytree.model.Human;
 import familytree.sort.Sorter;
 import familytree.view.FamilyTreeView;
+import familytree.writer.Writer;
 
 import java.util.List;
 
 public class FamilyTreePresenter {
     private FamilyTree familyTree;
     private FamilyTreeView view;
+    private Writer writer;
 
-    public FamilyTreePresenter(FamilyTree familyTree, FamilyTreeView view) {
+    public FamilyTreePresenter(FamilyTree familyTree, FamilyTreeView view, Writer writer) {
         this.familyTree = familyTree;
         this.view = view;
+        this.writer = writer;
     }
 
     public void saveTree(String filePath) {
-        familyTree.save(filePath);
+        writer.setPath(filePath);
+        writer.save(familyTree);
         view.displayMessage("Family tree saved to " + filePath);
     }
 
     public void loadTree(String filePath) {
-        this.familyTree = FamilyTree.read(filePath);
+        writer.setPath(filePath);
+        this.familyTree = (FamilyTree) writer.read();
         view.displayMessage("Family tree loaded from " + filePath);
     }
 
