@@ -4,7 +4,7 @@ import model.family_tree.TreeNode;
 
 import java.io.Serializable;
 
-public class RelationshipManager<E extends TreeNode<E>> implements Serializable {
+public class FamilyTreeRelationshipManager<E extends TreeNode<E>> implements Serializable {
     public void addToParents(E node) {
         for (E parent : node.getParents()) {
             parent.addChild(node);
