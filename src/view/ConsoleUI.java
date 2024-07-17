@@ -4,6 +4,7 @@ import presenter.Presenter;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
@@ -34,7 +35,7 @@ public class ConsoleUI implements View {
         while (work) {
             System.out.println(menu.menu());
             String choiceStr = scanner.nextLine();
-            if (isValidChoice(choiceStr, menu.size())) {
+            if (isValidMenuChoice(choiceStr, menu.size())) {
                 int choice = Integer.parseInt(choiceStr);
                 menu.execute(choice);
             } else {
@@ -86,6 +87,25 @@ public class ConsoleUI implements View {
         presenter.findByName(name);
     }
 
+    public void removeHuman() {
+        System.out.println("Укажите имя человека, которого хотите удалить:");
+        String name = scanner.nextLine();
+        presenter.findByName(name);
+        List<Integer> foundHumansId = presenter.foundHumansId(name);
+        System.out.println("Укажите id человека, которого хотите удалить:");
+        boolean flag = true;
+        while (flag) {
+            String idStr = scanner.nextLine();
+            if (isValidIdChoice(idStr, foundHumansId)) {
+                int id = Integer.parseInt(idStr);
+                presenter.removeHuman(id);
+                flag = false;
+            } else {
+                System.out.println("Введён неверный id.\nВведите корректный id из списка: " + foundHumansId);
+            }
+        }
+    }
+
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
@@ -125,10 +145,19 @@ public class ConsoleUI implements View {
         }
     }
 
-    private static boolean isValidChoice(String choiceStr, int menuSize) {
+    private boolean isValidMenuChoice(String choiceStr, int menuSize) {
         try {
             int choice = Integer.parseInt(choiceStr);
             return choice >= 1 && choice <= menuSize;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isValidIdChoice(String idStr, List<Integer> foundHumansId) {
+        try {
+            int id = Integer.parseInt(idStr);
+            return id >= 1 && foundHumansId.contains(id);
         } catch (NumberFormatException e) {
             return false;
         }

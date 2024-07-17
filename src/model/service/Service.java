@@ -8,6 +8,7 @@ import model.writer.FileHandler;
 import model.writer.Writer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
@@ -65,13 +66,26 @@ public class Service {
 
     public void findByName(String name) {
         List<Human> foundHumans = familyTree.getByName(name);
-        if(foundHumans.isEmpty()){
+        if (foundHumans.isEmpty()) {
             System.out.println("Не найдено ни одного человека.");
         } else {
             System.out.println("Список найденных людей:");
-            for(Human human : foundHumans){
+            for (Human human : foundHumans) {
                 System.out.println(human);
             }
         }
+    }
+
+    public List<Integer> foundHumansId(String name) {
+        List<Human> foundHumans = familyTree.getByName(name);
+        List<Integer> foundHumansId = new ArrayList<>();
+        for (Human human : foundHumans) {
+            foundHumansId.add(human.getId());
+        }
+        return foundHumansId;
+    }
+
+    public void removeHuman(int id) {
+        familyTree.remove(id);
     }
 }

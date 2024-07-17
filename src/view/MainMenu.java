@@ -12,6 +12,7 @@ public class MainMenu {
         commands = new ArrayList<>();
         commands.add(new AddHuman(consoleUI));
         commands.add(new FindByName(consoleUI));
+        commands.add(new RemoveHuman(consoleUI));
         commands.add(new GetHumanListInfo(consoleUI));
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByBirthDate(consoleUI));
