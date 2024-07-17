@@ -16,9 +16,8 @@ public class FileHandler implements Writer {
 
     @Override
     public Object read() {
-        try (ObjectInputStream objectIntputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-            Object object = objectIntputStream.readObject();
-            return object;
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+            return objectInputStream.readObject();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

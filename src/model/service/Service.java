@@ -5,13 +5,14 @@ import model.human.Gender;
 import model.human.Human;
 import model.builder.HumanBuilder;
 import model.writer.FileHandler;
+import model.writer.Writer;
 
 import java.time.LocalDate;
 
 public class Service {
     private FamilyTree<Human> familyTree;
     private HumanBuilder humanBuilder;
-    private FileHandler fileHandler;
+    private Writer fileHandler;
 
     public Service() {
         familyTree = new FamilyTree<>();

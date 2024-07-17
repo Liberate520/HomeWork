@@ -1,6 +1,6 @@
 package model.family_tree;
 
-import model.family_tree.iterators.FamilyTreeIterator;
+import model.iterators.FamilyTreeIterator;
 import model.human.comparators.HumansComparatorByBirthDate;
 import model.human.comparators.HumansComparatorById;
 import model.human.comparators.HumansComparatorByName;
@@ -113,7 +113,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         }
     }
 
-    public boolean remove(int humansId) {
+    public boolean removeHuman(int humansId) {
         if (checkId(humansId)) {
             E human = getById(humansId);
             return humanList.remove(human);
@@ -179,6 +179,4 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     public void sortById() {
         humanList.sort(new HumansComparatorById<>());
     }
-
-
 }

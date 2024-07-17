@@ -20,7 +20,7 @@ public class ConsoleUI implements View {
     }
 
     @Override
-    public void start() {
+    public void startWork() {
         greetings();
         presenter.readTree();
         selectItemFromMenu();
@@ -40,16 +40,6 @@ public class ConsoleUI implements View {
             } else {
                 System.out.println("Введён неверный пункт меню.\nВведите корректный номер из меню: от 1 до " + menu.size());
             }
-        }
-    }
-
-    private static boolean isValidChoice(String choiceStr, int menuSize) {
-        try {
-            int choice = Integer.parseInt(choiceStr);
-            return choice >= 1 && choice <= menuSize;
-        } catch (NumberFormatException e) {
-
-            return false;
         }
     }
 
@@ -126,6 +116,16 @@ public class ConsoleUI implements View {
             } catch (DateTimeException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
                 System.out.println("Неверный формат даты рождения. Пожалуйста, введите дату в формате ДД ММ ГГГГ:");
             }
+        }
+    }
+
+    private static boolean isValidChoice(String choiceStr, int menuSize) {
+        try {
+            int choice = Integer.parseInt(choiceStr);
+            return choice >= 1 && choice <= menuSize;
+        } catch (NumberFormatException e) {
+
+            return false;
         }
     }
 }
