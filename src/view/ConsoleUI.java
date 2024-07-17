@@ -92,6 +92,9 @@ public class ConsoleUI implements View {
         String name = scanner.nextLine();
         presenter.findByName(name);
         List<Integer> foundHumansId = presenter.foundHumansId(name);
+        if (foundHumansId.isEmpty()) {
+            return;
+        }
         System.out.println("Укажите id человека, которого хотите удалить:");
         boolean flag = true;
         while (flag) {
