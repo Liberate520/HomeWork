@@ -1,4 +1,4 @@
-package model.family_tree.FamilyTreeManager;
+package model.family_tree.family_tree_manager;
 
 import model.family_tree.TreeNode;
 

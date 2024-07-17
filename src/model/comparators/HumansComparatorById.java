@@ -1,4 +1,4 @@
-package model.human.comparators;
+package model.comparators;
 
 import model.family_tree.TreeNode;
 

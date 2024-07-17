@@ -1,12 +1,12 @@
 package model.family_tree;
 
-import model.family_tree.FamilyTreeManager.RelationshipManager;
-import model.family_tree.FamilyTreeManager.SiblingsManager;
-import model.family_tree.FamilyTreeManager.SpouseManager;
+import model.family_tree.family_tree_manager.FamilyTreeRelationshipManager;
+import model.family_tree.family_tree_manager.FamilyTreeSiblingsManager;
+import model.family_tree.family_tree_manager.FamilyTreeSpouseManager;
 import model.iterators.FamilyTreeIterator;
-import model.human.comparators.HumansComparatorByBirthDate;
-import model.human.comparators.HumansComparatorById;
-import model.human.comparators.HumansComparatorByName;
+import model.comparators.HumansComparatorByBirthDate;
+import model.comparators.HumansComparatorById;
+import model.comparators.HumansComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,15 +15,15 @@ import java.util.List;
 
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
     private List<E> nodeList;
-    private RelationshipManager<E> relationshipManager;
-    private SpouseManager<E> spouseManager;
-    private SiblingsManager<E> siblingsManager;
+    private FamilyTreeRelationshipManager<E> familyTreeRelationshipManager;
+    private FamilyTreeSpouseManager<E> familyTreeSpouseManager;
+    private FamilyTreeSiblingsManager<E> familyTreeSiblingsManager;
 
     public FamilyTree(List<E> nodeList) {
         this.nodeList = nodeList;
-        this.relationshipManager = new RelationshipManager<>();
-        this.spouseManager = new SpouseManager<>();
-        this.siblingsManager = new SiblingsManager<>();
+        this.familyTreeRelationshipManager = new FamilyTreeRelationshipManager<>();
+        this.familyTreeSpouseManager = new FamilyTreeSpouseManager<>();
+        this.familyTreeSiblingsManager = new FamilyTreeSiblingsManager<>();
     }
 
     public FamilyTree() {
@@ -38,7 +38,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
             nodeList.add(node);
             int id = getMaxId();
             node.setId(++id);
-            relationshipManager.updateRelationships(node);
+            familyTreeRelationshipManager.updateRelationships(node);
             return true;
         }
         return false;
@@ -73,14 +73,14 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     public List<E> getSiblings(int id) {
         E node = getById(id);
-        return siblingsManager.getSiblings(node);
+        return familyTreeSiblingsManager.getSiblings(node);
     }
 
     public boolean setWedding(int nodeId1, int nodeId2) {
         if (checkId(nodeId1) && checkId(nodeId2)) {
             E node1 = getById(nodeId1);
             E node2 = getById(nodeId2);
-            return spouseManager.setWedding(node1, node2);
+            return familyTreeSpouseManager.setWedding(node1, node2);
         }
         return false;
     }
@@ -89,7 +89,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         if (checkId(nodeId1) && checkId(nodeId2)) {
             E node1 = getById(nodeId1);
             E node2 = getById(nodeId2);
-            return spouseManager.setDivorce(node1, node2);
+            return familyTreeSpouseManager.setDivorce(node1, node2);
         }
         return false;
     }
