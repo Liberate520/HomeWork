@@ -120,9 +120,9 @@ public class Presenter<U extends Alivable<U>> {
 
     }
 
-    public void load(String path){
+    public void load(){
         try {
-            service.load(path);
+            service.load();
         }catch (IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException c){

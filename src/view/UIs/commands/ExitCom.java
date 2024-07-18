@@ -1,6 +1,6 @@
 package view.UIs.commands;
 
-import view.UIs.ConsoleUI;
+import view.UIs.console.ConsoleUI;
 
 public class ExitCom extends Command{
     public ExitCom(String name, ConsoleUI view) {

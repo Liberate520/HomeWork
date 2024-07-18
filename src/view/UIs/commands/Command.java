@@ -1,7 +1,6 @@
 package view.UIs.commands;
 
-import view.UIs.ConsoleUI;
-import view.View;
+import view.UIs.console.ConsoleUI;
 
 public abstract class Command {
     protected String name;

@@ -1,5 +1,6 @@
 package model.family.human;
 
+import model.family.Builder;
 import model.family.tree.FamilyTree;
 import model.rw.Writer;
 
@@ -10,10 +11,7 @@ import java.util.Set;
 public class HumanService extends model.family.Service<Human> {
 
     public HumanService(Writer rw) {
-        tree = new FamilyTree<>();
-        builder = new HumanBuilder();
-        this.path = "humantree.out";
-        this.rw = rw;
+        super(new FamilyTree<Human>(), new HumanBuilder(), rw);
     }
 
     public int size() {
@@ -96,15 +94,6 @@ public class HumanService extends model.family.Service<Human> {
     public void setWriter(Writer writer){
         super.setWriter(writer);
     }
-    public void save(String path) {
-        try {
-            super.save(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     //
     public void save() {
         try {
@@ -115,16 +104,6 @@ public class HumanService extends model.family.Service<Human> {
     }
 
     //
-    public void load(String path) throws IOException, ClassNotFoundException {
-        try {
-            super.load(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
-        }
-    }
-
     public void load() throws IOException, ClassNotFoundException {
         try {
             super.load();
