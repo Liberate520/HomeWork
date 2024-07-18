@@ -1,54 +1,70 @@
 package ru.gb.family_tree;
 
-import java.io.IOException;
+import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.service.FamilyTreeService;
+import ru.gb.family_tree.writer.FileHandler;
+import ru.gb.family_tree.writer.Writer;
+
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        // Создание экземпляра генеалогического древа
         FamilyTree familyTree = new FamilyTree();
+        FamilyTreeService familyTreeService = new FamilyTreeService(familyTree);
 
+        // Создание и добавление людей в генеалогическое древо
         Human olga = new Human("Ольга", LocalDate.of(1945, 5, 15), Gender.Female, null, null);
-        familyTree.addMember(olga);
+        familyTreeService.addMember(olga);
 
-        Human ivan = new Human("Иван", LocalDate.of(1963, 3, 10), Gender.Male, null, olga);
-        Human svetlana = new Human("Светлана", LocalDate.of(1965, 7, 25), Gender.Female, null, null);
+        Human ivan = new Human("Иван", LocalDate.of(1963, 3, 10), Gender.Male, null, null);
+        familyTreeService.addMember(ivan);
 
-        familyTree.addMember(ivan);
-        familyTree.addMember(svetlana);
+        // Устанавливаем супругов
+        ivan.setSpouse(olga);
+        olga.setSpouse(ivan);
 
-        ivan.setSpouse(svetlana);
-        svetlana.setSpouse(ivan);
+        Human anna = new Human("Анна", LocalDate.of(1985, 7, 22), Gender.Female, ivan, olga);
+        familyTreeService.addMember(anna);
 
-        Human anna = new Human("Анна", LocalDate.of(1988, 6, 5), Gender.Female, ivan, svetlana);
-        Human pavel = new Human("Павел", LocalDate.of(1990, 11, 20), Gender.Male, ivan, svetlana);
+        Human sergey = new Human("Сергей", LocalDate.of(1990, 11, 5), Gender.Male, ivan, olga);
+        familyTreeService.addMember(sergey);
 
+        // Добавляем детей к родителям
+        olga.addChild(anna);
+        olga.addChild(sergey);
         ivan.addChild(anna);
-        ivan.addChild(pavel);
-        svetlana.addChild(anna);
-        svetlana.addChild(pavel);
+        ivan.addChild(sergey);
 
-        familyTree.addMember(anna);
-        familyTree.addMember(pavel);
-
-        for (Human member : familyTree.getMembers()) {
+        // Сортировка по имени и вывод результата
+        familyTreeService.sortByName();
+        System.out.println("Сортировка по имени:");
+        for (Human member : familyTreeService.getMembers()) {
             System.out.println(member);
         }
 
-        FileHandler fileHandler = new FileHandler();
-        String fileName = "familyTree.ser";
+        // Сортировка по количеству детей и вывод результата
+        familyTreeService.sortByChildrenCount();
+        System.out.println("\nСортировка по количеству детей:");
+        for (Human member : familyTreeService.getMembers()) {
+            System.out.println(member);
+        }
 
-        try {
-            fileHandler.save(fileName, familyTree);
-            System.out.println("Данные сохранены в файл: " + fileName);
+        // Работа с файлом
+        Writer fileHandler = new FileHandler();
+        fileHandler.setPath("family_tree.ser");
+        fileHandler.save(familyTree);
 
-            FamilyTree loadedFamilyTree = fileHandler.load(fileName);
-            System.out.println("Данные загружены из файла: " + fileName);
-
-            for (Human member : loadedFamilyTree.getMembers()) {
+        FamilyTree loadedTree = (FamilyTree) fileHandler.read();
+        if (loadedTree != null) {
+            System.out.println("\nЗагруженное дерево:");
+            for (Human member : loadedTree.getMembers()) {
                 System.out.println(member);
             }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } else {
+            System.out.println("\nОшибка загрузки дерева.");
         }
     }
 }
