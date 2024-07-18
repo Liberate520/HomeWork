@@ -1,4 +1,4 @@
-import Human.Human;
+import Human.*;
 import familyTree.FamilyTree;
 
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<Human>();
 
         Human progenitor = new Human("GreatDaddy", LocalDate.of(1910,10,10),
                 Gender.male, LocalDate.of(1941,11,11));
