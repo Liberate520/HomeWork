@@ -1,27 +1,25 @@
+import java.util.ArrayList;
+
 public class FamilyTree {
-    
-    String nameFamily;
+    int ID;
+    String FamilyName;
     int countPeople;
+    ArrayList<Human> HumansFamily;
 
-/**Создание семьи */
-public FamilyTree(String nameFamily, int countPeople){
-    this.nameFamily = nameFamily;
-    this.countPeople = countPeople;
-
-}
-
-
-
-
-
+    public FamilyTree(int ID, String FamilyName, ArrayList<Human> HumansFamily){
+        this.FamilyName = FamilyName;
+        this.HumansFamily = HumansFamily;
+        this.countPeople = HumansFamily.size();
+        
+    }
 
     @Override
     public String toString() {
-        return String.format("\n\n\nСемья: %s, людей в семье: %s", nameFamily, countPeople);
+        
+        return String.format("\nID Семьи: %d\nФамилия семьи: %s\nКоличество людей: %d", ID, FamilyName, countPeople);
     }
+   
+   
+
+    
 }
-
-
-
-
-

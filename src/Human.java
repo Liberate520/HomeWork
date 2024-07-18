@@ -1,40 +1,100 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Human {
 
+    int ID;
     String name;
-    int birthYear;
+    int yearBirth;
+    int yearDeath;
     String gender;
-    Human father, mother;
-    String children;
+    Human father, mother = null;
+    ArrayList<Human> children = new ArrayList<>();
 
 
-/**Создание человека в семье */
-public Human(String name, int birthYear, String gender, Human father, Human mother, String children) {
-    this.name = name;
-    this.birthYear = birthYear;
-    this.gender = gender;
-    this.father = father;
-    this.mother = mother;
-    this.children = children;
-}
-
-
-public Human(String Name, String gender, String i, int birthYear){
-    this.name = Name;
-    if(gender == "Male"){
-        this.gender = "Male";
+    public Human(int ID, String name, int yearBirth, String gender){
+        this.ID = ID;
+        this.name = name;
+        this.yearBirth = yearBirth;
+        this.gender = gender;
+        
     }
-    else { this.gender = "Female"; }
-    this.children = i;
-    this.birthYear = birthYear;
-}
+    
+
+    public Human(int ID, String name, int yearBirth, int yearDeath, String gender){
+        this.ID = ID;
+        this.name = name;
+        this.yearBirth = yearBirth;
+        this.yearDeath = yearDeath;
+        this.gender = gender;
+        
+    }
+
+    public int getID() {
+        return ID;
+    }
+    
+    public String setFather(Human father) {
+        if (this.father == null) { 
+            this.father = father; 
+            return setChildren(father); }
+
+        else { return "Отец уже есть\n";}
+    }
+
+    public String setMother(Human mother) {
+        if (this.mother == null) { this.mother = mother; return setChildren(mother); }
+        else { return "Мама уже есть\n";}
+    }
+
+    public String setChildren(Human parent){
+        parent.children.add(this);
+        return "Ребенок добавлен";
+    }
 
 
-@Override
-public String toString() {
-    return String.format("\nName: %s \nBirth Year: %s \nGender: %s \n\nFather: %s \n\nMother: %s \nChildren: %s\n", name, birthYear, gender, father, mother, children);
-}
-}
+    public ArrayList<Human> getParents(){
+        ArrayList parents = new ArrayList<Human>();
+        parents.add(this.father);
+        parents.add(this.mother);
+        return parents;
+    }
+        
+    public ArrayList getChildren(Human human){
+        ArrayList Child = new ArrayList<>();
+        for(Human child: children){
+            Child.add(child.name);
+        }
+        return Child;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder SB = new StringBuilder();
+        SB.append("\n\nID: ");
+        SB.append(ID);
+        SB.append("\nИмя: ");
+        SB.append(name);
+        SB.append("\nГод рождения: ");
+        SB.append(yearBirth);
+        SB.append("\nГод смерти: ");
+        SB.append(yearDeath);
+        SB.append("\nПол: ");
+        SB.append(gender);
+        SB.append("\nПапа: ");
+        if (father != null) {SB.append(father.name);}
+        SB.append("\nМама: ");
+        if (mother != null) {SB.append(mother.name);}
+        SB.append("\nДети: ");
+        SB.append(getChildren(this));
+        
+        return SB.toString();
+    }
+    }
+    
 
 
+
+
+    
 
