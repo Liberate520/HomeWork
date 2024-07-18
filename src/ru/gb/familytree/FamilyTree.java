@@ -23,7 +23,9 @@ public class FamilyTree {
     }
     public String getHumansChildrenInfo(int selectId) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Список детей для " + humans.get(selectId-1).getName() + ":\n");
+        stringBuilder.append("Список детей для ")
+                .append(humans.get(selectId-1).getName())
+                .append(":\n");
 
         for(Human human : humans){
             if (human.getFather() != null) {

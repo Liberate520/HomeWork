@@ -62,8 +62,6 @@ public class Main {
         ft.addHuman(hum5);
         ft.addHuman(hum6);
 
-        System.out.println(hum4);
-
         System.out.println("Список людей древа:");
         System.out.println(ft.getHumansInfo());
 
