@@ -27,4 +27,3 @@ public class FamilyTreeFileIO implements FamilyTreeIO {
         }
     }
 }
-
