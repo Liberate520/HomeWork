@@ -30,7 +30,7 @@ public class Service {
         familyTree.add(human);
     }
 
-    private static void setGenderFromStr(String genderStr, Human human) {
+    private void setGenderFromStr(String genderStr, Human human) {
         if (genderStr.equalsIgnoreCase("м")) {
             human.setGender(Gender.Male);
         } else if (genderStr.equalsIgnoreCase("ж")) {
@@ -64,16 +64,13 @@ public class Service {
         }
     }
 
-    public void findByName(String name) {
+    public String findByName(String name) {
+        StringBuilder sb = new StringBuilder();
         List<Human> foundHumans = familyTree.getByName(name);
-        if (foundHumans.isEmpty()) {
-            System.out.println("Не найдено ни одного человека.");
-        } else {
-            System.out.println("Список найденных людей:");
-            for (Human human : foundHumans) {
-                System.out.println(human);
-            }
+        for (Human human : foundHumans) {
+            sb.append(human).append("\n");
         }
+        return sb.toString();
     }
 
     public List<Integer> foundHumansId(String name) {

@@ -45,8 +45,8 @@ public class Presenter {
         service.readTree();
     }
 
-    public void findByName(String name) {
-        service.findByName(name);
+    public String findByName(String name) {
+        return service.findByName(name);
     }
 
     public List<Integer> foundHumansId(String name) {
