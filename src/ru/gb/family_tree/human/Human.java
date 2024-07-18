@@ -1,37 +1,39 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     private long id;
     private String name;
     private Gender gender;
-    private List<Human> parents;
-    private List<Human> children;
     private LocalDate birthDate;
     private LocalDate deathDate;
+    private List<Human> parents;
+    private List<Human> children;
 
-    public Human(String name, Gender gender, Human father, Human mother, LocalDate birthDate, LocalDate deathDate) {
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         id = -1;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         parents = new ArrayList<>();
+        children = new ArrayList<>();
         if (father != null){
             parents.add(father);
         }
         if (mother != null){
             parents.add(mother);
         }
-        children = new ArrayList<>();
+
     }
 
-    public Human(String name, Gender gender, Human father, Human mother, LocalDate birthDate){
-        this (name, gender, father, mother, birthDate, deathDate = null);
+    public Human(String name, Gender gender, LocalDate birthDate){
+        this(name, gender, birthDate, null, null, null);
     }
 
     public boolean addChild(Human child){
@@ -82,17 +84,29 @@ public class Human {
     }
 
     public String getName() { return  name; }
+
     public long getId() { return id; }
+
     public void setId(long id) { this.id = id; }
+
     public LocalDate getBirthDate() { return birthDate; }
+
     public LocalDate getDeathDate() { return deathDate; }
+
     public List<Human> getParents() { return parents; }
+
     public List<Human> getChildren() { return children; }
+
     public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+
     public void setDeathDate(LocalDate deathDate) { this.deathDate = deathDate; }
+
     public Gender getGender() { return  gender; }
 
     @Override
+    public String toString(){
+        return getInfo();
+    }
     public String getInfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("id: ");

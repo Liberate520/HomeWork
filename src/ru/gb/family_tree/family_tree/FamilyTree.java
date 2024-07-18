@@ -1,10 +1,12 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.family_tree;
+
+import ru.gb.family_tree.human.Human;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree1 {
-    private long humanId;
+public class FamilyTree {
+    private long humansId;
     private List<Human> humanList;
 
     public FamilyTree() {
@@ -21,7 +23,10 @@ public class FamilyTree1 {
         }
         if (!humanList.contains(human)){
             humanList.add(human);
-            human.setId(humanId++);
+            human.setId(humansId++);
+
+            addToParents(human);
+            addToChildren(human);
 
             return true;
         }
@@ -41,7 +46,7 @@ public class FamilyTree1 {
     }
 
     public List<Human> getSiblings(int id){
-        Human human = getById(Id);
+        Human human = getById(id);
         if (human == null){
             return null;
         }
@@ -67,7 +72,7 @@ public class FamilyTree1 {
     }
 
     private boolean checkId(long id){
-        return id < humanId && id >= 0;
+        return id < humansId && id >= 0;
     }
 
     public Human getById(long id){
@@ -80,7 +85,9 @@ public class FamilyTree1 {
     }
 
     @Override
-    public String toSpring() { return  getInfo(); }
+    public String toString(){
+        return getInfo();
+    }
 
     public String getInfo(){
         StringBuilder sb = new StringBuilder();
