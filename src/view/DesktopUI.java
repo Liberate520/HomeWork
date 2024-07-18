@@ -2,15 +2,15 @@ package view;
 
 import model.builder.Gender;
 import model.builder.Human;
-import presenter.Presenter;
+import presenter.FamilyTreePresenter;
 
 import java.time.LocalDate;
 
 public class DesktopUI implements View {
-    private Presenter presenter;
+    private FamilyTreePresenter presenter;
 
     public DesktopUI() {
-        presenter = new Presenter(this);
+        presenter = new FamilyTreePresenter(new ConsoleFamilyTreeView());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DesktopUI implements View {
     }
 
     public String showFamilyTreeInfo() {
-        return presenter.getFamilyTreeInfo(); // Получаем информацию о дереве
+        return presenter.getFamilyTreeInfo();
     }
 
     public void saveFamilyTree() {

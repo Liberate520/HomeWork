@@ -7,15 +7,15 @@ import java.util.List;
 public interface TreeNode<T> extends Serializable {
     void setId(long id);
     long getId();
-    T getFather();
-    T getMother();
-    boolean addChild(T Human);
-    boolean addParent(T Human);
     String getName();
-    LocalDate getDeathDate();
     LocalDate getBirthDate();
+    LocalDate getDeathDate();
     List<T> getParents();
     List<T> getChildren();
     T getSpouse();
-    void setSpouse(T Human);
+    void setSpouse(T spouse);
+
+    void addChild(T human);
+
+    void addParent(T human);
 }

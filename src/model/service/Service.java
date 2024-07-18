@@ -2,68 +2,63 @@ package model.service;
 
 import model.builder.Gender;
 import model.builder.Human;
-import model.family_tree.FamilyTree;
-import model.writer.FileHandler;
+import model.family_tree.FamilyTreeManager;
+import model.writer.Writer;
+
+import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-
 public class Service {
-    private FamilyTree<Human> tree;
-    private FileHandler fileHandler;
+    private FamilyTreeManager familyTreeManager;
+    private Writer fileHandler;
+    private String filePath;
 
-    public Service() {
-        tree = new FamilyTree<>();
-        fileHandler = new FileHandler();
+    public Service(FamilyTreeManager familyTreeManager, Writer fileHandler, String filePath) {
+        this.familyTreeManager = familyTreeManager;
+        this.fileHandler = fileHandler;
+        this.filePath = filePath;
     }
 
     public Human createHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         Human human = new Human(name, gender, birthDate, deathDate, father, mother);
-        addHumanToFamilyTree(human);
+        familyTreeManager.addHuman(human);
         return human;
     }
 
     public Human createHuman(String name, Gender gender, LocalDate birthDate) {
         Human human = new Human(name, gender, birthDate);
-        addHumanToFamilyTree(human);
+        familyTreeManager.addHuman(human);
         return human;
     }
 
     public Human createHuman(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
         Human human = new Human(name, gender, birthDate, father, mother);
-        addHumanToFamilyTree(human);
+        familyTreeManager.addHuman(human);
         return human;
     }
 
     public void setWedding(Human human1, Human human2) {
-        tree.setWedding(human1, human2);
-        addHumanToFamilyTree(human1);
-        addHumanToFamilyTree(human2);
+        familyTreeManager.setWedding(human1, human2);
+    }
+
+    public void setDivorce(Human human1, Human human2) {
+        familyTreeManager.setDivorce(human1, human2);
     }
 
     public void addChild(Human parent, Human child) {
-        if (parent.addChild(child)) {
-            addHumanToFamilyTree(child); // Обновить информацию в дереве
-        } else {
-            System.out.println("Не удалось добавить ребёнка " + child.getName() + " к " + parent.getName());
-        }
+        parent.addChild(child);
     }
 
-    private void addHumanToFamilyTree(Human human) {
-        tree.add(human);
-    }
-
-    /**
-     * Возвращаем информацию о дереве
-     * @return Object FamilyTree
-     */
     public String getFamilyTreeInfo() {
-        return tree.getInfo();
+        return familyTreeManager.getFamilyTreeInfo();
     }
 
-    /**
-     * Сохраняем дерево в файл
-     */
-    public void saveFamilyTree() {
-        fileHandler.save(tree);
+    public void saveFamilyTree() throws IOException {
+        fileHandler.save((Serializable) familyTreeManager, filePath);
+    }
+
+    public FamilyTreeManager loadFamilyTree() throws IOException, ClassNotFoundException {
+        return (FamilyTreeManager) fileHandler.read(filePath);
     }
 }
