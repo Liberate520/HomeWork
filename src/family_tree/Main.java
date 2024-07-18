@@ -1,6 +1,5 @@
 package family_tree;
 
-import family_tree.presenter.Presenter;
 import family_tree.view.UserInterface;
 import family_tree.view.View;
 

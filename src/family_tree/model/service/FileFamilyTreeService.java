@@ -1,5 +1,6 @@
 package family_tree.model.service;
 
+import family_tree.model.human.Person;
 import family_tree.model.family_tree1.FamilyTree;
 import family_tree.model.human.Human;
 import family_tree.model.writer.FileHandler;
@@ -23,7 +24,7 @@ public class FileFamilyTreeService {
         }
     }
 
-    public FamilyTree<Human> loadFamilyTree() {
+    public FamilyTree<? extends Person> loadFamilyTree() {
         try {
             FamilyTree<Human> loadedTree = fileHandler.load(FILE_PATH);
             if (loadedTree != null) {

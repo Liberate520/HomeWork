@@ -1,7 +1,7 @@
 package family_tree.presenter;
 
+import family_tree.model.human.Person;
 import family_tree.model.human.Gender;
-import family_tree.model.human.Human;
 import family_tree.model.service.Service;
 import family_tree.view.View;
 import java.time.LocalDate;
@@ -41,11 +41,11 @@ public class Presenter {
         getHumanListInfo();
     }
 
-    public Human findHumanById(int id) {
+    public Person findHumanById(int id) {
         return service.findHumanById(id);
     }
 
-    public List<Human> findHumansByName(String name) {
+    public List<Person> findHumansByName(String name) {
         return service.findHumansByName(name);
     }
 

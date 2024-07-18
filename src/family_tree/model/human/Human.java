@@ -1,23 +1,22 @@
 package family_tree.model.human;
 
-import family_tree.model.family_tree1.ItemFamilyTree;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
+public class Human implements Serializable, Comparable<Human>, Person {
 
     private static int idCounter = 0;
     private final int id;
     private String name;
     private LocalDate dob, dod;
     private Gender gender;
-    private Human father, mother;
-    private List<Human> children;
+    private Person father, mother;
+    private List<Person> children;
 
     public Human(String name, LocalDate dob, LocalDate dod, Gender gender,
-                 Human father, Human mother, List<Human> children) {
+                 Human father, Human mother, List<Person> children) {
         this.id = ++idCounter;
         this.name = name;
         this.dob = dob;
@@ -41,56 +40,20 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public LocalDate getDod() {
-        return dod;
-    }
-
-    public void setDod(LocalDate dod) {
-        this.dod = dod;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public Human getFather() {
-        return father;
-    }
-
-    public void setFather(Human father) {
+    public void setFather(Person father) {
         this.father = father;
     }
 
-    public Human getMother() {
-        return mother;
-    }
-
-    public void setMother(Human mother) {
+    public void setMother(Person mother) {
         this.mother = mother;
     }
 
-    public List<Human> getChildren() {
+    public List<Person> getChildren() {
         return children;
-    }
-
-    public void setChildren(List<Human> children) {
-        this.children = children;
     }
 
     @Override

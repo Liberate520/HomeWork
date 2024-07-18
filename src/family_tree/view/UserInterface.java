@@ -1,7 +1,7 @@
 package family_tree.view;
 
 import family_tree.model.human.Gender;
-import family_tree.model.human.Human;
+import family_tree.model.human.Person;
 import family_tree.presenter.Presenter;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +12,6 @@ public class UserInterface implements View {
     private boolean work;
     private final Presenter presenter;
     private final MainMenu menu;
-
 
     public UserInterface() {
         scanner = new Scanner(System.in);
@@ -75,18 +74,18 @@ public class UserInterface implements View {
 
         try {
             int searchId = Integer.parseInt(searchInput);
-            Human human = presenter.findHumanById(searchId);
-            if (human != null) {
-                System.out.println("Найденный человек по ID:\n" + human);
+            Person person = presenter.findHumanById(searchId);
+            if (person != null) {
+                System.out.println("Найденный человек по ID:\n" + person);
             } else {
                 System.out.println("Человек с ID " + searchId + " не найден.");
             }
         } catch (NumberFormatException e) {
-            List<Human> humans = presenter.findHumansByName(searchInput);
-            if (!humans.isEmpty()) {
+            List<Person> persons = presenter.findHumansByName(searchInput);
+            if (!persons.isEmpty()) {
                 System.out.println("Найденные люди по имени:");
-                for (Human human : humans) {
-                    System.out.println(human);
+                for (Person person : persons) {
+                    System.out.println(person);
                 }
             } else {
                 System.out.println("Человек с именем " + searchInput + " не найден.");
