@@ -1,38 +1,28 @@
 package com.example.familytree.mvp;
 
-import com.example.familytree.BirthDateComparator;
 import com.example.familytree.FamilyTree;
-import com.example.familytree.NameComparator;
 import com.example.familytree.model.Person;
-import com.example.familytree.operations.FileOperations;
+import com.example.familytree.service.FamilyTreeService;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class FamilyTreePresenterImpl implements FamilyTreePresenter {
 
     private final FamilyTreeView view;
-    private FamilyTree<Person> familyTree;
-    private final FileOperations fileOps;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private final FamilyTreeService service;
 
-    public FamilyTreePresenterImpl(FamilyTreeView view, FileOperations fileOps) {
+    public FamilyTreePresenterImpl(FamilyTreeView view, FamilyTreeService service) {
         this.view = view;
-        this.familyTree = new FamilyTree<>();
-        this.fileOps = fileOps;
-    }
-
-    public void setFamilyTree(FamilyTree<Person> familyTree) {
-        this.familyTree = familyTree;
+        this.service = service;
     }
 
     @Override
     public void addPerson(int id, String name, String birthDateStr, String gender) {
         try {
-            LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);
+            LocalDate birthDate = LocalDate.parse(birthDateStr, FamilyTreeService.formatter);
             Person person = new Person(id, name, birthDate, gender);
-            familyTree.addMember(person);
+            service.addPerson(person);
             view.displayMessage("Человек добавлен: " + person);
         } catch (DateTimeParseException e) {
             view.displayMessage("Ошибка: неверный формат даты. Ожидается ДД-ММ-ГГГГ.");
@@ -43,43 +33,42 @@ public class FamilyTreePresenterImpl implements FamilyTreePresenter {
 
     @Override
     public void displayTree() {
-        view.displayTree(familyTree.getAllMembers());
+        view.displayTree(service.getFamilyTree().getAllMembers());
     }
 
     @Override
     public void sortByName() {
-        familyTree.sortBy(new NameComparator());
+        service.sortByName();
         view.displayMessage("Древо отсортировано по имени.");
     }
 
     @Override
     public void sortByBirthDate() {
-        familyTree.sortBy(new BirthDateComparator());
+        service.sortByBirthDate();
         view.displayMessage("Древо отсортировано по дате рождения.");
     }
 
     @Override
     public void saveToFile(String filename) {
-        fileOps.saveToFile(filename, familyTree);
+        service.saveToFile(filename);
     }
 
     @Override
     public void loadFromFile(String filename) {
-        familyTree = fileOps.loadFromFile(filename);
+        service.loadFromFile(filename);
     }
 
     @Override
     public void removePersonById(int id) {
-        familyTree.removeMemberById(id);
+        service.removePersonById(id);
         view.displayMessage("Человек удален: ID = " + id);
     }
 
     @Override
     public void changePersonId(int oldId, int newId) {
-        Person person = familyTree.findPersonById(oldId);
-        if (person != null) {
-            person.setId(newId);
-            view.displayMessage("ID человека изменен: " + person);
+        if (service.getFamilyTree().findPersonById(oldId) != null) {
+            service.changePersonId(oldId, newId);
+            view.displayMessage("ID человека изменен: ID = " + oldId + " на ID = " + newId);
         } else {
             view.displayMessage("Человек не найден: ID = " + oldId);
         }
@@ -87,19 +76,22 @@ public class FamilyTreePresenterImpl implements FamilyTreePresenter {
 
     @Override
     public void setParentChildRelation(int parentId, int childId) {
-        Person parent = familyTree.findPersonById(parentId);
-        Person child = familyTree.findPersonById(childId);
-        if (parent != null && child != null) {
-            parent.addChild(child);
+        if (service.getFamilyTree().findPersonById(parentId) != null && service.getFamilyTree().findPersonById(childId) != null) {
+            service.setParentChildRelation(parentId, childId);
             view.displayMessage("Связь родитель-ребенок установлена между ID " + parentId + " и ID " + childId);
             displayTree();
         } else {
-            if (parent == null) {
+            if (service.getFamilyTree().findPersonById(parentId) == null) {
                 view.displayMessage("Родитель с ID " + parentId + " не найден.");
             }
-            if (child == null) {
+            if (service.getFamilyTree().findPersonById(childId) == null) {
                 view.displayMessage("Ребенок с ID " + childId + " не найден.");
             }
         }
+    }
+
+    @Override
+    public void setFamilyTree(FamilyTree<Person> familyTree) {
+        service.setFamilyTree(familyTree);
     }
 }
