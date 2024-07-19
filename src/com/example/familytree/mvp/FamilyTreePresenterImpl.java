@@ -10,14 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class FamilyTreePresenterImpl implements
-        AddPersonPresenter,
-        DisplayTreePresenter,
-        SortTreePresenter,
-        FileOperationsPresenter,
-        RemovePersonPresenter,
-        ChangePersonIdPresenter,
-        RelationManagerPresenter {
+public class FamilyTreePresenterImpl implements FamilyTreePresenter {
 
     private final FamilyTreeView view;
     private FamilyTree<Person> familyTree;
@@ -28,6 +21,10 @@ public class FamilyTreePresenterImpl implements
         this.view = view;
         this.familyTree = new FamilyTree<>();
         this.fileOps = fileOps;
+    }
+
+    public void setFamilyTree(FamilyTree<Person> familyTree) {
+        this.familyTree = familyTree;
     }
 
     @Override
@@ -69,7 +66,6 @@ public class FamilyTreePresenterImpl implements
     @Override
     public void loadFromFile(String filename) {
         familyTree = fileOps.loadFromFile(filename);
-        view.displayMessage("Древо загружено из файла: " + filename);
     }
 
     @Override
@@ -96,6 +92,7 @@ public class FamilyTreePresenterImpl implements
         if (parent != null && child != null) {
             parent.addChild(child);
             view.displayMessage("Связь родитель-ребенок установлена между ID " + parentId + " и ID " + childId);
+            displayTree();
         } else {
             if (parent == null) {
                 view.displayMessage("Родитель с ID " + parentId + " не найден.");

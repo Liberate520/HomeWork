@@ -1,14 +1,19 @@
 package com.example.familytree.mvp;
 
 import com.example.familytree.model.Person;
+
 import java.util.List;
 import java.util.Scanner;
 
-public class FamilyTreeView {
-    private Scanner scanner;
+public abstract class FamilyTreeView {
+    private final Scanner scanner;
 
     public FamilyTreeView() {
         scanner = new Scanner(System.in);
+    }
+
+    public Scanner getScanner() {
+        return scanner;
     }
 
     public int getPersonIdInput() {
@@ -27,7 +32,7 @@ public class FamilyTreeView {
     }
 
     public String getPersonGenderInput() {
-        System.out.print("Введите пол: ");
+        System.out.print("Введите пол (муж/жен): ");
         return scanner.nextLine();
     }
 
@@ -41,27 +46,9 @@ public class FamilyTreeView {
         return Integer.parseInt(scanner.nextLine());
     }
 
+    public abstract void displayTree(List<Person> members);
+
     public void displayMessage(String message) {
         System.out.println(message);
-    }
-
-    public void displayTree(List<Person> tree) {
-        for (Person person : tree) {
-            System.out.println("ID: " + person.getId() + " Имя: " + person.getName() +
-                    " Дата рождения: " + person.getBirthDate() +
-                    " Пол: " + person.getGender() +
-                    " Возраст: " + person.getAge());
-
-            List<Person> children = person.getChildren();
-            if (!children.isEmpty()) {
-                System.out.println("Дети:");
-                for (Person child : children) {
-                    System.out.println("  - " + child.getName() + " (ID: " + child.getId() + ")");
-                }
-            } else {
-                System.out.println("Дети: нет");
-            }
-
-        }
     }
 }
