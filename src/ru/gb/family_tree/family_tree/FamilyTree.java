@@ -1,50 +1,60 @@
 package ru.gb.family_tree.family_tree;
 
-import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.iterator.FamilyTreeIterator;
+import ru.gb.family_tree.comparators.ItemComparatorByAge;
+import ru.gb.family_tree.comparators.ItemComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> humans;
+public class FamilyTree<E extends ElementFamilyTree<E>> implements Serializable, Iterable<E> {
+    private List<E> elements;
 
     public FamilyTree() {
-        humans = new ArrayList<>();
+        elements = new ArrayList<>();
     }
 
-    public Human getReadName(String nameHuman) {
-        for (Human human : humans) {
-            if (human.getName().equals(nameHuman)) {
-                return human;
+    public E getReadName(String nameElement) {
+        for (E element : elements) {
+            if (element.getName().equals(nameElement)) {
+                return element;
             }
         }
         return null;
     }
 
-    public void addHuman(Human human) {
-        humans.add(human);
+    public void addElement(E element) {
+        elements.add(element);
     }
 
-    public List<Human> getHumans() {
-        return humans;
+    public List<E> getElements() {
+        return elements;
+    }
+
+    public void sortByName() {
+        Collections.sort(elements, new ItemComparatorByName<>());
+    }
+
+    public void sortByAge() {
+        Collections.sort(elements, new ItemComparatorByAge<>());
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Список людей:");
-        for (Human human : humans) {
+        stringBuilder.append("Список элементов:");
+        for (E element : elements) {
             stringBuilder.append("\n\n");
-            stringBuilder.append(human.getBasicInfo());
+            stringBuilder.append(element.getBasicInfo());
         }
         return stringBuilder.toString();
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humans);
+    public Iterator<E> iterator() {
+        return new FamilyTreeIterator<>(elements);
     }
 }

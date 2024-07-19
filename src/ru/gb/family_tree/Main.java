@@ -5,16 +5,13 @@ import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.writer.Writer;
 import ru.gb.family_tree.writer.FileHandler;
-import ru.gb.family_tree.comparators.HumanComparatorByAge;
-import ru.gb.family_tree.comparators.HumanComparatorByName;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         Human human1 = new Human(1, "Семёнов Петр Игоревич", LocalDate.of(1965, 8, 16), Gender.Male, null, null);
         Human human2 = new Human(2, "Тарасов Виктор Алексеевич", LocalDate.of(1974, 1, 6), Gender.Male, null, null);
@@ -27,14 +24,14 @@ public class Main {
         human3.addChild(human4);
         human3.addChild(human5);
 
-        familyTree.addHuman(human1);
-        familyTree.addHuman(human2);
-        familyTree.addHuman(human3);
-        familyTree.addHuman(human4);
-        familyTree.addHuman(human5);
+        familyTree.addElement(human1);
+        familyTree.addElement(human2);
+        familyTree.addElement(human3);
+        familyTree.addElement(human4);
+        familyTree.addElement(human5);
 
         // Укажите абсолютный путь
-        String filePath = "C:\\GeekBrains\\htmlcssseminar\\JavaOOPwork\\homeWork\\src\\familytreebase.txt";
+        String filePath = "familytreebase.txt";
         Writer writer = new FileHandler(filePath);
 
         try {
@@ -46,12 +43,11 @@ public class Main {
             }
 
             // Чтение семейного древа из файла
-            FamilyTree readFamilyTree = (FamilyTree) writer.readFromFile();
+            FamilyTree<Human> readFamilyTree = (FamilyTree<Human>) writer.readFromFile();
             System.out.println("Данные успешно считаны из файла: " + filePath);
 
             // Сортировка по имени
-            Collections.sort(readFamilyTree.getHumans(), new HumanComparatorByName());
-            System.out.println("______________________________");
+            readFamilyTree.sortByName();
             System.out.println("Семейное древо (отсортировано по имени):");
             for (Human human : readFamilyTree) {
                 System.out.println("______________________________");
@@ -62,14 +58,14 @@ public class Main {
                 System.out.println();
                 System.out.println("Отец: " + (human.getFather() != null ? "\n" + human.getFather().getBasicInfo() : "неизвестно"));
                 System.out.println();
-                System.out.println("Дети: " + human.getChildrenAsString());
+                System.out.println("Дети: " + human.getChildrenInfo());
                 System.out.println();
             }
             System.out.println("______________________________");
 
             // Сортировка по возрасту
-            Collections.sort(readFamilyTree.getHumans(), new HumanComparatorByAge());
-            System.out.println("Семейное древо (отсортировано по убыванию возраста):");
+            readFamilyTree.sortByAge();
+            System.out.println("Семейное древо (отсортировано по возрасту):");
             for (Human human : readFamilyTree) {
                 System.out.println("______________________________");
                 System.out.println("Семейное древо: ");
@@ -79,7 +75,7 @@ public class Main {
                 System.out.println();
                 System.out.println("Отец: " + (human.getFather() != null ? "\n" + human.getFather().getBasicInfo() : "неизвестно"));
                 System.out.println();
-                System.out.println("Дети: " + human.getChildrenAsString());
+                System.out.println("Дети: " + human.getChildrenInfo());
                 System.out.println();
             }
             System.out.println("______________________________");

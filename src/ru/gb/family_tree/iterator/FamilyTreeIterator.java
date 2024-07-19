@@ -1,26 +1,26 @@
 package ru.gb.family_tree.iterator;
 
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.family_tree.ElementFamilyTree;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator implements Iterator<Human> {
+public class FamilyTreeIterator<E extends ElementFamilyTree<E>> implements Iterator<E> {
     private int index;
-    private List<Human> humans;
+    private List<E> itemList;
 
-    public FamilyTreeIterator(List<Human> humans) {
-        this.humans = humans;
+    public FamilyTreeIterator(List<E> itemList) {
+        this.itemList = itemList;
         this.index = 0;
     }
 
     @Override
     public boolean hasNext() {
-        return index < humans.size();
+        return index < itemList.size();
     }
 
     @Override
-    public Human next() {
-        return humans.get(index++);
+    public E next() {
+        return itemList.get(index++);
     }
 }
