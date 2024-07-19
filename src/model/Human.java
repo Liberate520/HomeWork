@@ -5,14 +5,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable{
+public class Human implements FamilyMember, Serializable{
 
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private List<Human> children;
-    private List<Human> parents;
+    private List<FamilyMember> children;
+    private List<FamilyMember> parents;
     //private List<Relationship> relationships;
 
     public Human(String name, Gender gender, LocalDate birthDate) {
@@ -41,11 +41,11 @@ public class Human implements Serializable{
         return deathDate;
     }
 
-    public List<Human> getChildren() {
+    public List<FamilyMember> getChildren() {
         return children;
     }
 
-    public List<Human> getParents() {
+    public List<FamilyMember> getParents() {
         return parents;
     }
 
@@ -61,16 +61,16 @@ public class Human implements Serializable{
         this.deathDate = deathDate;
     }
 
-    public void setParents(List<Human> parents) {
+    public void setParents(List<FamilyMember> parents) {
         this.parents = parents;
     }
 
-    public void addChild(Human child) {
+    public void addChild(FamilyMember child) {
         children.add(child);
         child.addParent(this);
     }
 
-    public void addParent(Human parent) {
+    public void addParent(FamilyMember parent) {
         if (parents.size() < 2) {
             parents.add(parent);
         }

@@ -1,6 +1,4 @@
-import model.FamilyTree;
-import model.Gender;
-import model.Human;
+import model.*;
 import service.FamilyTreeService;
 
 import java.io.*;
@@ -8,14 +6,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException{
+    public static void main(String[] args){
         Human mariya = new Human("Mariya", Gender.FEMALE, LocalDate.of(1980, 1, 1));
         Human pyotr = new Human("Pyotr", Gender.MALE, LocalDate.of(1981, 2, 2));
         Human alisa = new Human("Alisa", Gender.FEMALE, LocalDate.of(2005, 3, 3));
         Human vladimir = new Human("Vladimir", Gender.MALE, LocalDate.of(2008, 4, 4));
 
-        FamilyTree tree = new FamilyTree();
+        FamilyTree<Human> tree = new FamilyTree<>();
         tree.addMember(mariya);
         tree.addMember(pyotr);
         tree.addMember(alisa);
@@ -23,7 +20,6 @@ public class Main {
 
         pyotr.addChild(alisa);
         pyotr.addChild(vladimir);
-
         mariya.addChild(alisa);
         mariya.addChild(vladimir);
 
@@ -48,63 +44,28 @@ public class Main {
             System.out.println(parent);
         }
 
-        // Сериализация в файл с помощью класса ObjectOutputStream
+        // Serialization to file using ObjectOutputStream
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
                 new FileOutputStream("human.out"))) {
-            objectOutputStream.writeObject(mariya);
-            objectOutputStream.writeObject(pyotr);
-            objectOutputStream.writeObject(alisa);
-            objectOutputStream.writeObject(vladimir);
+            objectOutputStream.writeObject(tree);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Восстановление из файла с помощью класса ObjectInputStream
+        // Deserialization from file using ObjectInputStream
+        FamilyTree<Human> treeRestored;
         try (ObjectInputStream objectInputStream = new ObjectInputStream(
                 new FileInputStream("human.out"))) {
-            Human mariyaRestored = (Human) objectInputStream.readObject();
-            Human pyotrRestored = (Human) objectInputStream.readObject();
-            Human alisaRestored = (Human) objectInputStream.readObject();
-            Human vladimirRestored = (Human) objectInputStream.readObject();
-
-            FamilyTree treeRestored = new FamilyTree();
-            treeRestored.addMember(mariyaRestored);
-            treeRestored.addMember(pyotrRestored);
-            treeRestored.addMember(alisaRestored);
-            treeRestored.addMember(vladimirRestored);
-
-            pyotrRestored.addChild(alisaRestored);
-            pyotrRestored.addChild(vladimirRestored);
-
-            mariyaRestored.addChild(alisaRestored);
-            mariyaRestored.addChild(vladimirRestored);
-
-            System.out.println("Family Tree Restored:");
-            System.out.println(treeRestored);
-
-            System.out.println("Children of Pyotr Restored:");
-            List<Human> pyotrRestoredChildren = treeRestored.getChildrenOf("Pyotr");
-            for (Human child : pyotrRestoredChildren) {
-                System.out.println(child);
-            }
-
-            System.out.println("Children of Mariya Restored:");
-            List<Human> mariyaRestoredChildren = treeRestored.getChildrenOf("Mariya");
-            for (Human child : mariyaRestoredChildren) {
-                System.out.println(child);
-            }
-
-            System.out.println("Parents of Alisa Restored:");
-            List<Human> alisaRestoredParents = treeRestored.getParentsOf("Alisa");
-            for (Human parent : alisaRestoredParents) {
-                System.out.println(parent);
-            }
-
+            treeRestored = (FamilyTree<Human>) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return;
         }
 
-        FamilyTreeService service = new FamilyTreeService();
+        System.out.println("Family Tree Restored:");
+        System.out.println(treeRestored);
+
+        FamilyTreeService<Human> service = new FamilyTreeService<>();
         service.sortByName(tree);
         System.out.println("Sorted by name:");
         for (Human human : tree) {

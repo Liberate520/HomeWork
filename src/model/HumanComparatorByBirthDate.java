@@ -2,9 +2,9 @@ package model;
 
 import java.util.Comparator;
 
-public class HumanComparatorByBirthDate implements Comparator<Human> {
+public class HumanComparatorByBirthDate <T extends FamilyMember> implements Comparator<T> {
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(T o1, T o2) {
         return o1.getBirthDate().compareTo(o2.getBirthDate());
     }
 }
