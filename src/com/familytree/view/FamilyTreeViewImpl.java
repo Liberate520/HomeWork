@@ -7,26 +7,18 @@ import java.util.List;
 public class FamilyTreeViewImpl implements FamilyTreeView {
 
     @Override
-    public void showChildren(List<Human> children) {
-        System.out.println("Children:");
-        for (Human child : children) {
-            System.out.println(child);
+    public void showPeople(List<Human> people) {
+        if (people.isEmpty()) {
+            System.out.println("No people found.");
+        } else {
+            for (Human person : people) {
+                System.out.println(person);
+            }
         }
     }
 
     @Override
-    public void showPeopleSortedByName(List<Human> people) {
-        System.out.println("\nPeople sorted by name:");
-        for (Human person : people) {
-            System.out.println(person);
-        }
-    }
-
-    @Override
-    public void showPeopleSortedByBirthDate(List<Human> people) {
-        System.out.println("\nPeople sorted by birth date:");
-        for (Human person : people) {
-            System.out.println(person);
-        }
+    public void showError(String message) {
+        System.out.println("Error: " + message);
     }
 }

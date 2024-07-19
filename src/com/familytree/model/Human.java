@@ -1,10 +1,11 @@
 package com.familytree.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements FamilyMember<Human> {
+public class Human implements Serializable {
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -20,17 +21,14 @@ public class Human implements FamilyMember<Human> {
         this.children = new ArrayList<>();
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    @Override
     public LocalDate getDeathDate() {
         return deathDate;
     }
@@ -39,34 +37,28 @@ public class Human implements FamilyMember<Human> {
         return gender;
     }
 
-    @Override
     public Human getFather() {
         return father;
     }
 
-    @Override
     public Human getMother() {
         return mother;
     }
 
-    @Override
-    public void setMother(Human mother) {
-        this.mother = mother;
+    public List<Human> getChildren() {
+        return children;
     }
 
-    @Override
     public void setFather(Human father) {
         this.father = father;
     }
 
-    @Override
-    public void addChild(Human child) {
-        this.children.add(child);
+    public void setMother(Human mother) {
+        this.mother = mother;
     }
 
-    @Override
-    public List<Human> getChildren() {
-        return children;
+    public void addChild(Human child) {
+        this.children.add(child);
     }
 
     @Override

@@ -2,22 +2,24 @@ package com.familytree.presenter;
 
 import com.familytree.FamilyTree;
 import com.familytree.model.Gender;
-import com.familytree.model.Human;
+import com.familytree.utils.FamilyTreeSerializer;
 import com.familytree.view.FamilyTreeView;
+import com.familytree.model.Human;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class FamilyTreePresenter {
-    private FamilyTree<Human> familyTree;
+    private FamilyTree familyTree;
     private FamilyTreeView view;
 
     public FamilyTreePresenter(FamilyTreeView view) {
         this.view = view;
-        this.familyTree = new FamilyTree<>();
+        this.familyTree = new FamilyTree();
     }
 
-    public void addPerson(String name, LocalDate birthDate, Gender gender) {
-        familyTree.addPerson(new Human(name, birthDate, gender));
+    public void addPerson(String name, LocalDate dob, Gender gender) {
+        familyTree.addPerson(name, dob, gender);
     }
 
     public void setParents(String childName, String motherName, String fatherName) {
@@ -25,14 +27,30 @@ public class FamilyTreePresenter {
     }
 
     public void showChildren(String personName) {
-        view.showChildren(familyTree.getChildren(personName));
+        List<Human> children = familyTree.getChildren(personName);
+        view.showPeople(children);
     }
 
     public void showPeopleSortedByName() {
-        view.showPeopleSortedByName(familyTree.getPeopleSortedByName());
+        List<Human> people = familyTree.getPeopleSortedByName();
+        view.showPeople(people);
     }
 
     public void showPeopleSortedByBirthDate() {
-        view.showPeopleSortedByBirthDate(familyTree.getPeopleSortedByBirthDate());
+        List<Human> people = familyTree.getPeopleSortedByBirthDate();
+        view.showPeople(people);
+    }
+
+    public void saveFamilyTree(String filename) {
+        FamilyTreeSerializer.saveToFile(familyTree, filename);
+    }
+
+    public void loadFamilyTree(String filename) {
+        FamilyTree loadedFamilyTree = FamilyTreeSerializer.loadFromFile(filename);
+        if (loadedFamilyTree != null) {
+            this.familyTree = loadedFamilyTree;
+        } else {
+            view.showError("Failed to load family tree.");
+        }
     }
 }
