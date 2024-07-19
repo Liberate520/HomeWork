@@ -61,6 +61,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Имя: " + name + ", Год рождения: " + birthYear;
+        return "Имя: " + name + ", Год рождения: " + birthYear + " Пол: " + gender;
     }
 }

@@ -3,11 +3,11 @@ public class Main {
 
         GenealogyTree genealogyTree = new GenealogyTree();
 
-        Person person1 = new Person("Сергей", 1964, Gender.Male);
-        Person person2 = new Person("Светлана", 1964, Gender.Female);
-        Person person3 = new Person("Алексей", 1985, Gender.Male);
-        Person person4 = new Person("Никита", 1993, Gender.Male);
-        Person person5 = new Person("Мия", 2022, Gender.Female);
+        Person person1 = new Person("Сергей", 1964, Gender.мужской);
+        Person person2 = new Person("Светлана", 1964, Gender.женский);
+        Person person3 = new Person("Алексей", 1985, Gender.мужской);
+        Person person4 = new Person("Никита", 1993, Gender.мужской);
+        Person person5 = new Person("Мия", 2022, Gender.женский);
 
         genealogyTree.addPerson(person1);
         genealogyTree.addPerson(person2);
