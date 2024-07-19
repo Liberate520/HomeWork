@@ -13,7 +13,7 @@ public class Main {
         genealogyTree.addPerson(person3);
         genealogyTree.addPerson(person4);
 
-        // Set parent-child relationships
+
         person3.setFather(person1);
         person3.setMother(person2);
         person4.setFather(person1);
