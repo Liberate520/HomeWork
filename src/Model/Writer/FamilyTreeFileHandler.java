@@ -1,31 +1,32 @@
 package Writer;
 
+import FamilyTree.FamilyTree;
 import java.io.*;
 
 public class FamilyTreeFileHandler implements Writer {
     private String path;
 
     @Override
-    public void save(Serializable serializable) {
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @Override
+    public void save(FamilyTree<?> tree) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(serializable);
+            oos.writeObject(tree);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public Object read() {
+    public FamilyTree<?> read() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
-            return ois.readObject();
+            return (FamilyTree<?>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
         }
-    }
-
-    @Override
-    public void setPath(String path) {
-        this.path = path;
+        return null;
     }
 }

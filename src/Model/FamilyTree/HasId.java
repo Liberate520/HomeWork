@@ -1,10 +1,10 @@
 package FamilyTree;
 
-import java.util.List;
 import java.time.LocalDate;
 
-public interface HasChildren<T> {
-    List<T> getChildren();
+public interface HasId {
+    int getId();
     String getName();
     LocalDate getBirthDate();
+    int getAge();
 }

@@ -1,13 +1,15 @@
 import java.time.LocalDate;
-import FamilyTree.FamilyTree;
 import Human.Gender;
+import FamilyTree.FamilyTree;
 import Human.Human;
-import Writer.FamilyTreeFileHandler;
-import Writer.Writer;
+import Presenter.FamilyTreePresenter;
+import View.ConsoleFamilyTreeView;
+import View.FamilyTreeView;
 
 public class Main {
     public static void main(String[] args) {
-        // Создание объектов людей
+
+         // Создание объектов людей
         Human grandfather = new Human(1, "Алексей Петров", LocalDate.of(1940, 1, 1), null, Gender.Male, null, null);
         Human grandmother = new Human(2, "Екатерина Петрова", LocalDate.of(1945, 1, 1), null, Gender.Female, null, null);
         Human father = new Human(3, "Иван Петров", LocalDate.of(1965, 1, 1), null, Gender.Male, grandfather, grandmother);
@@ -47,42 +49,17 @@ public class Main {
         familyTree.addElement(child2);
         familyTree.addElement(cousin1);
         familyTree.addElement(cousin2);
+        
+        // FamilyTree<Human> familyTree = new FamilyTree<>();
+        // FamilyTreeView view = new ConsoleFamilyTreeView(); // Инициализация без презентера
+        // FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view);
+        // view.setPresenter(presenter);  // Установка презентера в представление
+        // view.showMenu();
 
-        Writer fileHandler = new FamilyTreeFileHandler();
-        String filename = "familyTree.txt";
-        fileHandler.setPath(filename);
-
-
-        // Печать всего дерева
-        familyTree.printTree();
-
-        // // Сохранение дерева в файл
-        // fileHandler.save(familyTree);
-        // System.out.println("Дерево сохранено в файл: " + filename);
-
-        // // Загрузка дерева из файла
-        // FamilyTree<Human> loadedTree = null;
-        // try {
-        //     loadedTree = (FamilyTree<Human>) fileHandler.read();
-        // } catch (ClassCastException e) {
-        //     e.printStackTrace();
-        // }
-
-        // System.out.println("Дерево загружено из файла:");
-
-        // // Вывод загруженного дерева
-        // if (loadedTree != null) {
-        //     // Сортировка по имени
-        //     loadedTree.sortByName();
-        //     System.out.println("Сортировка по имени:");
-        //     loadedTree.printTree();
-
-            // // Сортировка по дате рождения
-            // loadedTree.sortByBirthDate();
-            // System.out.println("Сортировка по дате рождения:");
-            // loadedTree.printTree();
-        // } else {
-        //     System.out.println("Не удалось загрузить дерево.");
-        // }
+        // Создание представления и презентера
+        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, null);
+        FamilyTreeView view = new ConsoleFamilyTreeView(presenter); // Передача презентера в конструктор
+        presenter.setView(view); // Установка view в презентер
+        view.showMenu();
     }
 }
