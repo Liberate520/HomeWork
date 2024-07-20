@@ -1,11 +1,12 @@
 package familytree.main;
 
-import familytree.ui.UserInterface;
+import familytree.presenter.FamilyTreePresenter;
+import familytree.view.ConsoleFamilyTreeView;
 
 public class Main {
     public static void main(String[] args) {
-        UserInterface ui = new UserInterface();
-        ui.start();
+        ConsoleFamilyTreeView view = new ConsoleFamilyTreeView();
+        FamilyTreePresenter presenter = new FamilyTreePresenter(view);
+        presenter.start();
     }
 }
-

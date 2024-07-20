@@ -3,66 +3,31 @@ package familytree.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Comparator;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
-    private List<Person> people;
+public class FamilyTree<T extends Serializable> implements Serializable, Iterable<T> {
+    private List<T> nodes;
 
     public FamilyTree() {
-        this.people = new ArrayList<>();
+        this.nodes = new ArrayList<>();
     }
 
-    public void addPerson(Person person) {
-        this.people.add(person);
+    public void addNode(T node) {
+        this.nodes.add(node);
     }
 
-    public List<Person> getPeople() {
-        return people;
-    }
-
-    public Person findPersonByName(String name) {
-        for (Person person : people) {
-            if (person.getName().equals(name)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public void displayTree() {
-        for (Person person : people) {
-            displayPerson(person, 0);
-        }
-    }
-
-    private void displayPerson(Person person, int level) {
-        for (int i = 0; i < level; i++) {
-            System.out.print("  ");
-        }
-        System.out.println(person.getName());
-        for (Person child : person.getChildren()) {
-            displayPerson(child, level + 1);
-        }
+    public List<T> getNodes() {
+        return nodes;
     }
 
     @Override
-    public Iterator<Person> iterator() {
-        return people.iterator();
+    public Iterator<T> iterator() {
+        return nodes.iterator();
     }
 
-    // Methods for sorting
-    public void sortByName() {
-        people.sort(Comparator.comparing(Person::getName));
-    }
-
-    public void sortByBirthDate() {
-        people.sort(Comparator.comparing(Person::getBirthDate));
-    }
-
-    public void addNode(Person person) {
-
+    public void sortBy(Comparator<T> comparator) {
+        Collections.sort(nodes, comparator);
     }
 }
-

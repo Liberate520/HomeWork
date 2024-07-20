@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class UserInterface {
-    private FamilyTree familyTree;
+    private FamilyTree<Person> familyTree;
     private FamilyTreeIO familyTreeIO;
     private Scanner scanner;
 
@@ -92,11 +92,11 @@ public class UserInterface {
     }
 
     private void sortByName() {
-        familyTree.sortByName();
+        Person.sortByName();
     }
 
     private void sortByBirthDate() {
-        familyTree.sortByBirthDate();
+        Person.sortByBirthDate();
     }
 
     private void saveTree() {
@@ -114,7 +114,7 @@ public class UserInterface {
         System.out.print("Введите имя файла для загрузки: ");
         String fileName = scanner.nextLine().trim();
         try {
-            familyTree = familyTreeIO.readFromFile(fileName);
+            familyTree = (FamilyTree) familyTreeIO.readFromFile(fileName);
             System.out.println("Дерево загружено из " + fileName);
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Ошибка при загрузке дерева: " + e.getMessage());

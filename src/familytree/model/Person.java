@@ -3,9 +3,10 @@ package familytree.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class Person implements Serializable, Comparable<Person> {
+public class Person implements Serializable {
     private String name;
     private String gender;
     private LocalDate birthDate;
@@ -22,68 +23,52 @@ public class Person implements Serializable, Comparable<Person> {
         this.children = new ArrayList<>();
     }
 
-    // Getters and setters
-
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public LocalDate getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public LocalDate getDeathDate() {
         return deathDate;
     }
 
-    public void setDeathDate(LocalDate deathDate) {
-        this.deathDate = deathDate;
-    }
-
     public Person getMother() {
         return mother;
-    }
-
-    public void setMother(Person mother) {
-        this.mother = mother;
     }
 
     public Person getFather() {
         return father;
     }
 
-    public void setFather(Person father) {
-        this.father = father;
-    }
-
     public List<Person> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Person> children) {
-        this.children = children;
+    public void addChild(Person child) {
+        this.children.add(child);
     }
 
-    @Override
-    public int compareTo(Person other) {
-        return this.name.compareTo(other.name);
+    public void setMother(Person mother) {
+        this.mother = mother;
+    }
+
+    public void setFather(Person father) {
+        this.father = father;
+    }
+
+    // Static methods for sorting
+    public static Comparator<Person> sortByName() {
+        return Comparator.comparing(Person::getName);
+    }
+
+    public static Comparator<Person> sortByBirthDate() {
+        return Comparator.comparing(Person::getBirthDate);
     }
 }
-

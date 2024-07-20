@@ -1,12 +1,8 @@
 package familytree.io;
 
-
-import familytree.model.FamilyTree;
-
 import java.io.IOException;
 
-public interface FamilyTreeIO {
-    void writeToFile(FamilyTree familyTree, String fileName) throws IOException;
-    FamilyTree readFromFile(String fileName) throws IOException, ClassNotFoundException;
+public interface FamilyTreeIO<T> {
+    void writeToFile(T object, String fileName) throws IOException;
+    T readFromFile(String fileName) throws IOException, ClassNotFoundException;
 }
-
