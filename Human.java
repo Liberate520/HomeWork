@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Human {
     private List<Human> parents;
     private List<Human> children;
 
-    Human(String name, Gender gender, int yearOfBirth, int monthOfBirth, int dayOfBirth) {
+    public Human(String name, Gender gender, int yearOfBirth, int monthOfBirth, int dayOfBirth) {
         this.id = count;
         count++;
         this.name = name;
@@ -21,7 +22,7 @@ public class Human {
         this.dateOfBirth = LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
     }
 
-    Human() {
+    public Human() {
         this.id = count;
         count++;
     }
@@ -35,9 +36,11 @@ public class Human {
 
         if (this.dateOfDeath == null) {
             LocalDate now = LocalDate.now();
-            age = now.compareTo(this.dateOfBirth);
+            Period diff = Period.between(dateOfBirth, now);
+            age = diff.getYears();
         } else {
-            age = dateOfDeath.compareTo(dateOfBirth);
+            Period diff = Period.between(dateOfBirth, dateOfDeath);
+            age = diff.getYears();
         }
 
         return age;

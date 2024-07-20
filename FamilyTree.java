@@ -4,7 +4,7 @@ import java.util.List;
 public class FamilyTree {
     private List<Human> familyTree;
 
-    FamilyTree() {
+    public FamilyTree() {
         familyTree = new ArrayList<>();
     }
 
