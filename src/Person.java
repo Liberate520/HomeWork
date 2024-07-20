@@ -1,18 +1,18 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
-
     private String name;
-    private int birthYear;
+    private LocalDate birthDate;
     private Gender gender;
     private Person father;
     private Person mother;
     private List<Person> children;
 
-    public Person(String name, int birthYear, Gender gender) {
+    public Person(String name, LocalDate birthDate, Gender gender) {
         this.name = name;
-        this.birthYear = birthYear;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.children = new ArrayList<>();
     }
@@ -21,8 +21,8 @@ public class Person {
         return name;
     }
 
-    public int getBirthYear() {
-        return birthYear;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     public Gender getGender() {
@@ -61,6 +61,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Имя: " + name + ", Год рождения: " + birthYear + " Пол: " + gender;
+        return "Имя: " + name + ", Дата рождения: " + birthDate + ", Пол: " + gender;
     }
 }

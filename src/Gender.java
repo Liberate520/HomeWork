@@ -1,3 +1,3 @@
-public enum Gender {
-    мужской, женский
+enum Gender {
+    MALE, FEMALE
 }

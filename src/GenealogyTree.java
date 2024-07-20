@@ -12,14 +12,18 @@ class GenealogyTree {
         persons.add(person);
     }
 
-    public void printTree() {
+    @Override
+    public String toString() {
+        StringBuilder treeString = new StringBuilder();
         for (Person person : persons) {
-            System.out.println(person);
-            System.out.println("Отец: " + (person.getFather() != null ? person.getFather().getName() : ""));
-            System.out.println("Мать: " + (person.getMother() != null ? person.getMother().getName() : ""));
-            System.out.println("Дети: " + formatChildrenList(person.getChildren()));
-            System.out.println();
+            treeString.append("Имя: ").append(person.getName()).append(", ");
+            treeString.append("Год рождения: ").append(person.getBirthDate()).append(", ");
+            treeString.append("Пол: ").append(person.getGender()).append("\n");
+            treeString.append("Отец: ").append(person.getFather() != null ? person.getFather().getName() : "").append("\n");
+            treeString.append("Мать: ").append(person.getMother() != null ? person.getMother().getName() : "").append("\n");
+            treeString.append("Дети: ").append(formatChildrenList(person.getChildren())).append("\n\n");
         }
+        return treeString.toString();
     }
 
     private String formatChildrenList(List<Person> children) {
