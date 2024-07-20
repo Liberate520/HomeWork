@@ -1,11 +1,11 @@
-package service;
+package model.service;
 
 import java.time.LocalDate;
 
-import builder.HumanBuilder;
-import family_tree.FamilyTree;
-import human.Gender;
-import human.Human;
+import model.family_tree.FamilyTree;
+import model.human.Gender;
+import model.human.Human;
+import model.builder.HumanBuilder;
 
 public class Service {
     private HumanBuilder humanBuilder;
@@ -19,6 +19,10 @@ public class Service {
     public void addHuman(String name, Gender gender, LocalDate dateOfBirth){
         Human human = humanBuilder.build(name, gender, dateOfBirth);
         familyTree.addHuman(human);
+    }
+
+    public Human getHuman(int idHuman){
+        return familyTree.getHuman(idHuman);
     }
 
     public void setMother(int idChildren, int idMother){
@@ -39,8 +43,8 @@ public class Service {
         parent.setChildren(children);
     }
 
-    public void setDateOfDeath(int id, LocalDate dateOfDeath) {
-        Human human = familyTree.getHuman(id);
+    public void setDateOfDeath(int idHuman, LocalDate dateOfDeath) {
+        Human human = familyTree.getHuman(idHuman);
         human.setDateOfDeath(dateOfDeath);
     }
 
@@ -59,6 +63,27 @@ public class Service {
             stringBuilder.append("\n");
             stringBuilder.append(human);
             stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getFamilyTreeHuman(int idHuman){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Семейное дерево:\n");
+        stringBuilder.append("\n");
+        for (Human human: familyTree){
+            if (idHuman == human.getId()){
+                stringBuilder.append(human);
+                stringBuilder.append("\n\n");
+                stringBuilder.append("Мать:\n");
+                stringBuilder.append(human.getMother());
+                stringBuilder.append("\n\n");
+                stringBuilder.append("Отец:\n");
+                stringBuilder.append(human.getFather());
+                stringBuilder.append("\n\n");
+                stringBuilder.append("Дети:\n");
+                stringBuilder.append(human.getChildren());
+            } 
         }
         return stringBuilder.toString();
     }
