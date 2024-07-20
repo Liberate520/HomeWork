@@ -1,52 +1,39 @@
 package ru.gb.family_tree;
 
+import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.human.Human;
+
+import java.time.LocalDate;
+
 public class Main {
-    public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
-        fillingFamilyTree(familyTree);
-        System.out.println(familyTree.toString());
+    public static void main(String[] args){
+        FamilyTree tree = testTree();
+
+        System.out.println(tree);
     }
 
-    public static void fillingFamilyTree(FamilyTree familyTree) {
-        Human grandfather1 = new Human("Герман", Gender.Male, 1935, 1, 1);
-        Human grandmother1 = new Human("Валентина", Gender.Female, 1934, 9, 25);
+    private static FamilyTree testTree(){
+        FamilyTree tree = new FamilyTree();
 
-        grandfather1.setSpouse(grandmother1);
-        grandmother1.setSpouse(grandfather1);
+        Human nikolay = new Human("Николай", Gender.Male, LocalDate.of(1963, 3, 26 ));
+        Human nadezhda = new Human("Надежда", Gender.Female, LocalDate.of(1961, 11, 13));
 
-        Human grandfather2 = new Human("Павел", Gender.Male, 1940, 10, 12);
-        Human grandmother2 = new Human("Мария", Gender.Female, 1939, 7, 21);
+        tree.add(nikolay);
+        tree.add(nadezhda);
+        tree.setWedding(nikolay, nadezhda);
 
-        grandfather2.setSpouse(grandmother2);
-        grandmother2.setSpouse(grandfather2);
+        Human anton = new Human("Антон", Gender.Male, LocalDate.of(1985, 7, 21), nikolay, nadezhda);
+        tree.add(anton);
 
-        Human father = new Human("Николай", Gender.Male, 1963, 3, 23);
-        father.setParents(grandfather1, grandmother1);
+        Human grandMother = new Human("Валентина", Gender.Female, LocalDate.of(1945, 9, 1));
+        grandMother.addChild(nikolay);
 
-        grandfather1.setChild(father);
-        grandmother1.setChild(father);
+        Human grandMother1 = new Human("Мария", Gender.Female, LocalDate.of(1940, 10, 12));
+        grandMother1.addChild(nadezhda);
 
-        Human mother = new Human("Надежда", Gender.Female, 1961, 11, 11);
-        mother.setParents(grandfather2, grandmother2);
-
-        grandfather2.setChild(mother);
-        grandmother2.setChild(mother);
-
-        father.setSpouse(mother);
-        mother.setSpouse(father);
-
-        Human child = new Human("Антон", Gender.Male, 1985, 7, 21);
-        child.setParents(father, mother);
-
-        father.setChild(child);
-        mother.setChild(child);
-
-        familyTree.addHuman(grandfather1);
-        familyTree.addHuman(grandmother1);
-        familyTree.addHuman(grandfather2);
-        familyTree.addHuman(grandmother2);
-        familyTree.addHuman(father);
-        familyTree.addHuman(mother);
-        familyTree.addHuman(child);
+        tree.add(grandMother);
+        tree.add(grandMother1);
+        return tree;
     }
 }
