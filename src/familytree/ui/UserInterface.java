@@ -11,11 +11,11 @@ import java.util.Scanner;
 
 public class UserInterface {
     private FamilyTree<Person> familyTree;
-    private FamilyTreeIO familyTreeIO;
-    private Scanner scanner;
+    private final FamilyTreeIO<FamilyTree<Person>> familyTreeIO;
+    private final Scanner scanner;
 
     public UserInterface() {
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
         familyTreeIO = new FamilyTreeFileIO();
         scanner = new Scanner(System.in);
     }
