@@ -1,9 +1,16 @@
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         FamilyTree familyTree = new FamilyTree();
         fillingFamilyTree(familyTree);
-        System.out.println(familyTree.toString());
+        System.out.println(familyTree);
+
+        FileHandler handler = new FileHandler();
+        handler.write(familyTree, "FamilyTree.bin");
+
+        FamilyTree ft;
+        ft = handler.read("FamilyTree.bin");
+        System.out.println(ft);
     }
 
     public static void fillingFamilyTree(FamilyTree familyTree) {
