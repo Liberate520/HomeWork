@@ -1,7 +1,9 @@
+import writer.FileHandler;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+
         GenealogyTree genealogyTree = new GenealogyTree();
 
         Person person1 = new Person("Сергей", LocalDate.of(1964, 9, 4), Gender.MALE);
@@ -24,5 +26,24 @@ public class Main {
 
         System.out.println("Генеалогическое древо:");
         System.out.println(genealogyTree);
+
+
+        FileHandler fileHandler = new FileHandler();
+        GenealogyTree loadedTree = readTree();
+        saveTree(genealogyTree);
+
+    }
+
+
+
+    private static GenealogyTree readTree() {
+        FileHandler fileHandler = new FileHandler();
+        return(GenealogyTree) fileHandler.read();
+    }
+
+    private static void saveTree(GenealogyTree tree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(tree);
+
     }
 }
