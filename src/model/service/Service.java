@@ -1,14 +1,14 @@
-package service;
+package model.service;
 
-import familyTreeSrc.FamilyTree;
-import person.Human;
-import writer.FileHandler;
-import writer.Writer;
+import model.familyTreeSrc.FamilyTree;
+import model.person.Human;
+import model.writer.FileHandler;
+import model.writer.Writer;
 
 import java.time.LocalDate;
 
-import static person.Gender.Female;
-import static person.Gender.Male;
+import static model.person.Gender.Female;
+import static model.person.Gender.Male;
 
 //  добавил в дженерики тип Human (FamilyTree<Human>)  \\
 public class Service {

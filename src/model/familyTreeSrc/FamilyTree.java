@@ -1,6 +1,6 @@
-package familyTreeSrc;
+package model.familyTreeSrc;
 
-import person.comparators.*;
+import model.person.comparators.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;

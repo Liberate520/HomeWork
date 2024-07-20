@@ -1,6 +1,6 @@
-package familyTreeSrc;
+package model.familyTreeSrc;
 
-import person.Gender;
+import model.person.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;

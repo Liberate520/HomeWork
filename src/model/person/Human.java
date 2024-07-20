@@ -1,8 +1,7 @@
-package person;
+package model.person;
 
-import familyTreeSrc.ItemFamilyTree;
+import model.familyTreeSrc.ItemFamilyTree;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;

@@ -1,11 +1,11 @@
-package writer;
+package model.writer;
 
 
 import java.io.*;
 
 public class FileHandler implements Writer {
     // Поле для хранения пути к файлу
-    private String filePath = "src/writer/testFiles/testTree.out";
+    private String filePath = "src/model.writer/testFiles/testTree.out";
 
     // Метод для сохранения объекта в файл
     @Override

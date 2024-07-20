@@ -1,6 +1,6 @@
-import familyTreeSrc.FamilyTree;
-import person.Human;
-import service.Service;
+import model.familyTreeSrc.FamilyTree;
+import model.person.Human;
+import model.service.Service;
 
 public class Main {
     public static void main(String[] args) {
