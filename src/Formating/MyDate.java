@@ -22,9 +22,9 @@ public class MyDate implements Serializable {
         dayInMonth.put(12, 31);
     }
 
-    private int year;
-    private int month;
-    private int day;
+    private Integer year;
+    private Integer month;
+    private Integer day;
 
     public MyDate(int year, int month, int day){
         setYear(year);
@@ -32,34 +32,31 @@ public class MyDate implements Serializable {
         setDay(day);
     }
 
-    public int getDay() {
+    public Integer getDay() {
         return day;
     }
 
-    public int getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
     private void setDay(int day){
-        if (0 < day && day < dayInMonth.get(this.month)){
-            this.day = day;
-        }
+        if (0 < day && day < dayInMonth.get(this.month)) this.day = day;
+        else this.day = null;
     }
 
     private void setMonth(int month){
-        if (0 < month && month < 13){
-             this.month = month;
-        }
+        if (0 < month && month < 13) this.month = month;
+        else this.day = null;
     }
 
     private void setYear(int year){
-        if (year > 0){
-            this.year = year;
-        }
+        if (year > 0) this.year = year;
+        else this.year = null;
     }
 
     @Override

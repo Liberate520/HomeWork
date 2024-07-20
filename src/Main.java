@@ -1,54 +1,26 @@
-import Gender.Gender;
-import Tree.FamilyTree;
-import Writer.FileHandler;
-import Human.*;
-import Formating.*;
+import Model.Database;
+import Model.Interface.DatabaseInterface;
+import Presenter.DatabasePresenter.DatabasePresenter;
+import Presenter.FamilyTreePresenter.FamilyTreePresenter;
+import Presenter.Interface.DatabaseRecipient;
+import Presenter.Interface.FamilyTreeRecipient;
+import View.DatabaseUI;
+import View.FamilyTreeUI;
+import View.Interface.DatabaseView;
+import View.Interface.FamilyTreeView;
 
-import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
-    private static final FileHandler fileHandler = new FileHandler();
+    public static void main(String[] args) {
+        FamilyTreeView familyTreeView = new FamilyTreeUI("Family tree", new Scanner(System.in));
+        FamilyTreeRecipient familyTreePresenter = new FamilyTreePresenter(familyTreeView);
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        DatabaseView databaseView = new DatabaseUI("Database", new Scanner(System.in));
+        DatabaseInterface database = new Database();
 
-        FamilyTree<Human> familyTree = new FamilyTree<>();
+        DatabaseRecipient databasePresenter = new DatabasePresenter(databaseView, database, familyTreePresenter);
 
-        Human Lilia = new Human("Lilia", "Kornaval", Gender.Female, new MyDate(2000, 9, 15));
-        Human Nastya = new Human("Nastya", "Kornaval", Gender.Female, new MyDate(2022, 4, 30));
-        Human Nicolay = new Human("Nicolay", "Kornaval", Gender.Male, new MyDate(1999,12, 3));
-        Human Kiril = new Human("Kiril", "Kornaval", Gender.Male, new MyDate(2023, 5, 13));
-        Human Olga = new Human("Olga", "Burnova", Gender.Female, new MyDate(1980, 8, 19));
-
-        Nicolay.setDataOfDeath(new MyDate(2024, 1, 9));
-        Nicolay.addChildren(Nastya);
-
-        Lilia.setSpouse(Nicolay);
-        Lilia.addChildren(Kiril);
-
-        familyTree.addCreature(Nastya);
-
-        Lilia.setMather(Olga);
-
-        familyTree.updateTree();
-
-        familyTree.sortBySurname();
-        familyTree.sortByID();
-        familyTree.sortByChildren();
-        familyTree.sortByName();
-
-        System.out.println(familyTree);
-
-
-        /*
-        fileHandler.writeFile(familyTree, "family_tree");
-
-        */
-
-        /*
-        FamilyTree familyTree = fileHandler.readFile("FamilyTree_0.data");
-
-        System.out.println(familyTree.getHuman(0).getChildren());
-
-         */
+        databasePresenter.start();
     }
 }
