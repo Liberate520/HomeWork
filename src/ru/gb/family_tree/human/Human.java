@@ -1,5 +1,6 @@
 package ru.gb.family_tree.human;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -9,7 +10,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class Human {
+//TODO Добавить ID и класс для создания ID
+
+public class Human implements Serializable {
     private String name, surname, patronymic;
     private Gender gender;
     private Human father, mother;
@@ -41,19 +44,7 @@ public class Human {
 
     public Human(String name, String patronymic, String surname,
                  Gender gender) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.gender = gender;
-        this.father = null;
-        this.mother = null;
-        this.children = null;
-        this.profession = null;
-        this.nationality = null;
-        this.dob = null;
-        this.dod = null;
-        this.birthPlace = null;
-        this.notes = null;
+        this(name, patronymic, surname, gender, null, null, null, null, null, null, null, null, null);
     }
 
     public String getName() {

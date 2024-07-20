@@ -3,7 +3,10 @@ package ru.gb.family_tree;
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.writer.FileHandler;
+import ru.gb.family_tree.writer.Writer;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -136,9 +139,16 @@ public class Main {
         return ft;
     }
 
-    public static void main(String[] args) {
-        FamilyTree famTree = autoFillFamTree();
-        famTree.setParentsByChildren(); // заполняет поля mother и father у детей если они есть в списке
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+//        FamilyTree famTree = autoFillFamTree();
+//        famTree.setParentsByChildren(); // заполняет поля mother и father у детей если они есть в списке
+
+        Writer fh = new FileHandler();
+//        fh.saveObject((Object) famTree, "famTree"); // Сохраняем дерево в файл famTree.out
+
+        FamilyTree famTree = (FamilyTree) fh.readObject("famTree"); // Читаем дерево из файла famTree.out
+
         String request = "Алексей Шевелёв"; // строка запроса для поиска
         System.out.println("Результат поиска: ");
         List<Human> searchResult = famTree.searchHuman(request); //результат поиска по запросу, если ничего не найдено возвращает null

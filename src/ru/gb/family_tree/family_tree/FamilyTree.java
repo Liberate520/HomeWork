@@ -3,9 +3,10 @@ package ru.gb.family_tree.family_tree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     List<Human> familyTree;
 
     public FamilyTree(List<Human> familyTree) {
