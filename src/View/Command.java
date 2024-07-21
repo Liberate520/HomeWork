@@ -9,12 +9,8 @@ public abstract class Command {
 
     public Command(String commandName){
         this.commandName = commandName;
-        this.presenter =new Presenter();
+        this.presenter = Presenter.getInstance();
     };
-//    public Command(String commandName, Presenter presenter, MainMenu mainMenu){
-//        this(commandName, presenter);
-//        this.mainMenu= mainMenu;
-//    };
 
     public abstract void execute();
 

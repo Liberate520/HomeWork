@@ -10,12 +10,19 @@ import java.time.LocalDate;
 public class FamilyTreeService {
     public HumanBuilder newHumanBuilder;
     public FamilyTree newFamilyTree;
+    private static FamilyTreeService instance;
 
-    public FamilyTreeService() {
+    private FamilyTreeService() {
         newHumanBuilder = new HumanBuilder();
         newFamilyTree = new FamilyTree();
     }
-
+    public static FamilyTreeService getInstance() {
+        if (instance == null) {
+            System.out.println("Creating new instance of FamilyTreeService");
+            instance = new FamilyTreeService();
+        }
+        return instance;
+    }
     public Human addToTree(String name, Gender gender, LocalDate dateOfBirth){
         Human human = newHumanBuilder.build(name, gender, dateOfBirth);
         newFamilyTree.addHumantoTree(human);

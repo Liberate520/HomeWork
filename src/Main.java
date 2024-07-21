@@ -11,7 +11,8 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        ConsoleUI consoleUI = new ConsoleUI();
+        System.out.println("Main method started");
+        ConsoleUI consoleUI =ConsoleUI.getInstance();
         consoleUI.startMenu();
 
 //        FamilyTree humanTree = new FamilyTree();

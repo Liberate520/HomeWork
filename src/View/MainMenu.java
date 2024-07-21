@@ -36,4 +36,9 @@ public void addToMainMenu(Command command){
         }
         return sb.toString();
     }
+
+    public Command chooseCommand (Integer commandId){
+        return mainMenuList.get(commandId-1);
+    }
+
 }
