@@ -1,12 +1,14 @@
-import java.io.*;
+package human;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human>{
     private static int humanNumber;
     private String name;
     private LocalDate dateBirth;
-    private LocalDate dateDiet;
+    private LocalDate dateDeath;
     private Human whoSpouse;
     private LocalDate dateOfMarriage;
     private Gender gender;
@@ -19,10 +21,10 @@ public class Human implements Serializable {
         Human.humanNumber = 0;
     }
     
-    public Human(String name, LocalDate dateBirth, LocalDate dateDiet, Gender gender, FamilyStatus familyStatus) {
+    public Human(String name, LocalDate dateBirth, LocalDate dateDeath, Gender gender, FamilyStatus familyStatus) {
         this.name = name;
         this.dateBirth = dateBirth;
-        this.dateDiet = dateDiet;
+        this.dateDeath = dateDeath;
         this.gender = gender;
         this.familyStatus = familyStatus;
     }
@@ -41,15 +43,16 @@ public class Human implements Serializable {
     public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
+
     public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateDiet(LocalDate dateDiet) {
-        this.dateDiet = dateDiet;
+    public void setDateDeath(LocalDate dateDeath) {
+        this.dateDeath = dateDeath;
     }
-    public LocalDate getDateDiet() {
-        return dateDiet;
+    public LocalDate getDateDeath() {
+        return dateDeath;
     }
 
     public void setWhoSpouse(Human whoSpouse) {
@@ -80,57 +83,50 @@ public class Human implements Serializable {
         return familyStatus;
     }
 
+    public ArrayList<Human> getAmountOfChildren() {
+        return amountOfChildren;
+    }
+
+    public void setAmountOfChildren(ArrayList<Human> amountOfChildren) {
+        this.amountOfChildren = amountOfChildren;
+    }
+
+    public ArrayList<Human> getParents() {
+        return parents;
+    }
+
+    public void setParents(ArrayList<Human> parents) {
+        this.parents = parents;
+    }
+
     @Override
     public String toString() {
-        return "Human{" +
+        return "human.Human{" +
                 "id=" + ++humanNumber + '\'' +
                 "name='" + name + '\'' +
                 ", dateBirth='" + dateBirth + '\'' +
-                ", dateDiet='" + dateDiet + '\'' +
+                ", dateDiet='" + dateDeath + '\'' +
                 ", whoSpouse=" + (whoSpouse == null ? "There is no married couple.": whoSpouse.getName()) +
                 ", dateOfMarriage='" + dateOfMarriage + '\'' +
                 ", gender=" + gender +
                 ", familyStatus=" + familyStatus +
-                '}';
+                '}' + '\n';
     }
 
     public void addChildren(Human human){
         amountOfChildren.add(human);
     }
-
-    public void printChildren(){
-        System.out.printf("%s's kids: \n", getName());
-        for (Human h: amountOfChildren) {
-            System.out.println(h.getName()+";");
-        }
+    public int howManyYears(LocalDate localDateDeath, LocalDate localDateBirth){
+        int howManyYears;
+        return howManyYears = localDateDeath.getYear() - localDateBirth.getYear();
     }
+
     public void addParents(Human human){
         parents.add(human);
     }
 
-    public void printParents(){
-        System.out.printf("%s's parents: %s and %s.\n", getName(), parents.get(0).getName(), parents.get(1).getName());
-    }
-    public void writeHuman(Human anyHuman){
-        try{
-            FileOutputStream fs = new FileOutputStream("Human.ser");
-            ObjectOutputStream os = new ObjectOutputStream(fs);
-            os.writeObject(anyHuman);
-            os.close();
-        } catch (IOException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-        }
-    }
-
-    public void readHuman(){
-        try {
-            FileInputStream fileInputStream = new FileInputStream("Human.ser");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            Object objHuman = objectInputStream.readObject();
-            Human human = (Human) objHuman;
-            System.out.println(human.getInfo());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 }
