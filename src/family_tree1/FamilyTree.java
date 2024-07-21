@@ -1,6 +1,19 @@
 package family_tree1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+public class FamilyTree implements Serializable {
+    private List<Human> familyTree;
+
+    public FamilyTree() {
+        familyTree = new ArrayList<>();
+    }
+
+    public void addHuman(Human human) {
+        this.familyTree.add(human);
+    }
 
 public class FamilyTree {
     int ID;
