@@ -9,8 +9,8 @@ import java.io.Serializable;
 public class FileHandler implements Writer {
     
     @Override
-    public void write(Serializable serializable) {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("human.out"))) {
+    public void save(Serializable serializable) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("familyTree.out"))) {
             objectOutputStream.writeObject(serializable);
             
         } catch (Exception e){
@@ -19,12 +19,12 @@ public class FileHandler implements Writer {
     }
 
     @Override
-    public Object read() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("human.out"))){
+    public Object loading() {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("familyTree.out"))){
             Object object = objectInputStream.readObject();
             return object;
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }

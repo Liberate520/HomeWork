@@ -5,15 +5,20 @@ import java.time.LocalDate;
 import model.family_tree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
+import model.writer.FileHandler;
+import model.writer.Writer;
 import model.builder.HumanBuilder;
 
 public class Service {
     private HumanBuilder humanBuilder;
     private FamilyTree<Human> familyTree;
+    private Writer writer;
+
 
     public Service() {
         familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
+        writer = new FileHandler();
     }
 
     public void addHuman(String name, Gender gender, LocalDate dateOfBirth){
@@ -25,22 +30,13 @@ public class Service {
         return familyTree.getHuman(idHuman);
     }
 
-    public void setMother(int idChildren, int idMother){
-        Human mother = familyTree.getHuman(idMother);
-        Human children = familyTree.getHuman(idChildren);
-        children.setMother(mother);
-    }
-
-    public void setFather(int idChildren, int idFather) {
-        Human father = familyTree.getHuman(idFather);
-        Human children = familyTree.getHuman(idChildren);
-        children.setFather(father);
-    }
-
-    public void setChildren(int idParent, int idChildren) {
+    public void setParent(int idChildren, int idParent){
         Human parent = familyTree.getHuman(idParent);
         Human children = familyTree.getHuman(idChildren);
-        parent.setChildren(children);
+        if (parent.getGender() == Gender.Male){
+            children.setFather(parent);
+            parent.setChildren(children);
+        } else {children.setMother(parent);}
     }
 
     public void setDateOfDeath(int idHuman, LocalDate dateOfDeath) {
@@ -54,6 +50,19 @@ public class Service {
 
     public void sortByAge(){
         familyTree.sortByAge();
+    }
+
+    public void save() {
+        writer.save(familyTree);
+    }
+
+    public boolean loading() {
+        if (writer.loading() != null) {
+            familyTree = (FamilyTree) writer.loading();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String getHumansListInfo(){

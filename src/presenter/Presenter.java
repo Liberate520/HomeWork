@@ -25,18 +25,8 @@ public class Presenter {
         return service.getHuman(idHuman);
     }
 
-    public void setMother(int idChildren, int idMother){
-        service.setMother(idChildren, idMother);
-        getHumansListInfo();
-    }
-
-    public void setFather(int idChildren, int idFather){
-        service.setFather(idChildren, idFather);
-        getHumansListInfo();
-    }
-
-    public void setChildren(int idParent, int idChildren){
-        service.setChildren(idParent, idChildren);
+    public void setParent(int idChildren, int idParent){
+        service.setParent(idChildren, idParent);
         getHumansListInfo();
     }
     
@@ -63,5 +53,17 @@ public class Presenter {
     public void sortByAge() {
         service.sortByAge();
         getHumansListInfo();
+    }
+
+    public void save() {
+        service.save();
+    }
+
+    public boolean loading() {
+        if (service.loading()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -13,7 +13,6 @@ public class ConsoleUI implements View {
     private boolean work;
     private Presenter presenter;
     private MainMenu menu;
-    Gender gender;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
@@ -41,6 +40,7 @@ public class ConsoleUI implements View {
     public void finish() {
         work = false;
         scanner.close();
+        presenter.save();
         System.out.println("До новых встреч!");
     }
 
@@ -53,6 +53,8 @@ public class ConsoleUI implements View {
     }
 
     public void addHuman(){
+        Gender gender = null;
+
         System.out.println("Укажите имя:");
         String name = scanner.nextLine();
 
@@ -77,41 +79,7 @@ public class ConsoleUI implements View {
         presenter.addHuman(name, gender, dateOfBirth);
     }
 
-    public void setMother(){
-        System.out.println("Укажите id мамы:");
-        String idMotherStr = scanner.nextLine();
-        int idMother = strNumToInt(idMotherStr);
-
-        if (searchIdHuman(idMother)){
-            System.out.println("Укажите id ребенка:");
-            String idChildrenStr = scanner.nextLine();
-            int idChildren = strNumToInt(idChildrenStr);
-
-            if (searchIdHuman(idChildren)){
-                presenter.setMother(idChildren, idMother);
-            }else{System.out.println("Человека с таким Id нет");}
-
-        }else{System.out.println("Человека с таким Id нет");}
-    }
-
-    public void setFather(){
-        System.out.println("Укажите id папы:");
-        String idFatherStr = scanner.nextLine();
-        int idFather = strNumToInt(idFatherStr);
-
-        if (searchIdHuman(idFather)){
-            System.out.println("Укажите id ребенка:");
-            String idChildrenStr = scanner.nextLine();
-            int idChildren = strNumToInt(idChildrenStr);
-
-            if (searchIdHuman(idChildren)){
-                presenter.setFather(idChildren, idFather);
-            }else{System.out.println("Человека с таким Id нет");}
-
-        }else{System.out.println("Человека с таким Id нет");}
-    }
-
-    public void setChildren(){
+    public void setParent(){
         System.out.println("Укажите id родителя:");
         String idParentStr = scanner.nextLine();
         int idParent = strNumToInt(idParentStr);
@@ -122,7 +90,7 @@ public class ConsoleUI implements View {
             int idChildren = strNumToInt(idChildrenStr);
 
             if (searchIdHuman(idChildren)){
-                presenter.setChildren(idParent, idChildren);
+                presenter.setParent(idChildren, idParent);
             }else{System.out.println("Человека с таким Id нет");}
 
         }else{System.out.println("Человека с таким Id нет");}
@@ -159,7 +127,15 @@ public class ConsoleUI implements View {
             presenter.getFamilyTreeHuman(idHuman);
         }else{System.out.println("Человека с таким Id нет");}
     }
-    
+
+    public void loading() {
+        if (presenter.loading()){
+            System.out.println("Чтение файла прошло успешно");
+        } else {
+            System.out.println("Не удалось прочитать файл. Возможно он не был сохранен, удален или переименован");
+        }
+    }
+
     private int strNumToInt(String choiceStr) {
         try {
             int choice = Integer.parseInt(choiceStr);
