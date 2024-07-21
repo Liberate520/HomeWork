@@ -10,7 +10,7 @@ import java.util.List;
 public class FileHandler implements Writer {
     public void saveToFile(List<Human> list, String string) {
         FileOutputStream output = null;
-        ObjectOutputStream objectOutputStream = null;
+        ObjectOutputStream objectOutputStream;
         try {
             output = new FileOutputStream(string);
         } catch (IOException e) {
@@ -27,7 +27,7 @@ public class FileHandler implements Writer {
 
     public void saveToFile(FamilyTree familyTree, String string) {
         FileOutputStream output = null;
-        ObjectOutputStream objectOutputStream = null;
+        ObjectOutputStream objectOutputStream;
         try {
             output = new FileOutputStream(string);
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class FileHandler implements Writer {
 
     public List<Human> restoreFromFileH (String string) {
         FileInputStream input = null;
-        ObjectInputStream objectInputStream = null;
+        ObjectInputStream objectInputStream;
         List<Human> result = new ArrayList<>();
         try {
             input = new FileInputStream(string);
@@ -65,7 +65,7 @@ public class FileHandler implements Writer {
 
     public FamilyTree restoreFromFileFT (String string) {
         FileInputStream input = null;
-        ObjectInputStream objectInputStream = null;
+        ObjectInputStream objectInputStream;
         FamilyTree result = new FamilyTree();
         try {
             input = new FileInputStream(string);

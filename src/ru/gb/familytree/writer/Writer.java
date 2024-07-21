@@ -6,8 +6,8 @@ import ru.gb.familytree.human.Human;
 import java.util.List;
 
 public interface Writer {
-    public void saveToFile(List<Human> list, String string);
-    public void saveToFile(FamilyTree familyTree, String string);
-    public List<Human> restoreFromFileH (String string);
-    public FamilyTree restoreFromFileFT (String string);
+    void saveToFile(List<Human> list, String string);
+    void saveToFile(FamilyTree familyTree, String string);
+    List<Human> restoreFromFileH (String string);
+    FamilyTree restoreFromFileFT (String string);
 }
