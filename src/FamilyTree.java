@@ -27,7 +27,6 @@ public class FamilyTree {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список детей для " + humans.get(selectId-1).getName() + " :\n");
-
         for(Human human : humans){
             if (human.getFather() == humans.get(selectId-1)) {
                 stringBuilder.append(" - ");
@@ -42,4 +41,5 @@ public class FamilyTree {
 
         return stringBuilder.toString();
     }
+
 }

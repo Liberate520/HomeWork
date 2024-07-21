@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-public class Human {
+public class Human implements Serializable {
     private int id;
     private String name;
     private LocalDate dob, dod;
@@ -70,4 +71,6 @@ public class Human {
     public String toString() {
         return id + ", имя: " + name + ", дата рождения: " + dob + ", дата смерти: " + dod + ", пол: " + gender;
     }
+
+
 }
