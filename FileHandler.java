@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 
 public class FileHandler implements Writer {
 
-    public void write(Object obj, String fileName) {
+    public void write(FamilyTree obj, String fileName) {
         ObjectOutputStream oos;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(fileName, false));
@@ -22,7 +22,8 @@ public class FileHandler implements Writer {
 
     public FamilyTree read(String fileName) throws ClassNotFoundException {
         ObjectInputStream ois;
-        FamilyTree obj = new FamilyTree();
+        FamilyTree obj = null;
+        ;
         try {
             ois = new ObjectInputStream(new FileInputStream(fileName));
             obj = (FamilyTree) ois.readObject();
