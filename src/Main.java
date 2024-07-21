@@ -46,7 +46,9 @@ public class Main {
         familytree.printTree();
         // Print information of one member
         System.out.println(member3);
+        // Print the name of desired family member
         System.out.println(member11.getName() + '\n');
+        // Find family member by name
         System.out.println(familytree.getMember("Orvin Smith"));
     }
 
