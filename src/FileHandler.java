@@ -1,0 +1,22 @@
+import java.io.*;
+
+public class FileHandler implements Writer {
+    private FamilyTree familyTree;
+
+    public FileHandler(FamilyTree familyTree) {
+        this.familyTree = familyTree;
+    }
+
+    public void saveToFile(FamilyTree familyTree) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("familyTree.ser"));
+        objectOutputStream.writeObject(familyTree);
+        objectOutputStream.close();
+    }
+
+    public FamilyTree readFromFile() throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("familyTree.ser"));
+        familyTree = (FamilyTree) objectInputStream.readObject();
+        objectInputStream.close();
+        return familyTree;
+    }
+}
