@@ -2,12 +2,15 @@ package ru.gb.family_tree.family_tree;
 
 import ru.gb.family_tree.human.Human;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long humansId;
-    private List<Human> humanList;
+    private final List<Human> humanList;
 
     public FamilyTree() {
         this(new ArrayList<>());
@@ -100,4 +103,10 @@ public class FamilyTree {
         }
         return sb.toString();
     }
+    public void sortByName() { humanList.sort((Comparator<? super Human>) new FamilyTreeComparatorByName());}
+
+    public void sortByDeathDate() { humanList.sort((Comparator<? super Human>) new FamilyTreeComparatorByBirthDate()); }
+
+    @Override
+    public Iterator<Human> iterator() { return new FamilyTreeIterator(humanList); }
 }
