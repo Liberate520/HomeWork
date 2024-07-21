@@ -34,11 +34,11 @@ public class Creator {
         return null;
     }
 
-    public static ArrayList<String> getAvailableCreatures() {
+    public ArrayList<String> getAvailableCreatures() {
         return availableCreatures;
     }
 
-    public static ArrayList<String> getAvailableDataAboutCreature() {
+    public ArrayList<String> getAvailableDataAboutCreature() {
         return availableDataAboutCreature;
     }
 }

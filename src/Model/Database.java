@@ -22,7 +22,7 @@ public class Database implements DatabaseInterface, Serializable {
     }
 
     public ArrayList<String> getAvailableCreatures() {
-        return Creator.getAvailableCreatures();
+        return this.creator.getAvailableCreatures();
     }
 }
 
