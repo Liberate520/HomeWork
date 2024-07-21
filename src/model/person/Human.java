@@ -24,55 +24,13 @@ public class Human implements Comparable<Human>, ItemFamilyTree<Human> {
      * @param name Имя человека
      * @param gender Пол человека
      * @param birthDate Дата рождения
-     * @param deathDate Дата смерти
-     * @param father Отец человека
-     * @param mother Мать человека
      */
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
+    public Human(String name, Gender gender, LocalDate birthDate) {
         id = -1;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.deathDate = deathDate;
-        this.father = father;
-        this.mother = mother;
         this.children = new ArrayList<>();
-    }
-
-    /**
-     * Создание Human без учета родителей
-     *
-     * @param name Имя человека
-     * @param gender Пол человека
-     * @param birthDate Дата рождения
-     */
-    public Human(String name, Gender gender, LocalDate birthDate) {
-        this(name, gender, birthDate, null, null, null);
-    }
-
-    /**
-     * Создание Human с учетом родителей
-     *
-     * @param name Имя человека
-     * @param gender Пол человека
-     * @param birthDate Дата рождения
-     * @param father отец
-     * @param mother мать
-     */
-    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
-        this(name, gender, birthDate, null, father, mother);
-    }
-
-    /**
-     * Создание Human без учета родителей, с указанием ДР и ДС
-     *
-     * @param name Имя человека
-     * @param gender Пол человека
-     * @param birthDate Дата рождения
-     * @param deathDate Дата смерти
-     */
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-        this(name, gender, birthDate, deathDate, null, null);
     }
 
     // Getters
@@ -128,7 +86,6 @@ public class Human implements Comparable<Human>, ItemFamilyTree<Human> {
         return children;
     }
 
-    // ПОЛУЧЕНИЕ КОЛИЧЕСТВА ДЕТЕЙ \\
     public Integer getChildrenQuantity() {
         return children.size();
     }
@@ -156,6 +113,10 @@ public class Human implements Comparable<Human>, ItemFamilyTree<Human> {
 
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
     }
 
     // Add
@@ -199,6 +160,10 @@ public class Human implements Comparable<Human>, ItemFamilyTree<Human> {
         sb.append(getFatherInfo());
         sb.append(", ");
         sb.append(getChildrenInfo());
+        if (deathDate != null) {
+            sb.append(", Дата смерти: ");
+            sb.append(getDeathDate());
+        }
         return sb.toString();
     }
 

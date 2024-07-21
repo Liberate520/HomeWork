@@ -1,75 +1,75 @@
 package model.service;
 
+import model.builder.HumanBuilder;
 import model.familyTreeSrc.FamilyTree;
+import model.person.Gender;
 import model.person.Human;
-import model.writer.FileHandler;
-import model.writer.Writer;
 
 import java.time.LocalDate;
 
-import static model.person.Gender.Female;
-import static model.person.Gender.Male;
-
-//  добавил в дженерики тип Human (FamilyTree<Human>)  \\
 public class Service {
+    private HumanBuilder humanBuilder;
     private FamilyTree<Human> familyTree;
 
     public Service() {
-        familyTree = familyTreeTest();
+        humanBuilder = new HumanBuilder();
+        familyTree = new FamilyTree<>();
     }
 
-    public void saveTree(FamilyTree<Human> tree) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.save(tree);
+    public void addHuman(String name, Gender gender, LocalDate dateOfBirth) {
+        Human human = humanBuilder.build(name, gender, dateOfBirth);
+        familyTree.addHuman(human);
     }
 
-    public FamilyTree<Human> readTree() {
-        FileHandler fileHandler = new FileHandler();
-        return (FamilyTree) fileHandler.read();
+    public void setMother(int idChild, int idMother) {
+        Human mother = familyTree.getById(idMother);
+        Human child = familyTree.getById(idChild);
+        child.setMother(mother);
     }
 
-    // Метод для установки пути к файлу
-    private static void setFilePath(Writer writer, String path) {
-        writer.setPath(path);
+    public void setFather(int idChild, int idFather) {
+        Human father = familyTree.getById(idFather);
+        Human child = familyTree.getById(idChild);
+        child.setMother(father);
     }
 
-    // Метод для создания тестового FamilyTree
-    public FamilyTree<Human> familyTreeTest() {
-        // Создаем генеалогическое древо
-        FamilyTree<Human> familyTree = new FamilyTree<>();
+    public void addChildToParent(int idParent, int idChild) {
+        Human parent = familyTree.getById(idParent);
+        Human child = familyTree.getById(idChild);
+        parent.addChild(child);
+    }
 
-        // Создаем родителей без указания их родителей
-        Human harry = new Human("Harry", Male, LocalDate.of(1941, 2, 22), LocalDate.of(2018, 11, 16));
-        Human emily = new Human("Emily", Female, LocalDate.of(1946, 6, 10), LocalDate.of(2023, 2, 5));
+    public void setDateOfDeath(int idHuman, LocalDate dateOfDeath) {
+        Human human = familyTree.getById(idHuman);
+        human.setDeathDate(dateOfDeath);
+    }
 
-        familyTree.addHuman(harry);
-        familyTree.addHuman(emily);
-        familyTree.setWedding(harry, emily);
+    public void sortByName() {
+        familyTree.sortByName();
+    }
 
-        Human charlie = new Human("Charlie", Male, LocalDate.of(1944, 1, 8), LocalDate.of(2020, 12, 4));
-        Human ella = new Human("Ella", Female, LocalDate.of(1952, 10, 17));
+    public void sortByAge() {
+        familyTree.sortByBirthDate();
+    }
 
-        familyTree.addHuman(charlie);
-        familyTree.addHuman(ella);
-        familyTree.setWedding(charlie, ella);
+    public void sortByChildrenQuantity() {
+        familyTree.sortByChildrenQuantity();
+    }
 
-        // Создаем детей, указывая их родителей
-        Human james = new Human("James", Male, LocalDate.of(1985, 7, 30), harry, emily);
-        Human jane = new Human("Jane", Female, LocalDate.of(1990, 8, 2), charlie, ella);
+    public void setWedding(long humanId1, long humanId2) {
+        familyTree.setWedding(humanId1, humanId2);
+    }
 
-        familyTree.addHuman(james);
-        familyTree.addHuman(jane);
-        familyTree.setWedding(james, jane);
+    public String getHumansListInfo() {
+        String result = "Информация о древе:\n";
+        return result + familyTree.getInfo();
+    }
 
-        // Создаем детей, указывая их родителей
-        Human emma = new Human("Emma", Female, LocalDate.of(2018, 3, 3), james, jane);
-        Human michael  = new Human("Michael", Male, LocalDate.of(2016, 1, 19), james, jane);
-        Human thomas  = new Human("Thomas", Male, LocalDate.of(2020, 4, 19), james, jane);
+    public Human getHumanById(long idHuman) {
+        return familyTree.getById(idHuman);
+    }
 
-        familyTree.addHuman(emma);
-        familyTree.addHuman(michael);
-        familyTree.addHuman(thomas);
-
-        return familyTree;
+    public String getAge(long idHuman) {
+        return Integer.toString(familyTree.getById(idHuman).getAge());
     }
 }
