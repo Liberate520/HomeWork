@@ -1,14 +1,15 @@
-package Part3_OOP.Seminar1.Family_tree;
+package Family_tree;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Human {
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private LinkedList<Human> parents;
+    public LinkedList<Human> parents;
     private LinkedList<Human> children;
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
@@ -36,19 +37,25 @@ public class Human {
         return deathDate;
     }
 
-    public LinkedList<Human> getParents() {
+    public List<Human> getParents() {
         return parents;
     }
 
-    public void addParent(Human parent) {
-        this.parents.add(parent);
+    public void addParent(Human parent1, Human parent2) {
+        this.parents.add(parent1);
+        this.parents.add(parent2);
     }
 
-    public LinkedList<Human> getChildren() {
+    public List<Human> getChildren() {
         return children;
     }
 
     public void addChild(Human child) {
         this.children.add(child);
+    }
+
+    @Override
+    public String toString() {
+        return "Имя: " + name + ", Пол: " + gender + ", Дата рождения: " + birthDate + ", Дата смерти: " + deathDate;
     }
 }
