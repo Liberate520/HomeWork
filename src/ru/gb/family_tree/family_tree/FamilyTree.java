@@ -103,10 +103,12 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         }
         return sb.toString();
     }
+
     public void sortByName() { humanList.sort((Comparator<? super Human>) new FamilyTreeComparatorByName());}
 
     public void sortByDeathDate() { humanList.sort((Comparator<? super Human>) new FamilyTreeComparatorByBirthDate()); }
 
     @Override
     public Iterator<Human> iterator() { return new FamilyTreeIterator(humanList); }
+
 }
