@@ -1,8 +1,8 @@
-package Humans;
+package model.Humans;
 
 import java.util.Comparator;
 
-import FamilyTree.ItemFamilyTree;
+import model.FamilyTree.ItemFamilyTree;
 
 public class HumanComparatorByGender<U extends ItemFamilyTree<U>> implements Comparator<U>{
 

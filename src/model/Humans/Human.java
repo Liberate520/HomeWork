@@ -1,10 +1,9 @@
-package Humans;
+package model.Humans;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import FamilyTree.ItemFamilyTree;
+import model.FamilyTree.ItemFamilyTree;
 
 public class Human implements ItemFamilyTree<Human>{
     private int ID;

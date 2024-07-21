@@ -1,10 +1,10 @@
-package FamilyTree;
+package model.FamilyTree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import Humans.Gender;
+import model.Humans.Gender;
 
 public interface ItemFamilyTree<U> extends Serializable {
     void setID(int ID);

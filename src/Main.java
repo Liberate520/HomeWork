@@ -1,19 +1,19 @@
-import java.time.LocalDate;
-import FamilyTree.FamilyTree;
-import FamilyTree.ItemFamilyTree;
-import Humans.Gender;
-import Humans.Human;
-import Service.Service;
+import model.FamilyTree.ItemFamilyTree;
+import model.Humans.Human;
+import model.Service.Service;
 import Writers.FileHandler;
+import model.FamilyTree.FamilyTree;
+import view.ConsoleUI;
+import view.View;
 
 public class Main {
     public static <U extends ItemFamilyTree<U>> void main(String[] args) {
-        
+        View view = new ConsoleUI();
+        view.start();
+
         Service<U> service = new Service<U>();
-        service.addHuman("Павлов Александр Иванович", LocalDate.of(1955, 12, 1), LocalDate.of(2022, 1, 20), Gender.Male);
         FamilyTree<Human> familyTree = testTree();
         saveTree(familyTree);
-        System.out.println(familyTree);
     }
 
     private static void saveTree(FamilyTree<Human> familyTree){

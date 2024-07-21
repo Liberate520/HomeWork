@@ -1,4 +1,4 @@
-package Humans;
+package model.Humans;
 
 public enum Gender {
     Male, Female;

@@ -1,12 +1,12 @@
-package FamilyTree;
+package model.FamilyTree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import Humans.HumanComparatorByName;
-import Humans.HumanComparatorByGender;
+import model.Humans.HumanComparatorByName;
+import model.Humans.HumanComparatorByGender;
 
 public class FamilyTree<U extends ItemFamilyTree<U>> implements Serializable, Iterable<U> {
     // private int humID;
