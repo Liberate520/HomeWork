@@ -1,13 +1,14 @@
-package ru.gb.familytree;
+package ru.gb.familytree.human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Human {
+public class Human implements Serializable {
     private int id;
     private String name;
     private Gender gender;
     private LocalDate birthDay;
-    private LocalDate deathDay;
+    private LocalDate deathData;
     private Human father;
     private Human mother;
 
@@ -27,8 +28,8 @@ public class Human {
         this.birthDay = birthDay;
     }
 
-    public void setDeathDay(LocalDate deathDay) {
-        this.deathDay = deathDay;
+    public void setDeathData(LocalDate deathData) {
+        this.deathData = deathData;
     }
 
     public void setFather(Human father) {
@@ -55,8 +56,8 @@ public class Human {
         return birthDay;
     }
 
-    public LocalDate getDeathDay() {
-        return deathDay;
+    public LocalDate getDeathData() {
+        return deathData;
     }
 
     public Human getFather() {
@@ -69,9 +70,18 @@ public class Human {
 
     @Override
     public String toString() {
-        return id + ", имя: " + name +
-                ", дата рождения: " + birthDay + ", дата смерти: " + deathDay +
-                ", пол: " + gender +
-                ", отец: " + father + ", мать: " + mother;
+        return getInfo();
+    }
+
+    private String getInfo() {
+        StringBuilder result = new StringBuilder();
+        result.append(getId())
+                .append(", Имя: ").append(getName())
+                .append(", пол: ").append(getGender())
+                .append(", дата рождения: ").append(getBirthDay())
+                .append(", дата смерти: ").append(getDeathData())
+                .append(", отец: ").append(getFather())
+                .append(", мать: ").append(getMother());
+        return result.toString();
     }
 }
