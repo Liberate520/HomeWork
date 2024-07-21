@@ -1,26 +1,29 @@
-package ru.gb.familytree.human;
-
-import ru.gb.familytree.familytree.FamilyMember;
+package ru.gb.familytree.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HumanInfo extends FamilyMember implements Serializable {
-    private LocalDate dob; // Date of Birth
-    private LocalDate dod; // Date of Death
+public class HumanInfo implements Serializable {
+    private String name;
+    private LocalDate dob;
+    private LocalDate dod;
     private Gender gender;
     private HumanInfo father;
     private HumanInfo mother;
     private List<HumanInfo> children;
 
     public HumanInfo(String name, LocalDate dob, LocalDate dod, Gender gender) {
-        super(name);
+        this.name = name;
         this.dob = dob;
         this.dod = dod;
         this.gender = gender;
         this.children = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public LocalDate getDob() {
@@ -51,16 +54,24 @@ public class HumanInfo extends FamilyMember implements Serializable {
         this.mother = mother;
     }
 
-    public List<HumanInfo> getChildren() {
-        return children;
-    }
-
     public void addChild(HumanInfo child) {
         this.children.add(child);
     }
 
+    public List<HumanInfo> getChildren() {
+        return children;
+    }
+
     @Override
     public String toString() {
-        return super.toString() + ", DOB: " + dob + ", DOD: " + (dod != null ? dod : "N/A") + ", Gender: " + gender;
+        return "HumanInfo{" +
+                "name='" + name + '\'' +
+                ", dob=" + dob +
+                ", dod=" + dod +
+                ", gender=" + gender +
+                ", father=" + (father != null ? father.getName() : "N/A") +
+                ", mother=" + (mother != null ? mother.getName() : "N/A") +
+                ", children=" + children +
+                '}';
     }
 }

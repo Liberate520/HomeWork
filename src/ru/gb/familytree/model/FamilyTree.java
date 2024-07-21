@@ -1,15 +1,12 @@
-package ru.gb.familytree.familytree;
-
-import ru.gb.familytree.human.HumanInfo;
+package ru.gb.familytree.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends FamilyMember> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends HumanInfo> implements Serializable, Iterable<T> {
     private List<T> members;
 
     public FamilyTree() {
@@ -24,8 +21,12 @@ public class FamilyTree<T extends FamilyMember> implements Serializable, Iterabl
         return members;
     }
 
-    public void sortBy(Comparator<T> comparator) {
-        Collections.sort(members, comparator);
+    public void sortByName() {
+        Collections.sort(members, (m1, m2) -> m1.getName().compareTo(m2.getName()));
+    }
+
+    public void sortByDob() {
+        Collections.sort(members, (m1, m2) -> m1.getDob().compareTo(m2.getDob()));
     }
 
     @Override
