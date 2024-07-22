@@ -3,12 +3,27 @@ package ru.gb.family_tree;
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.writer.FileHandler;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args){
         FamilyTree tree = testTree();
+
+        FileHandler fileOps = new FileHandler(new FamilyTree());
+
+        try {
+            fileOps.saveToFile("family_tree.out");
+            System.out.println("Семейное древо сохранено в файл");
+
+            fileOps.loadFromFile("family_tree.out");
+            System.out.println("Семейное древо загружено из файла");
+
+        } catch (IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
 
         System.out.println(tree);
     }
