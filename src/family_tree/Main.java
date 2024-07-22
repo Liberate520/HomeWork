@@ -16,17 +16,17 @@ public class Main {
         System.out.println(tree);
     }
 
-    private static FamilyTree readTree(){
+    private static FamilyTree readTree() {
         FileHandler fileHandler = new FileHandler();
         return (FamilyTree) fileHandler.read();
     }
 
-    private static void saveTree(FamilyTree tree){
+    private static void saveTree(FamilyTree tree) {
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(tree);
     }
 
-    private static FamilyTree testTree(){
+    private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
         Human john = new Human("John", "Doe", Gender.Male, LocalDate.of(1960, 5, 15),
@@ -53,5 +53,5 @@ public class Main {
 
         return tree;
     }
-    
+
 }

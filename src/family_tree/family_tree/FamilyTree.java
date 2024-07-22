@@ -1,12 +1,12 @@
 package family_tree.family_tree;
 
-import java.io.Serializable;
-import java.nio.channels.Pipe;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Handler;
-
 import family_tree.human.Human;
+import family_tree.human.HumanComparatorByBirthDate;
+import family_tree.human.HumanComparatorByName;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class FamilyTree implements Serializable {
     private long humansId;
@@ -127,9 +127,9 @@ public class FamilyTree implements Serializable {
         return id < humansId && id >= 0;
     }
 
-    public Human getById(long id){
-        for (Human human: humanList){
-            if (human.getId() == id){
+    public Human getById(long id) {
+        for (Human human : humanList) {
+            if (human.getId() == id) {
                 return human;
             }
         }
@@ -141,16 +141,28 @@ public class FamilyTree implements Serializable {
         return getInfo();
     }
 
-    public String getInfo(){
+    public String getInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("The tree contains ");
         sb.append(humanList.size());
         sb.append(" objects: \n");
-        for (Human human: humanList){
+        for (Human human : humanList) {
             sb.append(human);
             sb.append("\n");
         }
         return sb.toString();
     }
 
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humanList);
+    }
+
+    public void sortByBirthDate() {
+        humanList.sort(new HumanComparatorByBirthDate());
+    }
+
+    public void sortByName() {
+        humanList.sort(new HumanComparatorByName());
+    }
 }
