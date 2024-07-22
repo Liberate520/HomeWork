@@ -1,4 +1,4 @@
-package familytree.view;
+package view;
 
 import java.util.List;
 

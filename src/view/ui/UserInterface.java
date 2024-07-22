@@ -1,9 +1,9 @@
-package familytree.ui;
+package view.ui;
 
-import familytree.model.FamilyTree;
-import familytree.model.Person;
-import familytree.io.FamilyTreeFileIO;
-import familytree.io.FamilyTreeIO;
+import model.FamilyTree;
+import model.person.Person;
+import model.io.FamilyTreeFileIO;
+import model.io.FamilyTreeIO;
 
 import java.io.IOException;
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
-package familytree.view;
+package view;
 
-import familytree.model.Person;
-import java.time.LocalDate;
+import model.person.Person;
+
 import java.util.List;
 import java.util.Scanner;
 
