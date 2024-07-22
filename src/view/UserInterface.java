@@ -1,4 +1,4 @@
-package view.ui;
+package view;
 
 import model.FamilyTree;
 import model.person.Person;
