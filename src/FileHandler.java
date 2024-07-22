@@ -8,15 +8,19 @@ public class FileHandler implements Writer {
     }
 
     public void saveToFile(FamilyTree familyTree) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("familyTree.ser"));
-        objectOutputStream.writeObject(familyTree);
-        objectOutputStream.close();
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("familyTree.ser"))) {
+            objectOutputStream.writeObject(familyTree);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public FamilyTree readFromFile() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("familyTree.ser"));
-        familyTree = (FamilyTree) objectInputStream.readObject();
-        objectInputStream.close();
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("familyTree.ser"));) {
+            familyTree = (FamilyTree) objectInputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return familyTree;
     }
 }

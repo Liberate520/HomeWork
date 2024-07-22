@@ -49,7 +49,6 @@ public class Main {
         fileWriter.saveToFile(familyTree);
         System.out.println("Дерево сохранено");
 
-
         FamilyTree familyTreeRestored = fileWriter.readFromFile();
         System.out.println("Дерево восстановлено");
         familyTreeRestored.showTree();
