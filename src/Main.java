@@ -1,4 +1,5 @@
-package family;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,10 +11,7 @@ public class Main {
         Human h3 = new Human("Алексей", 1985, Gender.Male);
         Human h4 = new Human("Никита", 1993, Gender.Male);
 
-        familyTree.addHuman(h1);
-        familyTree.addHuman(h2);
-        familyTree.addHuman(h3);
-        familyTree.addHuman(h4);
+
 
         // Set parent-child relationships
         h1.setFather(h1);
@@ -23,5 +21,15 @@ public class Main {
 
         System.out.println("Генеалогическое древо:");
         System.out.println(familyTree);
+
+
+        Writer fileWriter = new FileHandler(familyTree);
+        fileWriter.saveToFile(familyTree);
+        System.out.println("Дерево сохранено");
+
+
+        FamilyTree familyTreeRestored = fileWriter.readFromFile();
+        System.out.println("Дерево восстановлено");
+        familyTreeRestored.showTree();
     }
 }
