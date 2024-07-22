@@ -1,5 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 class GenealogyTree implements Serializable {
@@ -37,5 +39,13 @@ class GenealogyTree implements Serializable {
             childrenList.delete(childrenList.length() - 2, childrenList.length());
         }
         return childrenList.toString();
+    }
+
+    public void sortByName() {
+        Collections.sort(persons, Comparator.comparing(Person::getName));
+    }
+
+    public void sortByBirthDate() {
+        Collections.sort(persons, Comparator.comparing(Person::getBirthDate));
     }
 }

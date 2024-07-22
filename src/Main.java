@@ -27,6 +27,14 @@ public class Main {
         System.out.println("Генеалогическое древо:");
         System.out.println(genealogyTree);
 
+        genealogyTree.sortByName();
+        System.out.println("\nСписок отсортированный по имени:");
+        System.out.println(genealogyTree);
+
+        genealogyTree.sortByBirthDate();
+        System.out.println("\nСписок отсортированный по дате рождения:");
+        System.out.println(genealogyTree);
+
 
         FileHandler fileHandler = new FileHandler();
         GenealogyTree loadedTree = readTree();
