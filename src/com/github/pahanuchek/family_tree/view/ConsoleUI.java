@@ -167,7 +167,7 @@ public class ConsoleUI implements View {
     public void addChildren() {
         printAnswer();
         System.out.println("Введите идентификатор родителя, которому хотите добавить ребенка," +
-                " и идентификатор ребенка через пробел: ");
+                " и идентификатор родителя через пробел: ");
         try {
             String strId = scanner.nextLine();
             List<String> listId = new ArrayList<>();

@@ -117,7 +117,7 @@ public class Human implements Serializable, ItemUser<Human> {
         } else if (this.father != null && this.mother == null) {
             result.append("Моего папу зовут " + father.getName() + ". ");
         } else if (this.father != null && this.mother != null) {
-            result.append("Моих родителей зовут: " + father.getName() + " - папа, " + mother.getName() + " - мама. ");
+            result.append("Моих родителей зовут: " + father.getName() + " - папа, " + mother.getName() + " мама. ");
         }
         if (children != null && !children.isEmpty()) {
             if (children.size() == 1) {

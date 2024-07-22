@@ -76,7 +76,7 @@ public class Service {
     public boolean addMother(int idHuman, int idMother) {
         Human human = familyTree.searchHuman(idHuman);
         Human parent = familyTree.searchHuman(idMother);
-        boolean result = familyTree.addMother(human, parent);
+        boolean result = familyTree.addFather(human, parent);
         return  result;
     }
 
