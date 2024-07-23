@@ -2,6 +2,7 @@ package ru.gb.family_tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FamilyTree {
     private List<Human> members;
