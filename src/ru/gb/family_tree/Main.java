@@ -26,10 +26,10 @@ public class Main {
 
         Human foundFather = familyTree.findByFullName("John Michael Doe");
         if (foundFather != null) {
-            List<Human> children = familyTree.getChildren(foundFather);
-            System.out.println("Children of " + foundFather.getFullName() + ":");
-            for (Human child : children) {
-                System.out.println(child.getFullName());
+            FamilyTree childrenTree = familyTree.getChildren(foundFather);
+            System.out.println("Children and descendants of " + foundFather.getFullName() + ":");
+            for (Human member : childrenTree.getMembers()) {
+                System.out.println(member.getFullName());
             }
         } else {
             System.out.println("Father not found.");

@@ -15,9 +15,19 @@ public class FamilyTree {
         this.members.add(human);
     }
 
-    // Получение всех детей выбранного человека
-    public List<Human> getChildren(Human human) {
-        return human.getChildren();
+    // Получение всех детей выбранного человека в виде поддерева
+    public FamilyTree getChildren(Human human) {
+        FamilyTree subtree = new FamilyTree();
+        addChildrenRecursively(subtree, human);
+        return subtree;
+    }
+
+    // Рекурсивное добавление детей и их потомков в поддерево
+    private void addChildrenRecursively(FamilyTree subtree, Human human) {
+        for (Human child : human.getChildren()) {
+            subtree.addMember(child);
+            addChildrenRecursively(subtree, child);
+        }
     }
 
     // Поиск человека по полному имени (для удобства)
@@ -28,5 +38,10 @@ public class FamilyTree {
             }
         }
         return null;
+    }
+
+    // Получение всех членов семьи
+    public List<Human> getMembers() {
+        return members;
     }
 }
