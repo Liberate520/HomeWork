@@ -1,10 +1,11 @@
-import writer.FileHandler;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.time.LocalDate;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
-
-        GenealogyTree genealogyTree = new GenealogyTree();
+        GenealogyTree<Person> genealogyTree = new GenealogyTree<>();
 
         Person person1 = new Person("Сергей", LocalDate.of(1964, 9, 4), Gender.MALE);
         Person person2 = new Person("Светлана", LocalDate.of(1964, 9, 26), Gender.FEMALE);
@@ -27,29 +28,19 @@ public class Main {
         System.out.println("Генеалогическое древо:");
         System.out.println(genealogyTree);
 
-
         System.out.println("Генеалогическое древо отсортированное по имени:");
         genealogyTree.sortByName();
         System.out.println(genealogyTree);
 
-        System.out.println("\nГенеалогическое древо отсортированное по дате рождения:");
+        System.out.println("Генеалогическое древо отсортированное по дате рождения:");
         genealogyTree.sortByBirthDate();
         System.out.println(genealogyTree);
 
-        FileHandler fileHandler = new FileHandler();
-        GenealogyTree loadedTree = readTree();
-        saveTree(genealogyTree);
-
-    }
-
-    private static GenealogyTree readTree() {
-        FileHandler fileHandler = new FileHandler();
-        return(GenealogyTree) fileHandler.read();
-    }
-
-    private static void saveTree(GenealogyTree tree) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.save(tree);
-
+        // Сохранение генеалогического древа в файл
+        try (Writer writer = new FileWriter("genealogy_tree.txt")) {
+            writer.write(genealogyTree.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

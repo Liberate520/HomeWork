@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable {
+class Person implements Serializable {
 
     private String name;
     private LocalDate birthDate;
