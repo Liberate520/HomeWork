@@ -1,13 +1,15 @@
-package human;
+package model.human;
 
+import model.family_tree.FamilyItem;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyItem<Human> {
 
+    private int id;
     private String name;
     private LocalDate dob;
     private LocalDate dod;
@@ -16,18 +18,23 @@ public class Human implements Serializable {
     private Human father;
     List<Human> children;
 
-    public Human(String name, LocalDate dob, LocalDate dod, Gender gender, Human mother, Human father) {
+    public Human(int id, String name, LocalDate dob, LocalDate dod, Gender gender, Human mother, Human father) {
+        this.id = id;
         this.name = name;
         this.dob = dob;
-        this.dod = dod;
         this.gender = gender;
         this.mother = mother;
         this.father = father;
-        this.children = new ArrayList<Human>();
+        this.dod = dod;
+        this.children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate dob) {
-        this(name, dob, null, gender, null, null);
+    public Human(int id, String name, Gender gender, LocalDate dob) {
+        this(id, name, dob, null, gender, null, null);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -81,12 +88,14 @@ public class Human implements Serializable {
     }
 
     public void addParent(Human parent) {
+
         if (parent.gender.equals(Gender.Male)) {
             setFather(parent);
         }
         else if (parent.gender.equals(Gender.Female)) {
             setMother(parent);
         }
+
     }
 
     private void setMother(Human mother) {
@@ -134,7 +143,9 @@ public class Human implements Serializable {
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Имя: ");
+        sb.append("Id: ");
+        sb.append(getId());
+        sb.append(", Имя: ");
         sb.append(getName());
         sb.append(", пол: ");
         sb.append(getGender());
@@ -150,7 +161,7 @@ public class Human implements Serializable {
         return sb.toString();
     }
 
-    public String getMotherInfo() {
+    private String getMotherInfo() {
         String res = "Мать: ";
         Human mother = getMother();
         if (mother == null) {
@@ -162,7 +173,7 @@ public class Human implements Serializable {
         return res;
     }
 
-    public String getFatherInfo() {
+    private String getFatherInfo() {
         String res = "Отец: ";
         Human father = getFather();
         if (father == null) {
@@ -188,5 +199,10 @@ public class Human implements Serializable {
             res.append("отсутствуют");
         }
         return res.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getInfo();
     }
 }
