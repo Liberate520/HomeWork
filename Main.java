@@ -15,6 +15,9 @@ public class Main {
         familyTree.sortByName();
         System.out.println(familyTree);
 
+        familyTree.sortByGender();
+        System.out.println(familyTree);
+
         /**
          * Для записи в файл
          */

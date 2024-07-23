@@ -34,6 +34,10 @@ public class Human implements Serializable, Comparable<Human> {
         return this.name;
     }
 
+    public Gender getGender() {
+        return this.gender;
+    }
+
     public int getAge() {
         int age;
 
