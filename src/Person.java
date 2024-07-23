@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class Person implements Serializable {
+class Person implements GenTreeService<Person> {
 
     private String name;
     private LocalDate birthDate;
@@ -44,6 +44,11 @@ class Person implements Serializable {
 
     public Person getMother() {
         return mother;
+    }
+
+    @Override
+    public List<Person> children() {
+        return List.of();
     }
 
     public void setMother(Person mother) {
