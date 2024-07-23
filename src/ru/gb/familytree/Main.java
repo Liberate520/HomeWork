@@ -5,7 +5,6 @@ import ru.gb.familytree.human.Gender;
 import ru.gb.familytree.human.Human;
 import ru.gb.familytree.writer.FileHandler;
 
-import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +54,19 @@ public class Main {
             menu();
             menuPoint = scanner.nextInt();
         }
+    }
+
+    public static void menu() {
+        StringBuilder result = new StringBuilder();
+        result.append("Меню:").append("\n")
+                .append("1 - Вывести список людей входящих в семейное древо.").append("\n")
+                .append("2 - Построть фамильное древо человека.").append("\n")
+                .append("3 - Создать семейное древо.").append("\n")
+                .append("4 - Восстановить семейное древо из файла.").append("\n")
+                .append("5 - Сохранение семейного древа в файл.").append("\n")
+                .append("6 - Выход.").append("\n").append("\n")
+                .append("Выберите пункт меню: ");
+        System.out.println(result);
     }
 
     public static void createFamilyTree(List<Human> list, FamilyTree familyTree) {
@@ -111,18 +123,5 @@ public class Main {
         familyTree.addHuman(list.get(3));
         familyTree.addHuman(list.get(4));
         familyTree.addHuman(list.getLast());
-    }
-
-    public static void menu() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Меню:").append("\n")
-                .append("1 - Вывести список людей входящих в семейное древо.").append("\n")
-                .append("2 - Построть фамильное древо человека.").append("\n")
-                .append("3 - Создать семейное древо.").append("\n")
-                .append("4 - Восстановить семейное древо из файла.").append("\n")
-                .append("5 - Сохранение семейного древа в файл.").append("\n")
-                .append("6 - Выход.").append("\n").append("\n")
-                .append("Выберите пункт меню: ");
-        System.out.println(sb);
     }
 }

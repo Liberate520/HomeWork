@@ -13,15 +13,15 @@ public class FileHandler implements Writer {
         ObjectOutputStream objectOutputStream;
         try {
             output = new FileOutputStream(string);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Файл не найден.");
         }
         try {
             objectOutputStream = new ObjectOutputStream(output);
             objectOutputStream.writeObject(list);
             objectOutputStream.close();
-        } catch (IOException e) {
-            System.out.println("1");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -38,7 +38,7 @@ public class FileHandler implements Writer {
             objectOutputStream.writeObject(familyTree);
             objectOutputStream.close();
         } catch (IOException e) {
-            System.out.println("1");
+            e.printStackTrace();
         }
     }
 
@@ -48,17 +48,15 @@ public class FileHandler implements Writer {
         List<Human> result = new ArrayList<>();
         try {
             input = new FileInputStream(string);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Файл не найден.");
         }
         try {
             objectInputStream = new ObjectInputStream(input);
             result = (List<Human>) objectInputStream.readObject();
             objectInputStream.close();
-        } catch (IOException e) {
-            System.out.println("2");
-        } catch (ClassNotFoundException e) {
-            System.out.println("3");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -76,10 +74,8 @@ public class FileHandler implements Writer {
             objectInputStream = new ObjectInputStream(input);
             result = (FamilyTree) objectInputStream.readObject();
             objectInputStream.close();
-        } catch (IOException e) {
-            System.out.println("2");
-        } catch (ClassNotFoundException e) {
-            System.out.println("3");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return result;
     }
