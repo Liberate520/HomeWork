@@ -1,12 +1,19 @@
 package family_tree;
 
 
+import family_tree.family_tree.FamilyTree;
+import family_tree.human.Gender;
+import family_tree.human.Human;
+import family_tree.writer.FileHandler;
+
+import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
+
 
         Human natalya = new Human("Наталья", LocalDate.of(1964, 9, 19), Gender.женский);
         Human ivan = new Human("Иван", LocalDate.of(1967, 1, 16), Gender.мужской);
@@ -34,8 +41,16 @@ public class Main {
         for (Human child : childrenOfIvan) {
             System.out.println(child.getName() + " (Дата рождения: " + child.getBirthDate() + ")");
         }
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath("family_tree.txt");
 
-        System.out.println(familyTree);
+        // Сохранение семейного дерева
+        fileHandler.save(familyTree);
+
+        // Чтение семейного дерева
+        FamilyTree loadedFamilyTree = (FamilyTree) fileHandler.read();
+        System.out.println(loadedFamilyTree);
+
+
     }
-
 }

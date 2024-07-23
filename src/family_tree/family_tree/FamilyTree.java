@@ -1,10 +1,14 @@
-package family_tree;
+package family_tree.family_tree;
 
 
+import family_tree.human.Gender;
+import family_tree.human.Human;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<Human> people;
 
     public FamilyTree() {
