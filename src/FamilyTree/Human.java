@@ -22,6 +22,9 @@ public class Human {
                  LocalDate dob,
                  LocalDate dod,
                  Gender gender,
+                 String occupation,
+                 String nationality,
+                 String placeOfBirth,
                  Human father,
                  Human mother) {
 
@@ -29,6 +32,9 @@ public class Human {
         this.dob=dob;
         this.dod=dod;
         this.gender=gender;
+        this.occupation=occupation;
+        this.nationality=nationality;
+        this.placeOfBirth=placeOfBirth;
 
         this.father=father;
         this.mother=mother;

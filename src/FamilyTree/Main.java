@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Human father = new Human("Иван", LocalDate.of(1981, 5, 1), null, Gender.Male, null, null);
-        Human mother = new Human("Наталья", LocalDate.of(1983, 6, 12), null, Gender.Female, null, null);
+        Human father = new Human("Иван", LocalDate.of(1981, 5, 1), null, Gender.Male, "Инженер", "Русский","Херсон", null, null);
+        Human mother = new Human("Наталья", LocalDate.of(1983, 6, 12), null, Gender.Female, "Доктор","Украинка","Херсон",null, null);
 
         father.setSpouse(mother);
         mother.setSpouse(father);
 
-        Human child1 = new Human("Анастасия", LocalDate.of(2009, 4, 26), null, Gender.Female, father, mother);
-        Human child2 = new Human("Иван", LocalDate.of(2024, 5, 1), null, Gender.Male, father, mother);
-        Human child3 = new Human("Виктор", LocalDate.of(2024, 5, 1), null, Gender.Male, father, mother);
+        Human child1 = new Human("Анастасия", LocalDate.of(2009, 4, 26), null, Gender.Female, "Ученица", "Русская", "Херсон", father, mother);
+        Human child2 = new Human("Иван", LocalDate.of(2024, 5, 1), null, Gender.Male,  null, "Русский", "Сургут", father, mother);
+        Human child3 = new Human("Виктор", LocalDate.of(2024, 5, 1), null, Gender.Male, null, "Русский", "Сургут", father, mother);
 
         father.addChild(child1);
         father.addChild(child2);
