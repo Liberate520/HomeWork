@@ -1,50 +1,41 @@
 package model;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
-public class FamilyTree <T extends FamilyMember> implements Iterable<T>, Serializable {
-
-    private final Map<String, T> members;
+public class FamilyTree<T extends FamilyMember> implements Iterable<T> {
+    private List<T> members;
 
     public FamilyTree() {
-        this.members = new HashMap<>();
+        this.members = new ArrayList<>();
     }
 
-    public void addMember(T human) {
-        members.put(human.getName(), human);
+    public void addMember(T member) {
+        members.add(member);
     }
 
     public T getMember(String name) {
-        return members.get(name);
+        for (T member : members) {
+            if (member.getName().equals(name)) {
+                return member;
+            }
+        }
+        return null;
     }
 
-    public List<T> getChildrenOf(String name) {
-        T parent = getMember(name);
-        return parent != null ? (List<T>) parent.getChildren() : new ArrayList<>();
+    public void sortByName() {
+        Collections.sort(members, Comparator.comparing(FamilyMember::getName));
     }
 
-    public List<T> getParentsOf(String name) {
-        T child = getMember(name);
-        return child != null ? (List<T>) child.getParents() : new ArrayList<>();
-    }
-
-    public List<T> getMembers() {
-        return new ArrayList<>(members.values());
+    public void sortByBirthDate() {
+        Collections.sort(members, Comparator.comparing(FamilyMember::getBirthDate));
     }
 
     @Override
     public Iterator<T> iterator() {
-        return members.values().iterator();
+        return members.iterator();
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (T member : members.values()) {
-            sb.append(member).append("\n");
-        }
-        return sb.toString();
-    }
-
 }

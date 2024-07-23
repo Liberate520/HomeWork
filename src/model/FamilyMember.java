@@ -3,14 +3,13 @@ package model;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface FamilyMember {
-
+public interface FamilyMember<T extends FamilyMember<T>> {
     String getName();
     Gender getGender();
     LocalDate getBirthDate();
     LocalDate getDeathDate();
-    List<FamilyMember> getChildren();
-    List<FamilyMember> getParents();
-
-    void addParent(FamilyMember human);
+    List<T> getChildren();
+    List<T> getParents();
+    void addChild(T child);
+    void addParent(T parent);
 }

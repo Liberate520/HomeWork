@@ -5,47 +5,51 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements FamilyMember, Serializable{
+public class Human implements FamilyMember<Human>, Serializable {
 
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private List<FamilyMember> children;
-    private List<FamilyMember> parents;
-    //private List<Relationship> relationships;
+    private List<Human> children;
+    private List<Human> parents;
 
     public Human(String name, Gender gender, LocalDate birthDate) {
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.deathDate = deathDate;
+        this.deathDate = null;
         this.children = new ArrayList<>();
         this.parents = new ArrayList<>();
-        //this.relationships = new ArrayList<>();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
+    @Override
     public LocalDate getDeathDate() {
         return deathDate;
     }
 
-    public List<FamilyMember> getChildren() {
+    @Override
+    public List<Human> getChildren() {
         return children;
     }
 
-    public List<FamilyMember> getParents() {
+    @Override
+    public List<Human> getParents() {
         return parents;
     }
 
@@ -61,16 +65,18 @@ public class Human implements FamilyMember, Serializable{
         this.deathDate = deathDate;
     }
 
-    public void setParents(List<FamilyMember> parents) {
+    public void setParents(List<Human> parents) {
         this.parents = parents;
     }
 
-    public void addChild(FamilyMember child) {
+    @Override
+    public void addChild(Human child) {
         children.add(child);
         child.addParent(this);
     }
 
-    public void addParent(FamilyMember parent) {
+    @Override
+    public void addParent(Human parent) {
         if (parents.size() < 2) {
             parents.add(parent);
         }
@@ -78,6 +84,21 @@ public class Human implements FamilyMember, Serializable{
 
     @Override
     public String toString() {
-        return name + " (" + gender + "), Birth Date: " + birthDate + (deathDate != null ? ", Death Date: " + deathDate : "");
+        StringBuilder sb = new StringBuilder();
+        sb.append(name)
+                .append(" (").append(gender)
+                .append("), Birth Date: ").append(birthDate);
+        if (deathDate != null) {
+            sb.append(", Death Date: ").append(deathDate);
+        }
+        if (!parents.isEmpty()) {
+            sb.append(", Parents: ");
+            for (Human parent : parents) {
+                sb.append(parent.getName()).append(" ");
+            }
+        } else {
+            sb.append(", Parents: None");
+        }
+        return sb.toString();
     }
 }
