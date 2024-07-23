@@ -1,24 +1,14 @@
 package View;
 
+import Human.Human;
+import Presenter.FamilyTreePresenter;
+import View.Сommand.*;
+
 import java.util.List;
 import java.util.Scanner;
 
-import Human.Human;
-import Presenter.FamilyTreePresenter;
-// import Writer.FamilyTreeFileHandler;
-import View.Сommand.*;
-
-
-
 public class ConsoleFamilyTreeView implements FamilyTreeView {
     private FamilyTreePresenter presenter;
-
-    // Конструктор без параметров
-    public ConsoleFamilyTreeView() {
-        this.scanner = new Scanner(System.in);
-        
-    }
-
     private final Scanner scanner;
 
     public ConsoleFamilyTreeView(FamilyTreePresenter presenter) {
@@ -33,6 +23,24 @@ public class ConsoleFamilyTreeView implements FamilyTreeView {
         }
     }
 
+    // @Override
+    // public void showFamilyTree(List<Human> family) {
+    //     for (Human member : family) {
+    //         System.out.println("Name: " + member.getName());
+    //         showChildren(member, "  ");
+    //     }
+    // }
+
+    // private void showChildren(Human parent, String indent) {
+    //     for (Human child : parent.getChildren()) {
+    //         System.out.println(indent + "Child: " + child.getName());
+    //         showChildren(child, indent + "  ");
+    //     }
+    // }
+
+
+
+
     @Override
     public void displayMessage(String message) {
         System.out.println(message);
@@ -42,6 +50,7 @@ public class ConsoleFamilyTreeView implements FamilyTreeView {
     public void showError(String message) {
         System.err.println(message);
     }
+
     @Override
     public void setPresenter(FamilyTreePresenter presenter) {
         this.presenter = presenter;
