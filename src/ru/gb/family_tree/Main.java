@@ -28,11 +28,12 @@ public class Main {
         if (foundFather != null) {
             FamilyTree childrenTree = familyTree.getChildren(foundFather);
             System.out.println("Children and descendants of " + foundFather.getFullName() + ":");
-            for (Human member : childrenTree.getMembers()) {
-                System.out.println(member.getFullName());
-            }
+            System.out.println(childrenTree);
         } else {
             System.out.println("Father not found.");
         }
+
+        System.out.println("Full family tree:");
+        System.out.println(familyTree);
     }
 }

@@ -44,4 +44,13 @@ public class FamilyTree {
     public List<Human> getMembers() {
         return members;
     }
+
+    @Override
+    public String toString() {
+        return "FamilyTree{" +
+                "members=\n" + members.stream()
+                                     .map(Human::toString)
+                                     .collect(Collectors.joining("\n")) +
+                '}';
+    }
 }

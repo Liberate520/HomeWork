@@ -125,4 +125,10 @@ public class Human {
     public String getFullName() {
         return String.format("%s %s %s", firstName, middleName, lastName);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Human{name='%s', gender=%s, birthDate=%s, placeOfBirth='%s', deathDate=%s}",
+                getFullName(), gender, birthDate, placeOfBirth, deathDate);
+    }
 }
