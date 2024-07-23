@@ -3,12 +3,31 @@ package family_tree;
 import family_tree.family_tree.FamilyTree;
 import family_tree.human.Gender;
 import family_tree.human.Human;
+import family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 import java.util.GregorianCalendar;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        FamilyTree tree = readTree();
+
+        saveTree(tree);
+
+        System.out.println(tree);
+    }
+
+    private static FamilyTree readTree(){
+        FileHandler fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static void saveTree(FamilyTree tree){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(tree);
+    }
+
+    private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
         Human oleg = new Human("Oleg", LocalDate.of(1964, 7, 2), Gender.Male);
@@ -16,7 +35,6 @@ public class Main {
 
         tree.add(oleg);
         tree.add(olga);
-
         tree.setWedding(oleg, olga);
 
         Human christina = new Human("Кристина", LocalDate.of(1989, 2, 23), Gender.Female, oleg, olga);
@@ -31,6 +49,11 @@ public class Main {
 
         tree.add(grandMother);
 
-        System.out.println(tree);
+        return tree;
     }
 }
+
+
+
+
+
