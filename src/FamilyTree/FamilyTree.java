@@ -31,12 +31,7 @@ public class FamilyTree {
     }
 
     public Human getSpouse(Human person) {
-        for (Human member : members) {
-            if (member.getSpouse() != null && member.getSpouse().equals(person)) {
-                return member;
-            }
-        }
-        return null;
+        return person.getSpouse();
     }
 
     public List<Human> getAncestors(Human person) {

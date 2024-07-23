@@ -18,35 +18,36 @@ public class Human {
     private List<Human> children;
     private Human spouse;
 
-    public Human(String name, LocalDate dob,
+    public Human(String name,
+                 LocalDate dob,
                  LocalDate dod,
                  Gender gender,
                  Human father,
                  Human mother) {
 
-        this.name = name;
-        this.dob = dob;
-        this.dod = dod;
-        this.gender = gender;
+        this.name=name;
+        this.dob=dob;
+        this.dod=dod;
+        this.gender=gender;
 
-        this.father = father;
-        this.mother = mother;
-        this.children = new ArrayList<>();
+        this.father=father;
+        this.mother=mother;
+        this.children=new ArrayList<>();
     }
 
     // Getters and Setters
 
-    public String getName() { return name; }
+    public String getName(){return name;}
 
-    public LocalDate getDob() { return dob; }
+    public LocalDate getDob(){return dob;}
 
-    public LocalDate getDod() { return dod; }
+    public LocalDate getDod(){return dod;}
 
-    public Gender getGender() { return gender; }
+    public Gender getGender(){return gender;}
 
-    public String getOccupation() { return occupation;}
+    public String getOccupation(){return occupation;}
 
-    public void setOccupation(String occupation){ this.occupation=occupation;}
+    public void setOccupation(String occupation){this.occupation=occupation;}
 
     public String getNationality(){return nationality;}
 
