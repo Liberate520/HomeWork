@@ -1,9 +1,9 @@
 public class Places {
-    private int homeNumber;
-    private String street;
-    private String region;
-    private String country;
-    private int postalCode;
+    protected int homeNumber;
+    protected String street;
+    protected String region;
+    protected String country;
+    protected int postalCode;
 
     public Places(int homeNumber, String street, String region, String country, int postalCode) {
         this.homeNumber = homeNumber;
@@ -55,9 +55,22 @@ public class Places {
 
     @Override
     public String toString() {
-        return "Home number = " + homeNumber + ", street = " + street + ", region = " + region + ", country = "
-                + country
-                + ", Postal code=" + postalCode + "]";
+        return getInfo();
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Страна: ");
+        sb.append(country);
+        sb.append(", Область: ");
+        sb.append(region);
+        sb.append(", Улица: ");
+        sb.append(street);
+        sb.append(", Дом: ");
+        sb.append(homeNumber);
+        sb.append(", Индекс: ");
+        sb.append(postalCode);
+        return sb.toString();
     }
 
 }

@@ -16,7 +16,12 @@ public class City extends Places {
 
     @Override
     public String toString() {
-        return "City = " + city + ", " + super.toString();
+        return getInfo();
+    }
+
+    @Override
+    public String getInfo() {
+        return "Город: " + city + ", " + super.getInfo();
     }
 
 }

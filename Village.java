@@ -16,7 +16,12 @@ public class Village extends Places {
 
     @Override
     public String toString() {
-        return "Village = " + village + " " + super.toString();
+        return getInfo();
+    }
+
+    @Override
+    public String getInfo() {
+        return "Деревня: " + village + ", " + super.getInfo();
     }
 
 }

@@ -1,5 +1,5 @@
 public class Town extends Places {
-    private String town;
+    protected String town;
 
     public Town(int homeNumber, String street, String region, String country, int postalCode, String town) {
         super(homeNumber, street, region, country, postalCode);
@@ -16,7 +16,12 @@ public class Town extends Places {
 
     @Override
     public String toString() {
-        return "Town = " + town + ", " + super.toString();
+        return getInfo();
+    }
+
+    @Override
+    public String getInfo() {
+        return "Город: " + town + ", " + super.getInfo();
     }
 
 }
