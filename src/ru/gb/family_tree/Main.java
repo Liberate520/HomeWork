@@ -23,9 +23,9 @@ public class Main {
         Human foundFather = familyTree.findByName("John");
         if (foundFather != null) {
             List<Human> children = familyTree.getChildren(foundFather);
-            System.out.println("Children of " + foundFather.getName() + ":");
+            System.out.println("Children of " + foundFather.getFirstName() + ":");
             for (Human child : children) {
-                System.out.println(child.getName());
+                System.out.println(child.getFirstName());
             }
         } else {
             System.out.println("Father not found.");

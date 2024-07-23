@@ -5,15 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Human {
-    private String name;
-    private Gender gender;
     private LocalDate birthDate;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private Gender gender;
+    private Nationality nationality;
+    private String placeOfBirth;
     private Human mother;
     private Human father;
     private List<Human> children;
+    private LocalDate deathDate;
 
-    public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father) {
-        this.name = name;
+    public Human(String firstname, Gender gender, LocalDate birthDate, Human mother, Human father) {
+        this.firstName = firstname;
         this.gender = gender;
         this.birthDate = birthDate;
         this.mother = mother;
@@ -22,12 +27,12 @@ public class Human {
     }
 
     // Геттеры и сеттеры
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstname) {
+        this.firstName = firstname;
     }
 
     public Gender getGender() {
