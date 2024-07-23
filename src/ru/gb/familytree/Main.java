@@ -7,7 +7,6 @@ import ru.gb.familytree.view.ConsoleFamilyTreeView;
 import ru.gb.familytree.view.FamilyTreeView;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,6 +38,7 @@ public class Main {
         viserys.addChild(helaena);
 
         aemma.addChild(rhaenyra);
+
         alisanta.addChild(aegon);
         alisanta.addChild(aemond);
         alisanta.addChild(helaena);
@@ -55,40 +55,8 @@ public class Main {
         helaena.setFather(viserys);
         helaena.setMother(alisanta);
 
-        runMenu(presenter);
-    }
-
-    private static void runMenu(FamilyTreePresenter presenter) {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("\nВыберите действие:");
-            System.out.println("1. Сортировка по имени");
-            System.out.println("2. Сортировка по дате рождения");
-            System.out.println("3. Найти конкретного человека");
-            System.out.println("4. Выйти");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // consume newline
-
-            switch (choice) {
-                case 1:
-                    presenter.sortByName();
-                    break;
-                case 2:
-                    presenter.sortByDob();
-                    break;
-                case 3:
-                    System.out.println("Введите имя человека:");
-                    String name = scanner.nextLine();
-                    presenter.findPersonByName(name);
-                    break;
-                case 4:
-                    System.out.println("Выход из программы.");
-                    return;
-                default:
-                    System.out.println("Неверный выбор. Попробуйте снова.");
-            }
-        }
+        // Запуск консольного меню для взаимодействия с пользователем
+        view.requestUserAction();
     }
 }
 
