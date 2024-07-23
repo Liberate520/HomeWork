@@ -35,7 +35,7 @@ class Person<T extends Person<T>> implements GenTreeService<T> {
 
     public void setFather(T father) {
         this.father = father;
-        if (father != null && father instanceof Person) {
+        if (father != null && father instanceof T) {
             ((Person) father).addChild(this);
         }
     }
@@ -51,7 +51,7 @@ class Person<T extends Person<T>> implements GenTreeService<T> {
 
     public void setMother(T mother) {
         this.mother = mother;
-        if (mother != null && mother instanceof Person) {
+        if (mother != null && mother instanceof T) {
             ((Person) mother).addChild(this);
         }
     }
