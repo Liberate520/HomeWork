@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
-
     private List<T> persons;
 
     public GenealogyTree() {
@@ -38,7 +37,7 @@ class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
             treeString.append("Пол: ").append(person.getGender()).append("\n");
             treeString.append("Отец: ").append(person.getFather() != null ? person.getFather().getName() : "").append("\n");
             treeString.append("Мать: ").append(person.getMother() != null ? person.getMother().getName() : "").append("\n");
-            treeString.append("Дети: ").append(formatChildrenList((List<T>) person.getChildren())).append("\n\n");
+            treeString.append("Дети: ").append(formatChildrenList(person.getChildren())).append("\n\n");
         }
         return treeString.toString();
     }

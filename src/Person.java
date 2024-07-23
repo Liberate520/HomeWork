@@ -1,16 +1,14 @@
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class Person implements GenTreeService<Person> {
-
+class Person<T extends Person<T>> implements GenTreeService<T> {
     private String name;
     private LocalDate birthDate;
     private Gender gender;
-    private Person father;
-    private Person mother;
-    private List<Person> children;
+    private T father;
+    private T mother;
+    private List<T> children;
 
     public Person(String name, LocalDate birthDate, Gender gender) {
         this.name = name;
@@ -31,38 +29,38 @@ class Person implements GenTreeService<Person> {
         return gender;
     }
 
-    public Person getFather() {
+    public T getFather() {
         return father;
     }
 
-    public void setFather(Person father) {
+    public void setFather(T father) {
         this.father = father;
-        if (father != null) {
-            father.addChild(this);
+        if (father != null && father instanceof Person) {
+            ((Person) father).addChild(this);
         }
     }
 
-    public Person getMother() {
+    public T getMother() {
         return mother;
     }
 
     @Override
-    public List<Person> children() {
-        return List.of();
-    }
-
-    public void setMother(Person mother) {
-        this.mother = mother;
-        if (mother != null) {
-            mother.addChild(this);
-        }
-    }
-
-    public List<Person> getChildren() {
+    public List<T> children() {
         return children;
     }
 
-    private void addChild(Person child) {
+    public void setMother(T mother) {
+        this.mother = mother;
+        if (mother != null && mother instanceof Person) {
+            ((Person) mother).addChild(this);
+        }
+    }
+
+    public List<T> getChildren() {
+        return children;
+    }
+
+    private void addChild(T child) {
         children.add(child);
     }
 
