@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import Human.Human;
+import family_tree1.FamilyTree;
+import writer.FileHandler;
 
 public static void main(String[] args) throws ClassNotFoundException {
     FamilyTree familyTree = new FamilyTree();
@@ -63,5 +66,16 @@ public static void main(String[] args) {
     System.out.println(F1.HumansFamily.get(2));
     System.out.println(F1.HumansFamily.get(3));
 
+    System.out.println();
+    FamilyTree.sortByName();
+    for (HumansFamily person : familyTree) {
+        System.out.println(person);
+    }
+
+    System.out.println();
+    FamilyTree.sortByBirthDate();
+    for (HumansFamily person : familyTree) {
+        System.out.println(person);
+    }
 }
 
