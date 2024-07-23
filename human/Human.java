@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     static int count;
 
     private int id;
@@ -137,5 +137,10 @@ public class Human implements Serializable {
     @Override
     public int hashCode() {
         return this.id;
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.getName().compareTo(o.getName());
     }
 }

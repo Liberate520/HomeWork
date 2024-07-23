@@ -1,7 +1,7 @@
 import family_tree.FamilyTree;
 import human.Gender;
 import human.Human;
-import writer.FileHandler;
+// import writer.FileHandler;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
@@ -9,12 +9,21 @@ public class Main {
         fillingFamilyTree(familyTree);
         System.out.println(familyTree);
 
-        FileHandler handler = new FileHandler();
-        handler.write(familyTree, "FamilyTree.bin");
+        familyTree.sortByAge();
+        System.out.println(familyTree);
 
-        FamilyTree ft;
-        ft = handler.read("FamilyTree.bin");
-        System.out.println(ft);
+        familyTree.sortByName();
+        System.out.println(familyTree);
+
+        /**
+         * Для записи в файл
+         */
+        // FileHandler handler = new FileHandler();
+        // handler.write(familyTree, "FamilyTree.bin");
+
+        // FamilyTree ft;
+        // ft = handler.read("FamilyTree.bin");
+        // System.out.println(ft);
     }
 
     public static void fillingFamilyTree(FamilyTree familyTree) {
