@@ -17,22 +17,52 @@ public class Human {
     private List<Human> children;
     private LocalDate deathDate;
 
-    public Human(String firstname, Gender gender, LocalDate birthDate, Human mother, Human father) {
-        this.firstName = firstname;
-        this.gender = gender;
+    public Human(LocalDate birthDate, String firstName, String middleName, String lastName, Gender gender, 
+                 Nationality nationality, String placeOfBirth, Human mother, Human father, LocalDate deathDate) {
         this.birthDate = birthDate;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.nationality = nationality;
+        this.placeOfBirth = placeOfBirth;
         this.mother = mother;
         this.father = father;
+        this.deathDate = deathDate;
         this.children = new ArrayList<>();
     }
 
     // Геттеры и сеттеры
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstname) {
-        this.firstName = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Gender getGender() {
@@ -43,12 +73,20 @@ public class Human {
         this.gender = gender;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public Nationality getNationality() {
+        return nationality;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
     public Human getMother() {
@@ -73,5 +111,18 @@ public class Human {
 
     public void addChild(Human child) {
         this.children.add(child);
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+
+    // Полное имя
+    public String getFullName() {
+        return String.format("%s %s %s", firstName, middleName, lastName);
     }
 }

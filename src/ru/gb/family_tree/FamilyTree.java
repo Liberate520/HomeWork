@@ -20,10 +20,10 @@ public class FamilyTree {
         return human.getChildren();
     }
 
-    // Поиск человека по имени (для удобства)
-    public Human findByName(String name) {
+    // Поиск человека по полному имени (для удобства)
+    public Human findByFullName(String fullName) {
         for (Human member : members) {
-            if (member.getName().equalsIgnoreCase(name)) {
+            if (member.getFullName().equalsIgnoreCase(fullName)) {
                 return member;
             }
         }
