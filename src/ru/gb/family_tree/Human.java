@@ -32,6 +32,27 @@ public class Human {
         this.children = new ArrayList<>();
     }
 
+    public Human(LocalDate birthDate, String firstName, String middleName, String lastName, Gender gender, 
+    Nationality nationality, String placeOfBirth, Human mother, Human father) {
+        this(birthDate, firstName, middleName, lastName, gender, nationality, placeOfBirth, mother, father, null);
+    }
+
+    public Human(LocalDate birthDate, String firstName, String middleName, String lastName, Gender gender, 
+    Nationality nationality, String placeOfBirth, Human mother) {
+        this(birthDate, firstName, middleName, lastName, gender, nationality, placeOfBirth, mother, null, null);
+    }
+    public Human(LocalDate birthDate, String firstName, String middleName, String lastName, Gender gender, 
+    Nationality nationality, String placeOfBirth) {
+        this(birthDate, firstName, middleName, lastName, gender, nationality, placeOfBirth, null, null, null);
+    }
+    public Human(LocalDate birthDate, String firstName, String middleName, String lastName, Gender gender, 
+    Nationality nationality) {
+        this(birthDate, firstName, middleName, lastName, gender, nationality, "", null, null, null);
+    }
+    public Human(LocalDate birthDate, String firstName, String middleName, String lastName, Gender gender) {
+        this(birthDate, firstName, middleName, lastName, gender, null, "", null, null, null);
+    }
+
     // Геттеры и сеттеры
     public LocalDate getBirthDate() {
         return birthDate;
