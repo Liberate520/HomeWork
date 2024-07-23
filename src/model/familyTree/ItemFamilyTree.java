@@ -1,4 +1,4 @@
-package familyTree;
+package model.familyTree;
 
 public interface ItemFamilyTree {
     String getName();
