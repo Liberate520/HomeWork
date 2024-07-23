@@ -1,32 +1,32 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.human.enums.Gender;
+
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-//TODO Добавить ID и класс для создания ID
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human>{
+    private int id;
     private String name, surname, patronymic;
     private Gender gender;
     private Human father, mother;
     private List<Human> children;
     private String profession, nationality;
-    private LocalDate dob, dod;
+    private LocalDate dateOfBirthday, dateOfDeath;
     private String birthPlace;
     private String notes;
 
-    public Human(String name, String patronymic, String surname,
+    public Human(int id, String name, String patronymic, String surname,
                  Gender gender, Human father, Human mother,
                  List<Human> children, String profession,
-                 String nationality, LocalDate dob, LocalDate dod,
+                 String nationality, LocalDate dateOfBirthday, LocalDate dateOfDeath,
                  String birthPlace, String notes) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -36,15 +36,15 @@ public class Human implements Serializable {
         this.children = children;
         this.profession = profession;
         this.nationality = nationality;
-        this.dob = dob;
-        this.dod = dod;
+        this.dateOfBirthday = dateOfBirthday;
+        this.dateOfDeath = dateOfDeath;
         this.birthPlace = birthPlace;
         this.notes = notes;
     }
 
-    public Human(String name, String patronymic, String surname,
+    public Human(int id, String name, String patronymic, String surname,
                  Gender gender) {
-        this(name, patronymic, surname, gender, null, null, null, null, null, null, null, null, null);
+        this(id, name, patronymic, surname, gender, null, null, null, null, null, null, null, null, null);
     }
 
     public String getName() {
@@ -83,16 +83,20 @@ public class Human implements Serializable {
         return nationality;
     }
 
-    public LocalDate getDob() {
-        return dob;
+    public LocalDate getDateOfBirthday() {
+        return dateOfBirthday;
     }
 
-    public LocalDate getDod() {
-        return dod;
+    public LocalDate getDateOfDeath() {
+        return dateOfDeath;
     }
 
     public String getBirthPlace() {
         return birthPlace;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setName(String name) {
@@ -123,8 +127,8 @@ public class Human implements Serializable {
         this.children = children;
     }
 
-    public void setDod(LocalDate dod) {
-        this.dod = dod;
+    public void setDateOfDeath(LocalDate dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
     }
 
     public void setGender(Gender gender) {
@@ -139,8 +143,8 @@ public class Human implements Serializable {
         this.nationality = nationality;
     }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
+    public void setDateOfBirthday(LocalDate dateOfBirthday) {
+        this.dateOfBirthday = dateOfBirthday;
     }
 
     public void setBirthPlace(String birthPlace) {
@@ -169,10 +173,10 @@ public class Human implements Serializable {
     }
 
     private String getDodAsStringIfDead(Human human) {
-        if (human.getDod() == null) {
+        if (human.getDateOfDeath() == null) {
             return "";
         }
-        return "Дата смерти: " + showRuDate(human.getDod()) + '\n';
+        return "Дата смерти: " + showRuDate(human.getDateOfDeath()) + '\n';
     }
 
     private String getFatherAsStringIfThere(Human human) {
@@ -214,10 +218,10 @@ public class Human implements Serializable {
     }
 
     private String getDobAsStringIfThere(Human human) {
-        if (human.getDob() == null) {
+        if (human.getDateOfBirthday() == null) {
             return "Неизвестно";
         }
-        return showRuDate(human.getDob());
+        return showRuDate(human.getDateOfBirthday());
     }
 
     private String getBirthPlaceIfThere(Human human) {
@@ -250,21 +254,28 @@ public class Human implements Serializable {
         return old;
     }
 
+    public int getAge(){
+        Period period = Period.between(getDateOfBirthday(), LocalDate.now());
+        return period.getYears();
+    }
+
     private String showAgeAsStringIfAlive(Human human) {
-        if (human.getDob() == null) {
+        if (human.getDateOfBirthday() == null) {
             return "Дата рождения неизвестна";
         }
-        Period period = Period.between(human.getDob(), LocalDate.now());
-        if (human.getDod() != null) {
-            period = Period.between(human.getDob(), human.getDod());
-            return "Умер в возрасте: " + period.getYears() + " " + generateStringAge(period.getYears());
+        int age = human.getAge();
+        if (human.getDateOfDeath() != null) {
+            Period period = Period.between(human.getDateOfBirthday(), human.getDateOfDeath());
+            return "Умер в возрасте: " + period.getYears() + " " + generateStringAge(period.getYears()) + "\n" +
+                    "Сейчас было бы: " +  age + " " + generateStringAge(age);
         }
-        return period.getYears() + " " + generateStringAge(period.getYears());
+        return age + " " + generateStringAge(age);
     }
 
     @Override
     public String toString() {
         return "---------------------------" + '\n' +
+                "ID: " + id + '\n' +
                 "ФИО: " + name + " " + patronymic + " " + surname + " " + '\n' +
                 "Пол: " + getRuGender(gender) + '\n' +
                 "Отец: " + getFatherAsStringIfThere(this) + '\n' +
@@ -277,5 +288,11 @@ public class Human implements Serializable {
                 "Место рождения: " + getBirthPlaceIfThere(this) + '\n' +
                 showAgeAsStringIfAlive(this) + '\n' +
                 getNotesIfThere(this) + '\n';
+    }
+
+
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
     }
 }

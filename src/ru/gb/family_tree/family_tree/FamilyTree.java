@@ -1,12 +1,16 @@
 package ru.gb.family_tree.family_tree;
 
-import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.human.enums.Gender;
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.human.comparators.HumanComparatorByAge;
+import ru.gb.family_tree.human.comparators.HumanComparatorByBirthday;
+import ru.gb.family_tree.human.comparators.HumanComparatorById;
+import ru.gb.family_tree.human.comparators.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     List<Human> familyTree;
 
     public FamilyTree(List<Human> familyTree) {
@@ -38,6 +42,40 @@ public class FamilyTree implements Serializable {
                 }
             }
         }
+    }
+
+    private void setChildren(Human parent, Human child){
+        if (parent.getChildren() != null){
+            List<Human> children = parent.getChildren();
+            children.add(child);
+            parent.setChildrenList(children);
+        } else {
+            List<Human> children = new ArrayList<>();
+            children.add(child);
+            parent.setChildrenList(children);
+        }
+    }
+
+    public void setChildrenByParents(){
+        for (Human human : familyTree){
+            if (human.getMother() != null){
+                Human mother = human.getMother();
+                setChildren(mother, human);
+            }
+            if (human.getFather() != null){
+                Human father = human.getFather();
+                setChildren(father, human);
+            }
+        }
+    }
+
+    public Human getHumanById(int id){
+        for(Human human : familyTree){
+            if(human.getId() == id){
+                return human;
+            }
+        }
+        return null;
     }
 
     // разбиваем строку запроса по пробелу, Создаем HashMap с количеством совпадений по Фамилии Имени и Отчеству,
@@ -109,5 +147,26 @@ public class FamilyTree implements Serializable {
             result.append(human);
         }
         return result.toString();
+    }
+
+    public void sortByName(){
+        familyTree.sort(new HumanComparatorByName());
+    }
+
+    public void sortByAge(){
+        familyTree.sort(new HumanComparatorByAge());
+    }
+
+    public void sortByBirthday(){
+        familyTree.sort(new HumanComparatorByBirthday());
+    }
+
+    public void sortById(){
+        familyTree.sort(new HumanComparatorById());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(familyTree);
     }
 }
