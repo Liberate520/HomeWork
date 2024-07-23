@@ -1,10 +1,9 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-class GenealogyTree implements Serializable {
+class GenealogyTree implements Serializable, Iterable<Person> {
 
     private List<Person> persons;
 
@@ -14,6 +13,19 @@ class GenealogyTree implements Serializable {
 
     public void addPerson(Person person) {
         persons.add(person);
+    }
+
+    public void sortByName() {
+        persons.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
+    }
+
+    public void sortByBirthDate() {
+        persons.sort((p1, p2) -> p1.getBirthDate().compareTo(p2.getBirthDate()));
+    }
+
+    @Override
+    public Iterator<Person> iterator() {
+        return persons.iterator();
     }
 
     @Override
@@ -41,11 +53,4 @@ class GenealogyTree implements Serializable {
         return childrenList.toString();
     }
 
-    public void sortByName() {
-        Collections.sort(persons, Comparator.comparing(Person::getName));
-    }
-
-    public void sortByBirthDate() {
-        Collections.sort(persons, Comparator.comparing(Person::getBirthDate));
-    }
 }

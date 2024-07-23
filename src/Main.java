@@ -27,22 +27,20 @@ public class Main {
         System.out.println("Генеалогическое древо:");
         System.out.println(genealogyTree);
 
+
+        System.out.println("Генеалогическое древо отсортированное по имени:");
         genealogyTree.sortByName();
-        System.out.println("\nСписок отсортированный по имени:");
         System.out.println(genealogyTree);
 
+        System.out.println("\nГенеалогическое древо отсортированное по дате рождения:");
         genealogyTree.sortByBirthDate();
-        System.out.println("\nСписок отсортированный по дате рождения:");
         System.out.println(genealogyTree);
-
 
         FileHandler fileHandler = new FileHandler();
         GenealogyTree loadedTree = readTree();
         saveTree(genealogyTree);
 
     }
-
-
 
     private static GenealogyTree readTree() {
         FileHandler fileHandler = new FileHandler();
