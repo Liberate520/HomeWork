@@ -1,3 +1,7 @@
+import family_tree.FamilyTree;
+import human.Gender;
+import human.Human;
+import writer.FileHandler;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
