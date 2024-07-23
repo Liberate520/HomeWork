@@ -33,6 +33,7 @@ public class Main {
             System.out.println("Father not found.");
         }
 
+        System.out.println("\n");
         System.out.println("Full family tree:");
         System.out.println(familyTree);
     }
