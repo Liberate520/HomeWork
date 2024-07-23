@@ -1,10 +1,13 @@
+package human;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private Gender gender;
     private LocalDate birthDate, deathDate;
@@ -32,15 +35,15 @@ public class Human {
     }
 
     public boolean addChild(Human child) {
-        if(!this.children.contains(child)){
+        if (!this.children.contains(child)) {
             this.children.add(child);
             return true;
         }
         return false;
     }
 
-    public boolean addParent(Human parent){
-        if(parent.gender.equals(Gender.Female)){
+    public boolean addParent(Human parent) {
+        if (parent.gender.equals(Gender.Female)) {
             setMother(parent);
         } else if (parent.gender.equals(Gender.Male)) {
             setFather(parent);
@@ -64,7 +67,7 @@ public class Human {
         return father;
     }
 
-    public Human getSpause(){
+    public Human getSpause() {
         return this.spause;
     }
 
@@ -85,7 +88,7 @@ public class Human {
         return Objects.hash(name, gender, birthDate, deathDate, spause, mother, father, children);
     }
 
-    public void setDeathDate(LocalDate deathDate){
+    public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }
 
@@ -96,35 +99,42 @@ public class Human {
         }
         return getPeriod(this.birthDate, date);
     }
-    private int getPeriod(LocalDate startPeriod, LocalDate endPeriod){
+
+    private int getPeriod(LocalDate startPeriod, LocalDate endPeriod) {
         Period diff = Period.between(startPeriod, endPeriod);
         return diff.getYears();
     }
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
-    private String getGender(){
+
+    private String getGender() {
         return this.gender.toString();
     }
-    private String getSpauseInfo(){
+
+    private String getSpauseInfo() {
         if (this.spause == null)
             return "нет";
         return getSpause().name;
     }
-    private String getMotherInfo(){
+
+    private String getMotherInfo() {
         if (this.mother == null)
             return "нет информации";
         return this.mother.name;
     }
-    private String getFatherInfo(){
+
+    private String getFatherInfo() {
         if (this.father == null)
             return "нет информации";
         return this.father.name;
     }
-    private String getChildrenInfo(){
+
+    private String getChildrenInfo() {
         if (this.children.isEmpty()) {
             return "отсутствуют";
-        }else{
+        } else {
             String[] children = new String[this.children.size()];
             for (int i = 0; i < this.children.size(); i++) {
                 children[i] = this.children.get(i).name;
