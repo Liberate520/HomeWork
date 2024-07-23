@@ -13,8 +13,8 @@ public class Person implements TreeNode<Person> {
     private LocalDate birthDate;
     private Gender gender;
     private List<Person> children;
-    private Person father; // Для хранения ссылки на отца
-    private Person mother; // Для хранения ссылки на мать
+    private Person father;
+    private Person mother;
 
     public Person(String name, String birthDate, Gender gender) {
         this.id = idCounter++;
@@ -60,15 +60,12 @@ public class Person implements TreeNode<Person> {
         this.mother = mother;
     }
 
-    @Override
     public void addChild(Person child) {
-        children.add(child);
+        this.children.add(child);
     }
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Name: " + name + ", Birth Date: " + birthDate + ", Gender: " + gender + 
-               ", Father ID: " + (father != null ? father.getId() : "Unknown") + 
-               ", Mother ID: " + (mother != null ? mother.getId() : "Unknown");
+        return String.format("ID: %d, Имя: %s, Дата рождения: %s, Пол: %s", id, name, birthDate, gender);
     }
 }

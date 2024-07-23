@@ -4,33 +4,33 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree<T extends Person> implements Serializable {
+public class FamilyTree implements Serializable {
     private static final long serialVersionUID = 1L;
-    private List<T> members;
+    private List<Person> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
-    public void addMember(T person) {
+    public void addMember(Person person) {
         members.add(person);
     }
 
-    public T getMemberById(int id) {
+    public Person getMemberById(int id) {
         return members.stream()
                 .filter(member -> member.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
-    public List<T> getMembers() {
+    public List<Person> getMembers() {
         return members;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (T member : members) {
+        for (Person member : members) {
             sb.append(member).append("\n");
         }
         return sb.toString();

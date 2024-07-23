@@ -4,21 +4,16 @@ import java.util.Scanner;
 
 public class ConsoleView implements View {
     private Scanner scanner;
+    private Menu menu;
 
     public ConsoleView() {
         this.scanner = new Scanner(System.in);
+        this.menu = new Menu(); // Инициализация Menu
     }
 
     @Override
     public void showMenu() {
-        System.out.println("1. Добавить человека");
-        System.out.println("2. Показать дерево");
-        System.out.println("3. Сортировать по имени");
-        System.out.println("4. Сортировать по дате рождения");
-        System.out.println("5. Сохранить дерево");
-        System.out.println("6. Загрузить дерево");
-        System.out.println("7. Выйти");
-        System.out.print("Выберите опцию: ");
+        menu.display(); // Вызов метода для отображения меню
     }
 
     @Override
@@ -27,23 +22,33 @@ public class ConsoleView implements View {
     }
 
     @Override
-    public void displayError(String errorMessage) {
-        System.err.println(errorMessage);
+    public void displayError(String message) {
+        System.err.println(message);
     }
 
     @Override
-    public String getUserInput(String prompt) { // SRP: добавлен метод для получения ввода пользователя
-        System.out.print(prompt);
-        return scanner.next();
+    public UserInput getUserInput() {
+        String name = getUserInput("Введите имя: ");
+        String birthDate = getUserInput("Введите дату рождения (в формате yyyy-mm-dd): ");
+        String genderStr = getUserInput("Введите пол (MALE или FEMALE): ");
+        Integer fatherId = getUserIntInput("Введите ID отца (или 0, если нет): ");
+        Integer motherId = getUserIntInput("Введите ID матери (или 0, если нет): ");
+        return new UserInput(name, birthDate, genderStr, fatherId != 0 ? fatherId : null, motherId != 0 ? motherId : null);
     }
 
     @Override
-    public int getUserIntInput(String prompt) { // SRP: добавлен метод для получения ввода пользователя
+    public int getUserIntInput(String prompt) {
         System.out.print(prompt);
         while (!scanner.hasNextInt()) {
-            scanner.next();  // Очистка неверного ввода
-            System.out.print("Пожалуйста, введите число: ");
+            System.out.println("Пожалуйста, введите целое число.");
+            scanner.next();
         }
         return scanner.nextInt();
+    }
+
+    @Override
+    public String getUserInput(String prompt) {
+        System.out.print(prompt);
+        return scanner.next();
     }
 }

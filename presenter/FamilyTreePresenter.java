@@ -1,68 +1,48 @@
 package presenter;
 
-import model.Person;
+import model.commands.*;
 import model.services.FamilyTreeService;
 import view.View;
 
-public class FamilyTreePresenter {
-    private FamilyTreeService<Person> service;
-    private View view;
+import java.util.HashMap;
+import java.util.Map;
 
-    public FamilyTreePresenter(FamilyTreeService<Person> service, View view) {
+public class FamilyTreePresenter {
+    private FamilyTreeService service;
+    private View view;
+    private Map<Integer, Command> commandMap;
+
+    public FamilyTreePresenter(FamilyTreeService service, View view) {
         this.service = service;
         this.view = view;
+        this.commandMap = new HashMap<>();
+        initializeCommands();
+    }
+
+    private void initializeCommands() {
+        commandMap.put(1, new AddPersonCommand(service, view));
+        commandMap.put(2, new ShowTreeCommand(service, view));
+        commandMap.put(3, new SortByNameCommand(service, view));
+        commandMap.put(4, new SortByBirthDateCommand(service, view));
+        commandMap.put(5, new SaveTreeCommand(service, view));
+        commandMap.put(6, new LoadTreeCommand(service, view));
+        commandMap.put(7, new ExitCommand(view));
     }
 
     public void start() {
-        boolean exit = false;
-        while (!exit) {
+        boolean running = true;
+        while (running) {
             view.showMenu();
-            int choice = view.getUserIntInput("");
-            switch (choice) {
-                case 1 -> addPerson();
-                case 2 -> showTree();
-                case 3 -> sortByName();
-                case 4 -> sortByBirthDate();
-                case 5 -> saveTree();
-                case 6 -> loadTree();
-                case 7 -> exit = true;
-                default -> view.displayError("Неверный выбор. Пожалуйста, попробуйте снова.");
+            int choice = view.getUserIntInput("Выберите действие: ");
+            Command command = commandMap.get(choice);
+            if (command != null) {
+                command.execute();
+                if (command instanceof ExitCommand) {
+                    running = false;
+                }
+            } else {
+                view.displayError("Неверный выбор, пожалуйста, попробуйте снова.");
             }
         }
-    }
-
-    private void addPerson() {
-        String name = view.getUserInput("Введите имя: ");
-        String birthDate = view.getUserInput("Введите дату рождения (в формате yyyy-mm-dd): ");
-        String genderStr = view.getUserInput("Введите пол (MALE или FEMALE): ");
-        Integer fatherId = view.getUserIntInput("Введите ID отца (или 0, если нет): ");
-        Integer motherId = view.getUserIntInput("Введите ID матери (или 0, если нет): ");
-        service.addPerson(name, birthDate, genderStr, fatherId != 0 ? fatherId : null, motherId != 0 ? motherId : null);
-    }
-
-    private void showTree() {
-        view.display(service.showTree());
-    }
-
-    private void sortByName() {
-        service.sortByName();
-        view.display("Дерево отсортировано по имени.");
-    }
-
-    private void sortByBirthDate() {
-        service.sortByBirthDate();
-        view.display("Дерево отсортировано по дате рождения.");
-    }
-
-    private void saveTree() {
-        String filename = view.getUserInput("Введите имя файла для сохранения: ");
-        service.saveTree(filename);
-        view.display("Дерево сохранено в файл " + filename);
-    }
-
-    private void loadTree() {
-        String filename = view.getUserInput("Введите имя файла для загрузки: ");
-        service.loadTree(filename);
-        view.display("Дерево загружено из файла " + filename);
     }
 }
