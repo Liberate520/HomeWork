@@ -64,6 +64,6 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "human.Person [Name: " + name + ", Age: " + age + ", human.Gender: " + gender + "]";
+        return "[Name: " + name + ", Age: " + age + ", Gender: " + gender + "]";
     }
 }

@@ -3,11 +3,9 @@ package family_tree;
 import human.Person;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Person> {
     private Map<String, Person> persons;
 
     public FamilyTree() {
@@ -29,4 +27,24 @@ public class FamilyTree implements Serializable {
         }
         return null;
     }
+
+    public  List<Person> PersonSortedByName() {
+        List<Person> sortedPersons = new ArrayList<>(persons.values());
+        sortedPersons.sort(Comparator.comparing(Person::getName));
+
+        return sortedPersons;
+    }
+
+    public  List<Person> PersonsSortedByBirthDay() {
+        List<Person> sortedPersons = new ArrayList<>(persons.values());
+        sortedPersons.sort(Comparator.comparing(Person::getAge));
+
+        return sortedPersons;
+    }
+
+    @Override
+    public Iterator<Person> iterator() {
+        return this.persons.values().iterator();
+    }
+
 }
