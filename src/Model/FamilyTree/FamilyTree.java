@@ -2,8 +2,8 @@ package Model.FamilyTree;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.function.Supplier;
 
-import Model.Creator;
 import Model.Creatures.Gender.Gender;
 import Model.Interface.Creature;
 import Model.Creatures.Iterator.CreatureIterator;
@@ -11,14 +11,13 @@ import Model.FamilyTree.Comparators.*;
 import Model.Interface.FamilyTreeInterface;
 
 public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable<T>, FamilyTreeInterface<T> {
-    private static final Creator creator = new Creator();
     private static int lastID = 0;
     private final int ID = lastID++;
     private final ArrayList<T> familyTree = new ArrayList<>();
-    private final Creator.creatureType genericType;
+    private final Supplier<T> supplier;
 
-    public FamilyTree(Creator.creatureType genericType){
-        this.genericType = genericType;
+    public FamilyTree(Supplier<T> supplier){
+        this.supplier = supplier;
     }
 
     public void addCreature(T creature) {
@@ -34,7 +33,13 @@ public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable
     }
 
     public void addCreature(String name, String surname, Gender gender){
-        addCreature((T) creator.createNewCreature(name, surname, gender, this.genericType));
+        T creature = supplier.get();
+
+        creature.setName(name);
+        creature.setSurname(name);
+        creature.setGender(gender);
+
+        addCreature(creature);
     }
 
     public void updateTree(){

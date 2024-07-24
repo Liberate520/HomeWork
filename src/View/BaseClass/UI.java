@@ -1,8 +1,10 @@
 package View.BaseClass;
 
+import View.Interface.UIView;
+
 import java.util.Scanner;
 
-public abstract class UI {
+public abstract class UI implements UIView {
     protected final Scanner scanner;
     protected final String CONSOLE_NAME;
     protected boolean runApp = true;
