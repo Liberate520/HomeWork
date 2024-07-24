@@ -28,7 +28,8 @@ public class FamilyTree {
             people.add(human);
             human.setId(humansId++);
             
-            addToParents(human);
+            addToFather(human);
+            addToMother(human);
             addToChildren(human);
         
             return true;
@@ -37,16 +38,23 @@ public class FamilyTree {
     }
 
     
-    private void addToParents(Human human){
-        for (Human parent : human.getParents()) {
-            parent.addChild(human);
+    private void addToFather(Human human){
+        if (human.getFather() != null){
+            human.getFather().addChild(human);
+        }
+    }
+
+    private void addToMother(Human human){
+        if (human.getMother() != null){
+            human.getMother().addChild(human);
         }
     }
     
     
     private void addToChildren(Human human){
         for (Human child : human.getChildren()) {
-            child.addParent(human);
+            child.addFather(human);
+            child.addMother(human);
         }
     }
 
