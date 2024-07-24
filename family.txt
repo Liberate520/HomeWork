@@ -1,0 +1,2 @@
+Person{id=3, name='Deti1', birthDate=Thu Mar 03 00:00:00 MSK 2005, gender=MALE, father=Ivan, mother=Maria, children=}
+Person{id=4, name='Deti2', birthDate=Wed Apr 04 00:00:00 MSK 2007, gender=FEMALE, father=Ivan, mother=Maria, children=}
