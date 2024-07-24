@@ -1,9 +1,36 @@
 package src;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
+        FamilyTree myTree = createTree();
+        
+        
+        // Save the tree and read it from file
+        writeTree(myTree);
+        readTree();
+        // Print entire tree (actions should be done from an imported tree)
+        myTree.printTree();
+        // Find family member by name
+        System.out.println(myTree.getMember("Orvin Smith"));        
+    }
+
+    private static FamilyTree readTree() throws ClassNotFoundException, IOException {
+        FileHandler fh = new FileHandler();
+        return(FamilyTree) fh.read();
+    }
+
+    private static void writeTree (FamilyTree tree) throws FileNotFoundException, IOException {
+        FileHandler fh = new FileHandler();
+        fh.write(tree);
+    }
+
+    private static FamilyTree createTree() {
+        FamilyTree familytree = new FamilyTree();
+
         Human member1 = new Human("John Smith", LocalDate.of(1965, 1, 2), null, Gender.Male, null, null, null);
         Human member2 = new Human("Jane Smith", LocalDate.of(1967, 2, 23), null, Gender.Female, null, null, null);
         Human member3 = new Human("Orvin Smith", LocalDate.of(1985, 6, 15), null, Gender.Male, member2, member1, null);
@@ -17,8 +44,7 @@ public class Main {
         Human member11 = new Human( "Bethany Smith", LocalDate.of(2005, 3, 4), null, Gender.Female, null, null, null);
 
         
-        // Adding members to family tree
-        FamilyTree familytree = new FamilyTree();
+        // Adding members to family tree        
         familytree.addMember(member1);
         familytree.addMember(member2);
         familytree.addMember(member3);
@@ -31,28 +57,34 @@ public class Main {
         familytree.addMember(member10);
         familytree.addMember(member11);
 
-        // Setting date of death if somebody died
+        // Setting date of death 
         member1.setDeathDate(LocalDate.of(2023,1,14));
 
         // Setting parents and children
         member7.setChildren(member11);
+        member5.setChildren(member11);
         member3.setChildren(member8);
         member3.setChildren(member9);
         member3.setChildren(member10);
-        member7.setMother(member2);
-        member7.setFather(member1);
+        member6.setChildren(member8);
+        member6.setChildren(member9);
+        member6.setChildren(member10);        
+        member1.setChildren(member3);
+        member1.setChildren(member4);
+        member1.setChildren(member5);
+        member2.setChildren(member3);
+        member2.setChildren(member4);
+        member2.setChildren(member5);        
+        member11.setMother(member5);
+        member11.setFather(member7);
+        member10.setMother(member6);
+        member10.setFather(member3);
+        member9.setMother(member6);
+        member9.setFather(member3);
+        member8.setMother(member6);
+        member8.setFather(member3);
 
-        // Print entire tree
-        familytree.printTree();
-        // Print information of one member
-        System.out.println(member3);
-        // Print the name of desired family member
-        System.out.println(member11.getName() + '\n');
-        // Find family member by name
-        System.out.println(familytree.getMember("Orvin Smith"));
+        
+        return familytree;
     }
-
-    
-    
-
 }
