@@ -1,10 +1,11 @@
 package human;//package ru.gb.family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     static int count = 0;
     private int id;
     private String name;
@@ -96,8 +97,12 @@ public class Human {
         return this.children;
     }
 
-    public void setChild(Human child) {
+    public boolean addChild(Human child) {
+        if (!this.children.contains(child)){
         this.children.add(child);
+        return true;
+        }
+        return false;
     }
 
     @Override
