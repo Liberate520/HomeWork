@@ -1,9 +1,15 @@
 package Family_tree;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import Family_tree.writer.FileHandler;
+
+import Family_tree.family_tree.FamilyTree;
+import Family_tree.human.Gender;
+import Family_tree.human.Human;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         FamilyTree familyTree = new FamilyTree();
 
         Human dad = new Human("Aibek", Gender.Male, LocalDate.of(1970, 9, 4), null, null, null, null);
@@ -15,13 +21,12 @@ public class Main {
         familyTree.getMarried(dad, mom);
 
 
-        Human bro = new Human("Askar", Gender.Male, LocalDate.of(1994,4,10), null, null, null, null);
+        Human bro = new Human("Askar", Gender.Male, LocalDate.of(1994,4,10), null, null, dad, mom);
         Human me = new Human("Kamila", Gender.Female, LocalDate.of(1999,4,7), null, null, null, null);
         
         familyTree.addHuman(bro);
         familyTree.addHuman(me);
 
-        dad.addChild(bro);
         mom.addChild(me);     
         
         
@@ -32,32 +37,40 @@ public class Main {
         familyTree.addHuman(grandma1);
 
         familyTree.getMarried(grandma1, grandpa1);
+        dad.addMother(grandma1);
         
         grandpa1.addChild(dad);
-        
         familyTree.getDivorsed(grandma1, grandpa1);
+        
        
-        Human grandpa2 = new Human("Pernebek", Gender.Male, LocalDate.of(1936,11,26), LocalDate.of(2022,12,31),null, null, null);
-        Human grandma2 = new Human("Patima", Gender.Female, LocalDate.of(1941,11,20), null, null, null, null);
+        // Human grandpa2 = new Human("Pernebek", Gender.Male, LocalDate.of(1936,11,26), LocalDate.of(2022,12,31),null, null, null);
+        // Human grandma2 = new Human("Patima", Gender.Female, LocalDate.of(1941,11,20), null, null, null, null);
 
-        familyTree.addHuman(grandpa2);
-        familyTree.addHuman(grandma2); 
+        // familyTree.addHuman(grandpa2);
+        // familyTree.addHuman(grandma2); 
 
-        familyTree.getMarried(grandpa2,grandma2);
+        // familyTree.getMarried(grandpa2,grandma2);
         
-        mom.addParent(grandma2);
+        // mom.addMother(grandpa2);
         
 
-        Human hubby = new Human("Yerke", Gender.Male, LocalDate.of(1991, 11, 15));
+        // Human hubby = new Human("Yerke", Gender.Male, LocalDate.of(1991, 11, 15));
         
-        familyTree.addHuman(hubby);
-        familyTree.getMarried(me, hubby);
+        // familyTree.addHuman(hubby);
+        // familyTree.getMarried(me, hubby);
 
-        Human SIL = new Human("Bota", Gender.Female, LocalDate.of(1999, 4, 16));
+        // Human SIL = new Human("Bota", Gender.Female, LocalDate.of(1999, 4, 16));
         
-        familyTree.addHuman(SIL);
-        familyTree.getMarried(bro, SIL);
+        // familyTree.addHuman(SIL);
+        // familyTree.getMarried(bro, SIL);
         
         System.out.println(familyTree);
+
+        FileHandler fh = new FileHandler();
+        fh.write(familyTree);
+        System.out.println("Serialization has been successfully completed!");
+        
+        fh.read();
+        System.out.println("The object has been successfully deserialized!");
     }
 }
