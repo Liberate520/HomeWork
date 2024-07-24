@@ -17,19 +17,19 @@ public class Main {
 
         FamilyTree familyTree = new FamilyTree();
 
-        Human stepan = new Human("Stepan", Gender.Male, LocalDate.of(1951, 10, 03), LocalDate.of(2015, 07, 23), null, null);
-        Human valentina = new Human("Valentina", Gender.Female, LocalDate.of(1953, 9, 11));
-        Human valentina1 = new Human("Valentina", Gender.Female, LocalDate.of(1953, 9, 11));
-        Human natasha = new Human("Natasha", Gender.Female, LocalDate.of(1960, 12, 22), LocalDate.of(2021, 1, 21), null, null, null);
+        Human stepan = new Human("Степан", Gender.Male, LocalDate.of(1951, 10, 03), LocalDate.of(2015, 07, 23), null, null);
+        Human valentina = new Human("Валентина", Gender.Female, LocalDate.of(1953, 9, 11));
+        Human valentina1 = new Human("Валентина", Gender.Female, LocalDate.of(1953, 9, 11));
+        Human natasha = new Human("Наталья", Gender.Female, LocalDate.of(1960, 12, 22), LocalDate.of(2021, 1, 21), null, null, null);
         familyTree.addHuman(stepan);
         familyTree.addHuman(valentina);
         familyTree.addHuman(valentina1); // добавлена для проверки работы метода @Override public boolean equals(Object obj) файла Human
         familyTree.addHuman(natasha);
 
-        Human olga = new Human("Olga", Gender.Female, LocalDate.of(1984, 12, 17), null, null, natasha, null);
+        Human olga = new Human("Ольга", Gender.Female, LocalDate.of(1984, 12, 17), null, null, natasha, null);
         familyTree.addHuman(olga);
 
-        Human petr = new Human("Petr", Gender.Male, LocalDate.of(1978, 04, 30));
+        Human petr = new Human("Петр", Gender.Male, LocalDate.of(1978, 04, 30));
         familyTree.addHuman(petr);
 
 //        olga.setMother(natasha);
