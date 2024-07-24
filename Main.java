@@ -16,6 +16,7 @@ public class Main {
         Human maria = new Human("Мария", Gender.Женский, LocalDate.of(2002, 10, 25), null);
         tolya.addParent(sasha, maria);
         familyTree.addMembers(sasha, maria);
+        System.out.println();
         System.out.println("Родители Толи: \n" + sasha + "\n" + maria + "\n");
         
         Human petya = new Human("Петя", Gender.Мужской, LocalDate.of(1980, 1, 25), null);
