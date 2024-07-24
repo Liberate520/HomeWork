@@ -10,7 +10,7 @@ import ru.gb.family_tree.human.comparators.HumanComparatorByName;
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree<T extends FamilyTreeItem> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, Iterable<T> {
     List<T> familyTree;
 
     public FamilyTree(List<T> familyTree) {
