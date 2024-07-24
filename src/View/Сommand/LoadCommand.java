@@ -21,6 +21,6 @@ public class LoadCommand implements Command {
         String filename = scanner.nextLine();
         Writer fileHandler = new FamilyTreeFileHandler();
         fileHandler.setPath(filename);
-        presenter.onLoad(fileHandler);
+        presenter.onLoad(fileHandler, filename); // Добавлен аргумент filename
     }
 }

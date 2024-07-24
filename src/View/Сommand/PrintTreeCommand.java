@@ -11,6 +11,6 @@ public class PrintTreeCommand implements Command {
 
     @Override
     public void execute() {
-        presenter.view.showFamilyTree(presenter.getFamilyTree().getAllElements());
+        presenter.getView().showFamilyTree(presenter.getFamilyTree().getAllElements());
     }
 }

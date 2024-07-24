@@ -4,6 +4,7 @@ import FamilyTree.FamilyTree;
 import Human.Human;
 import Presenter.FamilyTreePresenter;
 import View.ConsoleFamilyTreeView;
+import View.ConsoleInputHandler;
 import View.FamilyTreeView;
 
 public class Main {
@@ -49,17 +50,14 @@ public class Main {
         familyTree.addElement(child2);
         familyTree.addElement(cousin1);
         familyTree.addElement(cousin2);
-        
-        // FamilyTree<Human> familyTree = new FamilyTree<>();
-        // FamilyTreeView view = new ConsoleFamilyTreeView(); // Инициализация без презентера
-        // FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view);
-        // view.setPresenter(presenter);  // Установка презентера в представление
-        // view.showMenu();
 
         // Создание представления и презентера
+        ConsoleInputHandler inputHandler = new ConsoleInputHandler();
         FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, null);
-        FamilyTreeView view = new ConsoleFamilyTreeView(presenter); // Передача презентера в конструктор
-        presenter.setView(view); // Установка view в презентер
+        FamilyTreeView view = new ConsoleFamilyTreeView(presenter, inputHandler);
+        presenter.setView(view);
         view.showMenu();
+        inputHandler.close();
     }
 }
+

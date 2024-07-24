@@ -2,7 +2,6 @@ package FamilyTree;
 
 import java.util.*;
 import java.io.Serializable;
-// import Human.Human;
 
 public class FamilyTree<T extends HasId & HasChildren<T>> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
