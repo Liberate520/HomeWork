@@ -1,5 +1,5 @@
 public class Town extends Places {
-    protected String town;
+    private String town;
 
     public Town(int homeNumber, String street, String region, String country, int postalCode, String town) {
         super(homeNumber, street, region, country, postalCode);

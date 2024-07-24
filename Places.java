@@ -1,9 +1,9 @@
 public class Places {
-    protected int homeNumber;
-    protected String street;
-    protected String region;
-    protected String country;
-    protected int postalCode;
+    private int homeNumber;
+    private String street;
+    private String region;
+    private String country;
+    private int postalCode;
 
     public Places(int homeNumber, String street, String region, String country, int postalCode) {
         this.homeNumber = homeNumber;

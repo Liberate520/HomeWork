@@ -213,18 +213,6 @@ public class Human {
         return parents;
     }
 
-    public List<Human> getSiblings() {
-        List<Human> siblings = new ArrayList<>();
-        if (father != null) {
-            siblings.addAll(father.getChildren());
-        }
-        if (mother != null) {
-            siblings.addAll(mother.getChildren());
-        }
-        siblings.remove(this);
-        return siblings;
-    }
-
     public int getAge() {
         if (deathDate != null) {
             return deathDate.minusYears(birthDate.getYear()).getYear();
@@ -242,43 +230,56 @@ public class Human {
         StringBuilder sb = new StringBuilder();
         sb.append("ID");
         sb.append(id);
-        sb.append(", Имя: ");
+        sb.append(", \nИмя: ");
         sb.append(firstName);
-        sb.append(", Фамилия: ");
+        sb.append(", \nФамилия: ");
         sb.append(lastName);
-        sb.append(", Отчество: ");
+        sb.append(", \nОтчество: ");
         sb.append(patronymic);
-        sb.append(", Дата рождения: ");
+        sb.append(", \nДата рождения: ");
         sb.append(birthDate);
         if (deathDate != null) {
-            sb.append(", Дата смерти: ");
+            sb.append(", \nДата смерти: ");
             sb.append(deathDate);
         }
-        sb.append(", Пол: ");
+        sb.append(", \nПол: ");
         sb.append(gender);
-        sb.append(", Национальность: ");
+        sb.append(", \nНациональность: ");
         sb.append(nationality);
-        sb.append(", Отец: ");
+        sb.append(", \nОтец: ");
         if (father != null) {
-            sb.append(father.toString());
-            sb.append(", ");
+            if (father.getClass() != this.getClass()) {
+                sb.append(father.toString());
+            } else {
+                sb.append(father.getFirstName()).append(" ").append(father.getLastName());
+            }
         }
-        sb.append(", Мать: ");
+        sb.append(", \nМать: ");
         if (mother != null) {
-            sb.append(mother.toString());
-            sb.append(", ");
+            if (mother.getClass() != this.getClass()) {
+                sb.append(mother.toString());
+            } else {
+                sb.append(mother.getFirstName()).append(" ").append(mother.getLastName());
+            }
         }
-        sb.append(", Супруг: ");
+        sb.append(", \nСупруг: ");
         if (spouse != null) {
-            sb.append(spouse.toString());
-            sb.append(", ");
+            if (spouse.getClass() != this.getClass()) {
+                sb.append(spouse.toString());
+            } else {
+                sb.append(spouse.getFirstName()).append(" ").append(spouse.getLastName());
+            }
         }
-        sb.append(", Дети: ");
+        sb.append(", \nДети: ");
         for (Human child : children) {
-            sb.append(child.toString());
-            sb.append(", ");
+            if (child.getClass() != this.getClass()) {
+                sb.append(child.toString());
+            } else {
+                sb.append(child.getFirstName()).append(" ").append(child.getLastName()).append(",");
+            }
         }
-        sb.append(", Место жительства: ");
+
+        sb.append(", \nМесто жительства: ");
         if (village != null) {
             sb.append(village.toString());
             sb.append(", ");
@@ -293,4 +294,58 @@ public class Human {
         return sb.toString();
     }
 
+    public String getSpouseInfo() {
+        String res = "Супруг(а): ";
+        if (spouse != null) {
+            res += spouse.getInfo();
+        } else {
+            res += "Супруг не найден";
+        }
+        return res;
+    }
+
+    public String getMotherInfo() {
+        String res = "Мать: ";
+        if (mother != null) {
+            res += mother.getInfo();
+        } else {
+            res += "Мать не найдена";
+        }
+        return res;
+    }
+
+    public String getFatherInfo() {
+        String res = "Отец: ";
+        if (father != null) {
+            res += father.getInfo();
+        } else {
+            res += "Отец не найден";
+        }
+        return res;
+    }
+
+    public String getChildrenInfo() {
+        StringBuilder res = new StringBuilder("Дети: ");
+        if (children.size() > 0) {
+            for (Human child : children) {
+                res.append(child.getInfo());
+                res.append(", ");
+            }
+        } else {
+            res.append("Детей нет");
+        }
+        return res.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Human)) {
+            return false;
+        }
+        Human human = (Human) obj;
+        return human.getId() == getId();
+    }
 }
