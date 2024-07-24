@@ -1,13 +1,22 @@
-package Family_tree;
+package familyTree;
 
-import java.io.Serializable;
+// import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
-    private static final long serialVersionUID = 1L;
+import Comparator.CompareByAge;
+import Comparator.CompareByName;
+
+public class FamilyTree implements Iterable <Human> {
+// public class FamilyTree implements Serializable {
+    // private static final long serialVersionUID = 1L;
     
-    private List<Human> family = new ArrayList<>();
+    private List<Human> family;
+
+    public FamilyTree() {
+        this.family = new ArrayList<>();
+    }
 
     public void addMember(Human human) {
         family.add(human);
@@ -19,7 +28,7 @@ public class FamilyTree implements Serializable {
         }
     }
 
-    public List<Human> getFamily() {
+    public List <Human> getFamily() {
         return family;
     }
 
@@ -37,6 +46,28 @@ public class FamilyTree implements Serializable {
                 getAncestorsRecursive(parent, generations - 1, ancestors);
             }
         }
+    }
+
+    public void sortByName(){
+        family.sort(new CompareByName());
+    }
+
+    public void sortByAge(){
+        family.sort(new CompareByAge());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return family.iterator();
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Human person : family) {
+            sb.append(person).append("\n");
+        }
+        return sb.toString();
     }
 }
 

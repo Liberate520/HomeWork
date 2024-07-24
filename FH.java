@@ -1,22 +1,21 @@
-package Family_tree;
+package Writer;
 
 import java.io.*;
-import java.util.List;
-import java.io.Serializable;
+import familyTree.FamilyTree;
 
-public class FH implements Serializable {
+public class FH implements Writer {
 
     public void writeToFile(String fileName, FamilyTree familyTree) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(familyTree);
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            out.writeObject(familyTree);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public FamilyTree readFromFile(String fileName) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            return (FamilyTree) ois.readObject();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (FamilyTree) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

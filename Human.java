@@ -1,12 +1,14 @@
-package Family_tree;
+package familyTree;
 
-import java.io.Serializable;
+// import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+// import java.util.Collections;
 import java.util.List;
 
-public class Human implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Human {
+// public class Human implements Serializable {
+//     private static final long serialVersionUID = 1L;
     
     private String name;
     private Gender gender;
@@ -34,6 +36,14 @@ public class Human implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public List<Human> getParents() {
+        return parents;
     }
 
     @Override
