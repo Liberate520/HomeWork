@@ -1,7 +1,9 @@
-package Family_tree;
-
 import java.time.LocalDate;
-import java.util.List;
+
+// import Writer.FH;
+import familyTree.FamilyTree;
+import familyTree.Gender;
+import familyTree.Human;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,16 +30,25 @@ public class Main {
         familyTree.addMembers(kirill, olya);
         System.out.println("Родители Марии и соответственно, Дедушка и Бабушка Толи: \n" + kirill + "\n" + olya + "\n");
 
-        /** Сериализация */
+        /** Сериализация
         
         FH fileHandler = new FH();
         String fileName = "FT.txt";
         fileHandler.writeToFile(fileName, familyTree);
 
-        /** Десериализация */
+        Десериализация
+
         FamilyTree readFamilyTree = fileHandler.readFromFile(fileName);
         for (Human person : readFamilyTree.getFamily()) {
             System.out.println(person);
         }
+        */
+        
+        familyTree.sortByAge();
+        System.out.println("Сортировка по дате рождения: \n" + familyTree);
+
+        familyTree.sortByName();
+        System.out.println("Сортировка по имени: \n" + familyTree);
+
     }
 }

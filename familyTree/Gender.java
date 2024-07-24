@@ -1,4 +1,4 @@
-package Family_tree;
+package familyTree;
 
 public enum Gender {
     Мужской, Женский;

@@ -1,6 +1,6 @@
-package Family_tree;
+package Writer;
 
-import java.util.List;
+import familyTree.FamilyTree;
 
 public interface Writer {
     void writeToFile(String fileName, FamilyTree familyTree);
