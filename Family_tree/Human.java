@@ -130,22 +130,47 @@ public class Human {
     public void addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
-            child.addParent(this);
+            // child.addParent(this);
+            if (this.getGender() == Gender.Male) {
+                child.addFather(this);
+                child.setMother((this.getSpouse()));
+            } else {
+            child.addMother(this);
+            child.setFather((this.getSpouse()));
+            }
         }
     }
 
 
-    public void addParent(Human parent) {
-        if (parent.getGender().equals(Gender.Male) ) {
-            setFather(parent);
-        } else if (parent.getGender().equals(Gender.Female) ) {
+    public void addMother(Human parent) {
+        if (parent.getGender().equals(Gender.Female) ) {
             setMother(parent);
+            if (this.getFather() == null){
+                this.setFather(parent.getSpouse());
+            }
+        } else {
+            addFather(parent);
         }
         if (!parent.getChildren().contains(this)) {
             parent.getChildren().add(this); 
         }
     }
 
+    public void addFather(Human parent) {
+        if (parent.getGender().equals(Gender.Male) ) {
+            setFather(parent);
+            if (this.getMother() == null){
+                this.setMother(parent.getSpouse());
+            }
+        } else {
+            addMother(parent);
+        }
+        if (!parent.getChildren().contains(this)) {
+            parent.getChildren().add(this); 
+        }
+    }
+
+    
     public String toString() {
         return getInfo();
     }
