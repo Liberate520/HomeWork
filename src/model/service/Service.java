@@ -34,7 +34,7 @@ public class Service {
     public void setFather(int idChild, int idFather) {
         Human father = familyTree.getById(idFather);
         Human child = familyTree.getById(idChild);
-        child.setMother(father);
+        child.setFather(father);
     }
 
     public void addChildToParent(int idParent, int idChild) {

@@ -39,9 +39,9 @@ public class ConsoleUI implements View {
     }
 
     public void finish() {
-        work = false;
-        scanner.close();
         presenter.saveFile();
+        scanner.close();
+        work = false;
         System.out.println("Пока-пока, программа закрылась!");
     }
 
