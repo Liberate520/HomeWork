@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class ConsoleUI implements View{
+public class ConsoleUI implements View {
 
     private static final String INPUT_ERROR = "Вы ввели неверное значение!\n";
     final static String DATE_FORMAT = "dd.MM.yyyy";
@@ -35,7 +35,7 @@ public class ConsoleUI implements View{
     @Override
     public void start() throws IOException, ClassNotFoundException {
         hello();
-        while (work){
+        while (work) {
             printMenu();
             execute();
         }
@@ -117,22 +117,23 @@ public class ConsoleUI implements View{
         }
     }
 
-    private void hello(){
-        System.out.println("\n   Здравствуйте! Добавьте членов семьи и укажите родство, выбрав соответствующий номер команды:\n");
+    private void hello() {
+        System.out.println(
+                "\n   Здравствуйте! Добавьте членов семьи и укажите родство, выбрав соответствующий номер команды:\n");
     }
 
     private void execute() throws IOException, ClassNotFoundException {
         String line = scanner.nextLine();
-        if (checkTextForInt(line)){
+        if (checkTextForInt(line)) {
             int numCommand = Integer.parseInt(line);
-            if (checkCommand(numCommand)){
+            if (checkCommand(numCommand)) {
                 menu.execute(numCommand);
             }
         }
     }
 
-    private boolean checkTextForInt(String text){
-        if (text.matches("[0-9]+")){
+    private boolean checkTextForInt(String text) {
+        if (text.matches("[0-9]+")) {
             return true;
         } else {
             inputError();
@@ -140,8 +141,8 @@ public class ConsoleUI implements View{
         }
     }
 
-    private boolean checkCommand(int numCommand){
-        if (numCommand <= menu.getSize()){
+    private boolean checkCommand(int numCommand) {
+        if (numCommand <= menu.getSize()) {
             return true;
         } else {
             inputError();
@@ -149,11 +150,11 @@ public class ConsoleUI implements View{
         }
     }
 
-    private void printMenu(){
+    private void printMenu() {
         System.out.println(menu.menu());
     }
 
-    private void inputError(){
+    private void inputError() {
         System.out.println(INPUT_ERROR);
     }
 

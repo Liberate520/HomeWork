@@ -2,14 +2,14 @@ package view.commands;
 
 import view.ConsoleUI;
 
-public class AddMember extends Command{
+public class AddMember extends Command {
 
     public AddMember(ConsoleUI consoleUI) {
         super(consoleUI);
         description = "Добавить члена семьи";
     }
 
-    public void execute(){
+    public void execute() {
         consoleUI.addMember();
     }
 

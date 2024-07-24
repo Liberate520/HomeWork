@@ -9,10 +9,16 @@ import java.util.List;
 public interface FamilyItem<T> extends Serializable {
 
     String getName();
+
     int getAge();
+
     T getMother();
+
     T getFather();
+
     LocalDate getDob();
+
     Gender getGender();
+
     List<T> getChildren();
 }

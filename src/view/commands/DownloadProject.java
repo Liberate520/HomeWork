@@ -17,7 +17,7 @@ public class DownloadProject extends Command {
             consoleUI.downloadTree();
         } catch (IOException e) {
             System.out.println("Файл не найден! Проверьте, что он был сохранен\n");
-            
+
         } catch (ClassNotFoundException e) {
             System.out.println("Класс не найден при загрузке проекта!\n");
         }

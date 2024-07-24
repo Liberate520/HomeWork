@@ -27,9 +27,9 @@ public class Service {
     }
 
     public void addParent(int numMemberId, int numParentId) {
-        for (Human human: family) {
+        for (Human human : family) {
             if (human.getId() == numMemberId) {
-                for (Human parent: family) {
+                for (Human parent : family) {
                     if (parent.getId() == numParentId) {
                         human.addParent(parent);
                     }
@@ -42,7 +42,7 @@ public class Service {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Члены семьи:\n");
 
-        for (Human human: family) {
+        for (Human human : family) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
@@ -51,7 +51,7 @@ public class Service {
 
     public String getChildrenInfo(int memberId) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Human human: family) {
+        for (Human human : family) {
             if (human.getId() == memberId) {
                 stringBuilder.append(human.getChildrenInfo());
             }

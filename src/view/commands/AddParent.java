@@ -2,9 +2,9 @@ package view.commands;
 
 import view.ConsoleUI;
 
-public class AddParent extends Command{
+public class AddParent extends Command {
 
-    public AddParent (ConsoleUI consoleUI) {
+    public AddParent(ConsoleUI consoleUI) {
 
         super(consoleUI);
         description = "Добавить родителя";

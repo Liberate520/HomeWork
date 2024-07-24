@@ -91,18 +91,17 @@ public class Human implements Serializable, FamilyItem<Human> {
 
         if (parent.gender.equals(Gender.Male)) {
             setFather(parent);
-        }
-        else if (parent.gender.equals(Gender.Female)) {
+        } else if (parent.gender.equals(Gender.Female)) {
             setMother(parent);
         }
 
     }
 
     private void setMother(Human mother) {
-            if (this.mother == null) {
-                this.mother = mother;
-                this.mother.addChild(this);
-            }
+        if (this.mother == null) {
+            this.mother = mother;
+            this.mother.addChild(this);
+        }
     }
 
     private void setFather(Human father) {
@@ -130,8 +129,7 @@ public class Human implements Serializable, FamilyItem<Human> {
     public int getAge() {
         if (dod != null) {
             return getPeriod(dob, dod);
-        }
-        else {
+        } else {
             return getPeriod(dob, LocalDate.now());
         }
     }
@@ -166,8 +164,7 @@ public class Human implements Serializable, FamilyItem<Human> {
         Human mother = getMother();
         if (mother == null) {
             res += "неизвестна";
-        }
-        else {
+        } else {
             res += mother.getName();
         }
         return res;
@@ -178,8 +175,7 @@ public class Human implements Serializable, FamilyItem<Human> {
         Human father = getFather();
         if (father == null) {
             res += "неизвестен";
-        }
-        else {
+        } else {
             res += father.getName();
         }
         return res;
@@ -194,8 +190,7 @@ public class Human implements Serializable, FamilyItem<Human> {
                 res.append(", ");
                 res.append(children.get(i).getName());
             }
-        }
-        else {
+        } else {
             res.append("отсутствуют");
         }
         return res.toString();

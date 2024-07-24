@@ -4,7 +4,7 @@ import view.ConsoleUI;
 
 import java.io.IOException;
 
-public class SaveProject extends Command{
+public class SaveProject extends Command {
 
     public SaveProject(ConsoleUI consoleUI) {
 
@@ -12,7 +12,7 @@ public class SaveProject extends Command{
         description = "Сохранить семейное древо";
     }
 
-        public void execute() throws IOException {
+    public void execute() throws IOException {
         consoleUI.saveTree();
     }
 
