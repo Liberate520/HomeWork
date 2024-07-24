@@ -6,7 +6,7 @@ public class Finish extends Command{
 
     public Finish(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Закончить работу";
+        description = "Выход";
     }
 
     public void execute(){

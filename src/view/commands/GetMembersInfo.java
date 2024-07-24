@@ -6,7 +6,7 @@ public class GetMembersInfo extends Command{
 
     public GetMembersInfo(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Получить список членов семьи";
+        description = "Посмотреть список членов семьи";
     }
 
     public void execute(){

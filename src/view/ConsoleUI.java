@@ -118,7 +118,7 @@ public class ConsoleUI implements View{
     }
 
     private void hello(){
-        System.out.println("\n  Здравствуйте! Введите номер команды:\n");
+        System.out.println("\n   Здравствуйте! Добавьте членов семьи и укажите родство, выбрав соответствующий номер команды:\n");
     }
 
     private void execute() throws IOException, ClassNotFoundException {

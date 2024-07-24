@@ -57,12 +57,12 @@ public class Presenter {
 
     public void saveTree() throws IOException {
         service.saveTree();
-        view.printAnswer("Проект сохранён!\n");
+        view.printAnswer("Семейное древо успешно сохранено!\n");
     }
 
     public void downloadTree() throws IOException, ClassNotFoundException {
         service.downloadTree();
-        view.printAnswer("Проект загружен!\n");
+        view.printAnswer("Семейное древо успешно загружено!\n");
         getMembersInfo();
     }
 
