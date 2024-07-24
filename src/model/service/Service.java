@@ -4,16 +4,20 @@ import model.builder.HumanBuilder;
 import model.familyTreeSrc.FamilyTree;
 import model.person.Gender;
 import model.person.Human;
+import model.writer.FileHandler;
+import model.writer.Writer;
 
 import java.time.LocalDate;
 
 public class Service {
     private HumanBuilder humanBuilder;
     private FamilyTree<Human> familyTree;
+    private Writer fileHandler;
 
     public Service() {
         humanBuilder = new HumanBuilder();
         familyTree = new FamilyTree<>();
+        fileHandler = new FileHandler();
     }
 
     public void addHuman(String name, Gender gender, LocalDate dateOfBirth) {
@@ -71,5 +75,13 @@ public class Service {
 
     public String getAge(long idHuman) {
         return Integer.toString(familyTree.getById(idHuman).getAge());
+    }
+
+    public void saveFile() {
+        fileHandler.save(familyTree);
+    }
+
+    public void readFile() {
+        familyTree = (FamilyTree) fileHandler.read();
     }
 }

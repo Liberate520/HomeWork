@@ -41,6 +41,7 @@ public class ConsoleUI implements View {
     public void finish() {
         work = false;
         scanner.close();
+        presenter.saveFile();
         System.out.println("Пока-пока, программа закрылась!");
     }
 
@@ -216,5 +217,15 @@ public class ConsoleUI implements View {
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
+    }
+
+    public void save() {
+        presenter.saveFile();
+        System.out.println("Экспорт завершен успешно");
+    }
+
+    public void read() {
+        presenter.readFile();
+        System.out.println("Импорт данных выполнен");
     }
 }

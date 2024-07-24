@@ -3,6 +3,7 @@ package presenter;
 import model.person.Gender;
 import model.person.Human;
 import model.service.Service;
+import model.writer.Writer;
 import view.View;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 public class Presenter {
     View view;
     Service service;
+    Writer writer;
 
     public Presenter(View view) {
         this.view = view;
@@ -73,5 +75,14 @@ public class Presenter {
 
     public Human getHumanById(long idHuman) {
         return service.getHumanById(idHuman);
+    }
+
+    public void saveFile() {
+        service.saveFile();
+    }
+
+    public void readFile() {
+        service.readFile();
+        getHumansListInfo();
     }
 }

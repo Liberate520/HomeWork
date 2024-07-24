@@ -15,9 +15,9 @@ public abstract class Command {
         return description;
     }
 
-    public abstract void execute();
-
     ConsoleUI getConsoleUI() {
         return consoleUI;
     }
+
+    public abstract void execute();
 }

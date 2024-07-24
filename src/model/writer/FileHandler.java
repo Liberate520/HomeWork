@@ -5,7 +5,8 @@ import java.io.*;
 
 public class FileHandler implements Writer {
     // Поле для хранения пути к файлу
-    private String filePath = "src/model.writer/testFiles/testTree.out";
+    private String filePath = "src/model/writer/testFiles/tree.out";
+    private final String ERROR_READ = "Ошибка выгрузки из файла.";
 
     // Метод для сохранения объекта в файл
     @Override
@@ -25,11 +26,9 @@ public class FileHandler implements Writer {
         // Используем try-with-resources для автоматического закрытия потока
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
             // Читаем объект из файла
-            Object o = objectInputStream.readObject();
-            return o;
+            return objectInputStream.readObject();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return ERROR_READ;
         }
     }
 

@@ -21,6 +21,8 @@ public class MainMenu {
         commands.add(new SortByChildrenQuantity(consoleUI));
         commands.add(new SetWedding(consoleUI));
         commands.add(new SetDateOfDeath(consoleUI));
+        commands.add(new SaveFile(consoleUI));
+        commands.add(new ReadFile(consoleUI));
         commands.add(new Finish(consoleUI));
     }
 
