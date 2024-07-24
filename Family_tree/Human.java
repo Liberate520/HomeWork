@@ -137,6 +137,7 @@ public class Human {
 
     public void addParent(Human parent) {
         if (parent.getGender().equals(Gender.Male) ) {
+            setFather(parent);
         } else if (parent.getGender().equals(Gender.Female) ) {
             setMother(parent);
         }
