@@ -7,6 +7,16 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class FileHandler implements Writer {
+    private static FileHandler fileHandler;
+
+    private FileHandler(){}
+
+    public static FileHandler getFileHandler(){
+        if (fileHandler == null){
+            fileHandler = new FileHandler();
+        }
+        return fileHandler;
+    }
     
     @Override
     public void save(Serializable serializable) {

@@ -14,11 +14,10 @@ public class Service {
     private FamilyTree<Human> familyTree;
     private Writer writer;
 
-
     public Service() {
         familyTree = new FamilyTree<>();
-        humanBuilder = new HumanBuilder();
-        writer = new FileHandler();
+        humanBuilder = HumanBuilder.getHumanBuilder();
+        writer = FileHandler.getFileHandler();
     }
 
     public void addHuman(String name, Gender gender, LocalDate dateOfBirth){

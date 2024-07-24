@@ -27,7 +27,6 @@ public class Presenter {
 
     public void setParent(int idChildren, int idParent){
         service.setParent(idChildren, idParent);
-        getHumansListInfo();
     }
     
     public void setDateOfDeath(int idHuman, LocalDate dateOfDeath){
