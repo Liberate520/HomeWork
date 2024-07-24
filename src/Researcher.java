@@ -3,16 +3,17 @@ import java.util.List;
 
 public class Researcher {
     public List<Person> getDescendants(Person person) {
-        List<Person> descendants = new ArrayList<>();
-        collectDescendants(person, descendants);
-        return descendants;
+        return collectDescendants(person);
     }
 
-    private void collectDescendants(Person person, List<Person> descendants) {
-        if (person == null) return;
-        for (Person child : person.getChildren()) {
-            descendants.add(child);
-            collectDescendants(child, descendants);
+    private List<Person> collectDescendants(Person person) {
+        List<Person> descendants = new ArrayList<>();
+        if (person != null) {
+            for (Person child : person.getChildren()) {
+                descendants.add(child);
+                descendants.addAll(collectDescendants(child));
+            }
         }
+        return descendants;
     }
 }
