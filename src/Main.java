@@ -11,17 +11,23 @@ public class Main {
     public static void main(String[] args) {
         String filepath = "src/family_tree.txt";
 
-        FamilyTree familyTree = load(filepath);
-        //FamilyTree familyTree = fillingFamilyTree();
-        //save(familyTree, filepath);
-
+        //FamilyTree familyTree = load(filepath); // загрузка из файла
+        FamilyTree familyTree = fillingFamilyTree(); // загрузка из Main
+        //save(familyTree, filepath); // сохранение в файл
+        System.out.println("Семейное древо:");
         System.out.println(familyTree);
 
-//        save(familyTree, filepath);
-        /*
-        fillingFamilyTree(familyTree);
-        System.out.println(familyTree.toString());
-        */
+        System.out.println("\nСортировка по имени:");
+        familyTree.sortByName();
+        for (Human human : familyTree) {
+            System.out.println(human);
+        }
+
+        System.out.println("\nСортировка по возрасту:");
+        familyTree.sortByAge();
+        for (Human human : familyTree) {
+            System.out.println(human);
+        }
     }
     private static void  save(FamilyTree familyTree, String filePath){
         FileHandler fileHandler = new FileHandler();
