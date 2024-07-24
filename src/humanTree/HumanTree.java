@@ -2,11 +2,12 @@ package humanTree;
 
 import human.Human;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HumanTree {
-    private List<Human> humans; // ключ это родитель, значение это ребенок
+public class HumanTree implements Serializable {
+    private List<Human> humans;
 
     public HumanTree () {
         humans = new ArrayList<>();
@@ -53,6 +54,10 @@ public class HumanTree {
             i++;
         }
         return sb.toString();
+    }
+
+    public List<Human> getHumans() {
+        return humans;
     }
 
 
