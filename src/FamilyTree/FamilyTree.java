@@ -1,8 +1,17 @@
+package FamilyTree;
+
+import Human.Human;
+import Human.comparators.HumanComparatorByAge;
+import Human.comparators.HumanComparatorByBirthdate;
+import Human.comparators.HumanComparatorByChildrenNum;
+import Human.comparators.HumanComparatorByName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree  implements Serializable {
+public class FamilyTree  implements Serializable, Iterable {
     private List<Human> family;
     private int id = -1;
 
@@ -49,8 +58,37 @@ public class FamilyTree  implements Serializable {
     }
 
     public void showTree () {
+        System.out.println("\nСемейное дерево:");
         for (Human human : family) {
             System.out.println(human);
         }
+        System.out.println("Всего " + family.size() + " элементов.\n");
     }
+
+    public int showFamilyTreeSize(){
+        return family.size();
+    }
+
+    public void SortByName(){
+        family.sort(new HumanComparatorByName());
+    }
+
+    public void SortByAge(){
+        family.sort(new HumanComparatorByAge());
+    }
+
+    public void SortByChildrenNum(){
+        family.sort(new HumanComparatorByChildrenNum());
+    }
+
+    public void SortByBirthdate(){
+        family.sort(new HumanComparatorByBirthdate());
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new HumanIterator(family);
+    }
+
+
 }

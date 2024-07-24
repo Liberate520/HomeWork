@@ -1,10 +1,12 @@
+package Human;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human  implements Serializable {
+public class Human  implements Serializable, Comparable<Human> {
     private int id = -1;
     private String name;
     private Gender gender;
@@ -156,8 +158,17 @@ public class Human  implements Serializable {
         }
     }
 
+    public int getAgeInfo(){
+        return getAge(birthDate, deathDate);
+    }
+
     @Override
     public String toString() {
-        return "ID:" + id + ", имя: " + name + ", пол: " + gender + ", возраст: " + getAge(birthDate, deathDate) + ", супруг(а): " + getSpouseInfo() +  ", родители: " + getParentsInfo() + ", дети: " + getChildrenInfo();
+        return "ID:" + id + ", имя: " + name + ", пол: " + gender + ", возраст: " + getAgeInfo() + ", супруг(а): " + getSpouseInfo() +  ", родители: " + getParentsInfo() + ", дети: " + getChildrenInfo();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 }

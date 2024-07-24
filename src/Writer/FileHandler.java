@@ -1,3 +1,7 @@
+package Writer;
+
+import FamilyTree.FamilyTree;
+
 import java.io.*;
 
 public class FileHandler implements Writer {
