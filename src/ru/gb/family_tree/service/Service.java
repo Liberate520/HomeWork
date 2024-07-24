@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Service implements Serializable {
     private HumanBuilder humanBuilder;
-    private FamilyTree famTree;
+    private FamilyTree<Human> famTree;
 
     public Service() {
         famTree = new FamilyTree();
@@ -47,11 +47,11 @@ public class Service implements Serializable {
     }
 
     public Human getHumanById(int id){
-        return famTree.getHumanById(id);
+        return (Human)famTree.getHumanById(id);
     }
 
     public List<Human> searchHuman(String request){
-        return famTree.searchHuman(request);
+        return (List<Human>) famTree.searchHuman(request);
     }
 
     public void sortByName(){

@@ -1,5 +1,6 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.family_tree.FamilyTreeItem;
 import ru.gb.family_tree.human.enums.Gender;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class Human implements Serializable, Comparable<Human>{
+public class Human implements Comparable<Human>, FamilyTreeItem<Human> {
     private int id;
     private String name, surname, patronymic;
     private Gender gender;

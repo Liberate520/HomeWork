@@ -1,10 +1,12 @@
 package ru.gb.family_tree;
 
+import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.enums.Gender;
 import ru.gb.family_tree.service.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
 
