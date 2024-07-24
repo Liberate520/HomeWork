@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Human {
 
@@ -19,18 +20,6 @@ public class Human {
     private Human human;
     private List<Human> children;
 
-
-    // создать класс, который будет описывать родственную связь
-    // будет два поля Человек_1 и Человек_2 --> enam --> тип связи ребенок, родитель, брат/сестра, и т.п.
-
-    // бабушки/дедушки не нужны, через родителей --> родителей (через методы)
-
-    // в классе все поля должны быть сверху, далее конструктор и потом методы
-
-
-//    public Human() {
-//
-//    }
 
     public Human(String name, Gender gender, LocalDate dateOfBirth) {
         // метод для внесения сведений о человеке (с отсутствием некоторых параметров)
@@ -58,8 +47,6 @@ public class Human {
         this.father = father;
         this.mother = mother;
         this.children = new ArrayList<>();
-
-        this.children = children;
     }
 
 
@@ -91,12 +78,20 @@ public class Human {
         this.gender = gender;
     }
 
+    public int getAge() {   // метод для вычисления возраста
+        if (dateOfDeath == null) {
+            return Period.between(dateOfBirth, LocalDate.now()).getYears();
+        } else {
+            return Period.between(dateOfBirth, dateOfDeath).getYears();
+        }
+    }
+
+
     public Human getMother() {
         return mother;
     }
 
     public void setMother(Human mother) {
-//        this.mother = mother;
         if (mother != null) {
             if (Gender.Female == mother.getGender()) {
                 mother.addChildren(this);
@@ -108,12 +103,31 @@ public class Human {
 
     }
 
+
+    public StringBuilder getMotherInfo() {
+        // метод для отображения только выборочных сведений о матери
+        StringBuilder sb = new StringBuilder();
+
+        if (mother != null) {
+            sb.append("id-").append(mother.getId());
+            sb.append(". имя: ").append(mother.getName());
+            sb.append("; дата рождения: ").append(mother.dateOfBirth);
+            if (mother.dateOfDeath == null) {
+                sb.append("; возраст: ").append(mother.getAge());
+            } else {
+                sb.append("; дата смерти: ").append(mother.dateOfDeath);
+                sb.append("; возраст: ").append(mother.getAge());
+            }
+        }
+        return sb;
+    }
+
+
     public Human getFather() {
         return father;
     }
 
     public void setFather(Human father) {
-//        this.father = father;
         if (father != null) {
             if (Gender.Male == father.getGender()) {
                 father.addChildren(this);
@@ -124,16 +138,52 @@ public class Human {
         }
     }
 
+
+    public StringBuilder getFatherInfo() {
+        // метод для отображения только выборочных сведений об отце
+        StringBuilder sb = new StringBuilder();
+
+        if (father != null) {
+            sb.append("id-").append(father.getId());
+            sb.append(". имя: ").append(father.getName());
+            sb.append("; дата рождения: ").append(father.dateOfBirth);
+            if (father.dateOfDeath == null) {
+                sb.append("; возраст: ").append(father.getAge());
+            } else {
+                sb.append("; дата смерти: ").append(father.dateOfDeath);
+                sb.append("; возраст: ").append(father.getAge());
+            }
+        }
+        return sb;
+    }
+
+
+    public boolean isParent(Human human) {
+        return this.getMother().equals(human) || this.getFather().equals(human);
+    }
+
+
     public Human getSpouse() {
         return spouse;
     }
 
-    public void setSpouse(Human human) {
-        this.spouse = human;
-        if (human.getSpouse() == null) {
-            human.setSpouse(this);
+    public void setSpouse(Human spouses) {
+        this.spouse = spouses;
+        if (spouses.getSpouse() == null) {
+            spouses.setSpouse(this);
         }
     }
+
+    public StringBuilder getSpouseInfo() {
+        // метод для отображения только выборочных сведений о супругах
+        StringBuilder sb = new StringBuilder();
+        if (spouse != null) {
+            sb.append(spouse.getName()).append(" (id: ");
+            sb.append(spouse.getId()).append(")");
+        }
+        return sb;
+    }
+
 
     public List<Human> getChildren() {
         return children;
@@ -143,26 +193,19 @@ public class Human {
         this.children = children;
     }
 
-    public int getAge() {   // метод для вычисления возраста
-        if (dateOfDeath == null) {
-            return Period.between(dateOfBirth, LocalDate.now()).getYears();
-        } else {
-            return Period.between(dateOfBirth, dateOfDeath).getYears();
-        }
-    }
-
-
     public Human addChildren(Human child) {
         // добавление ребенка (с проверкой)
-        //TODO метод добавления ребенка с проверкой (перепроверить! ОШИБКА!)
-//        if (!children.contains(child)) {
-//            children.add(child);
-//        } else {
-//            System.out.printf("Ребенок уже добавлен! Ребенок: [ id: %s, имя: %s\n]",
-//                    id, name);
-//        }
+        if (!children.contains(child)) {
+            children.add(child);
+        } else {
+            System.out.println("----------------------------------------");
+            System.out.printf("ОШИБКА! Сведения о данном ребёнке уже внесены!!! Ребенок: %s (id: %s)\n",
+                    child.name, child.id);
+            System.out.println("-----------------------------------------");
+        }
         return this;
     }
+
 
     public boolean isAddChildren(Human child) {
         int size = this.getChildren().size();
@@ -170,19 +213,18 @@ public class Human {
         return this.getChildren().size() > size;
     }
 
-    public boolean isParent(Human human) {
-        return this.getMother().equals(human) || this.getFather().equals(human);
-    }
-
 
     public String getChildrenInfo() { // метод для отображения сведений о детях
         StringBuilder result = new StringBuilder();
-        result.append("; дети: ");
+        result.append("дети: ");
         if (!getChildren().isEmpty()) {
             result.append(children.get(0).getName());
+            result.append(" (id: ").append(children.get(0).getId());
+            result.append(")");
             for (int i = 1; i < children.size(); i++) {
                 result.append("; ");
                 result.append(children.get(i).getName());
+                result.append(children.get(i).getId());
             }
         } else {
             result.append("данные отсутствуют");
@@ -191,47 +233,25 @@ public class Human {
     }
 
 
-
-
-    public boolean addParent(Human parent) { // добавление родителя
-        if (parent.getGender().equals(Gender.Male)) {
-            setFather(parent);
-        } else if (parent.getGender().equals(Gender.Female)) {
-            setMother(parent);
-        }
-        return true;
-    }
-//
-    public List<Human> getParent() {
-        List<Human> list = new ArrayList<>(2);
-        if (getFather() != null) {
-            list.add(getFather());
-        }
-        if (getMother() != null) {
-            list.add(getMother());
-        }
-        return list;
-    }
-
-
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Human)) {
-            return false;
-        }
+        // метод проверки человека (внесен или нет)
+        if (this == obj) return true;
+        if (obj == null || !(obj instanceof Human)) return false;
         Human human = (Human) obj;
-        return human.getId() == getId();
+        return Objects.equals(id, id)
+                && Objects.equals(name, name)
+                && gender == human.gender
+                && Objects.equals(dateOfBirth, human.dateOfBirth);
+
     }
+
 
     @Override
     public String toString() {
-        //TODO - попробовать упростить данный метод!
         StringBuilder sb = new StringBuilder();
 
-        sb.append("id-").append(getId());
+        sb.append("\nid-").append(getId());
         sb.append(". имя: ").append(getName());
         sb.append("; пол: ").append(getGender());
         sb.append("; дата рождения: ").append(dateOfBirth);
@@ -241,35 +261,26 @@ public class Human {
             sb.append("; дата смерти: ").append(dateOfDeath);
             sb.append("; возраст: ").append(getAge());
         }
-            // можно использовать данный метод для отображения родителей
-        //TODO отредактировать вывод родителей (сделать вывод только некоторых значений...)
-//        if (father == null) {
-//            sb.append("; отец: данные отсутствуют");
-//        } else {
-//            sb.append("; отец: ").append(father).getClass();
-//        }
-//
-//        if (mother == null) {
-//            sb.append("; мать: данные отсутствуют");
-//        } else {
-//            sb.append("; мать: ").append(mother).getClass();
-//        }
 
-            // либо можно использовать данный метод для отображения родителей
-        //TODO отредактировать вывод родителей (сделать вывод только некоторых значений...)
-        if (getParent() == null) {
-            sb.append("; родители: данные отсутствуют");
+        if (father == null) {
+            sb.append("\n\tотец: данные отсутствуют");
         } else {
-            sb.append("; родители: ").append(getParent()).getClass();
+            sb.append("\n\tотец: ").append(getFatherInfo());
+        }
+
+        if (mother == null) {
+            sb.append("\n\tмать: данные отсутствуют");
+        } else {
+            sb.append("\n\tмать: ").append(getMotherInfo());
         }
 
         if (spouse == null) {
-            sb.append("; супруг(а): данные отсутствуют");
+            sb.append("\n\tсупруг(а): данные отсутствуют");
         } else {
-            sb.append("; супруг(а): ").append(spouse);
+            sb.append("\n\tсупруг(а): ").append(getSpouseInfo());
         }
 
-//        sb.append(getChildrenInfo()); //TODO Исправить ошибку!!!
+        sb.append("\n\t").append(getChildrenInfo());
 
         return sb.toString();
     }

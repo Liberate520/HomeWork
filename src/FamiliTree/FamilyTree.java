@@ -21,19 +21,15 @@ public class FamilyTree {
         for (Human human : humans) {
             if (human.getName().equals(nameHuman)) {
                 return human;
-            } else {
-                System.out.print("Данные не найдены.");
             }
         }
         return null;
     }
 
-    public Human getById(int id) { //  поиск по id
+    public Human getById(long id) { //  поиск по id
         for (Human human : humans) {
-            if (human.getId() >= 0 && human.getId() == id) {
+            if (human.getId() == id) {
                 return human;
-            } else {
-                System.out.print("Данные не найдены.");
             }
         }
         return null;
