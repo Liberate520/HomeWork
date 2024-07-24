@@ -1,7 +1,22 @@
+import family_tree.FamilyTree;
+import human.Gender;
+import human.Person;
+import writer.FileHandler;
+
 import java.time.LocalDate;
 
 public class Main {
+    final static String filePath = "src/writer/FamilyTree.txt";
     public static void main(String[] args) {
+        FamilyTree familyTree = getFamilyTree();
+        save(familyTree);
+
+        System.out.println("Children of Jack (male_1) & Jane (female_1): " + familyTree.getChildren("Jack"));
+        System.out.println("Children of Ted (male_2) & Anna (female_2): " + familyTree.getChildren("Ted"));
+        System.out.println("Children of Fred (male_3) & Kate (female_3): " + familyTree.getChildren("Fred"));
+    }
+
+    private static FamilyTree getFamilyTree() {
         FamilyTree familyTree = new FamilyTree();
 
         Person male_1 = new Person("Jack", 60, Gender.MALE);
@@ -41,14 +56,20 @@ public class Main {
         familyTree.addPerson(male_3);
         familyTree.addPerson(female_3);
         familyTree.addPerson(male_4);
-
-        System.out.println("Children of Jack (male_1) & Jane (female_1): " + familyTree.getChildren("Jack"));
-//        System.out.println("Children of Jane (female_1): " + familyTree.getChildren("Jane"));
-
-        System.out.println("Children of Ted (male_2) & Anna (female_2): " + familyTree.getChildren("Ted"));
-//        System.out.println("Children of Anna (female_2): " + familyTree.getChildren("Anna"));
-
-        System.out.println("Children of Fred (male_3) & Kate (female_3): " + familyTree.getChildren("Fred"));
-//        System.out.println("Children of Kate (female_3): " + familyTree.getChildren("Kate"));
+        return familyTree;
     }
+
+    private static FamilyTree load(FamilyTree familyTree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static void save(FamilyTree familyTree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(familyTree);
+    }
+
+
 }

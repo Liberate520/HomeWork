@@ -1,8 +1,13 @@
+package family_tree;
+
+import human.Person;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private Map<String, Person> persons;
 
     public FamilyTree() {
