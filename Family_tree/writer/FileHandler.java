@@ -5,21 +5,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class FileHandler implements Writer{
-    String fileName = "result.txt";
+    private String filePath = "src/Family_tree/writer/result.txt";
 
     @Override
-    public boolean write(Object object) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
-        objectOutputStream.writeObject(object);
-        objectOutputStream.close();
-        return true;
+    public void save(Serializable serializable){
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){
+            objectOutputStream.writeObject(serializable);
+        } catch (Exception e) {
+            // return e.printStackTrace();
+        }
     }
 
-    public void read() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName));
-        System.out.println(objectInputStream.readObject());
-        objectInputStream.close();
+    public Object read() {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))){
+            Object object = objectInputStream.readObject();
+            return object;
+        } catch (Exception e) {
+            // return e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setPath(String filePath){
+        this.filePath = filePath;
     }
 }
