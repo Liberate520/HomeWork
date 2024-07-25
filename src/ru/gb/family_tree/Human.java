@@ -1,8 +1,10 @@
 package ru.gb.family_tree;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Human {
     private long id;
@@ -49,10 +51,20 @@ public class Human {
     }
 
     public boolean addParent(Human parent){
-        if (parent.getGender().equals(Gender.Female)){
-           setMother(parent);
-        }else if (Gender.Male.equals(parent.getGender())){
-            setFather(parent);
+        if (parent.getGender().equals(Gender.женский)){
+            if (mother!=null){
+                return false;
+            }else{
+                setMother(parent);
+            }
+
+        }else if (Gender.мужской.equals(parent.getGender())){
+
+            if (father!=null){
+                return false;
+            }else{
+                setFather(parent);
+            }
         }
 
         return true;
@@ -153,32 +165,51 @@ public class Human {
         return listParens;
     }
 
-    //дописать метод расчета возраста
+    // метод расчета возраста
+    public  int getAge (){
+        if (dateOfBirth != null) {
+            return Period.between(dateOfBirth, Objects.requireNonNullElseGet(dateOfDeath, LocalDate::now)).getYears();
+        } else {
+            return 0;
+        }
+
+    }
+
+    public class AgeCalculator {
+        public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
+            if ((birthDate != null) && (currentDate != null)) {
+                return Period.between(birthDate, currentDate).getYears();
+            } else {
+                return 0;
+            }
+        }
+    }
 
 
     @Override
     public String toString() {
 
         StringBuilder sorse = new StringBuilder();
-        sorse.append("Человек id ");
-        sorse.append(getId());
+        sorse.append("Человек id=");
+        sorse.append(id);
         sorse.append(", ");
         sorse.append("фамилия ");
-        sorse.append(getLastName());
+        sorse.append(lastName);
         sorse.append(", ");
         sorse.append("имя ");
-        sorse.append(getFirstName());
+        sorse.append(firstName);
         sorse.append(", ");
         sorse.append("отчетство: ");
-        if (!getPatronymic().equals(""))
-            sorse.append(getPatronymic());
-        else  sorse.append("нет");
+        sorse.append(getPatronymicInfo());
         sorse.append(", ");
         sorse.append("пол ");
-        sorse.append(getGender());
+        sorse.append(gender);
+        sorse.append(", ");
+        sorse.append("возраст: ");
+        sorse.append(getAge());
         sorse.append(", ");
         sorse.append("дата рождения: ");
-        sorse.append(getDateOfBirth().toString());
+        sorse.append(dateOfBirth.toString());
         sorse.append(", ");
         sorse.append("мать: ");
         sorse.append(getMotherInfo());
@@ -193,6 +224,17 @@ public class Human {
         sorse.append(getChildrenInfo());
 
         return sorse.toString();
+    }
+
+    public String getPatronymicInfo() {
+        String patronymicStr = "";
+
+        if (patronymic==null){
+            patronymicStr = "нет";
+        } else{
+            patronymicStr = patronymic;
+        }
+        return patronymicStr;
     }
 
     public String getMotherInfo() {
