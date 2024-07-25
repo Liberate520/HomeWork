@@ -18,16 +18,44 @@ public class Human implements Serializable {
     private List<Human> children;
     private String placeBorn;
 
-    {
-        lastName = null;
-        firstname = null;
-        patronymic = null;
-        gender = null;
-        dayBirth = null;
-        dayDeath = null;
-        placeBorn = null;
+    public Human(String lastName, String firstname, String patronymic,
+                 Gender gender, LocalDate dayBirth, LocalDate dayDeath,
+                 Human father, Human mother, List<Human> children, String placeBorn) {
 
+        this.lastName = lastName;
+        this.firstname = firstname;
+        this.patronymic = patronymic;
+        this.gender = gender;
+
+        try {
+            this.dayBirth = dayBirth;
+        } catch (Exception ex) {
+            this.dayBirth = null;
+        }
+
+        try {
+            this.dayDeath = dayDeath;
+        } catch (Exception ex) {
+            this.dayDeath = null;
+        }
+
+        this.father = father;
+        this.mother = mother;
+        this.children = new ArrayList<>();
+        this.placeBorn = placeBorn;
     }
+
+    public Human(String lastName, String firstname, String patronymic, Gender gender, LocalDate dayBirth) {
+        this(lastName, firstname, patronymic, gender, dayBirth, null, null, null, null, null);
+    }
+
+    public Human(String lastName, String firstname, String patronymic, Gender gender, LocalDate dayBirth, Human father, Human mother) {
+        this(lastName, firstname, patronymic, gender, dayBirth, null, father, mother, null, null);
+    }
+    public Human(String lastName, String firstname, String patronymic, Gender gender, LocalDate dayBirth, String placeBorn) {
+        this(lastName, firstname, patronymic, gender, dayBirth, null, null, null, null, placeBorn);
+    }
+
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -108,45 +136,6 @@ public class Human implements Serializable {
     public String getPlaceBorn() {
         return placeBorn;
     }
-
-    public Human(String lastName, String firstname, String patronymic,
-                 Gender gender, LocalDate dayBirth, LocalDate dayDeath,
-                 Human father, Human mother, List<Human> children, String placeBorn) {
-
-        this.lastName = lastName;
-        this.firstname = firstname;
-        this.patronymic = patronymic;
-        this.gender = gender;
-
-        try {
-            this.dayBirth = dayBirth;
-        } catch (Exception ex) {
-            this.dayBirth = null;
-        }
-
-        try {
-            this.dayDeath = dayDeath;
-        } catch (Exception ex) {
-            this.dayDeath = null;
-        }
-
-        this.father = father;
-        this.mother = mother;
-        this.children = new ArrayList<>();
-        this.placeBorn = placeBorn;
-    }
-
-    public Human(String lastName, String firstname, String patronymic, Gender gender, LocalDate dayBirth) {
-        this(lastName, firstname, patronymic, gender, dayBirth, null, null, null, null, null);
-    }
-
-    public Human(String lastName, String firstname, String patronymic, Gender gender, LocalDate dayBirth, Human father, Human mother) {
-        this(lastName, firstname, patronymic, gender, dayBirth, null, father, mother, null, null);
-    }
-    public Human(String lastName, String firstname, String patronymic, Gender gender, LocalDate dayBirth, String placeBorn) {
-        this(lastName, firstname, patronymic, gender, dayBirth, null, null, null, null, placeBorn);
-    }
-
 
     @Override
     public String toString() {
