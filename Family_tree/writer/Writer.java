@@ -1,8 +1,8 @@
 package Family_tree.writer;
 
-import java.io.IOException;
+import java.io.Serializable;
 
 public interface Writer {
-    void read() throws IOException, ClassNotFoundException; 
-    boolean write(Object object) throws IOException;
+    Object read(); 
+    void save(Serializable serializable);
 }
