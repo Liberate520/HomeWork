@@ -48,7 +48,7 @@ public class FamilyTree<E extends ItemFamilyTree> implements Serializable, Itera
 
     @Override
     public Iterator iterator() {
-        return new HumanIterator(family);
+        return new ItemFamilyIterator(family);
     }
 
 }

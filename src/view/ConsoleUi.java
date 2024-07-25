@@ -1,22 +1,27 @@
 package view;
 
 import model.Human.Gender;
+import model.Human.Human;
 import presenter. Presenter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ConsoleUi implements View{
     private Scanner scanner;
     private boolean work;
+    private boolean ftwork;
     private Presenter presenter;
     private MainMenu menu;
+    private FamilyTiesMenu ftmenu;
 
     public ConsoleUi(){
         scanner = new Scanner(System.in);
         work = true;
         presenter = new Presenter(this);
         menu = new MainMenu(this);
+        ftmenu = new FamilyTiesMenu(this);
     }
 
     @Override
@@ -63,11 +68,11 @@ public class ConsoleUi implements View{
             String genderStr = scanner.nextLine();
             switch (genderStr){
                 case "1":
-                    gender = Gender.male;
+                    gender = Gender.мужчина;
                     inIsCorrect = true;
                     break;
                 case "2":
-                    gender = Gender.female;
+                    gender = Gender.женщина;
                     inIsCorrect = true;
                     break;
                 default:
@@ -96,5 +101,46 @@ public class ConsoleUi implements View{
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
+    }
+
+    public void writeTree() throws IOException {
+        System.out.println("Введите имя файла для записи дерева");
+        String filename = scanner.nextLine();
+
+        presenter.writeTree(filename);
+    }
+
+    public void readTree() throws IOException, ClassNotFoundException {
+        System.out.println("Введите имя файла для чтения дерева");
+        String filename = scanner.nextLine();
+
+        presenter.readTree(filename);
+    }
+
+    public void familyTies() {
+        System.out.println("Какую родственную связь вы хотите назначить?");
+        ftwork = true;
+        while (ftwork){
+            System.out.println(new FamilyTiesMenu(this).menu());
+            String choiceStr = scanner.nextLine();
+            int choice = Integer.parseInt(choiceStr);
+            ftmenu.execute(choice);
+        }
+    }
+
+    public void setMother() {
+        System.out.println("Метод пока не реализован");
+    }
+
+    public void setFather() {
+        System.out.println("Метод пока не реализован");
+    }
+
+    public void addChild() {
+        System.out.println("Метод пока не реализован");
+    }
+
+    public void toBaseMenu() {
+        ftwork = false;
     }
 }

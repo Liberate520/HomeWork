@@ -1,6 +1,7 @@
 package view;
 
-import view.commands.*;
+import view.commands.Command;
+import view.commands.ToBaseMenu;
 import view.commands.basemenu.*;
 import view.commands.familyTies.AddChild;
 import view.commands.familyTies.FamilyTies;
@@ -11,19 +12,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenu {
+public class FamilyTiesMenu {
     private List<Command> commands;
 
-    public MainMenu(ConsoleUi consoleUi) {
+    public FamilyTiesMenu(ConsoleUi consoleUi) {
         commands = new ArrayList<>();
-        commands.add(new AddPerson(consoleUi));
-        commands.add(new FamilyTies(consoleUi));
-        commands.add(new GetPersonListInfo(consoleUi));
-        commands.add(new SortByName(consoleUi));
-        commands.add(new SortByAge(consoleUi));
-        commands.add(new ReadTree(consoleUi));
-        commands.add(new WriteTree(consoleUi));
-        commands.add(new Finish(consoleUi));
+        commands.add(new SetMother(consoleUi));
+        commands.add(new SetFather(consoleUi));
+        commands.add(new AddChild(consoleUi));
+        commands.add(new ToBaseMenu(consoleUi));
     }
 
     public String menu(){

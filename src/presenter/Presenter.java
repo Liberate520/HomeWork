@@ -1,9 +1,11 @@
 package presenter;
 
 import model.Human.Gender;
+import model.Human.Human;
 import model.service.Service;
 import view.View;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Presenter {
@@ -34,4 +36,13 @@ public class Presenter {
         service.sortByAge();
         getPersonListInfo();
     }
+
+    public void writeTree(String filename) throws IOException {
+        service.writeTree(filename);
+    }
+
+    public void readTree(String filename) throws IOException, ClassNotFoundException {
+        service.readTree(filename);
+    }
+
 }

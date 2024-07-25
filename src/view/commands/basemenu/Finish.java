@@ -1,6 +1,7 @@
-package view.commands;
+package view.commands.basemenu;
 
 import view.ConsoleUi;
+import view.commands.Command;
 
 public class Finish extends Command {
 

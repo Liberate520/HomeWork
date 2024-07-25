@@ -2,6 +2,8 @@ package view.commands;
 
 import view.ConsoleUi;
 
+import java.io.IOException;
+
 public abstract class Command {
     private String description ;
     private ConsoleUi consoleUi;
@@ -19,5 +21,5 @@ public abstract class Command {
         return description;
     }
 
-    public abstract void execute();
+    public abstract void execute() throws IOException;
 }

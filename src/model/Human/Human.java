@@ -22,36 +22,7 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         this.setDob(dob);
         this.setGender(gender);
     }
-
-    public Human(String name, LocalDate dob, Gender gender, LocalDate dod){
-        this.children = new ArrayList<>();
-
-        this.setName(name);
-        this.setDob(dob);
-        this.setGender(gender);
-        this.setDod(dod);
-    }
-
-    public Human(String name, LocalDate dob, Gender gender, LocalDate dod, Human father, Human mother){
-        this.children = new ArrayList<>();
-
-        this.setName(name);
-        this.setDob(dob);
-        this.setGender(gender);
-        this.setDod(dod);
-        this.setFather(father);
-        this.setMother(mother);
-    }
-
-    public Human(String name, LocalDate dob, Gender gender, Human father, Human mother){
-        this.children = new ArrayList<>();
-
-        this.setName(name);
-        this.setDob(dob);
-        this.setGender(gender);
-        this.setFather(father);
-        this.setMother(mother);
-    }
+    
 
     public String getName() {
         return name;
