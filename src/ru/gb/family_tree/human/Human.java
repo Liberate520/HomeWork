@@ -111,6 +111,10 @@ public class Human {
         return id;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

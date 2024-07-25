@@ -26,6 +26,10 @@ public class Main {
         }
 
         System.out.println(tree);
+        tree.sortByBirthDate();
+        System.out.println(tree);
+        tree.sortByName();
+        System.out.println(tree);
     }
 
     private static FamilyTree testTree(){
