@@ -1,8 +1,9 @@
 package model.io;
 
-import java.io.IOException;
+import java.io.Serializable;
 
-public interface FamilyTreeIO<T> {
-    void writeToFile(T object, String fileName) throws IOException;
-    T readFromFile(String fileName) throws IOException, ClassNotFoundException;
+public interface FamilyTreeIO {
+    void save(Serializable serializable);
+    Object read();
+    void setPath(String path);
 }

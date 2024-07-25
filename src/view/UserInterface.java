@@ -1,124 +1,129 @@
 package view;
 
-import model.FamilyTree;
-import model.person.Person;
-import model.io.FamilyTreeFileIO;
-import model.io.FamilyTreeIO;
+import presenter.FamilyTreePresenter;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
-public class UserInterface {
-    private FamilyTree<Person> familyTree;
-    private final FamilyTreeIO<FamilyTree<Person>> familyTreeIO;
-    private final Scanner scanner;
+public class UserInterface implements View {
+    private final FamilyTreePresenter presenter;
+    private final UserInputHandler userInputHandler;
+    private UserMenuHandler userMenuHandler;
+    public boolean isRunning;
 
     public UserInterface() {
-        familyTree = new FamilyTree<>();
-        familyTreeIO = new FamilyTreeFileIO();
-        scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        userInputHandler = new UserInputHandler(scanner);
+        userMenuHandler = new UserMenuHandler(this);
+        presenter = new FamilyTreePresenter(this);
+        isRunning = true;
     }
 
+     @Override
     public void start() {
-        boolean running = true;
+        welcomeMsg();
+        presenter.readTree();
+        while (isRunning) {
+            selectMenuPoint();
+        }
+    }
 
-        while (running) {
-            printMenu();
-            String command = scanner.nextLine().trim();
+    private void welcomeMsg() {
+        System.out.println("Добро пожаловать в программу семейного древа!");
+    }
 
-            switch (command) {
-                case "1":
-                    addPerson();
-                    break;
-                case "2":
-                    displayTree();
-                    break;
-                case "3":
-                    sortByName();
-                    break;
-                case "4":
-                    sortByBirthDate();
-                    break;
-                case "5":
-                    saveTree();
-                    break;
-                case "6":
-                    loadTree();
-                    break;
-                case "0":
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Неверная команда. Попробуйте снова.");
+    public void selectMenuPoint() {
+        while (isRunning) {
+            System.out.println(userMenuHandler.getMenu());
+            String userInput = userInputHandler.getUserInput();
+            if (userInputHandler.isValidMenuChoice(userInput, userMenuHandler.size())) {
+                int commandNumber = Integer.parseInt(userInput);
+                userMenuHandler.executeCommand(commandNumber);
+            } else {
+                System.out.println("Введена некорректная команда. Попробуйте еще раз.");
             }
         }
     }
 
-    private void printMenu() {
-        System.out.println("Меню:");
-        System.out.println("1 - Добавить человека");
-        System.out.println("2 - Показать дерево");
-        System.out.println("3 - Сортировать по имени");
-        System.out.println("4 - Сортировать по дате рождения");
-        System.out.println("5 - Сохранить дерево в файл");
-        System.out.println("6 - Загрузить дерево из файла");
-        System.out.println("0 - Выход");
-        System.out.print("Введите команду: ");
+    public void addPerson() {
+        System.out.println("Введите, пожалуйста, имя человека: ");
+        String name = userInputHandler.getUserInput();
+
+        System.out.println("Введите, пожалуйста, пол человека: ");
+        String gender = userInputHandler.getGenderInput();
+
+        System.out.println("Введите, пожалуйста, дату рождения человека в формате ДД ММ ГГГГ: ");
+        LocalDate birthDate = userInputHandler.getBirthDateInput();
+        presenter.addPerson(name, gender, birthDate);
     }
 
-    private void addPerson() {
-        System.out.print("Введите имя: ");
-        String name = scanner.nextLine().trim();
-
-        System.out.print("Введите пол: ");
-        String gender = scanner.nextLine().trim();
-
-        System.out.print("Введите дату рождения (гггг-мм-дд): ");
-        LocalDate birthDate = LocalDate.parse(scanner.nextLine().trim());
-
-        System.out.print("Введите дату смерти (гггг-мм-дд) или оставьте пустым: ");
-        String deathDateString = scanner.nextLine().trim();
-        LocalDate deathDate = deathDateString.isEmpty() ? null : LocalDate.parse(deathDateString);
-
-        Person person = new Person(name, gender, birthDate, deathDate);
-        familyTree.addNode(person);
+    public void findByName() {
+        System.out.println("Укажите имя человека, которого хотите найти:");
+        String name = userInputHandler.getUserInput();
+        printFoundPersons(name);
     }
 
-    private void displayTree() {
-        for (Person person : familyTree) {
-            System.out.println(person.getName() + " (" + person.getBirthDate() + ")");
+    public void sortById() {
+        presenter.sortById();
+    }
+
+    public void sortByBirthDate() {
+        presenter.sortByBirthDate();
+    }
+
+    public void sortByName() {
+        presenter.sortByName();
+    }
+
+    public void printFoundPersons(String name) {
+        String FoundPersons = presenter.findByName(name);
+        if (FoundPersons.isEmpty()) {
+            System.out.println("Человек с таким именем не найден.");
+        } else {
+            System.out.println("Список людей, удовлетворяющие запросу: ");
+            System.out.println(FoundPersons);
         }
     }
 
-    private void sortByName() {
-        Person.sortByName();
+    public void removePerson() {
+        System.out.println("Укажите имя человека, которого хотите удалить: ");
+        String name = userInputHandler.getUserInput();
+        printFoundPersons(name);
+        List<Integer> foundPersonId = presenter.foundPersonId(name);
+        removePersonById(name, foundPersonId);
     }
 
-    private void sortByBirthDate() {
-        Person.sortByBirthDate();
-    }
-
-    private void saveTree() {
-        System.out.print("Введите имя файла для сохранения: ");
-        String fileName = scanner.nextLine().trim();
-        try {
-            familyTreeIO.writeToFile(familyTree, fileName);
-            System.out.println("Дерево сохранено в " + fileName);
-        } catch (IOException e) {
-            System.out.println("Ошибка при сохранении дерева: " + e.getMessage());
+    public void removePersonById(String name, List<Integer> foundPersonId) {
+        System.out.println("Укажите id человека, которого хотите удалить: ");
+        boolean flag = true;
+        while (flag) {
+            String idInt = userInputHandler.getUserInput();
+            if (userInputHandler.isValidIdChoice(idInt, foundPersonId)) {
+                int id = Integer.parseInt(idInt);
+                presenter.removePerson(id);
+                System.out.println("Человек с id: " + id + " " + name + " удален. ");
+                flag = false;
+            } else {
+                System.out.println("Некорректно введен id. \nПопробуйте еще раз ввести id человека из списка: " + foundPersonId);
+            }
         }
     }
 
-    private void loadTree() {
-        System.out.print("Введите имя файла для загрузки: ");
-        String fileName = scanner.nextLine().trim();
-        try {
-            familyTree = (FamilyTree) familyTreeIO.readFromFile(fileName);
-            System.out.println("Дерево загружено из " + fileName);
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Ошибка при загрузке дерева: " + e.getMessage());
-        }
+    public void getInfoTree() {
+        presenter.getInfoTree();
+    }
+
+    public void exit() {
+        isRunning = false;
+        System.out.println("Программа завершена.");
+        System.out.println("До свидания!");
+        presenter.sortById();
+        presenter.saveTree();
+    }
+
+    @Override
+    public void printAnswer(String answer) {
+
     }
 }
-

@@ -1,95 +1,59 @@
 package presenter;
 
-import model.FamilyTree;
-import model.person.Person;
-import view.FamilyTreeView;
-import model.io.FamilyTreeFileIO;
-import model.io.FamilyTreeIO;
+import model.serice.Service;
+import view.View;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class FamilyTreePresenter {
-    private FamilyTree<Person> familyTree;
-    private FamilyTreeView<Person> view;
-    private FamilyTreeIO<FamilyTree<Person>> familyTreeIO;
+    private View view;
+    private Service service;
 
-    public FamilyTreePresenter(FamilyTreeView<Person> view) {
+    public FamilyTreePresenter(View view) {
         this.view = view;
-        this.familyTree = new FamilyTree<>();
-        this.familyTreeIO = new FamilyTreeFileIO<>();
+        service = new Service();
     }
 
-    public void start() {
-        boolean running = true;
-
-        while (running) {
-            view.showMenu();
-            String command = view.getInput();
-
-            switch (command) {
-                case "1":
-                    addPerson();
-                    break;
-                case "2":
-                    displayTree();
-                    break;
-                case "3":
-                    sortByName();
-                    break;
-                case "4":
-                    sortByBirthDate();
-                    break;
-                case "5":
-                    saveTree();
-                    break;
-                case "6":
-                    loadTree();
-                    break;
-                case "0":
-                    running = false;
-                    break;
-                default:
-                    view.showError("Неверная команда. Попробуйте снова.");
-            }
-        }
+    public void addPerson(String name, String gender, LocalDate birthDay) {
+        service.addPerson(name, gender, String.valueOf(birthDay));
+        getInfoTree();
     }
 
-    private void addPerson() {
-        view.promptForPersonDetails();
-        Person person = new Person(view.getName(), view.getGender(), LocalDate.parse(view.getBirthDate()), view.getDeathDate().isEmpty() ? null : LocalDate.parse(view.getDeathDate()));
-        familyTree.addNode(person);
+    public String findByName(String name) {
+        return service.findByName(name);
     }
 
-    private void displayTree() {
-        view.displayTree(familyTree.getNodes());
+    public void getInfoTree() {
+        String answer = service.getInfoTree();
+        view.printAnswer(answer);
     }
 
-    private void sortByName() {
-        familyTree.sortBy(Person.sortByName());
+    public List<Integer> foundPersonId(String name) {
+        return service.foundPersonId(name);
     }
 
-    private void sortByBirthDate() {
-        familyTree.sortBy(Person.sortByBirthDate());
+    public void removePerson(int id) {
+        service.removePerson(id);
     }
 
-    private void saveTree() {
-        String fileName = view.getFileName();
-        try {
-            familyTreeIO.writeToFile(familyTree, fileName);
-            view.showSaveSuccess(fileName);
-        } catch (IOException e) {
-            view.showError("Ошибка при сохранении дерева: " + e.getMessage());
-        }
+    public void sortById() {
+        service.sortById();
     }
 
-    private void loadTree() {
-        String fileName = view.getFileName();
-        try {
-            familyTree = familyTreeIO.readFromFile(fileName);
-            view.showLoadSuccess(fileName);
-        } catch (IOException | ClassNotFoundException e) {
-            view.showError("Ошибка при загрузке дерева: " + e.getMessage());
-        }
+    public void sortByBirthDate() {
+        service.sortByBirthDate();
+    }
+
+    public void sortByName() {
+        service.sortByName();
+    }
+
+    public void saveTree() {
+        service.save();
+    }
+
+    public void readTree() {
+        service.read();
     }
 }
