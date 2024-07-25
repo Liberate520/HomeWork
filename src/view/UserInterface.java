@@ -56,6 +56,8 @@ public class UserInterface implements View {
         System.out.println("Введите, пожалуйста, дату рождения человека в формате ДД ММ ГГГГ: ");
         LocalDate birthDate = userInputHandler.getBirthDateInput();
         presenter.addPerson(name, gender, birthDate);
+
+        System.out.println("Человек успешно добавлен.");
     }
 
     public void findByName() {

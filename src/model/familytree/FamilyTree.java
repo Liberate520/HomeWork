@@ -67,7 +67,7 @@ public class FamilyTree<T extends TreeNodes<T>> implements Serializable, Iterabl
         return result;
     }
 
-    public String getInfoTree() {
+    public String getTreeInfo() {
         StringBuilder result = new StringBuilder();
         result.append("В дереве ").append(nodes.size()).append(" человек. \n");
         for (T node : nodes) {
@@ -133,5 +133,10 @@ public class FamilyTree<T extends TreeNodes<T>> implements Serializable, Iterabl
     @Override
     public Iterator<T> iterator() {
         return new TreeIterator<>(nodes);
+    }
+
+    @Override
+    public String toString() {
+        return getTreeInfo();
     }
 }

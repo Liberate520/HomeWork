@@ -50,7 +50,7 @@ public class Service {
     }
 
     public String getInfoTree() {
-        return familyTree.getInfoTree();
+        return familyTree.getTreeInfo();
     }
 
     public List<Integer> foundPersonId(String name) {
