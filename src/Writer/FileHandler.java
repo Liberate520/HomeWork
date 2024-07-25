@@ -27,10 +27,11 @@ public class FileHandler implements Writer {
             System.out.println("---------------------------------------");
             obj = ois.readObject();
             System.out.println(obj);
+            return obj;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            return null;
         }
-        return obj;
     }
 
 }
