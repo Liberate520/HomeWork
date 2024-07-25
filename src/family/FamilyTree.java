@@ -1,19 +1,26 @@
 package family;
 
 import human.Human;
+import human.HumanComparatorByAge;
+import human.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long humansId;
     private List<Human> people;
 
     public FamilyTree() {
-        this(new ArrayList<>());
+//        this(new ArrayList<>());
+        people = new ArrayList<>();
     }
 
-    public FamilyTree(List<Human> people){
+    public List<Human> getPeople() {
+        return people;
+    }
+
+    public void setFamilyTree(List<Human> people){
         this.people = people;
     }
 
@@ -23,10 +30,10 @@ public class FamilyTree implements Serializable {
     }
 
     public void addHuman(Human human){
-        if (human == null){
+        if (human == null) {
             return;
         }
-        if (!people.contains(human)){
+        if (!people.contains(human)) {
             people.add(human);
             human.setId(humansId++);
 
@@ -131,6 +138,14 @@ public class FamilyTree implements Serializable {
         return id < humansId && id >= 0;
     }
 
+    public void sortByName(){
+        people.sort(new HumanComparatorByName());
+    }
+
+    public void sortByAge() {
+        people.sort(new HumanComparatorByAge());
+    }
+
 
     @Override
     public String toString() {
@@ -157,5 +172,11 @@ public class FamilyTree implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(people);
+    }
+
+
+    @Override
+    public Iterator<Human> iterator() {
+        return people.iterator();
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -18,8 +18,11 @@ public class Human implements Serializable {
     private Human spouse;
     private List<Human> children;
 
+    public Human(){
+        children = new ArrayList<>();
+    }
+
     public Human(String name, Gender gender, LocalDate birthDate,LocalDate deathDate, Human mother, Human father){
-        id = -1;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
@@ -27,17 +30,24 @@ public class Human implements Serializable {
         this.mother = mother;
         this.father = father;
     }
+//
+//    public Human(String name, Gender gender, LocalDate birthDate){
+//        this(name, gender, birthDate, null, null, null);
+//    }
+//
+//    public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father){
+//        this(name, gender, birthDate, null, mother, father);
+//    }
 
-    public Human(String name, Gender gender, LocalDate birthDate){
-        this(name, gender, birthDate, null, null, null);
-    }
-
-    public Human(String name, Gender gender, LocalDate birthDate, Human mother, Human father){
-        this(name, gender, birthDate, null, mother, father);
-    }
-
-    public Human(){
+    public Human(int id, String name, Gender gender, LocalDate birthDate) {
+        this.name = name;
+        this.gender = gender;
+        this.birthDate = birthDate;
         children = new ArrayList<>();
+    }
+
+    public Human(int id, String name, Gender gender, LocalDate birthDate, Human mother, Human father) {
+        this(name, gender, birthDate, null, mother, father);
     }
 
     public long getId() {
@@ -49,7 +59,11 @@ public class Human implements Serializable {
     }
 
     public String getName() {
-        return name;
+        try {
+            return name;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void setName(String name) {
@@ -134,12 +148,16 @@ public class Human implements Serializable {
     }
 
     public void setChildren(Human child){
+
         if (!children.contains(child)){
             children.add(child);
         }
     }
 
     public List<Human> getChildren() {
+        if (children == null) {
+            children = new ArrayList<>();
+        }
         return children;
     }
 
@@ -165,11 +183,8 @@ public class Human implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Human)) return false;
-        Human human = (Human) o;
-        return human.getId() == getId();
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 
 }

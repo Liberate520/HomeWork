@@ -1,60 +1,41 @@
-import family.FamilyTree;
-import file_handler.DataHandler;
+import writer.DataHandler;
 import human.Gender;
-import human.Human;
+import service.Service;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Main {
 
-
+    final static String filePath = "src/writer/tree.txt";
     public static void main(String[] args) {
-        FamilyTree tree = testTree();
+        Service service = new Service();
 
-        DataHandler dataHandler = new DataHandler(tree);
+        service.addHuman("Mike", Gender.MALE, LocalDate.of(1979, 5,1));
+        service.addHuman("Jack", Gender.MALE, LocalDate.of(1999, 6,21), null, null);
+        service.addHuman("Rose", Gender.FEMALE, LocalDate.of(2000, 7,28));
+        service.addHuman("Annie", Gender.FEMALE, LocalDate.of(2021, 1,8), "Rose", "Jack");
 
-        String name = "family.txt";
 
-        dataHandler.saveToFile(name);
+//        System.out.println(service);
+//        service.sortByName();
+//        System.out.println(service);
+        service.sortByAge();
+        System.out.println(service);
+//        save(service);
 
-        dataHandler.loadFromFile(name);
+//        Service service = (Service) load();
+//        System.out.println(service.getPeopleInfo());
 
-        DataHandler loadedHandler = new DataHandler(null); // Создаем пустой объект file_handler.DataHandler
-        loadedHandler.loadFromFile(name);
-
-        // Выведите содержимое загруженного объекта на консоль
-        FamilyTree loadedTree = loadedHandler.getTree();
-
-        System.out.println(dataHandler.getTree());
-
-        System.out.println(loadedTree);
     }
-    private static FamilyTree testTree(){
-        FamilyTree tree = new FamilyTree();
-
-        Human human1 = new Human();
-        human1.setName("Mike");
-        human1.setGender(Gender.MALE);
-        human1.setBirthDate(LocalDate.of(1967,5,6));
-        human1.setDeathDate(LocalDate.of(2015, 4,25));
-
-        Human human2 = new Human("Lola", Gender.FEMALE, LocalDate.of(1969,11, 9));
-
-        tree.addHuman(human1);
-        tree.addHuman(human2);
-        tree.setWedding(human1, human2);
-
-        Human human3 = new Human("Sara", Gender.FEMALE, LocalDate.of(1991, 1,5), human2, human1);
-        Human human4 = new Human("Tara", Gender.FEMALE, LocalDate.of(1998, 1,5), human2, human1);
-
-        tree.addHuman(human3);
-        tree.addHuman(human4);
-
-        Human grandmother = new Human("Larisa", Gender.FEMALE, LocalDate.of(1947, 9, 17));
-        grandmother.setChildren(human1);
-
-        tree.addHuman(grandmother);
-
-        return tree;
+    private static void save(Serializable serializable) {
+        DataHandler dataHandler = new DataHandler();
+        dataHandler.setPath(filePath);
+        dataHandler.save(serializable);
+    }
+    private static Serializable load() {
+        DataHandler dataHandler = new DataHandler();
+        dataHandler.setPath(filePath);
+        return (Serializable) dataHandler.read();
     }
 }
