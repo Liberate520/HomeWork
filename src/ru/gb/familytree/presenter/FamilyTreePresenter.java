@@ -1,18 +1,18 @@
 package ru.gb.familytree.presenter;
 
 import ru.gb.familytree.model.HumanInfo;
-import ru.gb.familytree.view.Service;
+import ru.gb.familytree.service.FamilyTreeService;
 import ru.gb.familytree.view.FamilyTreeView;
 
 import java.util.List;
 
 public class FamilyTreePresenter {
     private FamilyTreeView view;
-    private Service service;
+    private FamilyTreeService service;
 
-    public FamilyTreePresenter(FamilyTreeView view) {
+    public FamilyTreePresenter(FamilyTreeView view, FamilyTreeService service) {
         this.view = view;
-        this.service = new Service();
+        this.service = service;
         this.view.setPresenter(this);
     }
 

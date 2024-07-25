@@ -5,13 +5,18 @@ import ru.gb.familytree.model.Gender;
 import ru.gb.familytree.presenter.FamilyTreePresenter;
 import ru.gb.familytree.view.ConsoleFamilyTreeView;
 import ru.gb.familytree.view.FamilyTreeView;
+import ru.gb.familytree.service.FamilyTreeService;
+import ru.gb.familytree.repository.FileFamilyTreeRepository;
+import ru.gb.familytree.repository.FamilyTreeRepository;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        FamilyTreeRepository repository = new FileFamilyTreeRepository("familytree.txt");
+        FamilyTreeService service = new FamilyTreeService(repository);
         FamilyTreeView view = new ConsoleFamilyTreeView();
-        FamilyTreePresenter presenter = new FamilyTreePresenter(view);
+        FamilyTreePresenter presenter = new FamilyTreePresenter(view, service);
 
         // Создание людей
         HumanInfo viserys = new HumanInfo("Viserys", LocalDate.of(1970, 1, 1), null, Gender.MALE);
