@@ -1,12 +1,13 @@
 package ru.gb.family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human {
+public class Human  implements Serializable {
     private long id;
     private String lastName;
     private String firstName;
