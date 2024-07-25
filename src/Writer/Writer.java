@@ -6,5 +6,5 @@ public interface Writer {
 
     void oos(Serializable serializable);
 
-    void ois();
+    Object ois(Object obj);
 }

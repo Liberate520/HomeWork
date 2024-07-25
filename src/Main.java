@@ -43,22 +43,22 @@ public class Main {
 //
 //        valentina.setSpouse(stepan);
 //        olga.setSpouse(petr);
-//
-//
-//        System.out.println(familyTree); // вывод всех данных генеалогического древа
-//        System.out.println(stepan);
-//
-//        System.out.println("\nВведите имя для поиска: ");
-//        String name = in.nextLine();
-//        System.out.println(familyTree.getByName(name));
-//
-//
-//        System.out.println("\nВведите номер ID для поиска: ");
-//        long id = in.nextLong();
-//        System.out.println(familyTree.getById(id));
 
-
+////
+////        System.out.println(familyTree); // вывод всех данных генеалогического древа
+////        System.out.println(stepan);
+////
+////        System.out.println("\nВведите имя для поиска: ");
+////        String name = in.nextLine();
+////        System.out.println(familyTree.getByName(name));
+////
+////
+////        System.out.println("\nВведите номер ID для поиска: ");
+////        long id = in.nextLong();
+////        System.out.println(familyTree.getById(id));
 //
+//
+////
         /* Проверка работы Сериализации напрямую из класса Main
 
 //        String fileName = "src\\Writer\\FamilyTree.txt";
@@ -89,7 +89,7 @@ public class Main {
 
         FileHandler fileHandler = new FileHandler();
 //        fileHandler.oos(familyTree); // проверка сохранения состояния программы (процесс записи состояния объекта в поток - сериализация)
-        fileHandler.ois(); // проверка восстановления состояния программы (процесс восстановления состояния объекта из потока - десериализация)
+        fileHandler.ois(fileHandler); // проверка восстановления состояния программы (процесс восстановления состояния объекта из потока - десериализация)
 
 
 

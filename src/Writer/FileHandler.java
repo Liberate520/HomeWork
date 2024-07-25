@@ -18,18 +18,19 @@ public class FileHandler implements Writer {
         }
     }
 
-    public void ois() {
+    public Object ois(Object obj) {
         // метод восстановления состояния программы (процесс восстановления состояния объекта из потока - десериализация)
+
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));) {
             System.out.println("---------------------------------------");
             System.out.printf("Восстановление файла \"%s\": \n", fileName);
             System.out.println("---------------------------------------");
-            Object obj = ois.readObject();
+            obj = ois.readObject();
             System.out.println(obj);
-
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        return obj;
     }
 
 }
