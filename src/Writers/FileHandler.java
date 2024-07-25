@@ -2,32 +2,24 @@ package Writers;
 
 import java.io.*;
 
-public class FileHandler implements Writer {
+public class FileHandler {
 
-    private String filePath = "familyTree.txt";
-
-    @Override
-    public void save(Serializable serializable) {
+    public boolean save(Serializable serializable, String filePath) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(serializable);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    @Override
-    public Object read() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-            Object object = objectInputStream.readObject();
-            return object;
-        } catch (Exception e) {
+    public Object read(String filePath) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream((new FileInputStream(filePath)))) {
+            return objectInputStream.readObject();
+        } catch (Exception e){
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public void setPath(String filePath) {
-        this.filePath = filePath;
     }
 }

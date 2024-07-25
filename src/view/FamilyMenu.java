@@ -14,6 +14,9 @@ public class FamilyMenu {
         commands.add(new GetHumanListInfo(consoleUI));
         commands.add(new SortByGender(consoleUI));
         commands.add(new SortByName(consoleUI));
+        commands.add(new SaveTree(consoleUI));
+        commands.add(new LoadTree(consoleUI));
+        commands.add(new setParents(consoleUI));
         commands.add(new StopProgram(consoleUI));
     }
 

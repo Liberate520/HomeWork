@@ -20,6 +20,11 @@ public class Presenter {
         getHumanListInfo();
     }
 
+    public void setParents(int childID, int fatherID, int motherID) {
+        service.setParents(childID, fatherID, motherID);
+        getHumanListInfo();
+    }
+
     public void getHumanListInfo() {
         String answer = service.getHumansInfo();
         view.printAnswer(answer);
@@ -32,6 +37,16 @@ public class Presenter {
 
     public void sortByName() {
         service.sortByName();
+        getHumanListInfo();
+    }
+
+    public void saveTree() {
+        service.saveTree();
+        getHumanListInfo();
+    }
+
+    public void loadTree() {
+        service.loadTree();
         getHumanListInfo();
     }
 }

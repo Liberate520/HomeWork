@@ -35,6 +35,41 @@ public class ConsoleUI implements View {
         }
     }
 
+    public void sortByName() {
+        presenter.sortByName();
+    }
+
+    public void sortByGender() {
+        presenter.sortByGender();
+    }
+
+    public void getHumanListInfo() {
+        presenter.getHumanListInfo();
+    }
+
+    public LocalDate addBornDate(){
+        System.out.println("Введите дату рождения родственника (год, месяц, день через -):");
+        return LocalDate.parse(scanner.next());
+    }
+
+    public LocalDate addDeathDate() {
+        System.out.println("Введите дату смерти родственника (год, месяц, день через -):");
+        return LocalDate.parse(scanner.next());
+    }
+
+    public void addHuman() {
+        System.out.println("Введите ФИО родственника: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Введите пол родственника: ");
+        String strGender = scanner.nextLine();
+        Gender gender = Gender.valueOf(strGender);
+
+
+
+        presenter.addHuman(name, gender, addBornDate(), addDeathDate());
+    }
+
     private boolean checkTextForInt(String text){
         if (text.matches("[0-9]+")){
             return true;
@@ -63,39 +98,28 @@ public class ConsoleUI implements View {
 
     }
 
-    public void sortByName() {
-        presenter.sortByName();
+    public void saveTree() {
+        presenter.saveTree();
     }
 
-    public void sortByGender() {
-        presenter.sortByGender();
+    public void loadTree() {
+        presenter.loadTree();
     }
 
-    public void getHumanListInfo() {
-        presenter.getHumanListInfo();
-    }
+    public void setParents(){
+        System.out.println("Введите ID ребёнка: \n");
+        String childStr = scanner.nextLine();
+        int childID = Integer.parseInt(childStr);
 
-    public void addHuman() {
-        System.out.println("Введите ФИО родственника: ");
-        String name = scanner.nextLine();
+        System.out.println("Введите ID отца: \n");
+        String fatherStr = scanner.nextLine();
+        int fatherID = Integer.parseInt(fatherStr);
 
-        System.out.println("Введите пол родственника: ");
-        String strGender = scanner.nextLine();
-        Gender gender = Gender.valueOf(strGender);
+        System.out.println("Введите ID матери: \n");
+        String motherStr = scanner.nextLine();
+        int motherID = Integer.parseInt(motherStr);
 
-
-        presenter.addHuman(name, gender, addBornDate(), addDeathDate());
-    }
-
-
-    public LocalDate addBornDate(){
-        System.out.println("Введите дату рождения родственника (год, месяц, день через -):");
-        return LocalDate.parse(scanner.next());
-    }
-
-    public LocalDate addDeathDate() {
-        System.out.println("Введите дату смерти родственника (год, месяц, день через -):");
-        return LocalDate.parse(scanner.next());
+        presenter.setParents(childID, fatherID, motherID);
     }
 
     @Override

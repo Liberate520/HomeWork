@@ -3,18 +3,19 @@ package model.Humans;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import model.FamilyTree.ItemFamilyTree;
 
-public class Human implements ItemFamilyTree<Human>{
-    private int ID;
+public class Human implements ItemFamilyTree<Human> {
+    private int humID;
     private String name;
     private LocalDate dateOfBorn, dateOfDeath;
     private Gender gender;
     private Human father, mother;
-    private List<Human> children; 
+    private List<Human> children;
 
     public Human(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender, Human father, Human mother) {
-        this.ID = 0;
+        this.humID = 0;
         this.name = name;
         this.dateOfBorn = dateOfBorn;
         this.dateOfDeath = dateOfDeath;
@@ -22,22 +23,21 @@ public class Human implements ItemFamilyTree<Human>{
         this.father = father;
         this.mother = mother;
         children = new ArrayList<>();
-        
     }
 
     public Human(int i, String name2, LocalDate dateOfBorn2, LocalDate dateOfDeath2, Gender gender2) {
         this(name2, dateOfBorn2, dateOfDeath2, gender2, null, null);
     }
 
-    public boolean addChild(Human child){
-        if(!children.contains(child)){
+    public boolean addChild(Human child) {
+        if (!children.contains(child)) {
             children.add(child);
             return true;
         }
         return false;
     }
 
-    public boolean addParent(Human parent){
+    public boolean addParent(Human parent) {
         if (parent.getGender().equals(Gender.Male)) {
             setFather(parent);
         } else if (parent.getGender().equals(Gender.Female)) {
@@ -46,7 +46,7 @@ public class Human implements ItemFamilyTree<Human>{
         return true;
     }
 
-    public List<Human> getParents(){
+    public List<Human> getParents() {
         List<Human> list = new ArrayList<>(2);
         if (father != null) {
             list.add(father);
@@ -57,53 +57,68 @@ public class Human implements ItemFamilyTree<Human>{
         return list;
     }
 
+    public int getID() {
+        return humID;
+    }
+
+    public void setID(int ID) {
+        this.humID = ID;
+    }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public LocalDate getDateOfBorn() {
         return dateOfBorn;
     }
+
     public void setDateOfBorn(LocalDate dateOfBorn) {
         this.dateOfBorn = dateOfBorn;
     }
+
     public LocalDate getDateOfDeath() {
         return dateOfDeath;
     }
+
     public void setDateOfDeath(LocalDate dateOfDeath) {
         this.dateOfDeath = dateOfDeath;
     }
+
     public Gender getGender() {
         return gender;
     }
+
     public void setGender(Gender gender) {
         this.gender = gender;
     }
+
     public Human getFather() {
         return father;
     }
+
     public void setFather(Human father) {
         this.father = father;
     }
+
     public Human getMother() {
         return mother;
     }
+
     public void setMother(Human mother) {
         this.mother = mother;
     }
+
     public List<Human> getChildren() {
         return children;
     }
+
     public void setChildren(List<Human> children) {
         this.children = children;
-    }
-    public int getID() {
-        return ID;
-    }
-    public void setID(int ID) {
-        this.ID = ID;
     }
 
     @Override
@@ -111,8 +126,11 @@ public class Human implements ItemFamilyTree<Human>{
         return getInfo();
     }
 
-    public String getInfo(){
+    public String getInfo() {
         StringBuilder sb = new StringBuilder();
+        sb.append("ID: ");
+        sb.append(humID);
+        sb.append("; ");
         sb.append("name: ");
         sb.append(name);
         sb.append(", gender: ");
@@ -126,7 +144,7 @@ public class Human implements ItemFamilyTree<Human>{
         return sb.toString();
     }
 
-    public String getFatherInfo(){
+    public String getFatherInfo() {
         String res = " папа: ";
         Human father = getFather();
         if (father != null) {
@@ -137,7 +155,7 @@ public class Human implements ItemFamilyTree<Human>{
         return res;
     }
 
-    public String getMotherInfo(){
+    public String getMotherInfo() {
         String res = " мама: ";
         Human mother = getMother();
         if (mother != null) {
@@ -148,7 +166,7 @@ public class Human implements ItemFamilyTree<Human>{
         return res;
     }
 
-    public String getChildrenInfo(){
+    public String getChildrenInfo() {
         StringBuilder res = new StringBuilder();
         res.append(" дети: ");
         if (children.size() != 0) {
@@ -163,16 +181,14 @@ public class Human implements ItemFamilyTree<Human>{
         return res.toString();
     }
 
-    // @Override
-    // public boolean equals(Object obj) {
-    //     if (this == obj) {
-    //         return true;
-    //     }
-    //     if (!(obj instanceof Human)) {
-    //         return false;
-    //     }
-    //     Human human = (Human) obj;
-    //     return human.getID() == getID();
-    // }
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Human human)) {
+            return false;
+        }
+        return human.getID() == getID();
+    }
 }

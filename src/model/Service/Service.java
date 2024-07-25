@@ -2,6 +2,7 @@ package model.Service;
 
 import java.time.LocalDate;
 
+import Writers.Writer;
 import model.FamilyTree.FamilyTree;
 import model.FamilyTree.ItemFamilyTree;
 import model.Humans.Gender;
@@ -11,6 +12,8 @@ import model.builder.HumanBuilder;
 public class Service<U extends ItemFamilyTree<U>> {
     private FamilyTree<Human> familyTree;
     private HumanBuilder humanBuilder;
+    private Writer writer;
+    private int humID;
 
     public Service() {
         familyTree = new FamilyTree<>();
@@ -19,8 +22,20 @@ public class Service<U extends ItemFamilyTree<U>> {
 
     public void addHuman(String name, LocalDate dateOfBorn, LocalDate dateOfDeath, Gender gender) {
         Human human = humanBuilder.build(name, dateOfBorn, dateOfDeath, gender);
+        humID++;
         familyTree.addHuman(human);
     }
+
+    public void setParents(int childID, int fatherID, int motherID) {
+        Human child = familyTree.getByID(childID);
+        Human father = familyTree.getByID(fatherID);
+        Human mother = familyTree.getByID(motherID);
+
+        child.addParent(father);
+        child.addParent(mother);
+    }
+
+
 
     public void sortByGender() {
         familyTree.sortByGender();
@@ -38,5 +53,24 @@ public class Service<U extends ItemFamilyTree<U>> {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public boolean saveTree() {
+        if (writer == null) {
+            return false;
+        }
+        return writer.save(familyTree);
+    }
+
+    public boolean loadTree() {
+        if (writer == null) {
+            return false;
+        }
+        familyTree = writer.read();
+        return true;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
     }
 }

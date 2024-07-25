@@ -7,7 +7,7 @@ import java.util.List;
 import model.Humans.Gender;
 
 public interface ItemFamilyTree<U> extends Serializable {
-    void setID(int ID);
+    void setID(int humID);
     int getID();
     String getName();
     Gender getGender();
