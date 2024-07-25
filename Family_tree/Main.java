@@ -1,6 +1,6 @@
 package Family_tree;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.time.LocalDate;
 import Family_tree.writer.FileHandler;
 
@@ -9,7 +9,29 @@ import Family_tree.human.Gender;
 import Family_tree.human.Human;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args){
+        // FamilyTree tree = testTree();
+        FamilyTree tree = readTree();
+
+        // saveTree(tree);
+        System.out.println(tree);
+        
+
+    }
+
+    private static FamilyTree readTree(){
+        FileHandler fh = new FileHandler();
+        System.out.println("Serialization has been successfully completed!");
+        return (FamilyTree) fh.read();
+    }
+    
+    private static void saveTree(FamilyTree tree) {
+        FileHandler fh = new FileHandler();
+        fh.save(tree);
+        System.out.println("The object has been successfully deserialized!");
+    }
+
+    private static FamilyTree testTree(){
         FamilyTree familyTree = new FamilyTree();
 
         Human dad = new Human("Aibek", Gender.Male, LocalDate.of(1970, 9, 4), null, null, null, null);
@@ -64,13 +86,10 @@ public class Main {
         // familyTree.addHuman(SIL);
         // familyTree.getMarried(bro, SIL);
         
-        System.out.println(familyTree);
+        // System.out.println(familyTree);
 
-        FileHandler fh = new FileHandler();
-        fh.write(familyTree);
-        System.out.println("Serialization has been successfully completed!");
-        
-        fh.read();
-        System.out.println("The object has been successfully deserialized!");
+        return familyTree;
+
     }
 }
+
