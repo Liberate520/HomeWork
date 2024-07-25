@@ -1,40 +1,62 @@
 package ru.gb.family_tree.view;
 
-import ru.gb.family_tree.view.commands.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenu {
-    private List<Command> commandList;
+    private List<String> menuItems;
+    private ConsoleUI consoleUI;
 
     public MainMenu(ConsoleUI consoleUI) {
-        commandList = new ArrayList<>();
-        commandList.add(new AddHuman(consoleUI));
-        commandList.add(new GetHumanInfo(consoleUI));
-        commandList.add(new SortByName(consoleUI));
-        commandList.add(new SortByAge(consoleUI));
-        commandList.add(new Finish(consoleUI));
+        this.consoleUI = consoleUI;
+        menuItems = new ArrayList<>();
+        menuItems.add("Добавить человека");
+        menuItems.add("Получить информацию о людях");
+        menuItems.add("Отсортировать по имени");
+        menuItems.add("Отсортировать по возрасту");
+        menuItems.add("Сохранить данные");
+        menuItems.add("Загрузить данные");
+        menuItems.add("Закончить работу");
     }
 
-    public String menu() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < commandList.size(); i++) {
-            stringBuilder.append(i + 1);
-            stringBuilder.append(". ");
-            stringBuilder.append(commandList.get(i).getDescription());
-            stringBuilder.append("\n");
+    public void execute(int numCommand) {
+        switch (numCommand) {
+            case 1:
+                consoleUI.addHuman();
+                break;
+            case 2:
+                consoleUI.getHumanListInfo();
+                break;
+            case 3:
+                consoleUI.sortByName();
+                break;
+            case 4:
+                consoleUI.sortByAge();
+                break;
+            case 5:
+                consoleUI.saveData();
+                break;
+            case 6:
+                consoleUI.loadData();
+                break;
+            case 7:
+                consoleUI.finish();
+                break;
+            default:
+                System.out.println("Неизвестная команда. Попробуйте снова.");
+                break;
         }
-        return stringBuilder.toString();
-    }
-
-    public void execute(int choice) {
-        Command command = commandList.get(choice - 1);
-        command.execute();
     }
 
     public int getSize() {
-        return commandList.size();
+        return menuItems.size();
+    }
+
+    public String menu() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < menuItems.size(); i++) {
+            sb.append(i + 1).append(". ").append(menuItems.get(i)).append("\n");
+        }
+        return sb.toString();
     }
 }
-

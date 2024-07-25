@@ -2,16 +2,21 @@ package ru.gb.family_tree.model.human;
 
 import ru.gb.family_tree.model.family_tree.ElementFamilyTree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class Human implements ElementFamilyTree<Human> {
+public class Human implements ElementFamilyTree<Human>, Serializable {
     private long id;
     private String name;
     private LocalDate dateOfBirth;
     private Gender gender;
     private String fatherName;
     private String motherName;
+    private List<Human> children;
 
     public Human(long id, String name, LocalDate dateOfBirth, Gender gender, String fatherName, String motherName) {
         this.id = id;
@@ -20,6 +25,7 @@ public class Human implements ElementFamilyTree<Human> {
         this.gender = gender;
         this.fatherName = fatherName;
         this.motherName = motherName;
+        this.children = new ArrayList<>();
     }
 
     public long getId() {
@@ -46,17 +52,24 @@ public class Human implements ElementFamilyTree<Human> {
         return motherName;
     }
 
+    public void addChild(Human child) {
+        this.children.add(child);
+    }
+
+    public List<Human> getChildren() {
+        return children;
+    }
+
     @Override
     public String toString() {
-        return "Human{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", gender=" + gender +
-                ", fatherName='" + fatherName + '\'' +
-                ", motherName='" + motherName + '\'' +
-                '}';
+        String childrenNames = children.stream()
+                .map(Human::getName)
+                .collect(Collectors.joining(", "));
+
+        return String.format("Human{id=%d, name='%s', dateOfBirth=%s, gender=%s, fatherName='%s', motherName='%s', children=[%s]}",
+                id, name, dateOfBirth, gender, fatherName, motherName, childrenNames);
     }
+
 
     @Override
     public int compareTo(Human other) {
@@ -73,10 +86,4 @@ public class Human implements ElementFamilyTree<Human> {
         return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
     }
 
-    @Override
-    public String getChildrenInfo() {
-        // Реализуйте логику получения информации о детях, если это необходимо.
-        // Пока возвращаем пустую строку или null.
-        return "";
-    }
 }

@@ -4,7 +4,7 @@ import ru.gb.family_tree.view.ConsoleUI;
 
 public abstract class Command {
     String description;
-    ConsoleUI consoleUI;
+    protected ConsoleUI consoleUI;
 
     public Command(ConsoleUI consoleUI) {
         this.consoleUI = consoleUI;
