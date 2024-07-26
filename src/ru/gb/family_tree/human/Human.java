@@ -1,5 +1,6 @@
 package ru.gb.family_tree.human;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -7,7 +8,10 @@ import java.util.HashMap;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Human {
+/**
+ * Класс Human представляет человека с различными атрибутами и родственными связями.
+ */
+public class Human implements Serializable {
     private long id;
     private String name;
     private Gender gender;
@@ -17,33 +21,64 @@ public class Human {
     private HashMap<Human, SpouseStatus> spouses = new HashMap<>();
 
     /**
-     * Конструктор для создания объекта Human с датой смерти.
+     * Конструктор для создания человека с полными данными.
+     *
      * @param name имя человека
-     * @param gender пол человека
+     * @param gender гендер человека
      * @param dob дата рождения
      * @param dod дата смерти
+     * @param mother мать
+     * @param father отец
      */
-    public Human(String name, Gender gender, LocalDate dob, LocalDate dod) {
+    public Human(String name, Gender gender, LocalDate dob, LocalDate dod, Human mother, Human father) {
         this.id = -1;
         this.name = name;
         this.gender = gender;
         this.dob = dob;
         this.dod = dod;
         this.children = new ArrayList<>();
-        this.mother = null;
-        this.father = null;
+        this.mother = mother;
+        this.father = father;
         this.spouses = new HashMap<>();
     }
 
     /**
-     * Конструктор для создания объекта Human без даты смерти.
+     * Конструктор для создания живого человека с родителями.
+     *
      * @param name имя человека
-     * @param gender пол человека
+     * @param gender гендер человека
+     * @param dob дата рождения
+     * @param mother мать
+     * @param father отец
+     */
+    public Human(String name, Gender gender, LocalDate dob, Human mother, Human father) {
+        this(name, gender, dob, null, mother, father);
+    }
+
+    /**
+     * Конструктор для создания человека с данными о смерти, но без родителей.
+     *
+     * @param name имя человека
+     * @param gender гендер человека
+     * @param dob дата рождения
+     * @param dod дата смерти
+     */
+    public Human(String name, Gender gender, LocalDate dob, LocalDate dod) {
+        this(name, gender, dob, dod, null, null);
+    }
+
+    /**
+     * Конструктор для создания живого человека без родителей.
+     *
+     * @param name имя человека
+     * @param gender гендер человека
      * @param dob дата рождения
      */
     public Human(String name, Gender gender, LocalDate dob) {
-        this(name, gender, dob, null);
+        this(name, gender, dob, null, null, null);
     }
+
+    // Геттеры и сеттеры
 
     public long getId() {
         return id;
@@ -51,10 +86,6 @@ public class Human {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void PrintId() {
-        System.out.println("Id: " + this.getId());
     }
 
     public String getName() {
@@ -65,20 +96,12 @@ public class Human {
         this.name = name;
     }
 
-    public void PrintName() {
-        System.out.println("Surname Name Patronymic: " + this.getName());
-    }
-
     public LocalDate getDob() {
         return dob;
     }
 
     public void setDob(LocalDate dob) {
         this.dob = dob;
-    }
-
-    public void PrintDob() {
-        System.out.println("Date of Birth (year-month-day): " + this.getDob());
     }
 
     public LocalDate getDod() {
@@ -89,24 +112,12 @@ public class Human {
         this.dod = dod;
     }
 
-    public void PrintDod() {
-        if (dod == null) {
-            System.out.println("Is alive");
-        } else {
-            System.out.println("Date of Death (year-month-day): " + this.getDod());
-        }
-    }
-
     public Gender getGender() {
         return gender;
     }
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public void PrintGender() {
-        System.out.println("Gender: " + this.getGender());
     }
 
     public List<Human> getChildren() {
@@ -121,11 +132,66 @@ public class Human {
         return false;
     }
 
+    public Human getMother() {
+        return mother;
+    }
+
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    public Human getFather() {
+        return father;
+    }
+
+    public void setFather(Human father) {
+        this.father = father;
+    }
+
+    public HashMap<Human, SpouseStatus> getSpouse() {
+        return spouses;
+    }
+
+    public boolean addSpouse(Human spouse, SpouseStatus status) {
+        if (this.spouses.containsKey(spouse)) {
+            return false;
+        } else {
+            this.spouses.put(spouse, status);
+        }
+        return true;
+    }
+
+    // Методы для вывода информации о человеке
+
+    public void PrintId() {
+        System.out.println("Id: " + this.getId());
+    }
+
+    public void PrintName() {
+        System.out.println("Surname Name Patronymic: " + this.getName());
+    }
+
+    public void PrintDob() {
+        System.out.println("Date of Birth (year-month-day): " + this.getDob());
+    }
+
+    public void PrintDod() {
+        if (dod == null) {
+            System.out.println("Is alive");
+        } else {
+            System.out.println("Date of Death (year-month-day): " + this.getDod());
+        }
+    }
+
+    public void PrintGender() {
+        System.out.println("Gender: " + this.getGender());
+    }
+
     public String getChildrenAbout() {
         StringBuilder childrenAbout = new StringBuilder();
         childrenAbout.append("Children: ");
         if (children.size() > 0) {
-            childrenAbout.append(children.getFirst().getName());
+            childrenAbout.append(children.get(0).getName());
             for (int i = 1; i < children.size(); i++) {
                 childrenAbout.append(", ");
                 childrenAbout.append(children.get(i).getName());
@@ -138,14 +204,6 @@ public class Human {
 
     public void PrintChildren() {
         System.out.println(getChildrenAbout());
-    }
-
-    public Human getMother() {
-        return mother;
-    }
-
-    public void setMother(Human mother) {
-        this.mother = mother;
     }
 
     public String getMotherAbout() {
@@ -163,14 +221,6 @@ public class Human {
         System.out.println(getMotherAbout());
     }
 
-    public Human getFather() {
-        return father;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
-    }
-
     public String getFatherAbout() {
         String fatherAbout = "Father: ";
         Human father = getFather();
@@ -186,25 +236,11 @@ public class Human {
         System.out.println(getFatherAbout());
     }
 
-    public HashMap<Human, SpouseStatus> getSpouse() {
-        return spouses;
-    }
-
-    public boolean addSpouse(Human spouse, SpouseStatus status) {
-        if (this.spouses.containsKey(spouse)) {
-            return false;
-        } else {
-            this.spouses.put(spouse, status);
-        }
-        return true;
-    }
-
     public String getSpousesAbout() {
         StringBuilder spousesAbout = new StringBuilder();
         spousesAbout.append("Spouses: ");
 
         if (!spouses.isEmpty()) {
-            // Перебираем пары ключ-значение с помощью метода entrySet()
             boolean first = true;
             for (Map.Entry<Human, SpouseStatus> entry : spouses.entrySet()) {
                 if (!first) {
@@ -212,10 +248,8 @@ public class Human {
                 } else {
                     first = false;
                 }
-                // Добавляем ключ - имя
                 spousesAbout.append(entry.getKey().getName());
                 spousesAbout.append(": ");
-                // Добавляем значение - статус
                 spousesAbout.append(entry.getValue());
             }
         } else {

@@ -5,13 +5,19 @@ import ru.gb.family_tree.human.Human;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class FamilyTree {
+/**
+ * Класс FamilyTree представляет семейное древо.
+ * Содержит методы для добавления и поиска людей в семейном древе.
+ */
+public class FamilyTree implements Serializable {
+
     private long humanId;
     private List<Human> humanList;
 
     /**
-     * Конструктор по умолчанию, инициализирующий список людей.
+     * Конструктор по умолчанию, инициализирует пустой список людей.
      */
     public FamilyTree() {
         this.humanList = new ArrayList<>();
@@ -19,8 +25,9 @@ public class FamilyTree {
 
     /**
      * Добавляет человека в семейное древо.
-     * @param human объект класса Human
-     * @return true если человек успешно добавлен, иначе false
+     *
+     * @param human человек, которого необходимо добавить
+     * @return true, если человек был успешно добавлен, false если человек уже существует в древе или null
      */
     public boolean addHuman(Human human) {
         if (human == null) {
@@ -39,8 +46,9 @@ public class FamilyTree {
     }
 
     /**
-     * Добавляет родительские связи для человека.
-     * @param human объект класса Human
+     * Добавляет родственные отношения родителей для данного человека.
+     *
+     * @param human человек, для которого добавляются родственные отношения родителей
      */
     private void addParentsRelations(Human human) {
         Human mother = human.getMother();
@@ -55,8 +63,9 @@ public class FamilyTree {
     }
 
     /**
-     * Добавляет детские связи для человека.
-     * @param human объект класса Human
+     * Добавляет родственные отношения детей для данного человека.
+     *
+     * @param human человек, для которого добавляются родственные отношения детей
      */
     private void addChildrenRelations(Human human) {
         if (human.getChildren().size() > 0) {
@@ -71,12 +80,13 @@ public class FamilyTree {
     }
 
     /**
-     * Ищет человека в семейном древе по ID.
+     * Ищет человека в семейном древе по идентификатору.
+     *
      * @param id идентификатор человека
-     * @return объект класса Human, если найден, иначе null
+     * @return найденный человек или null, если человек не найден
      */
     public Human findById(long id) {
-        for (Human human : humanList) {
+        for (Human human: humanList) {
             if (human.getId() == id) {
                 System.out.println(human);
                 return human;
@@ -87,12 +97,13 @@ public class FamilyTree {
 
     /**
      * Ищет людей в семейном древе по имени.
+     *
      * @param name имя человека
-     * @return список объектов класса Human с заданным именем
+     * @return список найденных людей с данным именем
      */
     public List<Human> findByName(String name) {
         List<Human> res = new ArrayList<>();
-        for (Human human : humanList) {
+        for (Human human: humanList) {
             if (human.getName().equalsIgnoreCase(name)) {
                 res.add(human);
             }
@@ -104,7 +115,8 @@ public class FamilyTree {
     }
 
     /**
-     * Возвращает информацию о семейном древе.
+     * Возвращает строку с информацией о всех людях в семейном древе.
+     *
      * @return строка с информацией о семейном древе
      */
     public String getAboutFamily() {
