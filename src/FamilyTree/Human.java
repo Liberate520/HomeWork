@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Human {
     private String name;
-    private LocalDate dob;
-    private LocalDate dod;
+    private LocalDate birthDate;
+    private LocalDate deathDate;
     private Gender gender;
     private String occupation;
     private String nationality;
@@ -19,8 +19,8 @@ public class Human {
     private Human spouse;
 
     public Human(String name,
-                 LocalDate dob,
-                 LocalDate dod,
+                 LocalDate birthDate,
+                 LocalDate deathDate,
                  Gender gender,
                  String occupation,
                  String nationality,
@@ -28,54 +28,108 @@ public class Human {
                  Human father,
                  Human mother) {
 
-        this.name=name;
-        this.dob=dob;
-        this.dod=dod;
-        this.gender=gender;
-        this.occupation=occupation;
-        this.nationality=nationality;
-        this.placeOfBirth=placeOfBirth;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.deathDate = deathDate;
+        this.gender = gender;
+        this.occupation = occupation;
+        this.nationality = nationality;
+        this.placeOfBirth = placeOfBirth;
 
-        this.father=father;
-        this.mother=mother;
-        this.children=new ArrayList<>();
+        this.father = father;
+        this.mother = mother;
+        this.children = new ArrayList<>();
     }
+
+    public Human(String name, LocalDate birthDate, Gender gender) {
+        this(name, birthDate, null, gender, null, null, null, null, null);
+    }
+
+    public Human(String name, LocalDate birthDate, Gender gender, Human father, Human mother) {
+        this(name, birthDate, null, gender, null, null, null, father, mother);
+    }
+
 
     // Getters and Setters
 
-    public String getName(){return name;}
+    public String getName() {
+        return name;
+    }
 
-    public LocalDate getDob(){return dob;}
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 
-    public LocalDate getDod(){return dod;}
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
 
-    public Gender getGender(){return gender;}
+    public Gender getGender() {
+        return gender;
+    }
 
-    public String getOccupation(){return occupation;}
+    public String getOccupation() {
+        return occupation;
+    }
 
-    public void setOccupation(String occupation){this.occupation=occupation;}
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
 
-    public String getNationality(){return nationality;}
+    public String getNationality() {
+        return nationality;
+    }
 
-    public void setNationality(String nationality){this.nationality=nationality;}
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
 
-    public String getPlaceOfBirth(){return placeOfBirth;}
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
 
-    public void setPlaceOfBirth(String placeOfBirth){this.placeOfBirth=placeOfBirth;}
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
+    }
 
-    public Human getFather(){return father;}
+    public Human getFather() {
+        return father;
+    }
 
-    public void setFather(Human father){this.father=father;}
+    public void setFather(Human father) {
+        this.father = father;
+    }
 
-    public Human getMother(){return mother;}
+    public Human getMother() {
+        return mother;
+    }
 
-    public void setMother(Human mother){this.mother=mother;}
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
 
-    public List<Human>getChildren(){return children;}
+    public List<Human> getChildren() {
+        return children;
+    }
 
-    public void addChild(Human child){if(!children.contains(child)){children.add(child);}if(this.gender==Gender.Male&&child.getFather()!=this){child.setFather(this);}else if(this.gender==Gender.Female&&child.getMother()!=this){child.setMother(this);}}
+//    public void addChild(Human child){if(!children.contains(child)){children.add(child);}if(this.gender==Gender.Male&&child.getFather()!=this){child.setFather(this);}else if(this.gender==Gender.Female&&child.getMother()!=this){child.setMother(this);}}
 
-    public void setSpouse(Human spouse){this.spouse=spouse;}
+    public void addChild(Human child) {
+        if (!children.contains(child)) {
+            children.add(child);
+        }
+        if (this.gender == Gender.Male && child.getFather() != this) {
+            child.setFather(this);
+        } else if (this.gender == Gender.Female && child.getMother() != this) {
+            child.setMother(this);
+        }
+    }
 
-    public Human getSpouse(){return spouse;}
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+
+    public Human getSpouse() {
+        return spouse;
+    }
 }
