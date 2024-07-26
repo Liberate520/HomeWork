@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Human implements FamilyMember<Human>, Serializable {
-
     private String name;
     private Gender gender;
     private LocalDate birthDate;
@@ -82,8 +81,7 @@ public class Human implements FamilyMember<Human>, Serializable {
         }
     }
 
-    @Override
-    public String toString() {
+    public String getInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append(name)
                 .append(" (").append(gender)
@@ -100,5 +98,10 @@ public class Human implements FamilyMember<Human>, Serializable {
             sb.append(", Parents: None");
         }
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getInfo();
     }
 }

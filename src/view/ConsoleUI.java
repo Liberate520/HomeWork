@@ -1,7 +1,7 @@
 package view;
 
-import presenter.Presenter;
 import model.Gender;
+import presenter.Presenter;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -11,7 +11,11 @@ public class ConsoleUI implements View {
     private Scanner scanner;
 
     public ConsoleUI() {
-        this.presenter = new Presenter(this);
+        this.scanner = new Scanner(System.in);
+    }
+
+    public ConsoleUI(Presenter presenter) {
+        this.presenter = presenter;
         this.scanner = new Scanner(System.in);
     }
 
@@ -21,7 +25,7 @@ public class ConsoleUI implements View {
         while (running) {
             System.out.println(menu.menu());
             int choice = Integer.parseInt(scanner.nextLine());
-            if (choice == 5) {
+            if (choice == 7) { // обновляем число опций
                 running = false;
             }
             menu.execute(choice);
@@ -63,13 +67,20 @@ public class ConsoleUI implements View {
         presenter.sortByName();
     }
 
-    public void sortByAge() {
+    public void sortByBirthDate() {
         presenter.sortByAge();
     }
 
-    public void finish() {
-        System.out.println("Завершение работы.");
-        System.exit(0);
+    public void findMemberByName() {
+        System.out.println("Введите имя для поиска:");
+        String name = scanner.nextLine();
+        presenter.findMemberByName(name);
+    }
+
+    public void findMembersByBirthYear() {
+        System.out.println("Введите год для поиска:");
+        int year = Integer.parseInt(scanner.nextLine());
+        presenter.findMembersByBirthYear(year);
     }
 
     @Override
@@ -77,4 +88,3 @@ public class ConsoleUI implements View {
         System.out.println(text);
     }
 }
-

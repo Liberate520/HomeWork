@@ -26,12 +26,9 @@ public class FamilyTree<T extends FamilyMember> implements Iterable<T> {
         return null;
     }
 
-    public void sortByName() {
-        Collections.sort(members, Comparator.comparing(FamilyMember::getName));
-    }
-
-    public void sortByBirthDate() {
-        Collections.sort(members, Comparator.comparing(FamilyMember::getBirthDate));
+    public List<T> getMembers() {
+        List<T> members1 = this.members;
+        return members1;
     }
 
     @Override

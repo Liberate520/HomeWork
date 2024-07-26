@@ -4,38 +4,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainMenu {
-
     private ConsoleUI ui;
-    private Map<Integer, Runnable> commands;
+    private Map<Integer, Runnable> menuItems;
 
     public MainMenu(ConsoleUI ui) {
         this.ui = ui;
-        commands = new HashMap<>();
-        commands.put(1, ui::displayHumanList);
-        commands.put(2, ui::addHuman);
-        commands.put(3, ui::sortByName);
-        commands.put(4, ui::sortByAge);
-        commands.put(5, ui::finish);
-    }
-
-    public void execute(int commandNumber) {
-        Runnable command = commands.get(commandNumber);
-        if (command != null) {
-            command.run();
-        } else {
-            System.out.println("Неизвестная команда.");
-        }
-    }
-
-    public int getSize() {
-        return commands.size();
+        menuItems = new HashMap<>();
+        menuItems.put(1, ui::displayHumanList);
+        menuItems.put(2, ui::addHuman);
+        menuItems.put(3, ui::sortByName);
+        menuItems.put(4, ui::sortByBirthDate);
+        menuItems.put(5, ui::findMemberByName);
+        menuItems.put(6, ui::findMembersByBirthYear);
     }
 
     public String menu() {
-        return "1. Показать список людей\n" +
-                "2. Добавить человека\n" +
-                "3. Сортировать по имени\n" +
-                "4. Сортировать по возрасту\n" +
-                "5. Завершить работу";
+        return "1. Показать всех членов семьи\n" +
+                "2. Добавить нового члена семьи\n" +
+                "3. Сортировать членов семьи по имени\n" +
+                "4. Сортировать членов семьи по дате рождения\n" +
+                "5. Найти члена семьи по имени\n" +
+                "6. Найти членов семьи по году рождения\n" +
+                "7. Выйти";
+    }
+
+    public void execute(int choice) {
+        Runnable action = menuItems.get(choice);
+        if (action != null) {
+            action.run();
+        } else {
+            System.out.println("Неверный выбор. Пожалуйста, попробуйте еще раз.");
+        }
     }
 }
