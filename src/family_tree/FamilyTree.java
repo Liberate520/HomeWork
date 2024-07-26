@@ -3,10 +3,9 @@ package family_tree;
 import human.Human;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long humansId;
     private List<Human> humanList;
 
@@ -116,4 +115,16 @@ private boolean checkId(long id){
          }
          return sb.toString();
      }
+
+    @Override
+    public Iterator <Human> iterator() {
+        return humanList.iterator();
+    }
+
+    public void sortByName(){
+        Collections.sort(humanList);
+    }
+    public void sortByAge(){
+        Collections.sort(humanList, new HumanComparatorByAge());
+    }
 }
