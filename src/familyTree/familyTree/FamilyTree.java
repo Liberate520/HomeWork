@@ -1,17 +1,22 @@
 package familyTree.familyTree;
 
 import familyTree.human.Human;
+import familyTree.human.HumanComporatorByAge;
+import familyTree.human.HumanComporatorByName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private List<Human> familyTree = new ArrayList<>();
-    private static long id = 0;
 
     public boolean addHuman(Human human) {
         if (human == null) {
-            return false;}
+            return false;
+        }
         if (!familyTree.contains(human)) {
             familyTree.add(human);
             addToParent(human);
@@ -24,12 +29,12 @@ public class FamilyTree implements Serializable {
 
     @Override
     public String toString() {
-        int id = 0;
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список членов семьи:\n");
         for (Human human : familyTree) {
-            id++;
-            stringBuilder.append(id + ". ");
+
+            stringBuilder.append(human.getID() + ". ");
             if (human.getLastName() != null) {
                 stringBuilder.append("Фамилия: " + human.getLastName() + "; ");
             } else {
@@ -51,7 +56,7 @@ public class FamilyTree implements Serializable {
                 stringBuilder.append("Пол: не указан; ");
             }
             if (human.getDayBirth() != null) {
-                stringBuilder.append("Возраст(лет):" + human.getAge(human.getDayBirth(), human.getDayDeath()) + "; ");
+                stringBuilder.append("Возраст(лет):" + human.getAge() + "; ");
             } else {
                 stringBuilder.append("Возраст: не известен;");
             }
@@ -65,7 +70,7 @@ public class FamilyTree implements Serializable {
             } else {
                 stringBuilder.append("Мать: не указана; ");
             }
-            if (human.getChildren().size() != 0) {
+            if (human.getChildren() != null && human.getChildren().size() != 0) {
                 stringBuilder.append("Дети: " + human.getChildren(human.getChildren()) + "; ");
             } else {
                 stringBuilder.append("Дети: не указаны; ");
@@ -88,9 +93,35 @@ public class FamilyTree implements Serializable {
     }
 
     private void addToChildren(Human human) {
-        for (Human child : human.getChildren()) {
-            child.addParent(human);
+        if (human.getChildren() != null) {
+            for (Human child : human.getChildren()) {
+                child.addParent(human);
+            }
         }
+    }
+
+    public Human getHuman(long id) {
+        if (familyTree != null) {
+            for (Human human : familyTree) {
+                if (human.getID() == id) {
+                    return human;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void sortByName() {
+        Collections.sort(familyTree, new HumanComporatorByName());
+    }
+
+    public void sortByAge() {
+        Collections.sort(familyTree, new HumanComporatorByAge());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(familyTree);
     }
 
 
