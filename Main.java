@@ -4,6 +4,7 @@ import human.Human;
 // import writer.FileHandler;
 
 public class Main {
+    @SuppressWarnings("rawtypes")
     public static void main(String[] args) throws ClassNotFoundException {
         FamilyTree familyTree = new FamilyTree();
         fillingFamilyTree(familyTree);
@@ -29,7 +30,8 @@ public class Main {
         // System.out.println(ft);
     }
 
-    public static void fillingFamilyTree(FamilyTree familyTree) {
+    @SuppressWarnings("unchecked")
+    public static void fillingFamilyTree(@SuppressWarnings("rawtypes") FamilyTree familyTree) {
         Human grandfather1 = new Human("Константин", Gender.Male, 1940, 7, 25);
         Human grandmother1 = new Human("Валентина", Gender.Female, 1942, 11, 5);
 

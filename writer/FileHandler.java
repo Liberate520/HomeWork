@@ -11,6 +11,7 @@ import family_tree.FamilyTree;
 
 public class FileHandler implements Writer {
 
+    @SuppressWarnings("rawtypes")
     public void write(FamilyTree obj, String fileName) {
         ObjectOutputStream oos;
         try {
@@ -24,6 +25,7 @@ public class FileHandler implements Writer {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public FamilyTree read(String fileName) throws ClassNotFoundException {
         ObjectInputStream ois;
         FamilyTree obj = null;

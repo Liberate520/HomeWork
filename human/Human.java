@@ -6,7 +6,9 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+import family_tree.FamilyTreeItem;
+
+public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
     static int count;
 
     private int id;
