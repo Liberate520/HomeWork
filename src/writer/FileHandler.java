@@ -17,17 +17,17 @@ public class FileHandler implements Writer {
     }
 
     @Override
-    public Object read(){
-        try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))){
+    public Object read() {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
             return objectInputStream.readObject();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public void setPath(String filePath){
+    public void setPath(String filePath) {
         this.filePath = filePath;
     }
 }
