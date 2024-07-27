@@ -16,15 +16,6 @@ public class Human  implements Serializable, Comparable<Human> {
     private List<Human> children;
     private Human Spouse;
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
-        parents = new ArrayList<>();
-        children = new ArrayList<>();
-    }
-
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, List<Human> parents) {
         this.name = name;
         this.gender = gender;
@@ -32,6 +23,11 @@ public class Human  implements Serializable, Comparable<Human> {
         this.deathDate = deathDate;
         this.parents = parents;
         children = new ArrayList<>();
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+        this(name, gender, birthDate, deathDate, null);
+        parents = new ArrayList<>();
     }
 
     private int getAge(LocalDate birthDate, LocalDate deathDate){

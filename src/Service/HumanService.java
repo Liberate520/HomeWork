@@ -1,5 +1,6 @@
 package Service;
 
+//import Builder.HumanBuilder;
 import FamilyTree.FamilyTree;
 import Human.Human;
 import Human.Gender;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class HumanService {
     private FamilyTree familyTree;
+    //private HumanBuilder builder;
 
     public HumanService() {
         familyTree = new FamilyTree();
