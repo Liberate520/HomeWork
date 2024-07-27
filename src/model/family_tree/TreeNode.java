@@ -14,8 +14,7 @@ public interface TreeNode<T> extends Serializable {
     List<T> getChildren();
     T getSpouse();
     void setSpouse(T spouse);
-
     void addChild(T human);
-
     void addParent(T human);
+    Object getGender();
 }

@@ -1,29 +1,29 @@
 package model.family_tree;
 
-import model.family_tree.comparators.FamilyTreeComparatorByBirthDate;
-import model.family_tree.comparators.FamilyTreeComparatorByName;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+
+import model.builder.Gender;
+import model.builder.Human;
 
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
+    private static final long serialVersionUID = 1L;
+    private final List<E> humanList;
+    private int humansId;
+
     public FamilyTree() {
         this(new ArrayList<>());
     }
-    private List<E> humanList;
-    private int humansId;
 
     public FamilyTree(List<E> humanList) {
         this.humanList = humanList;
     }
 
     public boolean add(E human) {
-        if(human == null) {
+        if (human == null) {
             return false;
         }
-        if(!humanList.contains(human)){
+        if (!humanList.contains(human)) {
             humanList.add(human);
             human.setId(humansId++);
 
@@ -36,54 +36,28 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     }
 
     private void addToParents(E human) {
-        for(E parent : human.getParents()) {
+        for (E parent : human.getParents()) {
             parent.addChild(human);
         }
     }
 
     private void addToChildren(E human) {
-        for(E child : human.getChildren()) {
+        for (E child : human.getChildren()) {
             child.addParent(human);
         }
     }
 
-    public List<E> getSiblings(int id) {
-        E human = getById(id);
-        if(human == null) {
-            return null;
-        }
-        List<E> res = new ArrayList<>();
-        for (E parent : human.getParents()) {
-            for (E child : parent.getChildren()) {
-                if(!child.equals(human)) {
-                    res.add(child);
-                }
+    public E getById(int id) {
+        for (E human : humanList) {
+            if (human.getId() == id) {
+                return human;
             }
         }
-        return res;
+        return null;
     }
 
-    public List<E> getByName(String name) {
-        List<E> res = new ArrayList<>();
-        for(E human : humanList) {
-            if(human.getName().equals(name)) {
-                res.add(human);
-            }
-        }
-        return res;
-    }
-
-    public boolean setWedding(long humanId1, long humanId2){
-        if(checkId(humanId1) && checkId(humanId2)) {
-            E human1 = getById(humanId1);
-            E human2 = getById(humanId2);
-            return setWedding(human1, human2);
-        }
-        return false;
-    }
-
-    public boolean setWedding(E human1, E human2){
-        if(human1.getSpouse() == null && human2.getSpouse() == null) {
+    public boolean setWedding(E human1, E human2) {
+        if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
             human2.setSpouse(human1);
             return true;
@@ -91,69 +65,112 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         return false;
     }
 
-    public boolean setDivorce(long humanId1, long humanId2) {
-        if(checkId(humanId1) && checkId(humanId2)) {
-            E human1 = getById(humanId1);
-            E human2 = getById(humanId2);
-            return setDivorce(human1, human2);
-        }
-        return false;
-    }
+    /**
+     * Потенциальные кандидаты на супруга(у)
+     * список не содержит детей и родителей текущего человека и исключает себя
+     * @param human текущий человек
+     * @return потенциальные кандидаты
+     */
+    public List<E> getPotentialSpouses(E human) {
+        List<E> potentialSpouses = new ArrayList<>();
+        for (E person : humanList) {
+            boolean isNotChildOrParent = !human.getParents().contains(person) && !human.getChildren().contains(person);
+            boolean isEligibleSpouse = !person.equals(human) && person.getSpouse() == null && human.getGender() != person.getGender();
 
-    public boolean setDivorce(E human1, E human2) {
-        if(human1.getSpouse() != null && human2.getSpouse() != null) {
-            human1.setSpouse(null);
-            human2.setSpouse(null);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean remove(long humansId) {
-        if(checkId(humansId)) {
-            E e = getById(humansId);
-            return humanList.remove(e);
-        }
-        return false;
-    }
-
-    private boolean checkId(long id) { return id < humansId && id >= 0; }
-
-    public E getById(long id) {
-        for(E human : humanList) {
-            if(human.getId() == id) {
-                return human;
+            if (isNotChildOrParent && isEligibleSpouse) {
+                potentialSpouses.add(person);
             }
         }
-        return null;
+        return potentialSpouses;
     }
 
-    @Override
-    public String toString() {
-        return getInfo();
-    }
-
-    public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("В дереве ");
-        sb.append(humanList.size());
-        sb.append(" объектов: \n");
-        for (E human : humanList) {
-            sb.append(human);
-            sb.append("\n");
+    public void addParent(E human, E parent) {
+        if (parent.getGender() == Gender.MALE && !human.getParents().contains(parent)) {
+            human.addParent(parent);
+            parent.addChild(human);
+        } else if (parent.getGender() == Gender.FEMALE && !human.getParents().contains(parent)) {
+            human.addParent(parent);
+            parent.addChild(human);
         }
-        return sb.toString();
     }
 
-    public void sortByName() {
-        humanList.sort(new FamilyTreeComparatorByName<>());
-    }
-    public void sortByDeathDate() {
-        humanList.sort(new FamilyTreeComparatorByBirthDate<>());
+    public void addChild(E parent, E child) {
+        if (!parent.getChildren().contains(child)) {
+            parent.addChild(child);
+            child.addParent(parent);
+        }
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new FamilyTreeIterator<E>(humanList);
+        return humanList.iterator();
+    }
+
+    public List<E> getHumanList() {
+        return humanList;
+    }
+
+    public int getHumanListSize() {
+        return humanList.size();
+    }
+
+    /**
+     * Поиск потенциальных родителей по гендеру
+     * @param gender искать по гендеру
+     * @param human для кого искать
+     * @return список потенциальных родителей (исключает себя, супруга(у), детей)
+     */
+    public <T extends Human> List<T> getPotentialParentsByGender(Gender gender, T human) {
+        List<T> potentialParents = new ArrayList<>();
+        if (humanList != null) {
+            for (E person : humanList) {
+                boolean isNotSelf = !person.equals(human);
+                boolean isNotSpouse = human.getSpouse() == null || !human.getSpouse().equals(person);
+                boolean isNotChild = !human.getChildren().contains(person);
+
+                if (person.getGender() == gender && isNotSelf && isNotSpouse && isNotChild) {
+                    potentialParents.add((T) person);
+                }
+            }
+        }
+        return potentialParents;
+    }
+
+    /**
+     * Поиск потенциальных детей
+     * @param human пользователь, для которого идёт поиск
+     * @return список потенциальных детей (исключает себя, имеющихся детей, родителей, супруга(у))
+     */
+    public <T extends Human> List<T> getPotentialChildren(T human) {
+        List<T> potentialChildren = new ArrayList<>();
+        for (E person : humanList) {
+            boolean isNotSelf = !person.equals(human);
+            boolean isNotChild = !human.getChildren().contains(person);
+            boolean isNotParent = !human.getParents().contains(person);
+            boolean isNotSpouse = human.getSpouse() == null || !human.getSpouse().equals(person);
+
+            if (isNotSelf && isNotChild && isNotParent && isNotSpouse) {
+                potentialChildren.add((T) person);
+            }
+        }
+        return potentialChildren;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("FamilyTree{\n");
+        sb.append("humanList=").append(" [\n");
+
+        Iterator<E> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            E human = iterator.next();
+            sb.append("  ").append(human).append(",\n");
+        }
+
+        sb.append("]\n}");
+        return sb.toString();
     }
 }
+
+

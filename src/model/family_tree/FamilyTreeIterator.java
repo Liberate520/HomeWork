@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTreeIterator<E> implements Iterator<E> {
-    // private List<E> list;
     private List<E> list;
     private int index;
 

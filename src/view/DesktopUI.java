@@ -2,31 +2,33 @@ package view;
 
 import model.builder.Gender;
 import model.builder.Human;
-import presenter.FamilyTreePresenter;
+import presenter.Presenter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
-public class DesktopUI implements View {
-    private FamilyTreePresenter presenter;
+public class DesktopUI {
+    private Presenter presenter;
 
     public DesktopUI() {
-        presenter = new FamilyTreePresenter(new ConsoleFamilyTreeView());
+        presenter = new Presenter();
     }
 
-    @Override
-    public Human createHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
-        return presenter.createHuman(name, gender, birthDate, deathDate, father, mother);
+    public void start() throws IOException {
+        Human human1 = createHuman("Николай", Gender.MALE, LocalDate.of(1963, 12, 18));
+        Human human2 = createHuman("Зинаида", Gender.FEMALE, LocalDate.of(1966, 11, 14));
+        Human human3 = createHuman("Маша", Gender.FEMALE, LocalDate.of(1985, 11, 18));
+        setWedding(human1, human2);
+        addChild(human1, human3);
     }
 
-    @Override
-    public Human createHuman(String name, Gender gender, LocalDate birthDate) {
-        return presenter.createHuman(name, gender, birthDate);
+    public Human createHuman(String name, Gender gender, LocalDate birthDate) throws IOException {
+        Human human = presenter.createHuman(name, gender, birthDate);
+        presenter.addHumanToFamilyTree(human);
+        showMessage("Создан новый человек: " + human.getName() + "\n");
+        return human;
     }
 
-    @Override
-    public Human createHuman(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
-        return presenter.createHuman(name, gender, birthDate, father, mother);
-    }
 
     public void setWedding(Human human1, Human human2) {
         presenter.setWedding(human1, human2);
@@ -36,11 +38,11 @@ public class DesktopUI implements View {
         presenter.addChild(parent, child);
     }
 
-    public String showFamilyTreeInfo() {
-        return presenter.getFamilyTreeInfo();
+    public void addParent(Human parent, Human child) {
+        presenter.addParent(parent, child);
     }
 
-    public void saveFamilyTree() {
-        presenter.saveFamilyTree();
+    public void showMessage(String message){
+        System.out.println(message);
     }
 }
