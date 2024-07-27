@@ -1,20 +1,21 @@
 package ru.gb.family_tree.human;
 
-import java.io.Serializable;
+import ru.gb.family_tree.family_tree.TreeNode; // Импортируем TreeNode
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements TreeNode<Human> {
     private long id;
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private List<Human> parents;
-    private List<Human> children;
+    private List<Human> parents = new ArrayList<>();
+    private List<Human> children = new ArrayList<>();
 
+    // конструктор
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         id = -1;
         this.name = name;
@@ -61,7 +62,7 @@ public class Human implements Serializable {
         return null;
     }
 
-    public Human getMather(){
+    public Human getMother(){
         for (Human parent: parents){
             if (parent.getGender() == Gender.Female){
                 return parent;
@@ -118,7 +119,7 @@ public class Human implements Serializable {
         sb.append(", пол: ");
         sb.append(getGender());
         sb.append(", ");
-        sb.append(getMatherInfo());
+        sb.append(getMotherInfo());
         sb.append(", ");
         sb.append(getFatherInfo());
         sb.append(", ");
@@ -126,9 +127,9 @@ public class Human implements Serializable {
         return sb.toString();
     }
 
-    public String getMatherInfo(){
+    public String getMotherInfo(){
         String res = " мама: ";
-        Human mother = getMather();
+        Human mother = getMother();
         if (mother != null){
             res += mother.getName();
         } else{
