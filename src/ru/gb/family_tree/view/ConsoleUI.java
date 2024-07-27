@@ -1,8 +1,6 @@
 package ru.gb.family_tree.view;
 
 import ru.gb.family_tree.model.human.Gender;
-import ru.gb.family_tree.model.service.Service;
-import ru.gb.family_tree.model.writer.FileHandler;
 import ru.gb.family_tree.presenter.Presenter;
 
 import java.time.LocalDate;
@@ -16,13 +14,14 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private MainMenu menu;
 
-    public ConsoleUI(String filePath) {
+    public ConsoleUI() {
         scanner = new Scanner(System.in);
-        Service service = new Service();
-        FileHandler fileHandler = new FileHandler(filePath);
-        presenter = new Presenter(this, service, fileHandler);
         work = true;
         menu = new MainMenu(this);
+    }
+
+    public void setPresenter(Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
