@@ -2,6 +2,7 @@ package View;
 
 import Presenter.Presenter;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
@@ -27,7 +28,7 @@ public class ConsoleUI implements View {
         return instance;
     }
     @Override
-    public void startMenu() {
+    public void startMenu() throws IOException, ClassNotFoundException {
         while (work) {
             System.out.println("Выберите пункт меню:");
             System.out.println(mainMenu.toString());

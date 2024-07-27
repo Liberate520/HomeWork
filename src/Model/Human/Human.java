@@ -83,11 +83,14 @@ public class Human implements Serializable, Comparable<Human>, FamilyMember<Huma
 
 
 
+
     //методы добавления и получения супруга(и) у человека
-    public void addSpouse (Human human) {
-        spouse=human;
+    @Override
+    public void setSpouse(Human spouse) {
+        this.spouse=spouse;
     }
 
+    @Override
     public Human getSpouse () {
         return this.spouse;
     }

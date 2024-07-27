@@ -1,9 +1,6 @@
 package View;
 
-import View.Commands.AddtoTree;
-import View.Commands.CloseMenu;
-import View.Commands.ShowTree;
-import View.Commands.SortByName;
+import View.Commands.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,9 @@ public MainMenu(){
     mainMenuList.add(new AddtoTree());
     mainMenuList.add(new ShowTree());
     mainMenuList.add(new SortByName());
+    mainMenuList.add(new SaveTreeToFile());
+    mainMenuList.add((new RestoreTreeFromFile()));
+    mainMenuList.add(new addSpouseToFamilyMember());
     mainMenuList.add(new CloseMenu());
 }
 

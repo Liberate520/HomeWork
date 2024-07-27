@@ -1,9 +1,20 @@
 package Model.Writer;
 
+import Model.FamilyTree.FamilyTreeService.FamilyTreeService;
+
 import java.io.*;
 
 public class FileHandler implements Writable {
-    String fileName = "Model.Dogs.FamilyTree.out";
+    String fileName = "FamilyTree.out";
+    private static FileHandler instance;
+
+    public static FileHandler getInstance() {
+        if (instance == null) {
+            System.out.println("Creating new instance of FileHandler");
+            instance = new FileHandler();
+        }
+        return instance;
+    }
 
     @Override
     public boolean writeObjecttoFile(Object object) throws IOException {

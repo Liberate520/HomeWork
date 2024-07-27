@@ -16,25 +16,35 @@ public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iter
         this.listOfFamily = listOfFamily;
     }
 
-    public void addHumantoTree(E human) {
-        if (!listOfFamily.contains(human)){
-            listOfFamily.add(human);
-            addHumantoChildListofParents(human);
-            makeHumanaParentofChildList(human);
+    public void addHumantoTree(E member) {
+        if (!listOfFamily.contains(member)){
+            listOfFamily.add(member);
+            addHumantoChildListofParents(member);
+            makeHumanaParentofChildList(member);
         }
     }
 
-    private void makeHumanaParentofChildList(E human) {
-        for(FamilyMember child: human.getChildrensList()){
-            child.addParentstoFamilyMember(human);
+    private void makeHumanaParentofChildList(E member) {
+        for(FamilyMember child: member.getChildrensList()){
+            child.addParentstoFamilyMember(member);
         }
     }
 
-    private void addHumantoChildListofParents(E human) {
-        for(FamilyMember parent: human.getParentsofFamilyMember()){
-            parent.addChildrentoFamilyMember(human);
+    private void addHumantoChildListofParents(E member) {
+        for(FamilyMember parent: member.getParentsofFamilyMember()){
+            parent.addChildrentoFamilyMember(member);
         }
     }
+
+    public boolean addSpouseToFamilyMember(E member, E spouse){
+        if (member == null || spouse == null || member.equals(spouse)) {
+            return false;
+        }
+        member.setSpouse(spouse);
+        spouse.setSpouse(member);
+        return true;
+    }
+
     public E getbyId(Integer id) {
         for (E member: listOfFamily){
             if (member.getId().equals(id)){
@@ -50,8 +60,7 @@ public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iter
     }
 
     public void sortByName(){
-        //Collections.sort(listOfFamily);
-        //sort(listOfFamily);
+
         listOfFamily.sort(null);
     }
 
@@ -74,10 +83,7 @@ public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iter
         return sb.toString();
     }
 
-//    @Override
-//    public Iterator<Model.Dogs.Human> iterator() {
-//        return new HumanIterator(this) ;
-//    }
+
     @Override
     public Iterator<E> iterator() {
         return listOfFamily.iterator() ;

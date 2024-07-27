@@ -2,6 +2,8 @@ package View;
 
 import Presenter.Presenter;
 
+import java.io.IOException;
+
 
 public abstract class Command {
     public String commandName;
@@ -12,7 +14,7 @@ public abstract class Command {
         this.presenter = Presenter.getInstance();
     };
 
-    public abstract void execute();
+    public abstract void execute() throws IOException, ClassNotFoundException;
 
     public void setCommandName(String newCommandName){
         this.commandName = newCommandName;

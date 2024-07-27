@@ -1,18 +1,23 @@
 package Presenter;
 
+import Model.FamilyTree.FamilyTree;
 import Model.FamilyTree.FamilyTreeService.FamilyTreeService;
 import Model.Human.Gender;
+import Model.Writer.FileHandler;
 import View.ConsoleUI;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Presenter {
     private static Presenter instance;
     FamilyTreeService familyTreeService;
+    FileHandler fileHandler;
 //    ConsoleUI consoleUI;
 
     private Presenter() {
         this.familyTreeService = FamilyTreeService.getInstance();
+        this.fileHandler = FileHandler.getInstance();
 //        this.consoleUI = consoleUI;
     }
 
@@ -35,5 +40,19 @@ public class Presenter {
 
     public void sortByName() {
          familyTreeService.sortByName();
+    }
+
+    public boolean savetoFile() throws IOException {
+        fileHandler.writeObjecttoFile(familyTreeService.getFamilyTree());
+        return true;
+    }
+
+    public Object RestoreTreeFromFile() throws IOException, ClassNotFoundException {
+        return fileHandler.readObjectfromFile();
+    }
+
+    public boolean addSpouseToFamilyMember(Integer idMember, Integer idSpouse){
+        familyTreeService.addSpouseToFamilyMember(idMember, idSpouse);
+        return true;
     }
 }
