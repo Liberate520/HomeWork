@@ -8,27 +8,27 @@ import java.util.List;
 import Comparator.CompareByAge;
 import Comparator.CompareByName;
 
-public class FamilyTree implements Iterable <Human> {
+public class FamilyTree<E extends FamilyTreeMember> implements Iterable <E> {
 // public class FamilyTree implements Serializable {
     // private static final long serialVersionUID = 1L;
     
-    private List<Human> family;
+    private List<E> family;
 
     public FamilyTree() {
         this.family = new ArrayList<>();
     }
 
-    public void addMember(Human human) {
+    public void addMember(E human) {
         family.add(human);
     }
 
-    public void addMembers(Human... humans) {
-        for (Human human : humans) {
+    public void addMembers(E... humans) {
+        for (E human : humans) {
             family.add(human);
         }
     }
 
-    public List <Human> getFamily() {
+    public List <E> getFamily() {
         return family;
     }
 
@@ -49,22 +49,22 @@ public class FamilyTree implements Iterable <Human> {
     }
 
     public void sortByName(){
-        family.sort(new CompareByName());
+        family.sort(new CompareByName<>());
     }
 
     public void sortByAge(){
-        family.sort(new CompareByAge());
+        family.sort(new CompareByAge<>());
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<E> iterator() {
         return family.iterator();
     }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Human person : family) {
+        for (E person : family) {
             sb.append(person).append("\n");
         }
         return sb.toString();

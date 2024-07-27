@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // import java.util.Collections;
 import java.util.List;
 
-public class Human {
+public class Human implements Comparable <Human>, FamilyTreeMember {
 // public class Human implements Serializable {
 //     private static final long serialVersionUID = 1L;
     
@@ -50,5 +50,15 @@ public class Human {
     public String toString() {
         return "Имя: " + name + ", Пол: " + gender + ", Родился: " + birthDate + 
                ", Дата смерти: " + (deathDate == null ? "Жив" : deathDate);
+    }
+
+    @Override
+    public LocalDate getDeathDate() {
+        throw new UnsupportedOperationException("Поломано");
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        throw new UnsupportedOperationException("Неверно");
     }
 }

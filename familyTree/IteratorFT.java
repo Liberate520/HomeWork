@@ -3,12 +3,12 @@ package familyTree;
 import java.util.Iterator;
 import java.util.List;
 
-public class IteratorFT implements Iterator <Human> {
+public class IteratorFT<E> implements Iterator <E> {
       
     private int index;
-    public List <Human> family;
+    public List <E> family;
 
-    public IteratorFT(List <Human> family) {
+    public IteratorFT(List <E> family) {
         this.family = family;
     }
 
@@ -18,7 +18,7 @@ public class IteratorFT implements Iterator <Human> {
     }
 
     @Override
-    public Human next() {
+    public E next() {
         return family.get(index++);
     }
 }
