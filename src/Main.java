@@ -1,9 +1,30 @@
+import family_tree.FamilyTree;
+import human.Gender;
+import human.Human;
+import writer.FileHandler;
+
 import java.time.LocalDate;
 
 public class Main {
+    final static String filePath = "src/writer/tree.txt";
     public static void main(String[] args) {
+//        FamilyTree tree = load();
         FamilyTree tree = ft();
+        save(tree);
+
         System.out.println(tree);
+    }
+
+    private static FamilyTree load(){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static void save(FamilyTree familyTree){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(familyTree);
     }
     public static FamilyTree ft(){
         FamilyTree ft = new FamilyTree();
@@ -23,8 +44,8 @@ public class Main {
         oleg.addParent(nadya);
         nadya.addChild(oleg);
         nadya.addChild(katya);
-        System.out.println(ft);
-        ft.remove(ft.findByName("Andrey"));
+//        System.out.println(ft);
+//        ft.remove(ft.findByName("Andrey"));
         return ft;
     }
 }
