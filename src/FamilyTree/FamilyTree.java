@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree  implements Serializable, Iterable {
-    private List<Human> family;
+public class FamilyTree<E extends FamilyTreeItem>  implements Serializable, Iterable<E> {
+    private List<E> family;
     private int id = -1;
 
-    public FamilyTree(List<Human> family) {
+    public FamilyTree(List<E> family) {
         this.family = family;
     }
 
@@ -23,7 +23,7 @@ public class FamilyTree  implements Serializable, Iterable {
         this.family = new ArrayList<>();
     }
 
-    public void addHuman(Human human) {
+    public void addHuman(E human) {
         if (!family.contains(human)) {
             family.add(human);
             id ++;
@@ -33,24 +33,33 @@ public class FamilyTree  implements Serializable, Iterable {
         }
     }
 
-    public void addChildren(Human human) {
-        if (human.getParents() != null) {
-            for (Human parent : human.getParents()) {
-                if (parent != null) {
+    public void addChildren(E human) {
+        List<E> parents = human.getParents();
+        if (parents != null) {
+            for (int i = 0; i < parents.size(); i++) {
+                E parent = parents.get(i);
+                if (parents.get(i) != null) {
                     parent.setChildren(human);
                 }
             }
         }
+//        if (human.getParents() != null) {
+//            for (E parent : human.getParents()) {
+//                if (parent != null) {
+//                    parent.setChildren(human);
+//                }
+//            }
+//        }
     }
 
-    public void setMarried (Human human, Human spouse) {
+    public void setMarried (E human, E spouse) {
         if (human.getSpouse() == null && spouse.getSpouse() == null) {
             human.setSpouse(spouse);
             spouse.setSpouse(human);
         }
     }
 
-    public void setDivorsed (Human human, Human spouse) {
+    public void setDivorsed (E human, E spouse) {
         if (human.getSpouse() == spouse && spouse.getSpouse() == human) {
             human.setSpouse(null);
             spouse.setSpouse(null);
@@ -59,7 +68,7 @@ public class FamilyTree  implements Serializable, Iterable {
 
     public void showTree () {
         System.out.println("\nСемейное дерево:");
-        for (Human human : family) {
+        for (E human : family) {
             System.out.println(human);
         }
         System.out.println("Всего " + family.size() + " элементов.\n");
@@ -86,7 +95,7 @@ public class FamilyTree  implements Serializable, Iterable {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return new HumanIterator(family);
     }
 
