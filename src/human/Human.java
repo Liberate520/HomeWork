@@ -1,11 +1,14 @@
 package human;
 
+import familytree.Creature;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Human implements Serializable, Comparable<Human>{
-    private static int humanNumber;
+public class Human implements Serializable, Comparable<Human>, Creature {
+
+    private int humanNumber;
     private String name;
     private LocalDate dateBirth;
     private LocalDate dateDeath;
@@ -17,11 +20,8 @@ public class Human implements Serializable, Comparable<Human>{
     private ArrayList<Human> parents = new ArrayList<>();
 
 
-    static {
-        Human.humanNumber = 0;
-    }
-    
-    public Human(String name, LocalDate dateBirth, LocalDate dateDeath, Gender gender, FamilyStatus familyStatus) {
+    public Human(int humanNumber, String name, LocalDate dateBirth, LocalDate dateDeath, Gender gender, FamilyStatus familyStatus) {
+        this.humanNumber = humanNumber;
         this.name = name;
         this.dateBirth = dateBirth;
         this.dateDeath = dateDeath;
@@ -31,6 +31,13 @@ public class Human implements Serializable, Comparable<Human>{
 
     public String getInfo() {
         return String.format("Name: %s, Date of Birt %s",this.name, this.dateBirth);
+    }
+
+    public int getHumanNumber() {
+        return humanNumber;
+    }
+    public void setHumanNumber(int humanNumber) {
+        this.humanNumber = humanNumber;
     }
 
     public void setName(String name) {
@@ -102,7 +109,7 @@ public class Human implements Serializable, Comparable<Human>{
     @Override
     public String toString() {
         return "human.Human{" +
-                "id=" + ++humanNumber + '\'' +
+                "id=" + humanNumber + '\'' +
                 "name='" + name + '\'' +
                 ", dateBirth='" + dateBirth + '\'' +
                 ", dateDiet='" + dateDeath + '\'' +
@@ -127,6 +134,6 @@ public class Human implements Serializable, Comparable<Human>{
 
     @Override
     public int compareTo(Human o) {
-        return this.name.compareTo(o.name);
+        return name.compareTo(o.getName());
     }
 }

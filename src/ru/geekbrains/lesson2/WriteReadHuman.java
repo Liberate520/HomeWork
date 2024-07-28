@@ -5,7 +5,7 @@ import java.io.*;
 public class WriteReadHuman <Human>{
     public void writeHuman(Human anyHuman){
         try{
-            FileOutputStream fs = new FileOutputStream("human.Human.ser");
+            FileOutputStream fs = new FileOutputStream("src/forFiles/human.Human.ser");
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(anyHuman);
             os.close();
@@ -17,7 +17,7 @@ public class WriteReadHuman <Human>{
     public Human readHuman(){
         Human human = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream("human.Human.ser");
+            FileInputStream fileInputStream = new FileInputStream("src/forFiles/human.Human.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Object objHuman = objectInputStream.readObject();
             human = (Human) objHuman;
