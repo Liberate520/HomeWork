@@ -1,17 +1,28 @@
-package FamilyTree;
+package FamilyTree.familyTree;
 
+import FamilyTree.human.Human;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree {
+    private long humanId;
     private List<Human> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
-    public void addMember(Human human) {
-        members.add(human);
+    public boolean addMember(Human human) {
+        if (human == null) {
+            return false;
+        }
+        if (!members.contains(human)){
+            members.add(human);
+            human.setId(humanId++);
+
+            return true;
+        }
+        return true;
     }
 
     public List<Human> getChildren(Human parent) {
