@@ -1,6 +1,7 @@
-package view.commands;
+package view.commands.sort;
 
 import view.ConsoleUI;
+import view.commands.Command;
 
 public class SortById extends Command {
     public SortById(ConsoleUI consoleUI) {

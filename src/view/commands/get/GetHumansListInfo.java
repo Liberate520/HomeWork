@@ -1,6 +1,7 @@
-package view.commands;
+package view.commands.get;
 
 import view.ConsoleUI;
+import view.commands.Command;
 
 public class GetHumansListInfo extends Command {
     public GetHumansListInfo(ConsoleUI consoleUI) {

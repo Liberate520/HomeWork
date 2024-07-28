@@ -1,6 +1,7 @@
-package view.commands;
+package view.commands.add;
 
 import view.ConsoleUI;
+import view.commands.Command;
 
 public class AddChild extends Command {
     public AddChild(ConsoleUI consoleUI) {

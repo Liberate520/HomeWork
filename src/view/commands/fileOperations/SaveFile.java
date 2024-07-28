@@ -1,6 +1,7 @@
-package view.commands;
+package view.commands.fileOperations;
 
 import view.ConsoleUI;
+import view.commands.Command;
 
 public class SaveFile extends Command {
     public SaveFile(ConsoleUI consoleUI) {

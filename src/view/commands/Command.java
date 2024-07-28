@@ -15,7 +15,7 @@ public abstract class Command {
         return description;
     }
 
-    ConsoleUI getConsoleUI() {
+    protected ConsoleUI getConsoleUI() {
         return consoleUI;
     }
 
