@@ -4,43 +4,39 @@ package family_tree;
 import family_tree.family_tree.FamilyTree;
 import family_tree.human.Gender;
 import family_tree.human.Human;
+import family_tree.sorter.HumanSorter;
 import family_tree.writer.FileHandler;
 
-import java.io.*;
 import java.time.LocalDate;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
+        Service service = new Service();
 
+        service.addHuman("Наталия", LocalDate.of(1964, 1, 16), Gender.женский);
+        service.addHuman("Иван", LocalDate.of(1967, 1, 16), Gender.мужской);
+        service.addHuman("Ольга", LocalDate.of(1989, 3, 20), Gender.женский);
+        service.addHuman("Елена", LocalDate.of(1994, 12, 23), Gender.женский);
 
-        Human natalya = new Human("Наталья", LocalDate.of(1964, 9, 19), Gender.женский);
-        Human ivan = new Human("Иван", LocalDate.of(1967, 1, 16), Gender.мужской);
-        Human olga = new Human("Ольга", LocalDate.of(1989, 3, 20), Gender.женский);
-        Human elena = new Human("Елена", LocalDate.of(1994, 12, 23), Gender.женский);
+        System.out.println(service.getHumanListInfo());
+        service.HumanSortByName();
+        System.out.println("После сортировки по имени:");
+        System.out.println(service.getHumanListInfo());
+        service.HumanSortByAge();
+        System.out.println("После сортировки по возрасту:");
+        System.out.println(service.getHumanListInfo());
 
-        familyTree.addHuman(natalya);
-        familyTree.addHuman(ivan);
-        familyTree.addHuman(olga);
-        familyTree.addHuman(elena);
+//        Human natalya = new Human("Наталья", LocalDate.of(1964, 9, 19), Gender.женский);
+//        Human ivan = new Human("Иван", LocalDate.of(1967, 1, 16), Gender.мужской);
+//        Human olga = new Human("Ольга", LocalDate.of(1989, 3, 20), Gender.женский);
+//        Human elena = new Human("Елена", LocalDate.of(1994, 12, 23), Gender.женский);
 
-        familyTree.addParentChildRelation("Наталья", "Ольга");
-        familyTree.addParentChildRelation("Наталья", "Елена");
-        familyTree.addParentChildRelation("Иван", "Ольга");
-        familyTree.addParentChildRelation("Иван", "Елена");
+//        familyTree.addHuman(natalya);
+//        familyTree.addHuman(ivan);
+//        familyTree.addHuman(olga);
+//        familyTree.addHuman(elena);
 
-        List<Human> childrenOfNatalya = familyTree.getChildrenOf("Наталья");
-        System.out.println("Дети Натальи:");
-        for (Human child : childrenOfNatalya) {
-            System.out.println(child.getName() + " (Дата рождения: " + child.getBirthDate() + ")");
-        }
-
-        List<Human> childrenOfIvan = familyTree.getChildrenOf("Иван");
-        System.out.println("Дети Ивана:");
-        for (Human child : childrenOfIvan) {
-            System.out.println(child.getName() + " (Дата рождения: " + child.getBirthDate() + ")");
-        }
         FileHandler fileHandler = new FileHandler();
         fileHandler.setPath("family_tree.txt");
 
@@ -49,8 +45,7 @@ public class Main {
 
         // Чтение семейного дерева
         FamilyTree loadedFamilyTree = (FamilyTree) fileHandler.read();
-        System.out.println(loadedFamilyTree);
-
 
     }
 }
+
