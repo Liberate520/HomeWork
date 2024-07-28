@@ -7,9 +7,11 @@ public class FamilyTree<T extends HasId & HasChildren<T>> implements Serializabl
     private static final long serialVersionUID = 1L;
     private List<T> elements;
     private int nextId = 1;
+    private List<T> members;
 
     public FamilyTree() {
         this.elements = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
     public void addElement(T element) {
@@ -31,6 +33,14 @@ public class FamilyTree<T extends HasId & HasChildren<T>> implements Serializabl
     public List<T> getChildren(int id) {
         T element = getElement(id);
         return (element != null) ? element.getChildren() : new ArrayList<>();
+    }
+
+    // public void addMember(T member) {
+    //     members.add(member);
+    // }
+
+    public List<T> getElements() {
+        return new ArrayList<>(members);
     }
 
     public List<T> getAllElements() {

@@ -3,9 +3,12 @@ import Human.Gender;
 import FamilyTree.FamilyTree;
 import Human.Human;
 import Presenter.FamilyTreePresenter;
+import Service.FamilyTreeService;
 import View.ConsoleFamilyTreeView;
 import View.ConsoleInputHandler;
 import View.FamilyTreeView;
+// import Writer.FamilyTreeFileHandler;
+// import Writer.Writer;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,13 +54,20 @@ public class Main {
         familyTree.addElement(cousin1);
         familyTree.addElement(cousin2);
 
-        // Создание представления и презентера
+        // Создание сервиса и представления
+        // Writer fileHandler = new FamilyTreeFileHandler();
+        // FamilyTreeService familyTreeService = new FamilyTreeService(familyTree, fileHandler);
+        FamilyTreeService familyTreeService = new FamilyTreeService(familyTree);
         ConsoleInputHandler inputHandler = new ConsoleInputHandler();
-        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, null);
-        FamilyTreeView view = new ConsoleFamilyTreeView(presenter, inputHandler);
+        FamilyTreeView view = new ConsoleFamilyTreeView(new FamilyTreePresenter(familyTreeService, null), inputHandler);
+        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTreeService, view);
+        view.setPresenter(presenter);
         presenter.setView(view);
+
+        presenter.onShowFamilyTree();
         view.showMenu();
         inputHandler.close();
+    
     }
 }
 

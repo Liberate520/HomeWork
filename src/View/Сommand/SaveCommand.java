@@ -3,8 +3,8 @@ package View.Сommand;
 import java.util.Scanner;
 
 import Presenter.FamilyTreePresenter;
-import Writer.FamilyTreeFileHandler;
-import Writer.Writer;
+// import Writer.FamilyTreeFileHandler;
+// import Writer.Writer;
 
 public class SaveCommand implements Command {
     private final FamilyTreePresenter presenter;
@@ -19,7 +19,7 @@ public class SaveCommand implements Command {
     public void execute() {
         System.out.println("Введите имя файла для сохранения:");
         String filename = scanner.nextLine();
-        Writer fileHandler = new FamilyTreeFileHandler();
-        presenter.onSave(fileHandler, filename);
+        // Writer fileHandler = new FamilyTreeFileHandler();
+        presenter.onSave(filename);
     }
 }

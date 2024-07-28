@@ -1,44 +1,39 @@
 package View.Сommand;
 
 import java.time.LocalDate;
-import java.util.Scanner;
+// import java.util.Scanner;
 
 // import FamilyTree.FamilyTree;
 import Human.Gender;
 import Human.Human;
 import Presenter.FamilyTreePresenter;
+import View.ConsoleInputHandler;
 
 public class AddHumanCommand implements Command {
-    private final FamilyTreePresenter presenter;
-    private final Scanner scanner;
+    private FamilyTreePresenter presenter;
+    private ConsoleInputHandler inputHandler;
 
-    public AddHumanCommand(FamilyTreePresenter presenter, Scanner scanner) {
+    public AddHumanCommand(FamilyTreePresenter presenter, ConsoleInputHandler inputHandler) {
         this.presenter = presenter;
-        this.scanner = scanner;
+        this.inputHandler = inputHandler;
     }
 
     @Override
     public void execute() {
-        System.out.println("Введите имя:");
-        String name = scanner.nextLine();
+        String name = inputHandler.getStringInput("Введите имя: ");
+        LocalDate birthDate = inputHandler.getDateInput("Введите дату рождения (YYYY-MM-DD): ");
+        LocalDate deathDate = inputHandler.getDateInput("Введите дату смерти (YYYY-MM-DD) или оставьте пустым: ");
+        Gender gender = inputHandler.getGenderInput("Введите пол (MALE/FEMALE): ");
 
-        System.out.println("Введите дату рождения (YYYY-MM-DD):");
-        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+        // Human father = presenter.findByName(inputHandler.getStringInput("Введите имя отца (или оставьте пустым): "));
+        // Human mother = presenter.findByName(inputHandler.getStringInput("Введите имя матери (или оставьте пустым): "));
+        String fatherName = inputHandler.getStringInput("Введите имя отца (или оставьте пустым): ");
+        Human father = fatherName.isEmpty() ? null : presenter.findByName(fatherName);
+        
+        String motherName = inputHandler.getStringInput("Введите имя матери (или оставьте пустым): ");
+        Human mother = motherName.isEmpty() ? null : presenter.findByName(motherName);
 
-        System.out.println("Введите дату смерти (если есть) (YYYY-MM-DD):");
-        String deathDateInput = scanner.nextLine();
-        LocalDate deathDate = deathDateInput.isEmpty() ? null : LocalDate.parse(deathDateInput);
 
-        System.out.println("Введите пол (Male/Female):");
-        Gender gender = Gender.valueOf(scanner.nextLine());
-
-        System.out.println("Введите имя отца (если есть):");
-        String fatherName = scanner.nextLine();
-        Human father = presenter.findByName(fatherName);
-
-        System.out.println("Введите имя матери (если есть):");
-        String motherName = scanner.nextLine();
-        Human mother = presenter.findByName(motherName);
 
         presenter.onAddHuman(name, birthDate, deathDate, gender, father, mother);
     }
