@@ -37,4 +37,9 @@ public class FileHandler implements Writer {
     public void setPath(String path) {
         filePath = path;
     }
+
+    @Override
+    public String getPath() {
+        return filePath;
+    }
 }

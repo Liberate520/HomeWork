@@ -3,8 +3,10 @@ package view;
 import view.commands.*;
 import view.commands.add.AddChild;
 import view.commands.add.AddHuman;
+import view.commands.fileOperations.GetCurrentPath;
 import view.commands.fileOperations.ReadFile;
 import view.commands.fileOperations.SaveFile;
+import view.commands.fileOperations.SetCustomPath;
 import view.commands.get.GetHumanBirthDate;
 import view.commands.get.GetHumansListInfo;
 import view.commands.set.*;
@@ -36,6 +38,8 @@ public class MainMenu {
         commands.add(new SetDateOfDeath(consoleUI));
         commands.add(new SaveFile(consoleUI));
         commands.add(new ReadFile(consoleUI));
+        commands.add(new GetCurrentPath(consoleUI));
+        commands.add(new SetCustomPath(consoleUI));
         commands.add(new Finish(consoleUI));
     }
 

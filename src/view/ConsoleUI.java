@@ -4,6 +4,9 @@ import model.person.Gender;
 import model.person.Human;
 import presenter.Presenter;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -242,22 +245,58 @@ public class ConsoleUI implements View {
         return presenter.getHumanById(idHuman);
     }
 
-    @Override
-    public void printAnswer(String answer) {
-        System.out.println(answer);
-    }
-
     public void save() {
         presenter.saveFile();
-        System.out.println("Экспорт завершен успешно");
+        System.out.println("Данные успешно сохранены в: " + presenter.getPath());
     }
 
     public void read() {
         presenter.readFile();
-        System.out.println("Импорт данных выполнен");
+        System.out.println("Данные успешно импортированы из: " + presenter.getPath());
+    }
+
+    // Добавил возможность пользователю изменениять пути к файлу семейного древа
+    public void setCustomPath() {
+        System.out.println("Текущий путь для сохранения данных: " + presenter.getPath());
+
+        System.out.print("Введите путь к директории для сохранения данных (например, C:\\Users\\User\\Documents): ");
+        String directoryPath = scanner.nextLine();
+
+        System.out.print("Введите имя файла (например, family_tree.out): ");
+        String fileName = scanner.nextLine();
+
+        String fullPath = Paths.get(directoryPath, fileName).toString();
+
+        if (!directoryPath.isEmpty() && isValidDirectory(directoryPath)) {
+            presenter.setCustomPath(fullPath);
+            System.out.println("Путь для сохранения данных изменен на: " + presenter.getPath());
+            save();
+        } else {
+            System.out.println("Указанный путь недействителен или не существует. Используется текущий путь: " + presenter.getPath());
+        }
+    }
+
+    // Проверка на авлидность дериктории
+    private boolean isValidDirectory(String path) {
+        try {
+            Path p = Paths.get(path);
+            return Files.exists(p) && Files.isDirectory(p);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // Получение текущей дериктории
+    public void getCurrentPath() {
+        System.out.println("Текущий путь для сохранения данных: " + presenter.getPath());
     }
 
     private void inputIdError() {
         System.out.println(INPUT_ID_ERROR);
+    }
+
+    @Override
+    public void printAnswer(String answer) {
+        System.out.println(answer);
     }
 }

@@ -116,15 +116,6 @@ public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, It
         }
     }
 
-    public E findPersonByName(String name) {
-        for (E person : people) {
-            if (person.getName().equalsIgnoreCase(name)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
     private boolean checkId(long id) {
         return id < peopleId && id >= 0;
     }

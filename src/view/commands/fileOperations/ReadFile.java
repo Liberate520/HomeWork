@@ -5,7 +5,7 @@ import view.commands.Command;
 
 public class ReadFile extends Command {
     public ReadFile(ConsoleUI consoleUI) {
-        super("Выгрузить существующее дерево", consoleUI);
+        super("Импортировать существующее дерево", consoleUI);
     }
 
     @Override

@@ -81,10 +81,6 @@ public class Service {
         return familyTree.getById(idHuman);
     }
 
-    public String getAge(long idHuman) {
-        return Integer.toString(familyTree.getById(idHuman).getAge());
-    }
-
     public LocalDate getBirthDate(long idHuman) {
         return familyTree.getById(idHuman).getBirthDate();
     }
@@ -99,5 +95,13 @@ public class Service {
 
     public void readFile() {
         familyTree = (FamilyTree) fileHandler.read();
+    }
+
+    public void setCustomPath(String path) {
+        fileHandler.setPath(path);
+    }
+
+    public String getPath() {
+        return fileHandler.getPath();
     }
 }

@@ -32,10 +32,6 @@ public class Presenter {
         view.printAnswer(answer);
     }
 
-    public void getName(long idHuman) {
-        view.printAnswer(service.getName(idHuman));
-    }
-
     public void getHumanBirthDate(long idHuman) {
         view.printAnswer(service.getBirthDate(idHuman).toString());
     }
@@ -96,5 +92,13 @@ public class Presenter {
     public void readFile() {
         service.readFile();
         getHumansListInfo();
+    }
+
+    public void setCustomPath(String path) {
+        service.setCustomPath(path);
+    }
+
+    public String getPath() {
+        return service.getPath();
     }
 }
