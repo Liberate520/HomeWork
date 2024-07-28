@@ -15,6 +15,10 @@ public class Service<U extends ItemFamilyTree<U>> {
     private Writer writer;
     private int humID;
 
+    public Service(FamilyTree<Human> familyTree) {
+        this.familyTree = familyTree;
+    }
+
     public Service() {
         familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
