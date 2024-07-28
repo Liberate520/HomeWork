@@ -1,3 +1,5 @@
+package group.model;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +21,7 @@ public interface Dogs<T> extends Serializable {
     boolean addChild(T child);
     boolean setWedding (T human1, T human2);
     List<T> getParents();
+
 
 
 }

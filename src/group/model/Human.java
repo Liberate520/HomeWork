@@ -1,24 +1,28 @@
+package group.model;
+
+import group.model.SaveReed.Writable;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Dogs<Human> {
+public class Human implements Dogs<Human>, Serializable, Writable {
 
     private int id;
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private  LocalDate deathDate;
-    private Human parent1;
-    private Human parent2;
+    private static Human parent1;
+    private static Human parent2;
     private Human married;
 
     private List<Human> children;
 
 
-    public Human(String name, Gender gender, Human parent1, Human parent2, LocalDate birthDate, LocalDate deathDate) {
+    public Human(int i,String name, Gender gender, Human parent1, Human parent2, LocalDate birthDate, LocalDate deathDate) {
         id = 0;
         this.name = name;
         this.gender = gender;
@@ -28,6 +32,16 @@ public class Human implements Dogs<Human> {
         this.deathDate = deathDate;
         children = new ArrayList<>();
 
+    }
+
+    public static Human valueOf(String s) {
+        Human human = null;
+        if (s.equals("parent1")) {
+            human = Human.parent1;
+        } else if (s.equals("parent2")) {
+            human = Human.parent2;
+        }
+        return human;
     }
 
 
@@ -45,11 +59,12 @@ public class Human implements Dogs<Human> {
         return false;
     }
 
+
     public boolean addParent(Human parent) {
 
-        if (parent.getGender().equals(Gender.Male)) {
+        if (parent.getGender().equals(Gender.male)) {
             setParent1(parent);
-        } else if (parent.getGender().equals(Gender.Female)) {
+        } else if (parent.getGender().equals(Gender.female)) {
             setParent2(parent);
 
         }
@@ -84,6 +99,8 @@ public class Human implements Dogs<Human> {
         return list;
     }
 
+
+
     public int getId() {
         return id;
     }
@@ -96,6 +113,7 @@ public class Human implements Dogs<Human> {
     public void add(Human human) {
 
     }
+
 
     public String getName() {
         return name;
@@ -234,5 +252,17 @@ public class Human implements Dogs<Human> {
         Human human = (Human) obj;
         return human.getId() == getId();
 
+    }
+
+
+    @Override
+    public void save(Serializable serializable, String filePath) {
+
+
+    }
+
+    @Override
+    public Object read(String filePath) {
+        return null;
     }
 }

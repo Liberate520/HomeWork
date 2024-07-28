@@ -1,3 +1,8 @@
+package group.model;
+
+import group.model.comparators.FamilyTreeComparatorByName;
+import group.model.iteators.FamilyTreeIterator;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -95,14 +100,14 @@ public class FamilyTree<E extends Dogs<E>>  implements Serializable, Iterable<E>
 
 
 
-    private void addToParents(E human) {
+    public void addToParents(E human) {
         for (E parent : human.getParents()) {
             parent.addChild(human);
 
         }
     }
 
-    private void addToChildren(E human) {
+    public void addToChildren(E human) {
         for (E child : human.getChildren()) {
             child.addParent(human);
 
@@ -147,5 +152,7 @@ public class FamilyTree<E extends Dogs<E>>  implements Serializable, Iterable<E>
 
     @Override
     public Iterator<E> iterator(){return new FamilyTreeIterator<>(humanList);}
+
+
 
 }

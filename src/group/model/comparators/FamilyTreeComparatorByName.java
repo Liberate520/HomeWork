@@ -1,3 +1,7 @@
+package group.model.comparators;
+
+import group.model.Dogs;
+
 import java.util.Comparator;
 
 public class FamilyTreeComparatorByName<T extends Dogs<T>> implements Comparator<T> {
