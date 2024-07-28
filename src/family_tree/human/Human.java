@@ -1,11 +1,13 @@
 package family_tree.human;
 
+import family_tree.Interface.Animal;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Animal<Human> {
     private String first_name;
     private String last_name;
     private String patronymic;

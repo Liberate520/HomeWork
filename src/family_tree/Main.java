@@ -76,7 +76,7 @@ public class Main {
         mother.addChild(child2);
         mother.addChild(child3);
 
-        FamilyTree ft = new FamilyTree();
+        FamilyTree ft = new FamilyTree<Human>();
         ft.addHuman(maternalGrandfather);
         ft.addHuman(maternalGrandmother);
         ft.addHuman(paternalGrandfather);
@@ -90,7 +90,7 @@ public class Main {
 
     }
     public static void main(String[] args) throws IOException {
-        FamilyTree ft = ft_create();
+        FamilyTree<Human> ft = ft_create();
         for (Human human : ft){
             System.out.println(human);
         }
