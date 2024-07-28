@@ -2,6 +2,7 @@ package Model.FamilyTree.FamilyTreeService;
 
 import Model.FamilyTree.FamilyMember;
 import Model.FamilyTree.FamilyTree;
+import Model.FamilyTree.Sorter;
 import Model.Human.Gender;
 import Model.Human.Human;
 import Model.Human.HumanBuilder.HumanBuilder;
@@ -44,11 +45,14 @@ public class FamilyTreeService {
         }
         return stringBuilder.toString();
     }
-    public void sortByName(){
-        newFamilyTree.sortByName();
-    }
-    public void sortByAmountOfChildren(){
-        newFamilyTree.sortByAmountOfChildren();
+//    public void sortByName(){
+//        newFamilyTree.sortByName();
+//    }
+//    public void sortByAmountOfChildren(){
+//        newFamilyTree.sortByAmountOfChildren();
+//    }
+    public void sort(Sorter<Human> sorter){
+        sorter.Sort(newFamilyTree.getListOfFamily());
     }
 
     public FamilyTree getFamilyTree(){
@@ -60,10 +64,10 @@ public class FamilyTreeService {
     }
 
     public boolean addSpouseToFamilyMember(Integer idMember, Integer idSpouse){
-        //newFamilyTree.getbyId(idMember).setSpouse(newFamilyTree.getbyId(idSpouse));
         newFamilyTree.addSpouseToFamilyMember(newFamilyTree.getbyId(idMember), newFamilyTree.getbyId(idSpouse));
         return true;
     }
+
 
 }
 

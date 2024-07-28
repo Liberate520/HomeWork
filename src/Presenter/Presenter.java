@@ -2,6 +2,8 @@ package Presenter;
 
 import Model.FamilyTree.FamilyTree;
 import Model.FamilyTree.FamilyTreeService.FamilyTreeService;
+import Model.FamilyTree.SortByAmountOfChildren;
+import Model.FamilyTree.SortByName;
 import Model.Human.Gender;
 import Model.Writer.FileHandler;
 import View.ConsoleUI;
@@ -39,7 +41,11 @@ public class Presenter {
     }
 
     public void sortByName() {
-         familyTreeService.sortByName();
+         familyTreeService.sort(new SortByName());
+    }
+
+    public void SortByAmountOfChildren() {
+        familyTreeService.sort(new SortByAmountOfChildren());
     }
 
     public boolean savetoFile() throws IOException {

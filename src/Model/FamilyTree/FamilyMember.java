@@ -13,6 +13,7 @@ public interface FamilyMember<T extends FamilyMember<T>> {
     void addChildrentoFamilyMember(T child);
 
     Integer getId();
+    String getName();
 
     void setSpouse(T spouse);
     T getSpouse();

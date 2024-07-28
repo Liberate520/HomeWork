@@ -59,14 +59,14 @@ public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iter
         return listOfFamily;
     }
 
-    public void sortByName(){
-
-        listOfFamily.sort(null);
-    }
-
-    public void sortByAmountOfChildren(){
-        listOfFamily.sort(new HumanComparatorbyAmountOfChildren<>());
-    }
+//    public void sortByName(){
+//
+//        listOfFamily.sort(null);
+//    }
+//
+//    public void sortByAmountOfChildren(){
+//        listOfFamily.sort(new HumanComparatorbyAmountOfChildren<>());
+//    }
 
     @Override
     public String toString() {

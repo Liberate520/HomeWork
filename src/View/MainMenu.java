@@ -11,11 +11,12 @@ List<Command> mainMenuList;
 
 public MainMenu(){
     mainMenuList = new ArrayList<>();
-    mainMenuList.add(new AddtoTree());
     mainMenuList.add(new ShowTree());
+    mainMenuList.add(new AddtoTree());
     mainMenuList.add(new SortByName());
+    mainMenuList.add(new SortByAmountOfChildren());
     mainMenuList.add(new SaveTreeToFile());
-    mainMenuList.add((new RestoreTreeFromFile()));
+    mainMenuList.add(new RestoreTreeFromFile());
     mainMenuList.add(new addSpouseToFamilyMember());
     mainMenuList.add(new CloseMenu());
 }
