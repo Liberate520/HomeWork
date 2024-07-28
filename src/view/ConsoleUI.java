@@ -14,6 +14,7 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private MainMenu menu;
     Gender gender;
+    private static final String INPUT_ID_ERROR = "Человека нет с таким ID";
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
@@ -24,7 +25,7 @@ public class ConsoleUI implements View {
 
     @Override
     public void start() {
-        System.out.println("Программа запустилась, здравствуй!");
+        greeting();
         while (work) {
             System.out.println(menu.showMenu());
             System.out.println("Введите пункт меню (число):");
@@ -43,6 +44,10 @@ public class ConsoleUI implements View {
         scanner.close();
         work = false;
         System.out.println("Пока-пока, программа закрылась!");
+    }
+
+    private void greeting() {
+        System.out.println("Программа запустилась.\nДобро пожаловать в программу для создания Вашего семейного древа!");
     }
 
     public void addHuman() {
@@ -89,9 +94,9 @@ public class ConsoleUI implements View {
 
             if (searchIdHuman(idChild)){
                 presenter.addChildToParent(idParent, idChild);
-            }else{System.out.println("Человека нет с таким ID");}
+            }else{inputIdError();}
 
-        }else{System.out.println("Человека нет с таким ID");}
+        }else{inputIdError();}
     }
 
     public void getHumanBirthDate() {
@@ -102,7 +107,7 @@ public class ConsoleUI implements View {
             System.out.println(getHumanById(idHuman).getName() + ":");
             presenter.getHumanBirthDate(idHuman);
         } else {
-            System.out.println("Человека нет с таким ID");
+            inputIdError();
         }
     }
 
@@ -125,7 +130,7 @@ public class ConsoleUI implements View {
                 System.out.println(e.getMessage());
                 System.out.println("Неверный ввод даты");
             }
-        } else {System.out.println("Человека с таким ID нет");}
+        } else {inputIdError();}
     }
 
     public void setWedding() {
@@ -176,9 +181,9 @@ public class ConsoleUI implements View {
 
             if (searchIdHuman(idChild)){
                 presenter.setFather(idChild, idFather);
-            }else{System.out.println("Человека с таким ID нет");}
+            }else{inputIdError();}
 
-        }else{System.out.println("Человека с таким ID нет");}
+        }else{inputIdError();}
     }
 
     public void setMother() {
@@ -193,9 +198,9 @@ public class ConsoleUI implements View {
 
             if (searchIdHuman(idChild)){
                 presenter.setMother(idChild, idMother);
-            }else{System.out.println("Человека с таким ID нет");}
+            }else{inputIdError();}
 
-        }else{System.out.println("Человека с таким ID нет");}
+        }else{inputIdError();}
     }
 
     public void sortByAge() {
@@ -250,5 +255,9 @@ public class ConsoleUI implements View {
     public void read() {
         presenter.readFile();
         System.out.println("Импорт данных выполнен");
+    }
+
+    private void inputIdError() {
+        System.out.println(INPUT_ID_ERROR);
     }
 }
