@@ -2,10 +2,13 @@ package family_tree.family_tree;
 
 import family_tree.human.Gender;
 import family_tree.human.Human;
+import family_tree.human.HumanComparatorByBirthDate;
+import family_tree.human.HumanComparatorByFirstName;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree implements Serializable {
@@ -110,4 +113,20 @@ public class FamilyTree implements Serializable {
         }
         return  sb.toString();
     }
+
+
+    public Iterator<Human> Iterator() {
+        return new FamilyTreeIterator(humanList);
+    }
+
+    public void HumanComparatorByBirthDate(){
+        humanList.sort(new HumanComparatorByBirthDate());
+    }
+
+    public void HumanComparatorByName(){
+        humanList.sort(new HumanComparatorByFirstName());
+    }
+
+
+
 }

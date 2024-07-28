@@ -10,11 +10,14 @@ import java.time.LocalDate;
 
 public class Main {
    public static void main(String[] args){
-       /*FamilyTree tree = testTree();*/
-       FamilyTree tree = readTree();
+       FamilyTree tree = testTree();
+      /* FamilyTree tree = readTree();*/
       /* saveTree(tree);*/
        System.out.println(tree);
-
+       tree.HumanComparatorByName();
+       System.out.println(tree);
+       tree.HumanComparatorByBirthDate();
+       System.out.println(tree);
    }
 
    public static FamilyTree readTree(){
