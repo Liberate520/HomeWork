@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable{
+public class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -18,9 +18,9 @@ public class Human implements Serializable{
     // private List<Human> parents;
     private Human spouse;
 
-    public Human(String name, Gender gender, LocalDate dateOfBirth,
+    public Human(long id, String name, Gender gender, LocalDate dateOfBirth,
             LocalDate dateOfDeath, Human spouse, Human father, Human mother) {
-        id = -1;
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -32,12 +32,12 @@ public class Human implements Serializable{
         // parents = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate dateOfBirth) {
-        this(name, gender, dateOfBirth, null, null, null, null);
+    public Human(long id, String name, Gender gender, LocalDate dateOfBirth) {
+        this(id, name, gender, dateOfBirth, null, null, null, null);
     }
 
-    public Human(String name, Gender gender, LocalDate dateOfBirth, Human father, Human mother) {
-        this(name, gender, dateOfBirth, null, null, father, mother);
+    public Human(long id, String name, Gender gender, LocalDate dateOfBirth, Human father, Human mother) {
+        this(id, name, gender, dateOfBirth, null, null, father, mother);
     }
 
     public long getId() {
@@ -125,35 +125,24 @@ public class Human implements Serializable{
         Period period = Period.between(dateOfBirth, endDate);
         return period.getYears();
     }
-
     
 
     public void addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
-            // child.addParent(this);
             if (this.getGender() == Gender.Male) {
                 child.addFather(this);
-                child.setMother((this.getSpouse()));
+                if (child.getMother() == null){
+                    child.setMother((this.getSpouse()));
+                }
             } else {
             child.addMother(this);
-            child.setFather((this.getSpouse()));
+            if (child.getFather() == null){
+                child.setFather((this.getSpouse()));
+            }
             }
         }
     }
-
-
-    // public void addParent(Human parent) {
-    //     if (parent.getGender().equals(Gender.Male) ) {
-    //         setFather(parent);
-    //     }
-    //     if (parent.getGender().equals(Gender.Female) ) {
-    //         setMother(parent);
-    //     }
-    //     if (!parent.getChildren().contains(this)) {
-    //         parent.getChildren().add(this); 
-    //     }
-    // }
 
     public void addMother(Human parent) {
         if (parent.getGender().equals(Gender.Female) ) {
@@ -180,6 +169,15 @@ public class Human implements Serializable{
         }
         if (!parent.getChildren().contains(this)) {
             parent.getChildren().add(this); 
+        }
+    }
+
+    public void getMarried(Human human) {
+        if (this.getSpouse() == null || this.getSpouse() == human && human.getSpouse() == null || human.getSpouse() == this) {
+            human.setSpouse(this);
+            this.setSpouse(human);
+            this.setChildren(human.getChildren());
+            human.setChildren(this.getChildren());
         }
     }
 
@@ -249,4 +247,8 @@ public class Human implements Serializable{
         }
     }
 
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
+    }
 }
