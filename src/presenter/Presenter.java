@@ -11,7 +11,6 @@ import java.time.LocalDate;
 public class Presenter {
     View view;
     Service service;
-    Writer writer;
 
     public Presenter(View view) {
         this.view = view;
@@ -33,9 +32,12 @@ public class Presenter {
         view.printAnswer(answer);
     }
 
-    public void getAge(long idHuman) {
-        String answer = service.getAge(idHuman);
-        view.printAnswer(answer);
+    public void getName(long idHuman) {
+        view.printAnswer(service.getName(idHuman));
+    }
+
+    public void getHumanBirthDate(long idHuman) {
+        view.printAnswer(service.getBirthDate(idHuman).toString());
     }
 
     public void setDateOfDeath(int idHuman, LocalDate dateOfDeath) {
@@ -70,6 +72,11 @@ public class Presenter {
 
     public void sortByChildrenQuantity() {
         service.sortByChildrenQuantity();
+        getHumansListInfo();
+    }
+
+    public void sortById() {
+        service.sortById();
         getHumansListInfo();
     }
 

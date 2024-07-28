@@ -24,7 +24,7 @@ public class ConsoleUI implements View {
 
     @Override
     public void start() {
-        System.out.println("Программа запустилась, здравствуй!\n");
+        System.out.println("Программа запустилась, здравствуй!");
         while (work) {
             System.out.println(menu.showMenu());
             System.out.println("Введите пункт меню (число):");
@@ -64,7 +64,7 @@ public class ConsoleUI implements View {
             return;
         }
 
-        System.out.println("Введите дату рождения в формате yyyy-MM-dd (пример 2001-03-12)");
+        System.out.println("Введите дату рождения в формате yyyy-MM-dd (пример 2001-12-28)");
         String dateOfBirthStr = scanner.nextLine();
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -94,12 +94,13 @@ public class ConsoleUI implements View {
         }else{System.out.println("Человека нет с таким ID");}
     }
 
-    public void getAge() {
+    public void getHumanBirthDate() {
         System.out.println("Введите ID челоека:");
         String choiceStr = scanner.nextLine();
         int idHuman = strNumToInt(choiceStr);
         if (searchIdHuman(idHuman)) {
-            presenter.getAge(idHuman);
+            System.out.println(getHumanById(idHuman).getName() + ":");
+            presenter.getHumanBirthDate(idHuman);
         } else {
             System.out.println("Человека нет с таким ID");
         }
@@ -138,10 +139,10 @@ public class ConsoleUI implements View {
                 presenter.setWedding(id1, id2);
                 System.out.println("Ура! Состоялась свадьба!");
             } else {
-                System.out.println("Невеста с таким ID не найдена\n");
+                System.out.println("Невеста с таким ID не найдена");
             }
         } else {
-            System.out.println("Жених с таким ID не найден\n");
+            System.out.println("Жених с таким ID не найден");
         }
     }
 
@@ -189,6 +190,10 @@ public class ConsoleUI implements View {
 
     public void sortByChildrenQuantity() {
         presenter.sortByChildrenQuantity();
+    }
+
+    public void sortById() {
+        presenter.sortById();
     }
 
     private int strNumToInt(String choiceStr) {

@@ -11,11 +11,12 @@ public class MainMenu {
     public MainMenu(ConsoleUI consoleUI) {
         commands = new ArrayList<>();
         commands.add(new AddHuman(consoleUI));
-        commands.add(new GetHumanAge(consoleUI));
+        commands.add(new GetHumanBirthDate(consoleUI));
         commands.add(new SetMother(consoleUI));
         commands.add(new SetFather(consoleUI));
         commands.add(new AddChild(consoleUI));
         commands.add(new GetHumansListInfo(consoleUI));
+        commands.add(new SortById(consoleUI));
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByAge(consoleUI));
         commands.add(new SortByChildrenQuantity(consoleUI));
@@ -28,7 +29,7 @@ public class MainMenu {
 
     public String showMenu() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Меню:\n");
+        stringBuilder.append("\nМеню:\n");
         for (int i = 0; i < commands.size(); i++) {
             stringBuilder.append(i + 1);
             stringBuilder.append(". ");

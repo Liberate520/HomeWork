@@ -60,6 +60,10 @@ public class Service {
         familyTree.sortByChildrenQuantity();
     }
 
+    public void sortById() {
+        familyTree.sortById();
+    }
+
     public void setWedding(long humanId1, long humanId2) {
         familyTree.setWedding(humanId1, humanId2);
     }
@@ -75,6 +79,14 @@ public class Service {
 
     public String getAge(long idHuman) {
         return Integer.toString(familyTree.getById(idHuman).getAge());
+    }
+
+    public LocalDate getBirthDate(long idHuman) {
+        return familyTree.getById(idHuman).getBirthDate();
+    }
+
+    public String getName(long idHuman) {
+        return familyTree.getById(idHuman).getName();
     }
 
     public void saveFile() {

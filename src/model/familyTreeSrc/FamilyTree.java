@@ -116,14 +116,6 @@ public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, It
         }
     }
 
-    public boolean remove(long humanId) {
-        if (checkId(humanId)) {
-            E human = getById(humanId);
-            return people.remove(human);
-        }
-        return false;
-    }
-
     public E findPersonByName(String name) {
         for (E person : people) {
             if (person.getName().equalsIgnoreCase(name)) {
@@ -160,6 +152,10 @@ public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, It
         people.sort(new HumanComparatorByChildrenQuantity<E>());
     }
 
+    public void sortById() {
+        people.sort(new HumanComparatorById<>());
+    }
+
     @Override
     public String toString() {
         return getInfo();
@@ -169,10 +165,10 @@ public class FamilyTree<E extends ItemFamilyTree<E>> implements Serializable, It
         StringBuilder res = new StringBuilder();
         res.append("В дереве ");
         res.append(people.size());
-        res.append(" объектов: \n");
+        res.append(" объектов:");
         for (E human : people) {
-            res.append(human);
             res.append("\n");
+            res.append(human);
         }
         return res.toString();
     }
