@@ -16,7 +16,6 @@ public class Presenter {
 
     public void addPerson(String name, int age, Gender gender){
         service.addPerson(name, age, gender);
-        viewTree();
     }
 
     public void viewTree(){
