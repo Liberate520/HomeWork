@@ -1,35 +1,45 @@
-import java.io.FileWriter;
+import FamilyTree.FamilyTree;
+import Human.Human;
+import Human.Gender;
+import Service.HumanService;
+import Writer.Writer;
+import Writer.FileHandler;
+
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        HumanService humanService = new HumanService();
 
-        FamilyTree familyTree = new FamilyTree();
+        humanService.testTree();
+        System.out.println(humanService);
 
-        Human h1 = new Human("Сергей", 1964, Gender.Male);
-        Human h2 = new Human("Светлана", 1964, Gender.Female);
-        Human h3 = new Human("Алексей", 1985, Gender.Male);
-        Human h4 = new Human("Никита", 1993, Gender.Male);
-
-
-
-        // Set parent-child relationships
-        h1.setFather(h1);
-        h3.setMother(h2);
-        h4.setFather(h1);
-        h4.setMother(h2);
-
-        System.out.println("Генеалогическое древо:");
-        System.out.println(familyTree);
-
-
+        FamilyTree familyTree = humanService.getFamilyTree();
         Writer fileWriter = new FileHandler(familyTree);
         fileWriter.saveToFile(familyTree);
-        System.out.println("Дерево сохранено");
-
+        System.out.println("Семейное дерево сохранено");
 
         FamilyTree familyTreeRestored = fileWriter.readFromFile();
-        System.out.println("Дерево восстановлено");
+        System.out.println("Семейное дерево восстановлено");
         familyTreeRestored.showTree();
+
+        System.out.println("Сортировка по имени:");
+        humanService.SortByName();
+        System.out.println(humanService);
+
+        System.out.println("Сортировка по возрасту:");
+        humanService.SortByAge();
+        System.out.println(humanService);
+
+        System.out.println("Сортировка по количеству детей:");
+        humanService.SortByChildrenNum();
+        System.out.println(humanService);
+
+        System.out.println("Сортировка по дате рождения:");
+        humanService.SortByBirthdate();
+        System.out.println(humanService);
     }
 }
