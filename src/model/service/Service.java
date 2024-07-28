@@ -68,6 +68,10 @@ public class Service {
         familyTree.setWedding(humanId1, humanId2);
     }
 
+    public void setDivorce(long humanId1, long humanId2) {
+        familyTree.setDivorce(humanId1, humanId2);
+    }
+
     public String getHumansListInfo() {
         String result = "Информация о древе:\n";
         return result + familyTree.getInfo();

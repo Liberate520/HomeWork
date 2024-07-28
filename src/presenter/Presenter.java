@@ -60,6 +60,11 @@ public class Presenter {
         getHumansListInfo();
     }
 
+    public void setDivorce(long humanId1, long humanId2) {
+        service.setDivorce(humanId1, humanId2);
+        getHumansListInfo();
+    }
+
     public void sortByName() {
         service.sortByName();
         getHumansListInfo();

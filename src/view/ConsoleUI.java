@@ -128,12 +128,12 @@ public class ConsoleUI implements View {
         } else {System.out.println("Человека с таким ID нет");}
     }
 
-    public void setWedding(){
+    public void setWedding() {
         System.out.println("Введите ID жениха: ");
-        int id1 = Integer.parseInt(scanner.nextLine());
+        long id1 = Long.parseLong(scanner.nextLine());
         if (searchIdHuman(id1)) {
             System.out.println("Введите ID невесты: ");
-            int id2 = Integer.parseInt(scanner.nextLine());
+            long id2 = Long.parseLong(scanner.nextLine());
 
             if (searchIdHuman(id2)) {
                 presenter.setWedding(id1, id2);
@@ -143,6 +143,24 @@ public class ConsoleUI implements View {
             }
         } else {
             System.out.println("Жених с таким ID не найден");
+        }
+    }
+
+    public void setDivorce() {
+        System.out.println("Введите ID мужа: ");
+        long id1 = Long.parseLong(scanner.nextLine());
+        if (searchIdHuman(id1)) {
+            System.out.println("Введите ID жены: ");
+            long id2 = Long.parseLong(scanner.nextLine());
+
+            if (searchIdHuman(id2)) {
+                presenter.setDivorce(id1, id2);
+                System.out.println("Развод состоялся");
+            } else {
+                System.out.println("Жена с таким ID не найдена");
+            }
+        } else {
+            System.out.println("Муж с таким ID не найден");
         }
     }
 
@@ -204,7 +222,7 @@ public class ConsoleUI implements View {
         }
     }
 
-    private boolean searchIdHuman(int idHuman) {
+    private boolean searchIdHuman(long idHuman) {
         return getHumanById(idHuman) != null;
     }
 
