@@ -1,5 +1,3 @@
-package ru.gb.family_tree;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
