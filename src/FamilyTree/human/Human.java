@@ -1,11 +1,15 @@
 package FamilyTree.human;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     private long id;
     private String name;
     private LocalDate birthDate;
@@ -17,7 +21,7 @@ public class Human {
 
     private Human father;
     private Human mother;
-    private List<Human> children;
+    private transient List<Human> children;
     private Human spouse;
 
     public Human(String name,
@@ -51,9 +55,19 @@ public class Human {
         this(name, birthDate, null, gender, null, null, null, father, mother);
     }
 
+    private static final long serialVersionUID = 1L;
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+        oos.writeObject(children);
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        children = (List<Human>) ois.readObject();
+    }
 
     // Getters and Setters
-
 
     public long getId() {
         return id;
@@ -127,10 +141,11 @@ public class Human {
         if (!children.contains(child)) {
             children.add(child);
         }
-        if (this.gender == Gender.Male && child.getFather() != this) {
-            child.setFather(this);
-        } else if (this.gender == Gender.Female && child.getMother() != this) {
-            child.setMother(this);
+        if (father != null && !father.getChildren().contains(child)) {
+            father.addChild(child);
+        }
+        if (mother != null && !mother.getChildren().contains(child)) {
+            mother.addChild(child);
         }
     }
 
@@ -280,29 +295,32 @@ public class Human {
         if (children.isEmpty()) {
             res = "Дети " + getName() + ": отсутствуют";
         } else {
-            res = "Дети " + getName() + ": \n";
+            res = "Дети " + getName() + ": ";
             for (Human child : children) {
-                res += child.getName() + "\n";
+                res += child.getName();
                 if (!child.getChildren().isEmpty()) {
-                    res += "  Дети " + child.getName() + ": \n";
+                    res += " (дети: ";
                     for (Human grandchild : child.getChildren()) {
-                        res += "    " + grandchild.getName() + "\n";
+                        res += grandchild.getName() + ", ";
                     }
+                    res = res.substring(0, res.length() - 2) + ")"; // удалить запятую в конце и пробел
                 }
+                res += ", ";
             }
+            res = res.substring(0, res.length() - 2); // удалить запятую в конце и пробел
         }
         return res;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Human)) {
-            return false;
-        }
-        Human human = (Human) obj;
-        return human.getId() == getId();
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        if (!(obj instanceof Human)) {
+//            return false;
+//        }
+//        Human human = (Human) obj;
+//        return human.getId() == getId();
+//    }
 }
