@@ -1,64 +1,45 @@
+import FamilyTree.FamilyTree;
+import Human.Gender;
+import Human.Human;
+import Writer.FileHandler;
+
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        FamilyTree tree = new FamilyTree();
         /**
          *Создаем людей
          * */
-        Human ivan = new Human("Иван", Gender.Make, LocalDate.of(1990, 1, 1), null, new ArrayList<>(), new ArrayList<>());
-        Human luda = new Human("Людмила", Gender.Female, LocalDate.of(1992, 2, 2), null, new ArrayList<>(), new ArrayList<>());
-        Human larisa = new Human("Лариса", Gender.Female, LocalDate.of(2010, 3, 3), null, new ArrayList<>(), new ArrayList<>());
-        Human petr = new Human("Петр", Gender.Make, LocalDate.of(2012, 4, 4), null, new ArrayList<>(), new ArrayList<>());
+        Human Ivan = new Human("Иван", LocalDate.of(1990, 1, 1), Gender.Male);
+        Human Luda = new Human("Людмила", LocalDate.of(1992, 2, 2), Gender.Female);
+        Human Larisa = new Human("Лариса", LocalDate.of(2010, 3, 3), Gender.Female);
+        Human Petr = new Human("Петр", LocalDate.of(2012, 4, 4), Gender.Male);
 
-        /**
-         *Создаем отношения между людьми
-         */
-        ivan.children.add(luda);
-        luda.parents.add(ivan);
-        ivan.children.add(larisa);
-        larisa.parents.add(ivan);
-        luda.children.add(petr);
-        petr.parents.add(luda);
+        tree.addHuman(Ivan);
+        tree.addHuman(Luda);
+        tree.addHuman(Larisa);
+        tree.addHuman(Petr);
 
-        /**
-         *Создаем генеалогическое древо
-         */
-        FamilyTree tree = new FamilyTree(ivan);
+        System.out.println(tree);
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите имя члена семьи:");
-        String name = scanner.nextLine();
+        writeToFileTree(tree);
+        FamilyTree tree1 = readTreeInFile();
 
-        Human person = findPersonByName(tree.getRoot(), name);
-        if (person != null) {
-            System.out.println("Родители:");
-            for (Human parent : person.getParents()) {
-                System.out.println(parent.name);
-            }
+        System.out.println(tree1);
+    }
 
-            System.out.println("Дети:");
-            for (Human child : person.getChildren()) {
-                System.out.println(child.name);
-            }
-        } else {
-            System.out.println("Такой человек не найден!");
+    private static void writeToFileTree(FamilyTree tree) throws IOException {
+        FileHandler fileHandler = new FileHandler();
+        if (fileHandler.writeToFileObject(tree)) {
+            System.out.println("Файл записан");
         }
     }
 
-    private static Human findPersonByName(Human person, String name) {
-        if (person.name.equals(name)) {
-            return person;
-        }
-
-        for (Human child : person.children) {
-            Human found = findPersonByName(child, name);
-            if (found != null) {
-                return found;
-            }
-        }
-
-        return null;
+    private static FamilyTree readTreeInFile() throws IOException, ClassNotFoundException {
+        FileHandler fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.readObjectInFile();
     }
+
 }
