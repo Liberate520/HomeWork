@@ -1,5 +1,7 @@
 package human;
 
+import family.GroupItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, GroupItem<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -103,13 +105,12 @@ public class Human implements Serializable, Comparable<Human> {
         this.deathDate = deathDate;
     }
 
-    public boolean addParent(Human parent){
+    public void addParent(Human parent){
         if (parent.getGender().equals(Gender.MALE)){
             setFather(parent);
         } else if (parent.getGender().equals(Gender.FEMALE)) {
             setMother(parent);
         }
-        return true;
     }
 
     public List<Human> getParents(){

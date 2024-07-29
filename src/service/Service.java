@@ -9,11 +9,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Service implements Serializable {
-    private FamilyTree tree;
+    private FamilyTree<Human> tree;
     private HumanBuilder builder;
 
     public Service() {
-        tree = new FamilyTree();
+        tree = new FamilyTree<>();
         builder = new HumanBuilder();
     }
 
@@ -46,6 +46,10 @@ public class Service implements Serializable {
 
     public void sortByAge(){
         tree.sortByAge();
+    }
+
+    public void setWedding(String human1, String human2){
+        tree.setWedding(tree.getByName(human1), tree.getByName(human2));
     }
 
     @Override
