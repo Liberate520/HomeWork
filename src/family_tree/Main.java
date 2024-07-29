@@ -8,17 +8,16 @@ import family_tree.writer.FileHandler;
 import java.time.LocalDate;
 
 public class Main {
-//    final static String filePath = "";
     public static void main(String[] args) {
 //        FamilyTree familyTree = load();
-        FamilyTree familyTree = createTree();
+        FamilyTree<Human> familyTree = createTree();
 //        save(familyTree);
         familyTree.sortByAge();
         System.out.println(familyTree);
     }
 
-    private static FamilyTree createTree() {
-        FamilyTree familyTree = new FamilyTree();
+    private static FamilyTree<Human> createTree() {
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         Human BuryakovskyKirillBorisovich = new Human("Буряковский", "Кирилл", "Борисович", Gender.Male, LocalDate.of(1972, 9, 19));
         Human BuryakovskayaVarvaraViktorovna = new Human("Буряковская(Попкова)", "Варвара", "Викторовна", Gender.Female, LocalDate.of(1978, 3, 1));
@@ -43,12 +42,12 @@ public class Main {
         return familyTree;
     }
 
-    private static void save(FamilyTree familyTree) {
+    private static void save(FamilyTree<Human> familyTree) {
         FileHandler fileHandler = new FileHandler();
         fileHandler.save(familyTree);
     }
 
-    private static FamilyTree load() {
+    private static FamilyTree<Human> load() {
         FileHandler fileHandler = new FileHandler();
         return (FamilyTree) fileHandler.load();
     }

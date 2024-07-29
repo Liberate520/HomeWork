@@ -1,12 +1,14 @@
 package family_tree.human;
 
+import family_tree.family_tree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyTreeItem<Human> {
     private long id;
     private String surname, name, middleName;
     private Gender gender;
@@ -35,6 +37,7 @@ public class Human implements Serializable {
         this(surname, name, middleName, gender, birthDate, null, dad, mom);
     }
 
+    @Override
     public boolean addChild(Human child){
         if (!children.equals(child)){
             children.add(child);
@@ -43,6 +46,7 @@ public class Human implements Serializable {
         return false;
     }
 
+    @Override
     public boolean addParent(Human parent){
         if (parent.getGender().equals(Gender.Male)){
             setDad(parent);
@@ -52,14 +56,17 @@ public class Human implements Serializable {
         return true;
     }
 
+    @Override
     public long getId() {
         return id;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }
 
+    @Override
     public String getSurname() {
         return surname;
     }
@@ -68,6 +75,7 @@ public class Human implements Serializable {
         this.surname = surname;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -76,6 +84,7 @@ public class Human implements Serializable {
         this.name = name;
     }
 
+    @Override
     public String getMiddleName() {
         return middleName;
     }
@@ -128,14 +137,17 @@ public class Human implements Serializable {
         this.mom = mom;
     }
 
+    @Override
     public Human getSpouse() {
         return spouse;
     }
 
+    @Override
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }
@@ -144,6 +156,7 @@ public class Human implements Serializable {
         this.children = children;
     }
 
+    @Override
     public List<Human> getParents(){
         List<Human> list = new ArrayList<>(2);
         if (dad != null){
@@ -155,6 +168,7 @@ public class Human implements Serializable {
         return list;
     }
 
+    @Override
     public int getAge() {
         if (deathDate == null) {
             return Period.between(birthDate, LocalDate.now()).getYears();
