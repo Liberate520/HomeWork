@@ -1,9 +1,11 @@
+package familytree.util;
+
 import java.io.*;
 import java.util.List;
 
 public class FileHandler implements Writer {
 
-    private String filePath="familyTree.ser";
+    private String filePath="familyTree.txt";
     @Override
     public void writeToFile(Serializable serializable) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {

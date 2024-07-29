@@ -1,8 +1,18 @@
+package familytree.family_tree;
+
+import familytree.human.Human;
+import familytree.human.Gender;
+import familytree.human.HumanAgeComparator;
+import familytree.human.HumanNameComparator;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private List<Human> humans;
 
     public FamilyTree() {
@@ -33,7 +43,15 @@ public class FamilyTree implements Serializable {
         }
         return new ArrayList<>();
     }
-    
+
+    public List<Human> getParentsOf(String name) {
+        Human human = findHuman(name);
+        if (human != null) {
+            return human.getParents();
+        }
+        return new ArrayList<>();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -42,4 +60,19 @@ public class FamilyTree implements Serializable {
         }
         return sb.toString();
     }
+  
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humans);
+    }
+
+
+    public void sortByName() {
+        Collections.sort(humans, new HumanNameComparator());
+    }
+
+    public void sortByAge() {
+        Collections.sort(humans, new HumanAgeComparator());
+    }
+
 }
