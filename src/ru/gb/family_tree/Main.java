@@ -1,10 +1,11 @@
-package ru.gb.familytree;
+package ru.gb.family_tree;
 
-import ru.gb.familytree.family_tree.FamilyTree;
-import ru.gb.familytree.human.Gender;
-import ru.gb.familytree.human.Human;
-import ru.gb.familytree.service.FamilyTreeService;
-import ru.gb.familytree.writer.FileHandler;
+import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.service.FamilyTreeService;
+import ru.gb.family_tree.service.HumanBuilder;
+import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,9 +22,42 @@ public class Main {
         al.add(new Human());
         al.add(new Human());
         al.add(new Human());
-        FamilyTree ft = new FamilyTree();
+        al.add(new Human());
+        /*
+        al.add(new Human.HumanBuilder("Евдокия Лукъяновна Стрешнева",
+                Gender.FEMALE, LocalDate.of(1626,2,15), null, null)
+                .setHumanDeathDate(LocalDate.of(1645,7,23))
+                .build());
+
+         */
+        /*
+        Human human = new Human.HumanBuilder("Евдокия Лукъяновна Стрешнева",
+                Gender.FEMALE, LocalDate.of(1626,2,15), null, null)
+                .setHumanDeathDate(LocalDate.of(1645,7,23))
+                .build();
+        //list.get(6).setName("Евдокия Лукъяновна Стрешнева");
+        //list.get(6).setBirthDay(LocalDate.of(1626,2,15));
+        //list.get(6).setDeathDate(LocalDate.of(1645,7,23));
+        //list.get(6).setGender(Gender.FEMALE);
+
+         */
+        al.add(new Human());
+        /*
+        al.add(new Human.HumanBuilder("Василий Михайлович Рoмaнoв",
+                Gender.MALE, LocalDate.of(1639,3,24), al.getFirst(), al.get(6))
+                .setHumanDeathDate(LocalDate.of(1639,4,4))
+                .build());
+
+         */
+        //list.getLast().setName("Василий Михайлович Рoмaнoв");
+        //list.getLast().setBirthDay(LocalDate.of(1639,3,24));
+        //list.getLast().setDeathDate(LocalDate.of(1639,4,4));
+        //list.getLast().setGender(Gender.MALE);
+        //list.getLast().setFather(list.getFirst());
+        //list.getLast().setMother(list.get(6));
+        FamilyTree<Human> ft = new FamilyTree<>();
         FileHandler fh = new FileHandler();
-        FamilyTreeService service = new FamilyTreeService();
+        FamilyTreeService<Human> service = new FamilyTreeService<>();
 
         menu();
         int menuPoint;
@@ -89,7 +123,7 @@ public class Main {
         System.out.println(result);
     }
 
-    public static void createFamilyTree(List<Human> list, FamilyTree familyTree) {
+    public static void createFamilyTree(List<Human> list, FamilyTree<Human> familyTree) {
         //Human hum1 = new Human();
         list.getFirst().setId(1);
         list.getFirst().setName("Михaил Федopoвич Рoмaнoв");
@@ -130,18 +164,34 @@ public class Main {
         list.get(4).setFather(list.get(1));
 
         //Human hum6 = new Human();
-        list.getLast().setId(6);
-        list.getLast().setName("Елизaветa Петpoвнa Рoмaнoвa");
-        list.getLast().setBirthDay(LocalDate.of(1709,12,18));
-        list.getLast().setDeathDate(LocalDate.of(1761,12,25));
-        list.getLast().setGender(Gender.FEMALE);
-        list.getLast().setFather(list.get(4));
+        list.get(5).setId(6);
+        list.get(5).setName("Елизaветa Петpoвнa Рoмaнoвa");
+        list.get(5).setBirthDay(LocalDate.of(1709,12,18));
+        list.get(5).setDeathDate(LocalDate.of(1761,12,25));
+        list.get(5).setGender(Gender.FEMALE);
+        list.get(5).setFather(list.get(4));
+
+        list.get(6).setId(7);
+        list.get(6).setName("Евдокия Лукъяновна Стрешнева");
+        list.get(6).setBirthDay(LocalDate.of(1626,2,15));
+        list.get(6).setDeathDate(LocalDate.of(1645,7,23));
+        list.get(6).setGender(Gender.FEMALE);
+
+        list.getLast().setId(8);
+        list.getLast().setName("Василий Михайлович Рoмaнoв");
+        list.getLast().setBirthDay(LocalDate.of(1639,3,24));
+        list.getLast().setDeathDate(LocalDate.of(1639,4,4));
+        list.getLast().setGender(Gender.MALE);
+        list.getLast().setFather(list.getFirst());
+        list.getLast().setMother(list.get(6));
 
         familyTree.addHuman(list.getFirst());
         familyTree.addHuman(list.get(1));
         familyTree.addHuman(list.get(2));
         familyTree.addHuman(list.get(3));
         familyTree.addHuman(list.get(4));
+        familyTree.addHuman(list.get(5));
+        familyTree.addHuman(list.get(6));
         familyTree.addHuman(list.getLast());
     }
 }

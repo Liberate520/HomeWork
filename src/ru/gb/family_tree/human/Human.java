@@ -1,4 +1,7 @@
-package ru.gb.familytree.human;
+package ru.gb.family_tree.human;
+
+import ru.gb.family_tree.service.FamilyTreeItem;
+import ru.gb.family_tree.service.HumanBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +9,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Human> {
     private int id;
     private String name;
     private Gender gender;
@@ -42,6 +45,7 @@ public class Human implements Serializable, Comparable<Human> {
         this(name, gender, birthDay, null, father, mother);
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -70,14 +74,17 @@ public class Human implements Serializable, Comparable<Human> {
         this.mother = mother;
     }
 
+    @Override
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -86,6 +93,7 @@ public class Human implements Serializable, Comparable<Human> {
         return gender;
     }
 
+    @Override
     public LocalDate getBirthDay() {
         return birthDay;
     }
@@ -94,6 +102,7 @@ public class Human implements Serializable, Comparable<Human> {
         return deathDate;
     }
 
+    @Override
     public int getAge() {
         if (deathDate == null) {
             return getPeriod(birthDay, LocalDate.now());
@@ -107,6 +116,7 @@ public class Human implements Serializable, Comparable<Human> {
         return diff.getYears();
     }
 
+    @Override
     public Human getFather() {
         return father;
     }
@@ -135,6 +145,7 @@ public class Human implements Serializable, Comparable<Human> {
         return result;
     }
 
+    @Override
     public Human getSpouse() {
         return spouse;
     }
@@ -149,6 +160,7 @@ public class Human implements Serializable, Comparable<Human> {
         return result;
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }
@@ -157,7 +169,7 @@ public class Human implements Serializable, Comparable<Human> {
         StringBuilder result = new StringBuilder();
         result.append("дети: ");
         if (!children.isEmpty()) {
-            result.append(children.get(0).getName());
+            result.append(children.getFirst().getName());
             for (int i = 1; i < children.size(); i++) {
                 result.append(", ").append(children.get(i).getName());
             }
@@ -167,6 +179,7 @@ public class Human implements Serializable, Comparable<Human> {
         return result.toString();
     }
 
+    @Override
     public boolean addChild(Human child) {
         if (!children.contains(child)) {
             children.add(child);
@@ -175,6 +188,7 @@ public class Human implements Serializable, Comparable<Human> {
         return false;
     }
 
+    @Override
     public boolean addParent(Human parent) {
         if (parent.getGender().equals(Gender.MALE)) {
             setFather(parent);
@@ -184,6 +198,7 @@ public class Human implements Serializable, Comparable<Human> {
         return true;
     }
 
+    @Override
     public List<Human> getParents() {
         List<Human> result = new ArrayList<>(2);
         if (father != null) {
@@ -237,5 +252,82 @@ public class Human implements Serializable, Comparable<Human> {
     @Override
     public int compareTo(Human o) {
         return name.compareTo(o.name);
+    }
+
+    public static class HumanBuilder {
+        private int id;
+        private String name;
+        private Gender gender;
+        private LocalDate birthDay;
+        private LocalDate deathDate;
+        private Human father;
+        private Human mother;
+        private Human spouse;
+        private List<Human> children;
+
+        public HumanBuilder(String name, Gender gender, LocalDate birthDay, Human father,
+                            Human mother) {
+            this.id = -1;
+            this.name = name;
+            this.gender = gender;
+            this.birthDay = birthDay;
+            this.deathDate = null;
+            this.father = father;
+            this.mother = mother;
+            this.spouse = null;
+            this.children = new ArrayList<>();
+        }
+
+        public HumanBuilder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public HumanBuilder setHumanName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public HumanBuilder setHumanGender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+        public HumanBuilder setHumanBirthDay(LocalDate birthDay) {
+            this.birthDay = birthDay;
+            return this;
+        }
+        public HumanBuilder setHumanDeathDate(LocalDate deathDate) {
+            this.deathDate = deathDate;
+            return this;
+        }
+        public HumanBuilder setHumanFather (Human father) {
+            this.father = father;
+            return this;
+
+        }
+        public HumanBuilder setHumanMother (Human mother) {
+            this.mother = mother;
+            return this;
+        }
+        public HumanBuilder setHumanSpouse (Human spouse) {
+            this.spouse = spouse;
+            return this;
+        }
+
+        public Human build() {
+            return new Human(this);
+        }
+    }
+
+    private Human(HumanBuilder builder) {
+        id = builder.id;
+        name = builder.name;
+        gender = builder.gender;
+        birthDay = builder.birthDay;
+        deathDate = builder.deathDate;
+        father = builder.father;
+        mother = builder.mother;
+        spouse = builder.spouse;
+        children = builder.children;
     }
 }

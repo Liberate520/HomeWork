@@ -1,7 +1,7 @@
-package ru.gb.familytree.writer;
+package ru.gb.family_tree.writer;
 
-import ru.gb.familytree.family_tree.FamilyTree;
-import ru.gb.familytree.human.Human;
+import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Human;
 
 import java.io.*;
 import java.util.ArrayList;
