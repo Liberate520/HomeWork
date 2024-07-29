@@ -136,17 +136,39 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
 
     public String getHumansChildrenInfo(int selectId) {
         StringBuilder result = new StringBuilder();
-        result.append("Список детей для ")
-                .append(humans.get(selectId-1).getName()).append(":\n");
+        result.append("Список детей для ");
+        //        .append(humans.get(selectId-1).getName()).append(":\n");
 
-        for(T human : humans){
+        for(T human : humans) {
+            if (human.getId() == selectId) {
+                result.append(human.getName()).append(":\n");
+                result.append(human.getChildrenInfo());
+            }
+        }
+
+        /*
+        for(T human : humans) {
             if (human.getFather() != null) {
                 if (human.getFather().getId() == selectId) {
                     result.append(human.getName()).append("\n");
                 }
             }
         }
+
+        for(T human : humans) {
+            if (human.getMother() != null) {
+                if (human.getMother().getId() == selectId) {
+                    result.append(human.getName()).append("\n");
+                }
+            }
+        }
+
+         */
         return result.toString();
+    }
+
+    public void sortById () {
+        humans.sort(new HumanComparatorById<>());
     }
 
     public void sortByName () {

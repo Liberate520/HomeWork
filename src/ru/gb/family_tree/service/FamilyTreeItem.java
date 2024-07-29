@@ -6,16 +6,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface FamilyTreeItem<T> extends Comparable<T> {
-    public void setId(int id);
-    public void setSpouse(T spouse);
-    public int getId();
+    void setId(int id);
+    void setSpouse(T spouse);
+    int getId();
     String getName();
     LocalDate getBirthDay();
     int getAge();
-    public Human getFather();
-    public Human getSpouse();
-    public List<T> getChildren();
-    public boolean addChild(T child);
-    public boolean addParent(T parent);
-    public List<T> getParents();
+    T getFather();
+    T getMother();
+    T getSpouse();
+    List<T> getChildren();
+    String getChildrenInfo();
+    boolean addChild(T child);
+    boolean addParent(T parent);
+    List<T> getParents();
 }

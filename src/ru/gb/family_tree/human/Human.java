@@ -131,6 +131,7 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Hu
         return result;
     }
 
+    @Override
     public Human getMother() {
         return mother;
     }
@@ -165,6 +166,7 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Hu
         return children;
     }
 
+    @Override
     public String getChildrenInfo() {
         StringBuilder result = new StringBuilder();
         result.append("дети: ");
