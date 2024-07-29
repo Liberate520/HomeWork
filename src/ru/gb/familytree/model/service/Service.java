@@ -11,12 +11,12 @@ public class Service {
 
     private TreeFamily<Human> treeFamily;
     //private PersonBuilder personBuilder;
-    private FileHandler fileHandler;
+    //private FileHandler fileHandler;
 
     public Service() {
         treeFamily = new TreeFamily<>();
         //personBuilder = new PersonBuilder();
-        fileHandler = new FileHandler();
+        //fileHandler = new FileHandler();
     }
 
     public void addPerson(String name, int age, Gender gender){
@@ -43,10 +43,12 @@ public class Service {
     }
 
     public void saveTree() {
-        fileHandler.save(treeFamily, "file"); //должно быть как-то иначе...
+        System.out.println("Sorry, not implemented!");
+        //fileHandler.save(treeFamily, "file"); //должно быть как-то иначе...
     }
 
     public void loadTree() {
-        fileHandler.read("file"); //должно быть как-то иначе...
+        System.out.println("Sorry, not implemented!");
+        //fileHandler.read("file"); //должно быть как-то иначе...
     }
 }

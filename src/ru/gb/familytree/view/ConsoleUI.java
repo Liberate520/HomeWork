@@ -53,14 +53,15 @@ public class ConsoleUI implements View {
         System.out.println("Укажите возраст: ");
         String ageStr = scanner.nextLine();
         int age = Integer.parseInt(ageStr);
-        System.out.println("Укажите пол (жен/муж): ");
+        System.out.println("Укажите пол (м/ж): ");
         String sex = scanner.nextLine();
+        Gender gender = getSex(sex);
+        presenter.addPerson(name, age, gender);
 
-        presenter.addPerson(name, age, getSex(sex));
     }
 
     private Gender getSex(String str) {
-        if (str.equals("жен")) {
+        if (str.equals("ж")) {
             return Gender.FEMALE;
         }
         return Gender.MALE;

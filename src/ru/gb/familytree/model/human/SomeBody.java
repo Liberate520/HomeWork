@@ -82,13 +82,13 @@ public abstract class SomeBody implements Serializable {
         return date.getYears();
     }
 
-//    public int getAge(){
-//        if(death == null){
-//            return getDate(birth, LocalDate.now());
-//        } else {
-//            return getDate(birth, death);
-//        }
-//    }
+    public int getAgeAgo(){
+        if(death == null){
+            return getDate(birth, LocalDate.now());
+        } else {
+            return getDate(birth, death);
+        }
+    }
 
     public long getId() {
         return id;

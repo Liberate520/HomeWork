@@ -26,22 +26,22 @@ public class TreeFamily<T extends SomeBody> implements Serializable, Iterable<T>
             humanList.add(human);
             human.setId(humansId++);
 
-            //addToParents(human);
-            //addToChildren(human);
+            addToParents(human);
+            addToChildren(human);
         }
     }
 
-//    private void addToParents(T human) {
-//        for (SomeBody parent : human.getParents()) {
-//            parent.addChild(human);
-//        }
-//    }
-//
-//    private void addToChildren(T human) {
-//        for (SomeBody child : human.getChildren()) {
-//            child.addParent(human);
-//        }
-//    }
+    private void addToParents(T human) {
+        for (SomeBody parent : human.getParents()) {
+            parent.addChild(human);
+        }
+    }
+
+    private void addToChildren(T human) {
+        for (SomeBody child : human.getChildren()) {
+            child.addParent(human);
+        }
+    }
 
     @Override
     public String toString() {
