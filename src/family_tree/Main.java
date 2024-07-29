@@ -10,9 +10,10 @@ import java.time.LocalDate;
 public class Main {
 //    final static String filePath = "";
     public static void main(String[] args) {
-        FamilyTree familyTree = load();
-//        FamilyTree familyTree = createTree();
+//        FamilyTree familyTree = load();
+        FamilyTree familyTree = createTree();
 //        save(familyTree);
+        familyTree.sortByAge();
         System.out.println(familyTree);
     }
 
