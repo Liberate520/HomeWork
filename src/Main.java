@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import Human.Human;
-import family_tree1.FamilyTree;
 import writer.FileHandler;
 
 public static void main(String[] args) throws ClassNotFoundException {

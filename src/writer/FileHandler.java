@@ -1,6 +1,6 @@
 package writer;
 
-import family_tree1.FamilyTree;
+import FamilyTree;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

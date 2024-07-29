@@ -1,18 +1,18 @@
-package family_tree1;
+import Human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private static final long serialVersionUID = 1L;
-    private List<Person> people;
+    private List<Human> people;
 
     public FamilyTree() {
-        familyTree = new ArrayList<>();
+       FamilyTree = new ArrayList<>();
     }
 
     public void addHuman(Human human) {
-        this.familyTree.add(human);
+        FamilyTree.add(human);
     }
 
     public class FamilyTree {

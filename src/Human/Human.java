@@ -1,99 +1,82 @@
 package Human;
 
+import FamilyTree;
+
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.nio.charset.StandardCharsets;
 
-public class Human {
+public class Human implements FamilyTree<Human>, Serializable {
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private Human father;
+    private Human mother;
+    private List<Human> children;
+    private String gender;
+    private LocalDate dateOfBirth;
 
-    int ID;
-    String name;
-    int yearBirth;
-    int yearDeath;
-    String gender;
-    Human father, mother = null;
-    ArrayList<Human> children = new ArrayList<>();
-
-
-    public Human(int ID, String name, int yearBirth, String gender){
-        this.ID = ID;
+    public Human(String name, String gender, LocalDate dateOfBirth) {
         this.name = name;
-        this.yearBirth = yearBirth;
         this.gender = gender;
-
+        this.dateOfBirth = dateOfBirth;
+        this.children = new ArrayList<>();
     }
 
-
-    public Human(int ID, String name, int yearBirth, int yearDeath, String gender){
-        this.ID = ID;
-        this.name = name;
-        this.yearBirth = yearBirth;
-        this.yearDeath = yearDeath;
-        this.gender = gender;
-
+    @Override
+    public String getName() {
+        return name;
     }
 
-    public int getID() {
-        return ID;
+    @Override
+    public Human getFather() {
+        return father;
     }
 
-    public String setFather(Human father) {
-        if (this.father == null) {
-            this.father = father;
-            return setChildren(father); }
-
-        else { return "Have a father\n";}
+    @Override
+    public void setFather(Human father) {
+        this.father = father;
     }
 
-    public String setMother(Human mother) {
-        if (this.mother == null) { this.mother = mother; return setChildren(mother); }
-        else { return "Have a mother\n";}
+    @Override
+    public Human getMother() {
+        return mother;
     }
 
-    public String setChildren(Human parent){
-        parent.children.add(this);
-        return "add baby";
+    @Override
+    public void setMother(Human mother) {
+        this.mother = mother;
     }
 
-
-    public ArrayList<Human> getParents(){
-        ArrayList parents = new ArrayList<Human>();
-        parents.add(this.father);
-        parents.add(this.mother);
-        return parents;
+    @Override
+    public List<Human> getChildren() {
+        return children;
     }
 
-    public ArrayList getChildren(Human human){
-        ArrayList Child = new ArrayList<>();
-        for(Human child: children){
-            Child.add(child.name);
-        }
-        return Child;
+    @Override
+    public void addChild(Human child) {
+        this.children.add(child);
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    @Override
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
     @Override
     public String toString() {
-        StringBuilder SB = new StringBuilder();
-        SB.append("\n\nID: ");
-        SB.append(ID);
-        SB.append("\nName: ");
-        SB.append(name);
-        SB.append("\nberthDate: ");
-        SB.append(yearBirth);
-        SB.append("\ndeathDate: ");
-        SB.append(yearDeath);
-        SB.append("\ngender: ");
-        SB.append(gender);
-        SB.append("\nFather: ");
-        if (father != null) {SB.append(father.name);}
-        SB.append("\nMother: ");
-        if (mother != null) {SB.append(mother.name);}
-        SB.append("\nchild: ");
-        SB.append(getChildren(this));
+        return new String(String.format("%s (Пол: %s, Дата рождения: %s)", name, gender, dateOfBirth).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+    }
 
-        return SB.toString();
+    @Override
+    public Iterator<Human> iterator() {
+        return null;
     }
 }
-
-    
-
