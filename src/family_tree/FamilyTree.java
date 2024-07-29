@@ -1,11 +1,15 @@
 package family_tree;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 // Класс, описывающий генеалогическое дерево
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L; // Для обеспечения совместимости версий
+
     private Map<String, Human> humans; // Карта для хранения людей по их имени
 
     // Конструктор класса FamilyTree
@@ -14,8 +18,8 @@ public class FamilyTree {
     }
 
     // Метод для добавления человека в дерево
-    public void addHuman(String name, String birthDate) {
-        humans.put(name, new Human(name, birthDate));
+    public void addHuman(String name, String birthDate, String gender) {
+        humans.put(name, new Human(name, birthDate, gender));
     }
 
     // Метод для получения человека по его имени
@@ -29,6 +33,7 @@ public class FamilyTree {
         Human child = getHuman(childName);
         if (parent != null && child != null) {
             parent.addChild(child);
+            child.addParent(parent); // Добавление родителя к ребенку
         }
     }
 
@@ -41,17 +46,36 @@ public class FamilyTree {
         return null;
     }
 
-    // Метод для отображения всего генеалогического дерева
-    public void displayFamilyTree() {
-        for (Human human : humans.values()) {
-            System.out.println("Имя: " + human.getName() + ", Дата рождения: " + human.getBirthDate());
-            List<Human> children = human.getChildren();
-            if (!children.isEmpty()) {
-                System.out.println("  Дети:");
-                for (Human child : children) {
-                    System.out.println("  - Имя: " + child.getName() + ", Дата рождения: " + child.getBirthDate());
-                }
-            }
+    // Метод для установки даты смерти
+    public void setDeathDate(String name, String deathDate) {
+        Human human = getHuman(name);
+        if (human != null) {
+            human.setDeathDate(deathDate);
         }
     }
+
+    // Метод для установки супружеской связи
+    public void setSpouse(String name1, String name2) {
+        Human human1 = getHuman(name1);
+        Human human2 = getHuman(name2);
+        if (human1 != null && human2 != null) {
+            human1.setSpouse(human2);
+            human2.setSpouse(human1); // Устанавливаем связь в обе стороны
+        }
+    }
+
+    // Метод для отображения всего генеалогического дерева
+    public String displayFamilyTree() {
+        StringBuilder sb = new StringBuilder();
+        for (Human human : humans.values()) {
+            sb.append(human).append("\n");
+        }
+        return sb.toString();
+    }
+
+    // Метод для получения всех людей в дереве
+    public List<Human> getAllHumans() {
+        return new ArrayList<>(humans.values());
+    }
 }
+
