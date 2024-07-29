@@ -3,35 +3,35 @@ package ru.gb2.family_tree7;
 import ru.gb2.family_tree7.model.family_tree.FamilyTree;
 import ru.gb2.family_tree7.model.human.Gender;
 import ru.gb2.family_tree7.model.human.Human;
-import ru.gb2.family_tree7.presenter.Presenter;
-import ru.gb2.family_tree7.view.ConsoleUI;
-import ru.gb2.family_tree7.view.View;
+import ru.gb2.family_tree7.presenter.FamilyTreePresenter;
+import ru.gb2.family_tree7.view.ConsoleFamilyTreeView;
+import ru.gb2.family_tree7.view.FamilyTreeView;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree<Human> familyTree = new FamilyTree<>();
-        ConsoleUI view = new ConsoleUI() {
+        ConsoleFamilyTreeView view = new ConsoleFamilyTreeView() {
             @Override
             public void showFamilyMembers(boolean add) {
 
             }
         };
-        Presenter presenter = new Presenter((View) view, familyTree);
+        FamilyTreePresenter presenter = new FamilyTreePresenter((FamilyTreeView) view, familyTree);
 
-        Human johnDoe = new Human(1, "John Doe", LocalDate.of(1980, 1, 1), Gender.MALE);
-        Human janeDoe = new Human(2, "Jane Doe", LocalDate.of(1985, 5, 15), Gender.FEMALE);
-        Human child = new Human(3, "Child Doe", LocalDate.of(2010, 3, 20), Gender.MALE);
+        Human ivanIvanov = new Human(1, "Ivan Ivanov", LocalDate.of(1980, 1, 1), Gender.MALE, "Отец");
+        Human ianaIvanova = new Human(2, "Iana Ivanova", LocalDate.of(1985, 5, 15), Gender.FEMALE, "Мать");
+        Human child = new Human(3, "Igor Ivanov", LocalDate.of(2010, 3, 20), Gender.MALE, " Ребенок");
 
-        familyTree.add(johnDoe);
-        familyTree.add(janeDoe);
+        familyTree.add(ivanIvanov);
+        familyTree.add(ianaIvanova);
         familyTree.add(child);
 
-        johnDoe.addChild(child);
-        janeDoe.addChild(child);
-        child.addParent(johnDoe);
-        child.addParent(janeDoe);
+        ivanIvanov.addChild(child);
+        ianaIvanova.addChild(child);
+        child.addParent(ivanIvanov);
+        child.addParent(ianaIvanova);
 
         presenter.displayFamilyTree();
     }

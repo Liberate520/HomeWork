@@ -4,7 +4,7 @@ import ru.gb2.family_tree7.model.human.Human;
 
 import java.util.List;
 
-public abstract class ConsoleUI implements View {
+public abstract class ConsoleFamilyTreeView implements FamilyTreeView {
 
     @Override
     public void showFamilyMembers(List<Human> members) {

@@ -4,7 +4,7 @@ import ru.gb2.family_tree7.model.human.Human;
 
 import java.util.List;
 
-public interface View {
+public interface FamilyTreeView {
     void showFamilyMembers(List<Human> members);
 
     void showFamilyMembers(boolean add);

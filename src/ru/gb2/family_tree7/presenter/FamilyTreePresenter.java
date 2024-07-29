@@ -4,22 +4,22 @@ package ru.gb2.family_tree7.presenter;
 import ru.gb2.family_tree7.model.family_tree.FamilyTree;
 import ru.gb2.family_tree7.model.family_tree.TreeNode;
 import ru.gb2.family_tree7.model.human.Human;
-import ru.gb2.family_tree7.view.ConsoleUI;
-import ru.gb2.family_tree7.view.View;
+import ru.gb2.family_tree7.view.ConsoleFamilyTreeView;
+import ru.gb2.family_tree7.view.FamilyTreeView;
 
-public class Presenter {
-    private View view;
+public class FamilyTreePresenter {
+    private FamilyTreeView view;
     private FamilyTree familyTree;
     private TreeNode member;
     private Human human;
 
     // Конструктор
-    public Presenter(View view, FamilyTree<Human> familyTree) {
+    public FamilyTreePresenter(FamilyTreeView view, FamilyTree<Human> familyTree) {
         this.view = view;
         this.familyTree = familyTree;
     }
 
-    public Presenter(ConsoleUI view, FamilyTree familyTree) {
+    public FamilyTreePresenter(ConsoleFamilyTreeView view, FamilyTree familyTree) {
     }
 
     public void displayFamilyTree() {

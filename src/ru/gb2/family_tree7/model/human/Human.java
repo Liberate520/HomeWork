@@ -2,12 +2,13 @@ package ru.gb2.family_tree7.model.human;
 
 import ru.gb2.family_tree7.model.family_tree.TreeNode;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements TreeNode<Human> {
+public class Human implements TreeNode<Human>, Serializable {
     private long id; // Уникальный идентификатор
     private String name;
     private LocalDate birthDate; // Дата рождения
@@ -15,12 +16,14 @@ public class Human implements TreeNode<Human> {
     private Gender gender;
     private List<Human> parents = new ArrayList<>(); // Список родителей
     private List<Human> children = new ArrayList<>(); // Список детей
+    private String role; // Роль в семье (мама, папа, ребенок)
 
-    public Human(long id, String name, LocalDate birthDate, Gender gender) {
+    public Human(long id, String name, LocalDate birthDate, Gender gender, String role) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.role = role;
     }
 
     // Геттеры
@@ -96,5 +99,10 @@ public class Human implements TreeNode<Human> {
         }
         LocalDate currentDate = LocalDate.now();
         return Period.between(birthDate, currentDate).getYears();
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + gender + ' ' + birthDate + ' ' + "Возраст:лет " + getAge() + ' ' + "Роль: " + role + ")";
     }
 }
