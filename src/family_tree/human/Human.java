@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private LocalDate dayOfBirth;
@@ -134,7 +134,7 @@ public class Human implements Serializable {
 
     public String getFatherInfo() {
         String res = "Имя отца: ";
-        Human father = getMother();
+        Human father = getFather();
         if (father != null) {
             res += father.getName();
         } else {
@@ -163,34 +163,34 @@ public class Human implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("ID: ");
         sb.append(id);
-        sb.append('\n');
+        sb.append("; ");
         sb.append("Имя: ");
         sb.append(name);
-        sb.append('\n');
+        sb.append("; ");
         sb.append("Дата рождения: ");
         sb.append(dayOfBirth);
-        sb.append('\n');
+        sb.append("; ");
         if (dayOfDeath != null) {
             sb.append("Дата смерти: ");
             sb.append(dayOfDeath);
-            sb.append('\n');
+            sb.append("; ");
         }
         if (gender != null) {
             sb.append("Пол: ");
             sb.append(gender);
-            sb.append('\n');
+            sb.append("; ");
         }
         if (father != null) {
             sb.append(getFatherInfo());
-            sb.append('\n');
+            sb.append("; ");
         }
         if (mother != null) {
             sb.append(getMotherInfo());
-            sb.append('\n');
+            sb.append("; ");
         }
         if (!children.isEmpty()) {
             sb.append(getChildrenInfo());
-            sb.append('\n');
+            sb.append("; ");
         }
         return sb.toString();
     }
@@ -205,4 +205,10 @@ public class Human implements Serializable {
         Human human = (Human) obj;
         return human.getId() == getId();
     }
+
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
+    }
+
 }

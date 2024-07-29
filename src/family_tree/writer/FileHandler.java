@@ -29,7 +29,7 @@ public class FileHandler implements Writer {
     }
 
     @Override
-    public void setPath(String prth) {
-        this.filePath =filePath;
+    public void setPath(String path) {
+        this.filePath = filePath;
     }
 }
