@@ -13,8 +13,10 @@ import java.util.List;
 
 public class MainMenu {
     private List<Command> commands;
+    private FamilyTiesMenu fmenu;
 
     public MainMenu(ConsoleUi consoleUi) {
+        fmenu = new FamilyTiesMenu(consoleUi);
         commands = new ArrayList<>();
         commands.add(new AddPerson(consoleUi));
         commands.add(new FamilyTies(consoleUi));
@@ -45,5 +47,9 @@ public class MainMenu {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public FamilyTiesMenu getFmenu() {
+        return fmenu;
     }
 }

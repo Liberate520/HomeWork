@@ -45,4 +45,16 @@ public class Presenter {
         service.readTree(filename);
     }
 
+    public void SetMother(String personName, String motherName){
+        service.setMother(personName, motherName);
+    }
+
+
+    public void SetFather(String personName, String fatherName) {
+        service.setFather(personName, fatherName);
+    }
+
+    public void addChild(String personName, String childName) {
+        service.addChild(personName, childName);
+    }
 }

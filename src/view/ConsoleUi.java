@@ -54,6 +54,22 @@ public class ConsoleUi implements View{
         presenter.getPersonListInfo();
     }
 
+    public LocalDate makeDateOfBirth(){
+        System.out.println("Укажите год рождения");
+        String yearStr = scanner.nextLine();
+        int year = Integer.parseInt(yearStr);
+
+        System.out.println("Укажите номер месяца рождения");
+        String monthStr = scanner.nextLine();
+        int month = Integer.parseInt(monthStr);
+
+        System.out.println("Укажите день рождения");
+        String dayStr = scanner.nextLine();
+        int day = Integer.parseInt(dayStr);
+
+        return LocalDate.of(year, month, day);
+    }
+
     public void addPerson() {
         System.out.println("Укажите имя");
         String name = scanner.nextLine();
@@ -68,33 +84,18 @@ public class ConsoleUi implements View{
             String genderStr = scanner.nextLine();
             switch (genderStr){
                 case "1":
-                    gender = Gender.мужчина;
+                    gender = Gender.male;
                     inIsCorrect = true;
                     break;
                 case "2":
-                    gender = Gender.женщина;
+                    gender = Gender.female;
                     inIsCorrect = true;
                     break;
                 default:
                     System.out.println("Неверный ввод");
             }
         }
-
-
-        System.out.println("Укажите год рождения");
-        String yearStr = scanner.nextLine();
-        int year = Integer.parseInt(yearStr);
-
-        System.out.println("Укажите номер месяца рождения");
-        String monthStr = scanner.nextLine();
-        int month = Integer.parseInt(monthStr);
-
-        System.out.println("Укажите день рождения");
-        String dayStr = scanner.nextLine();
-        int day = Integer.parseInt(dayStr);
-
-        LocalDate dateOfBirth = LocalDate.of(year, month, day);
-
+        LocalDate dateOfBirth = makeDateOfBirth();
         presenter.addPerson(name,dateOfBirth, gender);
     }
 
@@ -121,7 +122,7 @@ public class ConsoleUi implements View{
         System.out.println("Какую родственную связь вы хотите назначить?");
         ftwork = true;
         while (ftwork){
-            System.out.println(new FamilyTiesMenu(this).menu());
+            System.out.println(menu.getFmenu().menu());
             String choiceStr = scanner.nextLine();
             int choice = Integer.parseInt(choiceStr);
             ftmenu.execute(choice);
@@ -129,18 +130,40 @@ public class ConsoleUi implements View{
     }
 
     public void setMother() {
-        System.out.println("Метод пока не реализован");
+        System.out.println("Для кого вы хотите назначить мать?");
+        presenter.getPersonListInfo();
+        System.out.println("Введите имя для кого назначаете мать:");
+        String personName = scanner.nextLine();
+        System.out.println("Введите имя матери:");
+        String motherName = scanner.nextLine();
+        presenter.SetMother(personName, motherName);
+        presenter.getPersonListInfo();
     }
 
     public void setFather() {
-        System.out.println("Метод пока не реализован");
+        System.out.println("Для кого вы хотите назначить отца?");
+        presenter.getPersonListInfo();
+        System.out.println("Введите имя для кого назначаете отца:");
+        String personName = scanner.nextLine();
+        System.out.println("Введите имя отца:");
+        String fatherName = scanner.nextLine();
+        presenter.SetFather(personName, fatherName);
+        presenter.getPersonListInfo();
     }
 
     public void addChild() {
-        System.out.println("Метод пока не реализован");
+        System.out.println("Кому добавить ребенка?");
+        presenter.getPersonListInfo();
+        System.out.println("Введите имя родителя:");
+        String personName = scanner.nextLine();
+        System.out.println("Введите имя ребенка:");
+        String childName = scanner.nextLine();
+        presenter.addChild(personName, childName);
+        presenter.getPersonListInfo();
     }
 
     public void toBaseMenu() {
         ftwork = false;
     }
+
 }

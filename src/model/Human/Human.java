@@ -60,16 +60,17 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         return father;
     }
 
-    public void setFather(Human father) {
-        this.father = father;
+    public void setFather(ItemFamilyTree father) {
+        this.father = (Human) father;
     }
 
     public Human getMother() {
         return mother;
     }
 
-    public void setMother(Human mother) {
-        this.mother = mother;
+
+    public void setMother(ItemFamilyTree mother) {
+        this.mother = (Human) mother;
     }
 
     public String getChildren() {
@@ -86,8 +87,8 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         return stringBuilder.toString();
     }
 
-    public void addChild(Human child) {
-        children.add(child);
+    public void addChild(ItemFamilyTree child) {
+        children.add((Human) child);
     }
 
     public int getAge(){
@@ -101,7 +102,12 @@ public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
         stringBuilder.append("Имя: ");
         stringBuilder.append(name);
         stringBuilder.append(", пол: ");
-        stringBuilder.append(gender);
+        if (gender == Gender.male){
+            stringBuilder.append("мужчина");
+        }
+        else {
+            stringBuilder.append("женщина");
+        }
         stringBuilder.append(", Дата рождения: ");
         stringBuilder.append(dob);
         if (dod != null){
