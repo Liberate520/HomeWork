@@ -26,6 +26,12 @@ public class Human implements TreeNode<Human>, Serializable {
         this.role = role;
     }
 
+    public Human(String name, Gender gender, int birthYear, String role) {
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, String role) {
+    }
+
     // Геттеры
     public long getId() {
         return id;
@@ -93,16 +99,16 @@ public class Human implements TreeNode<Human>, Serializable {
     }
 
     // Метод для вычисления возраста
-    public int getAge() {
-        if (birthDate == null) {
-            throw new IllegalArgumentException("Дата рождения не может быть null");
-        }
-        LocalDate currentDate = LocalDate.now();
-        return Period.between(birthDate, currentDate).getYears();
-    }
+//    public int getAge() {
+//        if (birthDate == null) {
+//            throw new IllegalArgumentException("Дата рождения не может быть null");
+//        }
+//        LocalDate currentDate = LocalDate.now();
+//        return Period.between(birthDate, currentDate).getYears();
+//  }
 
     @Override
     public String toString() {
-        return name + " (" + gender + ' ' + birthDate + ' ' + "Возраст:лет " + getAge() + ' ' + "Роль: " + role + ")";
+        return name + " (" + gender + ' ' + birthDate + ' ' + "Возраст:лет " + ' ' + "Роль: " + role + ")";
     }
 }
