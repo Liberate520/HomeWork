@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable{
     private long id;
-    ArrayList <Man> mans;
+    private ArrayList <Man> mans;
 
     public FamilyTree(ArrayList <Man> peoples){
         this.mans = peoples;

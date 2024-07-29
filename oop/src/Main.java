@@ -3,6 +3,8 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         FamilyTree tree = testTree();
+        String filepath = "tree.txt";
+        saveTest(filepath, tree);
         System.out.println(tree);
         }
         private static FamilyTree testTree(){
@@ -30,6 +32,10 @@ public class Main {
         System.out.println(ann.getName());
         System.out.println(den.getParents());
         return tree;
-
+        }
+        private static void saveTest(String filepath, FamilyTree tree){
+        Saving save = new Saving();
+        save.saveTree(filepath, tree);
+        System.out.println(save.loadingTree(filepath));
         }
     }

@@ -1,19 +1,20 @@
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Man {
+public class Man implements Serializable {
     private long id;
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    List<Man> childrens = new ArrayList<>();
-    Man mother;
-    Man father;
-    Man spouse;
+    private List<Man> childrens = new ArrayList<>();
+    private Man mother;
+    private Man father;
+    private Man spouse;
 
 
     public Man(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Man mother, Man father, Man spouse) {
