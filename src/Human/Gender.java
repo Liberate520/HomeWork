@@ -1,4 +1,8 @@
-public class Gender {
+package Human;
+
+import java.io.Serializable;
+
+public class Gender implements Serializable {
     public static final Gender MALE = new Gender("MALE");
     public static final Gender FEMALE = new Gender("FEMALE");
 
@@ -12,5 +16,4 @@ public class Gender {
     public String toString() {
         return name;
     }
-
 }

@@ -1,9 +1,12 @@
+package FamillyTree;
+import Human.Human;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
-
-    private List<Human> familyMembers = new ArrayList<>();
+public class FamilyTree implements Serializable {
+    private final List<Human> familyMembers = new ArrayList<>();
 
     public void addHuman(Human human) {
         familyMembers.add(human);
@@ -16,23 +19,21 @@ public class FamilyTree {
 
     public void printFamilyRelationships() {
         for (Human human : familyMembers) {
-            System.out.println("Человек: " + human.name + " (родился: " + human.birthDate + ")");
+            System.out.println("Человек: " + human.getName() + " (родился: " + human.getBirthDate() + ")");
             if (!human.parents.isEmpty()) {
                 System.out.print("Родители: ");
                 for (Human parent : human.parents) {
-                    System.out.print(parent.name + " (родился: " + parent.birthDate + ")");
-                    if (parent.deathDate != null) {
-                        System.out.print(", умер: " + parent.deathDate);
+                    System.out.print(parent.getName() + " (родился: " + parent.getBirthDate() + ")");
+                    if (parent.getDeathDate() != null) {
+                        System.out.print(", умер: " + parent.getDeathDate());
                     }
                     System.out.print(") ");
-
                 }
-
                 System.out.println();
                 if (!human.children.isEmpty()) {
                     System.out.print("Дети: ");
                     for (Human child : human.children) {
-                        System.out.print(child.name + " (родился: " + child.birthDate);
+                        System.out.print(child.getName() + " (родился: " + child.getBirthDate() + ")");
                     }
                     System.out.print(") ");
                 }
@@ -40,14 +41,5 @@ public class FamilyTree {
                 System.out.println();
             }
         }
-
-
-        var sb = new StringBuilder();
-        for (Human human : familyMembers) {
-            sb.append(human.name).append(", ");
-        }
-
     }
 }
-
-

@@ -1,7 +1,39 @@
+import FamillyTree.FamilyTree;
+import Human.Gender;
+import Human.Human;
+
+import Writer.FileHandler;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 
-public class Main {
-    public static void main(String[] args) {
+public  class Main implements Serializable {
+    private static String filePath;
+
+    public static void main(String[] args) throws IOException {
+        filePath = ("D:\\Обучение\\homeWork\\src\\file.txt");
+
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
+        FamilyTree tree = testTree();
+        save(tree);
+        System.out.println(tree);
+        oos.writeObject(tree);
+        oos.close();
+    }
+
+    private static FamilyTree load() {
+        FileHandler fileHandler = new FileHandler(filePath);
+        return (FamilyTree) fileHandler.load();
+    }
+
+    private static void save(FamilyTree tree) {
+        FileHandler fileHandler = new FileHandler(filePath);
+
+    }
+
+    private static FamilyTree testTree() {
         FamilyTree familyTree = new FamilyTree();
 
         Human human1 = new Human("Олеся", Gender.FEMALE, LocalDate.of(1978, 4, 1), null);
@@ -25,5 +57,9 @@ public class Main {
         familyTree.setParentChildRelationship(human6, human3); // отец Татьяны
 
         familyTree.printFamilyRelationships();
+
+        return new FamilyTree();
     }
 }
+
+
