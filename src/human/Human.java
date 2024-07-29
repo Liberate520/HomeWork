@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private String name;
     private String surname;
     private LocalDate dob, dod;
@@ -110,5 +110,10 @@ public class Human implements Serializable {
         return "Name: " + name + "\nSurname: " + surname + "\nDateOfBirth: " + dob + "\nDateOfDeath: " + dod + "\nGender: " + gender + "\nFather: " + fatherInfo + "\nMother: " + motherInfo +
                 "\nChildren: " + childrenInfo + "\n";
 
+    }
+
+    @Override
+    public int compareTo(Human anotherStudent) {
+        return this.name.compareTo(anotherStudent.name);
     }
 }

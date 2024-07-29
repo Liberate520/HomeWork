@@ -1,22 +1,20 @@
 package humanTree;
-
+import comporators.HumanComparatorByAge;
 import human.Human;
+import iterator.HumanIterator;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class HumanTree implements Serializable {
+public class HumanTree implements Serializable, Iterable<Human> {
     private List<Human> humans;
-
     public HumanTree () {
         humans = new ArrayList<>();
     }
 
-
-    public void addHuman (Human human) { //добавление человека
+    public void addHuman (Human human) {
         humans.add(human);
-    }
+    }  //добавление человека
 
     public String getInfoAboutParents(Human human) {
         StringBuilder sb = new StringBuilder();
@@ -37,9 +35,9 @@ public class HumanTree implements Serializable {
         sb.append("Father:\n" + human.getFather() + "\n");
         sb.append("Mother:\n" + human.getMother() + "\n");
         return sb.toString();
-    }
+    } // информация о шнурках
 
-    public String getInfoAboutChildren(Human human) { // информация о детях человека
+    public String getInfoAboutChildren(Human human) {
         StringBuilder sb = new StringBuilder();
         if (human.getChildren().isEmpty()) {
             sb.append(human.getName() + " doesn`t hava a child.");
@@ -54,12 +52,11 @@ public class HumanTree implements Serializable {
             i++;
         }
         return sb.toString();
-    }
+    }  // информация о детях
 
     public List<Human> getHumans() {
         return humans;
     }
-
 
     @Override
     public String toString() {
@@ -71,4 +68,19 @@ public class HumanTree implements Serializable {
         }
         return sb.toString();
     }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(humans);
+    }  // итератор (пока не использую)
+
+    public void sortByName () {
+        System.out.println("Отсортированный по имени список: \n");
+        Collections.sort(humans);
+    } // сортировка по имени
+
+    public void sortByAge() {
+        System.out.println("Отсортированный по возрасту список: \n");
+        Collections.sort(humans, new HumanComparatorByAge());
+    } // сортировка по возрасту
 }
