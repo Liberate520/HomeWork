@@ -32,8 +32,20 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
         count++;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return this.name;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public Gender getGender() {
@@ -55,6 +67,10 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
         return age;
     }
 
+    public void setDateOfBirth(int year, int month, int day) {
+        this.dateOfBirth = LocalDate.of(year, month, day);
+    }
+
     public void setDateOfDeath(int year, int month, int day) {
         this.dateOfDeath = LocalDate.of(year, month, day);
     }
@@ -73,6 +89,10 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
 
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
+        if (spouse.getSpouse() != null) {
+            return;
+        }
+        spouse.setSpouse(this);
     }
 
     public String getParentsNames() {
@@ -91,6 +111,8 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
         this.parents = new ArrayList<Human>();
         this.parents.add(father);
         this.parents.add(mother);
+        father.setChild(this);
+        mother.setChild(this);
     }
 
     public String getChildrenNames() {
@@ -109,8 +131,10 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
         return this.children;
     }
 
-    public void setChild(Human child) {
-        this.children = new ArrayList<>();
+    private void setChild(Human child) {
+        if (this.children == null) {
+            this.children = new ArrayList<>();
+        }
         this.children.add(child);
     }
 

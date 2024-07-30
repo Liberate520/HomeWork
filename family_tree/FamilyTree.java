@@ -44,6 +44,24 @@ public class FamilyTree<E extends FamilyTreeItem> implements Serializable, Itera
         familyTree.sort(new HumanComparatorByGender<>());
     }
 
+    public boolean isInFamilyTree(int id) {
+        for (E human : this.familyTree) {
+            if (human.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public E getHumanById(int id) {
+        for (E human : this.familyTree) {
+            if (human.getId() == id) {
+                return human;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
