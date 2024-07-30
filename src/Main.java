@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -6,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
         Scanner scanner = new Scanner(System.in);
+        FileHandler fileHandler = new FileHandler();
 
         // Пример добавления людей в генеалогическое древо
         Human john = new Human("1", "John", "Doe", 60, Human.Gender.Male, LocalDate.of(1964, 1, 1));
@@ -29,7 +31,9 @@ public class Main {
             System.out.println("2. Найти человека по имени");
             System.out.println("3. Найти человека по фамилии");
             System.out.println("4. Получить информацию о детях человека");
-            System.out.println("5. Выйти");
+            System.out.println("5. Сохранить семейное древо");
+            System.out.println("6. Загрузить семейное древо");
+            System.out.println("7. Выйти");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -77,6 +81,26 @@ public class Main {
                     }
                 }
                 case 5 -> {
+                    System.out.print("Введите имя файла для сохранения: ");
+                    String filename = scanner.nextLine();
+                    try {
+                        fileHandler.saveFamilyTree(familyTree, filename);
+                        System.out.println("Семейное древо сохранено.");
+                    } catch (IOException e) {
+                        System.out.println("Ошибка при сохранении файла: " + e.getMessage());
+                    }
+                }
+                case 6 -> {
+                    System.out.print("Введите имя файла для загрузки: ");
+                    String filename = scanner.nextLine();
+                    try {
+                        familyTree = fileHandler.loadFamilyTree(filename);
+                        System.out.println("Семейное древо загружено.");
+                    } catch (IOException | ClassNotFoundException e) {
+                        System.out.println("Ошибка при загрузке файла: " + e.getMessage());
+                    }
+                }
+                case 7 -> {
                     System.out.println("Выход.");
                     scanner.close();
                     return;
