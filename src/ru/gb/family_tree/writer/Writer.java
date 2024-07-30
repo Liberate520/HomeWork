@@ -1,12 +1,10 @@
 package ru.gb.family_tree.writer;
 
-import ru.gb.family_tree.Human;
-
-import java.util.List;
+import ru.gb.family_tree.tree.FamilyTree;
 
 public interface Writer {
 
-    void serializationToFile();
-    List<Human> restoringFromFile();
+    void serializationToFile(FamilyTree tree);
+    FamilyTree restoringFromFile();
 
 }

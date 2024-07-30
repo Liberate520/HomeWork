@@ -1,4 +1,4 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human  implements Serializable {
-    private long id;
+public class Human  implements Serializable, Comparable<Human> {
+    private int id;
     private String lastName;
     private String firstName;
     private String patronymic;
@@ -21,7 +21,7 @@ public class Human  implements Serializable {
     private List<Human> children;
 
 
-    public Human(String lastName, String firstName, String patronymic, LocalDate dateOfBirth, LocalDate dateOfDeath, Gender gender, Human mother, Human father) {
+    public Human(int id, String lastName, String firstName, String patronymic, LocalDate dateOfBirth, LocalDate dateOfDeath, Gender gender, Human mother, Human father) {
 
         this.lastName = lastName;
         this.firstName = firstName;
@@ -31,16 +31,17 @@ public class Human  implements Serializable {
         this.mother = mother;
         this.father = father;
         this.dateOfDeath = dateOfDeath;
-        id = -1;
+        this.id = id;
+        //id = -1;
         children = new ArrayList<Human>();
     }
 
-    public Human(String lastName, String firstName, LocalDate dateOfBirth, Gender gender, Human mother, Human father) {
-        this(lastName, firstName, null, dateOfBirth, null, gender, mother, father );
+    public Human(int id, String lastName, String firstName, LocalDate dateOfBirth, Gender gender, Human mother, Human father) {
+        this(id, lastName, firstName, null, dateOfBirth, null, gender, mother, father );
     }
 
-    public Human(String lastName, String firstName, LocalDate dateOfBirth, Gender gender) {
-        this(lastName, firstName, null, dateOfBirth, null, gender, null, null );
+    public Human(int id, String lastName, String firstName, LocalDate dateOfBirth, Gender gender) {
+        this(id, lastName, firstName, null, dateOfBirth, null, gender, null, null );
     }
 
     public boolean addChild(Human child){
@@ -79,11 +80,11 @@ public class Human  implements Serializable {
         this.children = children;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -174,6 +175,11 @@ public class Human  implements Serializable {
             return 0;
         }
 
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.firstName.compareTo(o.firstName);
     }
 
     public class AgeCalculator {
