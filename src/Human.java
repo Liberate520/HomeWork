@@ -8,6 +8,7 @@ public class Human {
     private Gender gender;
     private List<Human> children;
     private String name;
+    private List<Human> parents;
 
     public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender) {
         this.name = name;
@@ -15,6 +16,7 @@ public class Human {
         this.deathDate = deathDate;
         this.gender = gender;
         this.children = new ArrayList<>();
+        this.parents = new ArrayList<>();
     }
 
     public String getName() {
@@ -33,8 +35,16 @@ public class Human {
         return gender;
     }
 
+    public List<Human> getParents() {
+        return parents;
+    }
+
     public List<Human> getChildren() {
         return children;
+    }
+
+    public void addParent(Human parent) {
+        this.parents.add(parent);
     }
 
     public void addChild(Human child) {
@@ -56,6 +66,12 @@ public class Human {
         }
         sb.append(", Пол: ").append(gender);
         sb.append(", Возраст: ").append(getAgeAt(LocalDate.now()));
+        if (!parents.isEmpty()) {
+            sb.append(", Родители: ");
+            for (Human parent : parents) {
+                sb.append(parent.getName()).append(" ");
+            }
+        }
         return sb.toString();
     }
 }

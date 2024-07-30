@@ -21,6 +21,14 @@ public class FamilyTree {
         return null;
     }
 
+    public List<Human> getParentsOf(String name) {
+        Human human = findPersonByName(name);
+        if (human != null) {
+            return human.getParents();
+        }
+        return null;
+    }
+
     public List<Human> getChildrenOf(String name) {
         Human human = findPersonByName(name);
         if (human != null) {

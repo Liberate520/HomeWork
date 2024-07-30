@@ -25,6 +25,16 @@ public class Main {
         george.addChild(igor);
         inga.addChild(igor);
 
+        anna.addParent(igor);
+        anna.addParent(mary);
+        vitaly.addParent(igor);
+        vitaly.addParent(mary);
+
+        mary.addParent(anastasia);
+        mary.addParent(vladimir);
+        igor.addParent(george);
+        igor.addParent(inga);
+
         familyTree.addPerson(igor);
         familyTree.addPerson(mary);
         familyTree.addPerson(anna);
@@ -51,6 +61,19 @@ public class Main {
         } else {
             System.out.println("У данного человека нет детей или человек с именем " + name + " не найден.");
         }
-        scanner.close();
+
+        System.out.println();
+        System.out.println("Введите имя для отображения родителей");
+        name = new Scanner(System.in).nextLine();
+
+        List<Human> parents = familyTree.getParentsOf(name);
+        if (parents != null && !parents.isEmpty()) {
+            System.out.println("Родители " + name + ":");
+            for (Human parent : parents) {
+                System.out.println(parent + ", возраст: " + parent.getAgeAt(LocalDate.now()));
+            }
+        } else {
+            System.out.println("Человек с именем " + name + " не найден");
+        }
     }
 }
