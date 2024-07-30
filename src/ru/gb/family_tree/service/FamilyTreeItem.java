@@ -1,11 +1,10 @@
 package ru.gb.family_tree.service;
 
-import ru.gb.family_tree.human.Human;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface FamilyTreeItem<T> extends Comparable<T> {
+public interface FamilyTreeItem<T> extends Serializable, Comparable<T> {
     void setId(int id);
     void setSpouse(T spouse);
     int getId();

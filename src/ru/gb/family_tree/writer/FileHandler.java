@@ -1,14 +1,14 @@
 package ru.gb.family_tree.writer;
 
 import ru.gb.family_tree.family_tree.FamilyTree;
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.service.FamilyTreeItem;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileHandler implements Writer {
-    public void saveToFile(List<Human> list, String string) {
+public class FileHandler<T extends FamilyTreeItem<T>> implements Writer<T> {
+    public void saveToFile(List<T> list, String string) {
         FileOutputStream output = null;
         ObjectOutputStream objectOutputStream;
         try {
@@ -25,7 +25,7 @@ public class FileHandler implements Writer {
         }
     }
 
-    public void saveToFile(FamilyTree familyTree, String string) {
+    public void saveToFile(FamilyTree<T> familyTree, String string) {
         FileOutputStream output = null;
         ObjectOutputStream objectOutputStream;
         try {
@@ -42,10 +42,10 @@ public class FileHandler implements Writer {
         }
     }
 
-    public List<Human> restoreFromFileH (String string) {
+    public List<T> restoreFromFileH (String string) {
         FileInputStream input = null;
         ObjectInputStream objectInputStream;
-        List<Human> result = new ArrayList<>();
+        List<T> result = new ArrayList<>();
         try {
             input = new FileInputStream(string);
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class FileHandler implements Writer {
         }
         try {
             objectInputStream = new ObjectInputStream(input);
-            result = (List<Human>) objectInputStream.readObject();
+            result = (List<T>) objectInputStream.readObject();
             objectInputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,10 +61,10 @@ public class FileHandler implements Writer {
         return result;
     }
 
-    public FamilyTree restoreFromFileFT (String string) {
+    public FamilyTree<T> restoreFromFileFT (String string) {
         FileInputStream input = null;
         ObjectInputStream objectInputStream;
-        FamilyTree result = new FamilyTree();
+        FamilyTree<T> result = new FamilyTree<>();
         try {
             input = new FileInputStream(string);
         } catch (IOException e) {
@@ -72,7 +72,7 @@ public class FileHandler implements Writer {
         }
         try {
             objectInputStream = new ObjectInputStream(input);
-            result = (FamilyTree) objectInputStream.readObject();
+            result = (FamilyTree<T>) objectInputStream.readObject();
             objectInputStream.close();
         } catch (Exception e) {
             e.printStackTrace();

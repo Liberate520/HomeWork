@@ -1,15 +1,13 @@
 package ru.gb.family_tree.human;
 
 import ru.gb.family_tree.service.FamilyTreeItem;
-import ru.gb.family_tree.service.HumanBuilder;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Human> {
+public class Human implements FamilyTreeItem<Human> {
     private int id;
     private String name;
     private Gender gender;

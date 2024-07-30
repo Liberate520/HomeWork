@@ -23,7 +23,7 @@ public class Main {
         menu();
         int menuPoint;
         menuPoint = scanner.nextInt();
-        while (menuPoint != 10) {
+        while (menuPoint != 12) {
             switch (menuPoint) {
                 case 1:
                     System.out.println("Список людей древа:");
@@ -53,16 +53,16 @@ public class Main {
                     System.out.println("Выберите id человека чтобы построть фамильное дерево:");
                     System.out.println(ft.getHumansChildrenInfo(scanner.nextInt()));
                     break;
-                case 7:
+                case 8:
                     createFamilyTree(al, ft);
                     System.out.println("Семейное древо создано.\n");
                     break;
-                case 8:
+                case 9:
                     al = fh.restoreFromFileH("Human.txt");
                     ft = fh.restoreFromFileFT("FamilyTree.txt");
                     System.out.println("Семейное древо востановленно из файла.");
                     break;
-                case 9:
+                case 10:
                     fh.saveToFile(al,"Human.txt");
                     fh.saveToFile(ft,"FamilyTree.txt");
                     System.out.println("Семейное древо сохранено в файл.");
@@ -82,31 +82,17 @@ public class Main {
                 .append("4 - Вывести список людей входящих в семейное древо (отсортированный по возрасту).").append("\n")
                 .append("5 - Вывести список людей входящих в семейное древо (отсортированный по дате рождения).").append("\n")
                 .append("6 - Построть фамильное древо человека.").append("\n")
-                .append("7 - Создать семейное древо.").append("\n")
-                .append("8 - Восстановить семейное древо из файла.").append("\n")
-                .append("9 - Сохранение семейного древа в файл.").append("\n")
-                .append("10 - Выход.").append("\n").append("\n")
+                .append("--------------------------------------------------------------------------------------").append("\n")
+                .append("8 - Создать семейное древо.").append("\n")
+                .append("9 - Восстановить семейное древо из файла.").append("\n")
+                .append("10 - Сохранение семейного древа в файл.").append("\n")
+                .append("--------------------------------------------------------------------------------------").append("\n")
+                .append("12 - Выход.").append("\n").append("\n")
                 .append("Выберите пункт меню: ");
         System.out.println(result);
     }
 
     public static void createFamilyTree(List<Human> list, FamilyTree<Human> familyTree) {
-        /*
-        al.add(new Human.HumanBuilder("Евдокия Лукъяновна Стрешнева",
-                Gender.FEMALE, LocalDate.of(1626,2,15), null, null)
-                .setHumanDeathDate(LocalDate.of(1645,7,23))
-                .build());
-
-         */
-        /*
-        Human human = new Human.HumanBuilder("Евдокия Лукъяновна Стрешнева",
-                Gender.FEMALE, LocalDate.of(1626,2,15), null, null)
-                .setHumanDeathDate(LocalDate.of(1645,7,23))
-                .build();
-
-
-         */
-
         list.add(new Human());
         //Human hum1 = new Human();
         list.getLast().setId(1);
