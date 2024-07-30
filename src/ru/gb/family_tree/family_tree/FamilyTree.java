@@ -1,36 +1,54 @@
 package ru.gb.family_tree.family_tree;
 
+import ru.gb.family_tree.comparators.HumanComparatorByAge;
+import ru.gb.family_tree.comparators.HumanComparatorByName;
+import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.human.HumanBuilder;
+import ru.gb.family_tree.human.HumanIterator;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
-    private  long humansId;
+public class FamilyTree implements Serializable, Iterable<Human> {
+    private int humansId;
+    private HumanBuilder humanBuilder;
     private List<Human> humanList;
 
     public FamilyTree(){
         this(new ArrayList<>());
+        humanBuilder = new HumanBuilder();
     }
 
     public FamilyTree(List<Human> humanList){
         this.humanList = humanList;
     }
 
-    public boolean addHuman(Human human){
-        if (human == null) {
-            return false;
-        }
-        if (!humanList.contains(human)){
-            humanList.add(human);
-            human.setId(humansId++);
+//    public void addHuman(Human human){
+//        humanList.add(human);
+//    }
 
-            addToParents(human);
-            addToChildren(human);
-            return true;
-        }
-        return false;
+    public Human addHuman(String name, Gender gender, LocalDate birthDate){
+        Human human = humanBuilder.build(name, gender, birthDate);
+        humanList.add(human);
+
+        return human;
+    }
+    public Human addHuman(String name, Gender gender, LocalDate birthDate, Human father, Human mother){
+        Human human = humanBuilder.build(name, gender, birthDate, null,father,mother);
+        humanList.add(human);
+        return human;
+    }
+
+    public void sortByName() {
+        humanList.sort(new HumanComparatorByName());
+    }
+    public void sortByAge() {
+        humanList.sort(new HumanComparatorByAge());
     }
 
     private void addToParents(Human human){
@@ -119,13 +137,17 @@ public class FamilyTree implements Serializable {
 
     public String getInfo(){
         StringBuilder sb = new StringBuilder();
-        sb.append("In tree ");
-        sb.append(humanList.size());
-        sb.append(" objects: \n");
+
         for (Human human: humanList){
             sb.append(human);
             sb.append("\n");
-                    }
+        }
         return sb.toString();
     }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(humanList);
+    }
+
 }

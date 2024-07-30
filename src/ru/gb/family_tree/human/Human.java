@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable {
-    private long id;
+public class Human implements Serializable, Comparable<Human> {
+    private int id;
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -19,8 +19,8 @@ public class Human implements Serializable {
     private Human spouse;
 
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
-        id = -1;
+    public Human(int id, String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
@@ -30,23 +30,20 @@ public class Human implements Serializable {
         children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate) {
-        this(name, gender, birthDate, null,null,null);
-    }
+//    public Human(String name, Gender gender, LocalDate birthDate) {
+//        this(name, gender, birthDate, null,null,null);
+//    }
+//
+//    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
+//        this(name, gender, birthDate, null,father,mother);
+//    }
 
-    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
-        this(name, gender, birthDate, null,father,mother);
-    }
 
     public Human getSpouse() { return spouse; }
 
     public void setSpouse(Human spouse) { this.spouse = spouse; }
 
     public long getId() { return id; }
-
-    public void getId(long id) { this.id = id; }
-
-    public void setId(long id) { this.id = id; }
 
     public String getName() { return name;}
 
@@ -201,5 +198,10 @@ public class Human implements Serializable {
         }
         Human human = (Human) obj;
         return human.getId() == getId();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 }

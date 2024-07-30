@@ -13,6 +13,9 @@ public class Main {
         FamilyTree tree = getFamilyTree();
 
         writeTree(tree);
+        tree.sortByName();
+        System.out.println(tree);
+        tree.sortByAge();
         System.out.println(tree);
 
         readTree(tree);
@@ -22,20 +25,15 @@ public class Main {
     private static FamilyTree getFamilyTree() {
         FamilyTree tree = new FamilyTree();
 
-        Human fyodor = new Human("Фёдор", Gender.Male, LocalDate.of(1956, 8, 15));
-        Human vera = new Human("Вера", Gender.Female, LocalDate.of(1961, 6, 19));
+        Human fyodor = tree.addHuman("Фёдор", Gender.Male, LocalDate.of(1956, 8, 15));
+        Human vera = tree.addHuman("Вера", Gender.Female, LocalDate.of(1961, 6, 19));
 
-        tree.addHuman(fyodor);
-        tree.addHuman(vera);
         tree.setWedding(fyodor, vera);
 
-        Human irina = new Human("Ирина", Gender.Female, LocalDate.of(1969, 7, 7), fyodor, vera);
-        Human natasha = new Human("Наташа", Gender.Female, LocalDate.of(1972, 5, 21), fyodor, vera);
-        Human yulya = new Human("Юля", Gender.Female, LocalDate.of(1975, 12, 14), fyodor, vera);
+        Human irina = tree.addHuman("Ирина", Gender.Female, LocalDate.of(1969, 7, 7), fyodor, vera);
+        Human natasha = tree.addHuman("Наташа", Gender.Female, LocalDate.of(1972, 5, 21), fyodor, vera);
+        Human yulya = tree.addHuman("Юля", Gender.Female, LocalDate.of(1975, 12, 14), fyodor, vera);
 
-        tree.addHuman(irina);
-        tree.addHuman(natasha);
-        tree.addHuman(yulya);
 
         fyodor.addChild(irina);
         fyodor.addChild(yulya);
