@@ -1,7 +1,12 @@
-package FamilyTree.Writer;
+package FamilyTree.writer;
 
 import FamilyTree.familyTree.*;
+
+import java.io.Serializable;
+
 public interface Writer {
-    void save(FamilyTree familyTree, String filename);
-    FamilyTree load(String filename);
+    void save(Serializable serializable);
+    FamilyTree load();
+
+    void setPath(String filePath);
 }

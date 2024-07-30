@@ -22,6 +22,8 @@ public class Human implements Serializable {
     private Human father;
     private Human mother;
     private transient List<Human> children;
+
+    private List<Human> grandchildren = new ArrayList<>();
     private Human spouse;
 
     public Human(String name,
@@ -149,6 +151,14 @@ public class Human implements Serializable {
         }
     }
 
+    public void addGrandchild(Human grandchild) {
+        grandchildren.add(grandchild);
+    }
+
+    public List<Human> getGrandchildren() {
+        return grandchildren;
+    }
+
     public void setParent(Human parent) {
         if (parent.gender.equals(Gender.Female)) {
             setMother(parent);
@@ -257,6 +267,7 @@ public class Human implements Serializable {
             }
         }
     }
+
     public String getSpouseInfo() {
         String res = "";
         if (spouse != null) {
@@ -312,15 +323,32 @@ public class Human implements Serializable {
         return res;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) {
-//            return true;
-//        }
-//        if (!(obj instanceof Human)) {
-//            return false;
-//        }
-//        Human human = (Human) obj;
-//        return human.getId() == getId();
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Human)) {
+            return false;
+        }
+        Human other = (Human) obj;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(id);
+    }
+
+    public void setName(String name) {
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+    }
+
+    public void setGender(Gender gender) {
+    }
 }
