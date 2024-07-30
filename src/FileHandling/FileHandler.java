@@ -1,4 +1,4 @@
-package src;
+package src.FileHandling;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,9 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import src.FamilyTree.FamilyTree;
+
 public class FileHandler implements Writer {
 
-    private String path = "src/Saved_tree.txt";
+    private String path = "src/FileHandling/Saved_tree.txt";
 
     @Override
     public Object read() throws ClassNotFoundException, IOException {

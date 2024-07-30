@@ -1,4 +1,4 @@
-package src;
+package src.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Human implements Serializable{
+    private int id;
     private String name;
     private LocalDate dateofbirth;
     private LocalDate dateofdeath;
@@ -15,7 +16,8 @@ public class Human implements Serializable{
     private Human father;
     private List<Human> children;
 
-public Human (String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father,List<Human> children){
+public Human (int id, String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father,List<Human> children){
+    this.id = id;
     this.name = name;
     this.dateofbirth = dateofbirth;
     this.dateofdeath = dateofdeath;
@@ -74,6 +76,7 @@ public String toString() {
     StringBuilder sb = new StringBuilder();
     String childrenCollected = children.stream().map(Human::getName).collect(Collectors.joining(", "));
     sb.append("Family member's info: \n");
+    sb.append("ID: ").append(id).append("\n");
     sb.append("Name: ").append(name).append("\n");
     sb.append("Date of birth: ").append(dateofbirth).append("\n");
     if (dateofdeath != null) {
@@ -100,4 +103,5 @@ public String toString() {
     } 
     return sb.toString();
 }
+
 }
