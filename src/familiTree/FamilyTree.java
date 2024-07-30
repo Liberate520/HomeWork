@@ -1,13 +1,16 @@
-package FamiliTree;
+package familiTree;
 
-import Human.Human;
+import human.Human;
+import human.comparators.HumanComparatorByAge;
+import human.comparators.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human>{
 
     private long humanId;
     private List<Human> humans;
@@ -25,6 +28,14 @@ public class FamilyTree implements Serializable {
             }
         }
         return null;
+    }
+
+    public void sortByName() {
+        humans.sort(new HumanComparatorByName());
+    }
+
+    public void sortByAge() {
+        humans.sort(new HumanComparatorByAge());
     }
 
     public Human getById(long id) { //  поиск по id
@@ -103,4 +114,8 @@ public class FamilyTree implements Serializable {
         return Objects.hash(humanId, humans);
     }
 
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(humans);
+    }
 }

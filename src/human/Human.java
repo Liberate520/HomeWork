@@ -1,4 +1,4 @@
-package Human;
+package human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
 
     private long id;
     private String name;
@@ -286,4 +286,8 @@ public class Human implements Serializable {
         return sb.toString();
     }
 
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
+    }
 }

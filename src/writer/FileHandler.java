@@ -1,4 +1,4 @@
-package Writer;
+package writer;
 
 import java.io.*;
 
@@ -9,10 +9,10 @@ public class FileHandler implements Writer {
     public void oos(Serializable serializable) {
         // метод сохранения состояния программы (процесс записи состояния объекта в поток - сериализация)
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName));) {
-            System.out.println("---------------------------------------");
-            System.out.printf("Файл \"%s\" успешно создан", fileName);
+//            System.out.println("---------------------------------------");  // сделать отдельный класс для вывода сообщений!
+//            System.out.printf("Файл \"%s\" успешно создан", fileName);
             oos.writeObject(serializable);
-            System.out.println("\n---------------------------------------");
+//            System.out.println("\n---------------------------------------");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -22,11 +22,11 @@ public class FileHandler implements Writer {
         // метод восстановления состояния программы (процесс восстановления состояния объекта из потока - десериализация)
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));) {
-            System.out.println("---------------------------------------");
-            System.out.printf("Восстановление файла \"%s\": \n", fileName);
-            System.out.println("---------------------------------------");
+//            System.out.println("---------------------------------------"); // сделать отдельный класс для вывода сообщений!
+//            System.out.printf("Восстановление файла \"%s\": \n", fileName);
+//            System.out.println("---------------------------------------");
             obj = ois.readObject();
-            System.out.println(obj);
+//            System.out.println(obj);
             return obj;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

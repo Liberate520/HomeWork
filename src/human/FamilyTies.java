@@ -1,4 +1,4 @@
-package Human;
+package human;
 
 public enum FamilyTies {
 //TODO продумать использование данной структуры!
