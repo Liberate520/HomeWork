@@ -6,7 +6,7 @@ import java.io.*;
 public class FileHandler implements Writer {
 
 
-    String path = "src/ru/gb/family_tree/writer/tree.txt";
+    private String path = "src/ru/gb/family_tree/writer/tree.txt";
 
     @Override
     public void write(Serializable serializable) throws IOException {

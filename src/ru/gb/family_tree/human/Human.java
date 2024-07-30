@@ -15,7 +15,7 @@ public class Human implements Serializable {
     private Gender gender;
     private Human father;
     private Human mother;
-    List<Human> children;
+    private List<Human> children;
     private Human spouse;
 
 
