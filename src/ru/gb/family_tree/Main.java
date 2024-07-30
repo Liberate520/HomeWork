@@ -4,7 +4,6 @@ import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.service.FamilyTreeService;
-import ru.gb.family_tree.service.HumanBuilder;
 import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
@@ -17,7 +16,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<Human> al = new ArrayList<>();
         FamilyTree<Human> ft = new FamilyTree<>();
-        FileHandler fh = new FileHandler();
+        FileHandler<Human> fh = new FileHandler<>();
         FamilyTreeService<Human> service = new FamilyTreeService<>();
 
         menu();
@@ -109,7 +108,7 @@ public class Main {
         list.getLast().setBirthDay(LocalDate.of(1629,3,9));
         list.getLast().setDeathDate(LocalDate.of(1676,1,29));
         list.getLast().setGender(Gender.MALE);
-        list.getLast().setFather(list.get(0));
+        list.getLast().setFather(list.getFirst());
         familyTree.addHuman(list.getLast());
 
         list.add(new Human());
