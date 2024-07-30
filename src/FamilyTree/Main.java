@@ -1,12 +1,12 @@
 package FamilyTree;
 
-import FamilyTree.human.*;
-import FamilyTree.familyTree.*;
-import FamilyTree.writer.*;
+import FamilyTree.model.FamilyTree;
+import FamilyTree.model.Gender;
+import FamilyTree.model.Human;
+import FamilyTree.utility.FileHandler;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
@@ -120,6 +120,26 @@ public class Main {
             ancestors = loadedFamilyTree.getAncestors(anastasia);
             for (Human ancestor : ancestors) {
                 System.out.println(ancestor.getName() + " (" + ancestor.getYearsString(ancestor.getAge()) + ")");
+            }
+
+            System.out.println();
+
+            System.out.println("Сортировка по имени:");
+            loadedFamilyTree.sortByname();
+            for (Human human : loadedFamilyTree) {
+                System.out.println(human.getInfo());
+            }
+
+            System.out.println("\nСортировка по дате рождения:");
+            loadedFamilyTree.sortByBirthDate();
+            for (Human human : loadedFamilyTree) {
+                System.out.println(human.getInfo());
+            }
+
+            System.out.println("\nСортировка по возрасту:");
+            loadedFamilyTree.sortByAge();
+            for (Human human : loadedFamilyTree) {
+                System.out.println(human.getInfo());
             }
         } else System.out.println("Данные древа НЕ загружены!");
     }

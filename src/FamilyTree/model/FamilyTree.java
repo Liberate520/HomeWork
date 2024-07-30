@@ -1,15 +1,14 @@
-package FamilyTree.familyTree;
+package FamilyTree.model;
 
-import FamilyTree.human.Human;
+import FamilyTree.iterator.FamilyTreeIterator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Iterable<Human>, Serializable {
     private long humanId;
     private List<Human> members;
 
@@ -17,6 +16,38 @@ public class FamilyTree implements Serializable {
 
     public FamilyTree() {
         this.members = new ArrayList<>();
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(this);
+    }
+
+    public void sortByname() {
+        Collections.sort(members, new Comparator<Human>() {
+            @Override
+            public int compare(Human o1, Human o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+    }
+
+    public void sortByBirthDate() {
+        Collections.sort(members, new Comparator<Human>() {
+            @Override
+            public int compare(Human o1, Human o2) {
+                return o1.getBirthDate().compareTo(o2.getBirthDate());
+            }
+        });
+    }
+
+    public void sortByAge() {
+        Collections.sort(members, new Comparator<Human>() {
+            @Override
+            public int compare(Human o1, Human o2) {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            }
+        });
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
@@ -48,7 +79,7 @@ public class FamilyTree implements Serializable {
             if (human.getMother() != null && members.contains(human.getMother())) {
                 human.getMother().addChild(human);
             }
-            // Обновить семейное дерево с учетом новых отношений члена семьи
+            // Обновим семейное дерево с учетом новых отношений члена семьи
             updateFamilyTree(human);
             return true;
         }
@@ -84,39 +115,6 @@ public class FamilyTree implements Serializable {
         // Обновить семейное дерево с учетом нового имени члена семьи
         human.setName(human.getName());
     }
-//    public boolean addMember(Human human) {
-//        if (human == null) {
-//            return false;
-//        }
-//        Human existingMember = getMemberById(human.getId());
-//        if (existingMember != null) {
-//            existingMember.setName(human.getName());
-//            existingMember.setBirthDate(human.getBirthDate());
-//            existingMember.setDeathDate(human.getDeathDate());
-//            existingMember.setGender(human.getGender());
-//            existingMember.setOccupation(human.getOccupation());
-//            existingMember.setNationality(human.getNationality());
-//            existingMember.setPlaceOfBirth(human.getPlaceOfBirth());
-//            existingMember.setFather(getMemberById(human.getFather().getId()));
-//            existingMember.setMother(getMemberById(human.getMother().getId()));
-//            existingMember.setSpouse(getMemberById(human.getSpouse().getId()));
-//            existingMember.getChildren().clear();
-//            for (Human child : human.getChildren()) {
-//                existingMember.addChild(getMemberById(child.getId()));
-//            }
-//            return true;
-//        } else {
-//            human.setId(humanId++);
-//            members.add(human);
-//            if (human.getFather() != null && members.contains(human.getFather())) {
-//                human.getFather().addChild(human);
-//            }
-//            if (human.getMother() != null && members.contains(human.getMother())) {
-//                human.getMother().addChild(human);
-//            }
-//            return true;
-//        }
-//    }
 
     public List<Human> getMembers() {
         return members;
@@ -188,5 +186,4 @@ public class FamilyTree implements Serializable {
         this.humanId = humanId;
     }
 
-    // Дополнительные методы для исследования добавлю позже здесь
 }

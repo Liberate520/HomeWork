@@ -1,4 +1,4 @@
-package FamilyTree.human;
+package FamilyTree.model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -209,8 +209,10 @@ public class Human implements Serializable {
         info.append(getFatherInfo());
         info.append(", ");
         info.append(getMotherInfo());
-        info.append(", ");
-        info.append(getChildrenInfo());
+
+//        info.append(", ");
+//        info.append(getChildrenInfo());
+
 //        info.append(", профессия: ");
 //        info.append(occupation != null ? occupation : "Не указана");
 //        info.append(", национальность: ");
