@@ -5,7 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
- public class Human implements Serializable {
+public class Human implements Serializable {
+    private static final long serialVersionUID = 1L;
 
      private String name;
      private Gender gender;
@@ -24,20 +25,17 @@ import java.util.List;
      }
 
      public String getName() {
-         return name;
+            return name;
      }
 
      public LocalDate getBirthDate() {
-         return birthDate;
+            return birthDate;
      }
 
-     public LocalDate getDeathDate() {
-         return deathDate;
+     public LocalDate getDeathDate() {return deathDate;
      }
 
-
-     public void addParent(Human parent) {
-         this.parents.add(parent);
+     public void addParent(Human parent) {this.parents.add(parent);
      }
 
      public void addChild(Human child) {
@@ -45,8 +43,6 @@ import java.util.List;
      }
 
      public String toString() {
-         return name + " (" + gender + ", СЂРѕРґРёР»СЃСЏ: " + birthDate + ")";
+         return name + " (" + gender + ", родился: " + birthDate + ")";
      }
  }
-
-

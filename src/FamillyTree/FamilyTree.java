@@ -1,11 +1,12 @@
 package FamillyTree;
 import Human.Human;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree  implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final List<Human> familyMembers = new ArrayList<>();
 
     public void addHuman(Human human) {
@@ -19,21 +20,21 @@ public class FamilyTree implements Serializable {
 
     public void printFamilyRelationships() {
         for (Human human : familyMembers) {
-            System.out.println("Р§РµР»РѕРІРµРє: " + human.getName() + " (СЂРѕРґРёР»СЃСЏ: " + human.getBirthDate() + ")");
+            System.out.println("Человек: " + human.getName() + " (родился: " + human.getBirthDate() + ")");
             if (!human.parents.isEmpty()) {
-                System.out.print("Р РѕРґРёС‚РµР»Рё: ");
+                System.out.print("Родители: ");
                 for (Human parent : human.parents) {
-                    System.out.print(parent.getName() + " (СЂРѕРґРёР»СЃСЏ: " + parent.getBirthDate() + ")");
+                    System.out.print(parent.getName() + " (родился: " + parent.getBirthDate() + ")");
                     if (parent.getDeathDate() != null) {
-                        System.out.print(", СѓРјРµСЂ: " + parent.getDeathDate());
+                        System.out.print(", умер: " + parent.getDeathDate());
                     }
                     System.out.print(") ");
                 }
                 System.out.println();
                 if (!human.children.isEmpty()) {
-                    System.out.print("Р”РµС‚Рё: ");
+                    System.out.print("Дети: ");
                     for (Human child : human.children) {
-                        System.out.print(child.getName() + " (СЂРѕРґРёР»СЃСЏ: " + child.getBirthDate() + ")");
+                        System.out.print(child.getName() + " (родился: " + child.getBirthDate() + ")");
                     }
                     System.out.print(") ");
                 }
@@ -42,4 +43,6 @@ public class FamilyTree implements Serializable {
             }
         }
     }
+
 }
+
