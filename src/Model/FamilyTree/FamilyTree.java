@@ -2,74 +2,40 @@ package Model.FamilyTree;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.function.Supplier;
 
-import Model.Creatures.Gender.Gender;
-import Model.Interface.Creature;
-import Model.Creatures.Iterator.CreatureIterator;
 import Model.FamilyTree.Comparators.*;
-import Model.Interface.FamilyTreeInterface;
+import Model.Creature.Entity;
 
-public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable<T>, FamilyTreeInterface<T> {
-    private static int lastID = 0;
-    private final int ID = lastID++;
-    private final ArrayList<T> familyTree = new ArrayList<>();
-    private final Supplier<T> supplier;
+public class FamilyTree implements Serializable, Tree {
+    private int lastHumanID = 0;
+    private final ArrayList<Entity> familyTree = new ArrayList<>();
+    private String description;
 
-    public FamilyTree(Supplier<T> supplier){
-        this.supplier = supplier;
+    public FamilyTree(String description){
+        this.description = description;
     }
 
-    public void addCreature(T creature) {
-        if (!this.familyTree.contains(creature) && creature != null) {
+    public void addCreature(Entity creature) {
+        this.familyTree.add(creature);
 
-            this.familyTree.add(creature);
-            addCreature(creature.getSpouse());
-            addCreature(creature.getMather());
-            addCreature(creature.getFather());
-
-            for (T kid: creature.getChildren()) addCreature(kid);
-        }
-    }
-
-    public void addCreature(String name, String surname, Gender gender){
-        T creature = supplier.get();
-
-        creature.setName(name);
-        creature.setSurname(name);
-        creature.setGender(gender);
-
-        addCreature(creature);
-    }
-
-    public void updateTree(){
-        ArrayList<T> copyFamilyTree = new ArrayList<>(this.familyTree);
-
-        for (T creature: copyFamilyTree){
-
-            addCreature(creature.getFather());
-            addCreature(creature.getMather());
-            addCreature(creature.getSpouse());
-
-            for (T kid: creature.getChildren()) addCreature(kid);
-        }
+        lastHumanID++;
     }
 
     public void removeCreature(int ID){
-        Creature<T> creature = getCreature(ID);
+        Entity creature = getCreature(ID);
 
         if (creature != null){
-            Creature mather = creature.getMather();
-            Creature father = creature.getFather();
-            Creature spouse = creature.getSpouse();
-            ArrayList<T> children = new ArrayList<>(creature.getChildren());
+            Entity mather = creature.getMather();
+            Entity father = creature.getFather();
+            Entity spouse = creature.getSpouse();
+            ArrayList<Entity> children = new ArrayList<>(creature.getChildren());
 
             if (mather != null) mather.removeKid(creature);
             if (father != null) father.removeKid(creature);
             if (spouse != null) spouse.setSpouse(null);
 
-            if (children != null){
-                for (T kid: children){
+            if (!children.isEmpty()){
+                for (Entity kid: children){
                     if (kid.getFather().equals(creature)) kid.setFather(null);
                     else kid.setMather(null);
                 }
@@ -78,8 +44,8 @@ public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable
         }
     }
 
-    public T getCreature(int ID){
-        for(T creature: this.familyTree){
+    public Entity getCreature(int ID){
+        for(Entity creature: this.familyTree){
             if (creature.getID() == ID){
                 return creature;
             }
@@ -87,10 +53,15 @@ public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable
         return null;
     }
 
-    public ArrayList<T> getCreature(String name, String surname){
-        ArrayList<T> creatures = new ArrayList<>();
+    @Override
+    public int getLastHumanID() {
+        return lastHumanID;
+    }
 
-        for (T creature: this.familyTree){
+    public ArrayList<Entity> getCreature(String name, String surname){
+        ArrayList<Entity> creatures = new ArrayList<>();
+
+        for (Entity creature: this.familyTree){
             if (creature.getName().equalsIgnoreCase(name) && creature.getSurname().equalsIgnoreCase(surname)){
                 creatures.add(creature);
             }
@@ -99,33 +70,28 @@ public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable
         return creatures;
     }
 
-    public int getID() {
-        return ID;
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void sortBySurname(){
-        this.familyTree.sort(new ComparatorBySurname<T>());
+        this.familyTree.sort(new ComparatorBySurname<Entity>());
     }
 
     public void sortByID(){
-        this.familyTree.sort(new ComparatorByID<T>());
+        this.familyTree.sort(new ComparatorByID<Entity>());
     }
 
     public void sortByChildren(){
-        this.familyTree.sort(new ComparatorByChildren<T>());
+        this.familyTree.sort(new ComparatorByChildren<Entity>());
     }
 
     public void sortByName(){
-        this.familyTree.sort(new ComparatorByName<T>());
-    }
-
-    public int size(){
-        return this.familyTree.size();
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new CreatureIterator<T>(this.familyTree);
+        this.familyTree.sort(new ComparatorByName<Entity>());
     }
 
     @Override
@@ -139,19 +105,5 @@ public class FamilyTree<T extends Creature<T>> implements Serializable, Iterable
             info.append(familyTree.getLast());
         }
         return info.toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (obj == null || getClass() == obj.getClass()) return false;
-
-        return this.ID == ((FamilyTree<?>) obj).getID();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.ID);
     }
 }
