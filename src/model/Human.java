@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Human implements FamilyMember<Human>, Serializable {
+    private static final long serialVersionUID = 1L;
     private String name;
     private Gender gender;
     private LocalDate birthDate;

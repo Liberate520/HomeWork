@@ -8,15 +8,22 @@ import java.util.Scanner;
 
 public class ConsoleUI implements View {
     private Presenter presenter;
-    private Scanner scanner;
+    private final Scanner scanner;
+    private final MainMenu menu;
 
+//    public ConsoleUI() {
+//        this.scanner = new Scanner(System.in);
+//    }
+
+    // Конструктор без параметров
     public ConsoleUI() {
         this.scanner = new Scanner(System.in);
+        this.menu = new MainMenu(this);
     }
 
-    public ConsoleUI(Presenter presenter) {
+    // Метод для установки Presenter
+    public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
-        this.scanner = new Scanner(System.in);
     }
 
     public void start() {
@@ -81,6 +88,14 @@ public class ConsoleUI implements View {
         System.out.println("Введите год для поиска:");
         int year = Integer.parseInt(scanner.nextLine());
         presenter.findMembersByBirthYear(year);
+    }
+
+    public void saveFamilyTree() {
+        presenter.saveFamilyTree();
+    }
+
+    public void loadFamilyTree() {
+        presenter.loadFamilyTree();
     }
 
     @Override

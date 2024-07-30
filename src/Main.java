@@ -1,13 +1,17 @@
+import service.*;
 import view.ConsoleUI;
 import presenter.Presenter;
-import service.FamilyTreeServiceImpl;
+import presenter.PresenterImpl;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTreeServiceImpl familyTreeService = new FamilyTreeServiceImpl();
-        Presenter presenter = new Presenter(familyTreeService, new ConsoleUI());
-        ConsoleUI ui = new ConsoleUI(presenter);
+        FileSaver fileSaver = new FileHandler();
+        FileLoader fileLoader = new FileHandler();
+        FamilyTreeManagementService managementService = new FamilyTreeServiceImpl(fileSaver, fileLoader);
+        FamilyTreePersistenceService persistenceService = (FamilyTreePersistenceService) managementService;
+        ConsoleUI ui = new ConsoleUI();
+        Presenter presenter = new PresenterImpl(managementService, persistenceService, ui);
+        ui.setPresenter(presenter);
         ui.start();
     }
 }
-

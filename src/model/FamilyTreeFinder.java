@@ -3,25 +3,29 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTreeFinder {
+public class FamilyTreeFinder<T extends FamilyMember<T>> {
+    private FamilyTree<T> familyTree;
 
-    private FamilyTree<? extends FamilyMember> familyTree;
-
-    public FamilyTreeFinder(FamilyTree<? extends FamilyMember> familyTree) {
+    public FamilyTreeFinder(FamilyTree<T> familyTree) {
         this.familyTree = familyTree;
     }
 
-    public FamilyMember findByName(String name) {
-        for (FamilyMember member : familyTree) {
-            if (member.getName().equalsIgnoreCase(name)) {
-                return member;
+    public void setFamilyTree(FamilyTree<? extends FamilyMember> familyTree) {
+        this.familyTree = (FamilyTree<T>) familyTree;
+    }
+
+    public T findByName(String name) {
+        for (T member : familyTree) {
+            if (!member.getName().equalsIgnoreCase(name)) {
+                continue;
             }
+            return member;
         }
         return null;
     }
 
     public String findByNameStr(String name) {
-        FamilyMember member = findByName(name);
+        T member = findByName(name);
         if (member != null) {
             return member.toString();
         } else {
@@ -29,9 +33,9 @@ public class FamilyTreeFinder {
         }
     }
 
-    public List<FamilyMember> findByBirthYear(int year) {
-        List<FamilyMember> result = new ArrayList<>();
-        for (FamilyMember member : familyTree) {
+    public List<T> findByBirthYear(int year) {
+        List<T> result = new ArrayList<>();
+        for (T member : familyTree) {
             if (member.getBirthDate().getYear() == year) {
                 result.add(member);
             }
@@ -40,16 +44,15 @@ public class FamilyTreeFinder {
     }
 
     public String findByBirthYearStr(int year) {
-        List<FamilyMember> members = findByBirthYear(year);
+        List<T> members = findByBirthYear(year);
         if (members.isEmpty()) {
             return "Члены семьи, родившиеся в " + year + " году не найдены.";
         } else {
             StringBuilder result = new StringBuilder("Члены семьи, родившиеся в " + year + " году:\n");
-            for (FamilyMember member : members) {
+            for (T member : members) {
                 result.append(member).append("\n");
             }
             return result.toString();
         }
     }
-
 }

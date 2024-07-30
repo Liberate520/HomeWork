@@ -1,37 +1,41 @@
 package view;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MainMenu {
     private ConsoleUI ui;
-    private Map<Integer, Runnable> menuItems;
+    private final Map<Integer, MenuItem> menuItems;
 
     public MainMenu(ConsoleUI ui) {
         this.ui = ui;
-        menuItems = new HashMap<>();
-        menuItems.put(1, ui::displayHumanList);
-        menuItems.put(2, ui::addHuman);
-        menuItems.put(3, ui::sortByName);
-        menuItems.put(4, ui::sortByBirthDate);
-        menuItems.put(5, ui::findMemberByName);
-        menuItems.put(6, ui::findMembersByBirthYear);
+        menuItems = new LinkedHashMap<>();
+        menuItems.put(1, new MenuItem("Показать всех членов семьи", ui::displayHumanList));
+        menuItems.put(2, new MenuItem("Добавить нового члена семьи", ui::addHuman));
+        menuItems.put(3, new MenuItem("Сортировать членов семьи по имени", ui::sortByName));
+        menuItems.put(4, new MenuItem("Сортировать членов семьи по дате рождения", ui::sortByBirthDate));
+        menuItems.put(5, new MenuItem("Найти члена семьи по имени", ui::findMemberByName));
+        menuItems.put(6, new MenuItem("Найти членов семьи по году рождения", ui::findMembersByBirthYear));
+        menuItems.put(7, new MenuItem("Сохранить дерево семьи", ui::saveFamilyTree));
+        menuItems.put(8, new MenuItem("Загрузить дерево семьи", ui::loadFamilyTree));
+        menuItems.put(9, new MenuItem("Выйти", () -> {}));
     }
 
     public String menu() {
-        return "1. Показать всех членов семьи\n" +
-                "2. Добавить нового члена семьи\n" +
-                "3. Сортировать членов семьи по имени\n" +
-                "4. Сортировать членов семьи по дате рождения\n" +
-                "5. Найти члена семьи по имени\n" +
-                "6. Найти членов семьи по году рождения\n" +
-                "7. Выйти";
+        StringBuilder menuBuilder = new StringBuilder();
+        for (Map.Entry<Integer, MenuItem> entry : menuItems.entrySet()) {
+            menuBuilder.append(entry.getKey())
+                    .append(". ")
+                    .append(entry.getValue().getDescription())
+                    .append("\n");
+        }
+        return menuBuilder.toString();
     }
 
     public void execute(int choice) {
-        Runnable action = menuItems.get(choice);
-        if (action != null) {
-            action.run();
+        MenuItem menuItem = menuItems.get(choice);
+        if (menuItem != null) {
+            menuItem.getAction().run();
         } else {
             System.out.println("Неверный выбор. Пожалуйста, попробуйте еще раз.");
         }
