@@ -1,6 +1,7 @@
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.familly_tree.FamilyTree;
+import ru.gb.family_tree.familly_tree.Service;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.writer.FileHandler;
@@ -11,10 +12,18 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) {
-//        FamilyTree familyTree = testTree();
-        FamilyTree familyTree = readTree();
-//        saveTree(familyTree);
+//        int genId = 0;
+        FamilyTree familyTree = testTree();
+//        FamilyTree familyTree = readTree();
+        saveTree(familyTree);
         System.out.println(familyTree); // смотрим, что введено в Базу
+
+
+        Service service = new Service();
+        service.addHuman("Шурин", Gender.Male, LocalDate.of(1984, 6, 19));
+        service.addHuman("Шафер", Gender.Male, LocalDate.of(1995, 3, 31));
+
+
     }
 
     public static FamilyTree readTree() {
@@ -56,7 +65,7 @@ public class Main {
         familyTree.add(sosedka);
         familyTree.setWedding(sosed, sosedka); // женимся
         familyTree.setDivorce(sosed, sosedka); // соседи разводятся
-        familyTree.remove(5); // соседи удаляютя из дерева
+        familyTree.remove(5); // соседи удаляются из дерева
         familyTree.remove(6);
 
         return familyTree;

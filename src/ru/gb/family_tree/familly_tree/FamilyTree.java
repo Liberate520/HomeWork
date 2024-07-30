@@ -1,13 +1,16 @@
 package ru.gb.family_tree.familly_tree;
 
 import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.human.HumanComparatorByBirthDate;
+import ru.gb.family_tree.human.HumanComparatorByName;
 
 import java.io.Externalizable;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {    // Список людей
+public class FamilyTree implements Serializable, Iterable<Human> {    // Список людей
     private long humansId;
     private List<Human> humanList;
 
@@ -88,4 +91,17 @@ public class FamilyTree implements Serializable {    // Список людей
         }
         return sb.toString();
     }
+
+    @Override
+    public Iterator<Human> iterator(){
+        return new FamilyTreeIterator(humanList);
+    }
+
+//    public void sortByBirthDate(){                                        // изучаю
+//        humanList.sort(new HumanComparatorByBirthDate());
+//    }
+//
+//    public void sortByBirthDate(){                                        // изучаю
+//        humanList.sort(new HumanComparatorByName());
+//    }
 }

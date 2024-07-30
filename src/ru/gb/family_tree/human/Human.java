@@ -14,8 +14,8 @@ public class Human implements Serializable {
     private Gender gender;
     private Human father;
     private Human mother;
-    private List<Human> children;
     private Human spouse;
+    private List<Human> children;  // не очень понимаю зачем этот список, если его можно получить из мамы и папы
 
     public Human(String name, LocalDate birthDate, LocalDate deathDate, Human father, Human mother,
                  List<Human> children, Gender gender) { // Общий конструктор для Человека
@@ -53,6 +53,7 @@ public class Human implements Serializable {
     public Human getSpouse(){ return spouse;}
 
 
+
     @Override
     public String toString() {
         return getInfo();
@@ -84,6 +85,9 @@ public class Human implements Serializable {
     public void setFather (Human father) { this.father = father; }
     public void setMother (Human mother) { this.mother = mother; }
 
+    public LocalDate getBirthDate (){
+        return birthDate;
+    }
 
     public String getSpouseInfo(){
         String res = "супруг(а): ";
