@@ -1,7 +1,7 @@
 package ru.gb.family_tree.family_tree;
 
-import ru.gb.family_tree.comparators.HumanComparatorByAge;
-import ru.gb.family_tree.comparators.HumanComparatorByName;
+import ru.gb.family_tree.human.comparators.HumanComparatorByAge;
+import ru.gb.family_tree.human.comparators.HumanComparatorByName;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.HumanBuilder;
@@ -10,7 +10,6 @@ import ru.gb.family_tree.human.HumanIterator;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.gb.family_tree.comparators;
+package ru.gb.family_tree.human.comparators;
 
 import ru.gb.family_tree.human.Human;
 
