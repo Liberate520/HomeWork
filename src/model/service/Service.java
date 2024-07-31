@@ -7,6 +7,7 @@ import model.human.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Service implements Serializable {
     private FamilyTree<Human> tree;
@@ -27,6 +28,10 @@ public class Service implements Serializable {
         Human mother = tree.getByName(motherName);
         Human human = builder.build(name, gender, birthDate, mother, father);
         tree.addHuman(human);
+    }
+
+    public List<Human> getPeople(){
+        return tree.getPeople();
     }
 
     public String getPeopleInfo(){

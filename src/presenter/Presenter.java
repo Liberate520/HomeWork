@@ -2,20 +2,22 @@ package presenter;
 
 import model.human.Gender;
 import model.service.Service;
+import model.writer.DataHandler;
 import view.View;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Presenter {
-    private Scanner scanner;
+    private String filePath;
     private View view;
     private Service service;
+    private DataHandler dataHandler;
 
     public Presenter(View view) {
         this.view = view;
         service = new Service();
-        scanner = new Scanner(System.in);
+        dataHandler = new DataHandler();
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate){
@@ -39,11 +41,28 @@ public class Presenter {
         service.sortByAge();
     }
 
-    public void setWedding(){
-        System.out.println("Введите имя первого человека");
-        String human1 = scanner.nextLine();
-        System.out.println("Введите имя второго человека");
-        String human2 = scanner.nextLine();
+    public void setWedding(String human1, String human2){
         service.setWedding(human1, human2);
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+        dataHandler.setPath(filePath);
+    }
+
+    public void save(){
+        dataHandler.setPath(filePath);
+        dataHandler.save(service);
+    }
+
+    public Serializable load(){
+        dataHandler.setPath(filePath);
+        service = (Service) dataHandler.read();
+        return service;
+
+//        dataHandler.setPath(filePath);
+//        Serializable loadedData = (Serializable)dataHandler.read();
+//        service = (Service) loadedData;
+//        return service;
     }
 }

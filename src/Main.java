@@ -1,14 +1,8 @@
-import model.writer.DataHandler;
-import model.human.Gender;
-import model.service.Service;
 import view.ConsoleUI;
-
-import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Main {
 
-    final static String filePath = "src/model.writer/tree.txt";
+//    final static String filePath = "src/model.writer/tree.txt";
     public static void main(String[] args) {
 
         ConsoleUI consoleUI = new ConsoleUI();

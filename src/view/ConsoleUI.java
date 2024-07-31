@@ -3,8 +3,10 @@ package view;
 import model.human.Gender;
 import presenter.Presenter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Scanner;
+
 
 public class ConsoleUI implements View{
 
@@ -108,19 +110,39 @@ public class ConsoleUI implements View{
     }
 
     public void setWedding(){
-        presenter.setWedding();
+        System.out.println("Введите имя первого человека");
+        String human1 = scanner.nextLine();
+        System.out.println("Введите имя второго человека");
+        String human2 = scanner.nextLine();
+        presenter.setWedding(human1, human2);
+        presenter.getPeopleInfo();
     }
 
     public void sortByAge(){
         presenter.sortByAge();
+        presenter.getPeopleInfo();
     }
 
     public void sortByName(){
         presenter.sortByName();
+        presenter.getPeopleInfo();
     }
 
     public void getPeopleInfo(){
         presenter.getPeopleInfo();
     }
 
+    public void save() {
+        System.out.println("Введите путь к файлу для сохранения");
+        String filePath = scanner.nextLine();
+        presenter.setFilePath(filePath);
+        presenter.save();
+    }
+
+    public Serializable load() {
+        System.out.println("Введите путь для загрузки файла");
+        String filePath = scanner.nextLine();
+        presenter.setFilePath(filePath);
+        return presenter.load();
+    }
 }
