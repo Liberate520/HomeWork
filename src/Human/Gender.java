@@ -1,2 +1,6 @@
-package Human;public class Gender {
+package Human;
+
+public enum Gender {
+    Male, Female
 }
+
