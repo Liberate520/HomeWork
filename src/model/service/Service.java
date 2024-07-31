@@ -25,6 +25,12 @@ public class Service {
         familyTree.addHuman(human);
     }
 
+    public void addChildToParent(long idParent, long idChild) {
+        Human parent = familyTree.getById(idParent);
+        Human child = familyTree.getById(idChild);
+        parent.addChild(child);
+    }
+
     public void setMother(long idChild, long idMother) {
         Human mother = familyTree.getById(idMother);
         Human child = familyTree.getById(idChild);
@@ -37,15 +43,13 @@ public class Service {
         child.setFather(father);
     }
 
-    public void addChildToParent(long idParent, long idChild) {
-        Human parent = familyTree.getById(idParent);
-        Human child = familyTree.getById(idChild);
-        parent.addChild(child);
-    }
-
     public void setDateOfDeath(long idHuman, LocalDate dateOfDeath) {
         Human human = familyTree.getById(idHuman);
         human.setDeathDate(dateOfDeath);
+    }
+
+    public LocalDate getBirthDate(long idHuman) {
+        return familyTree.getById(idHuman).getBirthDate();
     }
 
     public void sortByName() {
@@ -79,10 +83,6 @@ public class Service {
 
     public Human getHumanById(long idHuman) {
         return familyTree.getById(idHuman);
-    }
-
-    public LocalDate getBirthDate(long idHuman) {
-        return familyTree.getById(idHuman).getBirthDate();
     }
 
     public void saveFile() {

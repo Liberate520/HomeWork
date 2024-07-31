@@ -50,6 +50,11 @@ public class ConsoleUI implements View {
         }
     }
 
+    private void greeting() {
+        System.out.println("Программа запустилась.\nДобро пожаловать в программу для создания Вашего семейного древа!");
+    }
+
+    // Открыть меню по сортировке
     public void openSortMenu() {
         System.out.println(sortMenu.showMenu());
         System.out.println("Введите пункт меню (число):");
@@ -62,6 +67,7 @@ public class ConsoleUI implements View {
         }
     }
 
+    // Открыть меню по работе с фалами семейного древа
     public void openFileMenu() {
         System.out.println(fileMenu.showMenu());
         System.out.println("Введите пункт меню (число):");
@@ -79,10 +85,6 @@ public class ConsoleUI implements View {
         scanner.close();
         work = false;
         System.out.println("Пока-пока, программа закрылась!\nСемейное древо сохранилось в файл: " + presenter.getPath());
-    }
-
-    private void greeting() {
-        System.out.println("Программа запустилась.\nДобро пожаловать в программу для создания Вашего семейного древа!");
     }
 
     public void addHuman() {
@@ -260,51 +262,6 @@ public class ConsoleUI implements View {
         presenter.sortById();
     }
 
-    private long strNumToLong(String choiceStr) {
-        try {
-            return Long.parseLong(choiceStr);
-        } catch(NumberFormatException e){
-            return -1;
-        }
-    }
-
-    private int strNumToInt(String choiceStr) {
-        try {
-            return Integer.parseInt(choiceStr);
-        } catch(NumberFormatException e){
-            return -1;
-        }
-    }
-
-    private boolean searchIdHuman(long idHuman) {
-        return getHumanById(idHuman) != null;
-    }
-
-    private boolean isNumMainMenu(int choice) {
-        if (choice > 0 && choice <= mainMenu.size()){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isNumSortMenu(int choice) {
-        if (choice > 0 && choice <= sortMenu.size()){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isNumFileMenu(int choice) {
-        if (choice > 0 && choice <= fileMenu.size()){
-            return true;
-        }
-        return false;
-    }
-
-    private Human getHumanById(long idHuman) {
-        return presenter.getHumanById(idHuman);
-    }
-
     public void save() {
         System.out.println("Сохранение семейного древа:");
         System.out.println("1. Сохранить в файл по умолчанию: " + presenter.getPath());
@@ -343,7 +300,7 @@ public class ConsoleUI implements View {
         }
     }
 
-    // Добавил возможность пользователю изменениять пути к файлу семейного древа
+    // Добавил возможность пользователю изменить путь к файлу семейного древа
     public void setCustomPath() {
         System.out.print("Введите путь к директории для сохранения данных (например, C:\\Users\\User\\Documents): ");
         String directoryPath = scanner.nextLine();
@@ -361,7 +318,62 @@ public class ConsoleUI implements View {
         }
     }
 
-    // Проверка на авлидность дериктории
+    // Показать текущий путь к файлу, с которым работаем
+    public void showCurrentFilePath() {
+        System.out.println("Сейчас используется файл по этому пути: " + presenter.getPath());
+    }
+
+    // Преобразование строки (выбор пользователя) в long
+    private long strNumToLong(String choiceStr) {
+        try {
+            return Long.parseLong(choiceStr);
+        } catch(NumberFormatException e){
+            return -1;
+        }
+    }
+
+    // Преобразование строки (выбор пользователя) в int
+    private int strNumToInt(String choiceStr) {
+        try {
+            return Integer.parseInt(choiceStr);
+        } catch(NumberFormatException e){
+            return -1;
+        }
+    }
+
+    private boolean searchIdHuman(long idHuman) {
+        return getHumanById(idHuman) != null;
+    }
+
+    // Проверка на валидность выбора пункта Главного меню
+    private boolean isNumMainMenu(int choice) {
+        if (choice > 0 && choice <= mainMenu.size()){
+            return true;
+        }
+        return false;
+    }
+
+    // Проверка на валидность выбора пункта Меню сортировки
+    private boolean isNumSortMenu(int choice) {
+        if (choice > 0 && choice <= sortMenu.size()){
+            return true;
+        }
+        return false;
+    }
+
+    // Проверка на валидность выбора пункта Меню по работе с файлами
+    private boolean isNumFileMenu(int choice) {
+        if (choice > 0 && choice <= fileMenu.size()){
+            return true;
+        }
+        return false;
+    }
+
+    private Human getHumanById(long idHuman) {
+        return presenter.getHumanById(idHuman);
+    }
+
+    // Проверка на валидность дериктории
     private boolean isValidDirectory(String path) {
         try {
             Path p = Paths.get(path);
@@ -371,6 +383,7 @@ public class ConsoleUI implements View {
         }
     }
 
+    // Проверка на валидность файла
     private boolean isValidFile(String path) {
         try {
             Path p = Paths.get(path);
@@ -402,10 +415,6 @@ public class ConsoleUI implements View {
         } else {
             System.out.println("\nФайл по умолчанию для семейного древа уже существует: " + presenter.getPath());
         }
-    }
-
-    public void showCurrentFilePath() {
-        System.out.println("Сейчас используется файл по этому пути: " + presenter.getPath());
     }
 
     @Override

@@ -27,6 +27,10 @@ public class Presenter {
         getHumansListInfo();
     }
 
+    public Human getHumanById(long idHuman) {
+        return service.getHumanById(idHuman);
+    }
+
     public void getHumansListInfo() {
         String answer = service.getHumansListInfo();
         view.printAnswer(answer);
@@ -79,10 +83,6 @@ public class Presenter {
     public void sortById() {
         service.sortById();
         getHumansListInfo();
-    }
-
-    public Human getHumanById(long idHuman) {
-        return service.getHumanById(idHuman);
     }
 
     public void saveFile() {
