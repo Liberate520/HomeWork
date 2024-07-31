@@ -1,35 +1,33 @@
 package ru.gb.family_tree.iterator;
 
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.family_tree.FamilyTreeElement;
 
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Итератор для обхода списка объектов {@link Human} в семейном дереве.
- * <p>
- * Этот итератор позволяет последовательно проходить через элементы списка {@code familyTreeList},
- * предоставляя доступ к каждому объекту {@link Human} в порядке их следования.
- * </p>
+ * Итератор для обхода элементов семейного древа.
+ *
+ * @param <E> тип элементов семейного древа, должен быть подтипом FamilyTreeElement
  */
-public class FamilyTreeIterator implements Iterator<Human> {
+public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Iterator<E> {
     private int idx;
-    private List<Human> familyTreeList;
+    private List<E> familyTreeList;
 
     /**
-     * Конструктор для инициализации итератора.
+     * Конструктор для создания итератора семейного древа.
      *
-     * @param familyTreeList список объектов {@link Human}, по которому будет осуществляться итерация
+     * @param familyTreeList список элементов семейного древа
      */
-    public FamilyTreeIterator(List<Human> familyTreeList) {
+    public FamilyTreeIterator(List<E> familyTreeList) {
         this.familyTreeList = familyTreeList;
+        idx = 0;
     }
 
     /**
-     * Проверяет, есть ли еще элементы для итерации.
+     * Проверяет, есть ли следующий элемент в списке.
      *
-     * @return {@code true}, если в списке {@code familyTreeList} остались элементы для итерации,
-     *         {@code false} в противном случае
+     * @return true, если следующий элемент существует, иначе false
      */
     @Override
     public boolean hasNext() {
@@ -37,13 +35,13 @@ public class FamilyTreeIterator implements Iterator<Human> {
     }
 
     /**
-     * Возвращает следующий элемент в последовательности итерации.
+     * Возвращает следующий элемент из списка.
      *
-     * @return следующий объект {@link Human} из списка {@code familyTreeList}
-     * @throws java.util.NoSuchElementException если в списке больше нет элементов
+     * @return следующий элемент семейного древа
+     * @throws NoSuchElementException если больше нет элементов в списке
      */
     @Override
-    public Human next() {
+    public E next() {
         return familyTreeList.get(idx++);
     }
 }

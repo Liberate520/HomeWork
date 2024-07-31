@@ -8,19 +8,40 @@ import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 
-
+/**
+ * Основной класс приложения для работы с семейным древом.
+ * <p>
+ * В классе {@code Main} демонстрируются основные операции с семейным древом:
+ * создание, сортировка, запись и чтение из файлов.
+ * </p>
+ */
 public class Main {
+    /**
+     * Основной метод приложения.
+     * <p>
+     * В методе выполняются следующие действия:
+     * <ul>
+     *     <li>Инициализация путей к файлам для записи и чтения данных.</li>
+     *     <li>Создание и заполнение экземпляра {@code FamilyTree} данными.</li>
+     *     <li>Вывод данных семейного древа до записи в файлы.</li>
+     *     <li>Сортировка и вывод данных по имени и возрасту.</li>
+     *     <li>Запись данных в файлы.</li>
+     *     <li>Чтение данных из файлов и вывод восстановленных данных.</li>
+     * </ul>
+     * </p>
+     *
+     * @param args Массив аргументов командной строки.
+     */
     public static void main(String[] args) {
-
-//        Адреса файла для записи/чтения:
+        // Адреса файла для записи/чтения:
         String path1 = "src/ru/gb/family_tree/writer/family_tree_sorted_by_name.out";
         String path2 = "src/ru/gb/family_tree/writer/family_tree_sorted_by_age.out";
 
-//        Инициализируем экземпляр класса для записи/чтения:
+        // Инициализация экземпляра класса для записи/чтения:
         FileHandler fileHandler = new FileHandler();
 
-//        Инициализируем экземпляр класса семейного древа:
-        FamilyTree familyTree = testTree();
+        // Инициализация экземпляра класса семейного древа:
+        FamilyTree<Human> familyTree = testTree();
 
         System.out.println("\nДанные из семейного древа ДО чтения из файла:\n");
         System.out.println(familyTree);
@@ -31,43 +52,38 @@ public class Main {
         familyTree.sortByName();
         System.out.println(familyTree);
 
-//  ---------------------------------------
-//        Запись в файл:
+        // Запись в файл:
         fileHandler.write(familyTree, path1);
-
-//  ------------------------------------
 
         System.out.println("Sorted by Age:\n");
 
         familyTree.sortByAge();
         System.out.println(familyTree);
 
-//  ---------------------------------------
-//        Запись в файл:
+        // Запись в файл:
         fileHandler.write(familyTree, path2);
 
-//  ------------------------------------
-
-//  ------------------------------------
-
-//        Чтение из файла:
-        FamilyTree familyTreeRestored1 = (FamilyTree) fileHandler.read(path1);
+        // Чтение из файла:
+        FamilyTree<Human> familyTreeRestored1 = (FamilyTree<Human>) fileHandler.read(path1);
         System.out.println("\nДанные из семейного древа c сортировкой по имени\nПОСЛЕ чтения из файла:\n");
         System.out.println(familyTreeRestored1);
 
-//  ------------------------------------
-
-//        Чтение из файла:
-        FamilyTree familyTreeRestored2 = (FamilyTree) fileHandler.read(path2);
+        // Чтение из файла:
+        FamilyTree<Human> familyTreeRestored2 = (FamilyTree<Human>) fileHandler.read(path2);
         System.out.println("\nДанные из семейного древа c сортировкой по возрасту\nПОСЛЕ чтения из файла:\n");
         System.out.println(familyTreeRestored2);
     }
 
-//  ---------------------------------------------
-
-
-    static FamilyTree testTree() {
-        FamilyTree familyTree = new FamilyTree();
+    /**
+     * Создает и заполняет тестовое семейное древо данными.
+     * <p>
+     * Создает экземпляры {@code Human}, связывает их в семейные отношения и добавляет их в {@code FamilyTree}.
+     * </p>
+     *
+     * @return Заполненное тестовое семейное древо.
+     */
+    static FamilyTree<Human> testTree() {
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         Human human1 = new Human("Ермолов Вадим Викторович", Gender.male, LocalDate.of(1981, 5, 29));
         Human human2 = new Human("Ермолова Нурия Айдаровна", Gender.female, LocalDate.of(1981, 3, 17));
@@ -89,12 +105,12 @@ public class Main {
         human5.addSpouse(human6, SpouseStatus.Actual);
         human6.addSpouse(human5, SpouseStatus.Actual);
 
-        familyTree.addHuman(human1);
-        familyTree.addHuman(human2);
-        familyTree.addHuman(human3);
-        familyTree.addHuman(human4);
-        familyTree.addHuman(human5);
-        familyTree.addHuman(human6);
+        familyTree.addMember(human1);
+        familyTree.addMember(human2);
+        familyTree.addMember(human3);
+        familyTree.addMember(human4);
+        familyTree.addMember(human5);
+        familyTree.addMember(human6);
 
         return familyTree;
     }
