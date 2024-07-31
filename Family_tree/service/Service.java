@@ -8,11 +8,11 @@ import Family_tree.human.Gender;
 import Family_tree.human.Human;
 
 public class Service {
-    public FamilyTree tree;
+    public FamilyTree<Human> tree;
     private HumanBuilder builder;
 
     public Service() {
-        tree = new FamilyTree();
+        tree = new FamilyTree<>();
         builder = new HumanBuilder();
     }
 

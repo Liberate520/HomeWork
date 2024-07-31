@@ -8,17 +8,18 @@ import java.util.List;
 
 import Family_tree.human.Human;
 import Family_tree.human.HumanComparatorByAge;
+import Family_tree.human.HumanComparatorByName;
 
-public class FamilyTree implements Serializable, Iterable<Human>{
+public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Iterable<T> {
     private long humansId;  
-    private List<Human> people;
+    private List<T> people;
 
     public FamilyTree(){
         people = new ArrayList<>();
     }
 
-    public Human getByName(String nameHuman){
-        for (Human human: people){
+    public T getByName(String nameHuman){
+        for (T human: people){
             if (human.getName().equals(nameHuman)){
                 return human;
             }
@@ -31,7 +32,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
             return false;
         }
         if (!people.contains(human)){
-            people.add(human);
+            people.add((T) human);
             human.setId(humansId++);
             
             // addToParents(human);
@@ -45,11 +46,11 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
     
         public void sortByName(){
-            Collections.sort(people);
+            people.sort(new HumanComparatorByName<>());;
         }
     
         public void sortByAge(){
-            people.sort(new HumanComparatorByAge());
+            people.sort(new HumanComparatorByAge<>());
         }
     
     // private void addToParents(Human human){
@@ -91,7 +92,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     //     }
     // }
 
-    public boolean getDivorsed(Human human1, Human human2) {
+    public boolean getDivorsed(T human1, T human2) {
         if (human1.getSpouse() != null && human2.getSpouse() != null) {
             human1.setSpouse(null);
             human2.setSpouse(null);
@@ -105,7 +106,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Family members list:\n");
-        for (Human human: people){
+        for (T human: people){
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
@@ -113,7 +114,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
 
        @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(people);
+    public Iterator<T> iterator() {
+        return new HumanIterator<>(people);
     }
 }

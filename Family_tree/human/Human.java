@@ -5,8 +5,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import Family_tree.family_tree.ItemFamilyTree;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
     private long id;
     private String name;
     private Gender gender;
@@ -158,17 +159,17 @@ public class Human implements Serializable, Comparable<Human> {
         }
     }
 
-    public void addFather(Human parent) {
-        if (parent.getGender().equals(Gender.Male) ) {
-            setFather(parent);
+    public void addFather(Human human) {
+        if (human.getGender().equals(Gender.Male) ) {
+            setFather(human);
             if (this.getMother() == null){
-                this.setMother(parent.getSpouse());
+                this.setMother(human.getSpouse());
             }
         } else {
-            addMother(parent);
+            addMother(human);
         }
-        if (!parent.getChildren().contains(this)) {
-            parent.getChildren().add(this); 
+        if (!human.getChildren().contains(this)) {
+            human.getChildren().add(this); 
         }
     }
 

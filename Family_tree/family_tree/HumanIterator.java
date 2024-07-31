@@ -3,13 +3,13 @@ package Family_tree.family_tree;
 import java.util.Iterator;
 import java.util.List;
 
-import Family_tree.human.Human;
+// import Family_tree.human.Human;
 
-public class HumanIterator implements Iterator<Human>{
+public class HumanIterator<T> implements Iterator<T>{
     private int currentId;
-    private List<Human> tree;
+    private List<T> tree;
 
-    public HumanIterator(List<Human> tree) {
+    public HumanIterator(List<T> tree) {
         this.tree = tree;
     }
 
@@ -19,7 +19,7 @@ public class HumanIterator implements Iterator<Human>{
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return tree.get(currentId++);
     }
 }
