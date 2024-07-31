@@ -16,11 +16,11 @@ public class Main {
 
 
 
-        System.out.println(service.getHumansInfo());
+        System.out.println(service.getHumansInfo(1));
         service.sortByName();
-        System.out.println(service.getHumansInfo());
+        System.out.println(service.getHumansInfo(2));
         service.sortByDOB();
-        System.out.println(service.getHumansInfo());
+        System.out.println(service.getHumansInfo(3));
 
         //System.out.println("Выберите номер человека из древа  чтобы узнать его детей :");
         //System.out.println(ft.getHumansChildrenInfo(Integer.parseInt(sc.next())));

@@ -1,9 +1,11 @@
 package family_tree.human;
 
+import family_tree.family_tree.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Human implements Serializable{
+public class Human implements Serializable, ItemFamilyTree {
     private int id;
     private String name;
     private LocalDate dob, dod;
@@ -23,12 +25,14 @@ public class Human implements Serializable{
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    @Override
     public LocalDate getDob() {
         return dob;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDob(LocalDate dob) {
