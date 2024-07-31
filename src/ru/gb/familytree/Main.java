@@ -45,7 +45,7 @@ public class Main {
         List<Human> parents5 = new ArrayList<Human>();
         parents3.add(person3);
         parents3.add(person4);
-        person5.addParent();
+        person5.setParents(parents5);
 
         FamilyTree familyTree = new FamilyTree();
         familyTree.setRelative(person1);
@@ -53,5 +53,7 @@ public class Main {
         familyTree.setRelative(person3);
         familyTree.setRelative(person4);
         familyTree.setRelative(person5);
+
+
     }
 }
