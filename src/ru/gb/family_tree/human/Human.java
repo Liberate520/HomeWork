@@ -6,7 +6,7 @@ import java.util.List;
 import java.time.Period;
 import java.util.SplittableRandom;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private LocalDate birthDate;
@@ -29,7 +29,7 @@ public class Human implements Serializable {
         this.gender = gender;
     }
 
-    public Human(String name, LocalDate birthDate, Gender gender) {
+    public Human(String name, LocalDate birthDate, Gender gender, Human father, Human mother) {
         this.name = name;
         this.birthDate = birthDate;
         this.deathDate = null;
@@ -38,14 +38,11 @@ public class Human implements Serializable {
         this.mother = null;
     }
 
-    public Human(String name, LocalDate birthDate, Gender gender, Human father, Human mother) {
-        this.name = name;
-        this.birthDate = birthDate;
-        this.deathDate = null;
-        this.gender = gender;
-        this.father = father;
-        this.mother = mother;
-    }
+//    public Human(long id, String name, LocalDate birthDate) {
+//        this.id = id;
+//        this.name = name;
+//        this.birthDate = birthDate;
+//    }
 
     public void setId(long id) { this.id = id; }
     public long getId() { return id; }
@@ -119,6 +116,10 @@ public class Human implements Serializable {
     return res;
     }
 
+    @Override
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
+    }
 }
 
 

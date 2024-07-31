@@ -1,7 +1,7 @@
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.familly_tree.FamilyTree;
-import ru.gb.family_tree.familly_tree.Service;
+import ru.gb.family_tree.service.Service;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.writer.FileHandler;
@@ -18,11 +18,15 @@ public class Main {
         saveTree(familyTree);
         System.out.println(familyTree); // смотрим, что введено в Базу
 
-
         Service service = new Service();
         service.addHuman("Шурин", Gender.Male, LocalDate.of(1984, 6, 19));
         service.addHuman("Шафер", Gender.Male, LocalDate.of(1995, 3, 31));
 
+        System.out.println(familyTree);
+        familyTree.sortByName();
+        System.out.println(familyTree);
+        familyTree.sortByBirthDate();
+        System.out.println(familyTree);
 
     }
 
@@ -39,8 +43,8 @@ public class Main {
     private static FamilyTree testTree(){
         FamilyTree familyTree = new FamilyTree();
 
-        Human maksim = new Human("Максим", LocalDate.of(1972, 11, 22), Gender.Female);
-        Human nataly = new Human("Наталья", LocalDate.of(1972, 4, 9), Gender.Female);
+        Human maksim = new Human("Максим", LocalDate.of(1972, 11, 22), Gender.Female, null, null);
+        Human nataly = new Human("Наталья", LocalDate.of(1972, 4, 9), Gender.Female,null, null);
         familyTree.add(maksim);
         familyTree.add(nataly);
         familyTree.setWedding(maksim, nataly); // женимся
@@ -55,12 +59,12 @@ public class Main {
         vova.setFather(maksim);
         vova.setMother(nataly);
 
-        Human grandMother = new Human("Людмила", LocalDate.of(1939, 12, 25), Gender.Female);
+        Human grandMother = new Human("Людмила", LocalDate.of(1939, 12, 25), Gender.Female, null, null);
         familyTree.add(grandMother);
         maksim.setMother(grandMother); //
 
-        Human sosed = new Human("Алекс", LocalDate.of(1990, 1, 1), Gender.Male);
-        Human sosedka = new Human("Света", LocalDate.of(1991, 10, 10), Gender.Female);
+        Human sosed = new Human("Алекс", LocalDate.of(1990, 1, 1), Gender.Male, null, null);
+        Human sosedka = new Human("Света", LocalDate.of(1991, 10, 10), Gender.Female, null, null);
         familyTree.add(sosed);
         familyTree.add(sosedka);
         familyTree.setWedding(sosed, sosedka); // женимся

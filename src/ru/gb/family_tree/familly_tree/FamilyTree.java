@@ -1,14 +1,11 @@
 package ru.gb.family_tree.familly_tree;
 
 import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.human.HumanComparatorByBirthDate;
-import ru.gb.family_tree.human.HumanComparatorByName;
+import ru.gb.family_tree.human.comparators.HumanComparatorByBirthDate;
+import ru.gb.family_tree.human.comparators.HumanComparatorByName;
 
-import java.io.Externalizable;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class FamilyTree implements Serializable, Iterable<Human> {    // Список людей
     private long humansId;
@@ -35,7 +32,6 @@ public class FamilyTree implements Serializable, Iterable<Human> {    // Спи�
 
         }
     }
-
 
     public boolean setWedding(Human human1, Human human2) {
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
@@ -64,7 +60,7 @@ public class FamilyTree implements Serializable, Iterable<Human> {    // Спи�
         return false;
     }
 
-       public boolean checkId(long id) { return id < humansId && id >= 0; }
+    public boolean checkId(long id) { return id < humansId && id >= 0; }
 
     public Human getById(long id) {
         for (Human human : humanList) {
@@ -73,6 +69,16 @@ public class FamilyTree implements Serializable, Iterable<Human> {    // Спи�
             }
         }
         return null;
+    }
+
+    public void sortByName() {
+//        Collections.sort(humanList);
+//        humanList.sort(null);
+        humanList.sort(new HumanComparatorByName());
+    }
+    public void sortByBirthDate() {
+//        Collections.sort(humanList, new HumanComparatorByBirthDate());
+        humanList.sort(new HumanComparatorByBirthDate());
     }
 
     @Override
@@ -94,8 +100,9 @@ public class FamilyTree implements Serializable, Iterable<Human> {    // Спи�
 
     @Override
     public Iterator<Human> iterator(){
-        return new FamilyTreeIterator(humanList);
+        return new FamilyTreeIterator(humanList);  // Можно написать return humanList.iterator(), т.к. список людей уже - List
     }
+
 
 //    public void sortByBirthDate(){                                        // изучаю
 //        humanList.sort(new HumanComparatorByBirthDate());
