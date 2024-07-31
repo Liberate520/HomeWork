@@ -1,7 +1,9 @@
+package family_tree.human;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-public class Human implements Serializable {
+
+public class Human implements Serializable{
     private int id;
     private String name;
     private LocalDate dob, dod;
