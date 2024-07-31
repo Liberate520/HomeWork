@@ -391,16 +391,16 @@ public class ConsoleUI implements View {
             try {
                 // Создаем новый файл
                 if (defaultFile.createNewFile()) {
-                    System.out.println("Файл по умолчанию создан: " + presenter.getPath());
+                    System.out.println("\nСоздан файл по умолчанию для семейного древа: " + presenter.getPath());
                 } else {
-                    System.out.println("Не удалось создать файл по умолчанию: " + presenter.getPath());
+                    System.out.println("\nНе удалось создать файл по умолчанию: " + presenter.getPath());
                 }
             } catch (IOException e) {
-                System.out.println("Ошибка при создании файла: " + presenter.getPath());
+                System.out.println("\nОшибка при создании файла: " + presenter.getPath());
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Файл по умолчанию уже существует: " + presenter.getPath());
+            System.out.println("\nФайл по умолчанию для семейного древа уже существует: " + presenter.getPath());
         }
     }
 

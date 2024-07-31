@@ -33,7 +33,7 @@ public class MainMenu {
 
     public String showMenu() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\nМеню:\n");
+        stringBuilder.append("\nГлавное меню:\n");
         for (int i = 0; i < commands.size(); i++) {
             stringBuilder.append(i + 1);
             stringBuilder.append(". ");
