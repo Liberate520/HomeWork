@@ -1,4 +1,4 @@
-package Human;
+package Model.Human;
 
 import java.io.Serializable;
 

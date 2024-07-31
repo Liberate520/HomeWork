@@ -1,4 +1,4 @@
-package Writer;
+package Model.Writer;
 
 import java.io.IOException;
 import java.io.Serializable;

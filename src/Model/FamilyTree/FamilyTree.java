@@ -1,9 +1,8 @@
-package FamilyTree;
+package Model.FamilyTree;
 
-import Human.Human;
-import Human.HumanIterator;
-import Human.HumanByAgeComparator;
-import Human.HumanByNameComparator;
+import Model.Human.HumanIterator;
+import Model.Human.HumanByAgeComparator;
+import Model.Human.HumanByNameComparator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,13 +32,13 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
         return false;
     }
 
-    private void addToParents(T human){
+    public void addToParents(T human){
         for (T parent : human.getParents()){
             parent.addChild(human);
         }
     }
 
-    private void addToChildren(T human){
+    public void addToChildren(T human){
         for (T child : human.getChildren()){
             child.addParent(human);
         }
