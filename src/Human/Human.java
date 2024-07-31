@@ -1,12 +1,15 @@
 package Human;
 
+import FamilyTree.FamilyTree;
+import FamilyTree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human  implements Serializable, Comparable<Human> {
+public class Human  implements Serializable, Comparable<Human>, FamilyTreeItem {
     private int id = -1;
     private String name;
     private Gender gender;
@@ -16,15 +19,6 @@ public class Human  implements Serializable, Comparable<Human> {
     private List<Human> children;
     private Human Spouse;
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
-        parents = new ArrayList<>();
-        children = new ArrayList<>();
-    }
-
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, List<Human> parents) {
         this.name = name;
         this.gender = gender;
@@ -32,6 +26,11 @@ public class Human  implements Serializable, Comparable<Human> {
         this.deathDate = deathDate;
         this.parents = parents;
         children = new ArrayList<>();
+    }
+
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+        this(name, gender, birthDate, deathDate, null);
+        parents = new ArrayList<>();
     }
 
     private int getAge(LocalDate birthDate, LocalDate deathDate){
@@ -89,6 +88,11 @@ public class Human  implements Serializable, Comparable<Human> {
         return children;
     }
 
+    @Override
+    public void setChildren(Object human) {
+        this.setChildren((Human)human);
+    }
+
     public void setChildren(Human child) {
         if (!children.contains(child)) {
             children.add(child);
@@ -97,6 +101,11 @@ public class Human  implements Serializable, Comparable<Human> {
 
     public Human getSpouse() {
         return Spouse;
+    }
+
+    @Override
+    public void setSpouse(Object spouse) {
+        this.setSpouse((Human)spouse);
     }
 
     public void setSpouse(Human spouse) {

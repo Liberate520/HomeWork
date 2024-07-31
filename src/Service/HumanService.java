@@ -1,5 +1,6 @@
 package Service;
 
+//import Builder.HumanBuilder;
 import FamilyTree.FamilyTree;
 import Human.Human;
 import Human.Gender;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class HumanService {
     private FamilyTree familyTree;
+    //private HumanBuilder builder;
 
     public HumanService() {
         familyTree = new FamilyTree();
@@ -62,7 +64,7 @@ public class HumanService {
         familyTree.addHuman(dauther);
 
         Human grandmother = new Human("Nina", Gender.Female, LocalDate.of(1942, 8, 12), null);
-        Human grandfather = new Human("Egor", Gender.Male, LocalDate.of(1937, 7, 14), LocalDate.of(2021, 5, 13));
+        Human grandfather = new Human("Egor", Gender.Male, LocalDate.of(1937, 7, 14), LocalDate.of(1994, 5, 13));
 
         familyTree.addHuman(grandmother);
         familyTree.addHuman(grandfather);
@@ -72,7 +74,8 @@ public class HumanService {
         grandfather.setChildren(mother);
         mother.setParents(grandmother, grandfather);
 
-        parents.clear();
+        //parents.clear();
+        parents = new ArrayList<>();
         parents.add(null);
         parents.add(son);
 
