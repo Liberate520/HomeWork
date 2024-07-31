@@ -1,8 +1,7 @@
-package ru.gb.familytree;
+package ru.gb.familytree.FamilyTree;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 public class Human {
     private String name;
@@ -11,7 +10,7 @@ public class Human {
     private List<Human> parents;
     private List<Human> children;
 
-    Human() {
+    public Human() {
         birthDate = LocalDate.MIN;
         deathDate = LocalDate.MAX;
     }

@@ -1,4 +1,4 @@
-package ru.gb.familytree;
+package ru.gb.familytree.FamilyTree;
 
 import java.util.List;
 
