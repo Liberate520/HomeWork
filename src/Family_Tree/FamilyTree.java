@@ -1,63 +1,47 @@
 package Family_Tree;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
-    private Map<String, Person> people;
-    private FileIOInterface fileIO;
+public class FamilyTree<T> {
+    private Map<String, T> elements;
+    private FileIOInterface<Map<String, T>> fileIO;
 
     public FamilyTree() {
-        this.people = new HashMap<>();
-        this.fileIO = new FileIO();
+        this.elements = new HashMap<>();
+        this.fileIO = new FileIO<>();
     }
 
-    public void addPerson(Person person) {
-        people.put(person.getName(), person);
+    public void addElement(String key, T element) {
+        elements.put(key, element);
     }
 
-    public Person findPersonByName(String name) {
-        return people.get(name);
+    public T getElement(String key) {
+        return elements.get(key);
     }
 
-    public Map<String, Person> getPeople() {
-        return people;
+    public Map<String, T> getElements() {
+        return elements;
     }
 
     public void saveToFile(String fileName) {
-        fileIO.writeToFile(fileName, this);
+        fileIO.writeToFile(fileName, elements);
     }
 
     public void loadFromFile(String fileName) {
-        FamilyTree loadedTree = fileIO.readFromFile(fileName);
-        if (loadedTree != null) {
-            this.people = loadedTree.getPeople();
+        Map<String, T> loadedElements = fileIO.readFromFile(fileName);
+        if (loadedElements != null) {
+            elements.putAll(loadedElements);
         }
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        List<Person> sortedPeople = sortPeopleByName(new ArrayList<>(people.values()));
-        for (Person person : sortedPeople) {
-            sb.append(person.toString()).append("\
+        for (T element : elements.values()) {
+            sb.append(element.toString()).append("\
 ");
         }
         return sb.toString();
-    }
-
-    @Override
-    public Iterator<Person> iterator() {
-        return people.values().iterator();
-    }
-
-    private List<Person> sortPeopleByName(List<Person> peopleList) {
-        peopleList.sort(Comparator.comparing(Person::getName));
-        return peopleList;
-    }
-
-    private List<Person> sortPeopleByBirthDate(List<Person> peopleList) {
-        peopleList.sort(Comparator.comparing(Person::getBirthDate));
-        return peopleList;
     }
 }

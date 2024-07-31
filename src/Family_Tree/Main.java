@@ -4,24 +4,29 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree tree = new FamilyTree();
+        FamilyTree<Person> peopleTree = new FamilyTree<>();
+        FamilyTree<Dog> dogsTree = new FamilyTree<>();
 
         Person john = new Person("John", Person.MALE, LocalDate.of(1980, 1, 1));
-        Person jane = new Person("Jane", Person.FEMALE, LocalDate.of(1982, 3, 15));
-        Person alice = new Person("Alice", Person.FEMALE, LocalDate.of(2010, 5, 20));
+        Dog fido = new Dog("Fido", "Golden Retriever", LocalDate.of(2015, 5, 10));
 
-        john.addChild(alice);
-        jane.addChild(alice);
+        peopleTree.addElement(john.getName(), john);
+        dogsTree.addElement(fido.getName(), fido);
 
-        tree.addPerson(john);
-        tree.addPerson(jane);
-        tree.addPerson(alice);
+        peopleTree.saveToFile("people_tree.dat");
+        dogsTree.saveToFile("dogs_tree.dat");
 
-        tree.saveToFile("family_tree.dat");
+        // Загрузка данных из файлов
+        FamilyTree<Person> loadedPeopleTree = new FamilyTree<>();
+        FamilyTree<Dog> loadedDogsTree = new FamilyTree<>();
 
-        // Загружаем данные из файла
-        FamilyTree loadedTree = new FamilyTree();
-        loadedTree.loadFromFile("family_tree.dat");
-        System.out.println(loadedTree);
+        loadedPeopleTree.loadFromFile("people_tree.dat");
+        loadedDogsTree.loadFromFile("dogs_tree.dat");
+
+        System.out.println("People Tree:");
+        System.out.println(loadedPeopleTree);
+
+        System.out.println("Dogs Tree:");
+        System.out.println(loadedDogsTree);
     }
 }

@@ -1,13 +1,12 @@
 package Family_Tree;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Person implements Serializable {
+public class Person {
     public static final int MALE = 0;
     public static final int FEMALE = 1;
 
@@ -46,10 +45,6 @@ public class Person implements Serializable {
 
     public String getName() {
         return this.name;
-    }
-
-    public LocalDate getBirthDate() {
-        return this.birthDate;
     }
 
     public int getAge() {
