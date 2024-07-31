@@ -2,6 +2,8 @@ package human;
 
 
 
+import family_tree.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Human implements Serializable,Comparable<Human> {
+public class Human implements ItemFamilyTree<Human>{
     private long id ;
     private String name;
     private Gender gender;
@@ -248,8 +250,8 @@ public class Human implements Serializable,Comparable<Human> {
         return human.getId() == getId();
     }
 
-    @Override
-    public int compareTo(Human o) {
-        return this.name.compareTo(o.name);
-    }
+//    @Override
+//    public int compareTo(Human o) {
+//        return this.name.compareTo(o.name);
+//    }
 }
