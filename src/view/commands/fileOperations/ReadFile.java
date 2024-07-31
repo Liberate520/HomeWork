@@ -10,6 +10,6 @@ public class ReadFile extends Command {
 
     @Override
     public void execute() {
-        getConsoleUI().read();
+        getConsoleUI().importFile();
     }
 }

@@ -3,7 +3,11 @@ package view;
 import model.person.Gender;
 import model.person.Human;
 import presenter.Presenter;
+import view.extraMenus.FileMenu;
+import view.extraMenus.SortMenu;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,30 +19,58 @@ public class ConsoleUI implements View {
     private Scanner scanner;
     private boolean work;
     private Presenter presenter;
-    private MainMenu menu;
-    Gender gender;
+    private MainMenu mainMenu;
+    private SortMenu sortMenu;
+    private FileMenu fileMenu;
     private static final String INPUT_ID_ERROR = "Человека нет с таким ID";
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         work = true;
         presenter = new Presenter(this);
-        menu = new MainMenu(this);
+        mainMenu = new MainMenu(this);
+        sortMenu = new SortMenu(this);
+        fileMenu = new FileMenu(this);
     }
 
     @Override
     public void start() {
         greeting();
+        checkAndOrCreateDefaultFile();
         while (work) {
-            System.out.println(menu.showMenu());
+            System.out.println(mainMenu.showMenu());
             System.out.println("Введите пункт меню (число):");
             String choiceStr = scanner.nextLine();
             int choice = strNumToInt(choiceStr);
-            if (isNumMenu(choice)) {
-                menu.execute(choice);
+            if (isNumMainMenu(choice)) {
+                mainMenu.execute(choice);
             } else {
                 System.out.println("Неверный ввод. Попробуйте еще раз");
             }
+        }
+    }
+
+    public void openSortMenu() {
+        System.out.println(sortMenu.showMenu());
+        System.out.println("Введите пункт меню (число):");
+        String choiceStr = scanner.nextLine();
+        int choice = strNumToInt(choiceStr);
+        if (isNumSortMenu(choice)) {
+            sortMenu.execute(choice);
+        } else {
+            System.out.println("Неверный ввод. Попробуйте еще раз");
+        }
+    }
+
+    public void openFileMenu() {
+        System.out.println(fileMenu.showMenu());
+        System.out.println("Введите пункт меню (число):");
+        String choiceStr = scanner.nextLine();
+        int choice = strNumToInt(choiceStr);
+        if (isNumFileMenu(choice)) {
+            fileMenu.execute(choice);
+        } else {
+            System.out.println("Неверный ввод. Попробуйте еще раз");
         }
     }
 
@@ -46,7 +78,7 @@ public class ConsoleUI implements View {
         presenter.saveFile();
         scanner.close();
         work = false;
-        System.out.println("Пока-пока, программа закрылась!");
+        System.out.println("Пока-пока, программа закрылась!\nСемейное древо сохранилось в файл: " + presenter.getPath());
     }
 
     private void greeting() {
@@ -54,6 +86,7 @@ public class ConsoleUI implements View {
     }
 
     public void addHuman() {
+        Gender gender;
         System.out.println("Введите имя:");
         String name = scanner.nextLine();
 
@@ -88,12 +121,12 @@ public class ConsoleUI implements View {
     public void addChild() {
         System.out.println("Введите ID родителя:");
         String idParentStr = scanner.nextLine();
-        int idParent = strNumToInt(idParentStr);
+        long idParent = strNumToLong(idParentStr);
 
         if (searchIdHuman(idParent)){
             System.out.println("Введите ID ребенка:");
             String idChildStr = scanner.nextLine();
-            int idChild = strNumToInt(idChildStr);
+            long idChild = strNumToLong(idChildStr);
 
             if (searchIdHuman(idChild)){
                 presenter.addChildToParent(idParent, idChild);
@@ -105,7 +138,7 @@ public class ConsoleUI implements View {
     public void getHumanBirthDate() {
         System.out.println("Введите ID челоека:");
         String choiceStr = scanner.nextLine();
-        int idHuman = strNumToInt(choiceStr);
+        long idHuman = strNumToLong(choiceStr);
         if (searchIdHuman(idHuman)) {
             System.out.println(getHumanById(idHuman).getName() + ":");
             presenter.getHumanBirthDate(idHuman);
@@ -121,7 +154,7 @@ public class ConsoleUI implements View {
     public void setDateOfDeath() {
         System.out.println("Введите ID челоека:");
         String idHumanStr = scanner.nextLine();
-        int idHuman = strNumToInt(idHumanStr);
+        long idHuman = strNumToLong(idHumanStr);
         if (searchIdHuman(idHuman)) {
             System.out.println("Укажите дату смерти в формате yyyy-mm-dd");
             String dateOfDeathStr = scanner.nextLine();
@@ -138,10 +171,13 @@ public class ConsoleUI implements View {
 
     public void setWedding() {
         System.out.println("Введите ID жениха: ");
-        long id1 = Long.parseLong(scanner.nextLine());
+        String idHusband = scanner.nextLine();
+        long id1 = strNumToLong(idHusband);
+
         if (searchIdHuman(id1)) {
             System.out.println("Введите ID невесты: ");
-            long id2 = Long.parseLong(scanner.nextLine());
+            String idWife = scanner.nextLine();
+            long id2 = strNumToLong(idWife);
 
             if (searchIdHuman(id2)) {
                 presenter.setWedding(id1, id2);
@@ -156,10 +192,12 @@ public class ConsoleUI implements View {
 
     public void setDivorce() {
         System.out.println("Введите ID мужа: ");
-        long id1 = Long.parseLong(scanner.nextLine());
+        String idHusband = scanner.nextLine();
+        long id1 = strNumToLong(idHusband);
         if (searchIdHuman(id1)) {
             System.out.println("Введите ID жены: ");
-            long id2 = Long.parseLong(scanner.nextLine());
+            String idWife = scanner.nextLine();
+            long id2 = strNumToLong(idWife);
 
             if (searchIdHuman(id2)) {
                 presenter.setDivorce(id1, id2);
@@ -175,12 +213,12 @@ public class ConsoleUI implements View {
     public void setFather() {
         System.out.println("Укажите ID отца:");
         String idFatherStr = scanner.nextLine();
-        int idFather = strNumToInt(idFatherStr);
+        long idFather = strNumToLong(idFatherStr);
 
         if (searchIdHuman(idFather)){
             System.out.println("Укажите ID ребенка:");
             String idChildStr = scanner.nextLine();
-            int idChild = strNumToInt(idChildStr);
+            long idChild = strNumToLong(idChildStr);
 
             if (searchIdHuman(idChild)){
                 presenter.setFather(idChild, idFather);
@@ -192,12 +230,12 @@ public class ConsoleUI implements View {
     public void setMother() {
         System.out.println("Укажите ID мамы:");
         String idMotherStr = scanner.nextLine();
-        int idMother = strNumToInt(idMotherStr);
+        long idMother = strNumToLong(idMotherStr);
 
         if (searchIdHuman(idMother)){
             System.out.println("Укажите ID ребенка:");
             String idChildStr = scanner.nextLine();
-            int idChild = strNumToInt(idChildStr);
+            long idChild = strNumToLong(idChildStr);
 
             if (searchIdHuman(idChild)){
                 presenter.setMother(idChild, idMother);
@@ -222,6 +260,14 @@ public class ConsoleUI implements View {
         presenter.sortById();
     }
 
+    private long strNumToLong(String choiceStr) {
+        try {
+            return Long.parseLong(choiceStr);
+        } catch(NumberFormatException e){
+            return -1;
+        }
+    }
+
     private int strNumToInt(String choiceStr) {
         try {
             return Integer.parseInt(choiceStr);
@@ -234,8 +280,22 @@ public class ConsoleUI implements View {
         return getHumanById(idHuman) != null;
     }
 
-    private boolean isNumMenu(int choice) {
-        if (choice > 0 && choice <= menu.size()){
+    private boolean isNumMainMenu(int choice) {
+        if (choice > 0 && choice <= mainMenu.size()){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isNumSortMenu(int choice) {
+        if (choice > 0 && choice <= sortMenu.size()){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isNumFileMenu(int choice) {
+        if (choice > 0 && choice <= fileMenu.size()){
             return true;
         }
         return false;
@@ -246,19 +306,45 @@ public class ConsoleUI implements View {
     }
 
     public void save() {
-        presenter.saveFile();
-        System.out.println("Данные успешно сохранены в: " + presenter.getPath());
+        System.out.println("Сохранение семейного древа:");
+        System.out.println("1. Сохранить в файл по умолчанию: " + presenter.getPath());
+        System.out.println("2. Сохранить в указанный файл");
+
+        String choiceStr = scanner.nextLine();
+        int choice = strNumToInt(choiceStr);
+
+        if (choice == 1) {
+            presenter.saveFile();
+            System.out.println("Семейное древо сохранено в файл по умолчанию.");
+        } else if (choice == 2) {
+            setCustomPath();
+            presenter.saveFile();
+            System.out.println("Данные успешно сохранены в: " + presenter.getPath());
+        } else {
+            System.out.println("Введено неверное значение.");
+        }
     }
 
-    public void read() {
-        presenter.readFile();
-        System.out.println("Данные успешно импортированы из: " + presenter.getPath());
+    public void importFile() {
+        System.out.print("Введите путь к файлу для импорта (например, C:\\Users\\User\\Documents\\family_tree.ser): ");
+        String filePath = scanner.nextLine();
+
+        if (isValidFile(filePath)) {
+            if (presenter.readFile() != null) {
+                presenter.setCustomPath(filePath);
+                presenter.readFile();
+                presenter.getHumansListInfo();
+                System.out.println("Данные успешно импортированы из файла: " + filePath);
+            } else {
+                System.out.println("Ошибка при импорте данных. Используются текущие данные.");
+            }
+        } else {
+            System.out.println("Указанный файл недействителен или не существует.");
+        }
     }
 
     // Добавил возможность пользователю изменениять пути к файлу семейного древа
     public void setCustomPath() {
-        System.out.println("Текущий путь для сохранения данных: " + presenter.getPath());
-
         System.out.print("Введите путь к директории для сохранения данных (например, C:\\Users\\User\\Documents): ");
         String directoryPath = scanner.nextLine();
 
@@ -267,10 +353,9 @@ public class ConsoleUI implements View {
 
         String fullPath = Paths.get(directoryPath, fileName).toString();
 
-        if (!directoryPath.isEmpty() && isValidDirectory(directoryPath)) {
+        if (isValidDirectory(directoryPath)) {
             presenter.setCustomPath(fullPath);
             System.out.println("Путь для сохранения данных изменен на: " + presenter.getPath());
-            save();
         } else {
             System.out.println("Указанный путь недействителен или не существует. Используется текущий путь: " + presenter.getPath());
         }
@@ -286,13 +371,41 @@ public class ConsoleUI implements View {
         }
     }
 
-    // Получение текущей дериктории
-    public void getCurrentPath() {
-        System.out.println("Текущий путь для сохранения данных: " + presenter.getPath());
+    private boolean isValidFile(String path) {
+        try {
+            Path p = Paths.get(path);
+            return Files.exists(p) && Files.isRegularFile(p);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void inputIdError() {
         System.out.println(INPUT_ID_ERROR);
+    }
+
+    // Проверка на наличие дефолтного familyTree файла и его создание, если он отсутствует
+    private void checkAndOrCreateDefaultFile() {
+        File defaultFile = new File(presenter.getPath());
+        if (!defaultFile.exists()) {
+            try {
+                // Создаем новый файл
+                if (defaultFile.createNewFile()) {
+                    System.out.println("Файл по умолчанию создан: " + presenter.getPath());
+                } else {
+                    System.out.println("Не удалось создать файл по умолчанию: " + presenter.getPath());
+                }
+            } catch (IOException e) {
+                System.out.println("Ошибка при создании файла: " + presenter.getPath());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Файл по умолчанию уже существует: " + presenter.getPath());
+        }
+    }
+
+    public void showCurrentFilePath() {
+        System.out.println("Сейчас используется файл по этому пути: " + presenter.getPath());
     }
 
     @Override

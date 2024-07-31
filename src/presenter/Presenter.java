@@ -22,7 +22,7 @@ public class Presenter {
         getHumansListInfo();
     }
 
-    public void addChildToParent(int idParent, int idChild) {
+    public void addChildToParent(long idParent, long idChild) {
         service.addChildToParent(idParent, idChild);
         getHumansListInfo();
     }
@@ -36,17 +36,17 @@ public class Presenter {
         view.printAnswer(service.getBirthDate(idHuman).toString());
     }
 
-    public void setDateOfDeath(int idHuman, LocalDate dateOfDeath) {
+    public void setDateOfDeath(long idHuman, LocalDate dateOfDeath) {
         service.setDateOfDeath(idHuman, dateOfDeath);
         getHumansListInfo();
     }
 
-    public void setFather(int idChild, int idFather) {
+    public void setFather(long idChild, long idFather) {
         service.setFather(idChild, idFather);
         getHumansListInfo();
     }
 
-    public void setMother(int idChild, int idMother) {
+    public void setMother(long idChild, long idMother) {
         service.setMother(idChild, idMother);
         getHumansListInfo();
     }
@@ -89,9 +89,8 @@ public class Presenter {
         service.saveFile();
     }
 
-    public void readFile() {
-        service.readFile();
-        getHumansListInfo();
+    public Object readFile() {
+        return service.readFile();
     }
 
     public void setCustomPath(String path) {
