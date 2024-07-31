@@ -47,8 +47,11 @@ public class Main {
         parents3.add(person4);
         person5.addParent();
 
-        List<Human> person3_children = person3.getChildren();
-        List<Human> person3_ch_parents = person3_children.get(0).getParents();
-        List<Human> person3_ch_pa_parents = person3_ch_parents.get(0).getParents();
+        FamilyTree familyTree = new FamilyTree();
+        familyTree.setRelative(person1);
+        familyTree.setRelative(person2);
+        familyTree.setRelative(person3);
+        familyTree.setRelative(person4);
+        familyTree.setRelative(person5);
     }
 }
