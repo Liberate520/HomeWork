@@ -1,7 +1,8 @@
-import family_tree.FamilyTree;
-import human.Gender;
-import human.Human;
+
 // import writer.FileHandler;
+import model.family_tree.FamilyTree;
+import model.human.Gender;
+import model.human.Human;
 
 public class Main {
     @SuppressWarnings("rawtypes")

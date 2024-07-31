@@ -1,4 +1,4 @@
-package human;
+package model.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-import family_tree.FamilyTreeItem;
+import model.family_tree.FamilyTreeItem;
 
 public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
     static int count;

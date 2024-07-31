@@ -1,4 +1,4 @@
-package writer;
+package model.writer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import family_tree.FamilyTree;
+import model.family_tree.FamilyTree;
 
 public class FileHandler implements Writer {
 

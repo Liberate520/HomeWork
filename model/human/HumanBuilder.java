@@ -1,4 +1,4 @@
-package human;
+package model.human;
 
 public class HumanBuilder {
     private Human human;
@@ -23,21 +23,6 @@ public class HumanBuilder {
 
     public HumanBuilder setDateOfBirth(int year, int month, int day) {
         human.setDateOfBirth(year, month, day);
-        return this;
-    }
-
-    public HumanBuilder setDateOfDeath(int year, int month, int day) {
-        human.setDateOfDeath(year, month, day);
-        return this;
-    }
-
-    public HumanBuilder setSpouse(Human human) {
-        human.setSpouse(human);
-        return this;
-    }
-
-    public HumanBuilder setParents(Human father, Human mother) {
-        human.setParents(father, mother);
         return this;
     }
 
