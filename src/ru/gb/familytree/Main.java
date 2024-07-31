@@ -1,5 +1,9 @@
 package ru.gb.familytree;
 
+import ru.gb.familytree.FamilyTree.FamilyTree;
+import ru.gb.familytree.FamilyTree.Gender;
+import ru.gb.familytree.FamilyTree.Human;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -54,6 +58,7 @@ public class Main {
         familyTree.setRelative(person4);
         familyTree.setRelative(person5);
 
-
+        List<Human> person5_grandParents = familyTree.getParentsForHuman(person5).get(0).getParents();
+        List<Human> person2_grandChildren = familyTree.getChildrenForHuman(person2).get(0).getChildren();
     }
 }
