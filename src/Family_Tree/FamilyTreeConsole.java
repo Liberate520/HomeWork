@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class FamilyTreeConsole {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final FamilyTree<Person> tree = new FamilyTree<>();
+    private static final FamilyTree tree = new FamilyTree(); // Исправлено на FamilyTree
 
     public static void main(String[] args) {
         boolean exit = false;
@@ -41,7 +41,7 @@ public class FamilyTreeConsole {
                     exit = true;
                     break;
                 default:
-                    System.out.println("Invalid option. Please choose again.");
+                    System.outInvalid option. Please choose again.");
             }
         }
     }
@@ -51,6 +51,7 @@ public class FamilyTreeConsole {
         String name = scanner.nextLine();
         System.out.println("Enter gender (0 for Male, 1 for Female):");
         int gender = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
         System.out.println("Enter birth year:");
         int year = scanner.nextInt();
         System.out.println("Enter birth month:");
@@ -60,13 +61,13 @@ public class FamilyTreeConsole {
         LocalDate birthDate = LocalDate.of(year, month, day);
 
         Person person = new Person(name, gender, birthDate);
-        tree.addElement(name, person);
+        tree.addPerson(person); // Исправлено на вызов addPerson
     }
 
     private static void findPerson() {
         System.out.println("Enter name:");
         String name = scanner.nextLine();
-        Person person = tree.findElementByKey(name);
+        Person person = tree.findPersonByName(name); // Исправлено на вызов findPersonByName
         if (person != null) {
             System.out.println("Person found:");
             System.out.println(person);

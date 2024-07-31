@@ -1,45 +1,45 @@
 package Family_Tree;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
-public class FamilyTree<T> {
-    private Map<String, T> elements;
-    private FileIOInterface<Map<String, T>> fileIO;
+public class FamilyTree implements Serializable {
+    private Map<String, Person> people;
+    private FileIOInterface<FamilyTree> fileIO; // Исправлено на FileIOInterface<FamilyTree>
 
     public FamilyTree() {
-        this.elements = new HashMap<>();
-        this.fileIO = new FileIO<>();
+        this.people = new HashMap<>();
+        this.fileIO = new FileIO<>(); // Исправлено на FileIO<>
     }
 
-    public void addElement(String key, T element) {
-        elements.put(key, element);
+    public void addPerson(Person person) { // Исправлено на addPerson
+        people.put(person.getName(), person);
     }
 
-    public T getElement(String key) {
-        return elements.get(key);
+    public Person findPersonByName(String name) {
+        return people.get(name);
     }
 
-    public Map<String, T> getElements() {
-        return elements;
+    public Map<String, Person> getPeople() {
+        return people;
     }
 
     public void saveToFile(String fileName) {
-        fileIO.writeToFile(fileName, elements);
+        fileIO.writeToFile(fileName, this); // Исправлено на передачу объекта FamilyTree
     }
 
     public void loadFromFile(String fileName) {
-        Map<String, T> loadedElements = fileIO.readFromFile(fileName);
-        if (loadedElements != null) {
-            elements.putAll(loadedElements);
+        FamilyTree loadedTree = fileIO.readFromFile(fileName);
+        if (loadedTree != null) {
+            this.people = loadedTree.getPeople();
         }
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (T element : elements.values()) {
-            sb.append(element.toString()).append("\
+        for (Person person : people.values()) {
+            sb.append(person.toString()).append("\
 ");
         }
         return sb.toString();
