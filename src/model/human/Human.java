@@ -1,15 +1,14 @@
-package human;
+package model.human;
 
-import family.GroupItem;
+import model.family.GroupItem;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, GroupItem<Human> {
+public class Human implements GroupItem<Human> {
     private long id;
     private String name;
     private Gender gender;

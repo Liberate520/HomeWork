@@ -1,7 +1,7 @@
-package builder;
+package model.builder;
 
-import human.Gender;
-import human.Human;
+import model.human.Gender;
+import model.human.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;

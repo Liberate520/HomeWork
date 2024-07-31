@@ -1,9 +1,11 @@
-package family;
+package model.family;
 
-import human.Gender;
+import model.human.Gender;
+
+import java.io.Serializable;
 import java.util.List;
 
-public interface GroupItem<T> extends Comparable<T> {
+public interface GroupItem<T> extends Comparable<T>, Serializable {
     long getId();
     void setId(long id);
 

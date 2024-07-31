@@ -1,9 +1,9 @@
-package service;
+package model.service;
 
-import builder.HumanBuilder;
-import family.FamilyTree;
-import human.Gender;
-import human.Human;
+import model.builder.HumanBuilder;
+import model.family.FamilyTree;
+import model.human.Gender;
+import model.human.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
