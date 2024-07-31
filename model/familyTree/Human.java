@@ -1,4 +1,4 @@
-package familyTree;
+package model.familyTree;
 
 // import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // import java.util.Collections;
 import java.util.List;
 
-public class Human implements Comparable <Human>, FamilyTreeMember {
+public class Human implements Comparable <Human>, FamilyTreeMember <Human> {
 // public class Human implements Serializable {
 //     private static final long serialVersionUID = 1L;
     
@@ -44,6 +44,22 @@ public class Human implements Comparable <Human>, FamilyTreeMember {
 
     public List<Human> getParents() {
         return parents;
+    }
+
+    public List<Human> getAncestors(Human person, int generations) {
+        List<Human> ancestors = new ArrayList<>();
+        getAncestorsRecursive(person, generations, ancestors);
+        return ancestors;
+    }
+
+    private void getAncestorsRecursive(Human person, int generations, List<Human> ancestors) {
+        if (generations == 0 || person == null) return;
+        if (!person.parents.isEmpty()) {
+            ancestors.addAll(person.parents);
+            for (Human parent : person.parents) {
+                getAncestorsRecursive(parent, generations - 1, ancestors);
+            }
+        }
     }
 
     @Override

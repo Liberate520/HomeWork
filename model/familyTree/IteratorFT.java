@@ -1,9 +1,9 @@
-package familyTree;
+package model.familyTree;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class IteratorFT<E> implements Iterator <E> {
+public class IteratorFT<E extends FamilyTreeMember<E>> implements Iterator <E> {
       
     private int index;
     public List <E> family;

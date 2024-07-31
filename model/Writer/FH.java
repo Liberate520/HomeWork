@@ -1,11 +1,13 @@
-package Writer;
+package model.Writer;
 
 import java.io.*;
-import familyTree.FamilyTree;
+import model.familyTree.FamilyTree;
+import model.familyTree.Human;
 
 public class FH implements Writer {
 
-    public void writeToFile(String fileName, FamilyTree familyTree) {
+    @Override
+    public void writeToFile(String fileName, FamilyTree<Human> familyTree) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
             out.writeObject(familyTree);
         } catch (IOException e) {
@@ -13,9 +15,11 @@ public class FH implements Writer {
         }
     }
 
-    public FamilyTree readFromFile(String fileName) {
+    @Override
+    @SuppressWarnings("unchecked")
+    public FamilyTree<Human> readFromFile(String fileName) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
-            return (FamilyTree) in.readObject();
+            return (FamilyTree<Human>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
