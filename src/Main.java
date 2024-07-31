@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -44,36 +45,46 @@ public class Main {
         familyTree.addPerson(vladimir);
         familyTree.addPerson(anastasia);
 
-        System.out.println("Семейное древо:");
-        familyTree.printAllMembers();
+        try {
+            Writer writer = new Writer();
+            writer.writeToFile(familyTree, "familyTree.txt");
 
-        Scanner scanner = new Scanner(System.in, "UTF-8");
-        System.out.println();
-        System.out.println("Введите имя для отображения детей: ");
-        String name = scanner.nextLine();
+            FamilyTree loadedFamilyTree = writer.readFromFile("familyTree.txt");
 
-        List<Human> children = familyTree.getChildrenOf(name);
-        if (children != null && !children.isEmpty()) {
-            System.out.println("Дети " + name + ":");
-            for (Human child : children) {
-                System.out.println(child);
+            System.out.println("Семейное древо:");
+            loadedFamilyTree.printAllMembers();
+
+            Scanner scanner = new Scanner(System.in, "UTF-8");
+            System.out.println();
+            System.out.println("Введите имя для отображения детей: ");
+            String name = scanner.nextLine();
+
+            List<Human> children = familyTree.getChildrenOf(name);
+            if (children != null && !children.isEmpty()) {
+                System.out.println("Дети " + name + ":");
+                for (Human child : children) {
+                    System.out.println(child);
+                }
+            } else {
+                System.out.println("У данного человека нет детей или человек с именем " + name + " не найден.");
             }
-        } else {
-            System.out.println("У данного человека нет детей или человек с именем " + name + " не найден.");
-        }
 
-        System.out.println();
-        System.out.println("Введите имя для отображения родителей");
-        name = new Scanner(System.in).nextLine();
+            System.out.println();
+            System.out.println("Введите имя для отображения родителей");
+            name = new Scanner(System.in).nextLine();
 
-        List<Human> parents = familyTree.getParentsOf(name);
-        if (parents != null && !parents.isEmpty()) {
-            System.out.println("Родители " + name + ":");
-            for (Human parent : parents) {
-                System.out.println(parent + ", возраст: " + parent.getAgeAt(LocalDate.now()));
+            List<Human> parents = familyTree.getParentsOf(name);
+            if (parents != null && !parents.isEmpty()) {
+                System.out.println("Родители " + name + ":");
+                for (Human parent : parents) {
+                    System.out.println(parent + ", возраст: " + parent.getAgeAt(LocalDate.now()));
+                }
+            } else {
+                System.out.println("Человек с именем " + name + " не найден");
             }
-        } else {
-            System.out.println("Человек с именем " + name + " не найден");
+            scanner.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
