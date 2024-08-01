@@ -1,11 +1,18 @@
+package family_tree;
+
+import man.Gender;
+import man.Man;
+import man.comparator.ManComparatorByAge;
+import man.comparator.ManComparatorByName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable{
+public class FamilyTree implements Serializable, Iterable<Man>{
     private long id;
     private ArrayList <Man> mans;
-
     public FamilyTree(ArrayList <Man> peoples){
         this.mans = peoples;
     }
@@ -96,6 +103,20 @@ public class FamilyTree implements Serializable{
             }
         }
         return null;
+    }
+
+    public void sortByName(){
+        mans.sort(new ManComparatorByName());
+    }
+
+    public void sortByAge(){
+        mans.sort(new ManComparatorByAge());
+    }
+
+    @Override
+    public Iterator<Man> iterator()
+    {
+        return new ManIterator(mans);
     }
 
     @Override

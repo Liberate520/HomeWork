@@ -1,3 +1,4 @@
+package man;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -75,13 +76,13 @@ public class Man implements Serializable {
         return spouse;
     }
 
-    public int getAge(LocalDate birthDate, LocalDate deathDate) {
+    public int getAge() {
         int age;
-        if(deathDate != null){
-            age = Period.between(deathDate, birthDate).getYears();
+        if(this.deathDate != null){
+            age = Period.between(this.birthDate, this.deathDate).getYears();
         }
         else{
-            age = Period.between(LocalDate.now(), birthDate).getYears();
+            age = Period.between(this.birthDate, LocalDate.now()).getYears();
         }
         return age;
     }

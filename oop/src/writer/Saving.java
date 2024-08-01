@@ -1,7 +1,11 @@
+package writer;
+
+import family_tree.FamilyTree;
+
 import java.io.*;
 
-public class Saving implements Serializable {
-    public void saveTree(String filepath, FamilyTree tree) {
+public class Saving implements Write {
+    public void saveTree(String filepath, Serializable tree) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath))) {
             oos.writeObject(tree);
         } catch (IOException e) {
