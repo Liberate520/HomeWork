@@ -1,72 +1,13 @@
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
-class Person {
-    private String name;
-    private int age;
-    private List<Person> parents;
-    private List<Person> children;
-
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-        this.parents = new ArrayList<>();
-        this.children = new ArrayList<>();
-    }
-
-    public void addChild(Person child) {
-        this.children.add(child);
-        child.parents.add(this);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Person> getChildren() {
-        return children;
-    }
-
-    @Override
-    public String toString() {
-        return name + ", " + age + " years old";
-    }
-}
-
-class FamilyTree {
-    private List<Person> members;
-
-    public FamilyTree() {
-        this.members = new ArrayList<>();
-    }
-
-    public void addPerson(Person person) {
-        this.members.add(person);
-    }
-
-    public Person findPerson(String name) {
-        for (Person person : members) {
-            if (person.getName().equals(name)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public List<Person> getChildren(String name) {
-        Person person = findPerson(name);
-        if (person != null) {
-            return person.getChildren();
-        }
-        return null;
-    }
-
+public class Main {
     public static void main(String[] args) {
         // Создаем экземпляры класса Person
-        Person john = new Person("John", 50);
-        Person jane = new Person("Jane", 48);
-        Person anna = new Person("Anna", 25);
-        Person bob = new Person("Bob", 20);
+        Person john = new Person("John", LocalDate.of(1974, 1, 1), null);
+        Person jane = new Person("Jane", LocalDate.of(1976, 5, 15), null);
+        Person anna = new Person("Anna", LocalDate.of(1999, 3, 21), null);
+        Person bob = new Person("Bob", LocalDate.of(2004, 7, 30), null);
 
         // Создаем семейное дерево
         FamilyTree tree = new FamilyTree();
@@ -85,6 +26,11 @@ class FamilyTree {
 
         // Проводим исследование
         List<Person> childrenOfJohn = tree.getChildren("John");
+        List<Person> parentsOfAnna = tree.getParents("Anna");
+
         System.out.println("Children of John: " + childrenOfJohn);
+        System.out.println("Parents of Anna: " + parentsOfAnna);
+
+        System.out.println(tree);
     }
 }
