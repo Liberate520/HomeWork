@@ -5,13 +5,13 @@ import human.Human;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTreeIterator implements Iterator<Human> {
+public class FamilyTreeIterator<T> implements Iterator<T> {
 
 
-    private List<Human> list;
+    private List<T> list;
     private int currentId;
 
-    public FamilyTreeIterator(List<Human> list) {
+    public FamilyTreeIterator(List<T> list) {
         this.list = list;
     }
 
@@ -21,7 +21,7 @@ public class FamilyTreeIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() { // метод next() возвращает следующий объект
+    public T next() { // метод next() возвращает следующий объект
         return list.get(currentId++);
     }
 }

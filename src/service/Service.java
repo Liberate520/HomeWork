@@ -5,10 +5,10 @@ import human.Human;
 
 public class Service {
 
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
 
     public Service() {
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
     }
 
     public void sortByName() { // сортировка по имени

@@ -10,10 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class FamilyTree implements Serializable, Iterable<Human>{
+public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E>{
 
     private long humanId;
-    private List<Human> humans;
+    private List<E> humans;
 
     public FamilyTree() {
         this.humanId = 1;
@@ -21,8 +21,8 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
 
 
-    public Human getByName(String nameHuman) { //  поиск по имени
-        for (Human human : humans) {
+    public E getByName(String nameHuman) { //  поиск по имени
+        for (E human : humans) {
             if (human.getName().equals(nameHuman)) {
                 return human;
             }
@@ -31,15 +31,15 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
 
     public void sortByName() {
-        humans.sort(new HumanComparatorByName());
+        humans.sort(new HumanComparatorByName<>());
     }
 
     public void sortByAge() {
-        humans.sort(new HumanComparatorByAge());
+        humans.sort(new HumanComparatorByAge<>());
     }
 
-    public Human getById(long id) { //  поиск по id
-        for (Human human : humans) {
+    public E getById(long id) { //  поиск по id
+        for (E human : humans) {
             if (human.getId() == id) {
                 return human;
             }
@@ -48,7 +48,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
 
 
-    public boolean addHuman(Human human) {
+    public boolean addHuman(E human) {
         if (human != null && !humans.contains(human)) {
             if (human.getId() == -1) {
                 human.setId(humanId++);
@@ -58,17 +58,17 @@ public class FamilyTree implements Serializable, Iterable<Human>{
         return false;
     }
 
-    public FamilyTree addHumans(List<Human> humans) {
-        for (Human human : humans) {
-            addHuman(human);
-        }
-        return this;
-    }
+//    public FamilyTree addHumans(List<Human> humans) {
+//        for (Human human : humans) {
+//            addHuman(human);
+//        }
+//        return this;
+//    }
 
 
-    public List<Human> findChildrenByParent(Human parent, Human excludeHuman) {
-        List<Human> children = new ArrayList<>();
-        for (Human human : humans) {
+    public List<E> findChildrenByParent(E parent, E excludeHuman) {
+        List<E> children = new ArrayList<>();
+        for (E human : humans) {
             if (human.isParent(parent) && !human.equals(excludeHuman)) {
                 children.add(human);
             }
@@ -76,14 +76,14 @@ public class FamilyTree implements Serializable, Iterable<Human>{
         return children;
     }
 
-    public List<Human> findChildrenByParentId(long parentId) {
+    public List<E> findChildrenByParentId(long parentId) {
         return findChildrenByParent(getById((int) parentId), null);
     }
 
-    public List<Human> findSiblingsById(long humanId) {
-        Human child = getById((int) humanId);
-        return findChildrenByParent(child.getMother() != null ? child.getMother() : child.getFather(), child);
-    }
+//    public List<E> findSiblingsById(long humanId) {
+//        E child = getById((int) humanId);
+//        return findChildrenByParent(child.getMother() != null ? child.getMother() : child.getFather(), child);
+//    }
 
 
 
@@ -93,7 +93,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
         StringBuilder stringBuilder = new StringBuilder();
         System.out.println("Генеалогическое древо (размер = " + humans.size() + "):");
 
-        for (Human human : humans) {
+        for (E human : humans) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
@@ -115,7 +115,7 @@ public class FamilyTree implements Serializable, Iterable<Human>{
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humans);
+    public Iterator<E> iterator() {
+        return new FamilyTreeIterator<>(humans);
     }
 }

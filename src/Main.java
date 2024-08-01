@@ -14,13 +14,6 @@ public class Main {
         FamilyTree familyTree = new FamilyTree();
         Service service = new Service();
 
-//        System.out.println(Arrays.toString(Gender.values()));     // проверка вывода формата Gender
-//        Gender gender = Gender.Female;
-//        System.out.println(gender);
-//
-////
-
-
         Human stepan = new Human("Степан", Gender.Male, LocalDate.of(1951, 10, 03), LocalDate.of(2015, 07, 23), null, null);
         Human valentina = new Human("Валентина", Gender.Female, LocalDate.of(1953, 9, 11));
         Human valentina1 = new Human("Валентина", Gender.Female, LocalDate.of(1953, 9, 11));
@@ -36,8 +29,6 @@ public class Main {
         Human petr = new Human("Петр", Gender.Male, LocalDate.of(1978, 04, 30));
         familyTree.addHuman(petr);
 
-//        olga.setMother(natasha);
-
         petr.setMother(valentina);
         petr.setFather(stepan);
 //        petr.setMother(valentina);// проверка на вывод исключения (ребенок уже добавлен) - метод public Human addChildren(Human child)
@@ -45,19 +36,15 @@ public class Main {
 
         valentina.setSpouse(stepan);
         olga.setSpouse(petr);
+        olga.setMother(natasha);
+
+//        familyTree.sortByName(); // сортировка по имени
+//        System.out.println("Сортировка генеалогического древа по имени человека");
 //        System.out.println(familyTree);
-
-        familyTree.sortByName(); // сортировка по имени
-        System.out.println("Сортировка генеалогического древа по имени человека");
-        System.out.println(familyTree);
-
-        familyTree.sortByAge(); // сортировка по возрасту
-        System.out.println("Сортировка генеалогического древа по возрасту человека");
-        System.out.println(familyTree);
-
-////
-//        System.out.println(familyTree); // вывод всех данных генеалогического древа
-////        System.out.println(stepan);
+//
+//        familyTree.sortByAge(); // сортировка по возрасту
+//        System.out.println("Сортировка генеалогического древа по возрасту человека");
+//        System.out.println(familyTree);
 ////
 ////        System.out.println("\nВведите имя для поиска: ");
 ////        String name = in.nextLine();
@@ -71,11 +58,9 @@ public class Main {
 //
 
 
-
 //        FileHandler fileHandler = new FileHandler();
 ////        fileHandler.oos(familyTree); // проверка сохранения состояния программы (процесс записи состояния объекта в поток - сериализация)
 //        fileHandler.ois(fileHandler); // проверка восстановления состояния программы (процесс восстановления состояния объекта из потока - десериализация)
-
 
 
         in.close();
