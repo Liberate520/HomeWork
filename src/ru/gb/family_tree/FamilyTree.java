@@ -1,27 +1,33 @@
-package family_tree;
+package ru.gb.family_tree;
+
+import ru.gb.family_tree.models.Human;
+import ru.gb.family_tree.interfaces.MyIterable;
 
 import java.io.Serializable;
 import java.util.*;
 
 // Класс, описывающий генеалогическое дерево
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, MyIterable<Human> {
     private static final long serialVersionUID = 1L;
 
-    private Map<String, Human> humans;
-    private int nextId; // Поле для генерации уникальных идентификаторов
+    private Map<Integer, Human> humans;
+    private int nextId;
 
     public FamilyTree() {
         this.humans = new HashMap<>();
-        this.nextId = 1; // Начальный идентификатор
+        this.nextId = 1;
     }
 
     public void addHuman(String name, String birthDate, String gender) {
         Human newHuman = new Human(nextId++, name, birthDate, gender);
-        humans.put(name, newHuman);
+        humans.put(newHuman.getId(), newHuman);
     }
 
     public Human getHuman(String name) {
-        return humans.get(name);
+        return humans.values().stream()
+                .filter(human -> human.getName().equals(name))
+                .findFirst()
+                .orElse(null);
     }
 
     public void addChild(String parentName, String childName) {
@@ -69,20 +75,21 @@ public class FamilyTree implements Serializable {
         return new ArrayList<>(humans.values());
     }
 
-    // Метод для сортировки по дате рождения
     public List<Human> sortByBirthDate() {
         List<Human> sortedList = new ArrayList<>(humans.values());
         sortedList.sort(Comparator.comparing(Human::getBirthDate));
         return sortedList;
     }
 
-    // Метод для сортировки по идентификатору
     public List<Human> sortById() {
         List<Human> sortedList = new ArrayList<>(humans.values());
         sortedList.sort(Comparator.comparingInt(Human::getId));
         return sortedList;
     }
+
+    // Реализация интерфейса MyIterable
+    @Override
+    public Iterator<Human> iterator() {
+        return humans.values().iterator();
+    }
 }
-
-
-

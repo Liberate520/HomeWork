@@ -1,4 +1,4 @@
-package family_tree;
+package ru.gb.family_tree.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -20,7 +20,6 @@ public class Human implements Serializable {
     private List<Human> parents;
     private Human spouse;
 
-    // Конструктор
     public Human(int id, String name, String birthDate, String gender) {
         this.id = id;
         this.name = name;
@@ -30,7 +29,6 @@ public class Human implements Serializable {
         this.parents = new ArrayList<>();
     }
 
-    // Геттеры
     public int getId() {
         return id;
     }
@@ -61,6 +59,14 @@ public class Human implements Serializable {
 
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
+    }
+
+    public int getAge() {
+        if (deathDate != null) {
+            return Period.between(birthDate, deathDate).getYears();
+        } else {
+            return Period.between(birthDate, LocalDate.now()).getYears();
+        }
     }
 
     @Override
@@ -97,20 +103,12 @@ public class Human implements Serializable {
             sb.append(", Родители: отсутствуют");
         }
 
+        if (spouse != null) {
+            sb.append(", Супруг(а): ").append(spouse.getName());
+        } else {
+            sb.append(", Супруг(а): отсутствует");
+        }
+
         return sb.toString();
     }
-
-    public int getAge() {
-        if (deathDate != null) {
-            return Period.between(birthDate, deathDate).getYears();
-        } else {
-            return Period.between(birthDate, LocalDate.now()).getYears();
-        }
-    }
 }
-
-
-
-
-
-

@@ -1,14 +1,15 @@
-package family_tree;
+package ru.gb.family_tree;
+
+import ru.gb.family_tree.models.Human;
+import ru.gb.family_tree.utils.FileHandler;
 
 import java.util.List;
-import java.util.Scanner;
 
 // Главный класс приложения для работы с генеалогическим деревом
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
         FileHandler fileHandler = new FileHandler();
-        Scanner scanner = new Scanner(System.in);
 
         // Добавление людей в дерево
         familyTree.addHuman("Alice", "01-01-1970", "женский");
@@ -16,23 +17,21 @@ public class Main {
         familyTree.addHuman("Bob", "01-01-2000", "мужской");
         familyTree.addHuman("Charlie", "01-01-2005", "мужской");
 
-// Установление родительско-детских отношений
+        // Установление родительско-детских отношений
         familyTree.addChild("Alice", "Bob");
         familyTree.addChild("Alice", "Charlie");
         familyTree.addChild("Eugen", "Bob");
         familyTree.addChild("Eugen", "Charlie");
 
-        // Установка даты смерти
-        familyTree.setDeathDate("Alice", "01-01-2020");
-
         // Установление супружеской связи
         familyTree.setSpouse("Alice", "Eugen");
 
         // Сохранение семейного дерева в файл
-        fileHandler.saveFamilyTree(familyTree, "familyTree.dat");
+        String filename = "familyTree.ser";
+        fileHandler.saveFamilyTree(familyTree, filename);
 
-        // Чтение семейного дерева из файла
-        FamilyTree loadedFamilyTree = fileHandler.loadFamilyTree("familyTree.dat");
+        // Загрузка семейного дерева из файла
+        FamilyTree loadedFamilyTree = fileHandler.loadFamilyTree(filename);
 
         if (loadedFamilyTree != null) {
             // Отображение всего генеалогического дерева
@@ -48,12 +47,6 @@ public class Main {
             System.out.println("\nСортировка по идентификатору:");
             List<Human> sortedById = loadedFamilyTree.sortById();
             sortedById.forEach(System.out::println);
-
         }
-
-        scanner.close();
     }
 }
-
-
-
