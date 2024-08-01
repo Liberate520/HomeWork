@@ -1,20 +1,20 @@
-package ru.gb.family_tree.family_tree;
+package ru.gb.family_tree.model.family_tree;
 
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.iterator.ComparatorByAge;
-import ru.gb.family_tree.iterator.ComparatorByName;
-import ru.gb.family_tree.iterator.FamilyTreeIterator;
+import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.comparators.ComparatorByAge;
+import ru.gb.family_tree.model.human.comparators.ComparatorByName;
+import ru.gb.family_tree.model.family_tree.iterators.FamilyTreeIterator;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import java.io.Serializable;
 import java.util.Iterator;
 
 /**
- * Класс FamilyTree представляет собой древо семейных связей.
+ * Класс FamilyTree представляет собой семейное древо.
+ * Он управляет членами семьи и их взаимосвязями.
  *
- * @param <E> Тип элемента, который должен наследоваться от FamilyTreeElement<E>
+ * @param <E> тип элемента семейного древа, который должен расширять FamilyTreeElement
  */
 public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable, Iterable<E> {
 
@@ -22,7 +22,7 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     private final List<E> MemberList;
 
     /**
-     * Конструктор по умолчанию, инициализирующий пустой список членов семьи.
+     * Конструктор создает пустое семейное древо.
      */
     public FamilyTree() {
         this.MemberList = new ArrayList<>();
@@ -31,8 +31,8 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     /**
      * Добавляет нового члена семьи в древо.
      *
-     * @param member Член семьи для добавления
-     * @return true, если член семьи успешно добавлен; false, если он уже существует или равен null
+     * @param member новый член семьи
+     * @return true, если член семьи был успешно добавлен, иначе false
      */
     public boolean addMember(E member) {
         if (member == null) {
@@ -51,9 +51,9 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
     /**
-     * Добавляет отношения родителей для данного члена семьи.
+     * Добавляет отношения родитель-ребенок для нового члена семьи.
      *
-     * @param member Член семьи, для которого добавляются родители
+     * @param member новый член семьи
      */
     private void addParentsRelations(E member) {
         E mother = member.getMother();
@@ -68,9 +68,9 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
     /**
-     * Добавляет отношения детей для данного члена семьи.
+     * Добавляет отношения ребенок-родитель для нового члена семьи.
      *
-     * @param member Член семьи, для которого добавляются дети
+     * @param member новый член семьи
      */
     private void addChildrenRelations(E member) {
         if (member.getChildren().size() > 0) {
@@ -85,15 +85,14 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
     /**
-     * Находит члена семьи по его идентификатору.
+     * Ищет члена семьи по идентификатору.
      *
-     * @param id Идентификатор члена семьи
-     * @return Найденный член семьи или null, если не найден
+     * @param id идентификатор члена семьи
+     * @return член семьи с данным идентификатором или null, если член не найден
      */
     public E findById(long id) {
         for (E member: MemberList) {
             if (member.getId() == id) {
-                System.out.println(member);
                 return member;
             }
         }
@@ -101,10 +100,10 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
     /**
-     * Находит членов семьи по имени.
+     * Ищет членов семьи по имени.
      *
-     * @param name Имя для поиска
-     * @return Список членов семьи с данным именем
+     * @param name имя для поиска
+     * @return список членов семьи с данным именем
      */
     public List<E> findByName(String name) {
         List<E> res = new ArrayList<>();
@@ -120,9 +119,19 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     }
 
     /**
-     * Возвращает информацию о семье.
+     * Проверяет наличие члена семьи по идентификатору.
      *
-     * @return Строка с информацией о всех членах семьи
+     * @param id идентификатор члена семьи
+     * @return true, если член семьи с данным идентификатором существует, иначе false
+     */
+    public boolean checkById(int id) {
+        return MemberList.contains(findById(id));
+    }
+
+    /**
+     * Возвращает информацию о семейном древе.
+     *
+     * @return строка с информацией о семейном древе
      */
     public String getAboutFamily() {
         StringBuilder sb = new StringBuilder();
@@ -139,7 +148,7 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     /**
      * Возвращает строковое представление семейного древа.
      *
-     * @return Строка с информацией о семье
+     * @return строка с информацией о семейном древе
      */
     @Override
     public String toString() {
@@ -149,7 +158,7 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     /**
      * Возвращает итератор для обхода членов семейного древа.
      *
-     * @return Итератор членов семьи
+     * @return итератор для обхода членов семейного древа
      */
     @Override
     public Iterator<E> iterator() {
@@ -169,4 +178,5 @@ public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable,
     public void sortByName() {
         MemberList.sort(new ComparatorByName<>());
     }
+
 }
