@@ -31,7 +31,7 @@ public class Main {
 
         tree.add(grandMother);
 
-        tree.sortByBirthDate();
+        tree.sortByName();
 
         saveTree(tree);
         readTree();
