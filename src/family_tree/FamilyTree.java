@@ -1,4 +1,4 @@
-package famuly_tree;
+package family_tree;
 
 import human.Human;
 
@@ -18,7 +18,15 @@ public class FamilyTree {
         familyTree.add(human);
     }
 
-    public List<Human> findByName(String name){
+    public List<Human> getFamilyTree() {
+        return familyTree;
+    }
+
+    public void setFamilyTree(List<Human> familyTree) {
+        this.familyTree = familyTree;
+    }
+
+    public List<Human> findByName(String name) {
         return familyTree.stream()
                 .filter(h -> h.getName().equalsIgnoreCase(name))
                 .collect(Collectors.toList());

@@ -1,6 +1,7 @@
-import famuly_tree.FamilyTree;
+import family_tree.FamilyTree;
 import human.Human;
 import human.Sex;
+import writer.FileHandler;
 
 import java.time.LocalDate;
 
@@ -25,5 +26,15 @@ public class Main {
 
         System.out.println("Сиблинги:");
         System.out.println(familyTree.printList(human3.findSiblings().stream().toList()));
+
+        System.out.println();
+        System.out.println("Данные перед сохранением:");
+        System.out.println(familyTree);
+        FileHandler handler = new FileHandler();
+        handler.save(familyTree);
+        FamilyTree loadedTree = new FamilyTree();
+        handler.load(loadedTree);
+        System.out.println("Загруженные данные:");
+        System.out.println(loadedTree);
     }
 }

@@ -1,5 +1,6 @@
 package human;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Human {
+public class Human implements Serializable {
     private final String name;
     private LocalDate birthdate;
     private LocalDate deathDate;
