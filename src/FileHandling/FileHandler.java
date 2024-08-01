@@ -14,6 +14,7 @@ public class FileHandler implements Writer {
 
     private String path = "src/FileHandling/Saved_tree.txt";
 
+    @SuppressWarnings("rawtypes")
     @Override
     public Object read() throws ClassNotFoundException, IOException {
         try (ObjectInputStream inptree = new ObjectInputStream(

@@ -12,7 +12,7 @@ import src.Service.Service;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
         Service service = new Service();
-        FamilyTree myTree = service.createTree();
+        FamilyTree <Human> myTree = service.createTree();
         Human member1 = service.addToTree("John Smith", LocalDate.of(1965, 1, 2), null, Gender.Male, null, null, null);
         Human member2 = service.addToTree("Jane Smith", LocalDate.of(1967, 2, 23), null, Gender.Female, null, null, null);
         Human member3 = service.addToTree("Orvin Smith", LocalDate.of(1985, 6, 15), null, Gender.Male, member2, member1, null);
@@ -42,25 +42,23 @@ public class Main {
         service.addParent(member9, member3);
         service.addParent(member9, member6);
         service.addParent(member10, member3);
-        service.addParent(member10, member6);
-        
+        service.addParent(member10, member6);        
         
         // Save the tree and read it from file
-        service.writeTree(myTree);
-        service.readTree();
+        service.save();
+        service.load();
         // Print entire tree (actions should be done from an imported tree)
-        System.out.println(myTree.GetFamilyInfo());
+        service.printTreeInfo();
         // Sort list by name
-         myTree.sortByName();
-         System.out.println(myTree.GetFamilyInfo());
+        service.sortByName();
+        service.printTreeInfo();
         // Sort list by birth date
-         myTree.sortByBirthday();
-         System.out.println(myTree.GetFamilyInfo());
+        service.sortByBirthday();
+        service.printTreeInfo();
         // Sort list by number of children
-         myTree.sortByChildren();
-         System.out.println(myTree.GetFamilyInfo());
+        service.sortByChildren();
+        service.printTreeInfo();
         // Find family member by name
          System.out.println(myTree.getMember("Orvin Smith"));        
     }
-
 }

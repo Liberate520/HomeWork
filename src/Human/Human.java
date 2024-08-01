@@ -1,12 +1,13 @@
 package src.Human;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Human implements Serializable{
+import src.FamilyTree.FamilyMember;
+
+public class Human implements FamilyMember <Human>{
     private int id;
     private String name;
     private LocalDate dateofbirth;

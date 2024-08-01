@@ -6,26 +6,25 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import src.Human.Human;
 import src.Human.HumanComparatorByAge;
 import src.Human.HumanComparatorByChildrenAmount;
 import src.Human.HumanComparatorByName;
 
-public class FamilyTree implements Serializable, Iterable <Human> {
-    private List <Human> members;
+public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iterable <E> {
+    private List <E> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
     //  add member to family tree
-    public void addMember(Human member) {
+    public void addMember(E member) {
         members.add(member);
     }
 
     // find member by name
-    public Human getMember (String name) {
-        for (Human member: members) {
+    public E getMember (String name) {
+        for (E member: members) {
             if(member.getName().equals(name)){
                 return member;
             }
@@ -34,20 +33,20 @@ public class FamilyTree implements Serializable, Iterable <Human> {
     }    
 
     public void sortByName() {
-        Collections.sort(members, new HumanComparatorByName());
+        Collections.sort(members, new HumanComparatorByName<>());
     }
 
     public void sortByBirthday(){
-        Collections.sort(members, new HumanComparatorByAge());
+        Collections.sort(members, new HumanComparatorByAge<>());
     }
 
     public void sortByChildren(){
-        Collections.sort(members, new HumanComparatorByChildrenAmount());
+        Collections.sort(members, new HumanComparatorByChildrenAmount<>());
     }
 
     public String GetFamilyInfo(){
         StringBuilder sb = new StringBuilder();
-        for (Human member: members){
+        for (E member: members){
             sb.append(member);
             sb.append("\n");
         }
@@ -55,7 +54,7 @@ public class FamilyTree implements Serializable, Iterable <Human> {
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(members);        
+    public Iterator<E> iterator() {
+        return new HumanIterator<>(members);        
     }  
 }

@@ -14,14 +14,16 @@ import src.Human.HumanBuilder;
 
 public class Service {
     private HumanBuilder humanBuilder;
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
+    private FileHandler fileHandler;
     
     public Service() throws SecurityException, IOException{
         humanBuilder = new HumanBuilder();
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
+        fileHandler = new FileHandler();
     }
 
-    public FamilyTree createTree(){
+    public FamilyTree <Human> createTree(){
         return familyTree;
     }
 
@@ -56,15 +58,18 @@ public class Service {
         familyTree.sortByChildren();
     }    
 
-    public FamilyTree readTree() throws ClassNotFoundException, IOException {
-        FileHandler fileHandler = new FileHandler();
-        System.out.println("Family tree loaded succesfully!");
-        return(FamilyTree) fileHandler.read();
+    public void printTreeInfo(){
+        System.out.println(familyTree.GetFamilyInfo());
     }
 
-    public void writeTree (FamilyTree tree) throws FileNotFoundException, IOException {
-        FileHandler fileHandler = new FileHandler();
+    public void load() throws ClassNotFoundException, IOException{
+        fileHandler.read();
+        System.out.println("Family tree loaded succesfully!");
+    }
+    
+    public void save() throws FileNotFoundException, IOException{
+        fileHandler.write(familyTree);
         System.out.println("Family tree saved succesfully!");
-        fileHandler.write(tree);
     }
 }
+
