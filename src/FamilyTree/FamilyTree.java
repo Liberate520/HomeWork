@@ -31,14 +31,7 @@ public class FamilyTree implements Serializable, Iterable <Human> {
             }
         }
         return null;
-    }
-    
-    // print entire family tree, not used anywhere
-    // public void printTree() {
-    //     for (Human member : members) {
-    //         System.out.println(member.toString());
-    //     }
-    // }
+    }    
 
     public void sortByName() {
         Collections.sort(members, new HumanComparatorByName());
@@ -64,5 +57,5 @@ public class FamilyTree implements Serializable, Iterable <Human> {
     @Override
     public Iterator<Human> iterator() {
         return new HumanIterator(members);        
-    }    
+    }  
 }
