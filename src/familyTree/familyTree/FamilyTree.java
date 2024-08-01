@@ -2,10 +2,11 @@ package familyTree.familyTree;
 
 import familyTree.human.People;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<People> family;
     private long familyId;
 
@@ -66,6 +67,12 @@ public class FamilyTree {
         return false;
     }
 
+    /**
+     * Метод свадьбы
+     * @param spouce1 - первый возможный супруг
+     * @param spouce2 - второй возможный супруг
+     * @return
+     */
     public boolean setWeding(People spouce1, People spouce2){
         if(spouce1.getSpouse() == null && spouce2.getSpouse() == null){
             spouce1.setSpouse(spouce2);
@@ -75,6 +82,11 @@ public class FamilyTree {
         return false;
     }
 
+    /**
+     * Метод удаления человека из смейного древа
+     * @param idHumanRemove - id человека которого нужно удалить из семейного
+     * @return
+     */
     public boolean remove (long idHumanRemove){
         if(checkId(idHumanRemove)){
             family.remove(getById(idHumanRemove));
@@ -87,6 +99,11 @@ public class FamilyTree {
         return (0 < checkedId && checkedId <= familyId);
     }
 
+    /**
+     * Возвращение человека по id
+     * @param idHuman
+     * @return People
+     */
     public People getById(long idHuman) {
         for (People hum : family) {
             if (hum.getId() == idHuman) {
@@ -111,5 +128,21 @@ public class FamilyTree {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public List<People> getTree() {
+        return family;
+    }
+
+/**
+ * Медод для развода супругов
+ * @param spouse1 - первый супруг
+ * @param spouse2 - второй супруг
+ */
+    public void divorce (People spouse1, People spouse2){
+        if(spouse1.getSpouse().getName() == spouse2.getName() && spouse2.getSpouse().getName() == spouse1.getName()){
+            spouse1.setSpouse(null);
+            spouse2.setSpouse(null);
+        }
     }
 }
