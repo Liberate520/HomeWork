@@ -1,3 +1,6 @@
+
+package familytree;
+
 import familytree.human.Human;
 import familytree.human.Gender;
 import familytree.family_tree.FamilyTree;
@@ -8,7 +11,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
        
         Human grandparent = new Human("Prohor", Gender.Male, LocalDate.of(1949, 5, 21));
         Human parent1 = new Human("Alice", Gender.Female, LocalDate.of(1973, 8, 15));

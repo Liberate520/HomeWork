@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FileHandler implements Writer {
 
-    private String filePath="familyTree.txt";
+    private String filePath="familytree/familyTree.txt";
     @Override
     public void writeToFile(Serializable serializable) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {

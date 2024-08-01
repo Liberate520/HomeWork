@@ -5,8 +5,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import familytree.family_tree.TreeElement;
 
-public class Human implements Serializable {    
+public class Human implements TreeElement<Human> {    
     private String name;
     private Gender gender;
     private LocalDate birthDate;

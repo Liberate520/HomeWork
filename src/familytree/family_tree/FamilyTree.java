@@ -4,6 +4,7 @@ import familytree.human.Human;
 import familytree.human.Gender;
 import familytree.human.HumanAgeComparator;
 import familytree.human.HumanNameComparator;
+import familytree.family_tree.TreeElement;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,19 +13,19 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> humans;
+public class FamilyTree<E extends TreeElement<E>> implements Serializable, Iterable<E> {
+    private List<E> humans;
 
     public FamilyTree() {
         this.humans = new ArrayList<>();
     }
 
-    public void addHuman(Human human) {
+    public void addHuman(E human) {
         humans.add(human);
     }
 
-    public Human findHuman(String name) {
-        for (Human human : humans) {
+    public E findHuman(String name) {
+        for (E human : humans) {
             if (human.getName().equals(name)) {
                 return human;
             }
@@ -32,22 +33,22 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         return null;
     }
 
-    public List<Human> getAllHumans() {
+    public List<E> getAllHumans() {
         return humans;
     }
 
-    public List<Human> getChildrenOf(String name) {
-        Human human = findHuman(name);
+    public List<E> getChildrenOf(String name) {
+        E human = findHuman(name);
         if (human != null) {
-            return human.getChildren();
+            return (List<E>) human.getChildren(); 
         }
         return new ArrayList<>();
     }
 
-    public List<Human> getParentsOf(String name) {
-        Human human = findHuman(name);
+    public List<E> getParentsOf(String name) {
+        E human = findHuman(name);
         if (human != null) {
-            return human.getParents();
+            return (List<E>) human.getParents();
         }
         return new ArrayList<>();
     }
@@ -55,24 +56,24 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Human human : humans) {
+        for (E human : humans) {
             sb.append(human.toString()).append("\n");
         }
         return sb.toString();
     }
   
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humans);
+    public Iterator<E> iterator() {
+        return new FamilyTreeIterator<>(humans);
     }
 
 
     public void sortByName() {
-        Collections.sort(humans, new HumanNameComparator());
+        Collections.sort(humans, new HumanNameComparator<>());
     }
 
     public void sortByAge() {
-        Collections.sort(humans, new HumanAgeComparator());
+        Collections.sort(humans, new HumanAgeComparator<>());
     }
 
 }
