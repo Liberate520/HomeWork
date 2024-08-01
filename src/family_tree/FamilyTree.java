@@ -67,7 +67,7 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
 
     private String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("В вашем древе " + this.familyTree.size() + " объектов\n");
+        sb.append("В вашем древе ").append(familyTree.size()).append(" объектов\n");
         for (int i = 0; i < familyTree.size(); i++) {
             sb.append(i + 1 + ". " + familyTree.get(i) + "\n");
         }
@@ -75,17 +75,17 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
     }
 
     public void sortByName(){
-        Collections.sort(familyTree, new HumanComparatorByName());
+        Collections.sort(familyTree, new HumanComparatorByName<>());
     }
     public void sortByAge(){
-        Collections.sort(familyTree, new HumanComparatorByAge());
+        Collections.sort(familyTree, new HumanComparatorByAge<>());
     }
     public void sortByBirthDate(){
-        Collections.sort(familyTree, new HumanComparatorByBirthDate());
+        Collections.sort(familyTree, new HumanComparatorByBirthDate<>());
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new HumanIterator(this);
+        return new HumanIterator<>(this);
     }
 }

@@ -10,7 +10,7 @@ public class HumanIterator<E extends FamilyTreeItem<E>> implements Iterator<E> {
     private int curIndex;
     private List<E> humans;
 
-    public HumanIterator(FamilyTree familyTree) {
+    public HumanIterator(FamilyTree<E> familyTree) {
         this.humans = familyTree.getHumans();
         this.curIndex = 0;
     }

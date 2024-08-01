@@ -4,10 +4,11 @@ import human.Gender;
 import human.Human;
 import human.HumanBuilder;
 
+import java.security.PublicKey;
 import java.time.LocalDate;
 
-public class Service<E extends FamilyTreeItem>{
-    private FamilyTree familyTree;
+public class Service<E extends FamilyTreeItem<E>>{
+    private FamilyTree<E> familyTree;
     private HumanBuilder humanBuilder;
 
     public Service(){
@@ -16,11 +17,18 @@ public class Service<E extends FamilyTreeItem>{
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate){
-        Human human = humanBuilder.setName(name).setGender(gender).setBirthDate(birthDate).build();
-        familyTree.add((E) human);
+        E human = (E) humanBuilder.setName(name).setGender(gender).setBirthDate(birthDate).build();
+        familyTree.add(human);
     }
 
-    public FamilyTree getFamilyTree() {
+    public boolean setWedding(String name1, String name2){
+        return familyTree.setWedding(familyTree.findByName(name1), familyTree.findByName(name2));
+    }
+    public boolean setDivorce(String name1, String name2){
+        return familyTree.setDivorce(familyTree.findByName(name1), familyTree.findByName(name2));
+    }
+
+    public FamilyTree<E> getFamilyTree() {
         return familyTree;
     }
 }

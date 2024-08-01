@@ -1,10 +1,12 @@
 package human;
 
+import family_tree.FamilyTreeItem;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HumanBuilder {
+public class HumanBuilder<E extends FamilyTreeItem<E>> {
     private int genId;
     private Human human;
     private String name;
@@ -16,15 +18,15 @@ public class HumanBuilder {
         createHuman();
     }
 
-    public HumanBuilder setName(String name){
+    public HumanBuilder<E> setName(String name){
         this.name = name;
         return this;
     }
-    public HumanBuilder setGender(Gender gender){
+    public HumanBuilder<E> setGender(Gender gender){
         this.gender = gender;
         return this;
     }
-    public HumanBuilder setBirthDate(LocalDate birthdate){
+    public HumanBuilder<E> setBirthDate(LocalDate birthdate){
         this.birthDate = birthdate;
         return this;
     }
@@ -46,13 +48,13 @@ public class HumanBuilder {
     private void createBirthDate(){
         human.setBirthDate(birthDate);
     }
-    public Human build(){
+    public E build(){
         createHuman();
         createName();
         createGender();
         createBirthDate();
         nextId();
         setChildren();
-        return human;
+        return (E) human;
     }
 }

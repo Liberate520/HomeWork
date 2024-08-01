@@ -11,15 +11,15 @@ public class Main {
 
     public static void main(String[] args) {
 //        FamilyTree tree = load();
-        Service service = new Service();
-        FamilyTree ft = service.getFamilyTree();
+        Service <Human>  service= new Service<>();
+        FamilyTree <Human> ft = service.getFamilyTree();
         service.addHuman("Leha",Gender.Male, LocalDate.of(1999,9,9));
         service.addHuman("Oleg", Gender.Male, LocalDate.of(1995,7,2));
         service.addHuman("Nastya", Gender.Female, LocalDate.of(2001,3,16));
         service.addHuman("Nadezhda", Gender.Female, LocalDate.of(1974,6,26));
-        ft.setWedding(ft.findByName("Oleg"), ft.findByName("Nastya"));
+        service.setWedding("Oleg", "Nastya");
         service.addHuman("Andrey", Gender.Male, LocalDate.of(1970,7,25));
-        ft.setWedding(ft.findByName("Nadezhda"), ft.findByName("Andrey"));
+        service.setWedding("Nadezhda", "Andrey");
         service.addHuman("Katya", Gender.Female, LocalDate.of(2004,12,24));
         ft.findByName("Katya").addParent(ft.findByName("Andrey"));
         ft.findByName("Katya").addParent(ft.findByName("Nadezhda"));
@@ -42,7 +42,7 @@ public class Main {
         return (FamilyTree) fileHandler.read();
     }
 
-    private static void save(FamilyTree familyTree) {
+    private static void save(FamilyTree<Human> familyTree) {
         FileHandler fileHandler = new FileHandler();
         fileHandler.setPath(filePath);
         fileHandler.save(familyTree);

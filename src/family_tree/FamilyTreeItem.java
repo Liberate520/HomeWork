@@ -8,4 +8,6 @@ public interface FamilyTreeItem<E> extends Comparable<E>{
     LocalDate getBirthDate();
     Object getSpouse();
     void setSpouse(E human);
+    boolean addChild(E child);
+    boolean addParent(E parent);
 }
