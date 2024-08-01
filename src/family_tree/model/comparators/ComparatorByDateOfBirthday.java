@@ -1,9 +1,7 @@
-package family_tree.comparators;
+package family_tree.model.comparators;
 
-import family_tree.Interface.Animal;
-import family_tree.human.Human;
+import family_tree.model.Interface.Animal;
 
-import java.time.LocalDate;
 import java.util.Comparator;
 
 public class ComparatorByDateOfBirthday<E extends Animal<E>> implements Comparator<E> {

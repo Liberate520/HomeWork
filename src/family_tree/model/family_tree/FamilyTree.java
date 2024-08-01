@@ -1,16 +1,18 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 
-import family_tree.Interface.Animal;
-import family_tree.comparators.ComparatorByDateOfBirthday;
-import family_tree.comparators.ComparatorByName;
-import family_tree.human.Human;
+import family_tree.model.Interface.Animal;
+import family_tree.model.comparators.ComparatorByDateOfBirthday;
+import family_tree.model.comparators.ComparatorByName;
+import family_tree.model.human.Gender;
+import family_tree.model.human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class FamilyTree<T extends Animal<T>> implements Serializable, Iterable<T> {
-    ArrayList<T> family_tree;
+    private ArrayList<T> family_tree;
+    private int id = 0;
 
     public FamilyTree(){
         family_tree = new ArrayList<T>();
@@ -21,6 +23,26 @@ public class FamilyTree<T extends Animal<T>> implements Serializable, Iterable<T
     }
 
     public void addHuman(T human){
+        human.setId(id);
+        id++;
+        if (human.getFather() != null) {
+            if (!human.getFather().getChildren().contains(human)) {
+                human.getFather().addChild(human);
+            }
+        }
+        if (human.getMother() != null) {
+            if (!human.getMother().getChildren().contains(human)) {
+                human.getMother().addChild(human);
+            }
+        }
+        for (T child : human.getChildren()){
+            if (human.getGender() == Gender.MALE){
+                child.setFather(human);
+            }
+            else{
+                child.setMother(human);
+            }
+        }
         family_tree.add(human);
     }
 
@@ -28,9 +50,18 @@ public class FamilyTree<T extends Animal<T>> implements Serializable, Iterable<T
         family_tree.remove(human);
     }
 
-    public T findHuman(String first_name, String last_name, String patronymic){
+    public T findHumanbyname(String first_name, String last_name, String patronymic){
         for (T human : family_tree){
             if (human.getFirst_name().equals(first_name) && human.getLast_name().equals(last_name) && human.getPatronymic().equals(patronymic)){
+                return  human;
+            }
+        }
+        return null;
+    }
+
+    public T findHumanbyid(int id){
+        for (T human : family_tree){
+            if (human.getId()==id){
                 return  human;
             }
         }

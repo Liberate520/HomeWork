@@ -1,6 +1,6 @@
-package family_tree.human;
+package family_tree.model.human;
 
-import family_tree.Interface.Animal;
+import family_tree.model.Interface.Animal;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,6 +15,7 @@ public class Human implements Serializable, Animal<Human> {
     private Human father, mother;
     private ArrayList<Human> children;
     private Gender gender;
+    private int id;
 
     public Human(String first_name, String last_name, String patronymic, LocalDate birthday, Human father, Human mother, Gender gender) {
         this.first_name = first_name;
@@ -25,12 +26,30 @@ public class Human implements Serializable, Animal<Human> {
         this.mother = mother;
         this.children = new ArrayList<Human>();
         this.gender = gender;
+        this.id = 0;
+    }
+
+    public Human(String first_name, String last_name, String patronymic, LocalDate birthday, Human father, Human mother, ArrayList<Human> children, Gender gender) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.patronymic = patronymic;
+        this.birthday = birthday;
+        this.father = father;
+        this.mother = mother;
+        this.children = children;
+        this.gender = gender;
+        this.id = 0;
     }
 
     public Human(String first_name, String last_name, String patronymic, LocalDate dayofdeath, LocalDate birthday, Human father, Human mother, ArrayList<Human> children, Gender gender) {
         this(first_name, last_name, patronymic, birthday, father, mother, gender);
         this.dayofdeath = dayofdeath;
+        this.children = children;
     }
+
+    public int getId(){ return id; }
+
+    public void setId(int id){ this.id = id; }
 
     public String getFirst_name() {
         return first_name;
@@ -112,7 +131,8 @@ public class Human implements Serializable, Animal<Human> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Human{");
-        sb.append("first_name='").append(first_name).append('\'');
+        sb.append("id='").append(id).append('\'');
+        sb.append(", first_name='").append(first_name).append('\'');
         sb.append(", last_name='").append(last_name).append('\'');
         sb.append(", patronymic='").append(patronymic).append('\'');
         sb.append(", birthday=").append(birthday);
@@ -130,7 +150,7 @@ public class Human implements Serializable, Animal<Human> {
             sb.append(child.getFirst_name()).append(' ').append(child.getLast_name()).append(", ");
         }
         if (!children.isEmpty()) {
-            sb.setLength(sb.length() - 2); // Remove the trailing comma and space
+            sb.setLength(sb.length() - 2);
         }
         sb.append("]");
         sb.append(", gender=").append(gender);

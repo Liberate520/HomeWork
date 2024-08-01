@@ -1,11 +1,14 @@
 package family_tree;
 
-import family_tree.family_tree.FamilyTree;
-import family_tree.human.Gender;
-import family_tree.human.Human;
+import family_tree.model.family_tree.FamilyTree;
+import family_tree.model.human.Gender;
+import family_tree.model.human.Human;
+import family_tree.view.ConsoleUI;
+import family_tree.view.View;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Main {
     public static FamilyTree ft_create(){
@@ -90,19 +93,7 @@ public class Main {
 
     }
     public static void main(String[] args) throws IOException {
-        FamilyTree<Human> ft = ft_create();
-        for (Human human : ft){
-            System.out.println(human);
-        }
-        ft.sortByDateOfBirthday();
-        System.out.println("Sorted");
-        for (Human human : ft){
-            System.out.println(human);
-        }
-        ft.sortByName();
-        System.out.println("Sorted");
-        for (Human human : ft){
-            System.out.println(human);
-        }
+        View view = new ConsoleUI();
+        view.start();
     }
 }
