@@ -1,13 +1,15 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.familly_tree.ItemFamilyTree;
+
 import java.util.Iterator;
 import java.util.List;
 
-public class HumanIterator implements Iterator<Human> {// описание класса, который требует два метода
+public class HumanIterator<T extends ItemFamilyTree> implements Iterator<T> {// описание класса, который требует два метода
     private int currentId;
-    private List<Human> humanList;
+    private List<T> humanList;
 
-    public HumanIterator(List<Human> humanList) {
+    public HumanIterator(List<T> humanList) {
         this.humanList = humanList;
     }
 
@@ -17,7 +19,7 @@ public class HumanIterator implements Iterator<Human> {// описание кл�
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return humanList.get(currentId++);
     }
 

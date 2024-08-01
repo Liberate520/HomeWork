@@ -4,18 +4,19 @@ import ru.gb.family_tree.familly_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.builder.HumanBuilder;
+import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 
 public class Service { //  в этом классе функционал Приложения, что прописано, то может делать это приложение
 // сам ничего не делает (верхне уровневый), но всем раздает. Ты сделай, ты сделай.
 
-    private final FamilyTree familyTree;
+    private final FamilyTree<Human> familyTree;
     private final HumanBuilder humanBuilder;
     // TODO можно добавить FileHandler
 
     public Service(){
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
     }
 

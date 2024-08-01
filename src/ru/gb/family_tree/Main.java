@@ -40,7 +40,7 @@ public class Main {
         fileHandler.save(familyTree);
     }
 
-    private static FamilyTree testTree(){
+      private static FamilyTree testTree(){
         FamilyTree familyTree = new FamilyTree();
 
         Human maksim = new Human("Максим", LocalDate.of(1972, 11, 22), Gender.Female, null, null);

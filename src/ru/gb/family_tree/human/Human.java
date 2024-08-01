@@ -1,12 +1,14 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.familly_tree.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.time.Period;
 import java.util.SplittableRandom;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
     private long id;
     private String name;
     private LocalDate birthDate;
