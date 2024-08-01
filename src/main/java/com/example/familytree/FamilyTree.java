@@ -1,13 +1,17 @@
 package com.example.familytree;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FamilyTree {
     private Map<String, Person> people;
+    private FileHandler fileHandler;
 
     public FamilyTree() {
         people = new HashMap<>();
+        fileHandler = new FileHandler(people);
     }
 
     public void addPerson(String name, Date birthDate, String gender, Person mother, Person father) {
@@ -33,5 +37,22 @@ public class FamilyTree {
             sb.append(person).append("\n");
         }
         return sb.toString();
+    }
+
+    public void saveToFile(String filename) throws IOException {
+        fileHandler.saveToFile(filename);
+    }
+
+    public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
+        fileHandler.loadFromFile(filename);
+        // Обновим ссылки на людей в дереве после загрузки
+        for (Person person : people.values()) {
+            if (person.getMother() != null) {
+                person.setMother(people.get(person.getMother().getName()));
+            }
+            if (person.getFather() != null) {
+                person.setFather(people.get(person.getFather().getName()));
+            }
+        }
     }
 }

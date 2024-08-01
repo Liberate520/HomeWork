@@ -1,5 +1,6 @@
 package com.example.familytree;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class Main {
@@ -10,6 +11,16 @@ public class Main {
         familyTree.addChild("John", "Michael", new Date(), "Male");
         familyTree.addChild("John", "Sarah", new Date(), "Female");
 
-        System.out.println(familyTree.getFamilyTree());
+        try {
+            familyTree.saveToFile("familyTree.dat");
+            System.out.println("Family tree saved to file.");
+
+            FamilyTree loadedFamilyTree = new FamilyTree();
+            loadedFamilyTree.loadFromFile("familyTree.dat");
+            System.out.println("Family tree loaded from file.");
+            System.out.println(loadedFamilyTree.getFamilyTree());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
