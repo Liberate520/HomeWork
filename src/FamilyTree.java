@@ -1,27 +1,32 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private Map<Integer, Person> people;
 
     public FamilyTree() {
         this.people = new HashMap<>();
     }
 
+    // Метод для добавления нового члена семьи в дерево
     public void addPerson(Person person) {
         people.put(person.getId(), person);
     }
 
+    // Метод для получения человека по ID
     public Person getPerson(int id) {
         return people.get(id);
     }
 
+    // Метод для получения списка всех людей в дереве
     public List<Person> getAllPeople() {
         return new ArrayList<>(people.values());
     }
 
+    // Метод для поиска людей по имени и/или фамилии
     public List<Person> findByName(String firstName, String lastName) {
         List<Person> results = new ArrayList<>();
         for (Person person : people.values()) {
@@ -33,6 +38,7 @@ public class FamilyTree {
         return results;
     }
 
+    // Метод для установки родителей и обновления родственных связей
     public void setParents(int childId, int motherId, int fatherId) {
         Person child = getPerson(childId);
         Person mother = getPerson(motherId);
@@ -50,6 +56,7 @@ public class FamilyTree {
         }
     }
 
+    // Метод для получения детей человека
     public void getChildren(int personId) {
         Person person = getPerson(personId);
         if (person != null) {
@@ -60,6 +67,7 @@ public class FamilyTree {
         }
     }
 
+    // Метод для получения родителей человека
     public void getParents(int personId) {
         Person person = getPerson(personId);
         if (person != null) {

@@ -1,4 +1,3 @@
-// Main.java
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -8,6 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
+        FileManager fileManager = new FileManager(familyTree);
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -15,7 +15,9 @@ public class Main {
             System.out.println("1. Вывести на экран всех членов семьи");
             System.out.println("2. Добавить нового члена семьи и установить его родственные связи");
             System.out.println("3. Найти члена семьи и посмотреть его родственные связи");
-            System.out.println("4. Закончить работу");
+            System.out.println("4. Сохранить семейное дерево в файл");
+            System.out.println("5. Загрузить семейное дерево из файла");
+            System.out.println("6. Закончить работу");
             int choice = scanner.nextInt();
             scanner.nextLine();  // Очистка буфера
 
@@ -48,7 +50,7 @@ public class Main {
                         try {
                             birthDate = LocalDate.parse(birthDateStr, DateTimeFormatter.ISO_LOCAL_DATE);
                         } catch (DateTimeParseException e) {
-                            System.out.println("Неправильный формат даты. Пожалуйста, используйте формат ГГГГ-ММ-ДД.");
+                            System.out.println("Неправильный формат даты. Пожалуйста, используйте формат ГГГ-ММ-ДД.");
                         }
                     }
 
@@ -111,6 +113,26 @@ public class Main {
                     break;
 
                 case 4:
+                    // Сохранение семейного дерева в файл
+                    System.out.print("Введите имя файла для сохранения (без расширения, будет добавлено автоматически): ");
+                    String saveFilename = scanner.nextLine();
+                    fileManager.saveFamilyTree(saveFilename);
+                    break;
+
+                case 5:
+                    // Загрузка семейного дерева из файла
+                    System.out.print("Введите имя файла для загрузки: ");
+                    String loadFilename = scanner.nextLine();
+                    FamilyTree loadedTree = fileManager.loadFamilyTree(loadFilename);
+                    if (loadedTree != null) {
+                        familyTree = loadedTree;
+                        System.out.println("Семейное дерево загружено из файла: " + loadFilename);
+                    } else {
+                        System.out.println("Не удалось загрузить семейное дерево.");
+                    }
+                    break;
+
+                case 6:
                     // Закончить работу
                     System.out.println("Программа завершена.");
                     scanner.close();
