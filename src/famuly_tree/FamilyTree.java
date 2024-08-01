@@ -1,3 +1,7 @@
+package famuly_tree;
+
+import human.Human;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +18,13 @@ public class FamilyTree {
         familyTree.add(human);
     }
 
-    public static String printList(List<Human> list) {
+    public List<Human> findByName(String name){
+        return familyTree.stream()
+                .filter(h -> h.getName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+    }
+
+    public String printList(List<Human> list) {
         return list.stream()
                 .map(Human::toString)
                 .collect(Collectors.joining(System.lineSeparator()));

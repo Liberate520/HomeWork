@@ -1,3 +1,7 @@
+import famuly_tree.FamilyTree;
+import human.Human;
+import human.Sex;
+
 import java.time.LocalDate;
 
 public class Main {
@@ -17,6 +21,9 @@ public class Main {
         System.out.println(familyTree);
         System.out.println(human1.isSibling(human4));
         System.out.println(human3.isSibling(human4));
-        System.out.println(FamilyTree.printList(human1.getChildren()));
+        System.out.println(familyTree.printList(human1.getChildren()));
+
+        System.out.println("Сиблинги:");
+        System.out.println(familyTree.printList(human3.findSiblings().stream().toList()));
     }
 }
