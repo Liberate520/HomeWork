@@ -1,15 +1,14 @@
 package famili_tree.family_tree;
 
 
-import java.time.*;
+import java.io.Serializable;
 
-import java.util.List;
 
 import famili_tree.Human.Human;
 
 import java.util.*;
 
-public class FamilyTree{
+public class FamilyTree implements Serializable{
     
     private List <Human> tree;
     

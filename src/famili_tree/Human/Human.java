@@ -1,5 +1,6 @@
 package famili_tree.Human;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
@@ -8,7 +9,7 @@ import famili_tree.Pol.Pol;
 import java.time.format.DateTimeFormatter;
  
 
-public class Human{
+public class Human implements Serializable{
     String name;
     String familiya;
     Pol pol;
@@ -16,10 +17,11 @@ public class Human{
     LocalDate birthDate, dethDate;
     List <Human> parents;
     public List <Human> children;
-    DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy.MM.dd");
+    DateTimeFormatter formatter;
     
     
     public Human( String name, String familiya, String pol, String birthDate, String dethDate ){
+        this.formatter= DateTimeFormatter.ofPattern("yyyy.MM.dd");
         this.name= name;
         this.familiya=familiya;
         if (pol.equals("man")){
@@ -92,11 +94,12 @@ public class Human{
    }
    
     public String getVozrast(){
+        LocalDate date= LocalDate.now();
        if (dethDate==null ){
            if (birthDate==null){
                return "Ne ustanovlen";
            }else{
-                return Integer.toString(Period.between(birthDate, LocalDate.now()).getYears());
+                return Integer.toString(Period.between(birthDate, date).getYears());
            }
    
        }else{
@@ -114,4 +117,3 @@ public class Human{
        }
    }
 }
-
