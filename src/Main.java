@@ -1,13 +1,19 @@
+import familytree.FamilyTree;
+import person.Gender;
+import person.Person;
+import writer.FileHandler;
+import writer.Writer;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // Создаем экземпляры класса Person
-        Person john = new Person("John", LocalDate.of(1974, 1, 1), null);
-        Person jane = new Person("Jane", LocalDate.of(1976, 5, 15), null);
-        Person anna = new Person("Anna", LocalDate.of(1999, 3, 21), null);
-        Person bob = new Person("Bob", LocalDate.of(2004, 7, 30), null);
+        Person john = new Person("John", LocalDate.of(1974, 1, 1), null, Gender.MALE);
+        Person jane = new Person("Jane", LocalDate.of(1976, 5, 15), null, Gender.FEMALE);
+        Person anna = new Person("Anna", LocalDate.of(1999, 3, 21), null, Gender.FEMALE);
+        Person bob = new Person("Bob", LocalDate.of(2004, 7, 30), null, Gender.MALE);
 
         // Создаем семейное дерево
         FamilyTree tree = new FamilyTree();
@@ -32,5 +38,15 @@ public class Main {
         System.out.println("Parents of Anna: " + parentsOfAnna);
 
         System.out.println(tree);
+
+        // Записываем семейное дерево в файл
+        Writer fileHandler = new FileHandler();
+        String fileName = "familytree.txt";
+        fileHandler.writeToFile(tree, fileName);
+
+        // Читаем семейное дерево из файла
+        FamilyTree loadedTree = fileHandler.readFromFile(fileName);
+        System.out.println("Loaded FamilyTree from file:");
+        System.out.println(loadedTree);
     }
 }
