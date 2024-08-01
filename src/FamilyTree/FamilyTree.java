@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import src.Human.Human;
 import src.Human.HumanComparatorByAge;
@@ -34,22 +33,22 @@ public class FamilyTree implements Serializable, Iterable <Human> {
         return null;
     }
     
-    // print entire family tree
+    // print entire family tree, not used anywhere
     // public void printTree() {
     //     for (Human member : members) {
     //         System.out.println(member.toString());
     //     }
     // }
 
-    public void SortByName() {
+    public void sortByName() {
         Collections.sort(members, new HumanComparatorByName());
     }
 
-    public void SortByBirthday(){
+    public void sortByBirthday(){
         Collections.sort(members, new HumanComparatorByAge());
     }
 
-    public void SortByChildren(){
+    public void sortByChildren(){
         Collections.sort(members, new HumanComparatorByChildrenAmount());
     }
 

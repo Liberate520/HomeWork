@@ -20,13 +20,13 @@ public class Main {
         // Print entire tree (actions should be done from an imported tree)
         System.out.println(myTree.GetFamilyInfo());
         // Sort list by name
-         myTree.SortByName();
+         myTree.sortByName();
          System.out.println(myTree.GetFamilyInfo());
         // Sort list by birth date
-         myTree.SortByBirthday();
+         myTree.sortByBirthday();
          System.out.println(myTree.GetFamilyInfo());
         // Sort list by number of children
-         myTree.SortByChildren();
+         myTree.sortByChildren();
          System.out.println(myTree.GetFamilyInfo());
         // Find family member by name
          System.out.println(myTree.getMember("Orvin Smith"));        
