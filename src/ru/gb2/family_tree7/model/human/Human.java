@@ -1,45 +1,43 @@
 package ru.gb2.family_tree7.model.human;
 
+import ru.gb2.family_tree7.model.group.GroupItem;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
-    private final String name;
-    private final Gender gender;
-    private final LocalDate birthDate;
-    private final LocalDate deathDate;
-    private final List<Human> children;
+public class Human implements Comparable<Human>, GroupItem {
+    private int id;
+    private String name;
+    private int age;
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+    public Human(int id, String name, int age) {
+        this.id = id;
         this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
-        this.children = new ArrayList<>();
+        this.age = age;
     }
 
-    public void addChild(Human child) {
-        children.add(child);
+    @Override
+    public String toString() {
+        return "Human{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 
-    public List<Human> getChildren() {
-        return children;
+    @Override
+    public int getAge() {
+        return age;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public int getAge() {
-        return (deathDate != null ? deathDate : LocalDate.now()).getYear() - birthDate.getYear();
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
     }
 }
