@@ -1,6 +1,8 @@
 import human.Gender;
 import human.Human;
 import humanTree.HumanTree;
+import humanTree.ItemHumanTree;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,10 +31,8 @@ public class Main {
         human2.addChild(human4);
         human3.addChild(human5);
 
-        System.out.println(humanTree);
-        humanTree.sortByAge();
-        System.out.println(humanTree);
-//        System.out.println(humanTree.getInfoAboutChildren(human1));
+
+       System.out.println(humanTree.getInfoAboutChildren(human1));
 //        System.out.println(humanTree.getInfoAboutChildren(human5));
 //        System.out.println(humanTree.getInfoAboutParents(human3));
 
