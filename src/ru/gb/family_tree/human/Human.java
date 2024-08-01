@@ -1,13 +1,13 @@
 package ru.gb.family_tree.human;
 
-import java.io.Serializable;
+import ru.gb.family_tree.family_tree.TreeInterface;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements TreeInterface<Human> {
     private int id;
     private String name;
     private LocalDate birthDate;
@@ -30,20 +30,17 @@ public class Human implements Serializable, Comparable<Human> {
         children = new ArrayList<>();
     }
 
-//    public Human(String name, Gender gender, LocalDate birthDate) {
-//        this(name, gender, birthDate, null,null,null);
-//    }
-//
-//    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
-//        this(name, gender, birthDate, null,father,mother);
-//    }
-
 
     public Human getSpouse() { return spouse; }
 
     public void setSpouse(Human spouse) { this.spouse = spouse; }
 
     public long getId() { return id; }
+
+    @Override
+    public void setId(long id) {
+
+    }
 
     public String getName() { return name;}
 

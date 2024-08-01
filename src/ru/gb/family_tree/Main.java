@@ -3,6 +3,7 @@ package ru.gb.family_tree;
 import ru.gb.family_tree.family_tree.FamilyTree;
 import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
+
 import ru.gb.family_tree.writer.FileHandler;
 
 import java.io.IOException;
@@ -25,15 +26,14 @@ public class Main {
     private static FamilyTree getFamilyTree() {
         FamilyTree tree = new FamilyTree();
 
-        Human fyodor = tree.addHuman("Фёдор", Gender.Male, LocalDate.of(1956, 8, 15));
-        Human vera = tree.addHuman("Вера", Gender.Female, LocalDate.of(1961, 6, 19));
+        Human fyodor = (Human) tree.add("Фёдор", Gender.Male, LocalDate.of(1956, 8, 15));
+        Human vera = (Human) tree.add("Вера", Gender.Female, LocalDate.of(1961, 6, 19));
 
         tree.setWedding(fyodor, vera);
 
-        Human irina = tree.addHuman("Ирина", Gender.Female, LocalDate.of(1969, 7, 7), fyodor, vera);
-        Human natasha = tree.addHuman("Наташа", Gender.Female, LocalDate.of(1972, 5, 21), fyodor, vera);
-        Human yulya = tree.addHuman("Юля", Gender.Female, LocalDate.of(1975, 12, 14), fyodor, vera);
-
+        Human irina = (Human) tree.add("Ирина", Gender.Female, LocalDate.of(1969, 7, 7), fyodor, vera);
+        Human natasha = (Human) tree.add("Наташа", Gender.Female, LocalDate.of(1972, 5, 21), fyodor, vera);
+        Human yulya = (Human) tree.add("Юля", Gender.Female, LocalDate.of(1975, 12, 14), fyodor, vera);
 
         fyodor.addChild(irina);
         fyodor.addChild(yulya);

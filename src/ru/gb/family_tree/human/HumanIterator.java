@@ -1,13 +1,15 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.family_tree.TreeInterface;
+
 import java.util.Iterator;
 import java.util.List;
 
-public class HumanIterator implements Iterator<Human> {
+public class HumanIterator<T extends TreeInterface> implements Iterator<T> {
     private int currentId;
-    private List<Human> humanList;
+    private List<T> humanList;
 
-    public HumanIterator(List<Human> humanList) {
+    public HumanIterator(List<T> humanList) {
         this.humanList = humanList;
     }
 
@@ -17,8 +19,8 @@ public class HumanIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
-        return humanList.get(currentId++);
+    public T next() {
+        return (T) humanList.get(currentId++);
     }
 }
 
