@@ -1,114 +1,45 @@
 package ru.gb2.family_tree7.model.human;
 
-import ru.gb2.family_tree7.model.family_tree.TreeNode;
-
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements TreeNode<Human>, Serializable {
-    private long id; // Уникальный идентификатор
-    private String name;
-    private LocalDate birthDate; // Дата рождения
-    private LocalDate deathDate; // Дата смерти
-    private Gender gender;
-    private List<Human> parents = new ArrayList<>(); // Список родителей
-    private List<Human> children = new ArrayList<>(); // Список детей
-    private String role; // Роль в семье (мама, папа, ребенок)
+public class Human {
+    private final String name;
+    private final Gender gender;
+    private final LocalDate birthDate;
+    private final LocalDate deathDate;
+    private final List<Human> children;
 
-    public Human(long id, String name, LocalDate birthDate, Gender gender, String role) {
-        this.id = id;
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
         this.name = name;
-        this.birthDate = birthDate;
         this.gender = gender;
-        this.role = role;
-    }
-
-    public Human(String name, Gender gender, int birthYear, String role) {
-    }
-
-    public Human(String name, Gender gender, LocalDate birthDate, String role) {
-    }
-
-    // Геттеры
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public LocalDate getDeathDate() {
-        return deathDate;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public List<Human> getParents() {
-        return parents;
-    }
-
-    public List<Human> getChildren() {
-        return children;
-    }
-
-    // Сеттеры
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void addParent(Human parent) {
-        parents.add(parent);
+        this.children = new ArrayList<>();
     }
 
     public void addChild(Human child) {
         children.add(child);
     }
 
-    public void removeParent(Human parent) {
-        parents.remove(parent);
+    public List<Human> getChildren() {
+        return children;
     }
 
-    public void removeChild(Human child) {
-        children.remove(child);
+    public String getName() {
+        return name;
     }
 
-    // Метод для вычисления возраста
-//    public int getAge() {
-//        if (birthDate == null) {
-//            throw new IllegalArgumentException("Дата рождения не может быть null");
-//        }
-//        LocalDate currentDate = LocalDate.now();
-//        return Period.between(birthDate, currentDate).getYears();
-//  }
+    public Gender getGender() {
+        return gender;
+    }
 
-    @Override
-    public String toString() {
-        return name + " (" + gender + ' ' + birthDate + ' ' + "Возраст:лет " + ' ' + "Роль: " + role + ")";
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public int getAge() {
+        return (deathDate != null ? deathDate : LocalDate.now()).getYear() - birthDate.getYear();
     }
 }

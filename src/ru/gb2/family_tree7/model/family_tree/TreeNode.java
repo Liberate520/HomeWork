@@ -4,20 +4,24 @@ import java.util.List;
 
 public interface TreeNode<E> {
     long getId(); // Получение уникального идентификатора узла
-
     void setId(long id); // Установка уникального идентификатора узла
 
-    String getName(); // Получение имени узла
+    public interface Named {
+        String getName(); // Получение имени узла
+    }
 
-    List<E> getParents(); // Получение списка родителей
+    public interface ParentChildRelation<E> {
+        List<E> getParents(); // Получение списка родителей
 
-    List<E> getChildren(); // Получение списка детей
+        List<E> getChildren(); // Получение списка детей
 
-    void addParent(E parent); // Добавление родителя
+        void addParent(E parent); // Добавление родителя
 
-    void addChild(E child); // Добавление ребенка
+        void addChild(E child); // Добавление ребенка
 
-    void removeParent(E parent); // Удаление родителя
+        void removeParent(E parent); // Удаление родителя
 
-    void removeChild(E child); // Удаление ребенка
+        void removeChild(E child); // Удаление ребенка
+    }
 }
+
