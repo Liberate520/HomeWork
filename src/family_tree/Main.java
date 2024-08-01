@@ -16,14 +16,14 @@ public class Main {
         familyTree.addHuman("Bob", "01-01-2000", "мужской");
         familyTree.addHuman("Charlie", "01-01-2005", "мужской");
 
-        // Установление родительско-детских отношений
+// Установление родительско-детских отношений
         familyTree.addChild("Alice", "Bob");
         familyTree.addChild("Alice", "Charlie");
         familyTree.addChild("Eugen", "Bob");
         familyTree.addChild("Eugen", "Charlie");
 
         // Установка даты смерти
-        familyTree.setDeathDate("Alice", "01-01-2024");
+        familyTree.setDeathDate("Alice", "01-01-2020");
 
         // Установление супружеской связи
         familyTree.setSpouse("Alice", "Eugen");
@@ -31,32 +31,29 @@ public class Main {
         // Сохранение семейного дерева в файл
         fileHandler.saveFamilyTree(familyTree, "familyTree.dat");
 
-        // Сохранение семейного дерева в текстовый файл
-        fileHandler.saveFamilyTreeAsText(familyTree, "familyTree.txt");
-
         // Чтение семейного дерева из файла
         FamilyTree loadedFamilyTree = fileHandler.loadFamilyTree("familyTree.dat");
 
-        // Исследование: получение детей определенного человека
-        System.out.println("Введите имя человека, чтобы найти его детей:");
-        String name = scanner.nextLine();
+        if (loadedFamilyTree != null) {
+            // Отображение всего генеалогического дерева
+            System.out.println("\nПолное генеалогическое дерево:");
+            System.out.println(loadedFamilyTree.displayFamilyTree());
 
-        List<Human> children = loadedFamilyTree.getChildren(name);
-        if (children != null) {
-            System.out.println("Дети " + name + ":");
-            for (Human child : children) {
-                System.out.println("- " + child.getName());
-            }
-        } else {
-            System.out.println(name + " не имеет детей или не существует в генеалогическом дереве.");
+            // Сортировка и отображение по дате рождения
+            System.out.println("\nСортировка по дате рождения:");
+            List<Human> sortedByBirthDate = loadedFamilyTree.sortByBirthDate();
+            sortedByBirthDate.forEach(System.out::println);
+
+            // Сортировка и отображение по идентификатору
+            System.out.println("\nСортировка по идентификатору:");
+            List<Human> sortedById = loadedFamilyTree.sortById();
+            sortedById.forEach(System.out::println);
+
         }
-
-        // Отображение всего генеалогического дерева
-        System.out.println("\nПолное генеалогическое дерево:");
-        System.out.println(loadedFamilyTree.displayFamilyTree());
 
         scanner.close();
     }
 }
+
 
 
