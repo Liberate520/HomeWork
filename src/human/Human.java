@@ -1,5 +1,7 @@
 package human;
 
+import family_tree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Human> {
+    private int id;
     private String name;
     private Gender gender;
     private LocalDate birthDate, deathDate;
-    private Human spause;
+    private Human spouse;
     private Human mother;
     private Human father;
     private List<Human> children;
@@ -25,23 +28,31 @@ public class Human implements Serializable, Comparable<Human> {
         this.mother = mother;
         this.children = new ArrayList<>();
     }
-
     public Human(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate, null, null, null);
     }
-
     public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
         this(name, gender, birthDate, null, father, mother);
     }
+    public Human() {
 
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return id;
+    }
+    public void setChildren(List<Human> children){
+        this.children = children;
+    }
     public boolean addChild(Human child) {
-        if (!this.children.contains(child)) {
-            this.children.add(child);
+        if (!children.contains(child)) {
+            children.add(child);
             return true;
         }
         return false;
     }
-
     public boolean addParent(Human parent) {
         if (parent.gender.equals(Gender.Female)) {
             setMother(parent);
@@ -50,50 +61,48 @@ public class Human implements Serializable, Comparable<Human> {
         }
         return true;
     }
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
     public LocalDate getBirthDate(){
         return birthDate;
     }
     public void setMother(Human mother) {
         this.mother = mother;
     }
-
     public Human getMother() {
         return mother;
     }
-
     public void setFather(Human father) {
         this.father = father;
     }
-
     public Human getFather() {
         return father;
     }
-
-    public Human getSpause() {
-        return this.spause;
+    public Human getSpouse() {
+        return this.spouse;
     }
-
-    public void setSpause(Human spause) {
-        this.spause = spause;
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(name, human.name) && gender == human.gender && Objects.equals(birthDate, human.birthDate) && Objects.equals(deathDate, human.deathDate) && Objects.equals(spause, human.spause) && Objects.equals(mother, human.mother) && Objects.equals(father, human.father) && Objects.equals(children, human.children);
+        return Objects.equals(name, human.name) && gender == human.gender && Objects.equals(birthDate, human.birthDate) && Objects.equals(deathDate, human.deathDate) && Objects.equals(spouse, human.spouse) && Objects.equals(mother, human.mother) && Objects.equals(father, human.father) && Objects.equals(children, human.children);
     }
-
     @Override
     public int hashCode() {
-        return Objects.hash(name, gender, birthDate, deathDate, spause, mother, father, children);
+        return Objects.hash(name, gender, birthDate, deathDate, spouse, mother, father, children);
     }
-
     public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }
-
+    @Override
     public int getAge() {
         LocalDate date = LocalDate.now();
         if (this.deathDate != null) {
@@ -101,38 +110,35 @@ public class Human implements Serializable, Comparable<Human> {
         }
         return getPeriod(this.birthDate, date);
     }
-
     private int getPeriod(LocalDate startPeriod, LocalDate endPeriod) {
         Period diff = Period.between(startPeriod, endPeriod);
         return diff.getYears();
     }
-
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
     public String getName() {
         return this.name;
     }
-
     private String getGender() {
         return this.gender.toString();
     }
-
     private String getSpauseInfo() {
-        if (this.spause == null)
+        if (this.spouse == null)
             return "нет";
-        return getSpause().name;
+        return getSpouse().name;
     }
-
     private String getMotherInfo() {
         if (this.mother == null)
             return "нет информации";
         return this.mother.name;
     }
-
     private String getFatherInfo() {
         if (this.father == null)
             return "нет информации";
         return this.father.name;
     }
-
     private String getChildrenInfo() {
         if (this.children.isEmpty()) {
             return "отсутствуют";
@@ -144,15 +150,14 @@ public class Human implements Serializable, Comparable<Human> {
             return String.join(", ", children);
         }
     }
-
     @Override
     public String toString() {
         return getInfo();
     }
-
     private String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Имя: ").append(getName());
+        sb.append("id: ").append(id);
+        sb.append(". Имя: ").append(getName());
         sb.append(", пол: ").append(getGender());
         sb.append(", возраст: ").append(getAge());
         sb.append(", супруг(а): ").append(getSpauseInfo());
@@ -162,7 +167,6 @@ public class Human implements Serializable, Comparable<Human> {
         sb.append(getChildrenInfo());
         return sb.toString();
     }
-
     @Override
     public int compareTo(Human o) {
         return name.compareTo(o.name);
