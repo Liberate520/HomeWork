@@ -10,13 +10,13 @@ public class FamilyTree {
         people = new HashMap<>();
     }
 
-    public void addPerson(String name) {
-        people.put(name, new Person(name));
+    public void addPerson(String name, Date birthDate, String gender, Person mother, Person father) {
+        people.put(name, new Person(name, birthDate, gender, mother, father));
     }
 
-    public void addChild(String parentName, String childName) {
+    public void addChild(String parentName, String childName, Date birthDate, String gender) {
         Person parent = people.get(parentName);
-        Person child = new Person(childName);
+        Person child = new Person(childName, birthDate, gender, null, parent);
         if (parent != null) {
             parent.addChild(child);
             people.put(childName, child);
@@ -27,9 +27,11 @@ public class FamilyTree {
         return people.get(name);
     }
 
-    public void printFamilyTree() {
+    public String getFamilyTree() {
+        StringBuilder sb = new StringBuilder();
         for (Person person : people.values()) {
-            System.out.println(person);
+            sb.append(person).append("\n");
         }
+        return sb.toString();
     }
 }
