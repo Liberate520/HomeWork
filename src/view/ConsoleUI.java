@@ -3,7 +3,6 @@ package view;
 import model.FamilyTree;
 import model.human.Gender;
 import model.human.Person;
-import model.writer.FileHandler;
 import presenter.Presenter;
 
 import java.time.LocalDate;
@@ -11,11 +10,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI {
+    private Presenter presenter;
     private FamilyTree<Person> familyTree;
     public final String filePath = "src/model/writer/FamilyTree.txt";
 
-    public ConsoleUI(FamilyTree<Person> familyTree) {
-        this.familyTree = familyTree;
+    public ConsoleUI(Presenter presenter) {
+        this.presenter = presenter;
     }
 
     public void start() {
@@ -57,9 +57,11 @@ public class ConsoleUI {
                     break;
                 case 4:
                     sortByName();
+                    System.out.println("Сортировка по имени успешно завершена!");
                     break;
                 case 5:
                     sortByAge();
+                    System.out.println("Сортировка по возрасту успешно завершена!");
                     break;
                 case 6:
                     save();
@@ -68,6 +70,7 @@ public class ConsoleUI {
                     load();
                     break;
                 case 8:
+                    System.out.println("Работа приложения успешно завершена!");
                     return;
                 default:
                     System.out.println("Неверная команда");
@@ -142,14 +145,18 @@ public class ConsoleUI {
     }
 
     private void save() {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        fileHandler.save(familyTree);
+        if (presenter.save(filePath)) {
+            System.out.println("Данные сохранены.");
+        } else {
+            System.out.println("Ошибка сохранения данных.");
+        }
     }
 
     private void load() {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        this.familyTree = (FamilyTree<Person>) fileHandler.read();
+        if (presenter.load(filePath)) {
+            System.out.println("Данные загружены.");
+        } else {
+            System.out.println("Ошибка загрузки данных.");
+        }
     }
 }

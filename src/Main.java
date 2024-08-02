@@ -1,8 +1,10 @@
 import model.FamilyTree;
 import model.human.Gender;
 import model.human.Person;
+import model.writer.FileLoader;
+import model.writer.FileSaver;
+import presenter.Presenter;
 import view.ConsoleUI;
-import model.writer.FileHandler;
 
 import java.time.LocalDate;
 
@@ -11,7 +13,10 @@ public class Main {
 
     public static void main(String[] args) {
         FamilyTree<Person> familyTree = getFamilyTree();
-        ConsoleUI consoleUI = new ConsoleUI (familyTree);
+        FileSaver fileSaver = new FileSaver(filePath);
+        FileLoader fileLoader = new FileLoader(filePath);
+        Presenter presenter = new Presenter(familyTree, fileLoader, fileSaver);
+        ConsoleUI consoleUI = new ConsoleUI(presenter);
         consoleUI.start();
     }
 
@@ -60,15 +65,14 @@ public class Main {
     }
 
     private static FamilyTree<Person> load() {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        return (FamilyTree<Person>) fileHandler.read();
+        FileLoader fileLoader = new FileLoader(filePath);
+
+        return (FamilyTree<Person>) fileLoader.read();
     }
 
     private static void save(FamilyTree<Person> familyTree) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        fileHandler.save(familyTree);
+        FileSaver fileSaver = new FileSaver(filePath);
+        fileSaver.save(familyTree);
     }
 }
 

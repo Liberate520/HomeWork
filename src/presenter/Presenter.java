@@ -3,7 +3,8 @@ package presenter;
 import model.FamilyTree;
 import model.human.Gender;
 import model.human.Person;
-import model.writer.FileHandler;
+import model.writer.FileLoader;
+import model.writer.FileSaver;
 import view.ConsoleUI;
 
 import java.time.LocalDate;
@@ -11,11 +12,13 @@ import java.util.List;
 
 public class Presenter {
     private FamilyTree<Person> familyTree;
-    private ConsoleUI consoleUI;
+    private FileSaver fileSaver;
+    private FileLoader fileLoader;
 
-    public Presenter(FamilyTree<Person> familyTree, ConsoleUI consoleUI) {
+    public Presenter(FamilyTree<Person> familyTree, FileLoader fileLoader, FileSaver fileSaver) {
         this.familyTree = familyTree;
-        this.consoleUI = consoleUI;
+        this.fileLoader = fileLoader;
+        this.fileSaver = fileSaver;
     }
 
     public void addPerson(String name, int age, Gender gender, LocalDate birthDate) {
@@ -46,16 +49,11 @@ public class Presenter {
     }
 
     public boolean save(String filePath) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-
-        return fileHandler.save(familyTree);
+        return fileSaver.save(familyTree);
     }
 
     public boolean load(String filePath) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        FamilyTree<Person> loadedTree = (FamilyTree<Person>) fileHandler.read();
+        FamilyTree<Person> loadedTree = (FamilyTree<Person>) fileLoader.read();
         if (loadedTree != null) {
             this.familyTree = loadedTree;
 
