@@ -1,7 +1,10 @@
-import family_tree.FamilyTree;
-import human.Gender;
-import human.Person;
-import writer.FileHandler;
+package view;
+
+import model.FamilyTree;
+import model.human.Gender;
+import model.human.Person;
+import model.writer.FileHandler;
+import presenter.Presenter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.Scanner;
 
 public class ConsoleUI {
     private FamilyTree<Person> familyTree;
+    public final String filePath = "src/model/writer/FamilyTree.txt";
 
     public ConsoleUI(FamilyTree<Person> familyTree) {
         this.familyTree = familyTree;
@@ -139,13 +143,13 @@ public class ConsoleUI {
 
     private void save() {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(Main.filePath);
+        fileHandler.setPath(filePath);
         fileHandler.save(familyTree);
     }
 
     private void load() {
         FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(Main.filePath);
+        fileHandler.setPath(filePath);
         this.familyTree = (FamilyTree<Person>) fileHandler.read();
     }
 }

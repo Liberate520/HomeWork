@@ -1,12 +1,13 @@
-import family_tree.FamilyTree;
-import human.Gender;
-import human.Person;
-import writer.FileHandler;
+import model.FamilyTree;
+import model.human.Gender;
+import model.human.Person;
+import view.ConsoleUI;
+import model.writer.FileHandler;
 
 import java.time.LocalDate;
 
 public class Main {
-    final static String filePath = "src/writer/FamilyTree.txt";
+    public static final String filePath = "src/model/writer/FamilyTree.txt";
 
     public static void main(String[] args) {
         FamilyTree<Person> familyTree = getFamilyTree();
