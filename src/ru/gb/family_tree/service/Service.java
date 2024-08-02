@@ -12,7 +12,7 @@ import java.util.Collections;
 
 //функционал приложения
 public class Service {
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
     private FileHendler fileHendler;
     private HumanBuilder humanBuilder;
 

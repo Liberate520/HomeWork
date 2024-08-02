@@ -1,5 +1,7 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.tree.ItemFamilyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human  implements Serializable, Comparable<Human> {
+public class Human  implements Comparable<Human>, ItemFamilyTree<Human> {
     private int id;
     private String lastName;
     private String firstName;
@@ -192,7 +194,6 @@ public class Human  implements Serializable, Comparable<Human> {
         }
     }
 
-
     @Override
     public String toString() {
 
@@ -277,7 +278,6 @@ public class Human  implements Serializable, Comparable<Human> {
         }
         return spouseStr;
     }
-
 
     public String getChildrenInfo() {
         StringBuilder childrenStr = new StringBuilder();
