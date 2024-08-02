@@ -41,20 +41,26 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     }
 
     public void addChild(Human child) {
-        this.children.add(child);
-        if (this.gender == Gender.Female) {
-            child.setMother(this);
-        } else {
-            child.setFather(this);
+        if (children == null) {
+            children = new ArrayList<>();
         }
+        children.add(child);
     }
 
     public void setMother(Human mother) {
         this.mother = mother;
     }
 
+    public Human getMother() {
+        return mother;
+    }
+
     public void setFather(Human father) {
         this.father = father;
+    }
+
+    public Human getFather() {
+        return father;
     }
 
     public String getName() {
@@ -64,11 +70,14 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     public int getAge(){
         LocalDate currentDate = LocalDate.now();
         if (deathDate == null){
-           age = Period.between(birthDate, currentDate).getYears();
+            return Period.between(birthDate, currentDate).getYears();
         }else {
-            age = Period.between(birthDate, deathDate).getYears();
+            return Period.between(birthDate, deathDate).getYears();
         }
-        return age;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public LocalDate getBirthDate() {
@@ -85,7 +94,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
                 "ID: " + id + " " +
                 "Фамилия: " + lastName  +
                 " Имя: " + name +
-                " возраст: " + age +
+                " возраст: " + getAge() +
                 ", мать: " + (mother != null ? mother.getName() : "Неизвестна") +
                 ", отец: " + (father != null ? father.getName() : "Неизвестен") +
                 ", дети: " + children.stream().map(Human::getName).toList()  +

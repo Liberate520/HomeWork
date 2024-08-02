@@ -13,9 +13,8 @@ import java.util.List;
 public class Presenter {
     private View view;
     private Service service;
-    private FamilyTree<Human> familyTree;
 
-    public Presenter(View view, Service<Human> service){
+    public Presenter(View view, Service service){
         this.view = view;
         this.service = service;
     }
@@ -30,8 +29,8 @@ public class Presenter {
     }
 
     public void getFamilyTree() {
-        FamilyTree<Human> familyTree = service.getFamilyTree();
-        List<Human> humanList = familyTree.getHumanList();
+        FamilyTree familyTree = service.getFamilyTree();
+        List<Human> humanList = new ArrayList<>(familyTree.getHumanList());
         view.printAnswer(humanList.toString());
     }
 
@@ -43,5 +42,32 @@ public class Presenter {
     public void sortByName() {
         service.sortByName();
         getFamilyTree();
+    }
+
+    public void addChildById(long parentId, long childId) {
+        service.addChildById(parentId, childId);
+        getFamilyTree();
+    }
+
+    public void saveFamilyTree() {
+        service.saveFamilyTree();
+    }
+
+    public void loadFamilyTree() {
+        service.loadFamilyTree();
+    }
+
+    public void delHuman(long id) {
+        service.delHuman(id);
+//        boolean success = service.delHuman(id);
+//        if (success) {
+//            view.printAnswer("Человек с ID " + id + " был успешно удален.");
+//        } else {
+//            view.printAnswer("Человек с ID " + id + " не найден.");
+//        }
+    }
+
+    public void findHumanById(long id) {
+        service.findHumanById(id);
     }
 }

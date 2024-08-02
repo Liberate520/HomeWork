@@ -1,6 +1,7 @@
 package ru.gb.family_tree.model.FT;
 
 import ru.gb.family_tree.model.Human.Human;
+import ru.gb.family_tree.model.builder.HumanBuilder;
 
 import java.io.*;
 
@@ -16,4 +17,5 @@ public class FileHandler<T extends FamilyTreeItem<T>>  implements Writable {
             return (FamilyTree<T>) ois.readObject();
         }
     }
+
 }

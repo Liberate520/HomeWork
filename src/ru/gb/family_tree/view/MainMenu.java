@@ -11,6 +11,9 @@ public class MainMenu {
     public MainMenu(ConsoleUI consoleUI){
         commands = new ArrayList<>();
         commands.add(new AddHuman(consoleUI));
+        commands.add(new AddChildByID(consoleUI));
+        commands.add(new DeleteHuman(consoleUI));
+        commands.add(new FindHumanById(consoleUI));
         commands.add(new FindHumanByName(consoleUI));
         commands.add(new GetFamilyTree(consoleUI));
         commands.add(new SortByBirthDate(consoleUI));
