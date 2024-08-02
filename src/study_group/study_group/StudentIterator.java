@@ -5,11 +5,11 @@ import study_group.student.Student;
 import java.util.Iterator;
 import java.util.List;
 
-class StudentIterator implements Iterator<Student> {
+class StudentIterator<E extends ItemStudyGroup> implements Iterator<E> {
     private int currentId;
-    private List<Student> students;
+    private List<E> students;
 
-    public StudentIterator( List<Student> students) {
+    public StudentIterator( List<E> students) {
         this.students = students;
     }
 
@@ -19,7 +19,7 @@ class StudentIterator implements Iterator<Student> {
     }
 
     @Override
-    public Student next() {
+    public E next() {
         return students.get(currentId++);
     }
 }

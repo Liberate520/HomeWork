@@ -6,7 +6,7 @@ import study_group.study_group.StudyGroup;
 
 public class Service {
     private StudentBuilder studentBuilder;
-    private StudyGroup studyGroup;
+    private StudyGroup<Student> studyGroup;
     public Service(){
         studyGroup = new StudyGroup();
         studentBuilder = new StudentBuilder();

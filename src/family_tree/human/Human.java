@@ -1,6 +1,7 @@
 package family_tree.human;
 
-import java.io.Serializable;
+import family_tree.family_tree.ItemFamilyTree;
+import family_tree.human.enum_for_human.Gender;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -8,10 +9,11 @@ import java.util.List;
 import java.lang.Object;
 
 
-public class Human implements Serializable {
+public class Human implements Comparable<Human>, ItemFamilyTree<Human>{
     private long id;
     private String firstName;
-    //TODO  добавить Фамилию и Отчество
+    private String patronymic;
+    private String lastName;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -20,9 +22,11 @@ public class Human implements Serializable {
     private List<Human> children;
 
 
-    public Human(String firstName, Gender gender, LocalDate birthDate, LocalDate deathDate, Human mother, Human father) {
-        this.id = -1;
+    public Human(long id,String firstName,String patronymic,String lastName, Gender gender, LocalDate birthDate, LocalDate deathDate, Human mother, Human father) {
+        this.id = id;
         this.firstName = firstName;
+        this.patronymic = patronymic;
+        this.lastName = lastName;
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
@@ -31,13 +35,15 @@ public class Human implements Serializable {
         children = new ArrayList<>();
     }
 
-    public Human(String firstName, Gender gender, LocalDate birthDate) {
-        this(firstName, gender, birthDate, null, null, null);
+    public Human(Long id,String firstName,String patronymic,String lastName, Gender gender, LocalDate birthDate, Human mother, Human father) {
+        this(id, firstName,patronymic,lastName, gender, birthDate, null, mother, father);
     }
 
-    public Human(String firstName, Gender gender, LocalDate birthDate, Human mother, Human father) {
-        this(firstName, gender, birthDate, null, mother, father);
+    public Human(Long id,String firstName,String patronymic,String lastName,  Gender gender, LocalDate birthDate) {
+        this(id,firstName,patronymic,lastName, gender, birthDate, null, null, null);
     }
+
+    //Id
 
     public long getId() {
         return id;
@@ -47,13 +53,37 @@ public class Human implements Serializable {
         this.id = id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    //First Name
 
     public String getFirstName() {
         return firstName;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    //Patronymic
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    //Last Name
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    //Gender
 
     public void setGender(Gender gender) {
         this.gender = gender;
@@ -63,6 +93,8 @@ public class Human implements Serializable {
         return gender;
     }
 
+    //Birth Date
+
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -70,6 +102,8 @@ public class Human implements Serializable {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
+
+    //Death Date
 
     public LocalDate getDeathDate() {
         return deathDate;
@@ -79,6 +113,8 @@ public class Human implements Serializable {
         this.deathDate = deathDate;
     }
 
+    //Mother
+
     public void setMother(Human mother) {
         this.mother = mother;
     }
@@ -86,6 +122,8 @@ public class Human implements Serializable {
     public Human getMother() {
         return mother;
     }
+
+    //Father
 
     public void setFather(Human father) {
         this.father = father;
@@ -95,6 +133,8 @@ public class Human implements Serializable {
         return father;
     }
 
+    //Children
+
     public List<Human> getChildren() {
         return children;
     }
@@ -102,6 +142,8 @@ public class Human implements Serializable {
     public void setChildren(List<Human> children) {
         this.children = children;
     }
+
+    // Add Children or Parents
 
     public boolean addChild(Human child) {
         if (!children.contains(child)) {
@@ -130,6 +172,8 @@ public class Human implements Serializable {
         return list;
     }
 
+    //Age
+
     public int getAge() {
         if (deathDate == null) {
             return getPeriod(birthDate, LocalDate.now());
@@ -143,6 +187,8 @@ public class Human implements Serializable {
         return diff.getYears();
     }
 
+    //Info Human for String
+
     @Override
     public String toString() {
         return getInfo();
@@ -152,45 +198,43 @@ public class Human implements Serializable {
         StringBuilder info = new StringBuilder();
         info.append("Human ID: ");
         info.append(id);
-        info.append(", имя: ");
+        info.append(", ");
         info.append(firstName);
+        info.append(" ");
+        info.append(lastName);
+        info.append(" ");
+        info.append(patronymic);
         info.append(", пол: ");
         info.append(getGender());
         info.append(", возрост: ");
         info.append(getAge());
-        info.append(", ");
         info.append(getMotherInfo());
-        info.append(", ");
         info.append(getFatherInfo());
-        info.append(", ");
         info.append(getChildrenInfo());
         return info.toString();
     }
+
     public  String getFatherInfo(){
-        String res = "отец: ";
+        String res = "";
         Human father = getFather();
         if (father != null){
-            res += father.getFirstName();
-        } else {
-            res += "запись отсутствует";
+            res = ", отец: " +father.getFirstName()+" "+ father.getLastName()+" "+father.getPatronymic();
         }
         return res;
     }
 
     public  String getMotherInfo(){
-        String res = "мать: ";
+        String res = "";
         Human mother = getMother();
         if (mother != null){
-            res += mother.getFirstName();
-        } else {
-            res += "запись отсутствует";
+            res += ", мать: " + mother.getFirstName()+" "+ mother.getLastName()+" "+mother.getPatronymic();
         }
         return res;
     }
 
     public String getChildrenInfo(){
         StringBuilder res = new StringBuilder();
-        res.append("дети: ");
+        res.append(", дети: ");
         if (!children.isEmpty()){
             res.append(children.get(0).getFirstName());
             for (int i = 1; i< children.size();i++){
@@ -198,11 +242,12 @@ public class Human implements Serializable {
                 res.append(children.get(i).getFirstName());
             }
         }else {
-            res.append("Отсутствует");
+            res = new StringBuilder();
         }
         return res.toString();
     }
 
+    //default
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -213,5 +258,10 @@ public class Human implements Serializable {
         }
         Human human = (Human) obj;
         return human.getId() == getId();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return 0;
     }
 }
