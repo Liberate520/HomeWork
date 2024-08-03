@@ -1,31 +1,44 @@
 package com.oop.homeWorkOOP;
 
-import com.oop.homeWorkOOP.fileWork.LineAgeFile;
-import com.oop.homeWorkOOP.lineAge.Human;
+import java.util.Collections;
+
+import com.oop.homeWorkOOP.human.Gender;
+import com.oop.homeWorkOOP.human.Human;
 import com.oop.homeWorkOOP.lineAge.LineageTree;
+import com.oop.homeWorkOOP.lineAgeSave.LineAgeFile;
 
 public class Main {
     public static void main(String[] args) {
-        LineAgeFile lFile = new LineAgeFile();
-        LineageTree lineAge = lFile.loadLineAge("lineage.db");
-        lineAge.printLineAge();
+        LineAgeFile lFile = new LineAgeFile("lineage.db");
+        // LineageTree lineAge = lFile.loadLineAge();
+        LineageTree lineAge = creatAndFillLineAge();
+        for (Human hum : lineAge) {
+            System.out.println(hum);
+        }
         System.out.println("1--------");
-        LineageTree fatherLine = lineAge.getAllFather(lineAge.getHumanById(0));
-        fatherLine.printLineAge();
-        System.out.println("2----------");
-        LineageTree motherLine = lineAge.getAllMother(lineAge.getHumanById(1));
-        motherLine.printLineAge();
-        System.out.println("3----------");
-        LineageTree parents = lineAge.getAllParents(lineAge.getHumanById(3));
-        parents.printLineAge();
-        System.out.println("4----------");
-        LineageTree children = lineAge.getAllChildren(lineAge.getHumanById(6));
-        children.printLineAge();
-        System.out.println("5--------");
-        System.out.println(lineAge.getHumanById(3));
-        System.out.println("6--------");
+        // LineageTree fatherLine = lineAge.getAllFather(lineAge.getHumanById(0));
+        // fatherLine.printLineAge();
+        // System.out.println("2----------");
+        // LineageTree motherLine = lineAge.getAllMother(lineAge.getHumanById(1));
+        // motherLine.printLineAge();
+        // System.out.println("3----------");
+        // LineageTree parents = lineAge.getAllParents(lineAge.getHumanById(3));
+        // parents.printLineAge();
+        // System.out.println("4----------");
+        // LineageTree children = lineAge.getAllChildren(lineAge.getHumanById(6));
+        // children.printLineAge();
+        // System.out.println("5--------");
+        // System.out.println(lineAge.getHumanById(3));
+        // System.out.println("6--------");
         System.out.println(lineAge.getHumanByName("Инна"));
-        System.out.println(lFile.saveLineAge(lineAge, "lineage.db"));
+        System.out.println("2----------");
+        System.out.println(lFile.saveLineAge(lineAge));
+        System.out.println("3----------");
+        lineAge.sortByName();
+        lineAge.printLineAge();
+        System.out.println("4----------");
+        lineAge.sortByBirthDate();
+        lineAge.printLineAge();
 
     }
 

@@ -1,4 +1,4 @@
-package com.oop.homeWorkOOP;
+package com.oop.homeWorkOOP.human;
 
 public enum Gender {
     Male, Female;

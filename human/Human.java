@@ -1,13 +1,11 @@
-package com.oop.homeWorkOOP.lineAge;
+package com.oop.homeWorkOOP.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oop.homeWorkOOP.Gender;
-
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -96,9 +94,9 @@ public class Human implements Serializable {
         res.append("Name: ");
         res.append(name);
         res.append(", age: ");
+        res.append(getAge());
         res.append(", gender: ");
         res.append(gender);
-        res.append(getAge());
         res.append(", birthDate: ");
         res.append(birthDate);
         if (deathDate != null) {
@@ -185,6 +183,11 @@ public class Human implements Serializable {
 
     public void setMother(Human mother) {
         this.mother = mother;
+    }
+
+    @Override
+    public int compareTo(Human hum) {
+        return this.getAge()-hum.getAge();
     }
 
 }

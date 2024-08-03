@@ -2,12 +2,17 @@ package com.oop.homeWorkOOP.lineAge;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import com.oop.homeWorkOOP.Gender;
+import com.oop.homeWorkOOP.human.Gender;
+import com.oop.homeWorkOOP.human.Human;
+import com.oop.homeWorkOOP.human.comparators.compareHumanByBirthDate;
+import com.oop.homeWorkOOP.human.comparators.compareHumanByName;
 
-public class LineageTree implements Serializable {
+public class LineageTree implements Serializable, Iterable<Human> {
     private List<Human> lineAge;
 
     public LineageTree() {
@@ -153,4 +158,18 @@ public class LineageTree implements Serializable {
         }
         return resTree;
     }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new LineAgeIterator(lineAge);
+    }
+
+    public void sortByName() {
+        lineAge.sort(new compareHumanByName());
+    }
+
+    public void sortByBirthDate() {
+        lineAge.sort(new compareHumanByBirthDate());
+    }
+
 }
