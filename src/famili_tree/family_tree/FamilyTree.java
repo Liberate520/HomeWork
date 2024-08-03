@@ -66,6 +66,24 @@ public class FamilyTree implements Iterable <Human>, Serializable{
         return "konec dereva!";
     }
 
+    public String findByName (String name){
+        int count=0;
+        for (Human el : tree){
+            if ((el.getName()).equals(name)){
+                System.out.println(el);
+                count++;
+            }
+        }
+
+        if (count==0){
+            System.out.println("Chelovek s dannim imenem ne nayden");
+        }
+
+        return "Poisk zavershen";
+
+    }
+
+
 
     public void sortByName(){
         tree.sort(new HumanComporatorByName() ); 

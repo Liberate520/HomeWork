@@ -14,14 +14,14 @@ import java.time.format.DateTimeFormatter;
  
 
 public class Human implements Serializable, Comparable<Human>{
-    String name;
-    String familiya;
-    Pol pol;
+    private String name;
+    private String familiya;
+    private Pol pol;
     public Human suprug;
-    LocalDate birthDate, dethDate;
-    List <Human> parents;
+    private LocalDate birthDate, dethDate;
+    private List <Human> parents;
     public List <Human> children;
-    int age;
+    private int age;
     
     
     public Human( String name, String familiya, String pol, String birthDate, String dethDate ){
@@ -139,6 +139,11 @@ public class Human implements Serializable, Comparable<Human>{
     public int getAge(){
         return this.age;
     }
+
+    public String getName(){
+        return this.name;
+    }
+
 
     @Override
     public int compareTo(Human o){

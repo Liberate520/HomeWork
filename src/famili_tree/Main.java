@@ -31,18 +31,18 @@ public class Main {
         // System.out.println(numan1);
         // System.out.println(numan1.suprug);
         // System.out.println(numan4.suprug);
-        System.out.println(treeM);
+        // System.out.println(treeM);
         // for (Human el:treeM){
         //     System.out.println(el);
         // }
-        System.out.println("******************** ПО ИМЕНИ*************************");
-        treeM.sortByName();
-        System.out.println(treeM);
-        System.out.println("**********************ПО ВОЗРАСТУ*******************************");
-        treeM.sortByAge();
-        System.out.println(treeM);
-        
-        
+        // System.out.println("******************** ПО ИМЕНИ*************************");
+        // treeM.sortByName();
+        // System.out.println(treeM);
+        // System.out.println("**********************ПО ВОЗРАСТУ*******************************");
+        // treeM.sortByAge();
+        // System.out.println(treeM);
+        System.out.println(treeM.findByName("Ivan"));
+        // treeM.findByName("Vasiliy");
         // System.out.println(numan1.children);
         // System.out.println(numan1.getVozrast());
         // System.out.println(numan3);
