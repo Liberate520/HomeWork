@@ -1,6 +1,6 @@
-package ru.gb.family_tree.human;
+package ru.gb.family_tree.model.human;
 
-import ru.gb.family_tree.service.FamilyTreeItem;
+import ru.gb.family_tree.model.service.FamilyTreeItem;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -60,14 +60,17 @@ public class Human implements FamilyTreeItem<Human> {
         this.birthDay = birthDay;
     }
 
+    @Override
     public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }
 
+    @Override
     public void setFather(Human father) {
         this.father = father;
     }
 
+    @Override
     public void setMother(Human mother) {
         this.mother = mother;
     }
@@ -278,7 +281,7 @@ public class Human implements FamilyTreeItem<Human> {
             this.children = new ArrayList<>();
         }
 
-        public HumanBuilder setId(int id) {
+        public HumanBuilder setHumanId(int id) {
             this.id = id;
             return this;
         }

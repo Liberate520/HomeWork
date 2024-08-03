@@ -1,10 +1,9 @@
-package ru.gb.family_tree.service;
+package ru.gb.family_tree.model.service;
 
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class HumanBuilder {
     //private int humanId;

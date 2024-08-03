@@ -1,7 +1,7 @@
 package ru.gb.family_tree.writer;
 
-import ru.gb.family_tree.family_tree.FamilyTree;
-import ru.gb.family_tree.service.FamilyTreeItem;
+import ru.gb.family_tree.model.family_tree.FamilyTree;
+import ru.gb.family_tree.model.service.FamilyTreeItem;
 
 import java.util.List;
 
