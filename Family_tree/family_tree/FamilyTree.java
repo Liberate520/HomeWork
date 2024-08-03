@@ -10,7 +10,7 @@ import Family_tree.human.Human;
 import Family_tree.human.HumanComparatorByAge;
 import Family_tree.human.HumanComparatorByName;
 
-public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, Iterable<T> {
     private long humansId;  
     private List<T> people;
 
@@ -59,20 +59,20 @@ public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Itera
     //     }
     // }
 
-    private void addToFather(Human human){
+    private void addToFather(T human){
         if (human.getFather() != null){
             human.getFather().addChild(human);
         }
     }
 
-    private void addToMother(Human human){
+    private void addToMother(T human){
         if (human.getMother() != null){
             human.getMother().addChild(human);
         }
     }
     
     
-    private void addToChildren(Human human){
+    private void addToChildren(T human){
         for (Human child : human.getChildren()) {
             child.addFather(human);
             child.addMother(human);
