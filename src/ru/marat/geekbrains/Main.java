@@ -2,8 +2,10 @@ package ru.marat.geekbrains;
 
 import ru.marat.geekbrains.models.FamilyTree;
 import ru.marat.geekbrains.models.Person;
+import ru.marat.geekbrains.models.PersonRelationship;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -18,11 +20,11 @@ public class Main {
         child2.setMother(jane);
         child2.setFather(john);
 
-        FamilyTree familyTree = new FamilyTree();
-        familyTree.addPerson(john);
-        familyTree.addPerson(jane);
-        familyTree.addPerson(child1);
-        familyTree.addPerson(child2);
+        FamilyTree<Person> familyTree = new FamilyTree<>(new PersonRelationship());
+        familyTree.addMember(john);
+        familyTree.addMember(jane);
+        familyTree.addMember(child1);
+        familyTree.addMember(child2);
 
         List<Person> johnsChildren = familyTree.getChildren(john);
         System.out.println("Дети Джона:");
@@ -34,11 +36,11 @@ public class Main {
         System.out.println(familyTree);
 
         System.out.println("\nСортировка по имени:");
-        familyTree.sortByName();
+        familyTree.sortByName(Comparator.comparing(Person::getName));
         System.out.println(familyTree);
 
         System.out.println("\nСортировка по дате рождения:");
-        familyTree.sortByBirthDate();
+        familyTree.sortByBirthDate(Comparator.comparing(Person::getBirthDate));
         System.out.println(familyTree);
     }
 }

@@ -6,45 +6,47 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Person> {
-    private List<Person> people;
+public class FamilyTree<T> implements Iterable<T> {
+    private List<T> members;
+    private ParentChildRelationship<T> relationship;
 
-    public FamilyTree() {
-        this.people = new ArrayList<>();
+    public FamilyTree(ParentChildRelationship<T> relationship) {
+        this.members = new ArrayList<>();
+        this.relationship = relationship;
     }
 
-    public void addPerson(Person person) {
-        people.add(person);
+    public void addMember(T member) {
+        members.add(member);
     }
 
-    public List<Person> getChildren(Person parent) {
-        List<Person> children = new ArrayList<>();
-        for (Person person : people) {
-            if (person.getMother() == parent || person.getFather() == parent) {
-                children.add(person);
+    public List<T> getChildren(T parent) {
+        List<T> children = new ArrayList<>();
+        for (T member : members) {
+            if (relationship.getMother(member) == parent || relationship.getFather(member) == parent) {
+                children.add(member);
             }
         }
         return children;
     }
 
-    public void sortByName() {
-        Collections.sort(people, Comparator.comparing(Person::getName));
+    public void sortByName(Comparator<T> nameComparator) {
+        members.sort(nameComparator);
     }
 
-    public void sortByBirthDate() {
-        Collections.sort(people, Comparator.comparing(Person::getBirthDate));
+    public void sortByBirthDate(Comparator<T> birthDateComparator) {
+        members.sort(birthDateComparator);
     }
 
     @Override
-    public Iterator<Person> iterator() {
-        return people.iterator();
+    public Iterator<T> iterator() {
+        return members.iterator();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Person person : people) {
-            sb.append(person).append("\n");
+        for (T member : members) {
+            sb.append(member).append("\n");
         }
         return sb.toString();
     }
