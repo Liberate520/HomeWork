@@ -1,5 +1,6 @@
 package familyTree.HumanBuilder;
 
+import familyTree.familyTree.FamilyTreeItem;
 import familyTree.human.Gender;
 import familyTree.human.Human;
 
@@ -7,27 +8,27 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-public class HumanBuilder {
+public class HumanBuilder<E extends FamilyTreeItem<E>> {
     private long humID;
-    private Human human;
+    private E human;
     private String lastName;
     private String firstname;
     private String patronymic;
     private Gender gender;
     private LocalDate dayBirth;
     private LocalDate dayDeath;
-    private Human father;
-    private Human mother;
-    private List<Human> children;
+    private E father;
+    private E mother;
+    private List<E> children;
     private String placeBorn;
 
 
     public HumanBuilder() {
+
     }
 
     private void createHuman() {
-        human = new Human();
-
+        human = (E) new Human();
     }
 
     private void createLastName() {
@@ -87,7 +88,6 @@ public class HumanBuilder {
     }
 
     public HumanBuilder setFirstname(String firstname) {
-        this.firstname = null;
         this.firstname = firstname;
         return this;
     }
@@ -112,28 +112,27 @@ public class HumanBuilder {
         return this;
     }
 
-    public HumanBuilder setFather(Human father) {
+    public HumanBuilder setFather(E father) {
         this.father = father;
         return this;
     }
 
-    public HumanBuilder setMother(Human mother) {
+    public HumanBuilder setMother(E mother) {
         this.mother = mother;
         return this;
     }
 
-    public HumanBuilder setChildren(List<Human> children) {
+    public HumanBuilder setChildren(List<E> children) {
         this.children = children;
         return this;
     }
 
     public HumanBuilder setPlaceBorn(String placeBorn) {
-        this.placeBorn = null;
         this.placeBorn = placeBorn;
         return this;
     }
 
-    private void setHumID(Human human) {
+    private void setHumID(E human) {
         human.setID(humID++);
 
     }
@@ -151,7 +150,7 @@ public class HumanBuilder {
     }
 
 
-    public Human build() {
+    public E build() {
         createHuman();
         createLastName();
         createFirstName();
