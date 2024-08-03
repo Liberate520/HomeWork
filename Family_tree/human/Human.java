@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Family_tree.family_tree.ItemFamilyTree;
 
-public class Human implements Serializable, Comparable<Human>, ItemFamilyTree {
+public class Human implements Comparable<Human>, ItemFamilyTree<Human> {
     private long id;
     private String name;
     private Gender gender;
