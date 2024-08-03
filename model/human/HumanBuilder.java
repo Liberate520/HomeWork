@@ -16,8 +16,8 @@ public class HumanBuilder {
         return this;
     }
 
-    public HumanBuilder setGender(Gender gender) {
-        human.setGender(gender);
+    public HumanBuilder setGender(int i) {
+        human.setGender(i);
         return this;
     }
 

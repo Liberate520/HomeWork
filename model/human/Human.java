@@ -44,8 +44,12 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem {
         return this.name;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGender(int i) {
+        if (i == 1) {
+            this.gender = Gender.Male;
+        } else {
+            this.gender = Gender.Female;
+        }
     }
 
     public Gender getGender() {
