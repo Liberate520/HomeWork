@@ -1,4 +1,4 @@
-package famili_tree.Pol;
+package Pol;
 
 public enum Pol{
     man, woman;

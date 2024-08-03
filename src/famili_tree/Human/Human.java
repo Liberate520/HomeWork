@@ -1,4 +1,4 @@
-package famili_tree.Human;
+package Human;
 
 
 
@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
-import famili_tree.Pol.Pol;
+import Pol.Pol;
 
 import java.time.format.DateTimeFormatter;
  
 
-public class Human implements Serializable{
+public class Human implements Serializable, Comparable<Human>{
     String name;
     String familiya;
     Pol pol;
@@ -21,7 +21,7 @@ public class Human implements Serializable{
     LocalDate birthDate, dethDate;
     List <Human> parents;
     public List <Human> children;
-    
+    int age;
     
     
     public Human( String name, String familiya, String pol, String birthDate, String dethDate ){
@@ -38,10 +38,10 @@ public class Human implements Serializable{
         
         this.children= new ArrayList<>();
         this.parents= new ArrayList<>();
-        if (birthDate != null && !birthDate.equals("")){
+        
             
-            this.birthDate=getBirtdayDate(birthDate);
-        }
+        this.birthDate=getBirtdayDate(birthDate);
+        
         
         if (dethDate != null && !dethDate.equals("")){
             
@@ -61,9 +61,7 @@ public class Human implements Serializable{
         this (name,  familiya,  pol, birthDate,  null);
     }
     
-    public Human( String name, String familiya, String pol ){
-        this (name,  familiya,  pol,  null, null);
-    }
+    
     
     public  void setBirthDate(int year,int month,int day  ){
         this.birthDate = LocalDate.of(year, month, day);
@@ -105,16 +103,13 @@ public class Human implements Serializable{
    
     public String getVozrast(){
         LocalDate date= LocalDate.now();
-       if (dethDate==null ){
-           if (birthDate==null){
-               return "Ne ustanovlen";
-           }else{
+        if (dethDate==null ){
+                this.age=Period.between(birthDate, date).getYears();
                 return Integer.toString(Period.between(birthDate, date).getYears());
-           }
    
-       }else{
+        }else{
            return Integer.toString(Period.between(birthDate, dethDate).getYears());
-       }   
+        }   
     }
     
     public void addSuprug(Human supr ){
@@ -141,7 +136,15 @@ public class Human implements Serializable{
         return LocalDate.parse(dethDate, formatter);
     }
 
-   
+    public int getAge(){
+        return this.age;
+    }
+
+    @Override
+    public int compareTo(Human o){
+        return this.name.compareTo(o.name);
+    }
+ 
 
 
 }
