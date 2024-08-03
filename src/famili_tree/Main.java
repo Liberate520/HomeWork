@@ -8,9 +8,10 @@ import famili_tree.family_tree.FamilyTree;
 
 
 
-public class Main
-{final  static String  filePath="homeWork\\src\\famili_tree\\Filehendler\\tree.txt"; 
-    public static void main(String[] args) {
+public class Main {
+    
+    final  static String  filePath="D:\\обучение\\ООП\\homeWork\\src\\tree.txt"; 
+    public static void main (String[] args) {
         Human numan1=new Human("Vasiliy", "Morozov", "man", "1990.06.22");
         Human numan2=new Human("Aleksandr", "Morozov", "man");
         // Human numan3=new Human("Vasisuil", "lokhankin", "man", "1961.08.20","2003.09.25" );
@@ -24,11 +25,11 @@ public class Main
         // System.out.println(numan3);
         // System.out.println(numan4.suprug);
         System.out.println(treeM);
-        
+        System.out.println("********************************************************************************************");
 	 
-        // FamilyTree treeL =load();
-        // System.out.println(treeL);
-        save(treeM);
+        FamilyTree treeL =load();
+        System.out.println(treeL);
+        // save(treeM);
         
     }
 

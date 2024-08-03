@@ -1,5 +1,9 @@
 package famili_tree.Human;
 
+
+
+
+
 import java.io.Serializable;
 import java.time.*;
 import java.util.*;
@@ -17,11 +21,11 @@ public class Human implements Serializable{
     LocalDate birthDate, dethDate;
     List <Human> parents;
     public List <Human> children;
-    DateTimeFormatter formatter;
+    
     
     
     public Human( String name, String familiya, String pol, String birthDate, String dethDate ){
-        this.formatter= DateTimeFormatter.ofPattern("yyyy.MM.dd");
+       
         this.name= name;
         this.familiya=familiya;
         if (pol.equals("man")){
@@ -36,17 +40,23 @@ public class Human implements Serializable{
         this.parents= new ArrayList<>();
         if (birthDate != null && !birthDate.equals("")){
             
-            this.birthDate=LocalDate.parse(birthDate, formatter);
+            this.birthDate=getBirtdayDate(birthDate);
         }
         
         if (dethDate != null && !dethDate.equals("")){
             
-            this.dethDate=LocalDate.parse(dethDate, formatter);
+            this.dethDate=getdethDate(dethDate);
         }
             
         
     }
     
+    
+
+    
+
+
+
     public Human( String name, String familiya, String pol, String birthDate  ){
         this (name,  familiya,  pol, birthDate,  null);
     }
@@ -116,4 +126,22 @@ public class Human implements Serializable{
            System.out.println("Uzhe v brake");
        }
    }
+
+    private LocalDate getBirtdayDate(String birthDate) {
+        
+        DateTimeFormatter formatter;
+        formatter= DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        return LocalDate.parse(birthDate, formatter);
+    }
+
+    private LocalDate getdethDate(String dethDate) {
+        
+        DateTimeFormatter formatter;
+        formatter= DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        return LocalDate.parse(dethDate, formatter);
+    }
+
+   
+
+
 }
