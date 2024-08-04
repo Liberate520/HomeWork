@@ -6,10 +6,11 @@ public class AddHuman extends Command{
 
     public AddHuman(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Добавить студента";
+        description = "Добавить человека";
     }
 
     public void execute(){
+
         consoleUI.addHuman();
     }
 }

@@ -8,6 +8,7 @@ public class SortByName extends Command {
         description = "Отсортировать список по имени";
     }
 
+    @Override
     public void execute(){
         consoleUI.sortByName();
     }

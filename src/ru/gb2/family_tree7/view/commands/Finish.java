@@ -9,6 +9,7 @@ public class Finish extends Command {
     }
 
     public void execute(){
+
         consoleUI.finish();
     }
 }

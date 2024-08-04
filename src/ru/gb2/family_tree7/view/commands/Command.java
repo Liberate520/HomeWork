@@ -7,10 +7,12 @@ public abstract class Command {
     ConsoleUI consoleUI;
 
     public Command(ConsoleUI consoleUI) {
+
         this.consoleUI = consoleUI;
     }
 
     public String getDescription() {
+
         return description;
     }
 
