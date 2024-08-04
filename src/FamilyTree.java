@@ -1,11 +1,8 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private static final long serialVersionUID = 1L;
     private Map<String, Human> humans;
 
@@ -40,5 +37,22 @@ public class FamilyTree implements Serializable {
 
     public List<Human> getAllHumans() {
         return new ArrayList<>(humans.values());
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return humans.values().iterator();
+    }
+
+    public List<Human> sortByAge() {
+        return humans.values().stream()
+                .sorted(Comparator.comparingInt(Human::getAge))
+                .collect(Collectors.toList());
+    }
+
+    public List<Human> sortByGender() {
+        return humans.values().stream()
+                .sorted(Comparator.comparing(Human::getGender))
+                .collect(Collectors.toList());
     }
 }

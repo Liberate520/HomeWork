@@ -33,8 +33,9 @@ public class Main {
             System.out.println("4. Получить информацию о детях человека");
             System.out.println("5. Сохранить семейное древо");
             System.out.println("6. Загрузить семейное древо");
-            System.out.println("7. Выйти");
-
+            System.out.println("7. Сортировать по возрасту");
+            System.out.println("8. Сортировать по полу");
+            System.out.println("9. Выйти");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -101,6 +102,16 @@ public class Main {
                     }
                 }
                 case 7 -> {
+                    System.out.println("Сортировка по возрасту:");
+                    List<Human> sortedByAge = familyTree.sortByAge();
+                    sortedByAge.forEach(System.out::println);
+                }
+                case 8 -> {
+                    System.out.println("Сортировка по полу:");
+                    List<Human> sortedByGender = familyTree.sortByGender();
+                    sortedByGender.forEach(System.out::println);
+                }
+                case 9 -> {
                     System.out.println("Выход.");
                     scanner.close();
                     return;

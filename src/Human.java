@@ -97,6 +97,7 @@ public class Human implements Serializable {
                 ", Имя: " + name +
                 ", Фамилия: " + surname +
                 ", Возраст: " + age +
+                ", Пол: " + gender +
                 ", Отец: " + (father != null ? father.getName() : "Неизвестен") +
                 ", Мать: " + (mother != null ? mother.getName() : "Неизвестна") +
                 ", Дети: " + (childrenNames.isEmpty() ? "Нет" : childrenNames);
