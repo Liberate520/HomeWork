@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-// Класс, описывающий человека
 public class Human implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -41,32 +40,42 @@ public class Human implements Serializable {
         return birthDate;
     }
 
-    public List<Human> getChildren() {
-        return children;
-    }
-
-    public void addChild(Human child) {
-        children.add(child);
-    }
-
-    public void addParent(Human parent) {
-        parents.add(parent);
+    public LocalDate getDeathDate() {
+        return deathDate;
     }
 
     public void setDeathDate(String deathDate) {
         this.deathDate = LocalDate.parse(deathDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public List<Human> getChildren() {
+        return children;
+    }
+
+    public List<Human> getParents() {
+        return parents;
+    }
+
+    public Human getSpouse() {
+        return spouse;
+    }
+
     public void setSpouse(Human spouse) {
         this.spouse = spouse;
     }
 
+    public void addChild(Human child) {
+        this.children.add(child);
+        child.parents.add(this);
+    }
+
     public int getAge() {
-        if (deathDate != null) {
-            return Period.between(birthDate, deathDate).getYears();
-        } else {
-            return Period.between(birthDate, LocalDate.now()).getYears();
-        }
+        LocalDate endDate = (deathDate != null) ? deathDate : LocalDate.now();
+        return Period.between(birthDate, endDate).getYears();
     }
 
     @Override
