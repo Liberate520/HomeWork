@@ -1,14 +1,11 @@
 package writer;
 
 import family_tree.FamilyTree;
-import human.Human;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
 
 public class FileHandler implements MyWriter {
     private String storage = "data.txt";
@@ -20,7 +17,7 @@ public class FileHandler implements MyWriter {
     @Override
     public boolean save(FamilyTree familyTree) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(storage))) {
-            objectOutputStream.writeObject(familyTree.getFamilyTree());
+            objectOutputStream.writeObject(familyTree);
             return true;
         } catch (Exception e) {
             return false;
@@ -28,12 +25,11 @@ public class FileHandler implements MyWriter {
     }
 
     @Override
-    public boolean load(FamilyTree familyTree) {
+    public FamilyTree load() {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(storage))) {
-            familyTree.setFamilyTree((List<Human>) objectInputStream.readObject());
-            return true;
+            return (FamilyTree) objectInputStream.readObject();
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 }

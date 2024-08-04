@@ -32,8 +32,7 @@ public class Main {
         System.out.println(familyTree);
         FileHandler handler = new FileHandler();
         handler.save(familyTree);
-        FamilyTree loadedTree = new FamilyTree();
-        handler.load(loadedTree);
+        FamilyTree loadedTree = handler.load();
         System.out.println("Загруженные данные:");
         System.out.println(loadedTree);
     }
