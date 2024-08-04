@@ -1,11 +1,9 @@
 package ru.gb.family_tree;
 
-import ru.gb.family_tree.interfaces.MyIterable;
-
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree<T extends Serializable> implements Serializable, MyIterable<T> {
+public class FamilyTree<T extends Serializable> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
 
     private Map<Integer, T> members;
@@ -34,7 +32,6 @@ public class FamilyTree<T extends Serializable> implements Serializable, MyItera
         return sortedList;
     }
 
-    // Реализация интерфейса MyIterable
     @Override
     public Iterator<T> iterator() {
         return members.values().iterator();

@@ -2,7 +2,7 @@ package ru.gb.family_tree.main;
 
 import ru.gb.family_tree.FamilyTree;
 import ru.gb.family_tree.models.Human;
-import ru.gb.family_tree.util.FileHandler;
+import ru.gb.family_tree.utils.FileHandler;
 
 import java.util.Comparator;
 

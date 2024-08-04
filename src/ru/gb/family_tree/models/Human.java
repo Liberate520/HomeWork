@@ -45,7 +45,9 @@ public class Human implements Serializable {
     }
 
     public void setDeathDate(String deathDate) {
-        this.deathDate = LocalDate.parse(deathDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        if (deathDate != null && !deathDate.isEmpty()) {
+            this.deathDate = LocalDate.parse(deathDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        }
     }
 
     public String getGender() {
@@ -69,8 +71,29 @@ public class Human implements Serializable {
     }
 
     public void addChild(Human child) {
-        this.children.add(child);
-        child.parents.add(this);
+        if (child != null && !children.contains(child)) {
+            this.children.add(child);
+            child.getParents().add(this);
+        }
+    }
+
+    public void removeChild(Human child) {
+        if (child != null && children.remove(child)) {
+            child.getParents().remove(this);
+        }
+    }
+
+    public void addParent(Human parent) {
+        if (parent != null && !parents.contains(parent)) {
+            this.parents.add(parent);
+            parent.getChildren().add(this);
+        }
+    }
+
+    public void removeParent(Human parent) {
+        if (parent != null && parents.remove(parent)) {
+            parent.getChildren().remove(this);
+        }
     }
 
     public int getAge() {

@@ -1,4 +1,4 @@
-package ru.gb.family_tree.util;
+package ru.gb.family_tree.utils;
 
 import ru.gb.family_tree.FamilyTree;
 
@@ -10,7 +10,7 @@ public class FileHandler<T extends Serializable> {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(familyTree);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error saving family tree: " + e.getMessage());
         }
     }
 
@@ -18,8 +18,10 @@ public class FileHandler<T extends Serializable> {
     public FamilyTree<T> loadFamilyTree(String filename) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (FamilyTree<T>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Error loading family tree: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println("Class not found: " + e.getMessage());
         }
         return null;
     }
