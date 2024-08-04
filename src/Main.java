@@ -1,8 +1,6 @@
-import model.family.human.Human;
 import model.family.human.HumanService;
 import model.rw.FileHandler;
-import presenter.Presenter;
-import view.UIs.ConsoleUI;
+import view.UIs.console.ConsoleUI;
 import view.View;
 
 import java.io.IOException;
@@ -58,8 +56,10 @@ public class Main {
 //        System.out.println("=========================");
 //        System.out.println(tree.getById(0));
 
-        View view = new ConsoleUI(new HumanService(new FileHandler()));
+
+        View view = new ConsoleUI(new HumanService(new FileHandler("humantree.out")));
 
         view.start();
+
     }
 }

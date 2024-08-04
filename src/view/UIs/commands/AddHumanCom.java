@@ -1,7 +1,6 @@
 package view.UIs.commands;
 
-import view.UIs.ConsoleUI;
-import view.View;
+import view.UIs.console.ConsoleUI;
 
 public class AddHumanCom extends Command{
     public AddHumanCom(String name, ConsoleUI view) {

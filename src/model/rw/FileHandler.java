@@ -7,18 +7,29 @@ public class FileHandler implements Writer {
     ObjectOutputStream objectOutputStream;
     ObjectInputStream objectInputStream;
 
+    String path;
+
+    public FileHandler(String path) {
+        this.path = path;
+    }
+
     @Override
-    public void write(String filename, FamilyTree tree) throws IOException {
+    public void write(FamilyTree tree) throws IOException {
         objectOutputStream = new ObjectOutputStream(
-                new FileOutputStream(filename));
+                new FileOutputStream(this.path));
         objectOutputStream.writeObject(tree);
         objectOutputStream.close();
     }
 
     @Override
-    public FamilyTree read(String filename) throws IOException, ClassNotFoundException {
+    public String getPath() {
+        return this.path;
+    }
+
+    @Override
+    public FamilyTree read() throws IOException, ClassNotFoundException {
         objectInputStream = new ObjectInputStream(
-                new FileInputStream(filename));
+                new FileInputStream(this.path));
         FamilyTree tree = (FamilyTree) objectInputStream.readObject();
         objectInputStream.close();
         return tree;

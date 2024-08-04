@@ -1,5 +1,7 @@
 package model.family;
 
+import model.family.Alivable;
+
 import java.util.Iterator;
 import java.util.List;
 

@@ -1,12 +1,8 @@
-package view.UIs;
+package view.UIs.console;
 
 import model.family.Service;
 import model.family.human.Gender;
-import model.family.human.HumanService;
-import model.rw.Writer;
-import presenter.Classes;
 import presenter.Presenter;
-import view.UIs.commands.Command;
 import view.UIs.helpers.CheckNumber;
 import view.View;
 
@@ -44,7 +40,7 @@ public class ConsoleUI implements View {
     }
 
     /**
-     *         commands.add(new AddHumanCom("Добавить человека", view));
+     *   commands.add(new AddHumanCom("Добавить человека", view));
      *         commands.add(new GetHumanCom("Получить человека по ID", view));
      *         commands.add(new SetParentCom("Установить родителя", view));
      *         commands.add(new PrintTreeCom("Показать дерево", view));
@@ -163,9 +159,7 @@ public class ConsoleUI implements View {
     }
 
     public void load(){
-        System.out.println("Введите путь");
-        String input = scanner.nextLine();
-        presenter.load(input);
+        presenter.load();
     }
 
     public void exit(){

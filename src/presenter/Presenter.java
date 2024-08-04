@@ -14,7 +14,7 @@ public class Presenter<U extends Alivable<U>> {
     //    String answer;
     String errMessage;
     public Presenter(View view, Service<U> service) {
-        // Можно менять вью и менять вид животного, указывая конкретный сервис.
+
 
         this.view = view;
         this.service = service;
@@ -120,9 +120,9 @@ public class Presenter<U extends Alivable<U>> {
 
     }
 
-    public void load(String path){
+    public void load(){
         try {
-            service.load(path);
+            service.load();
         }catch (IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException c){

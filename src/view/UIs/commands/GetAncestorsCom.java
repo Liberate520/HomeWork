@@ -1,7 +1,6 @@
 package view.UIs.commands;
 
-import view.UIs.ConsoleUI;
-import view.View;
+import view.UIs.console.ConsoleUI;
 
 public class GetAncestorsCom extends Command{
     public GetAncestorsCom(String name, ConsoleUI view) {

@@ -1,8 +1,8 @@
-package view.UIs;
+package view.UIs.console;
 
 import view.UIs.commands.*;
+import view.UIs.console.ConsoleUI;
 import view.UIs.helpers.CheckNumber;
-import view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class Menu {
         commands.add(new ExitCom("Выход", view));
     }
 
-    public void setFlag(boolean flag) {
+    void setFlag(boolean flag) {
         this.flag = flag;
     }
 
@@ -55,6 +55,5 @@ public class Menu {
             }
         }
     }
-
 
 }

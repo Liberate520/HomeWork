@@ -1,6 +1,6 @@
 package view.UIs.commands;
 
-import view.UIs.ConsoleUI;
+import view.UIs.console.ConsoleUI;
 
 public class GetChildrenCom extends Command{
     public GetChildrenCom(String name, ConsoleUI view) {

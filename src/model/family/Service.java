@@ -15,7 +15,14 @@ public abstract class Service<T extends Alivable<T>> {
     protected FamilyTree<T> tree;
     protected Builder<T> builder;
     protected Writer rw;
-    protected String path;
+//    protected String path;
+
+    public Service(FamilyTree<T> tree, Builder<T> builder, Writer rw) {
+        this.tree = tree;
+        this.builder = builder;
+        this.rw = rw;
+//        this.path = path;
+    }
 
     public int size(){
         return tree.size();
@@ -81,19 +88,12 @@ public abstract class Service<T extends Alivable<T>> {
     }
 
     // FILEHANDLER
-    public void save(String path) throws IOException {
-        rw.write(path, tree);
-    }
-
     public void save() throws IOException {
-        rw.write(this.path, tree);
+        rw.write(tree);
     }
 
-    public void load(String path) throws IOException, ClassNotFoundException {
-        this.tree = rw.read(path);
-    }
     public void load() throws IOException, ClassNotFoundException {
-        this.tree = rw.read(this.path);
+        this.tree = rw.read();
     }
 
     public void setWriter(Writer writer) {
@@ -101,7 +101,7 @@ public abstract class Service<T extends Alivable<T>> {
     }
 
     public String getPath(){
-        return path;
+        return rw.getPath();
     }
 
 }

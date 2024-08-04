@@ -1,6 +1,6 @@
 package view.UIs.commands;
 
-import view.UIs.ConsoleUI;
+import view.UIs.console.ConsoleUI;
 
 public class LoadCom extends Command{
     public LoadCom(String name, ConsoleUI view) {
