@@ -1,5 +1,4 @@
-
-package family.human;
+package model.family.human;
 
 import java.time.LocalDate;
 

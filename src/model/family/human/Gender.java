@@ -1,4 +1,4 @@
-package family.human;
+package model.family.human;
 public enum Gender {
     Male, Female
 }

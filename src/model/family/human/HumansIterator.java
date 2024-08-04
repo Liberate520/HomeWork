@@ -1,11 +1,9 @@
-package family.human;
+package model.family.human;
 
-import family.Alivable;
+import model.family.Alivable;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class HumansIterator<T extends Alivable<T>> implements Iterator<T> {
     private List<T> list;

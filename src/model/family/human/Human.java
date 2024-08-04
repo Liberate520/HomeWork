@@ -1,9 +1,9 @@
-package family.human;
+package model.family.human;
 
 //TODO
 // Exceptions
 
-import family.Alivable;
+import model.family.Alivable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -26,8 +26,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         setParent(mother);
         setParent(father);
     }
-
-    // Этот конструктор для корневых элементов дерева, для которых не указываются родители
 
     public Human(int id, String name, LocalDate birthDate, Gender gender){
         this.id = id;
@@ -54,8 +52,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         return name;
     }
 
-    // Теперь возраст выдает сколько полных лет
-
     public int getAge(){
         LocalDate endDate;
         if (deathDate == null){
@@ -64,8 +60,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         Period period = Period.between(birthDate, endDate);
         return period.getYears();
     }
-
-    // Cледующие 2 метода для того, чтобы проследить родословную по конкретной линии
 
     public Human getMother(){
         if (mother != null)
@@ -79,8 +73,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         return null;
     }
 
-    // Для поиска братьев, сестер, дядь, теть, племянников
-
     public Human getChildByName(String name){
         for (Human child : children){
             if(child.getName().equals(name)){
@@ -90,13 +82,18 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         return null;
     }
 
-    // на случай, если родители не были указаны в конструкторе.
-    // может также понадобиться при продлении дерева вверх
-
-    public void setParent(Human parent){
-        if (parent.gender == Gender.Female)
-            this.mother = parent;
-        else this.father = parent;
+    public boolean setParent(Human parent){
+        if (parent.getAge() > this.getAge()) {
+            parent.addChild(this);
+            if (parent.gender == Gender.Female) {
+                this.mother = parent;
+                return true;
+            } else {
+                this.father = parent;
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setDeathDate(LocalDate deathDate) {
@@ -111,7 +108,7 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         return gender;
     }
 
-    public Set<Human>getChildren(){
+    public Set<Human> getChildren(){
         return children;
     }
 
@@ -120,8 +117,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
         return "#" + id + ": " + name + " " + getAge() + " y.o. " + gender.toString();
 
     }
-
-    // проверка на детей
 
     @Override
     public boolean equals(Object obj) {
@@ -133,8 +128,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
             return false;
         return this.id == human.id && this.name.equals(human.getName()) && this.birthDate.isEqual(human.birthDate)
                 && this.children.equals(human.children);
-
-//        return this.id == human.id;
     }
 
     private int setSize(){

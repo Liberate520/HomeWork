@@ -1,11 +1,12 @@
-package family.tree;
+package model.family.tree;
 
 import java.io.Serializable;
 import java.util.*;
 
-import family.Alivable;
-import family.human.Human;
-import family.human.HumansIterator;
+import model.family.Alivable;
+import model.family.human.comparators.ByAgeComparator;
+import model.family.human.comparators.ByNameComparator;
+import model.family.human.HumansIterator;
 
 
 public class FamilyTree<U extends Alivable<U>> implements Serializable, Iterable<U> {
@@ -17,6 +18,10 @@ public class FamilyTree<U extends Alivable<U>> implements Serializable, Iterable
 
     public FamilyTree() {
         tree = new ArrayList<>();
+    }
+
+    public int size(){
+        return tree.size();
     }
 
     public boolean add(U alivable) {
@@ -40,7 +45,6 @@ public class FamilyTree<U extends Alivable<U>> implements Serializable, Iterable
         return false;
     }
 
-    //
     public void setAllRelationships(){
         for (U alivable : tree){
             setParentRelationship(alivable);

@@ -1,11 +1,11 @@
-package family;
+package model.family;
 
-import family.human.Gender;
-import family.human.Human;
-import family.human.HumanBuilder;
-import family.tree.FamilyTree;
-import rw.FileHandler;
-import rw.Writer;
+import model.family.human.Gender;
+import model.family.human.Human;
+import model.family.human.HumanBuilder;
+import model.family.tree.FamilyTree;
+import model.rw.FileHandler;
+import model.rw.Writer;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,10 +24,13 @@ public class HumanService {
         path = "tree.out";
     }
 
-    // HUMAN
+    public int size(){
+        return tree.size();
+    }
 
-    public void setParent(int childId, int parentId){
-        tree.getById(childId).setParent(tree.getById(parentId));
+    // HUMAN
+    public boolean setParent(int childId, int parentId){
+        return tree.getById(childId).setParent(tree.getById(parentId));
     }
 
     public Human getById(int id){
@@ -35,7 +38,6 @@ public class HumanService {
     }
 
     // TREE
-
     public boolean addHumanToTree(String name, LocalDate birthDate, Gender gender){
         Human human = builder.create(name, birthDate, gender);
         return tree.add(human);
@@ -69,9 +71,12 @@ public class HumanService {
     }
 
     //Sorts
-
     public void sortById(){
         tree.sortById();
+    }
+
+    public Set<Human> getChildren(int id){
+        return tree.getById(id).getChildren();
     }
 
     public void sortByName(){
@@ -82,8 +87,7 @@ public class HumanService {
         tree.sortByAge();
     }
 
-    // FileHandler
-
+    // FILEHANDLER
     public void save(String path) throws IOException {
         rw.write(path, tree);
     }
@@ -92,8 +96,8 @@ public class HumanService {
         rw.write(this.path, tree);
     }
 
-    public FamilyTree load(String path) throws IOException, ClassNotFoundException {
-        return rw.read(path);
+    public void load(String path) throws IOException, ClassNotFoundException {
+        this.tree = rw.read(path);
     }
     public FamilyTree load() throws IOException, ClassNotFoundException {
         return rw.read(this.path);

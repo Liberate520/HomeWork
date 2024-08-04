@@ -1,7 +1,7 @@
-package rw;
+package model.rw;
 
 import java.io.*;
-import family.tree.FamilyTree;
+import model.family.tree.FamilyTree;
 
 public class FileHandler implements Writer {
     ObjectOutputStream objectOutputStream;

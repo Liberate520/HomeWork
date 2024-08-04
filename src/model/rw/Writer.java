@@ -1,7 +1,7 @@
-package rw;
+package model.rw;
 
 import java.io.IOException;
-import family.tree.FamilyTree;
+import model.family.tree.FamilyTree;
 
 public interface Writer {
     FamilyTree read(String path) throws IOException, ClassNotFoundException;
