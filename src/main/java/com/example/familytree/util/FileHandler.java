@@ -1,4 +1,4 @@
-package com.example.familytree;
+package com.example.familytree.util;
 
 import java.io.*;
 

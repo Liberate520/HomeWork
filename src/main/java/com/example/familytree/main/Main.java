@@ -1,4 +1,4 @@
-package com.example.familytree;
+package com.example.familytree.main;
 
 import java.io.IOException;
 import java.util.Date;
