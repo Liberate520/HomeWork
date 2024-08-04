@@ -1,6 +1,7 @@
 package ru.gb.family_tree;
 
 import java.time.LocalDate;
+import ru.gb.family_tree.serializers.FileHandler;
 
 public class Main {
     public static void main(String[] args) {
@@ -44,6 +45,15 @@ public class Main {
 
         System.out.println("\n");
         System.out.println("Full family tree:");
+        System.out.println(familyTree);
+
+        // Сортировка и вывод списка членов семьи
+        System.out.println("\nSorted by name:");
+        familyTree.sortByName();
+        System.out.println(familyTree);
+
+        System.out.println("\nSorted by birth date:");
+        familyTree.sortByBirthDate();
         System.out.println(familyTree);
         
         // Save familyTree object to local file system

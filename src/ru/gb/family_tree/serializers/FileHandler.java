@@ -1,10 +1,11 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.serializers;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import ru.gb.family_tree.FamilyTree;
 
 public class FileHandler implements PersistenceHandler{
 

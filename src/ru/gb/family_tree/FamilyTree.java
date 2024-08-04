@@ -2,10 +2,13 @@ package ru.gb.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import ru.gb.family_tree.iterators.FamilyTreeIterator;
 
-public class FamilyTree implements  Serializable{
+public class FamilyTree implements Iterable<Human>, Serializable{
     private List<Human> members;
 
     public FamilyTree() {
@@ -46,6 +49,21 @@ public class FamilyTree implements  Serializable{
     public List<Human> getMembers() {
         return members;
     }
+
+    // Сортировка по имени
+    public void sortByName() {
+        members.sort(Comparator.comparing(Human::getFullName));
+    }
+
+    // Сортировка по дате рождения
+    public void sortByBirthDate() {
+        members.sort(Comparator.comparing(Human::getBirthDate));
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new FamilyTreeIterator(members);
+    }   
 
     @Override
     public String toString() {

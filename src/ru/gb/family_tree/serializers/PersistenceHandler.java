@@ -1,4 +1,6 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.serializers;
+
+import ru.gb.family_tree.FamilyTree;
 
 public interface PersistenceHandler {
 
