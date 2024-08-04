@@ -1,14 +1,12 @@
-package ru.gb.family_tree.service;
+package ru.gb.family_tree.model.service;
 
-import ru.gb.family_tree.human.comparators.HumanComparatorByLastName;
-import ru.gb.family_tree.tree.FamilyTree;
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.builder.HumanBuilder;
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.model.builder.HumanBuilder;
+import ru.gb.family_tree.model.tree.FamilyTree;
+import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.writer.FileHendler;
 
 import java.time.LocalDate;
-import java.util.Collections;
 
 //функционал приложения
 public class Service {

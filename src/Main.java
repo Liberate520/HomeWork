@@ -1,8 +1,10 @@
-import ru.gb.family_tree.builder.HumanBuilder;
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.service.Service;
-import ru.gb.family_tree.tree.FamilyTree;
+import ru.gb.family_tree.model.builder.HumanBuilder;
+import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
+import ru.gb.family_tree.model.service.Service;
+import ru.gb.family_tree.model.tree.FamilyTree;
+import ru.gb.family_tree.view.ConsoleUI;
+import ru.gb.family_tree.view.View;
 
 import java.time.LocalDate;
 
@@ -10,12 +12,16 @@ public class Main {
     public static void main(String[] args) {
 
 
+       // test1();
+       // test2();
+       // test4();
 
+        View view = new ConsoleUI();
+        view.start();
 
+    }
 
-        test1();
-        //test2();
-
+    private static void test4() {
         Service service = new Service();
         service.addHuman("Иванова", "Мария", LocalDate.of(1985, 3,16), Gender.женский);
         service.addHuman("Филимонова", "Оксана", LocalDate.of(1975, 3,16), Gender.женский);
@@ -35,7 +41,6 @@ public class Main {
 
         service.sortByLastName();
         System.out.println(service.getFamilyTreeInfo());
-
     }
 
     private static void test2() {
