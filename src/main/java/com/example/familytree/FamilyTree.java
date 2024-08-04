@@ -1,17 +1,18 @@
 package com.example.familytree;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Map<String, Person> people;
-    private FileHandler fileHandler;
 
     public FamilyTree() {
         people = new HashMap<>();
-        fileHandler = new FileHandler(people);
     }
 
     public void addPerson(String name, Date birthDate, String gender, Person mother, Person father) {
@@ -40,19 +41,12 @@ public class FamilyTree {
     }
 
     public void saveToFile(String filename) throws IOException {
-        fileHandler.saveToFile(filename);
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.saveToFile(filename, this);
     }
 
-    public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
-        fileHandler.loadFromFile(filename);
-        // Обновим ссылки на людей в дереве после загрузки
-        for (Person person : people.values()) {
-            if (person.getMother() != null) {
-                person.setMother(people.get(person.getMother().getName()));
-            }
-            if (person.getFather() != null) {
-                person.setFather(people.get(person.getFather().getName()));
-            }
-        }
+    public static FamilyTree loadFromFile(String filename) throws IOException, ClassNotFoundException {
+        FileHandler fileHandler = new FileHandler();
+        return fileHandler.loadFromFile(filename);
     }
 }

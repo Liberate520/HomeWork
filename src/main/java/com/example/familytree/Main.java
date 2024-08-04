@@ -15,8 +15,7 @@ public class Main {
             familyTree.saveToFile("familyTree.dat");
             System.out.println("Family tree saved to file.");
 
-            FamilyTree loadedFamilyTree = new FamilyTree();
-            loadedFamilyTree.loadFromFile("familyTree.dat");
+            FamilyTree loadedFamilyTree = FamilyTree.loadFromFile("familyTree.dat");
             System.out.println("Family tree loaded from file.");
             System.out.println(loadedFamilyTree.getFamilyTree());
         } catch (IOException | ClassNotFoundException e) {
