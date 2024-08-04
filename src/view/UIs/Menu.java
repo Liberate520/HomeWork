@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    List<Command> commands;
-    ConsoleUI view;
-    boolean flag;
-    Scanner scanner;
+    private List<Command> commands;
+    private ConsoleUI view;
+    private boolean flag;
+    private Scanner scanner;
 
     public Menu(ConsoleUI view) {
         this.commands = new ArrayList<>();
@@ -27,6 +27,8 @@ public class Menu {
         commands.add(new GetSiblingsCom("Показать братьев и сестер", view));
         commands.add(new GetAncestorsCom("Показать предков", view));
         commands.add(new GetDescendantsCom("Показать потомков", view));
+        commands.add(new SaveCom("Сохранить", view));
+        commands.add(new LoadCom("Загрузить", view));
         commands.add(new ExitCom("Выход", view));
     }
 

@@ -1,12 +1,19 @@
 package view.UIs;
 
+import model.family.Service;
 import model.family.human.Gender;
+import model.family.human.HumanService;
+import model.rw.Writer;
+import presenter.Classes;
 import presenter.Presenter;
 import view.UIs.commands.Command;
 import view.UIs.helpers.CheckNumber;
 import view.View;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -15,8 +22,8 @@ public class ConsoleUI implements View {
     private Menu menu;
     Scanner scanner;
 
-    public ConsoleUI() {
-        this.presenter = new Presenter(this);
+    public ConsoleUI(Service service) {
+        this.presenter = new Presenter<>(this, service);
 //        this.command = new Command();
         this.scanner = new Scanner(System.in);
         this.menu = new Menu(this);
@@ -37,7 +44,7 @@ public class ConsoleUI implements View {
     }
 
     /**
-     *   commands.add(new AddHumanCom("Добавить человека", view));
+     *         commands.add(new AddHumanCom("Добавить человека", view));
      *         commands.add(new GetHumanCom("Получить человека по ID", view));
      *         commands.add(new SetParentCom("Установить родителя", view));
      *         commands.add(new PrintTreeCom("Показать дерево", view));
@@ -54,9 +61,21 @@ public class ConsoleUI implements View {
         LocalDate birthDate = LocalDate.of(1,1,1);
         while (flag) {
             String input = scanner.nextLine();
-            if (input.matches("^\\d{4}-[0-12]{2}-\\d{2}")) {
-                birthDate = LocalDate.parse(input);
-                flag = false;
+            if (input.matches("^\\d{4}-[0-9]{2}-\\d{2}")) {
+                int month = Integer.parseInt(input.substring(5, 7));
+                int day = Integer.parseInt(input.substring(8, 10));
+                int year = Integer.parseInt(input.substring(0, 4));
+                List<Integer> months31 = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 8, 10, 12));
+                if (month <= 12) {
+                    if (months31.contains(month) && day <= 31 ||
+                            month == 2 && day <= 29 ||
+                            year % 4 == 0 && year % 100 > 0 && day <= 29
+                            || day <= 30) {
+
+                        birthDate = LocalDate.parse(input);
+                        flag = false;
+                    }
+                }
             } else System.out.println("Неверный формат");
         }
         System.out.println("Выберите пол: 1. Муж; 2. Жен");
@@ -139,6 +158,16 @@ public class ConsoleUI implements View {
         presenter.getChildren(id);
     }
 
+    public void save(){
+        presenter.save();
+    }
+
+    public void load(){
+        System.out.println("Введите путь");
+        String input = scanner.nextLine();
+        presenter.load(input);
+    }
+
     public void exit(){
         menu.setFlag(false);
         System.out.println("Пока!");
@@ -148,10 +177,19 @@ public class ConsoleUI implements View {
         boolean flag = true;
         while (flag) {
             String input = scanner.nextLine();
-            if (input.matches("^\\d{4}-[1-12]{2}-\\d{2}")) {
-                LocalDate ld = LocalDate.parse(input);
-                System.out.println(ld.toString());
-                flag = false;
+            if (input.matches("^\\d{4}-[0-9]{2}-\\d{2}")) {
+                int month = Integer.parseInt(input.substring(5, 7));
+                int day = Integer.parseInt(input.substring(8, 10));
+                List<Integer> months31 = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 8, 10, 12));
+                if (month <= 12) {
+                    if (months31.contains(month) && day <= 31 || month == 2 && day <= 29 || day <= 30) {
+
+
+                        LocalDate ld = LocalDate.parse(input);
+                        System.out.println(ld.toString());
+                        flag = false;
+                    }
+                }
             } else System.out.println("Неверный формат");
         }
     }

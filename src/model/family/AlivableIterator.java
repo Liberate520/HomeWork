@@ -1,14 +1,12 @@
-package model.family.human;
-
-import model.family.Alivable;
+package model.family;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class HumansIterator<T extends Alivable<T>> implements Iterator<T> {
+public class AlivableIterator<T extends Alivable<T>> implements Iterator<T> {
     private List<T> list;
     private int index;
-    public HumansIterator(List<T> list){
+    public AlivableIterator(List<T> list){
         this.list = list;
     }
 

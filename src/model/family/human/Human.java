@@ -21,12 +21,6 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
     private Human mother, father;
     private Set<Human> children;
 
-    public Human(int id, String name, LocalDate birthDate, Gender gender, Human mother, Human father){
-        this(id, name, birthDate, gender);
-        setParent(mother);
-        setParent(father);
-    }
-
     public Human(int id, String name, LocalDate birthDate, Gender gender){
         this.id = id;
         children = new HashSet<>();
@@ -128,9 +122,10 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
             return false;
         return this.id == human.id && this.name.equals(human.getName()) && this.birthDate.isEqual(human.birthDate)
                 && this.children.equals(human.children);
+//        return this.id == human.id;
     }
 
-    private int setSize(){
+    private int size(){
         if (children == null){
             return 0;
         } else return children.size();
@@ -138,7 +133,7 @@ public class Human implements Serializable, Comparable<Human>, Alivable<Human> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, birthDate, mother, father, this.setSize());
+        return Objects.hash(id, name, birthDate, mother, father, this.size());
     }
 
     @Override
