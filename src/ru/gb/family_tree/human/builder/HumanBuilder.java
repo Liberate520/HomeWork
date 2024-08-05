@@ -16,8 +16,7 @@ public class HumanBuilder implements Serializable {
 
     // TODO хотел сделать добавление ID (++)
 
-    public Human build(){
-        Human human = new Human(name, gender, birthDate, father, mother);
-        return human;
+    public Human build(String name, Gender gender, LocalDate birthDate, Object o, Object object){
+        return new Human(this.name, this.gender, this.birthDate, father, mother);
     }
 }

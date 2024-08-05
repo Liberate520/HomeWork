@@ -1,5 +1,6 @@
 package ru.gb.family_tree.familly_tree;
 
+import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.comparators.HumanComparatorByBirthDate;
 import ru.gb.family_tree.human.comparators.HumanComparatorByName;
 
@@ -41,17 +42,14 @@ public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Itera
         return maxId;
     }
 
-    public boolean setWedding(T human1, T human2) {
+    public void setWedding(Human human1, Human human2) {
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human2.setSpouse(human1);
             human1.setSpouse(human2);
-            return true;
-        } else {
-            return false;
         }
     }
 
-    public boolean setDivorce (T human1, T human2){
+    public boolean setDivorce (Human human1,Human human2){
         if(human1.getSpouse() == human2){
             human1.setSpouse(null);
             human2.setSpouse(null);

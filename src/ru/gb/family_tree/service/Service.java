@@ -21,7 +21,7 @@ public class Service { //  в этом классе функционал При�
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate) { // принимаем сырые данные и обращаемся к Билдеру
-        Human human = humanBuilder.build(name, gender, birthDate); // появился человек human
+        Human human = humanBuilder.build(name, gender, birthDate, null, null); // появился человек human
         familyTree.add(human); // добавили его в дерево
     }
         // TODO сохранение
