@@ -75,4 +75,8 @@ public class Human implements Serializable {
         }
         return sb.toString();
     }
+
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }
 }

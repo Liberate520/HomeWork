@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,6 +53,7 @@ public class Main {
             FamilyTree loadedFamilyTree = writer.readFromFile("familyTree.txt");
 
             System.out.println("Семейное древо:");
+            loadedFamilyTree.sortByName();
             loadedFamilyTree.printAllMembers();
 
             Scanner scanner = new Scanner(System.in, "UTF-8");
@@ -61,6 +63,7 @@ public class Main {
 
             List<Human> children = familyTree.getChildrenOf(name);
             if (children != null && !children.isEmpty()) {
+                Collections.sort(children, new HumanComporatorByBirthDate());
                 System.out.println("Дети " + name + ":");
                 for (Human child : children) {
                     System.out.println(child);
@@ -74,7 +77,9 @@ public class Main {
             name = new Scanner(System.in).nextLine();
 
             List<Human> parents = familyTree.getParentsOf(name);
+
             if (parents != null && !parents.isEmpty()) {
+                Collections.sort(parents, new HumanComporatorByBirthDate());
                 System.out.println("Родители " + name + ":");
                 for (Human parent : parents) {
                     System.out.println(parent + ", возраст: " + parent.getAgeAt(LocalDate.now()));
@@ -83,6 +88,7 @@ public class Main {
                 System.out.println("Человек с именем " + name + " не найден");
             }
             scanner.close();
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
