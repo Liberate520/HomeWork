@@ -3,10 +3,11 @@ package family_tree;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree my_family = new FamilyTree(1000);
+        FamilyTree my_family = new FamilyTree();
 
         Human my = new Human("ID1", "Иван", Gender.Male, LocalDate.of(2018,4,4));
         Human my_m = new Human("ID2", "Елена", Gender.Female, LocalDate.of(1987,4,29));
@@ -24,7 +25,7 @@ public class Main {
 
     }
 
-    public static void PrintData(ArrayList<Human> data) {
+    public static void PrintData(HashSet<Human> data) {
         StringBuilder header = new StringBuilder();
         Formatter formatter = new Formatter(header);
         formatter.format("|%13s | " +

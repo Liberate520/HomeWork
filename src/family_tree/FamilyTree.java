@@ -1,17 +1,15 @@
 package family_tree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Formatter;
+import java.util.*;
 
 public class FamilyTree {
-    private ArrayList<Human> fTree;
+    private HashSet<Human> fTree;
 
-    public FamilyTree(int maxSize) {
-        this.fTree = new ArrayList<>();
+    public FamilyTree() {
+        this.fTree = new HashSet<>();
     }
 
-    public ArrayList<Human> getfTree() {
+    public HashSet<Human> getfTree() {
         return fTree;
     }
 
