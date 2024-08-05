@@ -37,11 +37,22 @@ public class Main {
         System.out.println("Children of John: " + childrenOfJohn);
         System.out.println("Parents of Anna: " + parentsOfAnna);
 
+        System.out.println("Unsorted FamilyTree:");
+        System.out.println(tree);
+
+        // Сортируем по имени
+        tree.sortByName();
+        System.out.println("FamilyTree sorted by name:");
+        System.out.println(tree);
+
+        // Сортируем по дате рождения
+        tree.sortByBirthDate();
+        System.out.println("FamilyTree sorted by birth date:");
         System.out.println(tree);
 
         // Записываем семейное дерево в файл
         Writer fileHandler = new FileHandler();
-        String fileName = "familytree.txt";
+        String fileName = "familytree.ser";
         fileHandler.writeToFile(tree, fileName);
 
         // Читаем семейное дерево из файла

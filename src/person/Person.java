@@ -37,6 +37,10 @@ public class Person implements Serializable {
         return name;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
     public List<Person> getChildren() {
         return children;
     }
