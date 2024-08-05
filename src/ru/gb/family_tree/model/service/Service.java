@@ -5,24 +5,25 @@ import ru.gb.family_tree.model.Human.Gender;
 import ru.gb.family_tree.model.Human.Human;
 import ru.gb.family_tree.model.builder.HumanBuilder;
 import ru.gb.family_tree.model.builder.HumanBuilderFileHandler;
+import ru.gb.family_tree.model.builder.HumanBuilderInterface;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class Service {
-    private FamilyTree<Human> familyTree;
-    private HumanBuilder humanBuilder;
+    private FamilyTreeInterface<Human> familyTree;
+    private HumanBuilderInterface humanBuilder;
     private HumanBuilderFileHandler humanBuilderFileHandler;
     private FileHandler fileHandler;
     private String familyTreeFilePath;
     private String humanBuilderFilePath;
 
-    public Service(FamilyTree<Human> familyTree, String familyTreeFilePath, String humanBuilderFilePath) {
+    public Service(FamilyTreeInterface<Human> familyTree, HumanBuilderInterface humanBuilder, String familyTreeFilePath, String humanBuilderFilePath) {
         this.familyTree = familyTree;
-        this.humanBuilder = new HumanBuilder();
+        this.humanBuilder = humanBuilder;
+        this.humanBuilderFileHandler = new HumanBuilderFileHandler();
         this.fileHandler = new FileHandler();
         this.familyTreeFilePath = familyTreeFilePath;
-        this.humanBuilderFileHandler = new HumanBuilderFileHandler();
         this.humanBuilderFilePath = humanBuilderFilePath;
     }
 
@@ -44,7 +45,7 @@ public class Service {
         familyTree.sortByBirthDate();
     }
 
-    public FamilyTree<Human> getFamilyTree() {
+    public FamilyTreeInterface<Human> getFamilyTree() {
         return familyTree;
     }
 
@@ -62,28 +63,6 @@ public class Service {
             e.printStackTrace();
         }
     }
-
-//    public void loadFamilyTree() {
-//        try {
-//            FamilyTree<Human> loadedTree = fileHandler.loadFamilyTree(filePath);
-//            HumanBuilder loadedBuilder = humanBuilderFileHandler.loadHumanBuilder(humanBuilderFilePath);
-//            if (loadedTree != null) {
-//                this.familyTree = loadedTree;
-//            } else {
-//                this.familyTree = new FamilyTree<>();
-//            }
-//            if (loadedBuilder != null) {
-//                this.humanBuilder = loadedBuilder;
-//            } else {
-//                this.humanBuilder = new HumanBuilder();
-//            }
-//        } catch (IOException | ClassNotFoundException e) {
-//            System.out.println("Файл не найден или поврежден, создаем новое семейное древо.");
-//            this.familyTree = new FamilyTree<>();
-//            this.humanBuilder = new HumanBuilder();
-//            saveFamilyTree();
-//        }
-//    }
 
     public void loadFamilyTree() {
         try {

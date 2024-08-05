@@ -1,8 +1,11 @@
 package ru.gb.family_tree.view;
 
 import ru.gb.family_tree.model.FT.FamilyTree;
+import ru.gb.family_tree.model.FT.FamilyTreeInterface;
 import ru.gb.family_tree.model.Human.Gender;
 import ru.gb.family_tree.model.Human.Human;
+import ru.gb.family_tree.model.builder.HumanBuilder;
+import ru.gb.family_tree.model.builder.HumanBuilderInterface;
 import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.presenter.Presenter;
 
@@ -16,8 +19,6 @@ public class ConsoleUI implements View {
     private MainMenu menu;
     private Service service;
 
-
-
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         work = true;
@@ -25,8 +26,9 @@ public class ConsoleUI implements View {
 
         String familyTreeFilePath = "familyTree.txt";
         String humanBuilderFilePath = "humanBuilder.txt";
-        FamilyTree<Human> familyTree = new FamilyTree<>();
-        service = new Service(familyTree, familyTreeFilePath, humanBuilderFilePath);
+        FamilyTreeInterface<Human> familyTree = new FamilyTree<>();
+        HumanBuilderInterface humanBuilder = new HumanBuilder();
+        Service service = new Service(familyTree, humanBuilder, "familyTree.txt", "humanBuilder.txt");
 
         presenter = new Presenter(this, service);
         loadFamilyTree();
@@ -76,7 +78,6 @@ public class ConsoleUI implements View {
         long id = Long.parseLong(scanner.nextLine());
         presenter.findHumanById(id);
     }
-
 
     public void getFamilyTree() {
         presenter.getFamilyTree();

@@ -1,6 +1,7 @@
 package ru.gb.family_tree.presenter;
 
 import ru.gb.family_tree.model.FT.FamilyTree;
+import ru.gb.family_tree.model.FT.FamilyTreeInterface;
 import ru.gb.family_tree.model.Human.Gender;
 import ru.gb.family_tree.model.Human.Human;
 import ru.gb.family_tree.model.service.Service;
@@ -29,7 +30,7 @@ public class Presenter {
     }
 
     public void getFamilyTree() {
-        FamilyTree familyTree = service.getFamilyTree();
+        FamilyTreeInterface familyTree = service.getFamilyTree();
         List<Human> humanList = new ArrayList<>(familyTree.getHumanList());
         view.printAnswer(humanList.toString());
     }

@@ -6,7 +6,7 @@ import ru.gb.family_tree.model.Human.Human;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class HumanBuilder implements Serializable {
+public class HumanBuilder implements Serializable, HumanBuilderInterface {
     private static final long serialVersionUID = 1L;
 
     public long genID;

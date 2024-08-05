@@ -29,5 +29,18 @@ public class Gender implements Serializable {
     public String toString() {
         return gender;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Gender gender1 = (Gender) obj;
+        return gender.equals(gender1.gender);
+    }
+
+    @Override
+    public int hashCode() {
+        return gender.hashCode();
+    }
 }
 

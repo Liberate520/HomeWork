@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 public class HumanBuilderFileHandler implements Writable {
 
-    public void saveHumanBuilder(HumanBuilder humanBuilder, String filePath) throws IOException {
+    public void saveHumanBuilder(HumanBuilderInterface humanBuilder, String filePath) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(humanBuilder);
         }

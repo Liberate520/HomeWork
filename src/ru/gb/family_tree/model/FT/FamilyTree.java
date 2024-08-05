@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, Iterable<T>, FamilyTreeInterface<T> {
     private static final long serialVersionUID = 1L;
 
     private List<T> humanList;
@@ -63,10 +63,13 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
                 child.setMother(parent);
             } else if (parent.getGender().equals(Gender.Male)){
                 child.setFather(parent);
-            }else {
+            } else {
                 System.out.println("Родитель или ребенок не найдены.");
             }
+        } else {
+            System.out.println("Родитель или ребенок не найдены.");
         }
+
     }
 
     public boolean removeHumanById(long id) {
