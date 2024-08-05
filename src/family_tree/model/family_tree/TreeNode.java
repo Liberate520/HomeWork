@@ -1,14 +1,12 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import family_tree.human.Human;
-
 public interface TreeNode<T> extends Serializable {
-    void setId(long id);
-    long getId();
+    void setId(int id);
+    int getId();
     T getFather();
     T getMother();
     boolean addChild(T human);

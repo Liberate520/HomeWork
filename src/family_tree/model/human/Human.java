@@ -1,15 +1,14 @@
-package family_tree.human;
+package family_tree.model.human;
 
-import family_tree.family_tree.TreeNode;
+import family_tree.model.family_tree.TreeNode;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements TreeNode<Human>  /*, Comparable<Human>*/ {
-    private long id;
+public class Human implements TreeNode<Human> {
+    private int id;
     private String name;
     private LocalDate dayOfBirth;
     private LocalDate dayOfDeath;
@@ -44,11 +43,15 @@ public class Human implements TreeNode<Human>  /*, Comparable<Human>*/ {
 
     public void setSpouse(Human spouse) {this.spouse = spouse; }
 
-    public long getId() {return id; }
+    public int getId() {return id; }
 
-    public void setId(long id) {this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {return name; }
+
+    public void setName(String name) {this.name = name;    }
 
     public LocalDate getDayOfBirth() {return dayOfBirth;}
 
@@ -59,6 +62,8 @@ public class Human implements TreeNode<Human>  /*, Comparable<Human>*/ {
     public void setDayOfDeath(LocalDate dayOfDeath) {this.dayOfDeath = dayOfDeath;}
 
     public Gender getGender() {return gender;}
+
+    public void setGender(Gender gender) {this.gender = gender;    }
 
     public Human getFather() {return father;}
 

@@ -1,5 +1,9 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 
+
+import family_tree.model.family_tree.comparators.FamilyTreeComparatorByBirthDate;
+import family_tree.model.family_tree.comparators.FamilyTreeComparatorByName;
+import family_tree.model.family_tree.comparators.HumansComparatorById;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
-    private long humansId;
+    private int humansId;
     private List<E> humanList;
 
     public FamilyTree(){
@@ -146,6 +150,18 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     public void sortByName(){
             humanList.sort(new FamilyTreeComparatorByName<>());
+    }
+
+    public void sortById() { humanList.sort(new HumansComparatorById<>());
+    }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nВ дереве ").append(humanList.size()).append(" объектов:\n");
+        for (E node : humanList) {
+            sb.append(node).append("\n");
+        }
+        return sb.toString();
     }
 
 }
