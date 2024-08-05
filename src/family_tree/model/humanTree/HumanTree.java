@@ -1,14 +1,13 @@
-package humanTree;
-import comporators.HumanComparatorByAge;
-import comporators.HumanComparatorByName;
-import human.Human;
-import iterator.HumanIterator;
+package family_tree.model.humanTree;
+import family_tree.model.comporators.HumanComparatorByAge;
+import family_tree.model.comporators.HumanComparatorByName;
+import family_tree.model.iterator.HumanIterator;
 
 import java.io.Serializable;
 import java.util.*;
 
 public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterable<E> {
-    private List<E> humans;
+    private final List<E> humans;
 
     public HumanTree () {
         humans = new ArrayList<>();
@@ -41,7 +40,7 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
 
     public String getInfoAboutChildren(E human) {
         StringBuilder sb = new StringBuilder();
-        List<? extends ItemHumanTree> children = human.getChildren();
+        List<E> children = human.getChildren();
         if (human.getChildren().isEmpty()) {
             sb.append(human.getName() + " doesn`t hava a child.");
             return sb.toString();
@@ -78,11 +77,11 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
 
     public void sortByName () {
         System.out.println("Отсортированный по имени список: \n");
-        Collections.sort(humans, new HumanComparatorByName<>());
+        humans.sort(new HumanComparatorByName<>());
     } // сортировка по имени
 
     public void sortByAge() {
         System.out.println("Отсортированный по возрасту список: \n");
-        Collections.sort(humans, new HumanComparatorByAge<>());
+        humans.sort(new HumanComparatorByAge<>());
     } // сортировка по возрасту
 }

@@ -1,9 +1,9 @@
-package writer;
+package family_tree.model.writer;
 import java.io.*;
 
     public class FileHandler implements Writer {
 
-        private String filePath = "src/writer/person.out";
+        private String filePath = "src/family_tree.model.writer/person.out";
 
         @Override
         public void save(Serializable serializable) {

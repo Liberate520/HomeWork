@@ -1,9 +1,10 @@
-import human.Gender;
-import human.Human;
-import humanTree.HumanTree;
-import humanTree.ItemHumanTree;
+package family_tree;
 
-import java.io.IOException;
+import family_tree.model.human.Gender;
+import family_tree.model.human.Human;
+import family_tree.model.humanTree.HumanTree;
+import family_tree.model.service.Service;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -31,14 +32,12 @@ public class Main {
         human2.addChild(human4);
         human3.addChild(human5);
 
-
-       System.out.println(humanTree.getInfoAboutChildren(human1));
-//        System.out.println(humanTree.getInfoAboutChildren(human5));
-//        System.out.println(humanTree.getInfoAboutParents(human3));
+//        System.out.println(family_tree.model.humanTree.getInfoAboutChildren(human5));
+//        System.out.println(family_tree.model.humanTree.getInfoAboutParents(human3));
 
 //        FileHandler fileHandler = new FileHandler();
 //
-////        fileHandler.save(humanTree);
+////        fileHandler.save(family_tree.model.humanTree);
 //        HumanTree readedTree = (HumanTree) fileHandler.read();
 //        System.out.println(readedTree);
 

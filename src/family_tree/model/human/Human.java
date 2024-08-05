@@ -1,12 +1,11 @@
-package human;
+package family_tree.model.human;
 
-import humanTree.ItemHumanTree;
+import family_tree.model.humanTree.ItemHumanTree;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human>, ItemHumanTree {
+public class Human implements Comparable<Human>, ItemHumanTree <Human> {
     private final String name;
     private final String surname;
     private final LocalDate dob;
@@ -45,6 +44,7 @@ public class Human implements Serializable, Comparable<Human>, ItemHumanTree {
     public List<Human> getChildren() {
         return children;
     }
+
     public void addChild(Human child) {
         this.children.add(child);
     }
