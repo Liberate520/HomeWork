@@ -4,9 +4,12 @@ import person.Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Person> {
     private List<Person> members;
 
     public FamilyTree() {
@@ -40,6 +43,19 @@ public class FamilyTree implements Serializable {
             return person.getParents();
         }
         return new ArrayList<>();
+    }
+
+    public void sortByName() {
+        Collections.sort(members, Comparator.comparing(Person::getName));
+    }
+
+    public void sortByBirthDate() {
+        Collections.sort(members, Comparator.comparing(Person::getBirthDate));
+    }
+
+    @Override
+    public Iterator<Person> iterator() {
+        return members.iterator();
     }
 
     @Override
