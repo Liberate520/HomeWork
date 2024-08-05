@@ -8,11 +8,12 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         Human human1 = new Human("Андрей", LocalDate.of(1975, 1, 1), Sex.MALE);
-        Human human2 = new Human("Ирина", LocalDate.of(1976, 12, 28), Sex.FEMALE);
+        Human human2 = new Human("Ирина", LocalDate.of(1972, 12, 28), Sex.FEMALE);
         Human human3 = new Human("Анна", LocalDate.of(1995, 10, 31), Sex.FEMALE,
                 human1, human2);
         Human human4 = new Human("Петр", LocalDate.of(1995, 10, 31), Sex.MALE);
         human4.setFamilyTies(human1, human2);
+        human2.setDeathDate(LocalDate.of(2014, 1, 20));
 
         FamilyTree familyTree = new FamilyTree();
         familyTree.add(human1);
@@ -35,5 +36,17 @@ public class Main {
         FamilyTree loadedTree = handler.load();
         System.out.println("Загруженные данные:");
         System.out.println(loadedTree);
+
+        System.out.println();
+        System.out.println("Сортировка по имени:");
+        familyTree.sortByName();
+        System.out.println(familyTree);
+        System.out.println("Сортировка по дате рождения:");
+        familyTree.sortByBirthDate();
+        System.out.println(familyTree);
+        System.out.println("Сортировка по возрасту:");
+        familyTree.sortByAge();
+        System.out.println(familyTree);
+
     }
 }

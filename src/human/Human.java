@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private final String name;
     private LocalDate birthdate;
     private LocalDate deathDate;
@@ -116,11 +116,15 @@ public class Human implements Serializable {
         return result;
     }
 
-    @Override
-    public String toString() {
-        int age = (deathDate == null) ?
+    public int getAge() {
+        return (deathDate == null) ?
                 Period.between(birthdate, LocalDate.now()).getYears() :
                 Period.between(birthdate, deathDate).getYears();
+    }
+
+    @Override
+    public String toString() {
+        int age = getAge();
         String fatherName = (father != null) ? father.name : "Неизвестен";
         String motherName = (mother != null) ? mother.name : "Неизвестна";
         String childrenNames = !children.isEmpty() ?
@@ -135,5 +139,10 @@ public class Human implements Serializable {
                 ", мать: " + motherName +
                 ", дети: " + childrenNames +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 }

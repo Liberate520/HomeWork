@@ -4,6 +4,8 @@ import human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,9 +35,25 @@ public class FamilyTree implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    public void sortByName() {
+        Collections.sort(familyTree);
+    }
+
+    public void sortByBirthDate() {
+        familyTree.sort(Comparator.comparing(Human::getBirthdate));
+    }
+
+    /**
+     * Сортировка по возрасту (с учетом даты смерти) по убыванию.
+     */
+    public void sortByAge() {
+        familyTree.sort(Comparator.comparing(Human::getAge).reversed());
+    }
+
     public String printList(List<Human> list) {
         return list.stream()
                 .map(Human::toString)
                 .collect(Collectors.joining(System.lineSeparator()));
     }
+
 }
