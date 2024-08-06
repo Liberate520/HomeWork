@@ -1,16 +1,13 @@
 package FamilyTree.model;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
-    private long id;
+public class Human implements ItemFamilyTree<Human>, Serializable {
+    private long humanId;
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -21,7 +18,7 @@ public class Human implements Serializable {
 
     private Human father;
     private Human mother;
-    private transient List<Human> children;
+    private List<Human> children;
 
     private List<Human> grandchildren = new ArrayList<>();
     private Human spouse;
@@ -36,7 +33,7 @@ public class Human implements Serializable {
                  Human father,
                  Human mother) {
 
-        id = -1;
+        humanId = -1;
         this.name = name;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
@@ -57,26 +54,22 @@ public class Human implements Serializable {
         this(name, birthDate, null, gender, null, null, null, father, mother);
     }
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-        oos.writeObject(children);
-    }
+//    private void writeObject(ObjectOutputStream oos) throws IOException {
+//        oos.defaultWriteObject();
+//        oos.writeObject(children);
+//    }
+//
+//    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+//        ois.defaultReadObject();
+//        children = (List<Human>) ois.readObject();
+//    }
 
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        children = (List<Human>) ois.readObject();
-    }
-
-    // Getters and Setters
+    // Getters
 
     public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        return humanId;
     }
 
     public String getName() {
@@ -92,135 +85,124 @@ public class Human implements Serializable {
     }
 
     public Gender getGender() {
-        return gender;
-    }
-
-    public String getOccupation() {
-        return occupation;
-    }
-
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getPlaceOfBirth() {
-        return placeOfBirth;
-    }
-
-    public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
+        return this.gender;
     }
 
     public Human getFather() {
         return father;
     }
 
-    public void setFather(Human father) {
-        this.father = father;
-    }
-
     public Human getMother() {
         return mother;
-    }
-
-    public void setMother(Human mother) {
-        this.mother = mother;
     }
 
     public List<Human> getChildren() {
         return children;
     }
 
-    public void addChild(Human child) {
-        if (!children.contains(child)) {
-            children.add(child);
-        }
-        if (father != null && !father.getChildren().contains(child)) {
-            father.addChild(child);
-        }
-        if (mother != null && !mother.getChildren().contains(child)) {
-            mother.addChild(child);
-        }
-    }
-
-    public void addGrandchild(Human grandchild) {
-        grandchildren.add(grandchild);
-    }
-
-    public List<Human> getGrandchildren() {
-        return grandchildren;
-    }
-
-    public void setParent(Human parent) {
-        if (parent.gender.equals(Gender.Female)) {
-            setMother(parent);
-        } else if (parent.gender.equals(Gender.Male)) {
-            setFather(parent);
-        }
-    }
-
-    public int getAge() {
-        if (deathDate == null) {
-            return getPeriod(birthDate, LocalDate.now());
-        } else {
-            return getPeriod(birthDate, deathDate);
-        }
-    }
-
-    private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
-        Period diff = Period.between(birthDate, deathDate);
-        return diff.getYears();
-    }
-
-    public void setSpouse(Human spouse) {
-        this.spouse = spouse;
-    }
-
     public Human getSpouse() {
         return spouse;
     }
 
+    public List<Human> getGrandchildren() {
+        List<Human> grandchildren = new ArrayList<>();
+        for (Human child : children) {
+            grandchildren.addAll(child.getChildren());
+        }
+        return grandchildren;
+    }
+
+    @Override
+    public void addChild(Human child) {
+        if (children == null) {
+            children = new ArrayList<>();
+        }
+        if (!children.contains(child)) {
+            children.add(child);
+        }
+    }
+
+    public void addGrandchild(Human grandchild) {
+        if (grandchildren == null) {
+            grandchildren = new ArrayList<>();
+        }
+        grandchildren.add(grandchild);
+    }
+
+    @Override
+    public int getAge() {
+        if (deathDate == null) {
+            return calculateAge(birthDate, LocalDate.now());
+        } else {
+            return calculateAge(birthDate, deathDate);
+        }
+    }
+
+    private int calculateAge(LocalDate birthDate, LocalDate endDate) {
+        return Period.between(birthDate, endDate).getYears();
+    }
+
     @Override
     public String toString() {
-        return super.toString();
+        return getInfo();
     }
 
     public String getInfo() {
         StringBuilder info = new StringBuilder();
-        info.append("id: ");
-        info.append(id);
-        info.append(" имя: ");
-        info.append(getName());
-        info.append(", пол: ");
-        info.append(gender == Gender.Male ? "Мужчина" : "Женщина");
-        info.append(", возраст: ");
-        info.append(getYearsString(getAge()));
-        info.append(", ");
-        info.append(getSpouseInfo());
-        info.append(", ");
-        info.append(getFatherInfo());
-        info.append(", ");
-        info.append(getMotherInfo());
+        info.append("id: ").append(humanId)
+                .append(", имя: ").append(name)
+                .append(", пол: ").append(gender == Gender.Male ? "Мужчина" : "Женщина")
+                .append(", возраст: ").append(getAge()).append(" лет");
+        if (spouse != null) {
+            info.append(spouse.getGender() == Gender.Male ? ", супруг: " : ", супруга: ").append(spouse.getName());
+        } else {
+            info.append(", супруг(а): отсутствует");
+        }
 
-//        info.append(", ");
-//        info.append(getChildrenInfo());
+        info.append(", отец: ").append(father != null ? father.getName() : "неизвестен")
+                .append(", мать: ").append(mother != null ? mother.getName() : "неизвестна");
 
-//        info.append(", профессия: ");
-//        info.append(occupation != null ? occupation : "Не указана");
-//        info.append(", национальность: ");
-//        info.append(nationality != null ? nationality : "Не указана");
-//        info.append(", место рождения: ");
-//        info.append(placeOfBirth != null ? placeOfBirth : "Не указано");
+        if (children != null && !children.isEmpty()) {
+            info.append(", дети: ");
+            for (Human child : children) {
+                info.append(child.getName()).append(" ");
+            }
+        } else {
+            info.append(", дети: отсутствуют");
+        }
+
         return info.toString();
     }
+
+
+//    public String getInfo() {
+//        StringBuilder info = new StringBuilder();
+//        info.append("id: ");
+//        info.append(humanId);
+//        info.append(" имя: ");
+//        info.append(getName());
+//        info.append(", пол: ");
+//        info.append(gender == Gender.Male ? "Мужчина" : "Женщина");
+//        info.append(", возраст: ");
+//        info.append(getYearsString(getAge()));
+//        info.append(", ");
+//        info.append(getSpouseInfo());
+//        info.append(", ");
+//        info.append(getFatherInfo());
+//        info.append(", ");
+//        info.append(getMotherInfo());
+//
+//        info.append(", ");
+//        info.append(getChildrenInfo());
+//
+////        info.append(", профессия: ");
+////        info.append(occupation != null ? occupation : "Не указана");
+////        info.append(", национальность: ");
+////        info.append(nationality != null ? nationality : "Не указана");
+////        info.append(", место рождения: ");
+////        info.append(placeOfBirth != null ? placeOfBirth : "Не указано");
+//        return info.toString();
+//    }
 
     public String getYearsString(int years) {
         if (years == 0) {
@@ -304,25 +286,25 @@ public class Human implements Serializable {
     }
 
     public String getChildrenInfo() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         if (children.isEmpty()) {
-            res = "Дети " + getName() + ": отсутствуют";
+            res = new StringBuilder("Дети " + getName() + ": отсутствуют");
         } else {
-            res = "Дети " + getName() + ": ";
+            res = new StringBuilder("Дети " + getName() + ": ");
             for (Human child : children) {
-                res += child.getName();
+                res.append(child.getName());
                 if (!child.getChildren().isEmpty()) {
-                    res += " (дети: ";
-                    for (Human grandchild : child.getChildren()) {
-                        res += grandchild.getName() + ", ";
+                    res.append(" (дети: ");
+                    for (Human grandchild : ((Human) child).getChildren()) {
+                        res.append(grandchild.getName()).append(", ");
                     }
-                    res = res.substring(0, res.length() - 2) + ")"; // удалить запятую в конце и пробел
+                    res = new StringBuilder(res.substring(0, res.length() - 2) + ")"); // удалить запятую в конце и пробел
                 }
-                res += ", ";
+                res.append(", ");
             }
-            res = res.substring(0, res.length() - 2); // удалить запятую в конце и пробел
+            res = new StringBuilder(res.substring(0, res.length() - 2)); // удалить запятую в конце и пробел
         }
-        return res;
+        return res.toString();
     }
 
     @Override
@@ -334,23 +316,50 @@ public class Human implements Serializable {
             return false;
         }
         Human other = (Human) obj;
-        return this.id == other.id;
+        return this.humanId == other.humanId;
     }
 
     @Override
     public int hashCode() {
-        return Long.hashCode(id);
+        return Long.hashCode(humanId);
+    }
+
+    // Setters
+
+    public void setId(long Id) {
+        this.humanId = Id;
     }
 
     public void setName(String name) {
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-    }
-
-    public void setDeathDate(LocalDate deathDate) {
+        this.name = name;
     }
 
     public void setGender(Gender gender) {
+        this.gender = gender;
     }
+
+    public void setFather(Human father) {
+        this.father = father;
+    }
+
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+
+    public void setChildren(List<Human> children) {
+        this.children = children;
+    }
+
 }

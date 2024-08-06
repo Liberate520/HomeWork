@@ -1,10 +1,11 @@
 package FamilyTree.utility;
 
 import FamilyTree.model.FamilyTree;
+import FamilyTree.model.ItemFamilyTree;
 
 import java.io.*;
 
-public class FileHandler implements Writer {
+public class FileHandler<T extends ItemFamilyTree> implements Writer {
 
     private String filePath = "src/FamilyTree/utility/family_tree.dat";
 
@@ -17,7 +18,7 @@ public class FileHandler implements Writer {
         }
     }
 
-    @Override
+
     public FamilyTree load() {
         File file = new File(filePath);
         if (!file.exists() || !file.canRead()) {

@@ -6,15 +6,29 @@ import FamilyTree.model.Human;
 import FamilyTree.utility.FileHandler;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        // Создаем старших членов семьи
+        Human grandFather = new Human("Иван", LocalDate.of(1952, 6, 1), null, Gender.Male, "Инженер", "Русский", "Херсон", null, null);
+        Human grandMother = new Human("Надежда", LocalDate.of(1952, 2, 17), null, Gender.Female, "Учитель", "Украинка", "Херсон", null, null);
+
+        Human grandFather1 = new Human("Виктор", LocalDate.of(1961, 7, 19), null, Gender.Male, "Инженер", "Русский", "Херсон", null, null);
+        Human grandMother1 = new Human("Людмила", LocalDate.of(1960, 4, 26), null, Gender.Female, "Учитель", "Украинка", "Херсон", null, null);
+
         // Создаем родителей
-        Human father = new Human("Иван", LocalDate.of(1981, 5, 1), null, Gender.Male, "Инженер", "Русский", "Херсон", null, null);
-        Human mother = new Human("Наталья", LocalDate.of(1983, 6, 12), null, Gender.Female, "Доктор", "Украинка", "Херсон", null, null);
+        Human father = new Human("Иван", LocalDate.of(1981, 5, 1), null, Gender.Male, "Инженер", "Русский", "Херсон", grandFather, grandMother);
+        Human mother = new Human("Наталья", LocalDate.of(1983, 6, 12), null, Gender.Female, "Доктор", "Украинка", "Херсон", grandFather1, grandMother1);
 
         // Устанавливаем супругов
+        grandFather.setSpouse(grandMother);
+        grandMother.setSpouse(grandFather);
+
+        grandFather1.setSpouse(grandMother1);
+        grandMother1.setSpouse(grandFather1);
+
         father.setSpouse(mother);
         mother.setSpouse(father);
 
@@ -25,122 +39,85 @@ public class Main {
                 new Human("Виктор", LocalDate.of(2024, 5, 1), null, Gender.Male, null, "Русский", "Сургут", father, mother)
         };
 
-        // Добавляем детей к родителям
+        // Добавляем детей и внуков к предкам
+        grandFather.addChild(father);
+        grandMother.addChild(father);
+        grandFather1.addChild(mother);
+        grandMother1.addChild(mother);
+
         for (Human child : children) {
+            grandFather.addGrandchild(child);
+            grandMother.addGrandchild(child);
+            grandFather1.addGrandchild(child);
+            grandMother1.addGrandchild(child);
             father.addChild(child);
             mother.addChild(child);
         }
 
         // Создаем дерево семьи
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         // Добавляем членов семьи к дереву
-        Human[] familyMembers = new Human[]{father, mother, children[0], children[1], children[2]};
-        for (Human member : familyMembers) {
-            familyTree.addMember(member);
+
+        familyTree.addMember(grandFather);
+        familyTree.addMember(grandMother);
+        familyTree.addMember(grandFather1);
+        familyTree.addMember(grandMother1);
+        familyTree.addMember(father);
+        familyTree.addMember(mother);
+
+        for (Human child : children) {
+            familyTree.addMember(child);
         }
+
         // создаем объект FileHandler
         FileHandler fileHandler = new FileHandler();
 
-        // сохранить объект FamilyTree в файл
+        // сохраняем объект FamilyTree в файл
         fileHandler.save(familyTree);
         System.out.println("Данные древа сохранены!");
 
-        // загрузить объект FamilyTree из файла
+        // загружаем объект FamilyTree из файла
         FamilyTree loadedFamilyTree = fileHandler.load();
-        if (loadedFamilyTree == null) {
-            System.out.println("Данные древа НЕ загружены!");
-        } else System.out.println("Данные древа загружены!");
-
-// Работаем с древом
-        System.out.println("Информация о членах семьи:\nРодители:");
         if (loadedFamilyTree != null) {
-            father = loadedFamilyTree.getMemberByName("Иван");
-            mother = loadedFamilyTree.getMemberByName("Наталья");
+            System.out.println("Данные древа загружены!");
 
-            System.out.println(father.getInfo());
-            System.out.println(mother.getInfo());
-            System.out.println("\nДети:");
-            List<Human> childrenOfFather = loadedFamilyTree.getChildren(father);
-            for (Human child : childrenOfFather) {
-                System.out.println(child.getInfo());
+            // Вывод информации о семье
+            loadedFamilyTree.printFamilyTree();
+
+            // Примеры использования других методов
+            loadedFamilyTree.printChildren(father);
+            loadedFamilyTree.printSiblings(children[0]);
+            loadedFamilyTree.printAncestors(children[1]);
+            loadedFamilyTree.printGrandchildren(grandFather);
+            loadedFamilyTree.printSpouse(mother);
+            loadedFamilyTree.printAgeStatistics();
+
+            // Вывод информации о возрасте членов семьи
+            System.out.println("Возраст членов семьи:");
+            for (Object memberObject : loadedFamilyTree.getMembers()) {
+                Human member = (Human) memberObject;
+                System.out.println(member.getName() + ": " + member.getAge());
             }
 
-            System.out.println();
+            // Вывод информации о общем возрасте всех членов семьи
+            System.out.println("Общий возраст членов семьи:");
+            System.out.println(loadedFamilyTree.getAge());
 
-            System.out.println("Дети Ивана:");
-            List<Human> childrenOfIvan = loadedFamilyTree.getChildren(father);
-            for (Human child : childrenOfIvan) {
-                System.out.println(child.getName());
-            }
+            // Сортировка членов семьи по имени
+            loadedFamilyTree.sortByName();
+            System.out.println("Члены семьи, отсортированные по имени:");
+            loadedFamilyTree.printFamilyTree();
 
-            System.out.println();
-
-            System.out.println("Братья и сестры Анастасии:");
-            Human anastasia = loadedFamilyTree.getMemberByName("Анастасия");
-            List<Human> siblings = loadedFamilyTree.getSiblings(anastasia);
-            for (Human sibling : siblings) {
-                System.out.println(sibling.getName());
-            }
-
-            System.out.println();
-
-            System.out.println("Супруга Ивана:");
-            Human spouse = loadedFamilyTree.getSpouse(father);
-            System.out.println(spouse != null ? spouse.getName() : "Отсутствует");
-
-            System.out.println();
-
-            System.out.println("Предки Ивана и Виктора:");
-            Human viktor = loadedFamilyTree.getMemberByName("Виктор");
-            List<Human> ancestors = loadedFamilyTree.getAncestors(viktor);
-            for (Human ancestor : ancestors) {
-                System.out.println(ancestor.getName() + " (" + ancestor.getYearsString(ancestor.getAge()) + ")");
-            }
-
-            System.out.println();
-
-            System.out.println("Дети Натальи:");
-            List<Human> childrenOfMother = loadedFamilyTree.getChildren(mother);
-            for (Human child : childrenOfMother) {
-                System.out.println(child.getName());
-            }
-
-            System.out.println();
-
-            System.out.println("Братья и сестры Виктора:");
-            List<Human> siblingsOfViktor = loadedFamilyTree.getSiblings(viktor);
-            for (Human sibling : siblingsOfViktor) {
-                System.out.println(sibling.getName());
-            }
-
-            System.out.println();
-
-            System.out.println("Предки Анастасии:");
-            ancestors = loadedFamilyTree.getAncestors(anastasia);
-            for (Human ancestor : ancestors) {
-                System.out.println(ancestor.getName() + " (" + ancestor.getYearsString(ancestor.getAge()) + ")");
-            }
-
-            System.out.println();
-
-            System.out.println("Сортировка по имени:");
-            loadedFamilyTree.sortByname();
-            for (Human human : loadedFamilyTree) {
-                System.out.println(human.getInfo());
-            }
-
-            System.out.println("\nСортировка по дате рождения:");
+            // Сортировка членов семьи по дате рождения
             loadedFamilyTree.sortByBirthDate();
-            for (Human human : loadedFamilyTree) {
-                System.out.println(human.getInfo());
-            }
+            System.out.println("Члены семьи, отсортированные по дате рождения:");
+            loadedFamilyTree.printFamilyTree();
 
-            System.out.println("\nСортировка по возрасту:");
+            // Сортировка членов семьи по возрасту
             loadedFamilyTree.sortByAge();
-            for (Human human : loadedFamilyTree) {
-                System.out.println(human.getInfo());
-            }
-        } else System.out.println("Данные древа НЕ загружены!");
+            System.out.println("Члены семьи, отсортированные по возрасту:");
+            loadedFamilyTree.printFamilyTree();
+        }
     }
 }

@@ -1,127 +1,179 @@
 package FamilyTree.model;
 
 import FamilyTree.iterator.FamilyTreeIterator;
+import FamilyTree.model.Comparators.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
-public class FamilyTree implements Iterable<Human>, Serializable {
-    private long humanId;
-    private List<Human> members;
-
-    private static final long serialVersionUID = 1L;
+public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Serializable {
+    private long id;
+    private List<T> members;
+    private List<T> children;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(this);
+    public Iterator<T> iterator() {
+        return members.iterator();
     }
 
-    public void sortByname() {
-        Collections.sort(members, new Comparator<Human>() {
-            @Override
-            public int compare(Human o1, Human o2) {
-                return o1.getName().compareTo(o2.getName());
+    public void addChild(T child) {
+        if (children == null) {
+            children = new ArrayList<>();
+        }
+        if (!children.contains(child)) {
+            children.add(child);
+        }
+        if (child.getFather() != null && !child.getFather().getChildren().contains(child)) {
+            child.getFather().addChild(child);
+        }
+        if (child.getMother() != null && !child.getMother().getChildren().contains(child)) {
+            child.getMother().addChild(child);
+        }
+    }
+
+    public void addGrandchild(T grandchild) {
+        for (T member : members) {
+            if (member.getChildren().contains(grandchild.getFather()) ||
+                    member.getChildren().contains(grandchild.getMother())) {
+                member.addGrandchild(grandchild);
             }
-        });
+        }
+    }
+
+    public List<T> getGrandchildren() {
+        List<T> grandchildren = new ArrayList<>();
+        for (T member : members) {
+            grandchildren.addAll(member.getGrandchildren());
+        }
+        return grandchildren;
+    }
+
+    public void setParent(T parent) {
+        if (parent.getGender() == Gender.Female) {
+            for (T child : parent.getChildren()) {
+                child.setMother(parent);
+            }
+        } else if (parent.getGender() == Gender.Male) {
+            for (T child : parent.getChildren()) {
+                child.setFather(parent);
+            }
+        }
+    }
+
+    public List<T> getSiblings(T person) {
+        List<T> siblings = new ArrayList<>();
+        if (person.getFather() != null) {
+            for (T sibling : person.getFather().getChildren()) {
+                if (!sibling.equals(person)) {
+                    siblings.add(sibling);
+                }
+            }
+        }
+        return siblings;
+    }
+
+    public List<T> getAncestors(T person) {
+        List<T> ancestors = new ArrayList<>();
+        if (person.getFather() != null) {
+            ancestors.add(person.getFather());
+            ancestors.addAll(getAncestors((T) person.getFather()));
+        }
+        if (person.getMother() != null) {
+            ancestors.add(person.getMother());
+            ancestors.addAll(getAncestors((T) person.getMother()));
+        }
+        return ancestors;
+    }
+
+//    public int getAge(T person) {
+//        if (person.getDeathDate() == null) {
+//            return getPeriod(person.getBirthDate(), LocalDate.now());
+//        } else {
+//            return getPeriod(person.getBirthDate(), person.getDeathDate());
+//        }
+//    }
+//
+//    private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
+//        Period diff = Period.between(birthDate, deathDate);
+//        return diff.getYears();
+//    }
+
+    public int getAge() {
+        int totalAge = 0;
+        for (T member : members) {
+            totalAge += member.getAge();
+        }
+        return totalAge;
+    }
+
+    public void sortByName() {
+        members.sort(new FTComparatorByName<>());
     }
 
     public void sortByBirthDate() {
-        Collections.sort(members, new Comparator<Human>() {
-            @Override
-            public int compare(Human o1, Human o2) {
-                return o1.getBirthDate().compareTo(o2.getBirthDate());
-            }
-        });
+        members.sort(new FTComparatorByBirthDate<>());
     }
 
     public void sortByAge() {
-        Collections.sort(members, new Comparator<Human>() {
-            @Override
-            public int compare(Human o1, Human o2) {
-                return Integer.compare(o1.getAge(), o2.getAge());
-            }
-        });
+        members.sort(new FTComparatorByAge<>());
     }
 
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-        oos.writeObject(members);
-    }
-
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        members = (List<Human>) ois.readObject();
-    }
-
-    public boolean addMember(Human human) {
-        if (human == null) {
+    public boolean addMember(T member) {
+        if (member == null) {
             return false;
         }
-        for (Human member : members) {
-            if (member.equals(human)) {
-                human = member;
+        for (T existingMember : members) {
+            if (existingMember.equals(member)) {
+                member = existingMember;
                 break;
             }
         }
-        if (!members.contains(human)) {
-            members.add(human);
-            human.setId(humanId++);
-            if (human.getFather() != null && members.contains(human.getFather())) {
-                human.getFather().addChild(human);
+        if (!members.contains(member)) {
+            members.add(member);
+            member.setId(id++);
+            if (member.getFather() != null && members.contains(member.getFather())) {
+                member.getFather().addChild(member);
             }
-            if (human.getMother() != null && members.contains(human.getMother())) {
-                human.getMother().addChild(human);
+            if (member.getMother() != null && members.contains(member.getMother())) {
+                member.getMother().addChild(member);
             }
             // Обновим семейное дерево с учетом новых отношений члена семьи
-            updateFamilyTree(human);
+            updateFamilyTree(member);
             return true;
         }
         return true;
     }
 
-    private void updateFamilyTree(Human human) {
-        // Обновить родственные отношения
-        if (human.getFather() != null) {
-            human.getFather().addChild(human);
-            // Обновить отношения дедушки и бабушки
-            if (human.getFather().getFather() != null) {
-                human.getFather().getFather().addGrandchild(human);
-            }
-            if (human.getFather().getMother() != null) {
-                human.getFather().getMother().addGrandchild(human);
+    private void updateFamilyTree(T member) {
+        if (member.getFather() != null) {
+            if (!member.getFather().getChildren().contains(member)) {
+                member.getFather().addChild(member);
             }
         }
-        if (human.getMother() != null) {
-            human.getMother().addChild(human);
-            // Обновить отношения дедушки и бабушки
-            if (human.getMother().getFather() != null) {
-                human.getMother().getFather().addGrandchild(human);
-            }
-            if (human.getMother().getMother() != null) {
-                human.getMother().getMother().addGrandchild(human);
+        if (member.getMother() != null) {
+            if (!member.getMother().getChildren().contains(member)) {
+                member.getMother().addChild(member);
             }
         }
-        // Обновить отношения супругов
-        if (human.getSpouse() != null) {
-            human.getSpouse().setSpouse(human);
+        for (T child : member.getChildren()) {
+            addChild(child);
         }
-        // Обновить семейное дерево с учетом нового имени члена семьи
-        human.setName(human.getName());
     }
 
-    public List<Human> getMembers() {
-        return members;
-    }
-
-    public Human getMemberById(long id) {
-        for (Human member : members) {
+    public T getMember(long id) {
+        for (T member : members) {
             if (member.getId() == id) {
                 return member;
             }
@@ -129,61 +181,159 @@ public class FamilyTree implements Iterable<Human>, Serializable {
         return null;
     }
 
-    public Human getMemberByName(String name) {
-        for (Human member : members) {
-            if (member.getName().equals(name)) {
+    public List<T> getMembers() {
+        return Collections.unmodifiableList(members);
+    }
+
+    public T getMemberById(long id) {
+        for (T member : members) {
+            if (member.getId() == id) {
                 return member;
             }
         }
         return null;
     }
 
-    public List<Human> getChildren(Human parent) {
-        return parent.getChildren();
-    }
-
-    public List<Human> getSiblings(Human person) {
-        List<Human> siblings = new ArrayList<>();
-        if (person.getFather() != null) {
-            for (Human child : person.getFather().getChildren()) {
-                if (!child.equals(person)) {
-                    siblings.add(child);
-                }
+    public T getMemberByName(String name) {
+        for (T member : members) {
+            if (member.getName().equalsIgnoreCase(name)) {
+                return member;
             }
         }
-        if (person.getMother() != null) {
-            for (Human child : person.getMother().getChildren()) {
-                if (!child.equals(person) && !siblings.contains(child)) {
-                    siblings.add(child);
-                }
+        return null;
+    }
+
+    public List<T> getChildren(T person) {
+        List<T> children = new ArrayList<>();
+        if (person.getChildren() != null) {
+            children.addAll(person.getChildren());
+        }
+        return children;
+    }
+
+    public T getSpouse(T person) {
+        if (person.getSpouse() != null) {
+            return person.getSpouse();
+        }
+        return null;
+    }
+
+    public void setSpouse(T person, T spouse) {
+        person.setSpouse(spouse);
+        spouse.setSpouse(person);
+    }
+
+    public int getNumberOfMembers() {
+        return members.size();
+    }
+
+    public boolean removeMember(T member) {
+        if (members.contains(member)) {
+            members.remove(member);
+            if (member.getFather() != null && member.getFather().getChildren().contains(member)) {
+                member.getFather().getChildren().remove(member);
+            }
+            if (member.getMother() != null && member.getMother().getChildren().contains(member)) {
+                member.getMother().getChildren().remove(member);
+            }
+            for (T child : member.getChildren()) {
+                child.setFather(null);
+                child.setMother(null);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void clear() {
+        members.clear();
+    }
+
+    public void printFamilyTree() {
+        System.out.println("Семейное дерево:");
+        for (T member : members) {
+            System.out.println(member.getInfo());
+        }
+    }
+
+    public void printChildren(T person) {
+        System.out.println("Дети " + person.getName() + ":");
+        if (person.getChildren() != null && !person.getChildren().isEmpty()) {
+            for (T child : person.getChildren()) {
+                System.out.println(child.getName());
+            }
+        } else {
+            System.out.println("Отсутствуют");
+        }
+    }
+
+    public void printSiblings(T person) {
+        System.out.println("Братья и сестры " + person.getName() + ":");
+        List<T> siblings = getSiblings(person);
+        if (siblings != null && !siblings.isEmpty()) {
+            for (T sibling : siblings) {
+                System.out.println(sibling.getName());
+            }
+        } else {
+            System.out.println("Отсутствуют");
+        }
+    }
+
+    public void printAncestors(T person) {
+        System.out.println("Предки " + person.getName() + ":");
+        List<T> ancestors = getAncestors(person);
+        if (ancestors != null && !ancestors.isEmpty()) {
+            for (T ancestor : ancestors) {
+                System.out.println(ancestor.getName());
+            }
+        } else {
+            System.out.println("Отсутствуют");
+        }
+    }
+
+    public void printGrandchildren(T person) {
+        System.out.println("Внуки " + person.getName() + ":");
+        List<T> grandchildren = person.getGrandchildren();
+        if (grandchildren != null && !grandchildren.isEmpty()) {
+            for (T grandchild : grandchildren) {
+                System.out.println(grandchild.getName());
+            }
+        } else {
+            System.out.println("Отсутствуют");
+        }
+    }
+
+    public void printSpouse(T person) {
+        T spouse = person.getSpouse();
+        if (spouse != null) {
+            String spouseTitle = spouse.getGender() == Gender.Male ? "супруг" : "супруга";
+            System.out.println("У " + person.getName() + " есть " + spouseTitle + ": " + spouse.getName());
+        } else {
+            System.out.println(person.getName() + " не состоит в браке.");
+        }
+    }
+
+    public void printAgeStatistics() {
+        int totalAge = 0;
+        int minAge = Integer.MAX_VALUE;
+        int maxAge = Integer.MIN_VALUE;
+
+        for (T member : members) {
+            int age = member.getAge();
+            totalAge += age;
+            if (age < minAge) {
+                minAge = age;
+            }
+            if (age > maxAge) {
+                maxAge = age;
             }
         }
-        return siblings;
-    }
 
-    public Human getSpouse(Human person) {
-        return person.getSpouse();
-    }
+        double averageAge = (double) totalAge / members.size();
 
-    public List<Human> getAncestors(Human person) {
-        List<Human> ancestors = new ArrayList<>();
-        if (person.getFather() != null) {
-            ancestors.add(person.getFather());
-            ancestors.addAll(getAncestors(person.getFather()));
-        }
-        if (person.getMother() != null) {
-            ancestors.add(person.getMother());
-            ancestors.addAll(getAncestors(person.getMother()));
-        }
-        return ancestors;
+        System.out.println("Статистика возраста членов семьи:");
+        System.out.println("Средний возраст: " + averageAge);
+        System.out.println("Минимальный возраст: " + minAge);
+        System.out.println("Максимальный возраст: " + maxAge);
     }
-
-    public long getHumanId() {
-        return humanId;
-    }
-
-    public void setHumanId(long humanId) {
-        this.humanId = humanId;
-    }
-
 }
