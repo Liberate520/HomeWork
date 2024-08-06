@@ -1,6 +1,4 @@
 package family_tree.model.service;
-import family_tree.model.comporators.HumanComparatorByAge;
-import family_tree.model.comporators.HumanComparatorByName;
 import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
 import family_tree.model.humanTree.HumanTree;
@@ -20,6 +18,11 @@ public class Service {
 
     public void addHuman (String name, String surname, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother, List<Human> children) {
         Human human = new Human(name, surname, dob, dod, gender, father, mother, children);
+        humans.addHuman(human);
+    }
+
+    public void addHumanNullNodes(String name, String surname, LocalDate dob, LocalDate dod, Gender gender) {
+        Human human = new Human(name, surname, dob, dod, gender, null, null,null);
         humans.addHuman(human);
     }
 
