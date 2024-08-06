@@ -1,5 +1,9 @@
 package ru.gb.family_tree.view.commands;
 
+import ru.gb.family_tree.view.ConsoleUI;
+
+import java.io.IOException;
+
 public class FinishWork extends Command {
 
     public FinishWork(ConsoleUI consoleUI) {
@@ -7,7 +11,7 @@ public class FinishWork extends Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         getConsoleUI().finishWork();
     }
 }

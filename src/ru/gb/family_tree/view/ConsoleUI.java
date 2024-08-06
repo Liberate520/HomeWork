@@ -3,16 +3,16 @@ package ru.gb.family_tree.view;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.presenter.Presenter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI implements View{
-    private MenuHandler menuHandler;
-    private Presenter presenter;
-    private InputHandler inputHandler;
+    private final MenuHandler menuHandler;
+    private final Presenter presenter;
+    private final InputHandler inputHandler;
     private boolean work;
-
 
 
     public ConsoleUI() {
@@ -24,7 +24,7 @@ public class ConsoleUI implements View{
     }
 
     @Override
-    public void startWork() {
+    public void startWork() throws IOException, ClassNotFoundException {
         greetings();
         presenter.readTree();
         selectItemFromMenu();
@@ -34,7 +34,7 @@ public class ConsoleUI implements View{
         System.out.println("Добро пожаловать! \nПожалуйста, выберите нужный Вам пункт меню.");
     }
 
-    private void selectItemFromMenu() {
+    private void selectItemFromMenu() throws IOException {
         while (work) {
             System.out.println(menuHandler.getMenu());
             String choiceStr = inputHandler.getInput();
@@ -47,15 +47,10 @@ public class ConsoleUI implements View{
         }
     }
 
-    public void finishWork() {
+    public void finishWork() throws IOException {
         work = false;
         System.out.println("До новых встреч!");
-        presenter.sortById(); // Будет сохраняться дерево, отсортированное по ID
         presenter.saveTree();
-    }
-
-    public void sortById() {
-        presenter.sortById();
     }
 
     public void sortByBirthDate() {
@@ -103,13 +98,13 @@ public class ConsoleUI implements View{
         System.out.println("Укажите имя человека, которого хотите удалить:");
         String name = inputHandler.getInput();
         printFoundHumans(name);
-        List<Integer> foundHumansId = presenter.foundHumansId(name);
+        List<Long> foundHumansId = presenter.foundHumansId(name);
         if (!foundHumansId.isEmpty()) {
             removeHumanById(name, foundHumansId);
         }
     }
 
-    private void removeHumanById(String name, List<Integer> foundHumansId) {
+    private void removeHumanById(String name, List<Long> foundHumansId) {
         System.out.println("Укажите id человека, которого хотите удалить:");
         boolean flag = true;
         while (flag) {

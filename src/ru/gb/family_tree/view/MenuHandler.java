@@ -3,6 +3,7 @@ package ru.gb.family_tree.view;
 import ru.gb.family_tree.view.commands.*;
 import ru.gb.family_tree.view.commands.Command;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class MenuHandler {
         return sb.toString();
     }
 
-    public void execute(int choice) {
+    public void execute(int choice) throws IOException {
         Command command = commands.get(choice - 1);
         command.execute();
     }

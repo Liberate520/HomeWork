@@ -106,6 +106,16 @@ public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Itera
         return sb.toString();
     }
 
+    public List<T> getByName(String name) {
+        List<T> res = new ArrayList<>();
+        for (T node : humanList) {
+            if (node.getName().equals(name)) {
+                res.add(node);
+            }
+        }
+        return res;
+    }
+
     @Override
     public Iterator<T> iterator(){
         return new FamilyTreeIterator<>(humanList);  // Можно написать return humanList.iterator(), т.к. список людей уже - List

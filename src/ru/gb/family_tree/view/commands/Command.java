@@ -1,8 +1,12 @@
 package ru.gb.family_tree.view.commands;
 
-public class Command {
+import ru.gb.family_tree.view.ConsoleUI;
+
+import java.io.IOException;
+
+public abstract class Command {
     private final String description;
-    private ConsoleUI consoleUI;
+    private final ConsoleUI consoleUI;
 
     public Command(String description, ConsoleUI consoleUI) {
         this.description = description;
@@ -17,5 +21,5 @@ public class Command {
         return description;
     }
 
-    public abstract void execute();
+    public abstract void execute() throws IOException;
 }

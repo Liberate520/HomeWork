@@ -4,11 +4,13 @@ import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.view.View;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Presenter {
-    private View view;
-    private Service service;
+    private final View view;
+    private final Service service;
 
     public Presenter(View view){
         this.view = view;
@@ -32,15 +34,11 @@ public class Presenter {
         service.sortByBirthDate();
     }
 
-    public void sortById() {
-        service.sortById();
-    }
-
-    public void saveTree() {
+    public void saveTree() throws IOException {
         service.saveTree();
     }
 
-    public void readTree() {
+    public void readTree() throws IOException, ClassNotFoundException {
         service.readTree();
     }
 
@@ -48,7 +46,7 @@ public class Presenter {
         return service.findByName(name);
     }
 
-    public List<Integer> foundHumansId(String name) {
+    public List<Long> foundHumansId(String name) {
         return service.foundHumansId(name);
     }
 

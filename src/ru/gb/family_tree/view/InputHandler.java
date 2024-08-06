@@ -59,7 +59,7 @@ public class InputHandler {
         }
     }
 
-    public boolean isValidIdChoice(String idStr, List<Integer> foundHumansId) {
+    public boolean isValidIdChoice(String idStr, List<Long> foundHumansId) {
         try {
             int id = Integer.parseInt(idStr);
             return id >= 1 && foundHumansId.contains(id);

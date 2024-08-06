@@ -1,6 +1,9 @@
 package ru.gb.family_tree.view;
 
+import java.io.IOException;
+
 public interface View {
-    void startWork();
-    void returnAnswer(String answer);
+    void startWork() throws IOException, ClassNotFoundException;
+
+    void printAnswer(String answer);
 }

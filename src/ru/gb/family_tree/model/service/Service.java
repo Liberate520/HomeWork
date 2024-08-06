@@ -4,13 +4,17 @@ import ru.gb.family_tree.model.familly_tree.FamilyTree;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.builder.HumanBuilder;
+import ru.gb.family_tree.model.writer.Writer;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Service { //  в этом классе функционал Приложения, что прописано, то может делать это приложение
 // сам ничего не делает (верхне уровневый), но всем раздает. Ты сделай, ты сделай.
 
-    private final FamilyTree<Human> familyTree;
+    private FamilyTree familyTree;
     private final HumanBuilder humanBuilder;
     private Writer fileHandler;
 
@@ -23,7 +27,7 @@ public class Service { //  в этом классе функционал При�
         Human human = humanBuilder.build(name, gender, birthDate, null, null); // появился человек human
         familyTree.add(human); // добавили его в дерево
     }
-        // TODO сохранение
+
         // TODO статистику посмотреть, сколько человек в дереве
         // TODO private void setGenderFromStr(String genderStr, Human human) {
         // TODO public void sortById() {
@@ -37,16 +41,15 @@ public class Service { //  в этом классе функционал При�
     }
 
 
-
     public String getHumanListInfo() {
         return familyTree.getInfo();
     }
 
-    public void saveTree() {
+    public void saveTree() throws IOException {
         fileHandler.save(familyTree);
     }
 
-    public void readTree() {
+    public void readTree() throws IOException, ClassNotFoundException {
         if (fileHandler.read() != null) {
             familyTree = (FamilyTree) fileHandler.read();
         }
@@ -61,9 +64,9 @@ public class Service { //  в этом классе функционал При�
         return sb.toString();
     }
 
-    public List<Integer> foundHumansId(String name) {
+    public List<Long> foundHumansId(String name) {
         List<Human> foundHumans = familyTree.getByName(name);
-        List<Integer> foundHumansId = new ArrayList<>();
+        List<Long> foundHumansId = new ArrayList<>();
         for (Human human : foundHumans) {
             foundHumansId.add(human.getId());
         }
