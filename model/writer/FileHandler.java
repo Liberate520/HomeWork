@@ -8,11 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import model.family_tree.FamilyTree;
+import model.human.Human;
 
 public class FileHandler implements Writer {
 
-    @SuppressWarnings("rawtypes")
-    public void write(FamilyTree obj, String fileName) {
+    public void write(FamilyTree<Human> obj, String fileName) {
         ObjectOutputStream oos;
         try {
             oos = new ObjectOutputStream(new FileOutputStream(fileName, false));

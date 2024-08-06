@@ -3,7 +3,6 @@ package model.service;
 import model.family_tree.FamilyTree;
 import model.human.Human;
 import model.human.HumanBuilder;
-import model.writer.FileHandler;
 
 public class Service {
     private FamilyTree<Human> familyTree;
@@ -64,13 +63,12 @@ public class Service {
     }
 
     public void saveFamilyTree() {
-        FileHandler handler = new FileHandler();
-        handler.write(familyTree, "FamilyTree.bin");
+        FileOperationServise saveFamilyTree = new FileOperationServise();
+        saveFamilyTree.saveFamilyTree(this.familyTree);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void loadFamilyTree() throws ClassNotFoundException {
-        FileHandler handler = new FileHandler();
-        this.familyTree = (FamilyTree) handler.read("FamilyTree.bin");
+        FileOperationServise loadFamilyTree = new FileOperationServise();
+        this.familyTree = loadFamilyTree.loadFamilyTree();
     }
 }

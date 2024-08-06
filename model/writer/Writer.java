@@ -1,11 +1,11 @@
 package model.writer;
 
 import model.family_tree.FamilyTree;
+import model.human.Human;
 
 public interface Writer {
 
-    @SuppressWarnings("rawtypes")
-    public void write(FamilyTree obj, String fileName);
+    public void write(FamilyTree<Human> obj, String fileName);
 
     public Object read(String fileName) throws ClassNotFoundException;
 
