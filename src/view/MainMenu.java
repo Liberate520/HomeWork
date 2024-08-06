@@ -32,12 +32,12 @@ public class MainMenu {
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByAge(consoleUI));
         commands.add(new GetHumanListInfo(consoleUI));
+        commands.add(new SaveFileHandler(consoleUI)); // Сохранить древо в файл
+        commands.add(new DisplayFileHandler(consoleUI)); // Вывести сохраненный файл
         commands.add(new Finish(consoleUI));
 //        commands.add(new AddHuman(consoleUI));  // Добавить ребенка --> доделать
 //        commands.add(new AddHuman(consoleUI)); // Добавить супруга --> доделать
 //        commands.add(new AddHuman(consoleUI)); // Внести дату смерти --> доделать
-//        commands.add(new AddHuman(consoleUI)); // Сохранить древо в файл --> доделать
-//        commands.add(new AddHuman(consoleUI)); // Вывести сохраненный файл --> доделать
 //        commands.add(new AddHuman(consoleUI)); // Поиск сведений о родителях (отдельно по матери и отцу) --> доделать
 //        commands.add(new AddHuman(consoleUI)); // Поиск сведений о детях --> доделать
     }
@@ -59,7 +59,6 @@ public class MainMenu {
         // метод выбора пунктов меню
         if (choice <= sizeMenu() && choice > 0) {
             Command command = commands.get(choice - 1); // получение команды
-//        command.execute();
             command.execute();
         } else {
             System.out.println("Некорректный ввод! Попробуйте ещё раз.");

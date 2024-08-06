@@ -3,16 +3,21 @@ package model.service;
 import model.familiTree.FamilyTree;
 import model.human.Gender;
 import model.human.Human;
+import model.writer.FileHandler;
+import model.writer.Writer;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Service {
 
     private FamilyTree<Human> familyTree;
+    private Writer fileHandler;
 
     public Service() {
         familyTree = new FamilyTree<>();
+        fileHandler = new FileHandler();
     }
 
 
@@ -25,8 +30,13 @@ public class Service {
 
     }
 
+    public void saveFileHandler() {
+        fileHandler.oos(familyTree);
+    }
 
-
+    public void displayFileHandler() {
+        fileHandler.ois(familyTree);
+    }
 
     public void sortByName() { // сортировка по имени
         familyTree.sortByName();

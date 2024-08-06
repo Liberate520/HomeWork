@@ -65,15 +65,14 @@ public class ConsoleUI implements View {
     public void addHuman() {
         System.out.print("Введите имя: ");
         String name = scanner.nextLine();
+
         System.out.print("Укажите пол (мужчина или женщина): ");
         Gender gender = inputGender();
-
 
         System.out.print("Введите дату рождения (формат ввода через пробел - ГГГГ ММ ДД): ");
         String date = scanner.nextLine();
         LocalDate birthDate = LocalDate.of(Integer.parseInt(date.split(" ")[0]),
                 Integer.parseInt(date.split(" ")[1]), Integer.parseInt(date.split(" ")[2]));
-
 
         presenter.addHuman(name, gender, birthDate);
     }
@@ -90,6 +89,13 @@ public class ConsoleUI implements View {
         presenter.getHumanListInfo();
     }
 
+    public void saveFileHandler() {
+        presenter.saveFileHandler();
+    }
+
+    public void displayFileHandler() {
+        presenter.displayFileHandler();
+    }
 
     @Override
     public void printAnswer(String answer) {

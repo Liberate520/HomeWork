@@ -37,5 +37,12 @@ public class Presenter {
         String answer = service.getHumanListInfo();
         view.printAnswer(answer);
     }
+    public void saveFileHandler() {
+        service.saveFileHandler();
+    }
+
+    public void displayFileHandler() {
+        service.displayFileHandler();
+    }
 
 }
