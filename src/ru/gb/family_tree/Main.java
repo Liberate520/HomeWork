@@ -1,10 +1,10 @@
 package ru.gb.family_tree;
 
-import ru.gb.family_tree.familly_tree.FamilyTree;
-import ru.gb.family_tree.service.Service;
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.writer.FileHandler;
+import ru.gb.family_tree.model.familly_tree.FamilyTree;
+import ru.gb.family_tree.model.service.Service;
+import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
+import ru.gb.family_tree.model.writer.FileHandler;
 
 import java.time.LocalDate;
 
@@ -23,9 +23,9 @@ public class Main {
         service.addHuman("Шафер", Gender.Male, LocalDate.of(1995, 3, 31));
 
         System.out.println(familyTree);
-        familyTree.sortByName();
+        service.sortByName();
         System.out.println(familyTree);
-        familyTree.sortByBirthDate();
+        service.sortByBirthDate();
         System.out.println(familyTree);
 
     }

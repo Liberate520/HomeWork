@@ -1,7 +1,7 @@
-package ru.gb.family_tree.human.builder;
+package ru.gb.family_tree.model.human.builder;
 
-import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -1,8 +1,8 @@
-package ru.gb.family_tree.familly_tree;
+package ru.gb.family_tree.model.familly_tree;
 
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.human.comparators.HumanComparatorByBirthDate;
-import ru.gb.family_tree.human.comparators.HumanComparatorByName;
+import ru.gb.family_tree.model.human.Human;
+import ru.gb.family_tree.model.human.comparators.HumanComparatorByBirthDate;
+import ru.gb.family_tree.model.human.comparators.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.*;
@@ -87,10 +87,12 @@ public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Itera
         humanList.sort(new HumanComparatorByBirthDate<>());
     }
 
+
     @Override
     public String toString() {
         return getInfo();
     }
+
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
