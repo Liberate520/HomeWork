@@ -1,54 +1,51 @@
 package Family_tree;
 
-// import java.io.IOException;
-import java.time.LocalDate;
-import Family_tree.writer.FileHandler;
-
-import Family_tree.family_tree.FamilyTree;
-import Family_tree.human.Gender;
-import Family_tree.human.Human;
-import Family_tree.service.Service;
+import Family_tree.view.ConsoleUI;
+import Family_tree.view.View;
 
 public class Main {
     public static void main(String[] args){
-        Service service = new Service();
+        View view = new ConsoleUI();
+        view.start();
 
-        Human dad = service.addToTree("Aibek", Gender.Male, LocalDate.of(1970, 9, 4));
-        Human mom = service.addToTree("Nurila", Gender.Female, LocalDate.of(1970,11,18), null, dad, null, null);
-        Human bro = service.addToTree("Askar", Gender.Male, LocalDate.of(1994,4,10), null, null, dad, null);
-        Human me = service.addToTree("Kamila", Gender.Female, LocalDate.of(1999,4,7), null, null, null, null);
-        Human grandma1 = service.addToTree("Aliya", Gender.Female, LocalDate.of(1948,9,2),null, null, null, null);
-        Human grandpa2 = service.addToTree("Pernebek", Gender.Male, LocalDate.of(1936,11,26), LocalDate.of(2022,12,31),null, null, null);
-        Human grandma2 = service.addToTree("Patima", Gender.Female, LocalDate.of(1941,11,20), null, null, null, null);
+        // Service service = new Service();
+
+        // Human dad = service.addToTree("Aibek", Gender.Male, LocalDate.of(1970, 9, 4));
+        // Human mom = service.addToTree("Nurila", Gender.Female, LocalDate.of(1970,11,18), null, dad, null, null);
+        // Human bro = service.addToTree("Askar", Gender.Male, LocalDate.of(1994,4,10), null, null, dad, null);
+        // Human me = service.addToTree("Kamila", Gender.Female, LocalDate.of(1999,4,7), null, null, null, null);
+        // Human grandma1 = service.addToTree("Aliya", Gender.Female, LocalDate.of(1948,9,2),null, null, null, null);
+        // Human grandpa2 = service.addToTree("Pernebek", Gender.Male, LocalDate.of(1936,11,26), LocalDate.of(2022,12,31),null, null, null);
+        // Human grandma2 = service.addToTree("Patima", Gender.Female, LocalDate.of(1941,11,20), null, null, null, null);
         
-        dad.getMarried(mom);
-        dad.addChild(bro);
-        mom.addChild(me);     
-        dad.addMother(grandma1);
-        grandpa2.getMarried(grandma2);
-        grandma2.addChild(mom);
+        // dad.getMarried(mom);
+        // dad.addChild(bro);
+        // mom.addChild(me);     
+        // dad.addMother(grandma1);
+        // grandpa2.getMarried(grandma2);
+        // grandma2.addChild(mom);
 
-        System.out.println(service.getHumanListInfo());
-        service.sortByAge();
-        System.out.println(service.getHumanListInfo());
-        service.sortByName();
-        System.out.println(service.getHumanListInfo());
+        // System.out.println(service.getHumanListInfo());
+        // service.sortByAge();
+        // System.out.println(service.getHumanListInfo());
+        // service.sortByName();
+        // System.out.println(service.getHumanListInfo());
         
-        // FamilyTree tree = testTree();
-        // FamilyTree tree = readTree();
+        // // FamilyTree tree = testTree();
+        // // FamilyTree tree = readTree();
 
-        saveTree(service.tree);
+        // saveTree(service.tree);
     }
 
-    private static FamilyTree readTree(){
-        FileHandler fh = new FileHandler();
-        return (FamilyTree) fh.read();
-    }
+    // private static FamilyTree readTree(){
+    //     FileHandler fh = new FileHandler();
+    //     return (FamilyTree) fh.read();
+    // }
     
-    private static void saveTree(FamilyTree tree) {
-        FileHandler fh = new FileHandler();
-        fh.save(tree);
-    }
+    // private static void saveTree(FamilyTree tree) {
+    //     FileHandler fh = new FileHandler();
+    //     fh.save(tree);
+    // }
 
 
 
