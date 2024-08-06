@@ -26,7 +26,7 @@ public class ConsoleUI implements View{
     @Override
     public void startWork() throws IOException, ClassNotFoundException {
         greetings();
-        presenter.readTree();
+//        presenter.readTree();
         selectItemFromMenu();
     }
 

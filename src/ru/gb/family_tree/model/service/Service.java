@@ -49,11 +49,11 @@ public class Service { //  в этом классе функционал При�
         fileHandler.save(familyTree);
     }
 
-    public void readTree() throws IOException, ClassNotFoundException {
-        if (fileHandler.read() != null) {
-            familyTree = (FamilyTree) fileHandler.read();
-        }
-    }
+//    public void readTree() throws IOException, ClassNotFoundException {
+//        if (fileHandler.read() != null) {
+//            familyTree = (FamilyTree) fileHandler.read();
+//        }
+//    }
 
     public String findByName(String name) {
         StringBuilder sb = new StringBuilder();
