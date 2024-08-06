@@ -1,5 +1,7 @@
 package ru.gb.family_tree.models;
 
+import ru.gb.family_tree.interfaces.HasRelations;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements HasRelations<Human>, Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
@@ -45,21 +47,37 @@ public class Human implements Serializable {
     }
 
     public void setDeathDate(String deathDate) {
-        if (deathDate != null && !deathDate.isEmpty()) {
-            this.deathDate = LocalDate.parse(deathDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        }
+        this.deathDate = LocalDate.parse(deathDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
     public String getGender() {
         return gender;
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }
 
+    @Override
     public List<Human> getParents() {
         return parents;
+    }
+
+    @Override
+    public void addChild(Human child) {
+        if (!this.children.contains(child)) {
+            this.children.add(child);
+            child.addParent(this);
+        }
+    }
+
+    @Override
+    public void addParent(Human parent) {
+        if (!this.parents.contains(parent)) {
+            this.parents.add(parent);
+            parent.addChild(this);
+        }
     }
 
     public Human getSpouse() {
@@ -67,32 +85,12 @@ public class Human implements Serializable {
     }
 
     public void setSpouse(Human spouse) {
+        if (this.spouse != null) {
+            this.spouse.spouse = null;
+        }
         this.spouse = spouse;
-    }
-
-    public void addChild(Human child) {
-        if (child != null && !children.contains(child)) {
-            this.children.add(child);
-            child.getParents().add(this);
-        }
-    }
-
-    public void removeChild(Human child) {
-        if (child != null && children.remove(child)) {
-            child.getParents().remove(this);
-        }
-    }
-
-    public void addParent(Human parent) {
-        if (parent != null && !parents.contains(parent)) {
-            this.parents.add(parent);
-            parent.getChildren().add(this);
-        }
-    }
-
-    public void removeParent(Human parent) {
-        if (parent != null && parents.remove(parent)) {
-            parent.getChildren().remove(this);
+        if (spouse != null && spouse.getSpouse() != this) {
+            spouse.setSpouse(this);
         }
     }
 

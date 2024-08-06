@@ -2,56 +2,29 @@ package ru.gb.family_tree.main;
 
 import ru.gb.family_tree.FamilyTree;
 import ru.gb.family_tree.models.Human;
+import ru.gb.family_tree.presenter.FamilyTreePresenter;
 import ru.gb.family_tree.utils.FileHandler;
-
-import java.util.Comparator;
+import ru.gb.family_tree.view.ConsoleView;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree<Human> familyTree = new FamilyTree<>();
         FileHandler<Human> fileHandler = new FileHandler<>();
+        ConsoleView view = new ConsoleView();
+        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view);
 
-        // Добавление людей в дерево
-        familyTree.addMember(new Human(1, "Alice", "01-01-1970", "женский"));
-        familyTree.addMember(new Human(2, "Eugen", "21-08-1965", "мужской"));
-        familyTree.addMember(new Human(3, "Bob", "01-01-2000", "мужской"));
-        familyTree.addMember(new Human(4, "Charlie", "01-01-2005", "мужской"));
+        // Пример взаимодействия
+        presenter.addMember("Alice", "01-01-1970", "женский");
+        presenter.addMember("Eugen", "21-08-1965", "мужской");
+        presenter.addMember("Bob", "01-01-2000", "мужской");
+        presenter.addMember("Charlie", "01-01-2005", "мужской");
 
-        // Установление родительско-детских отношений
-        Human alice = familyTree.getMember(1);
-        Human eugen = familyTree.getMember(2);
-        Human bob = familyTree.getMember(3);
-        Human charlie = familyTree.getMember(4);
-        alice.addChild(bob);
-        alice.addChild(charlie);
-        eugen.addChild(bob);
-        eugen.addChild(charlie);
+        presenter.setSpouse(1, 2);
+        presenter.setParent(3, 1);
+        presenter.setParent(3, 2);
+        presenter.setParent(4, 1);
+        presenter.setParent(4, 2);
 
-        // Установление супружеской связи
-        alice.setSpouse(eugen);
-        eugen.setSpouse(alice);
-
-        // Сохранение семейного дерева в файл
-        String filename = "familyTree.ser";
-        fileHandler.saveFamilyTree(familyTree, filename);
-
-        // Загрузка семейного дерева из файла
-        FamilyTree<Human> loadedFamilyTree = fileHandler.loadFamilyTree(filename);
-
-        if (loadedFamilyTree != null) {
-            // Отображение всего генеалогического дерева
-            System.out.println("\nПолное генеалогическое дерево:");
-            loadedFamilyTree.getAllMembers().forEach(System.out::println);
-
-            // Сортировка и отображение по дате рождения
-            System.out.println("\nСортировка по дате рождения:");
-            loadedFamilyTree.sortBy(Comparator.comparing(Human::getBirthDate))
-                    .forEach(System.out::println);
-
-            // Сортировка и отображение по идентификатору
-            System.out.println("\nСортировка по идентификатору:");
-            loadedFamilyTree.sortBy(Comparator.comparing(Human::getId))
-                    .forEach(System.out::println);
-        }
+        presenter.showAllMembers();
     }
 }

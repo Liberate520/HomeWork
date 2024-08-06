@@ -3,7 +3,9 @@ package ru.gb.family_tree;
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree<T extends Serializable> implements Serializable, Iterable<T> {
+import ru.gb.family_tree.interfaces.HasRelations;
+
+public class FamilyTree<T extends HasRelations<T> & Serializable> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
 
     private Map<Integer, T> members;
