@@ -1,12 +1,12 @@
 package family_tree.view.actions;
 
 import family_tree.presenter.Presenter;
-
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class AddHumanAction implements MenuActions {
     Scanner scanner = new Scanner(System.in);
+    private int id;
 
     public void execute(Presenter presenter) {
         System.out.println("Введите имя");
@@ -23,6 +23,14 @@ public class AddHumanAction implements MenuActions {
         String dodString = scanner.nextLine();
         LocalDate dod = dodString.isEmpty() ? null : LocalDate.parse(dodString);
 
-        presenter.addHuman(name, surname, dob, dod, presenter.fromStringToGender(presenter.getGenderString()));
+        System.out.println("Укажите пол (male/female)");
+        String genderString = scanner.nextLine().toLowerCase();
+        if (genderString.equals("male")) {
+            presenter.addHuman(name, surname, dob, dod, presenter.fromStringToGender("male"));
+        } else if (genderString.equals("female")) {
+            presenter.addHuman(name, surname, dob, dod, presenter.fromStringToGender("female"));
+        } else { System.out.println("Не соответствует male/female"); }
+
+
     }
 }

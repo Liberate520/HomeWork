@@ -4,8 +4,6 @@ import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
 import family_tree.model.service.Service;
 import family_tree.view.View;
-import java.util.Scanner;
-
 import java.time.LocalDate;
 
 public class Presenter {
@@ -21,19 +19,6 @@ public class Presenter {
         if (genderStr.equals("male"))
             return Gender.male;
         else { return Gender.female; }
-    }
-
-    public String getGenderString() {
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Укажите пол (male/female)");
-            String genderString = scanner.nextLine().toLowerCase();
-            if (genderString.equals("male")) {
-                return "male";
-            } else if (genderString.equals("female")) {
-                return "female";
-            } else { System.out.println("Не соответствует male/female"); }
-        }
     }
 
     public void addHuman(String name, String surname, LocalDate dob, LocalDate dod, Gender gender) {
@@ -64,7 +49,7 @@ public class Presenter {
         service.getInfoAboutChildren(human);
     }
 
-    public void addChild(Human child) {
-        service.addChild(child);
+    public void addChild(int idParent, int idChild) {
+        service.addChild(idParent, idChild);
     }
 }

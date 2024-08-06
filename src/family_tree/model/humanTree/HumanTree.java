@@ -1,6 +1,7 @@
 package family_tree.model.humanTree;
 import family_tree.model.comporators.HumanComparatorByAge;
 import family_tree.model.comporators.HumanComparatorByName;
+import family_tree.model.human.Human;
 import family_tree.model.iterator.HumanIterator;
 
 import java.io.Serializable;
@@ -16,6 +17,15 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
     public void addHuman (E human) {
         humans.add(human);
     }  //добавление человека
+
+    public E getHumanById(int id) {
+        for (E human : humans) {
+            if (((Human) human).getId() == id) {
+                return human;
+            }
+        }
+        return null; // Если человек с таким ID не найден
+    }
 
     public String getInfoAboutParents(E human) {
         StringBuilder sb = new StringBuilder();

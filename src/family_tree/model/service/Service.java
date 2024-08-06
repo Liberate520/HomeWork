@@ -3,28 +3,27 @@ import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
 import family_tree.model.humanTree.HumanTree;
 import family_tree.model.humanTree.ItemHumanTree;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public class Service {
     private final HumanTree<Human> humans;
     private List<Human> children;
-
     public Service() {
         humans = new HumanTree<>();
     }
 
 
-    public void addHuman (String name, String surname, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother, List<Human> children) {
-        Human human = new Human(name, surname, dob, dod, gender, father, mother, children);
+    public void addHuman (String name, String surname, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother) {
+        Human human = new Human(name, surname, dob, dod, gender, father, mother);
         humans.addHuman(human);
     }
 
     public void addHumanNullNodes(String name, String surname, LocalDate dob, LocalDate dod, Gender gender) {
-        Human human = new Human(name, surname, dob, dod, gender, null, null,null);
+        Human human = new Human(name, surname, dob, dod, gender, null, null);
         humans.addHuman(human);
     }
+
 
     public String getInfoAboutParents(Human human) {
         StringBuilder sb = new StringBuilder();
@@ -69,17 +68,26 @@ public class Service {
     }
 
     public void sortByName () {
-        System.out.println("Отсортированный по имени список: \n");
         humans.sortByName();
     }
 
     public void sortByAge() {
-        System.out.println("Отсортированный по возрасту список: \n");
         humans.sortByAge();
     }
 
-    public void addChild(Human child) {
-        children.add(child);
+    public Human getHumanById(int id) {
+        for (Human human : humans) {
+            if (((Human) human).getId() == id) {
+                return human;
+            }
+        }
+        return null; // Если человек с таким ID не найден
+    }
+
+    public void addChild(int idParent, int idChild) {
+        Human parent = getHumanById(idParent);
+        Human child = getHumanById(idChild);
+        parent.addChild(child);
     }
 
     public String humansInfo() {

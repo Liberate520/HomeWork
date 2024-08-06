@@ -3,9 +3,12 @@ package family_tree.model.human;
 import family_tree.model.humanTree.ItemHumanTree;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Human implements Comparable<Human>, ItemHumanTree <Human> {
+    private static int idCounter = 0;
+    private final int id;
     private final String name;
     private final String surname;
     private final LocalDate dob;
@@ -15,7 +18,9 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
     private final Human mother;
     private final List<Human> children;
 
-    public Human (String name, String surname, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother, List<Human> childern) {
+
+    public Human (String name, String surname, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother) {
+        this.id = ++idCounter;
         this.name = name;
         this.surname = surname;
         this.dob = dob;
@@ -23,8 +28,10 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
         this.gender = gender;
         this.father = father;
         this.mother = mother;
-        this.children = childern;
+        this.children = new ArrayList<>();
+
     }
+
 
     public String getName() {
         return name;
@@ -44,6 +51,7 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
     public List<Human> getChildren() {
         return children;
     }
+    public int getId() { return id; }
 
     public void addChild(Human child) {
         this.children.add(child);
@@ -57,10 +65,10 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
                 children.stream().map(h -> h.getName() + " " + h.getSurname()).reduce((s1, s2) -> s1 + ", " + s2).orElse("")
                 : "none";
         if (dod == null) {
-            return "Name: " + name + "\nSurname: " + surname + "\nDateOfBirth: " + dob + "\nDateOfDeath: Still Alive" + "\nGender: " + gender + "\nFather: " + fatherInfo + "\nMother: " + motherInfo +
+            return "ID: " + id + "\nName: " + name + "\nSurname: " + surname + "\nDateOfBirth: " + dob + "\nDateOfDeath: Still Alive" + "\nGender: " + gender + "\nFather: " + fatherInfo + "\nMother: " + motherInfo +
                     "\nChildren: " + childrenInfo + "\n";
         }
-        return "Name: " + name + "\nSurname: " + surname + "\nDateOfBirth: " + dob + "\nDateOfDeath: " + dod + "\nGender: " + gender + "\nFather: " + fatherInfo + "\nMother: " + motherInfo +
+        return "ID: " + id + "\nName: " + name + "\nSurname: " + surname + "\nDateOfBirth: " + dob + "\nDateOfDeath: " + dod + "\nGender: " + gender + "\nFather: " + fatherInfo + "\nMother: " + motherInfo +
                 "\nChildren: " + childrenInfo + "\n";
 
     }
@@ -69,4 +77,17 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
     public int compareTo(Human anotherStudent) {
         return this.name.compareTo(anotherStudent.name);
     }
+
+
+    public static int getIdCounter() {
+        return idCounter;
+    }
+
+    public static void setIdCounter(int idCounter) {
+        Human.idCounter = idCounter;
+    }
+
+//    public static void setChildren(ArrayList<> arrayList) {
+//        Human.ch
+//    }
 }
