@@ -1,12 +1,14 @@
 package man;
 
+import family_tree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Man implements Serializable {
+public class Man implements Serializable, FamilyTreeItem {
     private long id;
     private String name;
     private Gender gender;
@@ -96,28 +98,28 @@ public class Man implements Serializable {
             return false;
         }
     }
-    public boolean addChild(Man child){
-        if (!childrens.contains(child)){
-            childrens.add(child);
+    public boolean addChild(Object child){
+        if (!childrens.contains((Man)child)){
+            childrens.add((Man)child);
             return true;
         }
         else{
-            System.out.println(child.getName() + "уже был добавлен в список детей");
+            System.out.println(((Man)child).getName() + "уже был добавлен в список детей");
             return false;
         }
     }
-    public boolean addMother(Man mother) {
+    public boolean addMother(Object mother) {
         if (this.mother == null) {
-            this.mother = mother;
+            this.mother = (Man)mother;
             System.out.println(this.name + "добавлена мама");
             return true;
         } else {
             return false;
         }
     }
-    public boolean addFather(Man father){
+    public boolean addFather(Object father){
         if (this.father == null) {
-            this.father = father;
+            this.father = (Man)father;
             System.out.println(this.name + "добавлен папа");
             return true;
         } else {

@@ -2,64 +2,64 @@ package family_tree;
 
 import man.Gender;
 import man.Man;
-import man.comparator.ManComparatorByAge;
-import man.comparator.ManComparatorByName;
+import man.comparator.ItemComparatorByAge;
+import man.comparator.ItemComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Man>{
+public class FamilyTree <E extends FamilyTreeItem> implements Serializable, Iterable<E>{
     private long id;
-    private ArrayList <Man> mans;
-    public FamilyTree(ArrayList <Man> peoples){
-        this.mans = peoples;
+    private ArrayList <E> group;
+    public FamilyTree(ArrayList <E> items){
+        this.group = items;
     }
 
     public FamilyTree(){
-        mans = new ArrayList<>();
+        group = new ArrayList<>();
     }
 
-    public boolean addToFamilyTree(Man man) {
-        if (man == null){
+    public boolean addToFamilyTree(E groupItem) {
+        if (groupItem == null){
             System.out.println("Пусто...");
             return false;
         }
-        if (!mans.contains(man)) {
-            mans.add(man);
-            man.setId(id++);
-            System.out.println(man.getName() + " добавлен");
-            addToParents(man);
-            addToChildren(man);
+        if (!group.contains(groupItem)) {
+            group.add(groupItem);
+            groupItem.setId(id++);
+            System.out.println(groupItem.getName() + " добавлен");
+            addToParents(groupItem);
+            addToChildren(groupItem);
             return true;
         } else {
-            System.out.println(man.getName() + " Ошибка! Уже был добавлен");
+            System.out.println(groupItem.getName() + " Ошибка! Уже был добавлен");
             return false;
         }
     }
-    private void addToParents(Man man){
-        if (man.getParents()!= null) {
-            for (Man parent : man.getParents()) {
-                parent.addChild(man);
+    private void addToParents(E groupItem){
+        if (groupItem.getParents()!= null) {
+            for (Object parent : groupItem.getParents()) {
+                ((E)parent).addChild(groupItem);
             }
         }
     }
 
-    private void addToChildren(Man man) {
-        if (man.getChildrens()!= null) {
-            for (Man child : man.getChildrens()) {
-                if (man.getGender().equals(Gender.Female)) {
-                    child.addMother(man);
+    private void addToChildren(E groupItem) {
+        if (groupItem.getChildrens()!= null) {
+            for (Object child : groupItem.getChildrens()) {
+                if (groupItem.getGender().equals(Gender.Female)) {
+                    ((E)child).addMother(groupItem);
                 } else {
-                    child.addFather(man);
+                    ((E)child).addFather(groupItem);
                 }
             }
         }
     }
-    public List<Man> getByName(String name) {
-        List<Man> res = new ArrayList<>();
-        for (Man man : mans) {
+    public List<E> getByName(String name) {
+        List<E> res = new ArrayList<>();
+        for (E man : group) {
             if (man.getName().equals(name)) {
                 res.add(man);
             }
@@ -90,43 +90,43 @@ public class FamilyTree implements Serializable, Iterable<Man>{
     }
     public boolean remove(long currentId){
         if(currentId<id && id>=0){
-            Man currentMan = getById(currentId);
-            return mans.remove(currentMan);
+            E currentMan = getById(currentId);
+            return group.remove(currentMan);
         }
         return false;
     }
 
-    public Man getById(long id){
-        for (Man man : mans) {
-            if (man.getId() == id){
-                return man;
+    public E getById(long id){
+        for (E groupItem : group) {
+            if (groupItem.getId() == id){
+                return groupItem;
             }
         }
         return null;
     }
 
     public void sortByName(){
-        mans.sort(new ManComparatorByName());
+        group.sort(new ItemComparatorByName());
     }
 
     public void sortByAge(){
-        mans.sort(new ManComparatorByAge());
+        group.sort(new ItemComparatorByAge());
     }
 
     @Override
-    public Iterator<Man> iterator()
+    public Iterator<E> iterator()
     {
-        return new ManIterator(mans);
+        return new GroupIterator(group);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Дерево состоит из ");
-        sb.append(mans.size());
+        sb.append(group.size());
         sb.append(" объектов\n");
-        for (Man man : mans) {
-            sb.append(man);
+        for (E groupItem : group) {
+            sb.append(groupItem);
             sb.append("\n");
         }
         return sb.toString();
