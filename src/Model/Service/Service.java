@@ -1,16 +1,14 @@
-package src.Service;
+package src.Model.Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 
-
-import src.FamilyTree.FamilyTree;
-import src.FileHandling.FileHandler;
-import src.Human.Gender;
-import src.Human.Human;
-import src.Human.HumanBuilder;
+import src.Model.FamilyTree.FamilyTree;
+import src.Model.FileHandling.FileHandler;
+import src.Model.Human.Gender;
+import src.Model.Human.Human;
+import src.Model.Human.HumanBuilder;
 
 public class Service {
     private HumanBuilder humanBuilder;
@@ -27,23 +25,30 @@ public class Service {
         return familyTree;
     }
 
-    public Human addToTree(String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father,List<Human> children){
-        Human member = humanBuilder.build(name, dateofbirth, dateofdeath, gender,mother,father, children);
+    public Human addToTree(String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father){
+        Human member = humanBuilder.build(name, dateofbirth, dateofdeath, gender, mother, father);
         familyTree.addMember(member);
         return member;
     }
 
-    public void addParent(Human c, Human p){
-        if(p.getGender().equals(Gender.Male)){
-            c.setFather(p);
-        }
-        if(p.getGender().equals(Gender.Female)){
-            c.setMother(p);
-        }
+
+    public Human addToTreeShort(String name,LocalDate dateofbirth, Gender gender){
+        Human member = humanBuilder.build(name, dateofbirth, gender);
+        familyTree.addMember(member);
+        return member;
     }
 
-    public void addChildren(Human c, Human p){
-        p.setChildren(c);
+    public Human getMember(String name){
+        Human member = familyTree.getMember(name);
+        return member;
+    }
+
+    public void addParent(Human child, Human parent){
+        child.addParent(child, parent);
+    }
+
+    public void addChildren(Human child, Human parent){
+        parent.addChildren(child, parent);
     }
 
     public void sortByName(){
@@ -58,8 +63,9 @@ public class Service {
         familyTree.sortByChildren();
     }    
 
-    public void printTreeInfo(){
-        System.out.println(familyTree.GetFamilyInfo());
+    public String printTreeInfo(){
+       String info = familyTree.GetFamilyInfo();
+       return info;
     }
 
     public void load() throws ClassNotFoundException, IOException{

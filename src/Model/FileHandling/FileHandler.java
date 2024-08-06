@@ -1,4 +1,4 @@
-package src.FileHandling;
+package src.Model.FileHandling;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import src.FamilyTree.FamilyTree;
+import src.Model.FamilyTree.FamilyTree;
 
 public class FileHandler implements Writer {
 

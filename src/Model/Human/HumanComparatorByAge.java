@@ -1,8 +1,8 @@
-package src.Human;
+package src.Model.Human;
 
 import java.util.Comparator;
 
-import src.FamilyTree.FamilyMember;
+import src.Model.FamilyTree.FamilyMember;
 
 public class HumanComparatorByAge <E extends FamilyMember<E>> implements Comparator <E> {
 

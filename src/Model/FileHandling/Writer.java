@@ -1,4 +1,4 @@
-package src.FileHandling;
+package src.Model.FileHandling;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

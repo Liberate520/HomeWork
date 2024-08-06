@@ -1,14 +1,14 @@
-package src.Human;
+package src.Model.Human;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import src.FamilyTree.FamilyMember;
+import src.Model.FamilyTree.FamilyMember;
 
 public class Human implements FamilyMember <Human>{
-    private int id;
+    private long id;
     private String name;
     private LocalDate dateofbirth;
     private LocalDate dateofdeath;
@@ -17,7 +17,7 @@ public class Human implements FamilyMember <Human>{
     private Human father;
     private List<Human> children;
 
-public Human (int id, String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father,List<Human> children){
+public Human (long id, String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father){
     this.id = id;
     this.name = name;
     this.dateofbirth = dateofbirth;
@@ -25,8 +25,19 @@ public Human (int id, String name,LocalDate dateofbirth,LocalDate dateofdeath,Ge
     this.gender = gender;
     this.mother = mother;
     this.father = father;
-    this.children = new ArrayList<>();
+    children = new ArrayList<>();
 }    
+
+public Human(long id, String name, LocalDate dateofbirth, Gender gender) {
+    this.id = id;
+    this.name = name;
+    this.dateofbirth = dateofbirth;
+    this.gender = gender;
+}
+
+public long getId() {
+    return id;
+}
 
 public String getName() {
     return name;
@@ -48,6 +59,10 @@ public Human getFather() {
 }
 public List<Human> getChildren() {
     return children;
+}
+
+public void setID(long id) {
+    this.id = id;
 }
 
 public void setName(String name) {
@@ -72,10 +87,23 @@ public void setChildren(Human child) {
     this.children.add(child);
 }
 
+public void addParent(Human child, Human parent){
+    if(parent.getGender().equals(Gender.Male)){
+        child.setFather(parent);
+    }
+    if(parent.getGender().equals(Gender.Female)){
+        child.setMother(parent);
+    }
+}
+
+public void addChildren(Human child, Human parent){
+    parent.setChildren(child);
+}
+
 @Override
 public String toString() {
-    StringBuilder sb = new StringBuilder();
-    String childrenCollected = children.stream().map(Human::getName).collect(Collectors.joining(", "));
+    StringBuilder sb = new StringBuilder();    
+        
     sb.append("Family member's info: \n");
     sb.append("ID: ").append(id).append("\n");
     sb.append("Name: ").append(name).append("\n");
@@ -95,9 +123,12 @@ public String toString() {
     } 
     else{
         sb.append("Father is unknown ").append("\n");
-    }     
+    } 
+    if (children != null){    
     if (!children.isEmpty()) {
+        String childrenCollected = children.stream().map(Human::getName).collect(Collectors.joining(", "));
         sb.append("Children: ").append(childrenCollected).append("\n");
+        }
     }     
     else{
         sb.append("There is no information about children").append("\n");
