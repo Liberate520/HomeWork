@@ -1,7 +1,11 @@
-package service;
+package model.service;
 
-import familiTree.FamilyTree;
-import human.Human;
+import model.familiTree.FamilyTree;
+import model.human.Gender;
+import model.human.Human;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Service {
 
@@ -10,6 +14,19 @@ public class Service {
     public Service() {
         familyTree = new FamilyTree<>();
     }
+
+
+    public void addHuman(String name, Gender gender, LocalDate dateOfBirth) {
+        Human human = new Human(name, gender, dateOfBirth);
+        human.setName(name);
+        human.setGender(gender);
+        human.setDateOfBirth(dateOfBirth);
+        familyTree.addHuman(human);
+
+    }
+
+
+
 
     public void sortByName() { // сортировка по имени
         familyTree.sortByName();
@@ -21,15 +38,19 @@ public class Service {
 
     public String getHumanListInfo() {
         // метод для вывода информации о человеке
-
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Отсортированный список генеалогического древа:\n");
+        int count = 0;
 
         for (Human human : familyTree) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
+            count++;
         }
+        System.out.println("Генеалогическое древо (размер = " + count + "):");
         return stringBuilder.toString();
     }
+
+
+
 
 }

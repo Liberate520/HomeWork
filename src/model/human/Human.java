@@ -1,8 +1,7 @@
-package human;
+package model.human;
 
-import familiTree.TreeNode;
+import model.familiTree.TreeNode;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -26,22 +25,21 @@ public class Human implements TreeNode<Human> {
 
     public Human(String name, Gender gender, LocalDate dateOfBirth) {
         // метод для внесения сведений о человеке (с отсутствием некоторых параметров)
-        this(name, gender, dateOfBirth, null, null);
+        this(name, gender, dateOfBirth, null, null, null, null);
     }
-
-    public Human(String name, Gender gender, LocalDate dateOfBirth, Human father, Human mother) {
-        // метод для внесения сведений о человеке (с отсутствием некоторых параметров)
-        this(name, gender, dateOfBirth, null, father, mother, new ArrayList<>());
-    }
-
+//
+//    public Human(String name, Gender gender, LocalDate dateOfBirth, Human father, Human mother) {
+//        // метод для внесения сведений о человеке (с отсутствием некоторых параметров)
+//        this(name, gender, dateOfBirth, null, father, mother, null);
+//    }
+//
     public Human(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath,
                  Human father, Human mother) {
-        this(name, gender, dateOfBirth, dateOfDeath, father, mother, new ArrayList<>());
+        this(name, gender, dateOfBirth, dateOfDeath, father, mother, null);
     }
 
     public Human(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath,
                  Human father, Human mother, List<Human> children) {
-        // метод для внесения сведений о человеке (с отсутствием некоторых параметров)
         this.id = -1;
         this.name = name;
         this.gender = gender;
@@ -79,6 +77,22 @@ public class Human implements TreeNode<Human> {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public LocalDate getDateOfDeath() {
+        return dateOfDeath;
+    }
+
+    public void setDateOfDeath(LocalDate dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
     }
 
     public int getAge() {   // метод для вычисления возраста

@@ -1,8 +1,7 @@
-package familiTree;
+package model.familiTree;
 
-import human.Human;
-import human.comparators.HumanComparatorByAge;
-import human.comparators.HumanComparatorByName;
+import model.human.comparators.HumanComparatorByAge;
+import model.human.comparators.HumanComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,12 +57,6 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         return false;
     }
 
-//    public FamilyTree addHumans(List<Human> humans) {
-//        for (Human human : humans) {
-//            addHuman(human);
-//        }
-//        return this;
-//    }
 
 
     public List<E> findChildrenByParent(E parent, E excludeHuman) {
@@ -80,25 +73,25 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
         return findChildrenByParent(getById((int) parentId), null);
     }
 
-//    public List<E> findSiblingsById(long humanId) {
-//        E child = getById((int) humanId);
-//        return findChildrenByParent(child.getMother() != null ? child.getMother() : child.getFather(), child);
-//    }
-
-
-
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        System.out.println("Генеалогическое древо (размер = " + humans.size() + "):");
-
-        for (E human : humans) {
-            stringBuilder.append(human);
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString().replaceAll("^\\[|\\,|\\]$", "");
+    public List<E> findSiblingsById(long humanId) {
+        E child = getById((int) humanId);
+        return findChildrenByParent(child.getMother() != null ? child.getMother() : child.getFather(), child);
     }
+
+
+
+
+//    @Override
+//    public String toString() {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        System.out.println("Генеалогическое древо (размер = " + humans.size() + "):");
+//
+//        for (E human : humans) {
+//            stringBuilder.append(human);
+//            stringBuilder.append("\n");
+//        }
+//        return stringBuilder.toString().replaceAll("^\\[|\\,|\\]$", "");
+//    }
 
 
     @Override
