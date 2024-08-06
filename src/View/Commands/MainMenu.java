@@ -1,7 +1,6 @@
-package View;
+package View.Commands;
 
-import View.Commands.*;
-import View.Commands.Command;
+import View.ConsoleUI;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,10 +1,7 @@
 package Presenter;
 
-import Model.FamilyTree.FamilyTree;
 import Model.Human.Gender;
-import Model.Human.Human;
 import Model.Service.HumanService;
-import View.ConsoleUI;
 import View.View;
 
 import java.io.IOException;
@@ -20,54 +17,62 @@ public class Presenter {
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-        humanService.addHuman(name, gender, birthDate, deathDate);
-        System.out.println(name + " добавлен в семейное дерево");
+        String output = humanService.addHuman(name, gender, birthDate, deathDate);
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void addSpouse(int humanID, int spouseID){
-        humanService.addSpouse(humanID, spouseID);
+        String output = humanService.addSpouse(humanID, spouseID);
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void deleteSpouse(int humanID){
-        humanService.deleteSpouse(humanID);
+        String output = humanService.deleteSpouse(humanID);
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void addParent(int humanID, int parentID){
-        humanService.addParent(humanID, parentID);
+        String output = humanService.addParent(humanID, parentID);
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void addChild(int humanID, int childID){
-        humanService.addChild(humanID, childID);
+        String output = humanService.addChild(humanID, childID);
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void deleteHuman(int humanId) {
-        humanService.deleteHuman(humanId);
-        System.out.println("Человек с ID" + humanId + " удален из семейного дерева");
+        String output = humanService.deleteHuman(humanId);
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void sortByName() {
-        humanService.sortByName();
+        String output = humanService.sortByName();
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void sortByAge() {
-        humanService.sortByAge();
+        String output = humanService.sortByAge();
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void sortByBirthdate() {
-        humanService.sortByBirthdate();
+        String output = humanService.sortByBirthdate();
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
     public void sortByChildrenNumber() {
-        humanService.sortByChildrenNum();
+        String output = humanService.sortByChildrenNum();
+        view.printAnswer(output);
         showFamilyTreeInfo();
     }
 
@@ -77,12 +82,12 @@ public class Presenter {
     }
 
     public void saveToFile(String filename) throws IOException {
-        humanService.saveToFile(filename);
-        System.out.println("Семейное дерево сохранено в файл " + filename);
+        String output = humanService.saveToFile(filename);
+        view.printAnswer(output);
     }
 
     public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
-        humanService.loadFromFile(filename);
-        System.out.println("Семейное дерево загружено из файла " + filename);
+        String output = humanService.loadFromFile(filename);
+        view.printAnswer(output);
     }
 }

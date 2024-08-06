@@ -27,8 +27,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>>  implements Serializable, I
             family.add(human);
             id ++;
             human.setId(id);
-
-            //addChildren(human);
         }
     }
 
@@ -41,15 +39,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>>  implements Serializable, I
     }
 
     public void addChildren(E human) {
-//        List<E> parents = human.getParents();
-//        if (parents != null) {
-//            for (int i = 0; i < parents.size(); i++) {
-//                E parent = parents.get(i);
-//                if (parents.get(i) != null) {
-//                    parent.setChildren(human);
-//                }
-//            }
-//        }
         if (human.getParents() != null) {
             for (E parent : human.getParents()) {
                 if (parent != null) {
@@ -105,7 +94,4 @@ public class FamilyTree<E extends FamilyTreeItem<E>>  implements Serializable, I
     public Iterator<E> iterator() {
         return new HumanIterator(family);
     }
-
-
-
 }

@@ -22,38 +22,46 @@ public class HumanService {
         builder = new HumanBuilder();
     }
 
-    public void addHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+    public String addHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
         Human human = builder.setName(name)
                 .setGender(gender)
                 .setBirthDate(birthDate)
                 .setDeathDate(deathDate)
                 .build();
         familyTree.addHuman(human);
+        return name + " добавлен в семейное дерево.";
     }
 
-    public void addSpouse(int humanID, int spouseID) {
+    public String memberNotFoundError(){
+        return "Человек с указанным ID отсутствует в дереве.";
+    }
+
+    public String addSpouse(int humanID, int spouseID) {
         for (Human human : familyTree) {
             if (human.getId() == humanID){
                 for (Human spouse : familyTree) {
                     if (spouse.getId() == spouseID){
                         familyTree.setMarried(human, spouse);
+                        return "У человека с ID" + humanID + " добавлен супруг с ID" + spouseID + ".";
                     }
                 }
             }
         }
+        return memberNotFoundError();
     }
 
-    public void deleteSpouse(int humanID) {
-
+    public String deleteSpouse(int humanID) {
         for (Human human : familyTree) {
             if (human.getId() == humanID){
                 Human spouse = human.getSpouse();
                 familyTree.setDivorsed(human, spouse);
+                return "У человека с ID" + humanID + " удалена информация о супруге.";
             }
         }
+        return memberNotFoundError();
     }
 
-    public void addParent(int humanID, int parentID){
+    public String addParent(int humanID, int parentID){
         for (Human human : familyTree) {
             if (human.getId() == humanID){
                 for (Human parent : familyTree) {
@@ -65,13 +73,15 @@ public class HumanService {
                             human.setMother(parent);
                         }
                         parent.setChildren(human);
+                        return "У человека с ID" + humanID + " добавлен родитель с ID" + parentID + ".";
                     }
                 }
             }
         }
+        return memberNotFoundError();
     }
 
-    public void addChild(int humanID, int childID){
+    public String addChild(int humanID, int childID){
         for (Human human : familyTree) {
             if (human.getId() == humanID){
                 for (Human child : familyTree) {
@@ -83,24 +93,29 @@ public class HumanService {
                         if (human.getGender() == Gender.Female){
                             child.setMother(human);
                         }
+                        return "У человека с ID" + humanID + " добавлен ребенок с ID" + childID + ".";
                     }
                 }
             }
         }
+        return memberNotFoundError();
     }
 
-    public void deleteHuman(int ID) {
-        familyTree.deleteHuman(ID);
+    public String deleteHuman(int humanID) {
+        familyTree.deleteHuman(humanID);
+        return "Человек с ID" + humanID + " удален из семейного дерева.";
     }
 
-    public void saveToFile(String filename) throws IOException {
+    public String saveToFile(String filename) throws IOException {
         Writer fileWriter = new FileHandler(familyTree);
         fileWriter.saveToFile(filename, familyTree);
+        return "Семейное дерево сохранено в файл " + filename + ".";
     }
 
-    public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
+    public String loadFromFile(String filename) throws IOException, ClassNotFoundException {
         Writer fileWriter = new FileHandler(familyTree);
         familyTree = fileWriter.readFromFile(filename);
+        return "Семейное дерево загружено из файла " + filename + ".";
     }
 
     public String getHumanListInfo(){
@@ -116,20 +131,24 @@ public class HumanService {
         return stringBuilder.toString();
     }
 
-    public void sortByName(){
+    public String sortByName(){
         familyTree.SortByName();
+        return "Семейное дерево отсортировано по имени.";
     }
 
-    public void sortByAge(){
+    public String sortByAge(){
         familyTree.SortByAge();
+        return "Семейное дерево отсортировано по возрасту.";
     }
 
-    public void sortByChildrenNum(){
+    public String sortByChildrenNum(){
         familyTree.SortByChildrenNum();
+        return "Семейное дерево отсортировано по количеству детей.";
     }
 
-    public void sortByBirthdate(){
+    public String sortByBirthdate(){
         familyTree.SortByBirthdate();
+        return "Семейное дерево отсортировано по дате рождения.";
     }
 
     @Override
@@ -140,45 +159,4 @@ public class HumanService {
     public FamilyTree<Human> getFamilyTree(){
         return familyTree;
     }
-/*
-    public void testTree(){
-        List<Human> parents = new ArrayList<>();
-
-        Human mother = new Human("Nadezda", Gender.Female, LocalDate.of(1956, 11, 16), null);
-        Human father = new Human("Yakov", Gender.Male, LocalDate.of(1950, 9, 11), null);
-
-        familyTree.addHuman(mother);
-        familyTree.addHuman(father);
-        familyTree.setMarried(mother, father);
-
-        parents.clear();
-        parents.add(mother);
-        parents.add(father);
-
-        Human son = new Human("Dima", Gender.Male, LocalDate.of(1990, 04, 9), null, parents);
-        Human dauther = new Human("Jenia", Gender.Female, LocalDate.of(1992, 9, 27), null, parents);
-
-        familyTree.addHuman(son);
-        familyTree.addHuman(dauther);
-
-        Human grandmother = new Human("Nina", Gender.Female, LocalDate.of(1942, 8, 12), null);
-        Human grandfather = new Human("Egor", Gender.Male, LocalDate.of(1937, 7, 14), LocalDate.of(1994, 5, 13));
-
-        familyTree.addHuman(grandmother);
-        familyTree.addHuman(grandfather);
-        familyTree.setMarried(grandmother, grandfather);
-
-        grandmother.setChildren(mother);
-        grandfather.setChildren(mother);
-        mother.setParents(grandmother, grandfather);
-
-        //parents.clear();
-        parents = new ArrayList<>();
-        parents.add(null);
-        parents.add(son);
-
-        Human grandson = new Human("Ilia", Gender.Male, LocalDate.of(2017, 7, 4), null, parents);
-        familyTree.addHuman(grandson);
-    }
-*/
 }

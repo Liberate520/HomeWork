@@ -17,7 +17,7 @@ public class HumanBuilder {
     private Human father = null;
     private List<Human> children = null;
 
-   public HumanBuilder setName(String name) {
+    public HumanBuilder setName(String name) {
         this.name = name;
         return this;
     }
@@ -36,11 +36,6 @@ public class HumanBuilder {
         this.deathDate = deathDate;
         return this;
     }
-
-//    public HumanBuilder setParents(List<Human> parents){
-//        this.parents = parents;
-//        return this;
-//    }
 
     public HumanBuilder setMother(Human mother) {
         this.mother = mother;
@@ -88,10 +83,6 @@ public class HumanBuilder {
         human.setFather(father);
     }
 
-//    private void createParents(){
-//        human.setParents(parents.get(0), parents.get(1));
-//    }
-
     public Human build(){
         createHuman();
         createName();
@@ -100,7 +91,6 @@ public class HumanBuilder {
         createDeathDate();
         createMother();
         createFather();
-        //createParents();
         clear();
         return human;
     }
@@ -112,7 +102,6 @@ public class HumanBuilder {
         deathDate = null;
         mother = null;
         father = null;
-        //parents = null;
         children = null;
     }
 }

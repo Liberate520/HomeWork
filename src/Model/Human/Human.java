@@ -20,21 +20,6 @@ public class Human  implements Serializable, Comparable<Human>, FamilyTreeItem<H
     private List<Human> children;
     private Human spouse;
 
-//    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, List<Human> parents) {
-//        this.name = name;
-//        this.gender = gender;
-//        this.birthDate = birthDate;
-//        this.deathDate = deathDate;
-//        this.parents = parents;
-//        children = new ArrayList<>();
-//    }
-//
-//    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-//        this(name, gender, birthDate, deathDate, null);
-//        parents = new ArrayList<>();
-//    }
-
-
     public Human() {
         id = -1;
         name = null;
@@ -165,28 +150,6 @@ public class Human  implements Serializable, Comparable<Human>, FamilyTreeItem<H
             }
         return parentsList;
     }
-//    public StringBuilder getParentsInfo() {
-//        StringBuilder parentsList = new StringBuilder();
-//        if (parents.isEmpty()) {
-//            parentsList.append("неизвестны");
-//            return parentsList;
-//        }
-//        else  {
-//            if (parents.get(0) != null) {
-//                parentsList.append("мать: " + parents.get(0).getName());
-//            }
-//            else {
-//                parentsList.append("мать: неизвестна");
-//            }
-//            if (parents.get(1) != null) {
-//                parentsList.append(", отец: " + parents.get(1).getName());
-//            }
-//            else {
-//                parentsList.append(", отец: неизвестен");
-//            }
-//            return parentsList;
-//        }
-//    }
 
     public StringBuilder getChildrenInfo() {
         StringBuilder childrenList = new StringBuilder();

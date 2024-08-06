@@ -1,7 +1,4 @@
-import Model.FamilyTree.FamilyTree;
-import Model.Service.HumanService;
-import Model.Writer.Writer;
-import Model.Writer.FileHandler;
+
 import View.ConsoleUI;
 import View.View;
 

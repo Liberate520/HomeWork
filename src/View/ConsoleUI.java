@@ -2,32 +2,39 @@ package View;
 
 import Model.Human.Gender;
 import Presenter.Presenter;
+import View.Commands.MainMenu;
+import View.RelationsMenu.RelationsMenu;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ConsoleUI implements View{
+public class ConsoleUI implements View {
 
     private Scanner scanner;
     private Presenter presenter;
     private MainMenu mainMenu;
+    private RelationsMenu relationsMenu;
+    private Output output;
     private boolean work;
+    private boolean flag;
     private Gender gender;
+    private String defaultFilename = "FamilyTree_ver_1.0.ser";
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
         mainMenu = new MainMenu(this);
+        relationsMenu = new RelationsMenu(this);
+        output = new Output();
         work = true;
+        flag = true;
     }
 
     @Override
     public void start() throws IOException, ClassNotFoundException {
-        greeting();
+        output.printGreetingMessage();
         while(work){
             printMenu();
             workWithFamilyTree();
@@ -35,7 +42,7 @@ public class ConsoleUI implements View{
     }
 
     public void addHuman(){
-        System.out.println("Введите имя человека:");
+        output.printMessage("Введите имя человека:");
         String name = scanner.nextLine();
         gender = addHumanGender();
         LocalDate birthDate = addHumanBirthdate();
@@ -43,12 +50,10 @@ public class ConsoleUI implements View{
         presenter.addHuman(name, gender, birthDate, deathDate);
     }
 
-    public void addRelations() {
-        boolean flag = true;
-        int choice = 0;
-        int ID = 0;
+    public void addRelations(){
         int humanID = 0;
-        System.out.println("Введите ID человека:");
+        flag = true;
+        output.printMessage("Введите ID человека:");
         String str = scanner.nextLine();
         if (checkTextForInt(str)) {
             humanID = Integer.parseInt(str);
@@ -57,72 +62,61 @@ public class ConsoleUI implements View{
             flag = false;
         }
         while (flag){
-            System.out.println("Желаете добавить родственные связи с уже добавленными людьми?\n" +
-                    "1. Добавить супруга/супругу.\n" +
-                    "2. Удалить супруга/супругу.\n" +
-                    "3. Добавить родителя (мать, отца).\n" +
-                    "4. Добавить ребенка.\n" +
-                    "0. Закончить выбор.\n");
-            try {
-                str = scanner.nextLine();
-                if (checkTextForInt(str)) {
-                    choice = Integer.parseInt(str);
-                }
-                switch (choice){
-                    case 0:
-                        flag = false;
-                        break;
-                    case 1:
-                        System.out.println("Введите ID супруга/супруги");
-                        str = scanner.nextLine();
-                        if (checkTextForInt(str)) {
-                            ID = Integer.parseInt(str);
-                            addSpouse(humanID, ID);
-                        }
-                        else {
-                            flag = false;
-                        }
-
-                        break;
-                    case 2:
-                        deleteSpouse(humanID);
-                        System.out.println("Информация о супругах удалена");
-                        break;
-                    case 3:
-                        System.out.println("Введите ID родителя");
-                        str = scanner.nextLine();
-                        if (checkTextForInt(str)) {
-                            ID = Integer.parseInt(str);
-                            addParent(humanID, ID);
-                        }
-                        else {
-                            flag = false;
-                        }
-                        break;
-                    case 4:
-                        System.out.println("Введите ID ребенка");
-                        str = scanner.nextLine();
-                        if (checkTextForInt(str)) {
-                            ID = Integer.parseInt(str);
-                            addChild(humanID, ID);
-                        }
-                        else {
-                            flag = false;
-                        }
-                        break;
-                    default:
-                        System.out.println("Ошибка. Неверные данные.");
-                        break;
-                }
-            }
-            catch (InputMismatchException e){
-                System.out.println("Ошибка. Неверные данные.");
-            }
+            System.out.println(relationsMenu.RelationsMenuDescription());
+            changeRelations(humanID);
         }
     }
 
+     private void changeRelations(int humanID){
+        String str = scanner.nextLine();
+        if (checkTextForInt(str)) {
+            int choice = Integer.parseInt(str);
+            if (choice <= relationsMenu.getListSize()){
+                relationsMenu.execute(choice, humanID);
+            }
+        }
+        else {
+            output.printErrorMessage();;
+        }
+    }
+
+    public void addSpouseMenu(int humanID){
+        output.printMessage("Введите ID супруга/супруги");
+        String str = scanner.nextLine();
+        if (checkTextForInt(str)) {
+            int ID = Integer.parseInt(str);
+            addSpouse(humanID, ID);
+        }
+    }
+
+    public void deleteSpouseMenu(int humanID){
+        deleteSpouse(humanID);
+    }
+
+    public void addParentMenu(int humanID){
+        output.printMessage("Введите ID родителя");
+        String str = scanner.nextLine();
+        if (checkTextForInt(str)) {
+            int ID = Integer.parseInt(str);
+            addParent(humanID, ID);
+        }
+    }
+
+    public void addChildMenu(int humanID){
+        output.printMessage("Введите ID ребенка");
+        String str = scanner.nextLine();
+        if (checkTextForInt(str)) {
+            int ID = Integer.parseInt(str);
+            addChild(humanID, ID);
+        }
+    }
+
+    public void finishRelationsChoice(){
+        flag = false;
+    }
+
     private Gender addHumanGender() {
-        System.out.println("Введите пол человека (М/Ж или M/F):");
+        output.printMessage("Введите пол человека (М/Ж или M/F):");
         String genderStr = scanner.nextLine();
         if (genderStr.equalsIgnoreCase("м") || genderStr.equalsIgnoreCase("m")) {
             gender = Gender.Male;
@@ -131,14 +125,14 @@ public class ConsoleUI implements View{
             gender = Gender.Female;
         }
         else {
-            System.out.println("Ошибка пола");//TODO
+            output.printGenderError();
             return null;
         }
         return gender;
     }
 
     private LocalDate addHumanBirthdate() {
-        System.out.println("Введите дату рождения человека (ГГГГ-ММ-ДД):");
+        output.printMessage("Введите дату рождения человека (ГГГГ-ММ-ДД):");
         String dateStr = scanner.nextLine();
         if(checkDateFormat(dateStr)) {
             LocalDate birthDate = LocalDate.parse(dateStr);
@@ -148,14 +142,14 @@ public class ConsoleUI implements View{
     }
 
     private LocalDate addHumanDeathdate(LocalDate birthDate) {
-        System.out.println("Введите дату смерти человека (при наличии, ГГГГ-ММ-ДД). При отсутствии введите любой символ.");
+        output.printMessage("Введите дату смерти человека (при наличии, ГГГГ-ММ-ДД). При отсутствии введите любой символ.");
         String dateStr = scanner.nextLine();
         if(checkDateFormat(dateStr)) {
             LocalDate deathDate = LocalDate.parse(dateStr);
             if (deathDate.isAfter(birthDate)){
                 return deathDate;
             }
-            System.out.println("Ошибка. Дата смерти должна идти раньше даты рождения.");
+            output.printDateError();
         }
         return null;
     }
@@ -165,7 +159,7 @@ public class ConsoleUI implements View{
             LocalDate.parse(str);
         }
         catch (DateTimeParseException e){
-            System.out.println("Ошибка. Неверный формат даты");
+            output.printDateFormatError();
             return false;
         }
         return true;
@@ -188,7 +182,7 @@ public class ConsoleUI implements View{
     }
 
     public void deleteHuman(){
-        System.out.println("Введите ID человека, которого требуется удалить из семейного дерева:");
+        output.printMessage("Введите ID человека, которого требуется удалить из семейного дерева:");
         String str = scanner.nextLine();
         if (checkTextForInt(str)) {
             int ID = Integer.parseInt(str);
@@ -217,26 +211,25 @@ public class ConsoleUI implements View{
     }
 
     public void saveToFile() throws IOException {
-        System.out.println("Введите название файла для записи (при отсутствии будет использовано название по умолчанию):");
+        output.printMessage("Введите название файла для записи (при отсутствии будет использовано название по умолчанию):");
         String filename = scanner.nextLine();
         if (filename.isEmpty()) {
-            filename = "FamilyTree_ver_1.0.ser";
+            filename = defaultFilename;
         }
         presenter.saveToFile(filename);
     }
 
     public void loadFromFile() throws IOException, ClassNotFoundException {
-        System.out.println("Введите название файла для чтения (при отсутствии будет использовано название по умолчанию):");
+        output.printMessage("Введите название файла для чтения (при отсутствии будет использовано название по умолчанию):");
         String filename = scanner.nextLine();
         if (filename.isEmpty()) {
-            filename = "FamilyTree_ver_1.0.ser";
+            filename = defaultFilename;
         }
         presenter.loadFromFile(filename);
     }
 
     public void finishWork() {
-        System.out.println("Работа с семейным деревом завершена.\n" +
-                "До новых встреч!");
+        output.printExitMessage();
         work = false;
     }
 
@@ -251,24 +244,19 @@ public class ConsoleUI implements View{
     }
 
     private void printMenu() {
-        System.out.println(mainMenu.menu());
-    }
-
-    private void greeting() {
-        System.out.println("Добро пожаловать!\n" +
-                "Начинаем работу с семейным деревом.");
+        output.printMessage(mainMenu.menu());
     }
 
     @Override
     public void printAnswer(String answer) {
-        System.out.println(answer);
+        System.out.println(answer);//TODO
     }
 
     private boolean checkTextForInt(String text){
         if (text.matches("[0-9]+")){
             return true;
         } else {
-            inputError();
+            output.printErrorMessage();
             return false;
         }
     }
@@ -277,12 +265,8 @@ public class ConsoleUI implements View{
         if (numCommand <= mainMenu.getSize()){
             return true;
         } else {
-            inputError();
+            output.printErrorMessage();
             return false;
         }
-    }
-
-    private void inputError(){
-        System.out.println("Вы ввели неверное значение");
     }
 }
