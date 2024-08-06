@@ -1,6 +1,6 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 
-import family_tree.human.enum_for_human.Gender;
+import family_tree.model.human.enum_for_human.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;

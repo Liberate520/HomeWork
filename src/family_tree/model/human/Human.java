@@ -1,7 +1,7 @@
-package family_tree.human;
+package family_tree.model.human;
 
-import family_tree.family_tree.ItemFamilyTree;
-import family_tree.human.enum_for_human.Gender;
+import family_tree.model.family_tree.ItemFamilyTree;
+import family_tree.model.human.enum_for_human.Gender;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;

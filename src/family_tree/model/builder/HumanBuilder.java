@@ -1,7 +1,7 @@
-package family_tree.human.builder;
+package family_tree.model.builder;
 
-import family_tree.human.Human;
-import family_tree.human.enum_for_human.Gender;
+import family_tree.model.human.Human;
+import family_tree.model.human.enum_for_human.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;

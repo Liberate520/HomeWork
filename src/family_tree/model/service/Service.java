@@ -1,9 +1,9 @@
-package family_tree.service;
+package family_tree.model.service;
 
-import family_tree.family_tree.FamilyTree;
-import family_tree.human.Human;
-import family_tree.human.builder.HumanBuilder;
-import family_tree.human.enum_for_human.Gender;
+import family_tree.model.family_tree.FamilyTree;
+import family_tree.model.human.Human;
+import family_tree.model.builder.HumanBuilder;
+import family_tree.model.human.enum_for_human.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
