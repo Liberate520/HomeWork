@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Human implements Serializable {
+public class Human implements FamilyMember {
     private static final long serialVersionUID = 1L;
     private String id;
     private String name;
@@ -31,10 +31,12 @@ public class Human implements Serializable {
         this.children = new ArrayList<>();
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -79,6 +81,7 @@ public class Human implements Serializable {
         this.mother = mother;
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }

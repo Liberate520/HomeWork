@@ -1,13 +1,14 @@
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
         Scanner scanner = new Scanner(System.in);
-        FileHandler fileHandler = new FileHandler();
+        FileHandler<Human> fileHandler = new FileHandler<>();
 
         // Пример добавления людей в генеалогическое древо
         Human john = new Human("1", "John", "Doe", 60, Human.Gender.Male, LocalDate.of(1964, 1, 1));
@@ -20,10 +21,10 @@ public class Main {
         mary.setFather(john);
         mary.setMother(jane);
 
-        familyTree.addHuman(john);
-        familyTree.addHuman(jane);
-        familyTree.addHuman(mary);
-        familyTree.addHuman(tom);
+        familyTree.addMember(john);
+        familyTree.addMember(jane);
+        familyTree.addMember(mary);
+        familyTree.addMember(tom);
 
         while (true) {
             System.out.println("Выберите действие:");
@@ -43,7 +44,7 @@ public class Main {
                 case 1 -> {
                     System.out.print("Введите ID: ");
                     String id = scanner.nextLine();
-                    Human human = familyTree.getHumanById(id);
+                    Human human = familyTree.getMemberById(id);
                     if (human != null) {
                         System.out.println(human);
                     } else {
@@ -53,7 +54,7 @@ public class Main {
                 case 2 -> {
                     System.out.print("Введите имя: ");
                     String name = scanner.nextLine();
-                    List<Human> humansByName = familyTree.getHumanByName(name);
+                    List<Human> humansByName = familyTree.getMemberByName(name);
                     if (humansByName.isEmpty()) {
                         System.out.println("Человек с таким именем не найден.");
                     } else {
@@ -63,7 +64,7 @@ public class Main {
                 case 3 -> {
                     System.out.print("Введите фамилию: ");
                     String surname = scanner.nextLine();
-                    List<Human> humansBySurname = familyTree.getHumanBySurname(surname);
+                    List<Human> humansBySurname = familyTree.getMemberByName(surname);
                     if (humansBySurname.isEmpty()) {
                         System.out.println("Человек с такой фамилией не найден.");
                     } else {
@@ -103,12 +104,12 @@ public class Main {
                 }
                 case 7 -> {
                     System.out.println("Сортировка по возрасту:");
-                    List<Human> sortedByAge = familyTree.sortByAge();
+                    List<Human> sortedByAge = familyTree.sortByAge(Comparator.comparingInt(Human::getAge));
                     sortedByAge.forEach(System.out::println);
                 }
                 case 8 -> {
                     System.out.println("Сортировка по полу:");
-                    List<Human> sortedByGender = familyTree.sortByGender();
+                    List<Human> sortedByGender = familyTree.sortByGender(Comparator.comparing(Human::getGender));
                     sortedByGender.forEach(System.out::println);
                 }
                 case 9 -> {

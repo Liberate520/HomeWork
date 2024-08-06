@@ -2,57 +2,51 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<T extends FamilyMember> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
-    private Map<String, Human> humans;
+    private Map<String, T> members;
 
     public FamilyTree() {
-        this.humans = new HashMap<>();
+        this.members = new HashMap<>();
     }
 
-    public void addHuman(Human human) {
-        humans.put(human.getId(), human);
+    public void addMember(T member) {
+        members.put(member.getId(), member);
     }
 
-    public Human getHumanById(String id) {
-        return humans.get(id);
+    public T getMemberById(String id) {
+        return members.get(id);
     }
 
-    public List<Human> getHumanByName(String name) {
-        return humans.values().stream()
-                .filter(human -> human.getName().equalsIgnoreCase(name))
+    public List<T> getMemberByName(String name) {
+        return members.values().stream()
+                .filter(member -> member.getName().equalsIgnoreCase(name))
                 .collect(Collectors.toList());
     }
 
-    public List<Human> getHumanBySurname(String surname) {
-        return humans.values().stream()
-                .filter(human -> human.getSurname().equalsIgnoreCase(surname))
-                .collect(Collectors.toList());
+    public List<T> getAllChildren(String id) {
+        T member = getMemberById(id);
+        return member != null ? (List<T>) member.getChildren() : new ArrayList<>();
     }
 
-    public List<Human> getAllChildren(String id) {
-        Human human = getHumanById(id);
-        return human != null ? human.getChildren() : new ArrayList<>();
-    }
-
-    public List<Human> getAllHumans() {
-        return new ArrayList<>(humans.values());
+    public List<T> getAllMembers() {
+        return new ArrayList<>(members.values());
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return humans.values().iterator();
+    public Iterator<T> iterator() {
+        return members.values().iterator();
     }
 
-    public List<Human> sortByAge() {
-        return humans.values().stream()
-                .sorted(Comparator.comparingInt(Human::getAge))
+    public List<T> sortByAge(Comparator<T> comparator) {
+        return members.values().stream()
+                .sorted(comparator)
                 .collect(Collectors.toList());
     }
 
-    public List<Human> sortByGender() {
-        return humans.values().stream()
-                .sorted(Comparator.comparing(Human::getGender))
+    public List<T> sortByGender(Comparator<T> comparator) {
+        return members.values().stream()
+                .sorted(comparator)
                 .collect(Collectors.toList());
     }
 }
