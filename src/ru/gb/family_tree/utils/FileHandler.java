@@ -5,8 +5,10 @@ import ru.gb.family_tree.interfaces.HasRelations;
 
 import java.io.*;
 
+@SuppressWarnings("ALL")
 public class FileHandler<T extends Serializable & HasRelations<T>> {
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void saveFamilyTree(FamilyTree<T> familyTree, String filename) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(familyTree);

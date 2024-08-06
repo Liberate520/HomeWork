@@ -1,11 +1,9 @@
 package ru.gb.family_tree.view;
 
-import ru.gb.family_tree.models.Human;
-
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleView implements FamilyTreeView {
+public class ConsoleView<T> implements FamilyTreeView<T> {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -14,14 +12,14 @@ public class ConsoleView implements FamilyTreeView {
     }
 
     @Override
-    public void showAllMembers(List<Human> members) {
-        for (Human member : members) {
+    public void showAllMembers(List<T> members) {
+        for (T member : members) {
             System.out.println(member);
         }
     }
 
     @Override
-    public void showMember(Human member) {
+    public void showMember(T member) {
         System.out.println(member);
     }
 

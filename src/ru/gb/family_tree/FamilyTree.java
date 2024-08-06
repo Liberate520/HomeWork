@@ -1,11 +1,11 @@
 package ru.gb.family_tree;
 
+import ru.gb.family_tree.interfaces.HasRelations;
+
 import java.io.Serializable;
 import java.util.*;
 
-import ru.gb.family_tree.interfaces.HasRelations;
-
-public class FamilyTree<T extends HasRelations<T> & Serializable> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends HasRelations<T> & Serializable> implements Iterable<T>, Serializable {
     private static final long serialVersionUID = 1L;
 
     private Map<Integer, T> members;
