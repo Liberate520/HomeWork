@@ -4,23 +4,22 @@ package Human;
 
 
 
-import java.io.Serializable;
+
 import java.time.*;
 import java.util.*;
 
 import Pol.Pol;
 
 import java.time.format.DateTimeFormatter;
- 
 
-public class Human implements Serializable, Comparable<Human>{
+public class Human implements Comparable<Human>, FamilyTreeItem <Human> {
     private String name;
     private String familiya;
     private Pol pol;
-    public Human suprug;
+    private Human suprug;
     private LocalDate birthDate, dethDate;
     private List <Human> parents;
-    public List <Human> children;
+    private List <Human> children;
     private int age;
     
     
@@ -92,13 +91,21 @@ public class Human implements Serializable, Comparable<Human>{
    public void setParents(Human parent ){
        parents.add(parent);
    }
-   
+    
+    
+    
+     @Override 
    public List<Human>  getChildren(){
        return this.children;
    }
    
    public List<Human>  getParents(){
        return this.parents;
+   }
+   
+    @Override
+   public Human  getSuprug(){
+       return this.suprug;
    }
    
     public String getVozrast(){
@@ -136,10 +143,12 @@ public class Human implements Serializable, Comparable<Human>{
         return LocalDate.parse(dethDate, formatter);
     }
 
+     @Override
     public int getAge(){
         return this.age;
     }
-
+    
+     @Override
     public String getName(){
         return this.name;
     }
@@ -153,3 +162,5 @@ public class Human implements Serializable, Comparable<Human>{
 
 
 }
+
+

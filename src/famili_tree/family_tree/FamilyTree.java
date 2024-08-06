@@ -2,9 +2,9 @@ package family_tree;
 
 
 import java.io.Serializable;
+import family_tree.*;
 
-
-import Human.Human;
+import Human.*;
 
 import java.util.*;
 
@@ -13,22 +13,22 @@ import Comporator.HumanComporatorByName;
 
 
 
-public class FamilyTree implements Iterable <Human>, Serializable{
+public class FamilyTree <T extends FamilyTreeItem> implements Iterable <T>, Serializable{
     
-    private List <Human> tree;
+    private List <T> tree;
     
-    public FamilyTree(Human human){
+    public FamilyTree(T t){
         this.tree=new ArrayList<>();
-        this.tree.add(human);
+        this.tree.add(t);
     }
     public FamilyTree(){
         this(null);
         
     }
     
-    public void addHuman(Human  human){
-        if (!tree.contains(human)){
-            tree.add(human);
+    public void addHuman(T t){
+        if (!tree.contains(t)){
+            tree.add(t);
         }
     }
     
@@ -37,7 +37,7 @@ public class FamilyTree implements Iterable <Human>, Serializable{
             return "V dereve net ludey";
             
         }else{
-            for (Human el:tree){
+            for (T el:tree){
                 System.out.println(el);
                 
                 
@@ -52,12 +52,12 @@ public class FamilyTree implements Iterable <Human>, Serializable{
             return "V dereve net ludey";
             
         }else{
-            for (Human el:tree){
+            for (T el:tree){
                 System.out.println( el+"\n"+ 
                 " zhenat na "+ "\n"+
-                el.suprug +"\n"+
+                el.getSuprug() +"\n"+
                 " dety: "+"\n"+
-                el.children);
+                el.getChildren());
                 
                 
             }
@@ -68,7 +68,7 @@ public class FamilyTree implements Iterable <Human>, Serializable{
 
     public String findByName (String name){
         int count=0;
-        for (Human el : tree){
+        for (T el : tree){
             if ((el.getName()).equals(name)){
                 System.out.println(el);
                 count++;
@@ -96,24 +96,25 @@ public class FamilyTree implements Iterable <Human>, Serializable{
      
      
      @Override
-     public Iterator <Human> iterator(){
+     public Iterator <T> iterator(){
          return new HumanIterator();
      }
         
         
-    class HumanIterator implements Iterator<Human>{
-    private int curIndex;
+    // class HumanIterator implements Iterator<T>{
+    // private int curIndex;
 
-        @Override
-        public boolean hasNext(){
-            return tree.size()>curIndex;
-        }
+    //     @Override
+    //     public boolean hasNext(){
+    //         return tree.size()>curIndex;
+    //     }
         
-        @Override
-        public Human next(){
-            return tree.get(curIndex++);
-        }
+    //     @Override
+    //     public T next(){
+    //         return tree.get(curIndex++);
+    //     }
         
-    }
+    // }
+
         
 }

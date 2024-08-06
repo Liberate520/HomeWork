@@ -3,14 +3,13 @@ package Comporator;
 import java.util.*;
 
 import Filehendler.FileHandler;
-import Human.Human;
+import Human.*;
+import family_tree.*;
 
 
-
-
-public class HumanComporatorByAge implements Comparator <Human>{
+public class HumanComporatorByAge<T extends FamilyTreeItem> implements Comparator <T>{
     
-    public int compare (Human o1, Human o2){
+    public int compare (T o1, T o2){
         return Integer.compare(o1.getAge(),o2.getAge() );
     }
 }

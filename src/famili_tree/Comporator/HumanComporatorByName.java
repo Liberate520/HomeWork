@@ -1,14 +1,17 @@
 package Comporator;
 
-import Human.Human;
+import Human.*;
 
 import java.util.Comparator;
 
 import Filehendler.FileHandler;
 import family_tree.FamilyTree;
 
-public class HumanComporatorByName implements Comparator <Human> {
-    public int compare (Human o1, Human o2){
+import family_tree.*;
+
+public class HumanComporatorByName<T extends FamilyTreeItem> implements Comparator <T> {
+    public int compare (T o1, T o2){
         return o1.compareTo(o2);
     }
 }
+
