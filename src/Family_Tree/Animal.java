@@ -1,9 +1,10 @@
 package Family_Tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public abstract class Animal {
+public abstract class Animal implements Serializable {
     protected String name;
     protected LocalDate birthDate;
     protected LocalDate deathDate;
