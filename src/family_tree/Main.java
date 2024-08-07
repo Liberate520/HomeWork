@@ -1,62 +1,124 @@
 package family_tree;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.HashSet;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree my_family = new FamilyTree();
 
-        Human my = new Human("ID1", "Иван", Gender.Male, LocalDate.of(2018,4,4));
-        Human my_m = new Human("ID2", "Елена", Gender.Female, LocalDate.of(1987,4,29));
-        Human my_f = new Human("ID3", "Илья", Gender.Male, LocalDate.of(1989,3,7));
-        Human my_mm = new Human("ID4", "Зоя", Gender.Female, LocalDate.of(1961,5,9));
-        Human my_mf = new Human("ID5", "Александр", Gender.Male, LocalDate.of(1961,7,11));
-        Human my_fm = new Human("ID6", "Наталья", Gender.Female, LocalDate.of(1963,5,26));
-        Human my_ff = new Human("ID7", "Михаил", Gender.Male, LocalDate.of(1962,1,21));
-        my_family.addRecord(my, my_m, my_f);
-        my_family.addRecord(my_m, my_mm, my_mf);
-        my_family.addRecord(my_f, my_fm, my_ff);
+        FillTreeRandom(my_family);
+        CreateRandomRelationships(my_family);
+        SetRandomDeath(my_family);
 
         PrintData(my_family.getfTree());
+
+        PrintData(my_family.findInfoByDocument("doc7"));
+
 
 
     }
 
     public static void PrintData(HashSet<Human> data) {
-        StringBuilder header = new StringBuilder();
-        Formatter formatter = new Formatter(header);
-        formatter.format("|%13s | " +
-                        "%13s |" +
-                        "%13s |" +
-                        "%14s |" +
-                        "%13s |" +
-                        "%13s |" +
-                        "%13s |" +
-                        "%20s |"
-                , "ID",
-                "Имя",
-                "Пол",
-                "Дата рождения",
-                "Дата смерти",
-                "Мать",
-                "Отец",
-                "Дети");
-        String header_line="";
-        for (int i = 0; i < header.length(); i++) {
-            header_line+="-";
+        if (data.isEmpty()) {
+            System.out.println("Информация не найдена");
         }
-        System.out.println(header_line);
-        System.out.println(header);
-        System.out.println(header_line);
-        for (Human human : data)
-            if (human != null) {
-                System.out.println(human);
+        else {
+            StringBuilder header = new StringBuilder();
+            Formatter formatter = new Formatter(header);
+            formatter.format("|%13s | " +
+                            "%13s |" +
+                            "%13s |" +
+                            "%14s |" +
+                            "%13s |" +
+                            "%13s |" +
+                            "%13s |" +
+                            "%50s |"
+                    , "Документ",
+                    "Имя",
+                    "Пол",
+                    "Дата рождения",
+                    "Дата смерти",
+                    "Мать",
+                    "Отец",
+                    "Дети");
+            String header_line = "";
+            for (int i = 0; i < header.length(); i++) {
+                header_line += "-";
             }
-        System.out.println(header_line);
+            System.out.println(header_line);
+            System.out.println(header);
+            System.out.println(header_line);
+            for (Human human : data)
+                if (human != null) {
+                    System.out.println(human);
+                }
+            System.out.println(header_line);
+        }
+    }
 
+    public static void FillTreeRandom(FamilyTree my_family) {
+        Random rand = new Random();
+        for (int i = 0; i < 20; i++) {
+            String id = "doc" + i;
+            String name = "Имя " + rand.nextInt(1000);
+            Gender gender = Gender.values()[rand.nextInt(Gender.values().length)];
+            LocalDate birth = LocalDate.of(rand.nextInt(1024,2024),rand.nextInt(1, 12),rand.nextInt(1, 28));
+            Human human = new Human(id,name,gender,birth);
+            my_family.addHuman(human);
+        }
+
+    }
+
+    public static void CreateRandomRelationships(FamilyTree my_family) {
+        HashSet<Human> data = my_family.getfTree();
+        int index = 0;
+        for (Human human : data) {
+            if (index % 2 == 0) {
+                human.setParents(FindRandomMother(human, data));
+            }
+            if (index % 3 == 0) {
+                human.setParents(FindRandomFather(human, data));
+            }
+            index++;
+        }
+    }
+
+    public static void SetRandomDeath(FamilyTree my_family) {
+        HashSet<Human> data = my_family.getfTree();
+        Random rand = new Random();
+        int index = 0;
+        for (Human human : data) {
+            if (index % 5 == 0) {
+                LocalDate death = human.getBirthDate().plusYears(rand.nextInt(100));
+                human.setDeathDate(death);
+            }
+            index ++;
+        }
+    }
+
+    public static Human FindRandomMother(Human human, HashSet<Human> data) {
+        Random rand = new Random();
+        ArrayList<Human> possibleM = new ArrayList<>();
+        for (Human h : data) {
+            if (h.getGender() == Gender.Female && !human.equals(h)) {
+                possibleM.add(h);
+            }
+        }
+            int ramdom_indexM = rand.nextInt(possibleM.size());
+            return possibleM.get(ramdom_indexM);
+    }
+
+    public static Human FindRandomFather(Human human, HashSet<Human> data) {
+        Random rand = new Random();
+        ArrayList<Human> possibleF = new ArrayList<>();
+        for (Human h : data) {
+            if (h.getGender() == Gender.Male && !human.equals(h)) {
+                possibleF.add(h);
+            }
+        }
+        int ramdom_indexM = rand.nextInt(possibleF.size());
+        return possibleF.get(ramdom_indexM);
     }
 
 }

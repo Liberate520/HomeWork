@@ -13,20 +13,33 @@ public class FamilyTree {
         return fTree;
     }
 
-    public void addRecord(Human human, Human... parents){
+    public void addHuman(Human human){
             fTree.add(human);
-            if (parents.length > 0) {
-                Human mother = parents[0];
-                mother.addChild(human.getID());
-                fTree.add(mother);
-                human.setMother(mother.getID());
-            }
-            if (parents.length > 1) {
-                Human father = parents[1];
-                father.addChild(human.getID());
-                fTree.add(father);
-                human.setFather(father.getID());
-            }
     }
+
+    public HashSet<Human> findInfoByDocument(String doc) {
+        HashSet<Human> result = new HashSet<>();
+        for (Human human : fTree) {
+            if (human.getDocument().equals(doc)) {
+                result.add(human);
+            }
+        }
+        return result;
+    }
+
+    public HashSet<Human> findInfoByName(String name) {
+        HashSet<Human> result = new HashSet<>();
+        for (Human human : fTree) {
+            if (human.getName().equals(name)) {
+                result.add(human);
+            }
+        }
+        return result;
+    }
+
+
+
+
+
 
 }

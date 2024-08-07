@@ -4,13 +4,21 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Human {
-    private String ID;
+    private String document;
     private String name;
     private Gender gender;
     private LocalDate birthDate, deathDate;
-    private String idMother;
-    private String idFather;
+    private String mother;
+    private String father;
     private List<String> children;
+
+    public Human(String document, String name, Gender gender, LocalDate birthDate) {
+        this.document = document;
+        this.name = name;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.children = new ArrayList<>();
+    }
 
     @Override
     public String toString() {
@@ -23,14 +31,14 @@ public class Human {
                 "%13s |" +
                 "%13s |" +
                 "%13s |" +
-                "%20s |"
-                , getNull(ID),
+                "%50s |"
+                , getNull(document),
                 getNull(name),
                 getNull(getGenderText(gender)),
                 getNull(birthDate),
                 getNull(deathDate),
-                getNull(idMother),
-                getNull(idFather),
+                getNull(mother),
+                getNull(father),
                 getNull(children));
 
         return sb.toString();
@@ -41,42 +49,73 @@ public class Human {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(ID, human.ID) && Objects.equals(name, human.name) && gender == human.gender && Objects.equals(birthDate, human.birthDate);
+        return Objects.equals(document, human.document) && Objects.equals(name, human.name) && gender == human.gender && Objects.equals(birthDate, human.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, name, gender, birthDate);
+        return Objects.hash(document, name, gender, birthDate);
     }
 
-    public Human(String ID, String name, Gender gender, LocalDate birthDate) {
-        this.ID = ID;
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
+    public String getName() {
+        return name;
     }
 
-    public void setMother(String idMother) {
-        this.idMother = idMother;
+    public String getMother() {
+        return mother;
     }
 
-    public void setFather(String idFather) {
-        this.idFather = idFather;
+    public String getFather() {
+        return father;
     }
 
-    public void  addChild(String idChild) {
-        if (this.children == null) {
-            this.children = new ArrayList<>();
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    public void setParents(Human... parents) {
+        if (parents.length > 2) {
+            return;
         }
-        this.children.add(idChild);
+        else {
+            for (Human parent : parents) {
+                if (parent.getGender() == Gender.Female) {
+                    this.mother = parent.getDocument();
+                } else {
+                    this.father = parent.getDocument();
+                }
+                parent.addChild(this);
+            }
+        }
     }
 
-    public String getID() {
-        return ID;
+    public void  addChild(Human child) {
+        if (!this.children.equals(child.getDocument())) {
+            this.children.add(child.getDocument());
+        }
+        if (this.gender == Gender.Male) {
+            child.father = this.document;
+        }
+        else if (this.gender == Gender.Female) {
+            child.mother = this.document;
+        }
+
+    }
+
+    public String getDocument() {
+        return document;
     }
 
     public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     private String getGenderText(Gender value) {
@@ -90,7 +129,7 @@ public class Human {
 
     private Object getNull(Object o) {
         Object answer;
-        if (o == null) {
+        if (o == null || o.toString()=="[]") {
             answer = "нет данных";
         }
         else {
