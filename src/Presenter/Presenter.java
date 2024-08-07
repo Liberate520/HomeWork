@@ -1,7 +1,9 @@
 package Presenter;
 
+import Model.FamilyTree.ItemFamilyTree;
 import Model.Human.Gender;
 import Model.Service.Service;
+import Model.Service.ServiceAbstract;
 import View.View;
 
 import java.io.IOException;
