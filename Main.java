@@ -1,30 +1,40 @@
-package Homework1_2_OOP;
+package Homework2_OOP;
 
-public class Main {
+import java.time.LocalDate;
+
+public class Main{
 
     public static void main(String[] args) { 
 
-        Human startHuman = new Human("Dmitry", 60, "Male");// Тот человек, с которого и начинается семейное древо
+        FamilyTree tree = load();
+        save(tree);
+        System.out.println(tree);
 
-        FamilyTree familyTree = new FamilyTree(startHuman);
+    }
 
-        Human mary = new Human("Mary", 58, "Female");
-        startHuman.setSpouse(mary);  
+    private static FamilyTree load() {
+        FileHandler fileHandler = new FileHandler();
+        return (FamilyTree) fileHandler.read();
+    }
 
-        Human michael = new Human("Michael", 30, "Male");
-        michael.setFather(startHuman);
-        michael.setMother(mary);
+    private static void save(FamilyTree familyTree){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree);
+    }
 
-        familyTree.addMember(mary);
-        familyTree.addMember(michael);
+    private static FamilyTree famTree() {
+        FamilyTree tree = new FamilyTree();
 
-        System.out.println(familyTree);
+        Human first = new Human ("Altair", Gender.Male, LocalDate.of(1975, 2, 14));
+        Human second = new Human ("Jasmine", Gender.Female, LocalDate.of(1976, 3, 11));
 
-        Human foundHuman = familyTree.findHumanByName("Michael"); // Пробуем искать человека в семейном древе по имени - ищем Майкла
-        if (foundHuman != null) {
-            System.out.println("Found: " + foundHuman);
-        } else {
-            System.out.println("Human not found.");
-        }
+        tree.add(first);
+        tree.add(second);
+        tree.setWedding(first, second);
+
+        Human child1 = new Human ("Michael", Gender.Male, LocalDate.of(2000, 1, 23), first, second);
+
+        tree.add(child1);
+        return tree;
     }
 }
