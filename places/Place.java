@@ -1,18 +1,25 @@
+package places;
+
 import java.io.Serializable;
 
-public class Places implements Serializable {
+public class Place implements Serializable {
     private int homeNumber;
     private String street;
     private String region;
     private String country;
     private int postalCode;
+    private String locality;
 
-    public Places(int homeNumber, String street, String region, String country, int postalCode) {
+    public Place() {
+    }
+
+    public Place(int homeNumber, String street, String region, String country, int postalCode, String locality) {
         this.homeNumber = homeNumber;
         this.street = street;
         this.region = region;
         this.country = country;
         this.postalCode = postalCode;
+        this.locality = locality;
     }
 
     public int getHomeNumber() {
@@ -55,6 +62,14 @@ public class Places implements Serializable {
         this.postalCode = postalCode;
     }
 
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
     @Override
     public String toString() {
         return getInfo();
@@ -66,6 +81,8 @@ public class Places implements Serializable {
         sb.append(country);
         sb.append(", Область: ");
         sb.append(region);
+        sb.append(", Населенный пункт: ");
+        sb.append(locality);
         sb.append(", Улица: ");
         sb.append(street);
         sb.append(", Дом: ");
@@ -74,5 +91,4 @@ public class Places implements Serializable {
         sb.append(postalCode);
         return sb.toString();
     }
-
 }

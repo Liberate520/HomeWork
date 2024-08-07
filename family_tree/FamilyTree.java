@@ -1,17 +1,30 @@
+package family_tree;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+import human.Human;
+import places.Place;
+
+public class FamilyTree implements Serializable, Iterable<Human> {
         private long humansID;
         private List<Human> humanList;
+        private List<Place> placeList;
 
         public FamilyTree() {
-                this(new ArrayList<>());
+                this(new ArrayList<>(), new ArrayList<>());
         }
 
         public FamilyTree(List<Human> humanList) {
+                this(humanList, new ArrayList<>());
+        }
+
+        public FamilyTree(List<Human> humanList, List<Place> placeList) {
                 this.humanList = humanList;
+                this.placeList = placeList;
         }
 
         public boolean addHuman(Human human) {
@@ -19,12 +32,21 @@ public class FamilyTree implements Serializable {
                         return false;
                 }
                 if (!humanList.contains(human)) {
-                        humanList.add(human);
                         human.setId(humansID++);
-
+                        humanList.add(human);
                         addToParents(human);
                         addToChildren(human);
+                        return true;
+                }
+                return false;
+        }
 
+        public boolean addPlace(Place place) {
+                if (place == null) {
+                        return false;
+                }
+                if (!placeList.contains(place)) {
+                        placeList.add(place);
                         return true;
                 }
                 return false;
@@ -37,6 +59,9 @@ public class FamilyTree implements Serializable {
         }
 
         private void addToChildren(Human human) {
+                if (human.getChildren() == null) {
+                        human.setChildren(new ArrayList<>());
+                }
                 for (Human child : human.getChildren()) {
                         child.addParent(human);
                 }
@@ -144,6 +169,19 @@ public class FamilyTree implements Serializable {
                         sb.append("\n");
                 }
                 return sb.toString();
+        }
+
+        @Override
+        public Iterator<Human> iterator() {
+                return new HumanIterator(humanList);
+        }
+
+        public void sortByLastName() {
+                Collections.sort(humanList, new HumanComparatorByLastName());
+        }
+
+        public void sortByBirthDate() {
+                Collections.sort(humanList, new HumanComparatorByBirthDate());
         }
 
 }

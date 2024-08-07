@@ -1,7 +1,12 @@
+package human;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import places.Place;
 
 public class Human implements Serializable {
     private long id;
@@ -16,14 +21,15 @@ public class Human implements Serializable {
     private Human mother;
     private Human spouse;
     private List<Human> children;
-    private Village village;
-    private Town town;
-    private City city;
+    private Place place;
+
+    public Human() {
+        this.children = new ArrayList<>();
+    }
 
     public Human(String firstName, String lastName, String patronymic, LocalDate birthDate, LocalDate deathDate,
-            Gender gender, String nationality, Human father, Human mother, Human spouse, Village village, Town town,
-            City city) {
-        id = -1;
+            Gender gender, String nationality, Human father, Human mother, Human spouse, Place place) {
+        this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
@@ -35,25 +41,21 @@ public class Human implements Serializable {
         this.mother = mother;
         this.spouse = spouse;
         children = new ArrayList<>();
-        this.village = village;
-        this.town = town;
-        this.city = city;
+        this.place = place;
     }
 
     public Human(String firstName, String lastName, String patronymic, LocalDate birthDate, LocalDate deathDate,
-            Gender gender, Village village, Town town, City city) {
-        this(firstName, lastName, patronymic, birthDate, deathDate, gender, null, null, null, null, village,
-                town, city);
+            Gender gender, Place place) {
+        this(firstName, lastName, patronymic, birthDate, deathDate, gender, null, null, null, null, place);
     }
 
     public Human(String firstName, String lastName, String patronymic, LocalDate birthDate, Gender gender,
             String nationality) {
-        this(firstName, lastName, patronymic, birthDate, null, gender, nationality, null, null, null, null, null,
-                null);
+        this(firstName, lastName, patronymic, birthDate, null, gender, nationality, null, null, null, null);
     }
 
     public Human(String firstName, String lastName, LocalDate birthDate, Gender gender, String nationality) {
-        this(firstName, lastName, null, birthDate, null, gender, nationality, null, null, null, null, null, null);
+        this(firstName, lastName, null, birthDate, null, gender, nationality, null, null, null, null);
     }
 
     public boolean addChild(Human child) {
@@ -155,28 +157,12 @@ public class Human implements Serializable {
         this.nationality = nationality;
     }
 
-    public Village getVillage() {
-        return village;
+    public Place getPlace() {
+        return place;
     }
 
-    public void setVillage(Village village) {
-        this.village = village;
-    }
-
-    public Town getTown() {
-        return town;
-    }
-
-    public void setTown(Town town) {
-        this.town = town;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
+    public void setPlace(Place place) {
+        this.place = place;
     }
 
     public long getId() {
@@ -196,6 +182,9 @@ public class Human implements Serializable {
     }
 
     public List<Human> getChildren() {
+        if (children == null) {
+            children = new ArrayList<>();
+        }
         return children;
     }
 
@@ -272,25 +261,15 @@ public class Human implements Serializable {
             }
         }
         sb.append(", \nДети: ");
-        for (Human child : children) {
-            if (child.getClass() != this.getClass()) {
-                sb.append(child.toString());
-            } else {
-                sb.append(child.getFirstName()).append(" ").append(child.getLastName()).append(",");
-            }
+        for (Human child : getChildren()) {
+            sb.append(child.getFirstName()).append(" ").append(child.getLastName()).append(",");
         }
 
         sb.append(", \nМесто жительства: ");
-        if (village != null) {
-            sb.append(village.toString());
-            sb.append(", ");
-        }
-        if (town != null) {
-            sb.append(town.getInfo());
-            sb.append(", ");
-        }
-        if (city != null) {
-            sb.append(city.toString());
+        if (place != null) {
+            sb.append(place.toString());
+        } else {
+            sb.append("Место жительства не найдено");
         }
         return sb.toString();
     }
@@ -339,14 +318,17 @@ public class Human implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object o) {
+        if (this == o)
             return true;
-        }
-        if (!(obj instanceof Human)) {
+        if (o == null || getClass() != o.getClass())
             return false;
-        }
-        Human human = (Human) obj;
-        return human.getId() == getId();
+        Human human = (Human) o;
+        return id == human.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
