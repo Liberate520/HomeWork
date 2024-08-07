@@ -1,8 +1,9 @@
 package family_tree;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private HashSet<Human> fTree;
 
     public FamilyTree() {

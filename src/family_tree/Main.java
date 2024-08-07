@@ -1,5 +1,7 @@
 package family_tree;
 
+import family_tree.saving_data.FileHandler;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -13,9 +15,15 @@ public class Main {
 
         PrintData(my_family.getfTree());
 
-        PrintData(my_family.findInfoByDocument("doc7"));
+        FileHandler fh = new FileHandler();
+        fh.setFilePath("data.out");
+        fh.writeData(my_family);
 
+        FamilyTree my_family_from_file = fh.readData();
+        PrintData(my_family_from_file.getfTree());
 
+        PrintData(my_family_from_file.findInfoByName("Имя 148"));
+        PrintData(my_family_from_file.findInfoByDocument("doc11"));
 
     }
 
