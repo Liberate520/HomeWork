@@ -1,51 +1,34 @@
 package ru.gb.family_tree.serializers;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import ru.gb.family_tree.FamilyTree;
+import java.io.*;
 
-public class FileHandler implements PersistenceHandler{
+public class FileHandler<T> implements PersistenceHandler<T> {
 
     private String filename;
 
-
-    public FileHandler(String fileName) {
-
-        this.filename = fileName;
+    public FileHandler(String filename) {
+        this.filename = filename;
     }
 
-    public String getFileName() {
-        return  this.filename;
+    public String getFilename() {
+        return filename;
     }
-
 
     @Override
-    public FamilyTree readObject() {
-        
-        FamilyTree restoredObject = null;
-        
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.filename))) {
-            return (FamilyTree) ois.readObject();
+    public T readObject() throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            return (T) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-            // Файл или класс не найден. Ничего не делаем
-            //ex.printStackTrace();
+            throw ex;
         }
-        // Возвращаем null в случае неудачного чтения
-        return restoredObject;
     }
 
     @Override
-    public void writeObject(FamilyTree obj) {
-        
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.filename))) {
+    public void writeObject(T obj) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(obj);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
-
     }
-
 }
