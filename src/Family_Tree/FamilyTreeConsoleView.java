@@ -1,6 +1,7 @@
 package Family_Tree;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class FamilyTreeConsoleView {
@@ -71,13 +72,12 @@ public class FamilyTreeConsoleView {
         LocalDate birthDate = LocalDate.parse(birthDateStr);
 
         presenter.addPerson(name, "", gender, birthDate);
-        System.out.println("Человек успешно добавлен.");
     }
 
     private void findPerson() {
         System.out.print("Введите имя: ");
         String name = scanner.nextLine();
-        Family_Tree.Person person = presenter.findPersonByName(name, "");
+        Person person = presenter.findPersonByName(name, "");
         if (person != null) {
             System.out.println("Человек найден:");
             System.out.println(person);
@@ -90,18 +90,30 @@ public class FamilyTreeConsoleView {
         System.out.print("Введите имя файла для сохранения: ");
         String fileName = scanner.nextLine();
         presenter.saveToFile(fileName);
-        System.out.println("Семейное Дерево сохранено в файл: " + fileName);
     }
 
     private void loadTreeFromFile() {
         System.out.print("Введите имя файла для загрузки: ");
         String fileName = scanner.nextLine();
         presenter.loadFromFile(fileName);
-        System.out.println("Семейное Дерево загружено из файла: " + fileName);
     }
 
     private void displayTree() {
         System.out.println("Семейное Дерево:");
-        System.out.println(presenter.getPeople());
+        for (Person person : presenter.getPeople()) {
+            System.out.println(person);
+        }
+    }
+
+    protected void displayPersonAdded(Person person) {
+        System.out.println("Человек успешно добавлен: " + person);
+    }
+
+    protected void displayFileSaved(String fileName) {
+        System.out.println("Семейное Дерево сохранено в файл: " + fileName);
+    }
+
+    protected void displayFileLoaded(String fileName) {
+        System.out.println("Семейное Дерево загружено из файла: " + fileName);
     }
 }

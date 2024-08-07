@@ -1,33 +1,38 @@
 package Family_Tree;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.Collection;
 
 public class FamilyTreePresenter {
-    private FamilyTree<Family_Tree.Person> model;
+    private FamilyTree<Person> model;
+    private FamilyTreeConsoleView view;
 
-    public FamilyTreePresenter(FamilyTree<Family_Tree.Person> model) {
+    public FamilyTreePresenter(FamilyTree<Person> model, FamilyTreeConsoleView view) {
         this.model = model;
+        this.view = view;
     }
 
     public void addPerson(String firstName, String lastName, int gender, LocalDate birthDate) {
-        Family_Tree.Person person = new Family_Tree.Person(firstName, lastName, gender, birthDate);
+        Person person = new Person(firstName, lastName, gender, birthDate);
         model.addElement(person.getName(), person);
+        view.displayPersonAdded(person);
     }
 
-    public Family_Tree.Person findPersonByName(String firstName, String lastName) {
-        return (Family_Tree.Person) model.findElementByKey(firstName + " " + lastName);
+    public Person findPersonByName(String firstName, String lastName) {
+        return model.findElementByKey(firstName + " " + lastName);
     }
 
     public void saveToFile(String fileName) {
         model.saveToFile(fileName);
+        view.displayFileSaved(fileName);
     }
 
     public void loadFromFile(String fileName) {
         model.loadFromFile(fileName);
+        view.displayFileLoaded(fileName);
     }
 
-    public Map<String, Family_Tree.Person> getPeople() {
-        return model.getElements();
+    public Collection<Person> getPeople() {
+        return model.getElements().values();
     }
 }
