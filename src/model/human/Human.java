@@ -1,15 +1,13 @@
-package human;
+package model.human;
 
-import family_tree.FamilyTreeItem;
-
-import java.io.Serializable;
+import model.family_tree.FamilyTreeItem;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Human> {
+public class Human implements FamilyTreeItem<Human> {
     private int id;
     private String name;
     private Gender gender;
@@ -35,7 +33,6 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Hu
         this(name, gender, birthDate, null, father, mother);
     }
     public Human() {
-
     }
     public void setId(int id){
         this.id = id;
@@ -166,9 +163,5 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Hu
         sb.append(", дети: ");
         sb.append(getChildrenInfo());
         return sb.toString();
-    }
-    @Override
-    public int compareTo(Human o) {
-        return name.compareTo(o.name);
     }
 }

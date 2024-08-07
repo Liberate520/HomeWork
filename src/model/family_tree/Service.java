@@ -1,10 +1,8 @@
-package family_tree;
+package model.family_tree;
 
-import human.Gender;
-import human.Human;
-import human.HumanBuilder;
+import model.human.Gender;
+import model.human.HumanBuilder;
 
-import java.security.PublicKey;
 import java.time.LocalDate;
 
 public class Service<E extends FamilyTreeItem<E>>{
@@ -17,7 +15,7 @@ public class Service<E extends FamilyTreeItem<E>>{
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate){
-        E human = (E) humanBuilder.setName(name).setGender(gender).setBirthDate(birthDate).build();
+        E human = humanBuilder.setName(name).setGender(gender).setBirthDate(birthDate).build();
         familyTree.add(human);
     }
     public boolean setWedding(String name1, String name2){

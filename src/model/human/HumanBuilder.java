@@ -1,7 +1,6 @@
-package human;
+package model.human;
 
-import family_tree.FamilyTreeItem;
-
+import model.family_tree.FamilyTreeItem;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

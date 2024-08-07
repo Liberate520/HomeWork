@@ -1,17 +1,17 @@
-import family_tree.FamilyTree;
-import family_tree.Service;
-import human.Gender;
-import human.Human;
-import writer.FileHandler;
+import model.family_tree.FamilyTree;
+import model.family_tree.Service;
+import model.human.Gender;
+import model.human.Human;
+import model.writer.FileHandler;
 
 import java.time.LocalDate;
 
 public class Main {
-    final static String filePath = "src/writer/tree.txt";
+    final static String filePath = "src/model.writer/tree.txt";
 
     public static void main(String[] args) {
 //        FamilyTree tree = load();
-        Service <Human>  myFamilyTree= new Service<>();
+        Service<Human> myFamilyTree= new Service<>();
         myFamilyTree.addHuman("Leha",Gender.Male, LocalDate.of(1999,9,9));
         myFamilyTree.addHuman("Oleg", Gender.Male, LocalDate.of(1995,7,2));
         myFamilyTree.addHuman("Nastya", Gender.Female, LocalDate.of(2001,3,16));

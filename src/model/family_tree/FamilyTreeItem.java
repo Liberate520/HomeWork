@@ -1,12 +1,13 @@
-package family_tree;
+package model.family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public interface FamilyTreeItem<E> extends Comparable<E>{
+public interface FamilyTreeItem<E> extends Serializable {
     int getAge();
     String getName();
     LocalDate getBirthDate();
-    Object getSpouse();
+    E getSpouse();
     void setSpouse(E human);
     boolean addChild(E child);
     boolean addParent(E parent);

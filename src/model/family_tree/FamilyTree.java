@@ -1,7 +1,6 @@
-package family_tree;
+package model.family_tree;
 
-import human.*;
-
+import model.human.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,14 +13,13 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
     public FamilyTree() {
         this.familyTree = new ArrayList<>();
     }
+
     public List<E> getHumans(){
         return familyTree;
     }
-
     public void add(E human) {
         this.familyTree.add(human);
     }
-
     public boolean setWedding(E human1, E human2) {
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
@@ -31,7 +29,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
             return false;
         }
     }
-
     public boolean setDivorce(E human1, E human2) {
         if (human1.getSpouse() != null && human2.getSpouse() != null) {
             human1.setSpouse(null);
@@ -41,7 +38,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
             return false;
         }
     }
-
     public E findByName(String name) {
         for (E human : familyTree) {
             if (human.getName().equals(name)) {
@@ -50,7 +46,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         }
         return null;
     }
-
     public boolean remove(E human) {
         if (human != null) {
             familyTree.remove(human);
@@ -58,13 +53,10 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         }
         return false;
     }
-
-
     @Override
     public String toString() {
         return getInfo();
     }
-
     private String getInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("В вашем древе ").append(familyTree.size()).append(" объектов\n");
@@ -73,7 +65,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         }
         return sb.toString();
     }
-
     public void sortByName(){
         Collections.sort(familyTree, new HumanComparatorByName<>());
     }
@@ -83,7 +74,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
     public void sortByBirthDate(){
         Collections.sort(familyTree, new HumanComparatorByBirthDate<>());
     }
-
     @Override
     public Iterator<E> iterator() {
         return new HumanIterator<>(this);
