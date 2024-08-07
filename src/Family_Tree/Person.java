@@ -1,12 +1,13 @@
 package Family_Tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Person {
+public class Person implements Serializable {
     public static final int MALE = 0;
     public static final int FEMALE = 1;
 
@@ -17,8 +18,8 @@ public class Person {
     private List<Person> parents;
     private List<Person> children;
 
-    public Person(String name, int gender, LocalDate birthDate) {
-        this.name = name;
+    public Person(String firstName, String lastName, int gender, LocalDate birthDate) {
+        this.name = firstName + " " + lastName;
         this.gender = gender;
         this.birthDate = birthDate;
         this.parents = new ArrayList<>();
@@ -58,12 +59,12 @@ public class Person {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(name).append(", ");
-        sb.append("Gender: ").append(gender == MALE ? "Male" : "Female").append(", ");
-        sb.append("Birth Date: ").append(birthDate).append(", ");
-        sb.append("Age: ").append(getAge());
+        sb.append("Имя: ").append(name).append(", ");
+        sb.append("Пол: ").append(gender == MALE ? "Мужской" : "Женский").append(", ");
+        sb.append("Дата рождения: ").append(birthDate).append(", ");
+        sb.append("Возраст: ").append(getAge());
         if (deathDate != null) {
-            sb.append(", Death Date: ").append(deathDate);
+            sb.append(", Дата смерти: ").append(deathDate);
         }
         return sb.toString();
     }

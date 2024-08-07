@@ -4,16 +4,16 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class FamilyTreeConsoleView {
-    private FamilyTree model;
+    private FamilyTreePresenter presenter;
     private Scanner scanner;
 
-    public FamilyTreeConsoleView(FamilyTree model) {
-        this.model = model;
+    public FamilyTreeConsoleView(FamilyTreePresenter presenter) {
+        this.presenter = presenter;
         this.scanner = new Scanner(System.in);
     }
 
     public void start() {
-        System.out.println("Welcome to Family Tree Console");
+        System.out.println("Добро пожаловать в консоль Семейного Дерева");
 
         while (true) {
             displayMenu();
@@ -24,7 +24,7 @@ public class FamilyTreeConsoleView {
                     addPerson();
                     break;
                 case 2:
-                    displayTree();
+                    findPerson();
                     break;
                 case 3:
                     saveTreeToFile();
@@ -33,62 +33,75 @@ public class FamilyTreeConsoleView {
                     loadTreeFromFile();
                     break;
                 case 5:
-                    System.out.println("Exiting...");
+                    displayTree();
+                    break;
+                case 6:
+                    System.out.println("Выход...");
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Неверный выбор. Попробуйте еще раз.");
             }
         }
     }
 
     private void displayMenu() {
-        System.out.println("\
-1. Add Person");
-        System.out.println("2. Display Family Tree");
-        System.out.println("3. Save Family Tree to File");
-        System.out.println("4. Load Family Tree from File");
-        System.out.println("5. Exit");
-        System.out.print("Enter your choice: ");
+        System.out.println("1. Добавить человека");
+        System.out.println("2. Найти человека");
+        System.out.println("3. Сохранить Семейное Дерево в файл");
+        System.out.println("4. Загрузить Семейное Дерево из файла");
+        System.out.println("5. Отобразить Семейное Дерево");
+        System.out.println("6. Выход");
+        System.out.print("Введите Ваш выбор: ");
     }
 
     private int getUserChoice() {
         int choice = scanner.nextInt();
-        scanner.nextLine(); // consume newline character
+        scanner.nextLine(); // потребление символа новой строки
         return choice;
     }
 
     private void addPerson() {
-        System.out.print("Enter name: ");
+        System.out.print("Введите имя: ");
         String name = scanner.nextLine();
-        System.out.print("Enter gender (0 for Male, 1 for Female): ");
+        System.out.print("Введите пол (0 для Мужского, 1 для Женского): ");
         int gender = scanner.nextInt();
-        scanner.nextLine(); // consume newline character
-        System.out.print("Enter birth date (yyyy-mm-dd): ");
+        scanner.nextLine(); // потребление символа новой строки
+        System.out.print("Введите дату рождения (гггг-мм-дд): ");
         String birthDateStr = scanner.nextLine();
         LocalDate birthDate = LocalDate.parse(birthDateStr);
 
-        Person person = new Person(name, gender, birthDate);
-        model.addPerson(person);
-        System.out.println("Person added successfully.");
+        presenter.addPerson(name, "", gender, birthDate);
+        System.out.println("Человек успешно добавлен.");
     }
 
-    private void displayTree() {
-        System.out.println("\
-Family Tree:");
-        System.out.println(model.toString());
+    private void findPerson() {
+        System.out.print("Введите имя: ");
+        String name = scanner.nextLine();
+        Family_Tree.Person person = presenter.findPersonByName(name, "");
+        if (person != null) {
+            System.out.println("Человек найден:");
+            System.out.println(person);
+        } else {
+            System.out.println("Человек не найден.");
+        }
     }
 
     private void saveTreeToFile() {
-        System.out.print("Enter file name to save: ");
+        System.out.print("Введите имя файла для сохранения: ");
         String fileName = scanner.nextLine();
-        model.saveToFile(fileName);
-        System.out.println("Family Tree saved to file: " + fileName);
+        presenter.saveToFile(fileName);
+        System.out.println("Семейное Дерево сохранено в файл: " + fileName);
     }
 
     private void loadTreeFromFile() {
-        System.out.print("Enter file name to load: ");
+        System.out.print("Введите имя файла для загрузки: ");
         String fileName = scanner.nextLine();
-        model.loadFromFile(fileName);
-        System.out.println("Family Tree loaded from file: " + fileName);
+        presenter.loadFromFile(fileName);
+        System.out.println("Семейное Дерево загружено из файла: " + fileName);
+    }
+
+    private void displayTree() {
+        System.out.println("Семейное Дерево:");
+        System.out.println(presenter.getPeople());
     }
 }

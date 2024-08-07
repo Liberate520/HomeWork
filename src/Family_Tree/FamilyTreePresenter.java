@@ -1,17 +1,22 @@
 package Family_Tree;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public class FamilyTreePresenter {
-    private FamilyTree model;
+    private FamilyTree<Family_Tree.Person> model;
 
-    public FamilyTreePresenter(FamilyTree model) {
+    public FamilyTreePresenter(FamilyTree<Family_Tree.Person> model) {
         this.model = model;
     }
 
-    public void addPerson(String name, int gender, LocalDate birthDate) {
-        Person person = new Person(name, gender, birthDate);
-        model.addPerson(person);
+    public void addPerson(String firstName, String lastName, int gender, LocalDate birthDate) {
+        Family_Tree.Person person = new Family_Tree.Person(firstName, lastName, gender, birthDate);
+        model.addElement(person.getName(), person);
+    }
+
+    public Family_Tree.Person findPersonByName(String firstName, String lastName) {
+        return (Family_Tree.Person) model.findElementByKey(firstName + " " + lastName);
     }
 
     public void saveToFile(String fileName) {
@@ -22,7 +27,7 @@ public class FamilyTreePresenter {
         model.loadFromFile(fileName);
     }
 
-    public Map<String, Person> getPeople() {
-        return model.getPeople();
+    public Map<String, Family_Tree.Person> getPeople() {
+        return model.getElements();
     }
 }

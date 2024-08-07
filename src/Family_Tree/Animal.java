@@ -36,11 +36,11 @@ public abstract class Animal {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name: ").append(name).append(", ");
-        sb.append("Birth Date: ").append(birthDate).append(", ");
-        sb.append("Age: ").append(getAge());
+        sb.append("Имя: ").append(name).append(", ");
+        sb.append("Дата рождения: ").append(birthDate).append(", ");
+        sb.append("Возраст: ").append(getAge());
         if (deathDate != null) {
-            sb.append(", Death Date: ").append(deathDate);
+            sb.append(", Дата смерти: ").append(deathDate);
         }
         return sb.toString();
     }

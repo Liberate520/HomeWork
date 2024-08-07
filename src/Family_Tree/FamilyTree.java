@@ -1,46 +1,46 @@
 package Family_Tree;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FamilyTree implements Serializable {
-    private Map<String, Person> people;
-    private FileIOInterface<FamilyTree> fileIO; // Исправлено на FileIOInterface<FamilyTree>
+public class FamilyTree<T extends Serializable> implements Serializable {
+    private Map<String, T> elements;
+    private FileIOInterface<FamilyTree<T>> fileIO;
 
     public FamilyTree() {
-        this.people = new HashMap<>();
-        this.fileIO = new FileIO<>(); // Исправлено на FileIO<>
+        this.elements = new HashMap<>();
+        this.fileIO = new FileIO<>();
     }
 
-    public void addPerson(Person person) { // Исправлено на addPerson
-        people.put(person.getName(), person);
+    public void addElement(String key, T element) {
+        elements.put(key, element);
     }
 
-    public Person findPersonByName(String name) {
-        return people.get(name);
-    }
-
-    public Map<String, Person> getPeople() {
-        return people;
+    public T findElementByKey(String key) {
+        return elements.get(key);
     }
 
     public void saveToFile(String fileName) {
-        fileIO.writeToFile(fileName, this); // Исправлено на передачу объекта FamilyTree
+        fileIO.writeToFile(fileName, this);
     }
 
     public void loadFromFile(String fileName) {
-        FamilyTree loadedTree = fileIO.readFromFile(fileName);
+        FamilyTree<T> loadedTree = fileIO.readFromFile(fileName);
         if (loadedTree != null) {
-            this.people = loadedTree.getPeople();
+            this.elements = loadedTree.getElements();
         }
+    }
+
+    public Map<String, T> getElements() {
+        return elements;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Person person : people.values()) {
-            sb.append(person.toString()).append("\
-");
+        for (T element : elements.values()) {
+            sb.append(element.toString()).append("\n");
         }
         return sb.toString();
     }
