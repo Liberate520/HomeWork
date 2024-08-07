@@ -1,6 +1,10 @@
 package model.family_tree;
 
 import model.human.*;
+import model.human.comparators.HumanComparatorByAge;
+import model.human.comparators.HumanComparatorByBirthDate;
+import model.human.comparators.HumanComparatorByName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +50,16 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         }
         return null;
     }
+
+    public E findById(int id){
+        for(E human : familyTree){
+            if (human.getId() == id){
+                return human;
+            }
+        }
+        return null;
+    }
+
     public boolean remove(E human) {
         if (human != null) {
             familyTree.remove(human);

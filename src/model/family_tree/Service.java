@@ -27,8 +27,14 @@ public class Service<E extends FamilyTreeItem<E>>{
     public boolean addChild(String human, String child){
         return familyTree.findByName(human).addChild(familyTree.findByName(child));
     }
-    public boolean addParent(String human, String parent){
-        return familyTree.findByName(human).addParent(familyTree.findByName(parent));
+    public boolean addChild(int idHuman, int idChild){
+        return familyTree.findById(idHuman).addChild(familyTree.findById(idChild));
+    }
+    public boolean addParent(String child, String parent){
+        return familyTree.findByName(child).addParent(familyTree.findByName(parent));
+    }
+    public boolean addParent(int child, int parent){
+        return familyTree.findById(child).addParent(familyTree.findById(parent));
     }
     public FamilyTree<E> getFamilyTree() {
         return familyTree;

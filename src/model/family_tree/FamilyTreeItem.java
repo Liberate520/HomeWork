@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public interface FamilyTreeItem<E> extends Serializable {
     int getAge();
     String getName();
+    int getId();
     LocalDate getBirthDate();
     E getSpouse();
     void setSpouse(E human);
