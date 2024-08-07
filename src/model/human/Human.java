@@ -1,5 +1,6 @@
-package Human;
+package model.human;
 
+import model.familyTree.FamilyTreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Human implements Serializable, Comparable<Human> {
+
+public class Human implements Serializable, FamilyTreeItem<Human> {
 
 
     private long id;
@@ -147,7 +149,7 @@ public class Human implements Serializable, Comparable<Human> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getID() + ". ");
-        if (lastName != null) {
+        if (lastName != null && lastName !="") {
             stringBuilder.append("Фамилия: " + lastName + "; ");
         } else {
             stringBuilder.append("Фамилия: неизвестна; ");
@@ -157,7 +159,7 @@ public class Human implements Serializable, Comparable<Human> {
         } else {
             stringBuilder.append("Имя: неизвестно; ");
         }
-        if (patronymic != null) {
+        if (patronymic != null && patronymic !="") {
             stringBuilder.append("Отчество: " + patronymic + "; ");
         } else {
             stringBuilder.append("Отчество: неизвестно; ");
@@ -187,11 +189,12 @@ public class Human implements Serializable, Comparable<Human> {
         } else {
             stringBuilder.append("Дети: не указаны; ");
         }
-        if (placeBorn != null) {
+        if (placeBorn != null && placeBorn !="") {
             stringBuilder.append("Место рождения: " + placeBorn + "; ");
         } else {
             stringBuilder.append("Место рождения: не указано;");
         }
+
         return stringBuilder.toString();
     }
 
@@ -267,10 +270,13 @@ public class Human implements Serializable, Comparable<Human> {
         return Objects.equals(lastName, human.lastName) && Objects.equals(firstname, human.firstname) && Objects.equals(patronymic, human.patronymic) && gender == human.gender && Objects.equals(dayBirth, human.dayBirth) && Objects.equals(dayDeath, human.dayDeath) && Objects.equals(placeBorn, human.placeBorn);
     }
 
-    @Override
     public int compareTo(Human o) {
         return firstname.compareTo(o.firstname);
     }
 
 }
+
+
+
+
 

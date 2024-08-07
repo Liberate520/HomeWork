@@ -1,19 +1,21 @@
-package FamilyTree;
+package model.familyTree;
 
-import FileHandler.FileHandler;
-import HumanBuilder.HumanBuilder;
-import Human.Gender;
-import Human.Human;
+import model.HumanBuilder.HumanBuilder;
+import model.FileHandler.FileHandler;
+import model.human.Gender;
+import model.human.Human;
+
+
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class ServiceFamilyTree {
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
     private HumanBuilder humanBuilder;
 
     public ServiceFamilyTree() {
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
 
     }
@@ -21,6 +23,7 @@ public class ServiceFamilyTree {
     public void addHuman(String lastName, String firstname, String patronymic,
                          Gender gender, LocalDate dayBirth, LocalDate dayDeath,
                          Human father, Human mother, List<Human> children, String placeBorn) {
+
         Human human = humanBuilder
                 .setLastName(lastName)
                 .setFirstname(firstname)
@@ -48,11 +51,38 @@ public class ServiceFamilyTree {
     }
 
 
+    public void addParent(int idHuman, int idParent) {
+        if (idParent < familyTreeSize() && idHuman < familyTreeSize()) {
+            Human human = familyTree.getHuman(idHuman);
+            Human parent = familyTree.getHuman(idParent);
+
+            human.addParent(parent);
+            parent.addChild(human);
+        }
+    }
+
+    public void addChild(int idHuman, int idChild) {
+        if (idChild < familyTreeSize() && idHuman < familyTreeSize()) {
+            Human human = familyTree.getHuman(idHuman);
+            Human child = familyTree.getHuman(idChild);
+            human.addChild(child);
+            child.addParent(human);
+        }
+    }
+
+    private int familyTreeSize() {
+        int count = 0;
+        for (Human human : familyTree) {
+            count++;
+        }
+        return count;
+    }
+
     public void getFamilyTree() {
         System.out.println(familyTree.toString());
     }
 
-    public String getfamilyTreeList(){
+    public String getFamilyTreeList() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список семейного двера: \n");
 
@@ -62,11 +92,15 @@ public class ServiceFamilyTree {
         return stringBuilder.toString();
     }
 
-    public void sortByName(){
+    public void sortByName() {
         familyTree.sortByName();
     }
 
-    public void sortByAge(){
+    public void sortByID() {
+        familyTree.sortByID();
+    }
+
+    public void sortByAge() {
         familyTree.sortByAge();
     }
 
@@ -81,6 +115,7 @@ public class ServiceFamilyTree {
             fileHandler.saveFile(familyTree);
             return true;
         } catch (Exception ex) {
+            System.out.println("Ошибка сохранения");
             return false;
         }
     }
@@ -94,6 +129,11 @@ public class ServiceFamilyTree {
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    public void setMaxID() {
+        long maxID = familyTree.findMaxID();
+        humanBuilder.setMaxID(maxID);
     }
 
 

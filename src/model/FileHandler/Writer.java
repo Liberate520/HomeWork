@@ -1,4 +1,4 @@
-package FileHandler;
+package model.FileHandler;
 
 import java.io.Serializable;
 
@@ -7,4 +7,3 @@ public interface Writer {
     Object openFile();
     void setFileName(String fileName);
 }
-

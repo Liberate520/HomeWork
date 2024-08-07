@@ -1,10 +1,12 @@
-package HumanBuilder;
+package model.HumanBuilder;
 
-import Human.Gender;
-import Human.Human;
+import model.familyTree.FamilyTreeItem;
+import model.human.Gender;
+import model.human.Human;
 
-import java.awt.List;
 import java.time.LocalDate;
+import java.util.List;
+
 
 public class HumanBuilder {
     private long humID;
@@ -22,11 +24,11 @@ public class HumanBuilder {
 
 
     public HumanBuilder() {
+
     }
 
     private void createHuman() {
         human = new Human();
-
     }
 
     private void createLastName() {
@@ -76,17 +78,15 @@ public class HumanBuilder {
     }
 
     private void createPlaceBorn() {
-        human.setPlaceBorn(null);
         human.setPlaceBorn(placeBorn);
     }
 
-    public HumanBuilder setLastName(String lastName) {
+   public HumanBuilder setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
     public HumanBuilder setFirstname(String firstname) {
-        this.firstname = null;
         this.firstname = firstname;
         return this;
     }
@@ -127,7 +127,6 @@ public class HumanBuilder {
     }
 
     public HumanBuilder setPlaceBorn(String placeBorn) {
-        this.placeBorn = null;
         this.placeBorn = placeBorn;
         return this;
     }
@@ -135,6 +134,10 @@ public class HumanBuilder {
     private void setHumID(Human human) {
         human.setID(humID++);
 
+    }
+
+    public void setMaxID(long maxID) {
+        this.humID = maxID+1;
     }
 
     private void clearData() {
@@ -168,4 +171,3 @@ public class HumanBuilder {
     }
 
 }
-

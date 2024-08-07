@@ -1,4 +1,4 @@
-package FileHandler;
+package model.FileHandler;
 
 import java.io.*;
 
