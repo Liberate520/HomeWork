@@ -52,6 +52,12 @@ public class Presenter {
         showFamilyTreeInfo();
     }
 
+    public void sortById() {
+        String output = humanService.sortById();
+        view.printAnswer(output);
+        showFamilyTreeInfo();
+    }
+
     public void sortByName() {
         String output = humanService.sortByName();
         view.printAnswer(output);

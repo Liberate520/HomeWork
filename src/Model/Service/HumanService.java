@@ -32,7 +32,7 @@ public class HumanService {
         return name + " добавлен в семейное дерево.";
     }
 
-    public String memberNotFoundError(){
+    private String memberNotFoundError(){
         return "Человек с указанным ID отсутствует в дереве.";
     }
 
@@ -66,13 +66,7 @@ public class HumanService {
             if (human.getId() == humanID){
                 for (Human parent : familyTree) {
                     if (parent.getId() == parentID){
-                        if (parent.getGender() == Gender.Male){
-                            human.setFather(parent);
-                        }
-                        if (parent.getGender() == Gender.Female){
-                            human.setMother(parent);
-                        }
-                        parent.setChildren(human);
+                        familyTree.addParent(human, parent);
                         return "У человека с ID" + humanID + " добавлен родитель с ID" + parentID + ".";
                     }
                 }
@@ -86,13 +80,7 @@ public class HumanService {
             if (human.getId() == humanID){
                 for (Human child : familyTree) {
                     if (child.getId() == childID){
-                        human.setChildren(child);
-                        if (human.getGender() == Gender.Male){
-                            child.setFather(human);
-                        }
-                        if (human.getGender() == Gender.Female){
-                            child.setMother(human);
-                        }
+                        familyTree.addChild(human, child);
                         return "У человека с ID" + humanID + " добавлен ребенок с ID" + childID + ".";
                     }
                 }
@@ -109,26 +97,29 @@ public class HumanService {
     public String saveToFile(String filename) throws IOException {
         Writer fileWriter = new FileHandler(familyTree);
         fileWriter.saveToFile(filename, familyTree);
-        return "Семейное дерево сохранено в файл " + filename + ".";
+        return "Семейное дерево сохранено в файл \"" + filename + "\".";
     }
 
     public String loadFromFile(String filename) throws IOException, ClassNotFoundException {
         Writer fileWriter = new FileHandler(familyTree);
         familyTree = fileWriter.readFromFile(filename);
-        return "Семейное дерево загружено из файла " + filename + ".";
+        return "Семейное дерево загружено из файла \"" + filename + "\".";
     }
 
     public String getHumanListInfo(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Семейное дерево:\n");
-        Iterator<Human> iterator = familyTree.iterator();
-        while (iterator.hasNext()){
-            Human human = iterator.next();
+        for (Human human : familyTree) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
         stringBuilder.append("Всего " + familyTree.showFamilyTreeSize() + " элементов.\n");
         return stringBuilder.toString();
+    }
+
+    public String sortById(){
+        familyTree.SortById();
+        return "Семейное дерево отсортировано по Id.";
     }
 
     public String sortByName(){
@@ -151,12 +142,12 @@ public class HumanService {
         return "Семейное дерево отсортировано по дате рождения.";
     }
 
+    public FamilyTree<Human> getFamilyTree(){
+        return familyTree;
+    }
+
     @Override
     public String toString() {
         return getHumanListInfo();
-    }
-
-    public FamilyTree<Human> getFamilyTree(){
-        return familyTree;
     }
 }

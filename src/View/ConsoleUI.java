@@ -190,6 +190,10 @@ public class ConsoleUI implements View {
         }
     }
 
+    public void sortById(){
+        presenter.sortById();
+    }
+
     public void sortByName(){
         presenter.sortByName();
     }

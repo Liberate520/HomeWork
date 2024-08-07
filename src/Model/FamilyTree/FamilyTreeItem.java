@@ -1,23 +1,23 @@
 package Model.FamilyTree;
 
 import Model.Human.Gender;
+import Model.Human.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 public interface FamilyTreeItem<E> extends Serializable {
-    String getName();
-    Gender getGender();
-    LocalDate getBirthDate();
-    LocalDate getDeathDate();
-    List<E> getParents();
-
-    int getAgeInfo();
-    List<E> getChildren();
-    void setChildren(E human);
     void setId(int id);
     int getId();
+    void setChildren(E human);
+    Gender getGender();
+    void setMother(E mother);
+    void setFather(E mother);
     E getSpouse();
     void setSpouse(E spouse);
+    String getName();
+    int getAgeInfo();
+    List<E> getChildren();
+    LocalDate getBirthDate();
 }

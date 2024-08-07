@@ -1,9 +1,7 @@
 package Model.FamilyTree;
 
-import Model.Human.comparators.HumanComparatorByAge;
-import Model.Human.comparators.HumanComparatorByBirthdate;
-import Model.Human.comparators.HumanComparatorByChildrenNum;
-import Model.Human.comparators.HumanComparatorByName;
+import Model.Human.Gender;
+import Model.Human.comparators.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,14 +36,24 @@ public class FamilyTree<E extends FamilyTreeItem<E>>  implements Serializable, I
         family.remove(toRemove);
     }
 
-    public void addChildren(E human) {
-        if (human.getParents() != null) {
-            for (E parent : human.getParents()) {
-                if (parent != null) {
-                    parent.setChildren(human);
-                }
-            }
+    public void addChild(E human, E child) {
+        human.setChildren(child);
+        if (human.getGender() == Gender.Male){
+            child.setFather(human);
         }
+        if (human.getGender() == Gender.Female){
+            child.setMother(human);
+        }
+    }
+
+    public void addParent(E human, E parent) {
+        if (parent.getGender() == Gender.Male){
+            human.setFather(parent);
+        }
+        if (parent.getGender() == Gender.Female){
+            human.setMother(parent);
+        }
+        parent.setChildren(human);
     }
 
     public void setMarried (E human, E spouse) {
@@ -62,36 +70,32 @@ public class FamilyTree<E extends FamilyTreeItem<E>>  implements Serializable, I
         }
     }
 
-    public void showTree () {
-        System.out.println("\nСемейное дерево:");
-        for (E human : family) {
-            System.out.println(human);
-        }
-        System.out.println("Всего " + family.size() + " элементов.\n");
-    }
-
     public int showFamilyTreeSize(){
         return family.size();
     }
 
+    public void SortById(){
+        family.sort(new HumanComparatorByID<>());
+    }
+
     public void SortByName(){
-        family.sort(new HumanComparatorByName());
+        family.sort(new HumanComparatorByName<>());
     }
 
     public void SortByAge(){
-        family.sort(new HumanComparatorByAge());
+        family.sort(new HumanComparatorByAge<>());
     }
 
     public void SortByChildrenNum(){
-        family.sort(new HumanComparatorByChildrenNum());
+        family.sort(new HumanComparatorByChildrenNum<>());
     }
 
     public void SortByBirthdate(){
-        family.sort(new HumanComparatorByBirthdate());
+        family.sort(new HumanComparatorByBirthdate<>());
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new HumanIterator(family);
+        return new HumanIterator<>(family);
     }
 }
