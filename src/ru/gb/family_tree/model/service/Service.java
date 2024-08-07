@@ -9,36 +9,28 @@ import ru.gb.family_tree.model.tools.writer.FileHandler;
 import java.time.LocalDate;
 
 /**
- * Сервисный класс для работы с семейным деревом.
- * <p>
- * Этот класс предоставляет методы для управления членами семьи,
- * а также для чтения и записи данных в файл.
- * </p>
+ * Класс Service предоставляет методы для управления семейным древом.
  */
 public class Service {
     private FamilyTree<Human> tree;
     private FileHandler<Human> fileHandler = new FileHandler<>();
 
     /**
-     * Конструктор, который инициализирует пустое семейное дерево.
+     * Конструктор по умолчанию. Создает пустое семейное древо.
      */
     public Service() {
         tree = new FamilyTree<>();
     }
 
     /**
-     * Чтение семейного дерева из файла.
-     * <p>
-     * Если файл успешно прочитан, семейное дерево обновляется и метод возвращает {@code true}.
-     * В противном случае метод возвращает {@code false}.
-     * </p>
+     * Читает семейное древо из файла.
      *
      * @param path путь к файлу
-     * @return {@code true} если чтение прошло успешно, иначе {@code false}
+     * @return true, если чтение успешно, иначе false
      */
     public boolean read(String path) {
         FamilyTree<Human> treeRead = fileHandler.read(path);
-        if (treeRead == null) {
+        if (treeRead.equals(null)) {
             return false;
         }
         tree = treeRead;
@@ -46,22 +38,22 @@ public class Service {
     }
 
     /**
-     * Запись семейного дерева в файл.
+     * Записывает семейное древо в файл.
      *
      * @param path путь к файлу
-     * @return {@code true} если запись прошла успешно, иначе {@code false}
+     * @return true, если запись успешна, иначе false
      */
     public boolean write(String path) {
         return fileHandler.write(tree, path);
     }
 
     /**
-     * Добавление нового члена семьи.
+     * Добавляет нового члена в семейное древо.
      *
-     * @param name имя нового члена семьи
-     * @param gender пол нового члена семьи
-     * @param date дата рождения нового члена семьи в формате "yyyy-MM-dd"
-     * @return {@code true} если член семьи был успешно добавлен
+     * @param name   имя нового члена
+     * @param gender пол нового члена
+     * @param date   дата рождения нового члена в формате "yyyy-MM-dd"
+     * @return true, если член успешно добавлен
      */
     public boolean addMember(String name, Gender gender, String date) {
         Human human = new Human(name, gender, date);
@@ -70,10 +62,10 @@ public class Service {
     }
 
     /**
-     * Установка даты смерти для члена семьи.
+     * Устанавливает дату смерти члена семейного древа.
      *
-     * @param personId идентификатор члена семьи
-     * @param dod дата смерти
+     * @param personId идентификатор члена семейного древа
+     * @param dod      дата смерти
      */
     public void setDeathDate(int personId, LocalDate dod) {
         Human human = tree.findById(personId);
@@ -81,9 +73,9 @@ public class Service {
     }
 
     /**
-     * Установка родителя для члена семьи.
+     * Устанавливает родителя для члена семейного древа.
      *
-     * @param memberId идентификатор члена семьи
+     * @param memberId идентификатор члена семейного древа
      * @param parentId идентификатор родителя
      */
     public void setParent(int memberId, int parentId) {
@@ -92,11 +84,11 @@ public class Service {
     }
 
     /**
-     * Установка супруга/супруги для члена семьи.
+     * Устанавливает супруга для члена семейного древа.
      *
-     * @param firstMemberId идентификатор первого члена семьи
-     * @param secondMemberId идентификатор второго члена семьи
-     * @param spouseStatus статус супружеских отношений
+     * @param firstMemberId  идентификатор первого члена семейного древа
+     * @param secondMemberId идентификатор второго члена семейного древа
+     * @param spouseStatus   статус супруга
      */
     public void setSpouse(int firstMemberId, int secondMemberId, SpouseStatus spouseStatus) {
         Human human = tree.findById(firstMemberId);
@@ -104,28 +96,28 @@ public class Service {
     }
 
     /**
-     * Проверка существования члена семьи по идентификатору.
+     * Проверяет наличие члена семейного древа по идентификатору.
      *
-     * @param id идентификатор члена семьи
-     * @return {@code true} если член семьи с указанным идентификатором существует, иначе {@code false}
+     * @param id идентификатор члена семейного древа
+     * @return true, если член существует, иначе false
      */
     public boolean checkById(int id) {
         return tree.checkById(id);
     }
 
     /**
-     * Получение строки, представляющей семейное дерево.
+     * Возвращает информацию о семейном древе.
      *
-     * @return строковое представление семейного дерева
+     * @return информация о семейном древе
      */
     public String getAboutFamily() {
         return tree.toString();
     }
 
     /**
-     * Сортировка членов семьи по возрасту и получение строки, представляющей отсортированное дерево.
+     * Сортирует семейное древо по возрасту и возвращает его информацию.
      *
-     * @return строковое представление семейного дерева, отсортированного по возрасту
+     * @return информация о отсортированном по возрасту семейном древе
      */
     public String sortTreeByAge() {
         tree.sortByAge();
@@ -133,9 +125,9 @@ public class Service {
     }
 
     /**
-     * Сортировка членов семьи по имени и получение строки, представляющей отсортированное дерево.
+     * Сортирует семейное древо по имени и возвращает его информацию.
      *
-     * @return строковое представление семейного дерева, отсортированного по имени
+     * @return информация о отсортированном по имени семейном древе
      */
     public String sortTreeByName() {
         tree.sortByName();

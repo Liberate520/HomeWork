@@ -1,7 +1,7 @@
 package ru.gb.family_tree.model.human;
 
 /**
- * Перечисление, представляющее статус супруга.
+ * Перечисление SpouseStatus представляет статус супруга.
  */
 public enum SpouseStatus {
     /**

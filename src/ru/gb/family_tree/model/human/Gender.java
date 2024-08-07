@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 /**
  * Перечисление Gender представляет пол человека.
- * Это перечисление может быть сериализовано.
  */
 public enum Gender implements Serializable {
     /**

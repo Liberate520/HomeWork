@@ -8,17 +8,18 @@ import ru.gb.family_tree.view.View;
 import java.time.LocalDate;
 
 /**
- * Класс {@code Presenter} представляет собой контроллер для работы с данными семьи.
- * Он взаимодействует с моделью и представлением для управления семейным деревом.
+ * Класс {@code Presenter} представляет собой контроллер, который управляет взаимодействием
+ * между {@code View} и {@code Service}. Он обрабатывает запросы от представления, выполняет
+ * соответствующие операции через сервис и передает результаты обратно в представление.
  */
 public class Presenter {
     private View view;
     private Service service;
 
     /**
-     * Конструктор для создания экземпляра {@code Presenter}.
+     * Конструктор класса {@code Presenter}.
      *
-     * @param view объект представления, который будет использоваться для отображения данных
+     * @param view представление, которое будет использоваться для вывода информации.
      */
     public Presenter(View view) {
         this.view = view;
@@ -28,10 +29,10 @@ public class Presenter {
     /**
      * Добавляет нового члена семьи.
      *
-     * @param name имя нового члена семьи
-     * @param gender пол нового члена семьи
-     * @param date дата рождения нового члена семьи в формате "yyyy-MM-dd"
-     * @return {@code true}, если член семьи был успешно добавлен
+     * @param name имя нового члена семьи.
+     * @param gender пол нового члена семьи.
+     * @param date дата рождения нового члена семьи в строковом формате.
+     * @return {@code true}, если добавление прошло успешно; {@code false} в случае ошибки.
      */
     public boolean addMember(String name, Gender gender, String date) {
         service.addMember(name, gender, date);
@@ -39,11 +40,11 @@ public class Presenter {
     }
 
     /**
-     * Устанавливает дату смерти для указанного члена семьи.
+     * Устанавливает дату смерти для члена семьи по его идентификатору.
      *
-     * @param personId идентификатор члена семьи
-     * @param dod дата смерти в формате {@code LocalDate}
-     * @return {@code true}, если дата смерти была успешно установлена, иначе {@code false}
+     * @param personId идентификатор члена семьи.
+     * @param dod дата смерти.
+     * @return {@code true}, если установка даты смерти прошла успешно; {@code false} в случае ошибки.
      */
     public boolean setDeathDate(int personId, LocalDate dod) {
         if (service.checkById(personId)) {
@@ -54,15 +55,15 @@ public class Presenter {
     }
 
     /**
-     * Устанавливает родителя для указанного члена семьи.
+     * Устанавливает родителя для члена семьи по его идентификатору.
      *
-     * @param memberId идентификатор члена семьи, для которого устанавливается родитель
-     * @param parentId идентификатор родителя
-     * @return {@code true}, если родитель был успешно установлен, иначе {@code false}
+     * @param memberId идентификатор члена семьи.
+     * @param parentId идентификатор родителя.
+     * @return {@code true}, если установка родителя прошла успешно; {@code false} в случае ошибки.
      */
     public boolean setParent(int memberId, int parentId){
         if (service.checkById(memberId) & service.checkById(parentId)){
-            service.setParent(memberId,parentId);
+            service.setParent(memberId, parentId);
             return true;
         }
         return false;
@@ -71,10 +72,10 @@ public class Presenter {
     /**
      * Устанавливает супруга для двух членов семьи.
      *
-     * @param firstMemberId идентификатор первого супруга
-     * @param secondMemberId идентификатор второго супруга
-     * @param spouseStatus статус супружеских отношений
-     * @return {@code true}, если супруги были успешно установлены, иначе {@code false}
+     * @param firstMemberId идентификатор первого члена семьи.
+     * @param secondMemberId идентификатор второго члена семьи.
+     * @param spouseStatus статус брака.
+     * @return {@code true}, если установка супруга прошла успешно; {@code false} в случае ошибки.
      */
     public boolean setSpouse(int firstMemberId, int secondMemberId, SpouseStatus spouseStatus) {
         if (service.checkById(firstMemberId) & service.checkById(secondMemberId)) {
@@ -85,41 +86,41 @@ public class Presenter {
     }
 
     /**
-     * Получает информацию о семье и отображает ее через представление.
+     * Получает информацию о всей семье и передает её в представление.
      */
     public void getAboutFamily() {
         view.printAnswer(service.getAboutFamily());
     }
 
     /**
-     * Сортирует семейное дерево по возрасту и отображает результат через представление.
+     * Сортирует членов семьи по возрасту и передает отсортированный список в представление.
      */
     public void sortTreeByAge() {
         view.printAnswer(service.sortTreeByAge());
     }
 
     /**
-     * Сортирует семейное дерево по имени и отображает результат через представление.
+     * Сортирует членов семьи по имени и передает отсортированный список в представление.
      */
     public void sortTreeByName() {
         view.printAnswer(service.sortTreeByName());
     }
 
     /**
-     * Считывает данные семьи из файла.
+     * Считывает данные из файла и обновляет состояние сервиса.
      *
-     * @param path путь к файлу
-     * @return {@code true}, если данные были успешно считаны, иначе {@code false}
+     * @param path путь к файлу, из которого нужно считать данные.
+     * @return {@code true}, если чтение прошло успешно; {@code false} в случае ошибки.
      */
     public boolean read(String path) {
         return service.read(path);
     }
 
     /**
-     * Записывает данные семьи в файл.
+     * Записывает данные в файл.
      *
-     * @param path путь к файлу
-     * @return {@code true}, если данные были успешно записаны, иначе {@code false}
+     * @param path путь к файлу, в который нужно записать данные.
+     * @return {@code true}, если запись прошла успешно; {@code false} в случае ошибки.
      */
     public boolean write(String path) {
         return service.write(path);
