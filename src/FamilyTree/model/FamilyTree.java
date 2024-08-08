@@ -17,29 +17,25 @@ import java.util.List;
 public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Serializable {
     private long id;
     private List<T> members;
-    private List<T> children;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return members.iterator();
-    }
+//    public Iterator<T> iterator() {return members.iterator();}
+    public Iterator<T> iterator() {return new FamilyTreeIterator<>(members);}
 
     public void addChild(T child) {
-        if (children == null) {
-            children = new ArrayList<>();
+        if (child.getFather() != null && members.contains(child.getFather())) {
+            if (!child.getFather().getChildren().contains(child)) {
+                child.getFather().getChildren().add(child);
+            }
         }
-        if (!children.contains(child)) {
-            children.add(child);
-        }
-        if (child.getFather() != null && !child.getFather().getChildren().contains(child)) {
-            child.getFather().addChild(child);
-        }
-        if (child.getMother() != null && !child.getMother().getChildren().contains(child)) {
-            child.getMother().addChild(child);
+        if (child.getMother() != null && members.contains(child.getMother())) {
+            if (!child.getMother().getChildren().contains(child)) {
+                child.getMother().getChildren().add(child);
+            }
         }
     }
 
@@ -97,19 +93,6 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
         return ancestors;
     }
 
-//    public int getAge(T person) {
-//        if (person.getDeathDate() == null) {
-//            return getPeriod(person.getBirthDate(), LocalDate.now());
-//        } else {
-//            return getPeriod(person.getBirthDate(), person.getDeathDate());
-//        }
-//    }
-//
-//    private int getPeriod(LocalDate birthDate, LocalDate deathDate) {
-//        Period diff = Period.between(birthDate, deathDate);
-//        return diff.getYears();
-//    }
-
     public int getAge() {
         int totalAge = 0;
         for (T member : members) {
@@ -157,17 +140,14 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
     }
 
     private void updateFamilyTree(T member) {
+        List<T> children = new ArrayList<>();
         if (member.getFather() != null) {
-            if (!member.getFather().getChildren().contains(member)) {
-                member.getFather().addChild(member);
-            }
+            children.addAll(member.getFather().getChildren());
         }
         if (member.getMother() != null) {
-            if (!member.getMother().getChildren().contains(member)) {
-                member.getMother().addChild(member);
-            }
+            children.addAll(member.getMother().getChildren());
         }
-        for (T child : member.getChildren()) {
+        for (T child : children) {
             addChild(child);
         }
     }
@@ -184,6 +164,10 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
     public List<T> getMembers() {
         return Collections.unmodifiableList(members);
     }
+
+//        public List<T> getMembers() {
+//            return members;
+//        }
 
     public T getMemberById(long id) {
         for (T member : members) {
