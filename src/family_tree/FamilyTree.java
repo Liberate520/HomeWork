@@ -6,10 +6,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private List<Human> familyTree = new ArrayList<>();
 
     @Override
@@ -56,4 +57,8 @@ public class FamilyTree implements Serializable {
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
+    @Override
+    public Iterator<Human> iterator() {
+        return familyTree.iterator();
+    }
 }
