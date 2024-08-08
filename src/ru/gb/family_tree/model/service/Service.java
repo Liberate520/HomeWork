@@ -14,7 +14,7 @@ import java.util.List;
 public class Service { //  в этом классе функционал Приложения, что прописано, то может делать это приложение
 // сам ничего не делает (верхне уровневый), но всем раздает. Ты сделай, ты сделай.
 
-    private FamilyTree familyTree;
+    private final FamilyTree familyTree;
     private final HumanBuilder humanBuilder;
     private Writer fileHandler;
 

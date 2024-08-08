@@ -70,12 +70,12 @@ public class ConsoleUI implements View{
         String name = inputHandler.getInput();
 
         System.out.println("Укажите пол человека м/ж:");
-        String genderStr = inputHandler.getGenderInput();
+        Gender gender = inputHandler.getGenderInput();
 
         System.out.println("Укажите дату рождения человека через пробел в формате ДД ММ ГГГГ:");
         LocalDate birthDate = inputHandler.getBirthDateInput();
 
-        presenter.addHuman(name, Gender.valueOf(genderStr), birthDate);
+        presenter.addHuman(name, gender, birthDate);
     }
 
     public void findByName() {

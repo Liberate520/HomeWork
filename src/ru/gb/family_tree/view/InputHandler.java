@@ -1,5 +1,7 @@
 package ru.gb.family_tree.view;
 
+import ru.gb.family_tree.model.human.Gender;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,13 +18,13 @@ public class InputHandler {
         return scanner.nextLine();
     }
 
-    public String getGenderInput() {
+    public Gender getGenderInput() {
         while (true) {
             String genderStr = scanner.nextLine().trim();
             if (genderStr.equalsIgnoreCase("м")) {
-                return "м";
+                return Gender.Male;
             } else if (genderStr.equalsIgnoreCase("ж")) {
-                return "ж";
+                return Gender.Female;
             } else {
                 System.out.println("Введен неправильный пол, попробуйте заново (м/ж):");
             }
