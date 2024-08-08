@@ -17,24 +17,4 @@ public class FamilyTree implements Serializable {
     public List<Human> getChildrenForHuman(Human human) {
         return relatives.get(relatives.indexOf(human)).getChildren();
     }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("FamilyTree{\n");
-        for (Human relative : this.relatives) {
-            stringBuilder.append(relative.toString()).append("\n");
-        }
-        return stringBuilder.toString();
-    }
-
-    public void save(String filePath) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath));
-            out.writeObject(this);
-            out.close();
-        }
-        catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
 }

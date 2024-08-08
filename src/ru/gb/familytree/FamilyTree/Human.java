@@ -55,13 +55,4 @@ public class Human implements Serializable {
     public void addChild(Human child) {
         this.children.add(child);
     }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + this.name + "'" +
-                ", gender='" + this.gender + "'" +
-                ", birthdate='" + this.birthDate.toString() + "'" +
-                ", deathdate='" + this.deathDate.toString() + "'";
-    }
 }
