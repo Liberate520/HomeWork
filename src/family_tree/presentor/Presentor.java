@@ -24,10 +24,6 @@ public class Presentor {
         return familyTree.getFamily_tree().toString();
     }
 
-    private Human creatHuman(String first_name, String last_name, String patronymic, LocalDate dayofdeath, LocalDate birthday, Human father, Human mother, ArrayList<Human> children, Gender gender){
-        return new Human(first_name, last_name, patronymic, dayofdeath, birthday, father, mother, children, gender);
-    }
-
     public void addHuman(String first_name, String last_name, String patronymic, LocalDate dayofdeath, LocalDate birthday, int father, int mother, List<Integer> childrensId, String genderstr){
         ArrayList<Human> children = new ArrayList<>();
         for (int id : childrensId){

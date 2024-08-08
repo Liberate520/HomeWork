@@ -19,12 +19,12 @@ public class ConsoleUI implements View {
         presentor = new Presentor(this);
         scanner = new Scanner(System.in);
         flag = true;
+        menu = new Menu(this);
     }
 
     @Override
     public void start() {
         while (flag) {
-            menu = new Menu(this);
             menu.Start();
         }
     }
