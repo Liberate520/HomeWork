@@ -1,12 +1,16 @@
 package person;
 
+import familytree.HasBirthDate;
+import familytree.HasName;
+import familytree.HasRelations;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable {
+public class Person implements Serializable, HasName, HasBirthDate, HasRelations<Person> {
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -23,6 +27,26 @@ public class Person implements Serializable {
         this.children = new ArrayList<>();
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    @Override
+    public List<Person> getChildren() {
+        return children;
+    }
+
+    @Override
+    public List<Person> getParents() {
+        return parents;
+    }
+
     public void addChild(Person child) {
         this.children.add(child);
         child.parents.add(this);
@@ -31,22 +55,6 @@ public class Person implements Serializable {
     public void addParent(Person parent) {
         this.parents.add(parent);
         parent.children.add(this);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public List<Person> getChildren() {
-        return children;
-    }
-
-    public List<Person> getParents() {
-        return parents;
     }
 
     public int getAge() {
