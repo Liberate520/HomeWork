@@ -3,11 +3,14 @@ package ru.gb.familytree;
 import ru.gb.familytree.FamilyTree.FamilyTree;
 import ru.gb.familytree.FamilyTree.Gender;
 import ru.gb.familytree.FamilyTree.Human;
+import ru.gb.familytree.writer.Filehandler;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.FileHandler;
 
 public class Main {
+    final static String filePath = "src/FamilyTree/writer/tree.txt";
     public static void main(String[] args) {
         Human person1 = new Human();
         person1.setName("Иван Иванович Петров");
@@ -60,5 +63,10 @@ public class Main {
 
         List<Human> person5_grandParents = familyTree.getParentsForHuman(person5).get(0).getParents();
         List<Human> person2_grandChildren = familyTree.getChildrenForHuman(person2).get(0).getChildren();
+
+        Filehandler fileHandler = new Filehandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(familyTree);
+        familyTree = (FamilyTree) fileHandler.read();
     }
 }
