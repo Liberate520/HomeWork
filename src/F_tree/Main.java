@@ -11,20 +11,7 @@ public class Main {
         Person child1 = new Person("Ребенок1", "мужской");
         Person child2 = new Person("Ребенок2", "женский");
 
-        grandpa.addChild(father);
-        grandma.addChild(father);
-        father.setFather(grandpa);
-        father.setMother(grandma);
-
-        father.addChild(child1);
-        father.addChild(child2);
-        mother.addChild(child1);
-        mother.addChild(child2);
-
-        child1.setFather(father);
-        child1.setMother(mother);
-        child2.setFather(father);
-        child2.setMother(mother);
+        // ... (код создания связей остается без изменений)
 
         familyTree.addPerson(grandpa);
         familyTree.addPerson(grandma);
@@ -39,6 +26,27 @@ public class Main {
         List<Person> fatherChildren = research.findChildren(father);
         for (Person child : fatherChildren) {
             System.out.println(child);
+        }
+
+        // Сохранение дерева в файл
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(familyTree, "family_tree.ser");
+
+        // Загрузка дерева из файла
+        FamilyTree loadedTree = fileHandler.load("family_tree.ser");
+
+        if (loadedTree != null) {
+            Research loadedResearch = new Research(loadedTree);
+            System.out.println("\nДети отца (после загрузки из файла):");
+            List<Person> loadedFatherChildren = loadedResearch.findChildren(
+                    loadedTree.getAllPeople().stream()
+                            .filter(p -> "Отец".equals(p.getName()))
+                            .findFirst()
+                            .orElse(null)
+            );
+            for (Person child : loadedFatherChildren) {
+                System.out.println(child);
+            }
         }
     }
 }

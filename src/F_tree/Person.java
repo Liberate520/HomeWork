@@ -1,8 +1,9 @@
 package F_tree;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements Serializable {
     private String name;
     private String gender;
     private Person father;
