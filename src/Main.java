@@ -15,7 +15,7 @@ public class Main {
         human4.setFamilyTies(human1, human2);
         human2.setDeathDate(LocalDate.of(2014, 1, 20));
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
         familyTree.add(human1);
         familyTree.add(human2);
         familyTree.add(human3);
@@ -31,9 +31,9 @@ public class Main {
         System.out.println();
         System.out.println("Данные перед сохранением:");
         System.out.println(familyTree);
-        FileHandler handler = new FileHandler();
+        FileHandler<Human> handler = new FileHandler<>();
         handler.save(familyTree);
-        FamilyTree loadedTree = handler.load();
+        FamilyTree<Human> loadedTree = handler.load();
         System.out.println("Загруженные данные:");
         System.out.println(loadedTree);
 
@@ -48,5 +48,8 @@ public class Main {
         familyTree.sortByAge();
         System.out.println(familyTree);
 
+        System.out.println();
+        System.out.println("Проверка итератора");
+        familyTree.forEach(System.out::println);
     }
 }

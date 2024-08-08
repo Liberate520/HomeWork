@@ -1,6 +1,7 @@
 package human;
 
-import java.io.Serializable;
+import family_tree.FamilyTreeItem;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -9,38 +10,38 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements FamilyTreeItem {
     private final String name;
-    private LocalDate birthdate;
+    private LocalDate birthDate;
     private LocalDate deathDate;
     private Sex sex;
     private Human father;
     private Human mother;
     private List<Human> children;
 
-    public Human(String name, LocalDate birthdate, LocalDate deathDate, Sex sex, Human father, Human mother) {
+    public Human(String name, LocalDate birthDate, LocalDate deathDate, Sex sex, Human father, Human mother) {
         this.name = name;
-        this.birthdate = birthdate;
+        this.birthDate = birthDate;
         this.deathDate = deathDate;
         this.sex = sex;
         children = new ArrayList<>();
         setFamilyTies(father, mother);
     }
 
-    public Human(String name, LocalDate birthdate, Sex sex, Human father, Human mother) {
-        this(name, birthdate, null, sex, father, mother);
+    public Human(String name, LocalDate birthDate, Sex sex, Human father, Human mother) {
+        this(name, birthDate, null, sex, father, mother);
     }
 
-    public Human(String name, LocalDate birthdate, Sex sex) {
-        this(name, birthdate, sex, null, null);
+    public Human(String name, LocalDate birthDate, Sex sex) {
+        this(name, birthDate, sex, null, null);
     }
 
     public Human(String name, Sex sex) {
         this(name, null, sex);
     }
 
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public void setDeathDate(LocalDate deathDate) {
@@ -74,8 +75,8 @@ public class Human implements Serializable, Comparable<Human> {
         return name;
     }
 
-    public LocalDate getBirthdate() {
-        return birthdate;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     public LocalDate getDeathDate() {
@@ -118,8 +119,8 @@ public class Human implements Serializable, Comparable<Human> {
 
     public int getAge() {
         return (deathDate == null) ?
-                Period.between(birthdate, LocalDate.now()).getYears() :
-                Period.between(birthdate, deathDate).getYears();
+                Period.between(birthDate, LocalDate.now()).getYears() :
+                Period.between(birthDate, deathDate).getYears();
     }
 
     @Override
@@ -142,7 +143,7 @@ public class Human implements Serializable, Comparable<Human> {
     }
 
     @Override
-    public int compareTo(Human o) {
-        return this.name.compareTo(o.name);
+    public int compareTo(FamilyTreeItem o) {
+        return name.compareTo(o.getName());
     }
 }

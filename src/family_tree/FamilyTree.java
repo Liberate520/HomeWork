@@ -1,7 +1,5 @@
 package family_tree;
 
-import human.Human;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,29 +8,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> familyTree = new ArrayList<>();
+public class FamilyTree<E extends FamilyTreeItem> implements Serializable, Iterable<E> {
+    private List<E> familyTree = new ArrayList<>();
 
     @Override
     public String toString() {
         return printList(familyTree);
     }
 
-    public void add(Human human) {
+    public void add(E human) {
         familyTree.add(human);
     }
 
-    public List<Human> getFamilyTree() {
+    public List<E> getFamilyTree() {
         return familyTree;
     }
 
-    public void setFamilyTree(List<Human> familyTree) {
+    public void setFamilyTree(List<E> familyTree) {
         this.familyTree = familyTree;
     }
 
-    public List<Human> findByName(String name) {
+    public List<E> findByName(String name) {
         return familyTree.stream()
-                .filter(h -> h.getName().equalsIgnoreCase(name))
+                .filter(e -> e.getName().equalsIgnoreCase(name))
                 .collect(Collectors.toList());
     }
 
@@ -41,24 +39,24 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     public void sortByBirthDate() {
-        familyTree.sort(Comparator.comparing(Human::getBirthdate));
+        familyTree.sort(Comparator.comparing(E::getBirthDate));
     }
 
     /**
      * Сортировка по возрасту (с учетом даты смерти) по убыванию.
      */
     public void sortByAge() {
-        familyTree.sort(Comparator.comparing(Human::getAge).reversed());
+        familyTree.sort(Comparator.comparing(E::getAge).reversed());
     }
 
-    public String printList(List<Human> list) {
+    public String printList(List<E> list) {
         return list.stream()
-                .map(Human::toString)
+                .map(E::toString)
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<E> iterator() {
         return familyTree.iterator();
     }
 }
