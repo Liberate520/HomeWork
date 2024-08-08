@@ -5,7 +5,7 @@ import human.Human;
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree <T extends ItemFamilyTree<T>> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Iterable<T> {
     private long humansId;
     private List<T> humanList;
 
@@ -117,12 +117,12 @@ private boolean checkId(long id){
      }
 
     @Override
-    public Iterator<T> iterator() {
-        return (Iterator<T>) humanList.iterator();
+    public Iterator <T> iterator() {
+        return humanList.iterator();
     }
 
-    public void sortByName(){
-        Collections.sort(humanList, new HumanComparatorByName<>());
+    public void sortByName (){
+        Collections.sort(humanList);
     }
     public void sortByAge(){
         Collections.sort(humanList, new HumanComparatorByAge<>());

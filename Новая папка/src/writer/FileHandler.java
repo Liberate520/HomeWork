@@ -3,17 +3,23 @@ package writer;
 import java.io.*;
 
 public class FileHandler implements Writer {
-    public static  String treePath = "src/writer/tree.txt";
+    public  String treePath = "src/writer/tree.txt";
 
     @Override
-    public   void save(Serializable serializable) throws IOException {
+    public void save(Serializable serializable) throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(
             new FileOutputStream(treePath));
         objectOutputStream.writeObject(serializable);
         objectOutputStream.close();
 
 
-
+//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+//            new FileOutputStream(treePath))){
+//
+//            objectOutputStream.writeObject(serializable);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -34,19 +40,4 @@ public class FileHandler implements Writer {
     }
 }
 
-//@Override
-//public  void save(Serializable serializable) throws IOException {
-//    ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-//            new FileOutputStream(treePath));
-//    objectOutputStream.writeObject(serializable);
-//    objectOutputStream.close();
 
-
-
-//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-//            new FileOutputStream(treePath))){
-//
-//            objectOutputStream.writeObject(serializable);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }

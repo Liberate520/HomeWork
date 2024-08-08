@@ -2,15 +2,14 @@ package human;
 
 
 
-import family_tree.ItemFamilyTree;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Human implements ItemFamilyTree<Human>{
+public class Human implements Serializable,Comparable<Human> {
     private long id ;
     private String name;
     private Gender gender;
@@ -34,10 +33,9 @@ public class Human implements ItemFamilyTree<Human>{
         children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate date) {
+    public Human(String name, Gender gender, LocalDate birthDate) {
 
-
-        this(name, gender, date, null, null, null);
+        this(name, gender, birthDate, null, null, null);
 //        setId(++id);
 
 
@@ -47,8 +45,6 @@ public class Human implements ItemFamilyTree<Human>{
                  Human mother, Human father) {
         this(name, gender, birthDate, null, mother, father);
     }
-
-
 
 
     public boolean addChild(Human child) {
@@ -252,8 +248,8 @@ public class Human implements ItemFamilyTree<Human>{
         return human.getId() == getId();
     }
 
-//    @Override
-//    public int compareTo(Human o) {
-//        return this.name.compareTo(o.name);
-//    }
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
+    }
 }
