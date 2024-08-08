@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 import family_tree.*;
 
-class HumanIterator <T> implements Iterator<T>, Serializable{
+class HumanIterator <T> implements Iterator<T>{
     private int curIndex;
     private List <T> tree;
 
@@ -12,10 +12,10 @@ class HumanIterator <T> implements Iterator<T>, Serializable{
     public boolean hasNext(){
         return tree.size()>curIndex;
     }
-    
+
     @Override
     public T next(){
         return tree.get(curIndex++);
     }
-        
+
 }
