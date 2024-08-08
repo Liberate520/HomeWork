@@ -18,6 +18,8 @@ public class MainMenu {
         commandList.add(new AddParentByNum(consoleUI));
         commandList.add(new AddParentById(consoleUI));
         commandList.add(new GetParentByNum(consoleUI));
+        commandList.add(new Save(consoleUI));
+        commandList.add(new Load(consoleUI));
         commandList.add(new Finish(consoleUI));
     }
     public String menu(){

@@ -111,16 +111,15 @@ public class Service {
         System.out.println(human.getParents());
     }
 
-     public static FamilyTree load (){
+     public void load (){
          FileHandler filehendler= new FileHandler(filePath);
+         this.serviceTree=(FamilyTree) filehendler.read();
 
-         return (FamilyTree) filehendler.read();
      }
 
-    public static void save (FamilyTree familyTree){
+    public void save(){
          FileHandler filehendler= new FileHandler(filePath);
-
-         filehendler.save(familyTree);
+         filehendler.save(this.serviceTree);
     }
 
 

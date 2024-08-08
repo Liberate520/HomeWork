@@ -134,6 +134,36 @@ public class ConsoleUI implements View{
         presenter.getParentByNum(id1);
     }
 
+
+    public void save(){
+        System.out.println("Сохранить дерево Y/N ?");
+        String id1Str = scanner.nextLine();
+        if (id1Str.equals("Y")){
+            presenter.save();
+            System.out.println("Семейное дерево сохранено!");
+        }else{
+            System.out.println("Отмена сохранения");
+        }
+
+    }
+
+
+    public void load(){
+        System.out.println("Загрузить дерево Y/N ?");
+        String id1Str = scanner.nextLine();
+        if (id1Str.equals("Y")){
+            presenter.load();
+            System.out.println("Семейное дерево загружено!");
+            presenter.getTreeInfo();
+        }else{
+            System.out.println("Отмена Загрузки");
+        }
+
+    }
+
+
+
+
     private void execute(){
         String line = scanner.nextLine();
         if (checkTextForInt(line)){

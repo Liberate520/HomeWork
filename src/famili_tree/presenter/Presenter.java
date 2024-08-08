@@ -67,4 +67,12 @@ public class Presenter{
         service.getParentByNum(num1);
     }
 
+    public void save(){
+        service.save();
+    }
+
+    public void load(){
+        service.load();
+    }
+
 }
