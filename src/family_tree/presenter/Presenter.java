@@ -5,6 +5,7 @@ import family_tree.model.service.Service;
 import family_tree.view.View;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Presenter {
     private View view;
@@ -24,15 +25,26 @@ public class Presenter {
     public void sortHumansByName(){
         service.sortByName();
     }
-    public void getHumanInfo(int sortId){
-        System.out.println(service.getHumansInfo(sortId));
+    public String getHumanInfo(int sortId){
+        return service.getHumansInfo(sortId);
     }
 
     public void sortHumansByDOB() {
         service.sortByDOB();
     }
 
-    public void searhHumansByName(String name) {
-        service.searhHumansByName(name);
+    public List<String> searhHumansByName(String name) {
+        return service.searhHumansByName(name);
+        }
+
+    public void saveTree(){
+        service.saveTree();
+    }
+
+    public void readTree() {
+        service.readTree();
     }
 }
+
+
+

@@ -5,10 +5,10 @@ import family_tree.model.family_tree.FamilyTree;
 import java.io.*;
 
 public  class FileHendler implements Writer {
-    private String filePath = "src/family_tree/family_tree/person.out";
+    private String filePath = "src/family_tree/model/family_tree/person.out";
 
     @Override
-    public void save(FamilyTree serializable) {
+    public void save(FamilyTree<family_tree.model.human.Human> serializable) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){
             objectOutputStream.writeObject(serializable);
         } catch (Exception e){

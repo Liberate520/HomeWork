@@ -1,12 +1,11 @@
 package family_tree.view;
-
 import family_tree.model.human.Gender;
 import family_tree.presenter.Presenter;
-
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ConsoleUI  implements View{
+
     private static final String INPUT_ERROR = "Вы ввели неверное значение";
     private Scanner scanner;
     private Presenter presenter;
@@ -29,6 +28,7 @@ public class ConsoleUI  implements View{
     @Override
     public void start() {
         hello();
+        presenter.readTree();
         while (work){
             printMenu();
             execute();
@@ -36,44 +36,45 @@ public class ConsoleUI  implements View{
     }
     public void sortHumansByName(){
         presenter.sortHumansByName();
-        presenter.getHumanInfo(2);
+        printAnswer(presenter.getHumanInfo(2));
     }
     public  void getHumanInfo(){
-        presenter.getHumanInfo(1);
+        printAnswer(presenter.getHumanInfo(1));
     }
     public void addHuman() {
+
         Gender gender;
         LocalDate dod = null;
-        System.out.println("Введите имя человека");
+        printAnswer("Введите имя человека");
         String name = scanner.nextLine();
-        System.out.println("Укажите дату рождения в формате гггг-мм-дд :");
+        printAnswer("Укажите дату рождения в формате гггг-мм-дд :");
         String dobString = scanner.nextLine();
         LocalDate dob = LocalDate.parse(dobString);
-        System.out.println("Укажите дату смерти в формате гггг-мм-дд либо enter :" );
+        printAnswer("Укажите дату смерти в формате гггг-мм-дд либо enter :" );
         String dodString = scanner.nextLine();
         if (!dodString.equals("")) {
             dod = LocalDate.parse(dodString);
         }
-        System.out.println("Укажите 1 если пол мужской или 2 если женский :" );
+        printAnswer("Укажите 1 если пол мужской или 2 если женский :" );
         String genderString = scanner.nextLine();
         if (genderString == "1"){
             gender = Gender.Male;
         } else {
             gender = Gender.Female;
         }
-        System.out.println("Укажите id отца если он есть :" );
+        printAnswer("Укажите id отца если он есть :" );
         String idFather = scanner.nextLine();
-        System.out.println("Укажите id матери если она есть :" );
+        printAnswer("Укажите id матери если она есть :" );
         String idMather = scanner.nextLine();
         presenter.addHuman(name, dob, dod, gender, idFather, idMather);
     }
 
     private void printMenu() {
-        System.out.println(menu.menu());
+        printAnswer(menu.menu());
     }
 
     private void hello() {
-        System.out.println("Добро пожаловать, выберите пункт меню :");
+        printAnswer("Добро пожаловать, выберите пункт меню :");
     }
     private void execute(){
         String line = scanner.nextLine();
@@ -103,21 +104,38 @@ public class ConsoleUI  implements View{
     }
 
     private void inputError(){
-        System.out.println(INPUT_ERROR);
+        printAnswer(INPUT_ERROR);
     }
 
     public void sortHumansByDOB() {
         presenter.sortHumansByDOB();
-        presenter.getHumanInfo(3);
+        printAnswer(presenter.getHumanInfo(3));
     }
 
     public void searhHumansByName() {
-        System.out.println("Введите имя человека для поиска");
+        printAnswer("Введите имя человека для поиска");
         String line = scanner.nextLine();
-        presenter.searhHumansByName(line);
+
+
+        if(presenter.searhHumansByName(line).size() == 0) {
+            printAnswer("Людей с таким именем не найдено\n");
+        }else {
+            printAnswer("По запросу по имени " + line + " надено следующее :\n ");
+            for(String foundHuman : presenter.searhHumansByName(line)){
+                printAnswer(foundHuman);
+            }
+        }
+
     }
     public void finish(){
-        System.out.println("Спасибо за работу");
+        printAnswer("Сохранить данные?\n 1 - если да 2 - если нет");
+        String line = scanner.nextLine();
+        if (Integer.parseInt(line) == 1){
+            presenter.saveTree();
+        }
+
+        printAnswer("Спасибо за работу");
+
         work = false;
     }
 
