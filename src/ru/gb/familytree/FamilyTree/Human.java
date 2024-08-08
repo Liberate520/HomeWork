@@ -1,9 +1,10 @@
 package ru.gb.familytree.FamilyTree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private Gender gender;
     private LocalDate birthDate, deathDate;
@@ -53,5 +54,14 @@ public class Human {
 
     public void addChild(Human child) {
         this.children.add(child);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + this.name + "'" +
+                ", gender='" + this.gender + "'" +
+                ", birthdate='" + this.birthDate.toString() + "'" +
+                ", deathdate='" + this.deathDate.toString() + "'";
     }
 }
