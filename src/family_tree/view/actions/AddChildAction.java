@@ -1,11 +1,13 @@
 package family_tree.view.actions;
 
 import family_tree.presenter.Presenter;
+import family_tree.view.Menu;
 
 import java.util.Scanner;
 
-public class AddChildAction implements MenuActions {
+public class AddChildAction implements MenuActions{
     Scanner scanner = new Scanner(System.in);
+
 
 
     @Override
@@ -30,5 +32,6 @@ public class AddChildAction implements MenuActions {
         } catch (Exception e) {
             System.out.println("Произошла ошибка при добавлении ребенка к родителю: " + e.getMessage());
         }
+
     }
 }

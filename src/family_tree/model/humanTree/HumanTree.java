@@ -18,15 +18,17 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
         humans.add(human);
     }  //добавление человека
 
+    // Если человек с таким ID не найден
     public E getHumanById(int id) {
         for (E human : humans) {
             if (((Human) human).getId() == id) {
                 return human;
             }
         }
-        return null; // Если человек с таким ID не найден
+        return null;
     }
 
+    // информация о шнурках
     public String getInfoAboutParents(E human) {
         StringBuilder sb = new StringBuilder();
         if (human.getFather() == null && human.getMother() == null) {
@@ -46,8 +48,9 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
         sb.append("Father:\n" + human.getFather() + "\n");
         sb.append("Mother:\n" + human.getMother() + "\n");
         return sb.toString();
-    } // информация о шнурках
+    }
 
+    // информация о детях
     public String getInfoAboutChildren(E human) {
         StringBuilder sb = new StringBuilder();
         List<E> children = human.getChildren();
@@ -63,35 +66,36 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
             i++;
         }
         return sb.toString();
-    }  // информация о детях
+    }
 
     public List<E> getHumans() {
         return humans;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Полное генеалогическое дерево: \n");
-        for (E human : humans) {
-            sb.append(human);
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Полное генеалогическое дерево: \n");
+//        for (E human : humans) {
+//            sb.append(human);
+//            sb.append("\n");
+//        }
+//        return sb.toString();
+//    }
 
+    // итератор
     @Override
     public Iterator<E> iterator() {
         return new HumanIterator<>(humans);
-    }  // итератор (пока не использую)
+    }
 
+    // сортировка по имени
     public void sortByName () {
-        System.out.println("Отсортированный по имени список: \n");
         humans.sort(new HumanComparatorByName<>());
-    } // сортировка по имени
+    }
 
+    // сортировка по возрасту
     public void sortByAge() {
-        System.out.println("Отсортированный по возрасту список: \n");
         humans.sort(new HumanComparatorByAge<>());
-    } // сортировка по возрасту
+    }
 }

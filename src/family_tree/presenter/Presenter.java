@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class Presenter {
     private View view;
     private Service service;
+    private static final String MESSAGE = "Полное генеологическое дерево";
 
     public Presenter(View view) {
         this.view = view;
@@ -27,7 +28,7 @@ public class Presenter {
     }
 
     public void humansInfo() {
-        String info = service.humansInfo();
+        String info = service.humansInfo(MESSAGE);
         view.printAnswer(info);
     }
 

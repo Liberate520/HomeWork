@@ -13,12 +13,6 @@ public class Service {
         humans = new HumanTree<>();
     }
 
-
-    public void addHuman (String name, String surname, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother) {
-        Human human = new Human(name, surname, dob, dod, gender, father, mother);
-        humans.addHuman(human);
-    }
-
     public void addHumanNullNodes(String name, String surname, LocalDate dob, LocalDate dod, Gender gender) {
         Human human = new Human(name, surname, dob, dod, gender, null, null);
         humans.addHuman(human);
@@ -90,9 +84,9 @@ public class Service {
         parent.addChild(child);
     }
 
-    public String humansInfo() {
+    public String humansInfo(String message) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Полное генеалогическое дерево: \n");
+        sb.append(message + "\n");
         for (Human human : humans) {
             sb.append(human);
             sb.append("\n");

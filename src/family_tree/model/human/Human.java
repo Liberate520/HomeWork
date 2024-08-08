@@ -29,7 +29,6 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
         this.father = father;
         this.mother = mother;
         this.children = new ArrayList<>();
-
     }
 
 
@@ -74,20 +73,8 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
     }
 
     @Override
-    public int compareTo(Human anotherStudent) {
-        return this.name.compareTo(anotherStudent.name);
+    public int compareTo(Human anotherHuman) {
+        return this.name.compareTo(anotherHuman.name);
     }
 
-
-    public static int getIdCounter() {
-        return idCounter;
-    }
-
-    public static void setIdCounter(int idCounter) {
-        Human.idCounter = idCounter;
-    }
-
-//    public static void setChildren(ArrayList<> arrayList) {
-//        Human.ch
-//    }
 }
