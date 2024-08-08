@@ -1,5 +1,7 @@
 package ru.gb.familytree.FamilyTree;
 
+import ru.gb.familytree.FamilyTree.Human.Human;
+
 import java.io.*;
 import java.util.List;
 
