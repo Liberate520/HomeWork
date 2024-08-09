@@ -28,18 +28,21 @@ public class FamilyTreeConsoleView {
                     findPerson();
                     break;
                 case 3:
-                    saveTreeToFile();
+                    addAnimal();
                     break;
                 case 4:
-                    loadTreeFromFile();
+                    findAnimal();
                     break;
                 case 5:
-                    displayTree();
+                    saveTreeToFile();
                     break;
                 case 6:
-                    displayNewFeature();
+                    loadTreeFromFile();
                     break;
                 case 7:
+                    displayTree();
+                    break;
+                case 8:
                     System.out.println("Выход...");
                     return;
                 default:
@@ -51,11 +54,12 @@ public class FamilyTreeConsoleView {
     public void displayMenu() {
         System.out.println("1. Добавить человека");
         System.out.println("2. Найти человека");
-        System.out.println("3. Сохранить Семейное Дерево в файл");
-        System.out.println("4. Загрузить Семейное Дерево из файла");
-        System.out.println("5. Отобразить Семейное Дерево");
-        System.out.println("6. Использовать новую функцию");
-        System.out.println("7. Выход");
+        System.out.println("3. Добавить животное");
+        System.out.println("4. Найти животное");
+        System.out.println("5. Сохранить Семейное Дерево в файл");
+        System.out.println("6. Загрузить Семейное Дерево из файла");
+        System.out.println("7. Отобразить Семейное Дерево");
+        System.out.println("8. Выход");
         System.out.print("Введите Ваш выбор: ");
     }
 
@@ -90,6 +94,30 @@ public class FamilyTreeConsoleView {
         }
     }
 
+    private void addAnimal() {
+        System.out.print("Введите имя: ");
+        String name = scanner.nextLine();
+        System.out.print("Введите породу: ");
+        String breed = scanner.nextLine();
+        System.out.print("Введите дату рождения (гггг-мм-дд): ");
+        String birthDateStr = scanner.nextLine();
+        LocalDate birthDate = LocalDate.parse(birthDateStr);
+
+        presenter.addAnimal(name, breed, birthDate);
+    }
+
+    private void findAnimal() {
+        System.out.print("Введите имя: ");
+        String name = scanner.nextLine();
+        Animal animal = presenter.findAnimalByName(name);
+        if (animal != null) {
+            System.out.println("Животное найдено:");
+            System.out.println(animal);
+        } else {
+            System.out.println("Животное не найдено.");
+        }
+    }
+
     private void saveTreeToFile() {
         System.out.print("Введите имя файла для сохранения: ");
         String fileName = scanner.nextLine();
@@ -104,13 +132,22 @@ public class FamilyTreeConsoleView {
 
     private void displayTree() {
         System.out.println("Семейное Дерево:");
+        System.out.println("Люди:");
         for (Person person : presenter.getPeople()) {
             System.out.println(person);
+        }
+        System.out.println("Животные:");
+        for (Animal animal : presenter.getAnimals()) {
+            System.out.println(animal);
         }
     }
 
     public void displayPersonAdded(Person person) {
         System.out.println("Человек успешно добавлен: " + person);
+    }
+
+    public void displayAnimalAdded(Animal animal) {
+        System.out.println("Животное успешно добавлено: " + animal);
     }
 
     public void displayFileSaved(String fileName) {
@@ -120,9 +157,5 @@ public class FamilyTreeConsoleView {
     public void displayFileLoaded(String fileName) {
         System.out.println("Семейное Дерево загружено из файла: " + fileName);
     }
-
-    public void displayNewFeature() {
-        presenter.addNewFeature();
-        System.out.println("Новая функция использована.");
-    }
 }
+
