@@ -4,8 +4,6 @@ import ru.gb.family_tree.model.family_tree.FamilyTree;
 import ru.gb.family_tree.model.service.FamilyTreeItem;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileHandler<T extends FamilyTreeItem<T>> implements Writer<T> {
     /*
