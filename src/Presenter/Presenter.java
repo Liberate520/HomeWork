@@ -18,7 +18,7 @@ public class Presenter {
         service = new Service();
     }
 
-    private Gender setGender (String gender){
+    public Gender setGender (String gender){
         Gender genMale = Gender.Male;
         Gender genFemale = Gender.Female;
         if(gender == "male"){
@@ -45,20 +45,26 @@ public class Presenter {
         view.printMessage(info);
     }
 
-    public void getMember(String name){
+    public Human findMember(String name){
         Human member = service.getMember(name);
-        System.out.println(member.toString());
-    }
-    public void addParent(String childName, String parentName){
-        Human child = service.getMember(childName);
-        Human parent = service.getMember(parentName);
-        service.addChildren(child, parent);
+        return member;
     }
 
-    public void addChildren(String childName, String parentName){
+    public void getMember(String name){
+        Human member = service.getMember(name);
+        view.printMessage(member.toString());
+    }
+    
+    public void addParentOrChild(String childName, String parentName){
+        if(service.getMember(childName) == null){
+            service.addToTreeShort(childName, null, null);
+        }
+        if(service.getMember(parentName) == null){
+            service.addToTreeShort(parentName, null, null);
+        }
         Human child = service.getMember(childName);
         Human parent = service.getMember(parentName);
-        parent.addChildren(child, parent);
+        service.addParentOrChild(child, parent);
     }
 
     public void sortByName(){

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import src.View.Actions.Actions;
-import src.View.Actions.AddChild;
 import src.View.Actions.AddHuman;
-import src.View.Actions.AddParent;
+import src.View.Actions.AddInfo;
+import src.View.Actions.AddParentOrChild;
 import src.View.Actions.Finish;
 import src.View.Actions.Load;
 import src.View.Actions.PrintByName;
@@ -25,8 +25,8 @@ public class MainMenu {
         actions.add(new AddHuman(consoleUI));
         actions.add(new PrintTree(consoleUI));
         actions.add(new PrintByName(consoleUI));
-        actions.add(new AddChild(consoleUI));
-        actions.add(new AddParent(consoleUI));
+        actions.add(new AddInfo(consoleUI));
+        actions.add(new AddParentOrChild(consoleUI));
         actions.add(new SortByName(consoleUI));
         actions.add(new SortByBirthday(consoleUI));
         actions.add(new SortByChildren(consoleUI));
@@ -44,17 +44,6 @@ public class MainMenu {
             sb.append(actions.get(i).getDescription());
             sb.append("\n");
         }
-        // sb.append("1 - Создать новое семейное древо").append("\n");
-        // sb.append("2 - Получить всю информацию членов семьи").append("\n");
-        // sb.append("3 - Найти информацию члена семьи по имени").append("\n");
-        // sb.append("4 - Добавить детей").append("\n");
-        // sb.append("5 - Добавить родителей").append("\n");
-        // sb.append("6 - Отсортировать членов семьи по имени в алфавитном порядке").append("\n");
-        // sb.append("7 - Отсортировать членов семьи по дате рождения").append("\n");
-        // sb.append("8 - Отсортировать членов семьи по количеству детей").append("\n");
-        // sb.append("9 - Сохранить дерево в файл").append("\n");
-        // sb.append("0 - Загрузить дерево из файла").append("\n");
-        // sb.append("exit - Выход").append("\n");
         return sb.toString();
     }
 

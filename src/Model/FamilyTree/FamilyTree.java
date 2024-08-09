@@ -17,12 +17,10 @@ public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iter
         this.members = new ArrayList<>();
     }
 
-    //  add member to family tree
     public void addMember(E member) {
         members.add(member);
     }
 
-    // find member by name
     public E getMember (String name) {
         for (E member: members) {
             if(member.getName().equals(name)){

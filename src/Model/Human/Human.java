@@ -17,7 +17,7 @@ public class Human implements FamilyMember <Human>{
     private Human father;
     private List<Human> children;
 
-public Human (long id, String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father){
+public Human (long id, String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father, List<Human> children){
     this.id = id;
     this.name = name;
     this.dateofbirth = dateofbirth;
@@ -25,7 +25,7 @@ public Human (long id, String name,LocalDate dateofbirth,LocalDate dateofdeath,G
     this.gender = gender;
     this.mother = mother;
     this.father = father;
-    children = new ArrayList<>();
+    this.children = new ArrayList<>();
 }    
 
 public Human(long id, String name, LocalDate dateofbirth, Gender gender) {
@@ -84,21 +84,22 @@ public void setFather(Human father) {
     this.father = father;
 }
 public void setChildren(Human child) {
+    if(this.children == null){
+        this.children = new ArrayList<>();
+    }
     this.children.add(child);
 }
 
-public void addParent(Human child, Human parent){
+public void addParentOrChild(Human child, Human parent){
     if(parent.getGender().equals(Gender.Male)){
         child.setFather(parent);
     }
     if(parent.getGender().equals(Gender.Female)){
         child.setMother(parent);
     }
-}
-
-public void addChildren(Human child, Human parent){
     parent.setChildren(child);
 }
+
 
 @Override
 public String toString() {
@@ -135,5 +136,4 @@ public String toString() {
     } 
     return sb.toString();
 }
-
 }

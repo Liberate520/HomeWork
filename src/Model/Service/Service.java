@@ -3,6 +3,7 @@ package src.Model.Service;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 import src.Model.FamilyTree.FamilyTree;
 import src.Model.FileHandling.FileHandler;
@@ -25,12 +26,11 @@ public class Service {
         return familyTree;
     }
 
-    public Human addToTree(String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father){
-        Human member = humanBuilder.build(name, dateofbirth, dateofdeath, gender, mother, father);
+    public Human addToTree(String name,LocalDate dateofbirth,LocalDate dateofdeath,Gender gender,Human mother,Human father, List<Human> children){
+        Human member = humanBuilder.build(name, dateofbirth, dateofdeath, gender, mother, father, children);
         familyTree.addMember(member);
         return member;
     }
-
 
     public Human addToTreeShort(String name,LocalDate dateofbirth, Gender gender){
         Human member = humanBuilder.build(name, dateofbirth, gender);
@@ -43,12 +43,8 @@ public class Service {
         return member;
     }
 
-    public void addParent(Human child, Human parent){
-        child.addParent(child, parent);
-    }
-
-    public void addChildren(Human child, Human parent){
-        parent.addChildren(child, parent);
+    public void addParentOrChild(Human child, Human parent){
+        child.addParentOrChild(child, parent);
     }
 
     public void sortByName(){

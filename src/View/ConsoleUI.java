@@ -73,21 +73,12 @@ public class ConsoleUI implements View {
         presenter.getMember(name);
     }
 
-    public void addChild (){
+    public void addParentOrChild (){
         System.out.println("Введите имя ребенка");        
         String childName = scanner.nextLine();
         System.out.println("Введите имя родителя");
         String parentName = scanner.nextLine();
-        presenter.addChildren(childName, parentName);
-        // TODO Add ways to create a new entity or just add a name without an entity if the parent child doesn't extst yet
-    }
-
-    public void addParent (){
-        System.out.println("Введите имя ребенка");        
-        String childName = scanner.nextLine();
-        System.out.println("Введите имя родителя");
-        String parentName = scanner.nextLine();
-        presenter.addParent(childName, parentName);
+        presenter.addParentOrChild(childName, parentName);
     }
 
     public void sortByName(){
@@ -108,6 +99,65 @@ public class ConsoleUI implements View {
 
     public void save() throws FileNotFoundException, IOException{
         presenter.save();
+    }
+
+    public void addInfo(){
+        System.out.println("Введите имя члена семьи: ");
+            String name = scanner.nextLine();
+        if(presenter.findMember(name).getBirthDate() == null){
+            System.out.println("Желаете ввести дату рождения? \n 1 - Да  \n 2 - Нет");
+            String choice = scanner.nextLine();
+            switch(choice){
+            case "1":
+            System.out.println("Введите дату рождения (формат 'гггг-мм-дд'): ");
+            LocalDate dateofbirth = LocalDate.parse(scanner.nextLine());
+            presenter.findMember(name).setBirthDate(dateofbirth);
+            case "2":
+                break;
+            default:
+            System.out.println("Неверный ввод");
+            }
+        }
+        if(presenter.findMember(name).getDeathDate() == null){
+            System.out.println("Желаете ввести дату смерти? \n 1 - Да  \n 2 - Нет");
+            String choice = scanner.nextLine();
+            switch(choice){
+            case "1":
+            System.out.println("Введите дату смерти (формат 'гггг-мм-дд'): ");
+            LocalDate dateofdeath = LocalDate.parse(scanner.nextLine());
+            presenter.findMember(name).setDeathDate(dateofdeath);
+            case "2":
+                break;
+            default:
+            System.out.println("Неверный ввод");
+            }
+        }
+        if(presenter.findMember(name).getGender() == null){
+            System.out.println("Желаете ввести пол? \n 1 - Да  \n 2 - Нет");
+            String choice = scanner.nextLine();
+            switch(choice){
+            case "1":
+            System.out.println("Выберите пол \n 1 - Мужской \n 2 - Женский");
+            String gen = scanner.nextLine();
+            String gender = null;
+            switch(gen){
+                case "1":
+                gender = "male";
+                presenter.findMember(name).setGender(presenter.setGender(gender));
+                break;
+                case "2":
+                gender = "female";
+                presenter.findMember(name).setGender(presenter.setGender(gender));
+                break;
+                default:
+                System.out.println("Неверный ввод");
+            }
+            case "2":
+                break;
+            default:
+            System.out.println("Неверный ввод");
+            }
+        }
     }
 
     @Override

@@ -9,8 +9,7 @@ public interface FamilyMember <E> extends Serializable {
     long getId();
     E getFather();
     E getMother();
-    void addChildren(E child, E parent);
-    void addParent(E child, E parent);
+    void addParentOrChild(E child, E parent);
     String getName();
     LocalDate getBirthDate();
     LocalDate getDeathDate();
