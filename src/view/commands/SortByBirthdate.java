@@ -10,6 +10,6 @@ public class SortByBirthdate extends Command{
     }
     @Override
     public void execute() {
-        consoleUI.addHuman();
+        consoleUI.sortByBirthdate();
     }
 }

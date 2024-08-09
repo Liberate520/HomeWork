@@ -11,12 +11,16 @@ public class MainMenu {
     public MainMenu(ConsoleUI consoleUI){
         commandList = new ArrayList<>();
         commandList.add(new AddHuman(consoleUI));
-        commandList.add(new AddChild(consoleUI));
         commandList.add(new AddParent(consoleUI));
+        commandList.add(new AddChild(consoleUI));
+        commandList.add(new SetWedding(consoleUI));
+        commandList.add(new SetDivorce(consoleUI));
         commandList.add(new SortByName(consoleUI));
         commandList.add(new SortByAge(consoleUI));
         commandList.add(new SortByBirthdate(consoleUI));
         commandList.add((new GetFamilyTreeInfo(consoleUI)));
+        commandList.add((new SaveToFile(consoleUI)));
+        commandList.add((new LoadFromFile(consoleUI)));
         commandList.add((new Finish(consoleUI)));
     }
 

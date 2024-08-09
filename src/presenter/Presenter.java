@@ -84,4 +84,23 @@ public class Presenter {
         String info = service.getFamilyTree().toString();
         view.printAnswer(info);
     }
+    public boolean setWedding(String name1, String name2){
+        return service.setWedding(name1, name2);
+    }
+    public boolean setWedding(int id1, int id2){
+        return service.setWedding(id1, id2);
+    }
+    public boolean setDivorce(String name1, String name2){
+        return service.setDivorce(name1, name2);
+    }
+    public boolean setDivorce(int id1, int id2){
+        return service.setDivorce(id1, id2);
+    }
+
+    public boolean saveToFile(String filename) {
+        return service.saveToFile(filename);
+    }
+    public boolean loadFromFile(String filename){
+        return service.loadFromFile(filename);
+    }
 }
