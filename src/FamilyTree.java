@@ -3,7 +3,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FamilyTree {
+import java.io.Serializable;
+import java.util.*;
+
+
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Map<FullName, Person> members;
 
     public FamilyTree() {

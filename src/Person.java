@@ -1,8 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
     private FullName fullName;
     private Gender gender;
     private LocalDate dateOfBirth;
@@ -48,6 +50,7 @@ public class Person {
     public void setDateOfDeath(LocalDate dateOfDeath) {
         this.dateOfDeath = dateOfDeath;
     }
+
     public List<Person> getParents() {
         return parents;
     }
