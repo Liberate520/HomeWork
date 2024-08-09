@@ -1,11 +1,10 @@
 package ru.gb.family_tree.writer;
 
-import ru.gb.family_tree.family_tree.FamilyTree;
-
 import java.io.*;
 
 public class FileHandler implements Writer {
     private String filePath;
+
 
     public FileHandler(String filePath) {
         this.filePath = filePath;
@@ -30,10 +29,5 @@ public class FileHandler implements Writer {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public void setPath(String filePath) {
-        this.filePath=filePath;
     }
 }

@@ -6,7 +6,6 @@ import ru.gb.family_tree.human.Gender;
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.writer.FileHandler;
 
-import java.io.Console;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,7 +17,7 @@ import java.time.LocalDate;
 //        System.out.println(tree);
 //    }
 public class Main {
-    final static String filePath = "src/ru.gb.family_tree/writer/tree.txt";
+    final static String filePath = "src/ru/gb/family_tree/writer/tree.txt";
     public static void main(String[] args) throws IOException, FileNotFoundException {
 //        FamilyTree tree = load();
         FamilyTree tree = testTree();
@@ -29,13 +28,11 @@ public class Main {
 
     private static FamilyTree load () {
         FileHandler fileHandler = new FileHandler(filePath);
-        fileHandler.setPath(filePath);
         return (FamilyTree) fileHandler.read();
     }
 
     private static void save(FamilyTree familyTree) {
         FileHandler fileHandler = new FileHandler(filePath);
-        fileHandler.setPath(filePath);
         fileHandler.save(familyTree);
     }
 
