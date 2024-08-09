@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+// Использование полиморфизма для улучшения читаемости и обслуживания кода.
+
 class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
     private List<T> persons;
 

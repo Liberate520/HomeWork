@@ -1,5 +1,8 @@
 import writer.FileHandler;
 
+// Принцип инверсии зависимостей (DIP) - зависимость должна быть от абстракций, а не от конкретных классов.
+// Изменяем зависимость от конкретного класса FileHandler на абстракцию Writer.
+
 class MainPresenter {
     private GenealogyTreeModel model;
     private GenealogyTreeView view;

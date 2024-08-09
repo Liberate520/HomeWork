@@ -2,6 +2,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// Single Responsibility Principle (SRP) - Принцип единственной ответственности
+// Класс Person должен отвечать только за данные и поведение конкретного человека, а не за управление списком детей.
+
 class Person<T extends Person<T>> implements GenTreeService<T> {
     private String name;
     private LocalDate birthDate;
