@@ -2,44 +2,46 @@ package Family_Tree;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class FamilyTreePresenter {
-    private FamilyTree<Person> model;
+    private FamilyTreeService service;
     private FamilyTreeConsoleView view;
 
-    public FamilyTreePresenter(FamilyTree<Person> model, FamilyTreeConsoleView view) {
-        this.model = model;
+    public FamilyTreePresenter(FamilyTreeService service, FamilyTreeConsoleView view) {
+        this.service = service;
         this.view = view;
     }
 
     public void addPerson(String firstName, String lastName, int gender, LocalDate birthDate) {
         Person person = new Person(firstName, lastName, gender, birthDate);
-        model.addElement(person.getName(), person);
+        service.addPerson(person);
         view.displayPersonAdded(person);
     }
 
-    public Person findPersonByName(String firstName, String lastName) {
-        return model.findElementByKey(firstName + " " + lastName);
+    public Person findPersonByName(String name) {
+        return service.findPersonByName(name);
     }
 
     public void saveToFile(String fileName) {
-        model.saveToFile(fileName);
+        service.savePeopleToFile(fileName);
+        service.saveAnimalsToFile(fileName);
         view.displayFileSaved(fileName);
     }
 
     public void loadFromFile(String fileName) {
-        model.loadFromFile(fileName);
+        service.loadPeopleFromFile(fileName);
+        service.loadAnimalsFromFile(fileName);
         view.displayFileLoaded(fileName);
     }
 
     public Collection<Person> getPeople() {
-        return model.getElements().values();
+        return service.getPeople().values().stream()
+                .collect(Collectors.toList());
     }
 
-    // Добавить новые методы для расширения функциональности
-    public void addNewFeature() {
-        // Реализация нового функционала
-        model.addNewFeature("key", new Person("John", "Doe", Person.MALE, LocalDate.now()));
-        view.displayNewFeature();
+    public Collection<Animal> getAnimals() {
+        return service.getAnimals().values().stream()
+                .collect(Collectors.toList());
     }
 }

@@ -1,64 +1,58 @@
 package Family_Tree;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FamilyTreeService {
-    private FamilyTree<Person> peopleTree;
-    private FamilyTree<Animal> animalsTree;
+    private Map<String, Person> people;
+    private Map<String, Animal> animals;
+    private FileIOInterface<Map<String, Person>> peopleFileIO;
+    private FileIOInterface<Map<String, Animal>> animalsFileIO;
 
     public FamilyTreeService() {
-        this.peopleTree = new FamilyTree<>();
-        this.animalsTree = new FamilyTree<>();
-    }
-
-    public void loadPeopleFromFile(String fileName) {
-        peopleTree.loadFromFile(fileName);
-    }
-
-    public void loadAnimalsFromFile(String fileName) {
-        animalsTree.loadFromFile(fileName);
-    }
-
-    public void savePeopleToFile(String fileName) {
-        peopleTree.saveToFile(fileName);
-    }
-
-    public void saveAnimalsToFile(String fileName) {
-        animalsTree.saveToFile(fileName);
-    }
-
-    public void displayPeopleTree() {
-        System.out.println("Дерево Людей:");
-        System.out.println(peopleTree);
-    }
-
-    public void displayAnimalsTree() {
-        System.out.println("Дерево Животных:");
-        System.out.println(animalsTree);
+        this.people = new HashMap<>();
+        this.animals = new HashMap<>();
+        this.peopleFileIO = new FileIO<>();
+        this.animalsFileIO = new FileIO<>();
     }
 
     public void addPerson(Person person) {
-        peopleTree.addElement(person.getName(), person);
+        people.put(person.getName(), person);
     }
 
     public void addAnimal(Animal animal) {
-        animalsTree.addElement(animal.getName(), animal);
-    }
-
-    public List<Person> getPeople() {
-        return new ArrayList<>(peopleTree.getElements().values());
-    }
-
-    public List<Animal> getAnimals() {
-        return new ArrayList<>(animalsTree.getElements().values());
+        animals.put(animal.getName(), animal);
     }
 
     public Person findPersonByName(String name) {
-        return peopleTree.findElementByKey(name);
+        return people.get(name);
     }
 
     public Animal findAnimalByName(String name) {
-        return animalsTree.findElementByKey(name);
+        return animals.get(name);
+    }
+
+    public void savePeopleToFile(String fileName) {
+        peopleFileIO.writeToFile(fileName, people);
+    }
+
+    public void saveAnimalsToFile(String fileName) {
+        animalsFileIO.writeToFile(fileName, animals);
+    }
+
+    public void loadPeopleFromFile(String fileName) {
+        people = peopleFileIO.readFromFile(fileName);
+    }
+
+    public void loadAnimalsFromFile(String fileName) {
+        animals = animalsFileIO.readFromFile(fileName);
+    }
+
+    public Map<String, Person> getPeople() {
+        return people;
+    }
+
+    public Map<String, Animal> getAnimals() {
+        return animals;
     }
 }
