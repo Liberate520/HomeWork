@@ -5,9 +5,11 @@ import java.util.Scanner;
 
 public class FamilyTreeConsole {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final FamilyTreePresenter presenter = new FamilyTreePresenter(new FamilyTree<Family_Tree.Person>());
+    private static FamilyTreePresenter presenter;
 
     public static void main(String[] args) {
+        presenter = new FamilyTreePresenter(new FamilyTree<Family_Tree.Person>(), new FamilyTreeConsoleView(presenter));
+
         boolean exit = false;
         while (!exit) {
             System.out.println("Выберите опцию:");
