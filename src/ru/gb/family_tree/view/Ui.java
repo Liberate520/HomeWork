@@ -10,5 +10,6 @@ public interface Ui {
     void initNewCollector();
     void setInfoInCollector(Object obj, CollectorItems collectorItem);
     void addHuman(boolean ignoreSuccessMessage);
+    void editHuman(int id);
     Human getHumanById(int id);
 }

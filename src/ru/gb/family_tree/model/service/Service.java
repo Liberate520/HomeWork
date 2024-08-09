@@ -7,21 +7,21 @@ import ru.gb.family_tree.model.family_tree.FamilyTree;
 import ru.gb.family_tree.model.human.enums.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.writer.FileHandler;
+import ru.gb.family_tree.model.writer.Writer;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-public class Service implements Serializable {
+public class Service {
     private HumanBuilder humanBuilder;
     private FamilyTree<Human> famTree;
-    private FileHandler fh;
+    private Writer writer;
 
-    public Service() {
+    public Service(Writer writer) {
         famTree = new FamilyTree();
         humanBuilder = new HumanBuilder();
-        fh = new FileHandler();
+        this.writer = writer;
     }
 
     public void addHuman(String name, String patronymic, String surname,
@@ -100,7 +100,7 @@ public class Service implements Serializable {
     public boolean saveFamTreeToFile(String fileName){
         boolean success = true;
         try{
-            fh.saveObject(famTree, fileName + ".fmt");
+            writer.saveObject(famTree, fileName + ".fmt");
         } catch (Exception e){
             e.printStackTrace();
             success = false;
@@ -125,7 +125,7 @@ public class Service implements Serializable {
     public boolean loadFamTreeFromFile(String fileName){
         boolean success = true;
         try{
-            famTree = (FamilyTree<Human>) fh.readObject(fileName);
+            famTree = (FamilyTree<Human>) writer.readObject(fileName);
             setIdAfterLoad();
         } catch (Exception e){
             e.printStackTrace();
@@ -135,7 +135,7 @@ public class Service implements Serializable {
     }
 
     public List<String> showSaveFiles(){
-        return fh.showSaveFiles();
+        return writer.showSaves();
     }
 
 

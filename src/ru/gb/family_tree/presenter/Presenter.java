@@ -5,6 +5,8 @@ import ru.gb.family_tree.info_collector.InfoCollector;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.enums.Gender;
 import ru.gb.family_tree.model.service.Service;
+import ru.gb.family_tree.model.writer.FileHandler;
+import ru.gb.family_tree.model.writer.Writer;
 import ru.gb.family_tree.view.Ui;
 
 import java.time.LocalDate;
@@ -15,9 +17,9 @@ public class Presenter {
     private Ui ui;
     private Service service;
 
-    public Presenter(Ui ui) {
+    public Presenter(Ui ui, Writer writer) {
         this.ui = ui;
-        service = new Service();
+        service = new Service(writer);
     }
 
     public void addHuman(boolean ignoreSuccessMessage, String name, String patronymic, String surname,

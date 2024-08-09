@@ -2,6 +2,7 @@ package ru.gb.family_tree;
 
 import ru.gb.family_tree.info_collector.CollectorItems;
 import ru.gb.family_tree.model.human.enums.Gender;
+import ru.gb.family_tree.model.writer.FileHandler;
 import ru.gb.family_tree.view.Ui;
 import ru.gb.family_tree.view.console_ui.ConsoleUi;
 
@@ -255,7 +256,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Ui ui = new ConsoleUi();
+        Ui ui = new ConsoleUi(new FileHandler());
 //        fillTemplateData(ui);
         ui.startUi();
 

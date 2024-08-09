@@ -27,7 +27,7 @@ public class FileHandler implements Writer{
         return obj;
     }
 
-    public List<String> showSaveFiles(){
+    public List<String> showSaves(){
         File dir = new File("save");
         File[] listOfFiles = dir.listFiles();
         List<String> saveFiles = new ArrayList<>();

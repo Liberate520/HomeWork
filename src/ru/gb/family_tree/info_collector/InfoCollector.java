@@ -1,10 +1,5 @@
 package ru.gb.family_tree.info_collector;
 
-import ru.gb.family_tree.model.human.Human;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class InfoCollector {
     Object name;
     Object patronymic;
@@ -36,21 +31,6 @@ public class InfoCollector {
             case CollectorItems.BirthPlace -> birthPlace = data;
             case CollectorItems.Notes -> notes = data;
         }
-    }
-
-    private Object addHumanInChildren(Object data){
-        List<Human> childs ;
-        if(data != null){
-            if (children == null){
-                childs = new ArrayList<>();
-                childs.add((Human)data);
-            } else {
-                childs = (List<Human>)children;
-                childs.add((Human)data);
-            }
-            return (Object) childs;
-        }
-        return null;
     }
 
     public Object getCollectorItem(CollectorItems collectorItem){

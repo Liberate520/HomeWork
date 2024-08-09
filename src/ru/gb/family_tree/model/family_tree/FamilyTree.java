@@ -27,11 +27,6 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
         familyTree.add(human);
     }
 
-    public void addHumans(T... humans) {
-        familyTree.addAll(Arrays.asList(humans));
-    }
-
-
     public void setParentsByChildren() {
         for (T human : familyTree) {
             List<T> children = human.getChildren();
@@ -87,10 +82,6 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
                 setChildren(father, human);
             }
         }
-    }
-
-    public List<T> getHumanList(){
-        return familyTree;
     }
 
     public boolean isEmpty(){
@@ -191,38 +182,6 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
             }
         }
         return result;
-    }
-
-    public List<T> getParents(T human){
-        List<T> parents = new ArrayList<>();
-        parents.add((T)human.getMother());
-        parents.add((T)human.getFather());
-        return parents;
-    }
-
-    public String showParents(T human){
-        return "Мать: " + '\n' +
-                human.getMother() +
-                "Отец: " + '\n' +
-                human.getFather();
-    }
-
-    public List<T> getGrandMothers(T human){
-        List<T> grandMothers = new ArrayList<>();
-        T mother = (T)human.getMother();
-        T father = (T)human.getFather();
-        grandMothers.add((T)mother.getMother());
-        grandMothers.add((T)father.getMother());
-        return grandMothers;
-    }
-
-    public List<T> getGrandFathers(T human){
-        List<T> grandFathers = new ArrayList<>();
-        T mother = (T)human.getMother();
-        T father = (T)human.getFather();
-        grandFathers.add((T)mother.getFather());
-        grandFathers.add((T)father.getFather());
-        return grandFathers;
     }
 
     @Override

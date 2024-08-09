@@ -2,6 +2,7 @@ package ru.gb.family_tree.view.console_ui;
 
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.enums.Gender;
+import ru.gb.family_tree.model.writer.Writer;
 import ru.gb.family_tree.presenter.Presenter;
 import ru.gb.family_tree.view.Ui;
 import ru.gb.family_tree.view.console_ui.enums.LocalDatesTypes;
@@ -38,9 +39,9 @@ public class ConsoleUi implements Ui {
     private List<CollectorItems> editedItems;
     private boolean stopEditFlag;
 
-    public ConsoleUi() {
+    public ConsoleUi(Writer writer) {
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+        presenter = new Presenter(this, writer);
         infoCollector = new InfoCollector();
         mainMenu = new MainMenu(this);
         savedFlag = true;
