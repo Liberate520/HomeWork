@@ -44,4 +44,9 @@ public class FamilyTree<T extends Serializable> implements Serializable {
         }
         return sb.toString();
     }
+
+
+    public void addNewFeature(String key, T element) {
+
+    }
 }

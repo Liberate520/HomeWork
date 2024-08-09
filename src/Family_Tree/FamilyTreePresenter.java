@@ -35,4 +35,11 @@ public class FamilyTreePresenter {
     public Collection<Person> getPeople() {
         return model.getElements().values();
     }
+
+    // Добавить новые методы для расширения функциональности
+    public void addNewFeature() {
+        // Реализация нового функционала
+        model.addNewFeature("key", new Person("John", "Doe", Person.MALE, LocalDate.now()));
+        view.displayNewFeature();
+    }
 }

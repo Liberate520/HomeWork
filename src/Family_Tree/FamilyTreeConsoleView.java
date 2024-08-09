@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Scanner;
 
 public class FamilyTreeConsoleView {
-    private FamilyTreePresenter presenter;
-    private Scanner scanner;
+    private final FamilyTreePresenter presenter;
+    private final Scanner scanner;
 
     public FamilyTreeConsoleView(FamilyTreePresenter presenter) {
         this.presenter = presenter;
@@ -37,6 +37,9 @@ public class FamilyTreeConsoleView {
                     displayTree();
                     break;
                 case 6:
+                    displayNewFeature();
+                    break;
+                case 7:
                     System.out.println("Выход...");
                     return;
                 default:
@@ -45,13 +48,14 @@ public class FamilyTreeConsoleView {
         }
     }
 
-    private void displayMenu() {
+    public void displayMenu() {
         System.out.println("1. Добавить человека");
         System.out.println("2. Найти человека");
         System.out.println("3. Сохранить Семейное Дерево в файл");
         System.out.println("4. Загрузить Семейное Дерево из файла");
         System.out.println("5. Отобразить Семейное Дерево");
-        System.out.println("6. Выход");
+        System.out.println("6. Использовать новую функцию");
+        System.out.println("7. Выход");
         System.out.print("Введите Ваш выбор: ");
     }
 
@@ -105,15 +109,20 @@ public class FamilyTreeConsoleView {
         }
     }
 
-    protected void displayPersonAdded(Person person) {
+    public void displayPersonAdded(Person person) {
         System.out.println("Человек успешно добавлен: " + person);
     }
 
-    protected void displayFileSaved(String fileName) {
+    public void displayFileSaved(String fileName) {
         System.out.println("Семейное Дерево сохранено в файл: " + fileName);
     }
 
-    protected void displayFileLoaded(String fileName) {
+    public void displayFileLoaded(String fileName) {
         System.out.println("Семейное Дерево загружено из файла: " + fileName);
+    }
+
+    public void displayNewFeature() {
+        presenter.addNewFeature();
+        System.out.println("Новая функция использована.");
     }
 }
