@@ -10,10 +10,12 @@ public class Menu {
 
     public Menu(ConsoleUI consoleUI){
         commands = new ArrayList<>();
+        commands.add(new ReadTree(consoleUI));
         commands.add(new AddHuman(consoleUI));
         commands.add(new GetFamilyTreeInfo(consoleUI));
         commands.add(new SortByName(consoleUI));
         commands.add(new SortByBirthday(consoleUI));
+        commands.add(new SaveTree(consoleUI));
         commands.add(new Finish(consoleUI));
 
     }
@@ -30,6 +32,7 @@ public class Menu {
         return stringBuilder.toString();
     }
 
+    public int menuSize() {return commands.size();}
 
     public void execute(int choice){
         commands.get(choice-1).execute();

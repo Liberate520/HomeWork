@@ -44,4 +44,15 @@ public class Service implements Serializable {
     public void sortByBirthday(){
         humanList.comparatorByBirthDate();
     }
+
+
+    public void saveTree(Service tree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.save(tree);
+    }
+
+    public Service readTree() {
+        FileHandler fileHandler = new FileHandler();
+        return (Service) fileHandler.read();
+    }
 }

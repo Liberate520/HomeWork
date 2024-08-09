@@ -1,4 +1,4 @@
-package family_tree.writer;
+package family_tree.model.service;
 
 import java.io.Serializable;
 public interface Writer {

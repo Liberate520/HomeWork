@@ -1,11 +1,11 @@
-package family_tree.writer;
+package family_tree.model.service;
 
 
 import java.io.*;
 
-public class FileHandler implements Writer{
+public class FileHandler implements Writer {
 
-    private String filePath = "src/family_tree/writer/tree.txt";
+    private String filePath = "src/family_tree/model/bd_tree/tree.txt";
     @Override
     public void save(Serializable serializable){
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){

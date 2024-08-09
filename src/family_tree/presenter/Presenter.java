@@ -32,5 +32,19 @@ public class Presenter {
         getFamilyTreeInfo();
     }
 
+    public void saveTree() {
+        service.saveTree(service);
+    }
+
+    public void readTree() {
+        Service loadedService = service.readTree();
+        if (loadedService != null) {
+            this.service = loadedService;
+            view.printAnswer("Upload completed\n");
+        } else {
+            view.printAnswer("Error upload\n");
+        }
+    }
+
 
 }
