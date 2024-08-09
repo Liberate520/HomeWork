@@ -45,47 +45,49 @@ public class Presenter {
         } else if (strGender.charAt(0) == 'Ж') {
             gender = Gender.FEMALE;
         } else {
-            return "Данные пола введены не верно.";
+            return "Данные пола введены не верно. Введите М или Ж";
         }
         LocalDate birthDay = LocalDate.parse(strBirthDay);
-        return service.addHuman(strName, gender, birthDay);
+        return service.addHuman(strName, gender, birthDay) + "\n" + "Человек добавлен в дерево.";
     }
 
     public String setHumanDeathDay(int id, String strDeathDay) {
         LocalDate deathDay = LocalDate.parse(strDeathDay);
-        return service.setHumanDeathDay(id, deathDay);
+        return service.setHumanDeathDay(id, deathDay) + "\n" + "Добавлена дата смерти.";
     }
 
     public String setHumanFather(int idChildren, int idFather) {
-        return service.setHumanFather(idChildren, idFather);
+        return service.setHumanFather(idChildren, idFather) + "\n" + "Отец добавлен.";
     }
 
     public String setHumanMother(int idChildren, int idMother) {
-        return service.setHumanMother(idChildren, idMother);
+        return service.setHumanMother(idChildren, idMother) + "\n" + "Мать добавлена.";
     }
 
     public String wedding(int idHusband, int idWife) {
-        return service.wedding(idHusband, idWife);
+        return service.wedding(idHusband, idWife) + "\n" + "Брак заключен.";
     }
 
     public String divorce(int idHusband, int idWife) {
-        return service.divorce(idHusband, idWife);
+        return service.divorce(idHusband, idWife) + "\n" + "Брак разторгнут.";
     }
 
     public String remove(int id) {
-        return service.remove(id);
+        return service.remove(id) + "\n" + "Человек удален и дерева.";
     }
 
     public String createFamilyTree() {
         service.createFamilyTree();
-        return service.getTreeInfo();
+        return service.getTreeInfo() + "\n" + "Семейное древо создано.";
     }
 
-    public void restoreTree() {
-        service.restoreTree();
-    }
-
-    public void saveTree() {
+    public String saveTree() {
         service.saveTree();
+        return service.getTreeInfo() + "\n" + "Семейное древо сохранено в файл.";
+    }
+
+    public String restoreTree() {
+        service.restoreTree();
+        return service.getTreeInfo() + "\n" + "Семейное древо востановленно из файла.";
     }
 }

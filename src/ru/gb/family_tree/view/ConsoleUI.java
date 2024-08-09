@@ -77,7 +77,7 @@ public class ConsoleUI implements View {
         String birthDay = "1637-02-20";
         String result = presenter.addHuman(name, gender, birthDay);
         printResult(result);
-        System.out.println("Человек добавлен в дерево.");
+        //System.out.println("Человек добавлен в дерево.");
     }
 
     public void setHumanDeathDay() {
@@ -89,7 +89,7 @@ public class ConsoleUI implements View {
         String deathDay = "1637-02-20";
         String result = presenter.setHumanDeathDay(id, deathDay);
         printResult(result);
-        System.out.println("Добавлена дата смерти.");
+        //System.out.println("Добавлена дата смерти.");
     }
 
     public void setHumanFather() {
@@ -101,7 +101,7 @@ public class ConsoleUI implements View {
         int idFather = 1;
         String result = presenter.setHumanFather(idChildren, idFather);
         printResult(result);
-        System.out.println("Отец добавлен.");
+        //System.out.println("Отец добавлен.");
     }
 
     public void setHumanMother() {
@@ -113,7 +113,7 @@ public class ConsoleUI implements View {
         int idMother = 8;
         String result = presenter.setHumanMother(idChildren, idMother);
         printResult(result);
-        System.out.println("Мать добавлена.");
+        //System.out.println("Мать добавлена.");
     }
 
     public void wedding() {
@@ -125,7 +125,7 @@ public class ConsoleUI implements View {
         int idWife = 8;
         String result = presenter.wedding(idHusband, idWife);
         printResult(result);
-        System.out.println("Брак заключен.");
+        //System.out.println("Брак заключен.");
     }
 
     public void divorce() {
@@ -137,7 +137,7 @@ public class ConsoleUI implements View {
         int idWife = 8;
         String result = presenter.divorce(idHusband, idWife);
         printResult(result);
-        System.out.println("Брак разторгнут.");
+        //System.out.println("Брак разторгнут.");
     }
 
     public void remove() {
@@ -146,24 +146,26 @@ public class ConsoleUI implements View {
         int id = 10;
         String result = presenter.remove(id);
         printResult(result);
-        System.out.println("Человек удален и дерева.");
+        //System.out.println("Человек удален и дерева.");
     }
 
     public void createFamilyTree() {
         System.out.println("Список людей древа:");
         String result = presenter.createFamilyTree();
         printResult(result);
-        System.out.println("Семейное древо создано.");
+        //System.out.println("Семейное древо создано.");
     }
 
     public void saveTree() {
-        presenter.saveTree();
-        System.out.println("Семейное древо сохранено в файл.");
+        String result = presenter.saveTree();
+        printResult(result);
+        //System.out.println("Семейное древо сохранено в файл.");
     }
 
     public void restoreTree() {
-        presenter.restoreTree();
-        System.out.println("Семейное древо востановленно из файла.");
+        String result = presenter.restoreTree();
+        printResult(result);
+        //System.out.println("Семейное древо востановленно из файла.");
     }
 
     public void stop() {
