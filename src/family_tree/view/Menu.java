@@ -27,17 +27,10 @@ public class Menu {
         actions.put(5, new HumansInfoAction());
         actions.put(6, new GetInfoAboutChildren());
         actions.put(7, new GetInfoAboutParents());
-    }
+        actions.put(8, new Save());
+        actions.put(9, new Download());
+        actions.put(10, new DeleteSave());
 
-    public void displayMenu() {
-        System.out.println("Выберите действие: ");
-        menuBuilder(categories);
-        for (int i = 0; i < categories.size(); i++) {
-            System.out.println(i + " " + categories.get(i));
-        }
-    }
-
-    public void menuBuilder(List<String> lst) {
         categories.add("Закончить работу");
         categories.add("Добавить человека");
         categories.add("Отсортировать по возрасту");
@@ -46,7 +39,17 @@ public class Menu {
         categories.add("Полный список людей");
         categories.add("Информация о детях человека (по ID)");
         categories.add("Информация о родителях человека (по ID)");
+        categories.add("Сохранить семейное дерево");
+        categories.add("Загрузить семейное дерево");
+        categories.add("Удалить семейное дерево");
 
+    }
+
+    public void displayMenu() {
+        System.out.println("Выберите действие: ");
+        for (int i = 0; i < categories.size(); i++) {
+            System.out.println(i + " " + categories.get(i));
+        }
     }
 
     public void performAction(int choice, Presenter presenter) {

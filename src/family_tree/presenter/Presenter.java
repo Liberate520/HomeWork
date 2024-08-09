@@ -2,6 +2,7 @@ package family_tree.presenter;
 
 import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
+import family_tree.model.humanTree.HumanTree;
 import family_tree.model.service.Service;
 import family_tree.view.View;
 import java.time.LocalDate;
@@ -42,15 +43,35 @@ public class Presenter {
         humansInfo();
     }
 
-    public void getInfoAboutParents(Human human) {
-        service.getInfoAboutParents(human);
+    public String getInfoAboutParents(int id) {
+        return service.getInfoAboutParents(id);
     }
 
-    public void getInfoAboutChildren(Human human) {
-        service.getInfoAboutChildren(human);
+    public String getInfoAboutChildren(int id) {
+        return service.getInfoAboutChildren(id);
     }
 
     public void addChild(int idParent, int idChild) {
         service.addChild(idParent, idChild);
+    }
+
+    public String getNameByID (int id) {
+        return service.getNameByID(id);
+    }
+
+    public HumanTree<Human> getHumanTree() {
+        return service.getHumans();
+    }
+
+    public void save () {
+        service.save(getHumanTree());
+    }
+
+    public void read () {
+        service.setHumans();
+    }
+
+    public  void deleteSave () {
+        service.clear();
     }
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterable<E> {
-    private final List<E> humans;
+    private List<E> humans;
 
     public HumanTree () {
         humans = new ArrayList<>();
@@ -72,6 +72,10 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
         return humans;
     }
 
+    public void setHumans (List<E> humanTree){
+        humans = humanTree;
+    }
+
 //    @Override
 //    public String toString() {
 //        StringBuilder sb = new StringBuilder();
@@ -97,5 +101,9 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
     // сортировка по возрасту
     public void sortByAge() {
         humans.sort(new HumanComparatorByAge<>());
+    }
+
+    public int size() {
+        return humans.size();
     }
 }

@@ -31,6 +31,9 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
         this.children = new ArrayList<>();
     }
 
+    public static void setIdCounter(int idCounter) {
+        Human.idCounter = idCounter;
+    }
 
     public String getName() {
         return name;

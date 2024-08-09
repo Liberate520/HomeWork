@@ -3,12 +3,16 @@ import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
 import family_tree.model.humanTree.HumanTree;
 import family_tree.model.humanTree.ItemHumanTree;
+import family_tree.model.writer.FileHandler;
+import family_tree.model.writer.Writer;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Service {
-    private final HumanTree<Human> humans;
-    private List<Human> children;
+public class Service implements Serializable {
+    private HumanTree<Human> humans;
+    Writer writer = new FileHandler();
     public Service() {
         humans = new HumanTree<>();
     }
@@ -18,43 +22,17 @@ public class Service {
         humans.addHuman(human);
     }
 
-
-    public String getInfoAboutParents(Human human) {
-        StringBuilder sb = new StringBuilder();
-        if (human.getFather() == null && human.getMother() == null) {
-            sb.append(human.getName() + " has no information about parents.");
-            return sb.toString();
-        } else if (human.getFather() == null) {
-            sb.append(human.getName() + " has no information about father.");
-            sb.append("Mother of " + human.getName() + " " + human.getSurname() + ":\n" + human.getMother() + "\n");
-            return sb.toString();
-        } else if (human.getMother() == null) {
-            sb.append("Father of " + human.getName() + " " + human.getSurname() + ":\n" + human.getFather() + "\n");
-            sb.append(human.getName() + " has no information about mother.");
-            return sb.toString();
-        }
-        sb.append("Parents of " + human.getName() + ":\n");
-        sb.append("\n");
-        sb.append("Father:\n" + human.getFather() + "\n");
-        sb.append("Mother:\n" + human.getMother() + "\n");
-        return sb.toString();
+    public String getNameByID (int id) {
+        Human human = getHumanById(id);
+        return human.getName();
     }
 
-    public String getInfoAboutChildren(Human human) {
-        StringBuilder sb = new StringBuilder();
-        List<Human> children = human.getChildren();
-        if (human.getChildren().isEmpty()) {
-            sb.append(human.getName() + " doesn`t hava a child.");
-            return sb.toString();
-        }
-        sb.append("Children of " + human.getName() + ": \n");
-        int i = 1;
-        for (ItemHumanTree child : children) {
-            sb.append(i + " child: ");
-            sb.append(child + "\n");
-            i++;
-        }
-        return sb.toString();
+    public String getInfoAboutParents(int id) {
+        return humans.getInfoAboutParents(getHumanById(id));
+    }
+
+    public String getInfoAboutChildren(int id) {
+        return humans.getInfoAboutChildren(getHumanById(id));
     }
 
     public HumanTree<Human> getHumans() {
@@ -71,7 +49,7 @@ public class Service {
 
     public Human getHumanById(int id) {
         for (Human human : humans) {
-            if (((Human) human).getId() == id) {
+            if ((human).getId() == id) {
                 return human;
             }
         }
@@ -85,8 +63,11 @@ public class Service {
     }
 
     public String humansInfo(String message) {
+        if (humans.size() == 0 && humans == null) {
+            return "Список пуст";
+        }
         StringBuilder sb = new StringBuilder();
-        sb.append(message + "\n");
+        sb.append(message).append("\n");
         for (Human human : humans) {
             sb.append(human);
             sb.append("\n");
@@ -94,5 +75,21 @@ public class Service {
         return sb.toString();
     }
 
+    public void save(HumanTree humanTree) {
+        writer.save(humanTree);
+    }
 
+    public HumanTree read() {
+        HumanTree humanTree = (HumanTree) writer.read();
+        return humanTree;
+    }
+
+    public void clear() {
+        writer.clear();
+        humans = null;
+    }
+
+    public void setHumans () {
+        humans = read();
+    }
 }

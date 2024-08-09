@@ -6,7 +6,7 @@ public class FinishAction implements MenuActions {
 
     @Override
     public void execute(Presenter presenter) {
-        System.out.println("Работа завершена.");
+        System.out.println("Работа завершена. До встречи!");
         System.exit(0);
     }
 }
