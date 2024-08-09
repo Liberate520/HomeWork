@@ -67,6 +67,10 @@ public class Main {
         fileHandler.setPath(filePath);
         fileHandler.save(familyTree);
         familyTree = (FamilyTree) fileHandler.read();
+
+        for (Human human: familyTree) {
+            human.setName("123");
+        }
     }
     
 }
