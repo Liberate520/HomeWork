@@ -32,11 +32,14 @@ public class Main{
         tree.add(second);
         tree.setWedding(first, second);
 
-        Human child1 = new Human ("Baelor", Gender.Male, LocalDate.of(2000, 1, 23), first, second);
+        Human child1 = new Human ("Balian", Gender.Male, LocalDate.of(2000, 1, 23), first, second);
 
         tree.add(child1);
+
+        tree.sortById(); // Сортировка по ID
         
-        tree.sortByName();
+        tree.sortByName(); // Сортировка по имени
+
         return tree;
     }
 }

@@ -2,9 +2,11 @@ package Homework2_OOP;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable{
+public class FamilyTree implements Serializable, Iterable<Human>{
     private long humansId;
     private List<Human> humanList;
 
@@ -141,5 +143,35 @@ public class FamilyTree implements Serializable{
     public void sortByName(){
         Collections.sort(humanList);
     }
+
+    public void sortById(){
+        Collections.sort(humanList);
+    }
+
+    @Override
+    public Iterator<Human> iterator(){
+        return new HumanIterator();
+    }
+
+    class HumanIterator implements Iterator<Human>{
+
+        private int index;
+        private List<Human> humanList;
+
+        public StudentIterator(List<Student> humanList) {
+            this.humanList = humanList;
+        }
+
+        @Override
+        public boolean hasNext() {
+          return index < humanList.size();
+        }
+
+        @Override
+        public Student next() {
+            return humanList.get(index++);
+        }
+    }
+
 }
 
