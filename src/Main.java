@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
-        FileManager fileManager = new FileManager(familyTree);
+        FileManager fileManager = new FileManager();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -54,8 +54,16 @@ public class Main {
                         }
                     }
 
-                    System.out.print("Введите пол (Мужчина/Женщина): ");
-                    String gender = scanner.nextLine();
+                    // Ввод пола с проверкой
+                    Person.Gender gender = null;
+                    while (gender == null) {
+                        System.out.print("Введите пол (МУЖЧИНА/ЖЕНЩИНА): ");
+                        try {
+                            gender = Person.Gender.valueOf(scanner.nextLine().toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Некорректный ввод пола. Пожалуйста, введите МУЖЧИНА или ЖЕНЩИНА.");
+                        }
+                    }
 
                     Person newPerson = new Person(firstName, lastName, birthDate, gender);
                     familyTree.addPerson(newPerson);
@@ -116,7 +124,7 @@ public class Main {
                     // Сохранение семейного дерева в файл
                     System.out.print("Введите имя файла для сохранения (без расширения, будет добавлено автоматически): ");
                     String saveFilename = scanner.nextLine();
-                    fileManager.saveFamilyTree(saveFilename);
+                    fileManager.saveFamilyTree(familyTree, saveFilename);
                     break;
 
                 case 5:

@@ -10,21 +10,22 @@ public class Person implements Serializable {
     private String lastName;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private String gender;
+    private Gender gender;
     private List<Person> children;
     private Person mother;
     private Person father;
 
-    public Person(String firstName, String lastName, LocalDate birthDate, String gender) {
-        this.id = idCounter++;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.gender = gender;
-        this.children = new ArrayList<>();
+    // Определение enum для пола
+    public enum Gender {
+        МУЖЧИНА, ЖЕНЩИНА;
     }
 
-    public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate, String gender) {
+    public Person(String firstName, String lastName, LocalDate birthDate, Gender gender) {
+        this(firstName, lastName, birthDate, null, gender);
+        this.id = idCounter++;
+    }
+
+    public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate, Gender gender) {
         this.id = idCounter++;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -70,11 +71,11 @@ public class Person implements Serializable {
         this.deathDate = deathDate;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -105,6 +106,8 @@ public class Person implements Serializable {
     @Override
     public String toString() {
         return "ID: " + id + ", Имя: " + firstName + " " + lastName + ", Дата рождения: " + birthDate +
-                (deathDate != null ? ", Дата смерти: " + deathDate : "") + ", Пол: " + gender;
+                (deathDate != null ? ", Дата смерти: " + deathDate : "") + ", Пол: " + gender +
+                (mother != null ? ", Мать: " + mother.getFirstName() + " " + mother.getLastName() : "") +
+                (father != null ? ", Отец: " + father.getFirstName() + " " + father.getLastName() : "");
     }
 }

@@ -1,4 +1,4 @@
 public interface DataHandler {
-    void saveFamilyTree(String filename);
+    void saveFamilyTree(FamilyTree familyTree, String filename);
     FamilyTree loadFamilyTree(String filename);
 }

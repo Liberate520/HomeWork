@@ -1,14 +1,9 @@
 import java.io.*;
 
 public class FileManager implements DataHandler {
-    private FamilyTree familyTree;
-
-    public FileManager(FamilyTree familyTree) {
-        this.familyTree = familyTree;
-    }
 
     @Override
-    public void saveFamilyTree(String saveFilename) {
+    public void saveFamilyTree(FamilyTree familyTree, String saveFilename) {
         if (!saveFilename.endsWith(".ser")) {
             saveFilename += ".ser";
         }
