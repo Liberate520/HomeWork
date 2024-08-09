@@ -6,8 +6,8 @@ import ru.gb.family_tree.model.service.FamilyTreeItem;
 import java.util.List;
 
 public interface Writer<T extends FamilyTreeItem<T>> {
-    void saveToFile(List<T> list, String string);
+    //void saveToFile(List<T> list, String string);
     void saveToFile(FamilyTree<T> familyTree, String string);
-    List<T> restoreFromFileH (String string);
+    //List<T> restoreFromFileH (String string);
     FamilyTree<T> restoreFromFileFT (String string);
 }

@@ -4,6 +4,8 @@ import ru.gb.family_tree.model.service.FamilyTreeItem;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class Human implements FamilyTreeItem<Human> {
     private Human father;
     private Human mother;
     private Human spouse;
-    private List<Human> children;
+    private final List<Human> children;
 
     public Human() {
         this.children = new ArrayList<>();
@@ -94,6 +96,16 @@ public class Human implements FamilyTreeItem<Human> {
         return gender;
     }
 
+    public String getGenderInfo() {
+        String result = "пол: ";
+        if (getGender().equals(Gender.MALE)) {
+            result += "Мужской";
+        } else {
+            result += "Женский";
+        }
+        return result;
+    }
+
     @Override
     public LocalDate getBirthDay() {
         return birthDay;
@@ -101,6 +113,16 @@ public class Human implements FamilyTreeItem<Human> {
 
     public LocalDate getDeathDate() {
         return deathDate;
+    }
+
+    public String getDeathDateInfo() {
+        String result = "дата смерти: ";
+        if (getDeathDate() != null) {
+            result += getDeathDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
+        } else {
+            result += "неизвестена";
+        }
+        return result;
     }
 
     @Override
@@ -192,6 +214,15 @@ public class Human implements FamilyTreeItem<Human> {
     }
 
     @Override
+    public boolean delChild(Human child) {
+        if (children.contains(child)) {
+            children.remove(child);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean addParent(Human parent) {
         if (parent.getGender().equals(Gender.MALE)) {
             setFather(parent);
@@ -222,7 +253,7 @@ public class Human implements FamilyTreeItem<Human> {
         StringBuilder result = new StringBuilder();
         result.append("Id: ").append(getId())
                 .append(", Имя: ").append(getName())
-                .append(", пол: ").append(getGender())
+                .append(", ").append(getGenderInfo())
                 .append(", возраст: ").append(getAge());
         if (getAge() % 10 == 1) {
             result.append(" год");
@@ -231,8 +262,8 @@ public class Human implements FamilyTreeItem<Human> {
         } else {
             result.append(" лет");
         }
-        result.append(", дата рождения: ").append(getBirthDay())
-                .append(", дата смерти: ").append(getDeathDate())
+        result.append(", дата рождения: ").append(getBirthDay().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
+        result.append(", ").append(getDeathDateInfo())
                 .append(", ").append(getFatherInfo())
                 .append(", ").append(getMotherInfo())
                 .append(", ").append(getSpouseInfo())
@@ -266,7 +297,7 @@ public class Human implements FamilyTreeItem<Human> {
         private Human father;
         private Human mother;
         private Human spouse;
-        private List<Human> children;
+        private final List<Human> children;
 
         public HumanBuilder(String name, Gender gender, LocalDate birthDay, Human father,
                             Human mother) {

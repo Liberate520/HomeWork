@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenu {
-    private List<Command> commands;
+    private final List<Command> commands;
 
     public MainMenu(ConsoleUI consoleUI) {
         commands = new ArrayList<>();
@@ -23,6 +23,7 @@ public class MainMenu {
         commands.add(new setHumanMotherCommand(consoleUI));
         commands.add(new WeddingCommand(consoleUI));
         commands.add(new DivorceCommand(consoleUI));
+        commands.add(new Remove(consoleUI));
         commands.add(new DeviderCommand(consoleUI));
         commands.add(new CreateFamilyTreeCommand(consoleUI));
         commands.add(new SaveTreeCommand(consoleUI));
@@ -35,7 +36,7 @@ public class MainMenu {
         StringBuilder result = new StringBuilder();
         result.append("Меню:\n");
         for (int i = 0; i < commands.size(); i++) {
-            if (i != 6 && i != 13 && i != 17) {
+            if (i != 6 && i != 14 && i != 18) {
                 result.append(i + 1)
                         .append(". ");
             }

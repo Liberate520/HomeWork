@@ -45,20 +45,14 @@ public class Presenter {
         } else if (strGender.charAt(0) == 'Ж') {
             gender = Gender.FEMALE;
         } else {
-            return "Введены неверные данные";
+            return "Данные пола введены не верно.";
         }
-        String[] dates = strBirthDay.split("-");
-        LocalDate birthDay = LocalDate.of(Integer.parseInt(dates[0]),
-                Integer.parseInt(dates[1]),
-                Integer.parseInt(dates[2]));
+        LocalDate birthDay = LocalDate.parse(strBirthDay);
         return service.addHuman(strName, gender, birthDay);
     }
 
     public String setHumanDeathDay(int id, String strDeathDay) {
-        String[] dates = strDeathDay.split("-");
-        LocalDate deathDay = LocalDate.of(Integer.parseInt(dates[0]),
-                Integer.parseInt(dates[1]),
-                Integer.parseInt(dates[2]));
+        LocalDate deathDay = LocalDate.parse(strDeathDay);
         return service.setHumanDeathDay(id, deathDay);
     }
 
@@ -76,6 +70,10 @@ public class Presenter {
 
     public String divorce(int idHusband, int idWife) {
         return service.divorce(idHusband, idWife);
+    }
+
+    public String remove(int id) {
+        return service.remove(id);
     }
 
     public String createFamilyTree() {

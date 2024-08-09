@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileHandler<T extends FamilyTreeItem<T>> implements Writer<T> {
+    /*
     public void saveToFile(List<T> list, String string) {
         FileOutputStream output = null;
         ObjectOutputStream objectOutputStream;
@@ -24,6 +25,8 @@ public class FileHandler<T extends FamilyTreeItem<T>> implements Writer<T> {
             e.printStackTrace();
         }
     }
+
+     */
 
     public void saveToFile(FamilyTree<T> familyTree, String string) {
         FileOutputStream output = null;
@@ -42,6 +45,7 @@ public class FileHandler<T extends FamilyTreeItem<T>> implements Writer<T> {
         }
     }
 
+    /*
     public List<T> restoreFromFileH (String string) {
         FileInputStream input = null;
         ObjectInputStream objectInputStream;
@@ -60,6 +64,8 @@ public class FileHandler<T extends FamilyTreeItem<T>> implements Writer<T> {
         }
         return result;
     }
+
+     */
 
     public FamilyTree<T> restoreFromFileFT (String string) {
         FileInputStream input = null;

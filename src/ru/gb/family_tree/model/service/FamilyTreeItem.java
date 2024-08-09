@@ -22,6 +22,7 @@ public interface FamilyTreeItem<T> extends Serializable, Comparable<T> {
     List<T> getChildren();
     String getChildrenInfo();
     boolean addChild(T child);
+    boolean delChild(T child);
     boolean addParent(T parent);
     List<T> getParents();
 }

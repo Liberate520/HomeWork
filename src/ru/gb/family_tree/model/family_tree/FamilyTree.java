@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, Iterable<T> {
-    private int humansId;
     private final List<T> items;
 
     public FamilyTree() {
@@ -22,7 +21,6 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
         }
         if (!items.contains(item)) {
             items.add(item);
-            //item.setId(++humansId);
             addToParents(item);
             addToChildren(item);
             return true;
@@ -31,20 +29,6 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
     }
 
     public void setFather(int idChildren, int idFather) {
-        /*
-        for (T itemChildren : items) {
-            if (itemChildren.getId() == idChildren) {
-                for (T itemFather : items) {
-                    if (itemFather.getId() == idFather) {
-                        itemChildren.setFather(itemFather);
-                        addToParents(itemChildren);
-                        addToChildren(itemChildren);
-                    }
-                }
-            }
-        }
-
-         */
         T itemChildren = getById(idChildren);
         T itemFather = getById(idFather);
         itemChildren.setFather(itemFather);
@@ -53,20 +37,6 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
     }
 
     public void setMother(int idChildren, int idMother) {
-        /*
-        for (T itemChildren : items) {
-            if (itemChildren.getId() == idChildren) {
-                for (T itemFather : items) {
-                    if (itemFather.getId() == idMother) {
-                        itemChildren.setMother(itemFather);
-                        addToParents(itemChildren);
-                        addToChildren(itemChildren);
-                    }
-                }
-            }
-        }
-
-         */
         T itemChildren = getById(idChildren);
         T itemMother = getById(idMother);
         itemChildren.setMother(itemMother);
@@ -88,9 +58,15 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
         }
     }
 
-    private void addToChildren(T human) {
-        for (T child : human.getChildren()) {
-            child.addParent(human);
+    private void delFromParents(T item) {
+        for (T parent : item.getParents()) {
+            parent.delChild(item);
+        }
+    }
+
+    private void addToChildren(T item) {
+        for (T child : item.getChildren()) {
+            child.addParent(item);
         }
     }
 
@@ -158,16 +134,18 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
         }
     }
 
-    public boolean remove(int humansId) {
-        if (checkId(humansId)) {
-            T item = getById(humansId);
+    public boolean remove(int id) {
+        if (checkId(id)) {
+            T item = getById(id);
+            delFromParents(item);
+            setDivorce(item, item.getSpouse());
             return items.remove(item);
         }
         return false;
     }
 
     private boolean checkId(int id) {
-        return  id < items.size() && id >= 0;
+        return  id <= items.size() && id > 0;
     }
 
     public T getById(int id) {
@@ -195,9 +173,11 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
             if (item.getId() == selectId) {
                 result.append(item.getName()).append(":\n");
                 if (!item.getChildren().isEmpty()) {
-                    result.append(item.getChildren().getFirst().getName());
+                    result.append("ID: ").append(item.getChildren().getFirst().getId())
+                            .append(", Имя: ").append(item.getChildren().getFirst().getName()).append(":\n");
                     for (int i = 1; i < item.getChildren().size(); i++) {
-                        result.append(", ").append(item.getChildren().get(i).getName());
+                        result.append("ID: ").append(item.getChildren().get(i).getId())
+                                .append(", Имя: ").append(item.getChildren().get(i).getName()).append(":\n");
                     }
                 } else {
                     result.append("отсутствуют");

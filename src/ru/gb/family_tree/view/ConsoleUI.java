@@ -19,13 +19,7 @@ public class ConsoleUI implements View {
 
     @Override
     public void start() {
-        int menuPoint = 0;
-        //String input;
-        //if (input.isEmpty()){
-        //    System.out.println("Введена пустая строка. Введите номер меню или q для выхода.");
-        //}
-        //TODO: Написать обработчик ошибок.
-        //TODO: Добавить выход по q.
+        int menuPoint;
         while (work) {
             System.out.println(mainMenu.menu());
             //input = scanner.nextLine();
@@ -80,27 +74,28 @@ public class ConsoleUI implements View {
         String gender = "Ж";
         //System.out.println("Введите дату рождения (в формате год-месяц-день):");
         //String birthDay = scanner.nextLine();
-        String birthDay = "1637-2-20";
+        String birthDay = "1637-02-20";
         String result = presenter.addHuman(name, gender, birthDay);
         printResult(result);
-        System.out.println("Человек добавлен.");
+        System.out.println("Человек добавлен в дерево.");
     }
 
     public void setHumanDeathDay() {
         System.out.println("Введите ID человека:");
         //int selectId = Integer.parseInt(scanner.nextLine());
-        int selectId = 9;
+        int id = 10;
         //System.out.println("Введите дату смерти (в формате год-месяц-день):");
         //String deathDay = scanner.nextLine();
-        String deathDay = "1637-2-20";
-        String result = presenter.setHumanDeathDay(selectId, deathDay);
+        String deathDay = "1637-02-20";
+        String result = presenter.setHumanDeathDay(id, deathDay);
         printResult(result);
+        System.out.println("Добавлена дата смерти.");
     }
 
     public void setHumanFather() {
         System.out.println("Введите ID ребенка:");
         //int idChildren = Integer.parseInt(scanner.nextLine());
-        int idChildren = 9;
+        int idChildren = 10;
         System.out.println("Введите ID отца:");
         //int idFather = Integer.parseInt(scanner.nextLine());
         int idFather = 1;
@@ -112,10 +107,10 @@ public class ConsoleUI implements View {
     public void setHumanMother() {
         System.out.println("Введите ID ребенка:");
         //int idChildren = Integer.parseInt(scanner.nextLine());
-        int idChildren = 9;
+        int idChildren = 10;
         System.out.println("Введите ID матери:");
         //int idMother = Integer.parseInt(scanner.nextLine());
-        int idMother = 7;
+        int idMother = 8;
         String result = presenter.setHumanMother(idChildren, idMother);
         printResult(result);
         System.out.println("Мать добавлена.");
@@ -127,7 +122,7 @@ public class ConsoleUI implements View {
         int idHusband = 1;
         System.out.println("Введите ID жены:");
         //int idWife = Integer.parseInt(scanner.nextLine());
-        int idWife = 7;
+        int idWife = 8;
         String result = presenter.wedding(idHusband, idWife);
         printResult(result);
         System.out.println("Брак заключен.");
@@ -139,10 +134,19 @@ public class ConsoleUI implements View {
         int idHusband = 1;
         System.out.println("Введите ID жены:");
         //int idWife = Integer.parseInt(scanner.nextLine());
-        int idWife = 7;
+        int idWife = 8;
         String result = presenter.divorce(idHusband, idWife);
         printResult(result);
         System.out.println("Брак разторгнут.");
+    }
+
+    public void remove() {
+        System.out.println("Введите ID человека:");
+        //int id = Integer.parseInt(scanner.nextLine());
+        int id = 10;
+        String result = presenter.remove(id);
+        printResult(result);
+        System.out.println("Человек удален и дерева.");
     }
 
     public void createFamilyTree() {
@@ -154,12 +158,12 @@ public class ConsoleUI implements View {
 
     public void saveTree() {
         presenter.saveTree();
-        System.out.println("Семейное древо востановленно из файла.");
+        System.out.println("Семейное древо сохранено в файл.");
     }
 
     public void restoreTree() {
         presenter.restoreTree();
-        System.out.println("Семейное древо сохранено в файл.");
+        System.out.println("Семейное древо востановленно из файла.");
     }
 
     public void stop() {
