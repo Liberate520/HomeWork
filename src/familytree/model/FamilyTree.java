@@ -7,31 +7,31 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Person>, Serializable {
-    private List<Person> people;
+public class FamilyTree<T extends TreeMember> implements Iterable<T>, Serializable {
+    private List<T> members;
 
     public FamilyTree() {
-        people = new ArrayList<>();
+        members = new ArrayList<>();
     }
 
-    public void addPerson(Person person) {
-        people.add(person);
+    public void addMember(T member) {
+        members.add(member);
     }
 
-    public List<Person> getPeople() {
-        return people;
+    public List<T> getMembers() {
+        return members;
     }
 
     @Override
-    public Iterator<Person> iterator() {
-        return people.iterator();
+    public Iterator<T> iterator() {
+        return members.iterator();
     }
 
     public void sortByName() {
-        Collections.sort(people, Comparator.comparing(Person::getName));
+        Collections.sort(members, Comparator.comparing(TreeMember::getName));
     }
 
     public void sortByBirthDate() {
-        Collections.sort(people, Comparator.comparing(Person::getBirthDate));
+        Collections.sort(members, Comparator.comparing(TreeMember::getBirthDate));
     }
 }

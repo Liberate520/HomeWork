@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Person> familyTree = new FamilyTree<>();
 
         Person john = new Person("John", LocalDate.of(1980, 6, 15), Gender.MALE);
         Person mary = new Person("Mary", LocalDate.of(1982, 3, 20), Gender.FEMALE);
@@ -23,10 +23,10 @@ public class Main {
         mary.addChild(peter);
         mary.addChild(sarah);
 
-        familyTree.addPerson(john);
-        familyTree.addPerson(mary);
-        familyTree.addPerson(peter);
-        familyTree.addPerson(sarah);
+        familyTree.addMember(john);
+        familyTree.addMember(mary);
+        familyTree.addMember(peter);
+        familyTree.addMember(sarah);
 
         System.out.println("John's children:");
         List<Person> johnsChildren = Research.findChildren(john);
@@ -34,12 +34,12 @@ public class Main {
             System.out.println(child.getName());
         }
 
-        FileHandler fileHandler = new FileHandler();
+        FileHandler<Person> fileHandler = new FileHandler<>();
         try {
             fileHandler.save(familyTree, "family_tree.dat");
             System.out.println("Family tree saved successfully.");
 
-            FamilyTree loadedTree = fileHandler.load("family_tree.dat");
+            FamilyTree<Person> loadedTree = fileHandler.load("family_tree.dat");
             System.out.println("Family tree loaded successfully.");
 
             System.out.println("Sorted by name:");

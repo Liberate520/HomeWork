@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable {
+public class Person implements TreeMember, Serializable {
     private String name;
     private LocalDate birthDate;
     private Gender gender;
@@ -20,46 +20,60 @@ public class Person implements Serializable {
         this.children = new ArrayList<>();
     }
 
-    // Геттеры
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
 
+    @Override
     public Person getFather() {
         return father;
     }
 
+    @Override
     public Person getMother() {
         return mother;
     }
 
+    @Override
     public List<Person> getChildren() {
         return children;
     }
 
-    // Сеттеры
-    public void setFather(Person father) {
-        this.father = father;
+    @Override
+    public void setFather(TreeMember father) {
+        if (father instanceof Person) {
+            this.father = (Person) father;
+        }
     }
 
-    public void setMother(Person mother) {
-        this.mother = mother;
+    @Override
+    public void setMother(TreeMember mother) {
+        if (mother instanceof Person) {
+            this.mother = (Person) mother;
+        }
     }
 
-    public void addChild(Person child) {
-        children.add(child);
-        if (this.gender == Gender.MALE) {
-            child.setFather(this);
-        } else {
-            child.setMother(this);
+    @Override
+    public void addChild(TreeMember child) {
+        if (child instanceof Person) {
+            Person personChild = (Person) child;
+            children.add(personChild);
+            if (this.gender == Gender.MALE) {
+                personChild.setFather(this);
+            } else {
+                personChild.setMother(this);
+            }
         }
     }
 }

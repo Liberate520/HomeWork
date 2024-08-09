@@ -1,12 +1,11 @@
 package familytree.service;
 
-import familytree.model.Person;
+import familytree.model.TreeMember;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Research {
-    public static List<Person> findChildren(Person person) {
-        return person.getChildren();
+    public static <T extends TreeMember> List<T> findChildren(T member) {
+        return (List<T>) member.getChildren();
     }
 }
