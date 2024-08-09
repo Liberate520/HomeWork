@@ -6,10 +6,10 @@ public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
 
-        Person ivanovM = new Person("Иванов", "Михаил", "Дмитриевич", "Male", LocalDate.of(1980, 1, 1));
-        Person kuznetzovaLiza = new Person("Кузнецова", "Елизавета", "Сергеевна", "Female", LocalDate.of(1982, 3, 5));
-        Person kuznetzovaMary = new Person("Кузнецова", "Мария", "Михайловна", "Female", LocalDate.of(2005, 7, 20));
-        Person kuznetzovAl = new Person("Кузнецов", "Александр", "Михайлович", "Male", LocalDate.of(2007, 11, 15));
+        Person ivanovM = new Person("Иванов", "Михаил", "Дмитриевич", Person.Gender.MALE, LocalDate.of(1980, 1, 1));
+        Person kuznetzovaLiza = new Person("Кузнецова", "Елизавета", "Сергеевна", Person.Gender.FEMALE, LocalDate.of(1982, 3, 5));
+        Person kuznetzovaMary = new Person("Кузнецова", "Мария", "Михайловна", Person.Gender.FEMALE, LocalDate.of(2005, 7, 20));
+        Person kuznetzovAl = new Person("Кузнецов", "Александр", "Михайлович", Person.Gender.MALE, LocalDate.of(2007, 11, 15));
 
         familyTree.addPerson(ivanovM);
         familyTree.addPerson(kuznetzovaLiza);

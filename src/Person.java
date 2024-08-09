@@ -4,15 +4,27 @@ import java.util.List;
 
 public class Person {
     private FullName fullName;
-    private String gender;
+    private Gender gender;
     private LocalDate dateOfBirth;
+    private LocalDate dateOfDeath;
     private List<Person> parents;
     private List<Person> children;
 
-    public Person(String familyName, String firstName, String fatherName, String gender, LocalDate dateOfBirth) {
+
+    public Person(String familyName, String firstName, String fatherName, Gender gender, LocalDate dateOfBirth) {
         this.fullName = new FullName(familyName, firstName, fatherName);
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.dateOfDeath = null;
+        this.parents = new ArrayList<>();
+        this.children = new ArrayList<>();
+    }
+
+        public Person(String familyName, String firstName, String fatherName, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
+        this.fullName = new FullName(familyName, firstName, fatherName);
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfDeath = dateOfDeath;
         this.parents = new ArrayList<>();
         this.children = new ArrayList<>();
     }
@@ -21,7 +33,7 @@ public class Person {
         return fullName;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -29,6 +41,13 @@ public class Person {
         return dateOfBirth;
     }
 
+    public LocalDate getDateOfDeath() {
+        return dateOfDeath;
+    }
+
+    public void setDateOfDeath(LocalDate dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
+    }
     public List<Person> getParents() {
         return parents;
     }
@@ -47,10 +66,16 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "fullName=" + fullName +
-                ", gender='" + gender + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                '}';
+        return " " +
+                "ФИО:" + fullName +
+                " , пол:" + gender +
+                " , дата рождения:" + dateOfBirth +
+                (dateOfDeath != null ? " , дата смерти:" + dateOfDeath : "") +
+                ' ';
+    }
+
+    public enum Gender {
+        MALE,
+        FEMALE
     }
 }
