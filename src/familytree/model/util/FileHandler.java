@@ -3,7 +3,7 @@ package familytree.model.util;
 import java.io.*;
 import java.util.List;
 
-public class FileHandler implements Writer {
+public class FileHandler implements Writer, Reader {
 
     private String filePath="familytree/familyTree.txt";
     @Override
@@ -31,19 +31,4 @@ public class FileHandler implements Writer {
         this.filePath=filePath;
     }
 
-
-
-    // @Override
-    // public void writeToFile(FamilyTree tree, String filename) throws IOException {
-    //     try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-    //         oos.writeObject(tree);
-    //     }
-    // }
-
-    // @Override
-    // public FamilyTree readFromFile(String filename) throws IOException, ClassNotFoundException {
-    //     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-    //         return (FamilyTree) ois.readObject();
-    //     }
-    // }
 }
