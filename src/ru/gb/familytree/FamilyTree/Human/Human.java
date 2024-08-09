@@ -2,6 +2,7 @@ package ru.gb.familytree.FamilyTree.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Human implements Serializable {
@@ -12,6 +13,8 @@ public class Human implements Serializable {
     private List<Human> children;
 
     public Human() {
+        parents = new ArrayList<>();
+        children = new ArrayList<>();
         birthDate = LocalDate.MIN;
         deathDate = LocalDate.MAX;
     }

@@ -68,4 +68,5 @@ public class Main {
         fileHandler.save(familyTree);
         familyTree = (FamilyTree) fileHandler.read();
     }
+    
 }
