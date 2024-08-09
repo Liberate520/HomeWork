@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -5,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
+        FileDataHandler fileDataHandler = new FileDataHandler();
 
         Person ivanovM = new Person("Иванов", "Михаил", "Дмитриевич", Person.Gender.MALE, LocalDate.of(1980, 1, 1));
         Person kuznetzovaLiza = new Person("Кузнецова", "Елизавета", "Сергеевна", Person.Gender.FEMALE, LocalDate.of(1982, 3, 5));
@@ -21,22 +23,37 @@ public class Main {
         familyTree.addParentChildRelationship("Иванов", "Михаил", "Дмитриевич", "Кузнецов", "Александр", "Михайлович");
         familyTree.addParentChildRelationship("Кузнецова", "Елизавета", "Сергеевна", "Кузнецов", "Александр", "Михайлович");
 
-        Scanner scanner = new Scanner(System.in);
+        // Сохранение в файл
+        try {
+            fileDataHandler.saveToFile("familyTree.dat", familyTree);
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении: " + e.getMessage());
+        }
 
-        System.out.println("Введите фамилию:");
-        String familyName = scanner.nextLine();
+        // Загрузка из файла
+        try {
+            FamilyTree loadedFamilyTree = fileDataHandler.loadFromFile("familyTree.dat");
+            System.out.println("Дерево загружено успешно!");
 
-        System.out.println("Введите имя:");
-        String firstName = scanner.nextLine();
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите отчество:");
-        String fatherName = scanner.nextLine();
+            System.out.println("Введите фамилию:");
+            String familyName = scanner.nextLine();
 
-        List<Person> children = familyTree.findChildrenByFullName(familyName, firstName, fatherName);
+            System.out.println("Введите имя:");
+            String firstName = scanner.nextLine();
 
-        System.out.println("Дети у " + familyName + " " + firstName + " " + fatherName + ":");
-        for (Person child : children) {
-            System.out.println("\t" + child);
+            System.out.println("Введите отчество:");
+            String fatherName = scanner.nextLine();
+
+            List<Person> children = familyTree.findChildrenByFullName(familyName, firstName, fatherName);
+
+            System.out.println("Дети у " + familyName + " " + firstName + " " + fatherName + ":");
+            for (Person child : children) {
+                System.out.println("\t" + child);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Ошибка при загрузке: " + e.getMessage());
         }
     }
 }
