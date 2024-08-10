@@ -58,7 +58,7 @@ public class UserInterface {
         child2.setMother(jane);
         child2.setFather(john);
 
-        FamilyTree<Person> familyTree = new FamilyTree<>(new PersonRelationship());
+        FamilyTree<Person> familyTree = new FamilyTree<>();
         familyTree.addMember(john);
         familyTree.addMember(jane);
         familyTree.addMember(child1);

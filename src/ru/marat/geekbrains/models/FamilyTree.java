@@ -1,18 +1,15 @@
 package ru.marat.geekbrains.models;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 
-public class FamilyTree<T> implements Iterable<T> {
+public class FamilyTree<T extends Person> implements Iterable<T> {
     private List<T> members;
-    private ParentChildRelationship<T> relationship;
 
-    public FamilyTree(ParentChildRelationship<T> relationship) {
+    public FamilyTree() {
         this.members = new ArrayList<>();
-        this.relationship = relationship;
     }
 
     public void addMember(T member) {
@@ -20,13 +17,7 @@ public class FamilyTree<T> implements Iterable<T> {
     }
 
     public List<T> getChildren(T parent) {
-        List<T> children = new ArrayList<>();
-        for (T member : members) {
-            if (relationship.getMother(member) == parent || relationship.getFather(member) == parent) {
-                children.add(member);
-            }
-        }
-        return children;
+        return parent.getChildren();
     }
 
     public void sortByName(Comparator<T> nameComparator) {

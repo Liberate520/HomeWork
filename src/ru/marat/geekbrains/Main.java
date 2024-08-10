@@ -2,11 +2,11 @@ package ru.marat.geekbrains;
 
 import ru.marat.geekbrains.models.FamilyTree;
 import ru.marat.geekbrains.models.Person;
-import ru.marat.geekbrains.models.PersonRelationship;
+import ru.marat.geekbrains.presenter.FamilyTreePresenter;
+import ru.marat.geekbrains.userInterface.ConsoleFamilyTreeView;
+import ru.marat.geekbrains.userInterface.FamilyTreeView;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,27 +20,14 @@ public class Main {
         child2.setMother(jane);
         child2.setFather(john);
 
-        FamilyTree<Person> familyTree = new FamilyTree<>(new PersonRelationship());
+        FamilyTree<Person> familyTree = new FamilyTree<>(); // Без аргументов
         familyTree.addMember(john);
         familyTree.addMember(jane);
         familyTree.addMember(child1);
         familyTree.addMember(child2);
 
-        List<Person> johnsChildren = familyTree.getChildren(john);
-        System.out.println("Дети Джона:");
-        for (Person child : johnsChildren) {
-            System.out.println(child.getName());
-        }
-
-        System.out.println("\nВсе люди в дереве:");
-        System.out.println(familyTree);
-
-        System.out.println("\nСортировка по имени:");
-        familyTree.sortByName(Comparator.comparing(Person::getName));
-        System.out.println(familyTree);
-
-        System.out.println("\nСортировка по дате рождения:");
-        familyTree.sortByBirthDate(Comparator.comparing(Person::getBirthDate));
-        System.out.println(familyTree);
+        FamilyTreeView view = new ConsoleFamilyTreeView();
+        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view);
+        presenter.start();
     }
 }
