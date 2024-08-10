@@ -1,7 +1,5 @@
 package com.oop.homeWorkOOP;
 
-import java.util.Collections;
-
 import com.oop.homeWorkOOP.human.Gender;
 import com.oop.homeWorkOOP.human.Human;
 import com.oop.homeWorkOOP.lineAge.LineageTree;
@@ -11,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         LineAgeFile lFile = new LineAgeFile("lineage.db");
         // LineageTree lineAge = lFile.loadLineAge();
-        LineageTree lineAge = creatAndFillLineAge();
+        LineageTree<Human> lineAge = creatAndFillLineAge();
         for (Human hum : lineAge) {
             System.out.println(hum);
         }
@@ -42,8 +40,8 @@ public class Main {
 
     }
 
-    private static LineageTree creatAndFillLineAge() {
-        LineageTree lineAge = new LineageTree();
+    private static LineageTree<Human> creatAndFillLineAge() {
+        LineageTree<Human> lineAge = new LineageTree<>();
         Human h9 = new Human("Эрнст", 24, 7, 1920, 3, 5, 2020, Gender.Male, null, null);
         Human h5 = new Human("Арнольд", 3, 8, 1955, 4, 7, 2022, Gender.Male, h9, null);
         Human h6 = new Human("Антонина", 12, 10, 1961, Gender.Female, null, null, null);

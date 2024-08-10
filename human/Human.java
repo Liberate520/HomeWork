@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+import com.oop.homeWorkOOP.lineAge.LineAgeItem;
+
+public class Human implements Serializable, Comparable<Human>, LineAgeItem<Human> {
     private String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -116,7 +118,7 @@ public class Human implements Serializable, Comparable<Human> {
             res.append(mother.getName());
         }
         res.append("\n\t\t children: ");
-        if (children.size() == 0) {
+        if (children.isEmpty()) {
             res.append("Пока нет");
         } else {
             for (Human hum : children) {
@@ -187,7 +189,7 @@ public class Human implements Serializable, Comparable<Human> {
 
     @Override
     public int compareTo(Human hum) {
-        return this.getAge()-hum.getAge();
+        return this.getAge() - hum.getAge();
     }
 
 }

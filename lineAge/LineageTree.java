@@ -2,24 +2,21 @@ package com.oop.homeWorkOOP.lineAge;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import com.oop.homeWorkOOP.human.Gender;
-import com.oop.homeWorkOOP.human.Human;
 import com.oop.homeWorkOOP.human.comparators.compareHumanByBirthDate;
 import com.oop.homeWorkOOP.human.comparators.compareHumanByName;
 
-public class LineageTree implements Serializable, Iterable<Human> {
-    private List<Human> lineAge;
+public class LineageTree<T extends LineAgeItem<T>> implements Serializable, Iterable<T> {
+    private List<T> lineAge;
 
     public LineageTree() {
         lineAge = new ArrayList<>();
     }
 
-    public boolean addHuman(Human human) {
+    public boolean addHuman(T human) {
         if (lineAge.contains(human)) {
             System.out.println("Такой человек уже есть в древе.");
             return false;
@@ -30,11 +27,11 @@ public class LineageTree implements Serializable, Iterable<Human> {
         return true;
     }
 
-    private boolean searchAndAddParents(Human human) {
+    private boolean searchAndAddParents(T human) {
         boolean fl = false;
-        for (Human mem : lineAge) {
-            if (mem.getChildren().size() > 0) {
-                for (Human chil : mem.getChildren()) {
+        for (T mem : lineAge) {
+            if (!mem.getChildren().isEmpty()) {
+                for (T chil : mem.getChildren()) {
                     if (chil.equals(human)) {
                         if (chil.getGender() == Gender.Male && human.getFather() == null) {
                             human.setFather(mem);
@@ -51,10 +48,10 @@ public class LineageTree implements Serializable, Iterable<Human> {
         return fl;
     }
 
-    private boolean searchAndAddChildren(Human human) {
+    private boolean searchAndAddChildren(T human) {
         boolean fl = false;
-        for (Human mem : lineAge) {
-            for (Human par : mem.getParents()) {
+        for (T mem : lineAge) {
+            for (T par : mem.getParents()) {
                 if (par != null) {
                     if (par.equals(human)) {
                         human.addChild(mem);
@@ -66,7 +63,7 @@ public class LineageTree implements Serializable, Iterable<Human> {
         return fl;
     }
 
-    public Human getHumanById(int i) {
+    public T getHumanById(int i) {
         if (i >= lineAge.size()) {
             System.out.println("Нет такого ID.");
             return null;
@@ -74,9 +71,9 @@ public class LineageTree implements Serializable, Iterable<Human> {
             return lineAge.get(i);
     }
 
-    public List<Human> getHumanByName(String name) {
-        List<Human> res = new ArrayList<>();
-        for (Human human : lineAge) {
+    public List<T> getHumanByName(String name) {
+        List<T> res = new ArrayList<>();
+        for (T human : lineAge) {
             if (name.equals(human.getName())) {
                 res.add(human);
             }
@@ -90,19 +87,19 @@ public class LineageTree implements Serializable, Iterable<Human> {
         }
     }
 
-    public LineageTree getAllFather(Human human) {
-        LineageTree resTree = new LineageTree();
+    public LineageTree<T> getAllFather(T human) {
+        LineageTree<T> resTree = new LineageTree<>();
         resTree.addHuman(human);
         while (true) {
-            if (Objects.isNull(human.getFather()))
+            if (human.getFather() == null)
                 return resTree;
-            human = human.getFather();
+            human = (T) human.getFather();
             resTree.addHuman(human);
         }
     }
 
-    public LineageTree getAllMother(Human human) {
-        LineageTree resTree = new LineageTree();
+    public LineageTree<T> getAllMother(T human) {
+        LineageTree<T> resTree = new LineageTree<>();
         resTree.addHuman(human);
         while (true) {
             if (human.getMother() == null) {
@@ -113,63 +110,63 @@ public class LineageTree implements Serializable, Iterable<Human> {
         }
     }
 
-    public LineageTree getAllChildren(Human human) {
-        LineageTree resTree = new LineageTree();
+    public LineageTree<T> getAllChildren(T human) {
+        LineageTree<T> resTree = new LineageTree<>();
         resTree.addHuman(human);
         if (human.getChildren().size() <= 0) {
             return resTree;
         }
-        for (Human chil : human.getChildren()) {
+        for (T chil : human.getChildren()) {
             getAllChildren(chil, resTree);
         }
         return resTree;
     }
 
-    private LineageTree getAllChildren(Human human, LineageTree resTree) {
+    private LineageTree<T> getAllChildren(T human, LineageTree<T> resTree) {
         resTree.addHuman(human);
         if (human.getChildren().size() <= 0) {
             return resTree;
         }
-        for (Human chil : human.getChildren()) {
+        for (T chil : human.getChildren()) {
             getAllChildren(chil, resTree);
         }
         return resTree;
     }
 
-    public LineageTree getAllParents(Human human) {
-        LineageTree resTree = new LineageTree();
+    public LineageTree<T> getAllParents(T human) {
+        LineageTree<T> resTree = new LineageTree<>();
         resTree.addHuman(human);
         if (human.getParents().size() <= 0) {
             return resTree;
         }
-        for (Human par : human.getParents()) {
+        for (T par : human.getParents()) {
             getAllParents(par, resTree);
         }
         return resTree;
     }
 
-    private LineageTree getAllParents(Human human, LineageTree resTree) {
+    private LineageTree<T> getAllParents(T human, LineageTree<T> resTree) {
         resTree.addHuman(human);
         if (human.getParents().size() <= 0) {
             return resTree;
         }
-        for (Human par : human.getParents()) {
+        for (T par : human.getParents()) {
             getAllParents(par, resTree);
         }
         return resTree;
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new LineAgeIterator(lineAge);
+    public Iterator<T> iterator() {
+        return new LineAgeIterator<>(lineAge);
     }
 
     public void sortByName() {
-        lineAge.sort(new compareHumanByName());
+        lineAge.sort(new compareHumanByName<T>());
     }
 
     public void sortByBirthDate() {
-        lineAge.sort(new compareHumanByBirthDate());
+        lineAge.sort(new compareHumanByBirthDate<T>());
     }
 
 }

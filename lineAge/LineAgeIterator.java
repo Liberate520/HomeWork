@@ -3,14 +3,12 @@ package com.oop.homeWorkOOP.lineAge;
 import java.util.Iterator;
 import java.util.List;
 
-import com.oop.homeWorkOOP.human.Human;
+public class LineAgeIterator<T extends LineAgeItem> implements Iterator<T> {
 
-public class LineAgeIterator implements Iterator<Human> {
-
-    private List<Human> tree;
+    private List<T> tree;
     private int ind;
 
-    public LineAgeIterator(List<Human> tree) {
+    public LineAgeIterator(List<T> tree) {
         this.tree = tree;
         ind = 0;
     }
@@ -21,7 +19,7 @@ public class LineAgeIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return tree.get(ind++);
     }
 
