@@ -1,9 +1,9 @@
 package ru.marat.geekbrains.models;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 
 public class FamilyTree<T extends Person> implements Iterable<T> {
     private List<T> members;
@@ -17,7 +17,11 @@ public class FamilyTree<T extends Person> implements Iterable<T> {
     }
 
     public List<T> getChildren(T parent) {
-        return parent.getChildren();
+        List<T> children = new ArrayList<>();
+        for (Person child : parent.getChildren()) {
+            children.add((T) child);  // Приведение типа
+        }
+        return children;
     }
 
     public void sortByName(Comparator<T> nameComparator) {

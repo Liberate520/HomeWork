@@ -20,7 +20,7 @@ public class Main {
         child2.setMother(jane);
         child2.setFather(john);
 
-        FamilyTree<Person> familyTree = new FamilyTree<>(); // Без аргументов
+        FamilyTree<Person> familyTree = new FamilyTree<>();
         familyTree.addMember(john);
         familyTree.addMember(jane);
         familyTree.addMember(child1);
@@ -28,6 +28,8 @@ public class Main {
 
         FamilyTreeView view = new ConsoleFamilyTreeView();
         FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view);
+        ((ConsoleFamilyTreeView) view).setPresenter(presenter);
+
         presenter.start();
     }
 }

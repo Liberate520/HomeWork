@@ -4,8 +4,6 @@ import ru.marat.geekbrains.models.FamilyTree;
 import ru.marat.geekbrains.models.Person;
 import ru.marat.geekbrains.userInterface.FamilyTreeView;
 
-import java.util.Comparator;
-
 public class FamilyTreePresenter {
     private FamilyTree<Person> familyTree;
     private FamilyTreeView view;
@@ -15,33 +13,26 @@ public class FamilyTreePresenter {
         this.view = view;
     }
 
-    public void start() {
-        while (true) {
-            view.displayMessage("Введите команду (add, list, sort_name, sort_date, exit):");
-            String command = view.getUserInput();
+    public void addPerson(Person person) {
+        familyTree.addMember(person);
+        view.displayMessage("Член семьи добавлен: " + person.getName());
+    }
 
-            switch (command) {
-                case "add":
-                    // Логика добавления нового члена семьи
-                    break;
-                case "list":
-                    view.displayFamilyTree(familyTree.toString());
-                    break;
-                case "sort_name":
-                    familyTree.sortByName(Comparator.comparing(Person::getName));
-                    view.displayMessage("Отсортировано по имени.");
-                    break;
-                case "sort_date":
-                    familyTree.sortByBirthDate(Comparator.comparing(Person::getBirthDate));
-                    view.displayMessage("Отсортировано по дате рождения.");
-                    break;
-                case "exit":
-                    view.displayMessage("Выход...");
-                    return;
-                default:
-                    view.displayMessage("Неизвестная команда.");
-                    break;
-            }
-        }
+    public void displayFamilyTree() {
+        view.displayFamilyTree(familyTree);
+    }
+
+    public void sortFamilyTreeByName() {
+        familyTree.sortByName((p1, p2) -> p1.getName().compareTo(p2.getName()));
+        view.displayMessage("Семейное дерево отсортировано по имени.");
+    }
+
+    public void sortFamilyTreeByBirthDate() {
+        familyTree.sortByBirthDate((p1, p2) -> p1.getBirthDate().compareTo(p2.getBirthDate()));
+        view.displayMessage("Семейное дерево отсортировано по дате рождения.");
+    }
+
+    public void start() {
+        view.start();
     }
 }

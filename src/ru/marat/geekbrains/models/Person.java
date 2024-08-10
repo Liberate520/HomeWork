@@ -1,10 +1,9 @@
 package ru.marat.geekbrains.models;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.Period;
-
 
 public class Person {
     private String name;
@@ -57,8 +56,8 @@ public class Person {
         this.children.add(child);
     }
 
-    public <T extends Person> List<T> getChildren() {
-        return (List<T>) children;
+    public List<Person> getChildren() {
+        return children;
     }
 
     @Override
