@@ -1,8 +1,11 @@
 import java.time.LocalDate;
 public class Main {
+    final static String filePath = "src/writer/tree.txt";
     public static void main(String[] args) {
-        FamilyTree tree = testTree();
+        FamilyTree tree = load();
+       // FamilyTree tree = testTree();
         System.out.println(tree);
+        save(tree);
     }
     private static FamilyTree testTree(){
         FamilyTree familyTree = new FamilyTree();
@@ -20,5 +23,15 @@ public class Main {
 
         return familyTree;
 
+    }
+    private static void save(FamilyTree familyTree){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(familyTree);
+    }
+    private static FamilyTree load(){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        return (FamilyTree) fileHandler.read();
     }
 }
