@@ -6,7 +6,6 @@ import familyTree.model.human.Gender;
 import familyTree.model.human.Human;
 
 
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,7 +48,6 @@ public class ServiceFamilyTree {
                 .build();
         familyTree.addHuman(human);
     }
-
 
     public void addParent(int idHuman, int idParent) {
         if (idParent < familyTreeSize() && idHuman < familyTreeSize()) {
@@ -135,6 +133,4 @@ public class ServiceFamilyTree {
         long maxID = familyTree.findMaxID();
         humanBuilder.setMaxID(maxID);
     }
-
-
 }

@@ -1,12 +1,10 @@
 package familyTree.model.HumanBuilder;
 
-import familyTree.model.familyTree.FamilyTreeItem;
 import familyTree.model.human.Gender;
 import familyTree.model.human.Human;
 
 import java.time.LocalDate;
 import java.util.List;
-
 
 public class HumanBuilder {
     private long humID;
@@ -22,7 +20,6 @@ public class HumanBuilder {
     private List<Human> children;
     private String placeBorn;
 
-
     public HumanBuilder() {
 
     }
@@ -32,12 +29,10 @@ public class HumanBuilder {
     }
 
     private void createLastName() {
-
         human.setLastName(lastName);
     }
 
     private void createFirstName() {
-
         human.setFirstname(firstname);
     }
 
@@ -81,7 +76,7 @@ public class HumanBuilder {
         human.setPlaceBorn(placeBorn);
     }
 
-   public HumanBuilder setLastName(String lastName) {
+    public HumanBuilder setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -133,11 +128,10 @@ public class HumanBuilder {
 
     private void setHumID(Human human) {
         human.setID(humID++);
-
     }
 
     public void setMaxID(long maxID) {
-        this.humID = maxID+1;
+        this.humID = maxID + 1;
     }
 
     private void clearData() {
@@ -151,7 +145,6 @@ public class HumanBuilder {
         children = null;
         placeBorn = null;
     }
-
 
     public Human build() {
         createHuman();
@@ -169,5 +162,4 @@ public class HumanBuilder {
         clearData();
         return human;
     }
-
 }

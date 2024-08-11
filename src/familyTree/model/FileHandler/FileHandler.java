@@ -2,7 +2,7 @@ package familyTree.model.FileHandler;
 
 import java.io.*;
 
-public class FileHandler implements Writer{
+public class FileHandler implements Writer {
     private String fileName;
 
     public void setFileName(String fileName) {
@@ -30,5 +30,4 @@ public class FileHandler implements Writer{
             return null;
         }
     }
-
 }

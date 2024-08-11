@@ -150,7 +150,6 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         } catch (Exception ex) {
             this.dayDeath = null;
         }
-
         this.father = father;
         this.mother = mother;
         this.children = new ArrayList<>();
@@ -161,7 +160,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getID() + ". ");
-        if (lastName != null && lastName !="") {
+        if (lastName != null && lastName != "") {
             stringBuilder.append("Фамилия: " + lastName + "; ");
         } else {
             stringBuilder.append("Фамилия: неизвестна; ");
@@ -171,7 +170,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         } else {
             stringBuilder.append("Имя: неизвестно; ");
         }
-        if (patronymic != null && patronymic !="") {
+        if (patronymic != null && patronymic != "") {
             stringBuilder.append("Отчество: " + patronymic + "; ");
         } else {
             stringBuilder.append("Отчество: неизвестно; ");
@@ -201,7 +200,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         } else {
             stringBuilder.append("Дети: не указаны; ");
         }
-        if (placeBorn != null && placeBorn !="") {
+        if (placeBorn != null && placeBorn != "") {
             stringBuilder.append("Место рождения: " + placeBorn + "; ");
         } else {
             stringBuilder.append("Место рождения: не указано;");
@@ -213,8 +212,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     public int getAge() {
         if (dayBirth == null) {
             return 0;
-        }
-        else if (dayDeath != null) {
+        } else if (dayDeath != null) {
             return (int) dayBirth.until(dayDeath, ChronoUnit.YEARS);
         } else {
             return (int) dayBirth.until(LocalDate.now(), ChronoUnit.YEARS);

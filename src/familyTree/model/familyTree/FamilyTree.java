@@ -29,9 +29,8 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
 
     @Override
     public String toString() {
-
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Список членов семьи:\n");
+        stringBuilder.append("Список:\n");
         for (E human : familyTree) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
@@ -92,8 +91,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
     public Iterator<E> iterator() {
         return new HumanIterator<>(familyTree);
     }
-
-
 }
 
 

@@ -49,20 +49,20 @@ public class Presenter {
     public void saveFile() {
         try {
             service.saveFile("src/familyTree/file.txt");
-            System.out.println("Программа успешно сохранена");
+            view.PrintAnwser("Программа успешно сохранена");
         } catch (Exception e) {
-            System.out.println("Ошибка сохранения");
+            view.PrintAnwser("Ошибка сохранения");
         } finally {
             getFamilyTree();
         }
     }
 
-    public void addParent(int idHuman,int idParent){
+    public void addParent(int idHuman, int idParent) {
         service.addParent(idHuman, idParent);
         getFamilyTree();
     }
 
-    public void addChild(int idHuman,int idChild){
+    public void addChild(int idHuman, int idChild) {
         service.addChild(idHuman, idChild);
         getFamilyTree();
     }
@@ -72,11 +72,10 @@ public class Presenter {
         try {
             service.openFile("src/familyTree/file.txt");
             service.setMaxID();
-            System.out.println("Семейное древо успешно загружено");
+            view.PrintAnwser("Семейное древо успешно загружено");
             getFamilyTree();
         } catch (Exception e) {
-            System.out.println("Ошибка открытия");
+            view.PrintAnwser("Ошибка открытия");
         }
     }
-
 }
