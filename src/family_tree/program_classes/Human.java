@@ -1,10 +1,10 @@
-package family_tree;
+package family_tree.program_classes;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Human implements Serializable {
+public class Human implements Serializable, Comparable<Human> {
     private String document;
     private String name;
     private Gender gender;
@@ -139,6 +139,8 @@ public class Human implements Serializable {
         return answer;
     }
 
-
-
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }
 }

@@ -1,33 +1,60 @@
 package family_tree;
 
+import family_tree.program_classes.FamilyTree;
+import family_tree.program_classes.Gender;
+import family_tree.program_classes.Human;
 import family_tree.saving_data.FileHandler;
 
 import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) {
+/*
         FamilyTree my_family = new FamilyTree();
 
         FillTreeRandom(my_family);
         CreateRandomRelationships(my_family);
         SetRandomDeath(my_family);
 
-        PrintData(my_family.getfTree());
+        PrintData(my_family);
+        String filePath = "src/family_tree/saving_data/data.out";
+        saveDataFile(filePath, my_family);
+*/
+       String filePath = "src/family_tree/saving_data/data.out";
+        FamilyTree my_family_from_file = loadDataFile(filePath);
+        PrintData(my_family_from_file);
+        my_family_from_file.sortByName();
+        PrintData(my_family_from_file);
+        my_family_from_file.sortBybirthDate();
+        PrintData(my_family_from_file);
 
-        FileHandler fh = new FileHandler();
-        fh.setFilePath("data.out");
-        fh.writeData(my_family);
+        ArrayList<Human> find_by_name = my_family_from_file.findInfoByName("Имя 148");
+        for (Human human : find_by_name) {
+            System.out.println(human);
+        }
+        ArrayList<Human> find_by_doc = my_family_from_file.findInfoByDocument("doc11");
+        for (Human human : find_by_doc) {
+            System.out.println(human);
+        }
 
-        FamilyTree my_family_from_file = fh.readData();
-        PrintData(my_family_from_file.getfTree());
 
-        PrintData(my_family_from_file.findInfoByName("Имя 148"));
-        PrintData(my_family_from_file.findInfoByDocument("doc11"));
+        saveDataFile(filePath, my_family_from_file);
 
     }
 
-    public static void PrintData(HashSet<Human> data) {
+    public static void saveDataFile(String filePath, FamilyTree data) {
+        FileHandler fh = new FileHandler(filePath);
+        fh.writeData(data);
+    }
+
+    public static FamilyTree loadDataFile(String filePath) {
+        FileHandler fh = new FileHandler(filePath);
+        return fh.readData();
+    }
+
+    public static void PrintData(FamilyTree data) {
         if (data.isEmpty()) {
             System.out.println("Информация не найдена");
         }
@@ -78,8 +105,7 @@ public class Main {
 
     }
 
-    public static void CreateRandomRelationships(FamilyTree my_family) {
-        HashSet<Human> data = my_family.getfTree();
+    public static void CreateRandomRelationships(FamilyTree data) {
         int index = 0;
         for (Human human : data) {
             if (index % 2 == 0) {
@@ -93,10 +119,9 @@ public class Main {
     }
 
     public static void SetRandomDeath(FamilyTree my_family) {
-        HashSet<Human> data = my_family.getfTree();
         Random rand = new Random();
         int index = 0;
-        for (Human human : data) {
+        for (Human human : my_family) {
             if (index % 5 == 0) {
                 LocalDate death = human.getBirthDate().plusYears(rand.nextInt(100));
                 human.setDeathDate(death);
@@ -105,7 +130,7 @@ public class Main {
         }
     }
 
-    public static Human FindRandomMother(Human human, HashSet<Human> data) {
+    public static Human FindRandomMother(Human human, FamilyTree data) {
         Random rand = new Random();
         ArrayList<Human> possibleM = new ArrayList<>();
         for (Human h : data) {
@@ -117,7 +142,7 @@ public class Main {
             return possibleM.get(ramdom_indexM);
     }
 
-    public static Human FindRandomFather(Human human, HashSet<Human> data) {
+    public static Human FindRandomFather(Human human, FamilyTree data) {
         Random rand = new Random();
         ArrayList<Human> possibleF = new ArrayList<>();
         for (Human h : data) {

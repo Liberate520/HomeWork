@@ -1,11 +1,15 @@
 package family_tree.saving_data;
 
-import family_tree.FamilyTree;
+import family_tree.program_classes.FamilyTree;
 
 import java.io.*;
 
 public class FileHandler implements Writer {
     private String filePath;
+
+    public FileHandler(String filePath) {
+        this.filePath = filePath;
+    }
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
