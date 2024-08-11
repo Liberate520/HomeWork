@@ -1,9 +1,11 @@
+package Model;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable {
+public class Person implements Serializable, Comparable<Person>  {
     private static int idCounter = 0;
     private int id;
     private String firstName;
@@ -109,5 +111,10 @@ public class Person implements Serializable {
                 (deathDate != null ? ", Дата смерти: " + deathDate : "") + ", Пол: " + gender +
                 (mother != null ? ", Мать: " + mother.getFirstName() + " " + mother.getLastName() : "") +
                 (father != null ? ", Отец: " + father.getFirstName() + " " + father.getLastName() : "");
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        return this.firstName.compareTo(other.firstName);
     }
 }

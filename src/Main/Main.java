@@ -1,3 +1,9 @@
+package Main;
+
+import Model.FamilyTree;
+import Model.Person;
+import Util.FileManager;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -23,6 +29,26 @@ public class Main {
 
             switch (choice) {
                 case 1:
+                    // Сортировка членов семьи перед выводом
+                    System.out.println("Выберите по какому признаку вы хотите отсортировать:");
+                    System.out.println("1. По имени");
+                    System.out.println("2. По дате рождения");
+                    int sortChoice = scanner.nextInt();
+                    scanner.nextLine(); // Очистка буфера
+
+                    switch (sortChoice) {
+                        case 1:
+                            familyTree.sort();
+                            break;
+                        case 2:
+                            familyTree.sortByBirthDate();
+                            break;
+                        default:
+                            System.out.println("Некорректный выбор. Будет использована сортировка по имени.");
+                            familyTree.sort();
+                            break;
+                    }
+
                     // Вывод всех членов семьи
                     List<Person> people = familyTree.getAllPeople();
                     if (people.isEmpty()) {
