@@ -38,9 +38,9 @@ public class Presenter {
         service.saveTree();
     }
 
-//    public void readTree() throws IOException, ClassNotFoundException {
-//        service.readTree();
-//    }
+    public void readTree() throws IOException, ClassNotFoundException {
+        service.readTree();
+    }
 
     public String findByName(String name) {
         return service.findByName(name);

@@ -3,7 +3,7 @@ package ru.gb.family_tree.model.writer;
 import java.io.*;
 
 public class FileHandler implements Writer{
-    private String filePath = "src/ru/gb/family_tree/writer/myFamilyTree.out";
+    private String filePath = "src/ru/gb/family_tree/myFamilyTree.out";
 
 
     @Override
@@ -18,9 +18,9 @@ public class FileHandler implements Writer{
     @Override
     public Object read() {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))){
-            Object object = objectInputStream.readObject();
-            return object;
+            return objectInputStream.readObject();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

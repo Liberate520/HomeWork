@@ -4,6 +4,7 @@ import ru.gb.family_tree.model.familly_tree.FamilyTree;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.human.builder.HumanBuilder;
+import ru.gb.family_tree.model.writer.FileHandler;
 import ru.gb.family_tree.model.writer.Writer;
 
 import java.io.IOException;
@@ -14,17 +15,19 @@ import java.util.List;
 public class Service { //  в этом классе функционал Приложения, что прописано, то может делать это приложение
 // сам ничего не делает (верхне уровневый), но всем раздает. Ты сделай, ты сделай.
 
-    private final FamilyTree familyTree;
+    private FamilyTree familyTree;
     private final HumanBuilder humanBuilder;
-    private Writer fileHandler;
+    private final Writer fileHandler;
 
     public Service(){
         familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
+        fileHandler = new FileHandler();
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate) { // принимаем сырые данные и обращаемся к Билдеру
-        Human human = humanBuilder.build(name, gender, birthDate, null, null); // появился человек human
+        Human human; // появился человек human
+        human = humanBuilder.build(name, gender, birthDate);
         familyTree.add(human); // добавили его в дерево
     }
 
@@ -49,11 +52,11 @@ public class Service { //  в этом классе функционал При�
         fileHandler.save(familyTree);
     }
 
-//    public void readTree() throws IOException, ClassNotFoundException {
-//        if (fileHandler.read() != null) {
-//            familyTree = (FamilyTree) fileHandler.read();
-//        }
-//    }
+    public void readTree() throws IOException, ClassNotFoundException {
+        if (fileHandler.read() != null) {
+            familyTree = (FamilyTree) fileHandler.read();
+        }
+    }
 
     public String findByName(String name) {
         StringBuilder sb = new StringBuilder();
@@ -76,6 +79,4 @@ public class Service { //  в этом классе функционал При�
     public void removeHuman(int id) {
         familyTree.remove(id);
     }
-
-
 }

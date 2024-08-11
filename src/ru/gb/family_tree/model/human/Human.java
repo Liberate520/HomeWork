@@ -16,17 +16,13 @@ public class Human implements TreeNode<Human>, ItemFamilyTree{
     private Human father, mother, spouse;
     private List<Human> children;  // не очень понимаю зачем этот список, если его можно получить из мамы и папы
 
-    public Human(String name,  Gender gender, LocalDate birthDate, Human father, Human mother) { // Общий конструктор для Человека
+    public Human(String name,  Gender gender, LocalDate birthDate) { // Общий конструктор для Человека
         id = -1;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.father = father;
-        this.mother = mother;
         children = new ArrayList<>();
     }
-
-    public Human(String name, Gender gender, LocalDate birthDate) {this(name, gender, birthDate,null,null);}
 
     public void setId(long id) { this.id = id; }
     public long getId() { return id; }
