@@ -1,60 +1,73 @@
 package model.family_tree;
 
+import model.human.Human;
 import model.human.Gender;
 import model.human.HumanBuilder;
 import model.writer.FileHandler;
 
 import java.time.LocalDate;
 
-public class Service<E extends FamilyTreeItem<E>>{
-    private FamilyTree<E> familyTree;
-    private HumanBuilder<E> humanBuilder;
+public class Service {
+    private FamilyTree familyTree;
+    private HumanBuilder humanBuilder;
     FileHandler fileHandler;
 
-    public Service(){
+    public Service() {
         familyTree = new FamilyTree<>();
-        humanBuilder = new HumanBuilder<>();
+        humanBuilder = new HumanBuilder();
         fileHandler = new FileHandler();
     }
 
-    public void addHuman(String name, Gender gender, LocalDate birthDate){
-        E human = humanBuilder.setName(name).setGender(gender).setBirthDate(birthDate).build();
+    public void addHuman(String name, Gender gender, LocalDate birthDate) {
+        Human human = humanBuilder.setName(name).setGender(gender).setBirthDate(birthDate).build();
         familyTree.add(human);
     }
-    public boolean setWedding(String name1, String name2){
+
+    public boolean setWedding(String name1, String name2) {
         return familyTree.setWedding(familyTree.findByName(name1), familyTree.findByName(name2));
     }
-    public boolean setWedding(int id1, int id2){
+
+    public boolean setWedding(int id1, int id2) {
         return familyTree.setWedding(familyTree.findById(id1), familyTree.findById(id2));
     }
-    public boolean setDivorce(String name1, String name2){
+
+    public boolean setDivorce(String name1, String name2) {
         return familyTree.setDivorce(familyTree.findByName(name1), familyTree.findByName(name2));
     }
-    public boolean setDivorce(int id1, int id2){
+
+    public boolean setDivorce(int id1, int id2) {
         return familyTree.setDivorce(familyTree.findById(id1), familyTree.findById(id2));
     }
-    public boolean addChild(String human, String child){
+
+    public boolean addChild(String human, String child) {
         return familyTree.findByName(human).addChild(familyTree.findByName(child));
     }
-    public boolean addChild(int idHuman, int idChild){
+
+    public boolean addChild(int idHuman, int idChild) {
         return familyTree.findById(idHuman).addChild(familyTree.findById(idChild));
     }
-    public boolean addParent(String child, String parent){
+
+    public boolean addParent(String child, String parent) {
         return familyTree.findByName(child).addParent(familyTree.findByName(parent));
     }
-    public boolean addParent(int child, int parent){
+
+    public boolean addParent(int child, int parent) {
         return familyTree.findById(child).addParent(familyTree.findById(parent));
     }
-    public FamilyTree<E> getFamilyTree() {
+
+    public FamilyTree getFamilyTree() {
         return familyTree;
     }
-    public void sortByName(){
+
+    public void sortByName() {
         familyTree.sortByName();
     }
-    public void sortByAge(){
+
+    public void sortByAge() {
         familyTree.sortByAge();
     }
-    public void sortByBirthDate(){
+
+    public void sortByBirthDate() {
         familyTree.sortByBirthDate();
     }
 
@@ -62,9 +75,10 @@ public class Service<E extends FamilyTreeItem<E>>{
         fileHandler.setPath(filename);
         return fileHandler.save(familyTree);
     }
-    public boolean loadFromFile(String filePath){
+
+    public boolean loadFromFile(String filePath) {
         fileHandler.setPath(filePath);
-        familyTree = (FamilyTree<E>)fileHandler.read();
+        familyTree = (FamilyTree) fileHandler.read();
         if (familyTree.equals(null))
             return false;
         else
