@@ -155,7 +155,22 @@ public class HumanBuilder {
         createSpouse();
         createChildren();
         createPlace();
+        clear();
         return human;
     }
 
+    private void clear() {
+        firstName = null;
+        lastName = null;
+        patronymic = null;
+        birthDate = null;
+        deathDate = null;
+        gender = null;
+        nationality = null;
+        father = null;
+        mother = null;
+        spouse = null;
+        children = null;
+        place = null;
+    }
 }

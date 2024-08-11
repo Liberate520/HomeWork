@@ -11,11 +11,12 @@ public class HumanIterator implements Iterator<Human> {
 
     public HumanIterator(List<Human> humans) {
         this.humans = humans;
+        curIndex = 0;
     }
 
     @Override
     public boolean hasNext() {
-        return humans.size() > curIndex;
+        return curIndex < humans.size();
     }
 
     @Override
