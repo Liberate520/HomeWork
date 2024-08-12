@@ -46,8 +46,9 @@ public class HumanService {
         fileHandler.save(this.familyTree);
     }
 
-    public FamilyTree<Human> load() {
+    public void load() {
         FileHandler fileHandler = new FileHandler();
-        return (FamilyTree) fileHandler.load();
+        familyTree = (FamilyTree) fileHandler.load();
+        System.out.println(familyTree);
     }
 }
