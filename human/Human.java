@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import family_tree.FamilyTreeItem;
 import places.Place;
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyTreeItem<Human> {
     private long id;
     private String firstName;
     private String lastName;
@@ -330,5 +331,10 @@ public class Human implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return Long.compare(this.id, o.id);
     }
 }

@@ -79,7 +79,17 @@ public class PlaceBuilder {
         createCountry();
         createPostalCode();
         createLocality();
+        clear();
         return place;
+    }
+
+    private void clear() {
+        homeNumber = 0;
+        street = null;
+        region = null;
+        country = null;
+        postalCode = 0;
+        locality = null;
     }
 
 }

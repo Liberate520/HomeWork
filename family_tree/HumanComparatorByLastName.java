@@ -2,11 +2,9 @@ package family_tree;
 
 import java.util.Comparator;
 
-import human.Human;
-
-public class HumanComparatorByLastName implements Comparator<Human> {
+public class HumanComparatorByLastName<T extends FamilyTreeItem<T>> implements Comparator<T> {
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(T o1, T o2) {
         if (o1.getLastName() == null && o2.getLastName() == null) {
             return 0;
         }

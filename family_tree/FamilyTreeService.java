@@ -10,12 +10,12 @@ import places.Place;
 import places.PlaceBuilder;
 
 public class FamilyTreeService {
-    private FamilyTree familyTree;
+    private FamilyTree<Human, Place> familyTree;
     private HumanBuilder humanBuilder;
     private PlaceBuilder placeBuilder;
 
     public FamilyTreeService() {
-        familyTree = new FamilyTree();
+        familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
         placeBuilder = new PlaceBuilder();
     }

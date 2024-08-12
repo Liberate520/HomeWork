@@ -2,7 +2,7 @@ package places;
 
 import java.io.Serializable;
 
-public class Place implements Serializable {
+public class Place implements Serializable, PlaceItem<Place> {
     private int homeNumber;
     private String street;
     private String region;
