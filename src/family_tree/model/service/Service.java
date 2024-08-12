@@ -48,17 +48,16 @@ public class Service implements Serializable {
     }
 
     public Human getHumanById(int id) {
-        for (Human human : humans) {
-            if ((human).getId() == id) {
-                return human;
-            }
-        }
-        return null; // Если человек с таким ID не найден
+        return humans.getHumanById(id);
     }
 
     public void addChild(int idParent, int idChild) {
         Human parent = getHumanById(idParent);
         Human child = getHumanById(idChild);
+        if (parent.getGender() == Gender.male) {
+            child.setFather(parent);
+        }
+        else {child.setMother(parent);}
         parent.addChild(child);
     }
 

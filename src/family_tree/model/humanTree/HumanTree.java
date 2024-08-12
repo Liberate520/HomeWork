@@ -18,7 +18,6 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
         humans.add(human);
     }  //добавление человека
 
-    // Если человек с таким ID не найден
     public E getHumanById(int id) {
         for (E human : humans) {
             if (((Human) human).getId() == id) {
@@ -71,21 +70,9 @@ public class HumanTree<E extends ItemHumanTree> implements Serializable, Iterabl
     public List<E> getHumans() {
         return humans;
     }
-
     public void setHumans (List<E> humanTree){
         humans = humanTree;
     }
-
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Полное генеалогическое дерево: \n");
-//        for (E human : humans) {
-//            sb.append(human);
-//            sb.append("\n");
-//        }
-//        return sb.toString();
-//    }
 
     // итератор
     @Override

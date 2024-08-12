@@ -14,8 +14,8 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
     private final LocalDate dob;
     private final LocalDate dod;
     private final Gender gender;
-    private final Human father;
-    private final Human mother;
+    private Human father;
+    private Human mother;
     private final List<Human> children;
 
 
@@ -31,10 +31,10 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
         this.children = new ArrayList<>();
     }
 
+    //геттеры, сеттеры
     public static void setIdCounter(int idCounter) {
         Human.idCounter = idCounter;
     }
-
     public String getName() {
         return name;
     }
@@ -54,6 +54,15 @@ public class Human implements Comparable<Human>, ItemHumanTree <Human> {
         return children;
     }
     public int getId() { return id; }
+    public Gender getGender() {
+        return gender;
+    }
+    public void setMother (Human mother) {
+        this.mother = mother;
+    }
+    public void setFather (Human father) {
+        this.father = father;
+    }
 
     public void addChild(Human child) {
         this.children.add(child);
