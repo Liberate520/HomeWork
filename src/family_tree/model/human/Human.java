@@ -1,6 +1,6 @@
-package family_tree.human;
+package family_tree.model.human;
 
-import family_tree.family_tree.FamilyTreeItem;
+import family_tree.model.family_tree.TreeNode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable, FamilyTreeItem<Human> {
+public class Human implements Serializable, TreeNode<Human> {
     private long id;
     private String surname, name, middleName;
     private Gender gender;
@@ -16,7 +16,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     private Human dad, mom, spouse;
     private List<Human> children;
 
-    public Human(String surname, String name, String middleName, Gender gender, LocalDate birthDate, LocalDate deathDate, Human dad, Human mom) {
+    public Human(String surname, String name, String middleName, Gender gender, LocalDate birthDate, LocalDate deathDate) {
         id = -1;
         this.surname = surname;
         this.name = name;
@@ -24,36 +24,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
-        this.dad = dad;
-        this.mom = mom;
         children = new ArrayList<>();
-    }
-
-    public Human(String surname, String name, String middleName, Gender gender, LocalDate birthDate) {
-        this(surname, name, middleName, gender, birthDate, null, null, null);
-    }
-
-    public Human(String surname, String name, String middleName, Gender gender, LocalDate birthDate, Human dad, Human mom) {
-        this(surname, name, middleName, gender, birthDate, null, dad, mom);
-    }
-
-    @Override
-    public boolean addChild(Human child){
-        if (!children.equals(child)){
-            children.add(child);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean addParent(Human parent){
-        if (parent.getGender().equals(Gender.Male)){
-            setDad(parent);
-        } else if (parent.getGender().equals(Gender.Female)) {
-            setMom(parent);
-        }
-        return true;
     }
 
     @Override
@@ -121,6 +92,14 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         this.deathDate = deathDate;
     }
 
+    @Override
+    public int getAge() {
+        if (deathDate == null) {
+            return Period.between(birthDate, LocalDate.now()).getYears();
+        }
+        return Period.between(birthDate, deathDate).getYears();
+    }
+
     public Human getDad() {
         return dad;
     }
@@ -157,6 +136,25 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     }
 
     @Override
+    public boolean addChild(Human child){
+        if (!children.equals(child)){
+            children.add(child);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addParent(Human parent){
+        if (parent.getGender().equals(Gender.М)){
+            setDad(parent);
+        } else if (parent.getGender().equals(Gender.Ж)) {
+            setMom(parent);
+        }
+        return true;
+    }
+
+    @Override
     public List<Human> getParents(){
         List<Human> list = new ArrayList<>(2);
         if (dad != null){
@@ -166,14 +164,6 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
             list.add(mom);
         }
         return list;
-    }
-
-    @Override
-    public int getAge() {
-        if (deathDate == null) {
-            return Period.between(birthDate, LocalDate.now()).getYears();
-        }
-        return Period.between(birthDate, deathDate).getYears();
     }
 
     public String isAlive(){

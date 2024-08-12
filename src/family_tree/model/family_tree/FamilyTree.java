@@ -1,13 +1,11 @@
-package family_tree.family_tree;
-
-import family_tree.human.Human;
+package family_tree.model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, Iterable<E> {
+public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable<E> {
     private long humansId;
     private List<E> humanList;
 
@@ -26,10 +24,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         if (!humanList.contains(human)){
             humanList.add(human);
             human.setId(humansId++);
-
-            addToParents(human);
-            addToChildren(human);
-
             return true;
         }
         return false;
@@ -57,7 +51,29 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         return res;
     }
 
-    public boolean setWedding(E human1, E human2){
+    public boolean setRelationship(long childId, long parentId) {
+        if (checkId(childId) && checkId(parentId)) {
+            E child = getById(childId);
+            E parent = getById(parentId);
+            if (child.getParents().size() < 2) {
+                child.addParent(parent);
+                parent.addChild(child);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean setWedding(long humanId1, long humanId2) {
+        if (checkId(humanId1) && checkId(humanId2)){
+            E human1 = getById(humanId1);
+            E human2 = getById(humanId2);
+            return setWedding(human1, human2);
+        }
+        return false;
+    }
+
+    public boolean setWedding(E human1, E human2) {
         if (human1.getSpouse() == null && human2.getSpouse() == null){
             human1.setSpouse(human2);
             human2.setSpouse(human1);
@@ -66,7 +82,16 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         return false;
     }
 
-    public boolean setDivorce(E human1, E human2){
+    public boolean setDivorce(long humanId1, long humanId2) {
+        if (checkId(humanId1) && checkId(humanId2)){
+            E human1 = getById(humanId1);
+            E human2 = getById(humanId2);
+            return setDivorce(human1, human2);
+        }
+        return false;
+    }
+
+    public boolean setDivorce(E human1, E human2) {
         if (human1.getSpouse() != null && human2.getSpouse() != null){
             human1.setSpouse(null);
             human2.setSpouse(null);

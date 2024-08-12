@@ -1,8 +1,8 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 
 import java.util.List;
 
-public interface FamilyTreeItem<T> {
+public interface TreeNode<T> {
     String getSurname();
     String getName();
     String getMiddleName();
