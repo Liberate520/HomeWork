@@ -51,6 +51,8 @@ public class Human {
         }
     }
 
+
+
     public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }

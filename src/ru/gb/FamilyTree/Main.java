@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        FamilyTree familyTree = new FamilyTree();
+
         Human human1 = new Human(1,"Александр", Gender.Male,  LocalDate.of(1960, 10, 10));
         Human human2 = new Human(2,"Екатерина", Gender.Female,  LocalDate.of(1965, 05, 05));
         Human human3 = new Human(3,"Михаил", Gender.Male,  LocalDate.of(1985, 06, 15));
@@ -21,14 +23,22 @@ public class Main {
         human5.setParents(List.of(human3, human4));
         human2.setDeathDate(LocalDate.of(2020, 3,25));
 
+        familyTree.addHuman(human1);
+        familyTree.addHuman(human2);
+        familyTree.addHuman(human3);
+        familyTree.addHuman(human4);
+        familyTree.addHuman(human5);
+
+        System.out.println(familyTree);
 
 
+/**
         System.out.println(human1);
         System.out.println(human2);
         System.out.println(human3);
         System.out.println(human4);
         System.out.println(human5);
-
+*/
     }
 
 
