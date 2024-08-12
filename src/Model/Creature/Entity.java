@@ -13,17 +13,19 @@ public interface Entity {
 
     MyDate getDateOfBirth();
 
-    MyDate getDataOfDeath();
+    MyDate getDateOfDeath();
 
     Entity getFather();
 
     Entity getMather();
 
-    int getID();
+    Integer getID();
 
     Gender getGender();
 
     Entity getSpouse();
+
+    void setID(Integer ID);
 
     void setName(String name);
 
@@ -33,7 +35,7 @@ public interface Entity {
 
     void setDateOfBirth(MyDate dateOfBirth);
 
-    void setDataOfDeath(MyDate dataOfDeath);
+    void setDateOfDeath(MyDate dataOfDeath);
 
     void setFather(Entity father);
 
@@ -47,8 +49,7 @@ public interface Entity {
 
     void removeKid(Entity kid);
 
-    @Override
-    String toString();
+    Info getInfo();
 
     @Override
     boolean equals(Object obj);

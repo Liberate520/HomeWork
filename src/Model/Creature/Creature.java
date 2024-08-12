@@ -1,5 +1,7 @@
 package Model.Creature;
 
+import Model.Builders.InfoBuilder;
+import Model.Builders.OwnInfoBuilder;
 import Model.Formating.MyDate;
 
 import java.io.Serializable;
@@ -7,19 +9,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Creature implements Serializable, Entity {
-    private final int ID;
-    private MyDate dateOfBirth = null, dataOfDeath = null;
+    private Integer ID;
+    private MyDate dateOfBirth, dateOfDeath;
     private String name, surname;
     private Gender gender;
     private final ArrayList<Entity> children = new ArrayList<>();
-    private Entity mather = null, father = null, spouse = null;
-
-    public Creature(String name, String surname, Gender gender, int ID){
-        this.name = name;
-        this.surname = surname;
-        this.gender = gender;
-        this.ID = ID;
-    }
+    private Entity mather, father, spouse;
 
     public String getName() {
         return name;
@@ -37,8 +32,8 @@ public class Creature implements Serializable, Entity {
         return dateOfBirth;
     }
 
-    public MyDate getDataOfDeath() {
-        return dataOfDeath;
+    public MyDate getDateOfDeath() {
+        return dateOfDeath;
     }
 
     public Entity getFather() {
@@ -49,7 +44,7 @@ public class Creature implements Serializable, Entity {
         return mather;
     }
 
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
@@ -59,6 +54,10 @@ public class Creature implements Serializable, Entity {
 
     public Entity getSpouse() {
         return spouse;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 
     public void setName(String name) {
@@ -77,8 +76,8 @@ public class Creature implements Serializable, Entity {
          this.dateOfBirth = dateOfBirth;
     }
 
-    public void setDataOfDeath(MyDate dataOfDeath) {
-        this.dataOfDeath = dataOfDeath;
+    public void setDateOfDeath(MyDate dataOfDeath) {
+        this.dateOfDeath = dataOfDeath;
     }
 
     public void setFather(Entity father) {
@@ -102,13 +101,7 @@ public class Creature implements Serializable, Entity {
     public void addKid(Entity new_kid){
         if (!this.children.contains(new_kid)){
 
-            if (this.gender.equals(Gender.male)) new_kid.setFather(this);
-
-            else new_kid.setMather(this);
-
             this.children.add(new_kid);
-
-            if (this.spouse != null) this.spouse.addKid(new_kid);
         }
     }
 
@@ -122,44 +115,39 @@ public class Creature implements Serializable, Entity {
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder info = new StringBuilder();
-
-        info.append(String.format("\tID: %d", this.ID));
-
-        info.append(String.format("%n\tName: %s %s", this.name, this.surname));
-
-        if (this.gender != null) info.append(String.format("%n\tGender: %s", this.gender));
-        if (this.dateOfBirth != null) info.append(String.format("%n\tData of birth: %s", this.dateOfBirth));
-        if (this.dataOfDeath != null) info.append(String.format("%n\tData of death: %s", this.dataOfDeath));
-        if (this.spouse != null) info.append(String.format("%n\tSpouse: %s %s", this.spouse.getName(), this.spouse.getSurname()));
-        if (this.mather != null) info.append(String.format("%n\tMather: %s %s", this.mather.getName(), this.mather.getSurname()));
-        if (this.father != null) info.append(String.format("%n\tFather: %s %s", this.father.getName(), this.father.getSurname()));
-
-        if (!this.children.isEmpty()){
-            info.append("\n\tChildren: ");
-
-            for (Entity kid: this.children){
-                info.append(String.format("%n\t\tID: %d", kid.getID()));
-
-                info.append(String.format("%n\t\tName: %s %s", kid.getName(), kid.getSurname()));
-
-                if (kid.getGender() != null) info.append(String.format("%n\t\tGander: %s", kid.getGender()));
-
-                if (kid.getDateOfBirth() != null)
-                    info.append(String.format("%n\t\tData of birth: %s", kid.getDateOfBirth()));
-
-                if (kid.getDataOfDeath() != null)
-                    info.append(String.format("%n\t\tData of death: %s", kid.getDataOfDeath()));
-
-                info.append("\n");
-            }
-        } else {
-            info.append("\n");
+    private OwnInfo packEntity(Entity entity){
+        if (entity == null){
+            return null;
         }
 
-        return info.toString();
+        return new OwnInfoBuilder()
+                 .setID(entity.getID())
+                 .setName(entity.getName())
+                 .setSurname(entity.getSurname())
+                 .setGender(entity.getGender())
+                 .setDateOfBirth(entity.getDateOfBirth())
+                 .setDateOfDeath(entity.getDateOfDeath())
+                 .build();
+    }
+
+    public Info getInfo(){
+        ArrayList<OwnInfo> childrenOwnInfo = null;
+
+        if(!this.children.isEmpty()){
+            childrenOwnInfo = new ArrayList<>();
+
+             for (Entity kid: this.children){
+                childrenOwnInfo.add(packEntity(kid));
+            }
+        }
+
+        return new InfoBuilder()
+                .setSelfInfo(packEntity(this))
+                .setSpouseInfo(packEntity(this.spouse))
+                .setMatherInfo(packEntity(this.mather))
+                .setFatherInfo(packEntity(this.father))
+                .setChildrenInfo(childrenOwnInfo)
+                .build();
     }
 
     @Override
@@ -170,7 +158,7 @@ public class Creature implements Serializable, Entity {
 
         Creature creature = (Creature) obj;
 
-        return this.ID == creature.getID();
+        return this.ID.equals(creature.getID());
     }
 
     @Override

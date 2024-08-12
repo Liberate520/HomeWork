@@ -46,17 +46,14 @@ public class MyDate implements Serializable {
 
     private void setDay(int day){
         if (0 < day && day < dayInMonth.get(this.month)) this.day = day;
-        else this.day = null;
     }
 
     private void setMonth(int month){
         if (0 < month && month < 13) this.month = month;
-        else this.day = null;
     }
 
     private void setYear(int year){
         if (year > 0) this.year = year;
-        else this.year = null;
     }
 
     @Override
@@ -72,7 +69,7 @@ public class MyDate implements Serializable {
 
         MyDate date = (MyDate) obj;
 
-        return this.year == date.year && this.month == date.month && this.day == date.day;
+        return Objects.equals(this.year, date.year) && Objects.equals(this.month, date.month) && Objects.equals(this.day, date.day);
     }
 
     @Override

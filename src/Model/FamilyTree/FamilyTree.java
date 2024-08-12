@@ -3,107 +3,83 @@ package Model.FamilyTree;
 import java.io.Serializable;
 import java.util.*;
 
+import Model.Creature.Info;
 import Model.FamilyTree.Comparators.*;
 import Model.Creature.Entity;
 
-public class FamilyTree implements Serializable, Tree {
-    private int lastHumanID = 0;
-    private final ArrayList<Entity> familyTree = new ArrayList<>();
-    private String description;
+public class FamilyTree<T extends Entity> implements Serializable {
+    private final ArrayList<T> familyTree = new ArrayList<>();
+    private int lastEntityID = 0;
 
-    public FamilyTree(String description){
-        this.description = description;
+    public void addEntity(T entity) {
+        entity.setID(this.lastEntityID++);
+
+        this.familyTree.add(entity);
     }
 
-    public void addCreature(Entity creature) {
-        this.familyTree.add(creature);
+    public void removeEntity(int ID) {
+        T entity = getEntity(ID);
 
-        lastHumanID++;
-    }
+        if (entity != null) {
+            Entity mather = entity.getMather();
+            Entity father = entity.getFather();
+            Entity spouse = entity.getSpouse();
+            ArrayList<T> children = (ArrayList<T>) new ArrayList<>(entity.getChildren());
 
-    public void removeCreature(int ID){
-        Entity creature = getCreature(ID);
-
-        if (creature != null){
-            Entity mather = creature.getMather();
-            Entity father = creature.getFather();
-            Entity spouse = creature.getSpouse();
-            ArrayList<Entity> children = new ArrayList<>(creature.getChildren());
-
-            if (mather != null) mather.removeKid(creature);
-            if (father != null) father.removeKid(creature);
+            if (mather != null) mather.removeKid(entity);
+            if (father != null) father.removeKid(entity);
             if (spouse != null) spouse.setSpouse(null);
 
-            if (!children.isEmpty()){
-                for (Entity kid: children){
-                    if (kid.getFather().equals(creature)) kid.setFather(null);
+            if (!children.isEmpty()) {
+                for (T kid : children) {
+                    if (kid.getFather().equals(entity)) kid.setFather(null);
                     else kid.setMather(null);
                 }
             }
-            this.familyTree.remove(creature);
+            this.familyTree.remove(entity);
         }
     }
 
-    public Entity getCreature(int ID){
-        for(Entity creature: this.familyTree){
-            if (creature.getID() == ID){
-                return creature;
+    public T getEntity(int ID) {
+        for (T entity : this.familyTree) {
+            if (entity.getID() == ID) {
+                return entity;
             }
         }
         return null;
     }
 
-    @Override
-    public int getLastHumanID() {
-        return lastHumanID;
+    public int getLastEntityID() {
+        return lastEntityID;
     }
 
-    public ArrayList<Entity> getCreature(String name, String surname){
-        ArrayList<Entity> creatures = new ArrayList<>();
-
-        for (Entity creature: this.familyTree){
-            if (creature.getName().equalsIgnoreCase(name) && creature.getSurname().equalsIgnoreCase(surname)){
-                creatures.add(creature);
-            }
-        }
-
-        return creatures;
+    public void sortBySurname() {
+        this.familyTree.sort(new ComparatorBySurname<T>());
     }
 
-    public String getDescription(){
-        return description;
+    public void sortByID() {
+        this.familyTree.sort(new ComparatorByID<T>());
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void sortByChildren() {
+        this.familyTree.sort(new ComparatorByChildren<T>());
     }
 
-    public void sortBySurname(){
-        this.familyTree.sort(new ComparatorBySurname<Entity>());
+    public void sortByName() {
+        this.familyTree.sort(new ComparatorByName<T>());
     }
 
-    public void sortByID(){
-        this.familyTree.sort(new ComparatorByID<Entity>());
+    public ArrayList<T> getFamilyTree() {
+        return familyTree;
     }
 
-    public void sortByChildren(){
-        this.familyTree.sort(new ComparatorByChildren<Entity>());
-    }
-
-    public void sortByName(){
-        this.familyTree.sort(new ComparatorByName<Entity>());
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder info = new StringBuilder();
+    public ArrayList<Info> getInfo(){
+        ArrayList<Info> infos = new ArrayList<>();;
 
         if (!this.familyTree.isEmpty()){
-            for (int index = 0; index != familyTree.size() - 1; index++){
-                info.append(familyTree.get(index)).append("\n");
-            }
-            info.append(familyTree.getLast());
+            for (T entity: this.familyTree) infos.add(entity.getInfo());
         }
-        return info.toString();
+
+        return infos;
     }
 }

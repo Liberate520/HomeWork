@@ -1,6 +1,7 @@
-import Model.Writer.FileHandler;
-import Model.Writer.Writer;
-import Presenter.Leader;
+import Model.Service;
+import Model.Formating.Writer.FileHandler;
+import Model.Formating.Writer.Writer;
+import Presenter.Presenter;
 import View.*;
 
 public class Main {
@@ -9,7 +10,9 @@ public class Main {
 
         View view = new ConsoleUI();
 
-        new Leader(view, writer);
+        Service service = new Service(writer);
+
+        new Presenter(view, service);
 
         view.mainLoop();
     }
