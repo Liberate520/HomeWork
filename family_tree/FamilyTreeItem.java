@@ -1,10 +1,11 @@
 package family_tree;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import human.Gender;
 import java.util.List;
 
-public interface FamilyTreeItem<T> extends Comparable<T> {
+public interface FamilyTreeItem<T> extends Serializable, Comparable<T> {
     String getFirstName();
 
     String getLastName();
