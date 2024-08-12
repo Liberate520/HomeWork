@@ -2,6 +2,10 @@ package homeWork;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import homeWork.Human.Gender;
+import homeWork.Human.Human;
+import homeWork.Tree.FamilyTree;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -30,26 +34,29 @@ public class Main {
 
 
         System.out.println(tree.getFamilyTree());
+        tree.sortByName();
+        // tree.sortByAge();
+        System.out.println(tree.getFamilyTree());
 
-        FileHandler fileHandler = new FileHandler();
-        String fileName = "familyTree.java";
-
-
-       try {
-           fileHandler.writeToFile(tree, fileName);
-           System.out.println("Family tree сохранён в файл.");
-       } catch (IOException e) {
-           System.out.println("Ошибка сохранения family tree: " + e.getMessage());
-       }
+    //     FileHandler fileHandler = new FileHandler();
+    //     String fileName = "familyTree.java";
 
 
-        try {
-            FamilyTree loadedTree = fileHandler.readFromFile(fileName);
-            System.out.println("Family tree загружен из файла:");
-            System.out.println(loadedTree);
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Ошибка загрузки family tree: " + e.getMessage());
-        }
+    //    try {
+    //        fileHandler.writeToFile(tree, fileName);
+    //        System.out.println("Family tree сохранён в файл.");
+    //    } catch (IOException e) {
+    //        System.out.println("Ошибка сохранения family tree: " + e.getMessage());
+    //    }
+
+
+    //     try {
+    //         FamilyTree loadedTree = fileHandler.readFromFile(fileName);
+    //         System.out.println("Family tree загружен из файла:");
+    //         System.out.println(loadedTree);
+    //     } catch (IOException | ClassNotFoundException e) {
+    //         System.out.println("Ошибка загрузки family tree: " + e.getMessage());
+    //     }
 
 
 
