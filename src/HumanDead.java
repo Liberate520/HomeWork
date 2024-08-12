@@ -4,7 +4,6 @@ public class HumanDead extends Human {
     private LocalDate dateOfDeath;
 
     //Конструктор
-
     public HumanDead(String name, LocalDate dateOfBirth, Gender gender,LocalDate dateOfDeath) {
         super(name,dateOfBirth,gender);
         this.dateOfDeath = dateOfDeath;

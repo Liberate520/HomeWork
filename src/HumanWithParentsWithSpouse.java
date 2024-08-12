@@ -11,11 +11,9 @@ public class HumanWithParentsWithSpouse extends HumanWithParents{
     }
 
     //Геттер
-
     public Human getSpouse() {
         return spouse;
     }
-
 
     // Переопределение метода
     @Override

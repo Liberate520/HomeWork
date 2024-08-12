@@ -12,19 +12,16 @@ public class HumanWithSpouseWithChildrenAndDead extends HumanWithSpouseWithChild
     }
 
     // Геттер
-
     public LocalDate getDateOfDeath() {
         return dateOfDeath;
     }
 
     //Сеттеры
-
     public void setDateOfDeath(LocalDate dateOfDeath) {
         this.dateOfDeath = dateOfDeath;
     }
 
     // Ещё методы
-
     @Override
     public String toString(){
         return  super.toString()+

@@ -6,7 +6,6 @@ public class Human {
     private Gender gender;
 
     //Конструктор
-
     public Human(String name, LocalDate dateOfBirth, Gender gender) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;

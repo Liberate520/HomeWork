@@ -2,13 +2,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class FamilyTree {
-    // список людей
-    // метод нахождения человека по имени
-    // дядя/тетя
-    // бабушки/дедушки
-    // братья/сестры
-    // наполняемость людьми, список людей, методы по работе с этим списком, добавление - четкого ТЗ нету.
+
     private List<Human> family;
+    private long humansId;
+    private List<Human> humanList;
 
     public FamilyTree() {
         family = new ArrayList<>();

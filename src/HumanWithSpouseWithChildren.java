@@ -11,11 +11,9 @@ public class HumanWithSpouseWithChildren extends HumanWithSpouse{
     }
 
     //Геттер
-
     public List <Human> getChildren() {
         return children;
     }
-
 
     // Переопределение метода
     @Override

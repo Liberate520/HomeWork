@@ -6,7 +6,6 @@ public class HumanWithParentsWithSpouseWithChildrenAndDead extends HumanWithPare
     private LocalDate dateOfDeath;
 
     //Конструктор
-
     public HumanWithParentsWithSpouseWithChildrenAndDead (String name, LocalDate dateOfBirth, Gender gender,Human father, Human mother, Human spouse, List<Human>children, LocalDate dateOfDeath) {
         super(name,dateOfBirth,gender, father, mother, spouse, children);
         this.dateOfDeath = dateOfDeath;

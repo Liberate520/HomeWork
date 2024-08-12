@@ -4,7 +4,6 @@ public class HumanWithParents extends Human {
     private Human father, mother;
 
     //Конструктор
-
     public HumanWithParents(String name, LocalDate dateOfBirth, Gender gender, Human father, Human mother) {
         super(name,dateOfBirth,gender);
         this.father = father;

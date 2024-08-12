@@ -11,7 +11,6 @@ public class HumanWithParentsWithSpouseWithChildren extends HumanWithParentsWith
     }
 
     //Геттер
-
     public List <Human> getChildren() {
         return children;
     }

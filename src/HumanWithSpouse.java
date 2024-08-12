@@ -10,7 +10,6 @@ public class HumanWithSpouse extends Human{
     }
 
     //Геттер
-
     public Human getSpouse() {
         return spouse;
     }
