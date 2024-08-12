@@ -4,8 +4,6 @@ import java.util.ArrayList;
 public class FamilyTree {
 
     private List<Human> family;
-    private long humansId;
-    private List<Human> humanList;
 
     public FamilyTree() {
         family = new ArrayList<>();
