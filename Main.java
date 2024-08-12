@@ -31,7 +31,7 @@ public class Main {
 
         System.out.println(tree.getFamilyTree());
         tree.sortByName();
-        // tree.sortByAge();
+        tree.sortByAge();
         System.out.println(tree.getFamilyTree());
 
        //  FileHandler fileHandler = new FileHandler();
