@@ -1,16 +1,16 @@
-package family_tree;
+package model.family_tree;
 
-import man.Gender;
-import man.Man;
-import man.comparator.ItemComparatorByAge;
-import man.comparator.ItemComparatorByName;
+import model.man.Gender;
+import model.man.Man;
+import model.man.comparator.ItemComparatorByAge;
+import model.man.comparator.ItemComparatorByName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree <E extends FamilyTreeItem> implements Serializable, Iterable<E>{
+public class FamilyTree <E extends FamilyTreeItem<E>> implements Serializable, Iterable<E>{
     private long id;
     private ArrayList <E> group;
     public FamilyTree(ArrayList <E> items){
@@ -23,36 +23,33 @@ public class FamilyTree <E extends FamilyTreeItem> implements Serializable, Iter
 
     public boolean addToFamilyTree(E groupItem) {
         if (groupItem == null){
-            System.out.println("Пусто...");
             return false;
         }
         if (!group.contains(groupItem)) {
             group.add(groupItem);
             groupItem.setId(id++);
-            System.out.println(groupItem.getName() + " добавлен");
             addToParents(groupItem);
             addToChildren(groupItem);
             return true;
         } else {
-            System.out.println(groupItem.getName() + " Ошибка! Уже был добавлен");
             return false;
         }
     }
     private void addToParents(E groupItem){
         if (groupItem.getParents()!= null) {
-            for (Object parent : groupItem.getParents()) {
-                ((E)parent).addChild(groupItem);
+            for (E parent : groupItem.getParents()) {
+                parent.addChild(groupItem);
             }
         }
     }
 
     private void addToChildren(E groupItem) {
         if (groupItem.getChildrens()!= null) {
-            for (Object child : groupItem.getChildrens()) {
+            for (E child : groupItem.getChildrens()) {
                 if (groupItem.getGender().equals(Gender.Female)) {
-                    ((E)child).addMother(groupItem);
+                    child.addMother(groupItem);
                 } else {
-                    ((E)child).addFather(groupItem);
+                    child.addFather(groupItem);
                 }
             }
         }
@@ -106,17 +103,18 @@ public class FamilyTree <E extends FamilyTreeItem> implements Serializable, Iter
     }
 
     public void sortByName(){
-        group.sort(new ItemComparatorByName());
+        group.sort(new ItemComparatorByName<>());
     }
 
     public void sortByAge(){
-        group.sort(new ItemComparatorByAge());
+        group.sort(new ItemComparatorByAge<>());
     }
 
     @Override
     public Iterator<E> iterator()
     {
-        return new GroupIterator(group);
+        GroupIterator<E> eGroupIterator = new GroupIterator<>(group);
+        return eGroupIterator;
     }
 
     @Override

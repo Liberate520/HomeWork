@@ -1,6 +1,6 @@
-package writer;
+package model.writer;
 
-import family_tree.FamilyTree;
+import model.family_tree.FamilyTree;
 
 import java.io.*;
 

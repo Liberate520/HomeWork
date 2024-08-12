@@ -1,7 +1,6 @@
-package family_tree;
+package model.family_tree;
 
-import man.Gender;
-import man.Man;
+import model.man.Gender;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface FamilyTreeItem <E> {
     long getId();
     void setId(long id);
     List<E> getParents();
-    boolean addChild(Object child);
+    boolean addChild(E child);
     List<E> getChildrens();
     Gender getGender();
     boolean addMother(E mother);

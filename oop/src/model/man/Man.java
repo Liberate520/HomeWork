@@ -1,6 +1,6 @@
-package man;
+package model.man;
 
-import family_tree.FamilyTreeItem;
+import model.family_tree.FamilyTreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Man implements Serializable, FamilyTreeItem {
+public class Man implements Serializable, FamilyTreeItem<Man> {
     private long id;
     private String name;
     private Gender gender;
@@ -37,6 +37,10 @@ public class Man implements Serializable, FamilyTreeItem {
 
     public Man(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate, null, null, null, null);
+
+    }
+    public Man(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+        this(name, gender, birthDate, deathDate, null, null, null);
 
     }
 
@@ -94,33 +98,29 @@ public class Man implements Serializable, FamilyTreeItem {
             return true;
         }
         else{
-            System.out.println(this.name + "уже женат/замужем, запрещено");
             return false;
         }
     }
-    public boolean addChild(Object child){
-        if (!childrens.contains((Man)child)){
-            childrens.add((Man)child);
+    public boolean addChild(Man child){
+        if (!childrens.contains(child)){
+            childrens.add(child);
             return true;
         }
         else{
-            System.out.println(((Man)child).getName() + "уже был добавлен в список детей");
             return false;
         }
     }
-    public boolean addMother(Object mother) {
+    public boolean addMother(Man mother) {
         if (this.mother == null) {
-            this.mother = (Man)mother;
-            System.out.println(this.name + "добавлена мама");
+            this.mother = mother;
             return true;
         } else {
             return false;
         }
     }
-    public boolean addFather(Object father){
+    public boolean addFather(Man father){
         if (this.father == null) {
-            this.father = (Man)father;
-            System.out.println(this.name + "добавлен папа");
+            this.father = father;
             return true;
         } else {
             return false;
@@ -160,6 +160,8 @@ public class Man implements Serializable, FamilyTreeItem {
 
     public String getInfo(){
         StringBuilder manInfo = new StringBuilder();
+        manInfo.append("ID:");
+        manInfo.append(id);
         manInfo.append("имя: ");
         manInfo.append(name);
         manInfo.append(" пол: ");
