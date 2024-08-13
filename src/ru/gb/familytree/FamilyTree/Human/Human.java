@@ -1,5 +1,7 @@
 package ru.gb.familytree.FamilyTree.Human;
 
+import ru.gb.familytree.FamilyTree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;

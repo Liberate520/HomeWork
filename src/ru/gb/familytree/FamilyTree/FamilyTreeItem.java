@@ -1,4 +1,4 @@
-package ru.gb.familytree.FamilyTree.Human;
+package ru.gb.familytree.FamilyTree;
 
 import java.time.LocalDate;
 import java.util.List;
