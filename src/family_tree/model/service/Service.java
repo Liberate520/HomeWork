@@ -1,36 +1,42 @@
-package service;
+package family_tree.model.service;
 
-import family_tree.FamilyTree;
-import family_tree.view.View;
-import human.Gender;
-import human.Human;
+import family_tree.model.FamilyTree;
+import family_tree.model.human.Gender;
+import family_tree.model.human.Human;
 import writer.FileHandler;
+import writer.Writer;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Service {
+
     public Human human;
     public Human child;
     public Human person1;
     public Human person2;
     public FamilyTree<Human> familyTree;
 
-    private String name;
-    private Gender gender;
-    private LocalDate date;
 
-    public Service() {
-        human = new Human(name,gender,date);
+    private Writer writer;
+
+    public Service(Writer writer) {
+
+        this.writer = writer;
+        Human human = new Human.Builder().build();
         familyTree = new FamilyTree<>();
     }
 
-//    public
-//
+
     public  void addHuman(String name, Gender gender, LocalDate date){
-        Human human = new Human(name,gender,date);
+
+       Human human = new Human.Builder()
+                    .setName(name)
+                    .setGender(gender)
+                    .setBirthDate(date)
+                    .build();
+
+
         familyTree.add(human);
     }
 
@@ -42,7 +48,9 @@ public class Service {
 
 
     public void addParent(long humanId,long childId){
-        human = familyTree.getById(humanId);
+//        family_tree.model.human = familyTree.getById(humanId);
+        Human human = familyTree.getById(humanId);
+
         child = familyTree.getById(childId);
 
         child.addParent(human);
@@ -62,16 +70,13 @@ public class Service {
     }
 
     public void saveToFile() throws IOException {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.save(familyTree);
-//        FileHandler.save(familyTree);
-//        private static void saveTree (FamilyTree familyTree) throws IOException {
-//        FileHandler fileHandler = new FileHandler();
-//        fileHandler.save(familyTree);
+        Writer fileHandler = new FileHandler();
+       fileHandler.save(familyTree);
+
     }
 
     public FamilyTree readFromFile() throws IOException, ClassNotFoundException {
-        FileHandler fileHandler = new FileHandler();
+        Writer fileHandler = new FileHandler();
         return (FamilyTree) fileHandler.read();
 
     }

@@ -1,10 +1,10 @@
-//package service;
+//package family_tree.model.service;
 //
-//import family_tree.FamilyTree;
-//import human.Human;
+//import family_tree.model.FamilyTree;
+//import family_tree.model.human.Human;
 //
 //public class Service {
-//    public Human human;
+//    public Human family_tree.model.human;
 //    public FamilyTree familyTree;
 //
 //

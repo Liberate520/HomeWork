@@ -1,8 +1,8 @@
-package human;
+package family_tree.model.human;
 
 
 
-import family_tree.ItemFamilyTree;
+import family_tree.model.ItemFamilyTree;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,33 +22,117 @@ public class Human implements ItemFamilyTree<Human>{
     private Human spouse;
 
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate,
-                 Human mother, Human father) {
-        id = -1;
-        this.name = name;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
-        this.mother = mother;
-        this.father = father;
-        children = new ArrayList<>();
+//    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate,
+//                 Human mother, Human father) {
+//        id = -1;
+//        this.name = name;
+//        this.gender = gender;
+//        this.birthDate = birthDate;
+//        this.deathDate = deathDate;
+//        this.mother = mother;
+//        this.father = father;
+//        children = new ArrayList<>();
+//    }
+//
+//    public Human(String name, Gender gender, LocalDate date) {
+//
+//
+//        this(name, gender, date, null, null, null);
+//
+//
+//
+//    }
+//
+//    public Human(String name, Gender gender, LocalDate birthDate,
+//                 Human mother, Human father) {
+//        this(name, gender, birthDate, null, mother, father);
+//    }
+
+    private Human(Builder builder){
+        id = -1;;
+        this.name = builder.name;
+        this.gender = builder.gender;
+        this.birthDate = builder.birthDate;
+        this.deathDate = builder.deathDate;
+        this.mother = builder.mother;
+        this.father = builder.father;
+        children = new ArrayList<>();;
+        this.spouse = builder.spouse;
     }
 
-    public Human(String name, Gender gender, LocalDate date) {
+     public static class Builder {
+         private long id;
+         private String name;
+         private Gender gender;
+         private LocalDate birthDate;
+         private LocalDate deathDate;
+         private Human mother;
+         private Human father;
+         private List<Human> children;
+         private Human spouse;
+
+         public Builder setBirthDate(LocalDate birthDate) {
+             this.birthDate = birthDate;
+             return this;
+         }
+
+         public Builder setChildren(List<Human> children) {
+             this.children = children;
+             return this;
+         }
+
+         public Builder setDeathDate(LocalDate deathDate) {
+             this.deathDate = deathDate;
+             return this;
+         }
+
+         public Builder setFather(Human father) {
+             this.father = father;
+             return this;
+         }
+
+         public Builder setGender(Gender gender) {
+             this.gender = gender;
+             return this;
+         }
+
+         public Builder setId(long id) {
+             this.id = id;
+             return this;
+         }
+
+         public Builder setMother(Human mother) {
+             this.mother = mother;
+             return this;
+         }
+
+         public Builder setName(String name) {
+             this.name = name;
+             return this;
+         }
+
+         public Builder setSpouse(Human spouse) {
+             this.spouse = spouse;
+             return this;
+         }
+
+         public Human build() {
+             return new Human(this);
+         }
 
 
-        this(name, gender, date, null, null, null);
-//        setId(++id);
+     }
 
+// Добавил проверку на пустое поле отца или матери
 
-    }
-
-    public Human(String name, Gender gender, LocalDate birthDate,
-                 Human mother, Human father) {
-        this(name, gender, birthDate, null, mother, father);
-    }
-
-
+        public boolean addParent(Human parent) {
+            if ((this.father == null) && (parent.getGender().equals(Gender.male))) {
+                setFather(parent);
+            } else if ((this.mother == null) && (parent.getGender().equals(Gender.female))) {
+                setMother(parent);
+            }
+            return true;
+        }
 
 
     public boolean addChild(Human child) {
@@ -58,19 +142,6 @@ public class Human implements ItemFamilyTree<Human>{
         }
         return false;
     }
-
-
-// Добавил проверку на пустое поле отца или матери
-
-    public boolean addParent(Human parent) {
-        if ((this.father == null) && (parent.getGender().equals(Gender.male))) {
-            setFather(parent);
-        } else if ((this.mother == null) && (parent.getGender().equals(Gender.female))) {
-            setMother(parent);
-        }
-        return true;
-    }
-
 
     public long getId() {
         return id;
@@ -131,6 +202,8 @@ public class Human implements ItemFamilyTree<Human>{
     public List<Human> getChildren() {
         return children;
     }
+
+
 
     public void setChildren(List<Human> children) {
         this.children = children;
@@ -256,4 +329,7 @@ public class Human implements ItemFamilyTree<Human>{
 //    public int compareTo(Human o) {
 //        return this.name.compareTo(o.name);
 //    }
+
+
+
 }

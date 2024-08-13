@@ -1,14 +1,16 @@
 package family_tree.view;
 
 import family_tree.presenter.Presenter;
-import human.Gender;
+import family_tree.model.human.Gender;
+import writer.Writer;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class ConsoleUI implements View {
+public class ConsoleUI implements View, Writer {
     private Scanner scanner;
     private boolean work;
     private Presenter presenter;
@@ -17,7 +19,7 @@ public class ConsoleUI implements View {
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         work = true;
-        presenter = new Presenter(this);
+        presenter = new Presenter(this,  this);
         menu = new MainMenu(this);
 
     }
@@ -151,6 +153,16 @@ public class ConsoleUI implements View {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No enum constant " + gender);
         }
+    }
+
+    @Override
+    public void save(Serializable serializable) throws IOException {
+
+    }
+
+    @Override
+    public Object read() throws IOException, ClassNotFoundException {
+        return null;
     }
 }
 

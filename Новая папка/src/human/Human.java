@@ -1,4 +1,4 @@
-package human;
+package family_tree.model.human;
 
 
 

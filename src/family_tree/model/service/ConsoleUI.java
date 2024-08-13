@@ -1,4 +1,4 @@
-//package service;
+//package family_tree.model.service;
 
 
 //public void getHumanListInfo() {

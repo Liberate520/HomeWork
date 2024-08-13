@@ -1,6 +1,6 @@
 import family_tree.FamilyTree;
-import human.Gender;
-import human.Human;
+import family_tree.model.human.Gender;
+import family_tree.model.human.Human;
 
 import java.io.IOException;
 import java.time.LocalDate;
