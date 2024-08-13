@@ -1,6 +1,5 @@
 package ru.gb.family_tree.view;
 
-import ru.gb.family_tree.model.familly_tree.FamilyTree;
 import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.presenter.Presenter;
 
@@ -27,7 +26,7 @@ public class ConsoleUI implements View{
     @Override
     public void startWork() throws IOException, ClassNotFoundException {
         greetings();
-        presenter.readTree();
+ //       presenter.readTree();
         selectItemFromMenu();
     }
 

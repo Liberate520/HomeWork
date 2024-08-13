@@ -20,7 +20,7 @@ public class Service { //  в этом классе функционал При�
     private final Writer fileHandler;
 
     public Service(){
-        familyTree = new FamilyTree<>();
+        familyTree = new FamilyTree<Human>();
         humanBuilder = new HumanBuilder();
         fileHandler = new FileHandler();
     }
@@ -30,11 +30,6 @@ public class Service { //  в этом классе функционал При�
         human = humanBuilder.build(name, gender, birthDate);
         familyTree.add(human); // добавили его в дерево
     }
-
-        // TODO статистику посмотреть, сколько человек в дереве
-        // TODO private void setGenderFromStr(String genderStr, Human human) {
-        // TODO public void sortById() {
-
 
     public void sortByName() {
         familyTree.sortByName();

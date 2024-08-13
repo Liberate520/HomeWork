@@ -83,7 +83,6 @@ public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Itera
         humanList.sort(new HumanComparatorByName<>());
     }
     public void sortByBirthDate() {
-//        Collections.sort(humanList, new HumanComparatorByBirthDate());
         humanList.sort(new HumanComparatorByBirthDate<>());
     }
 
@@ -118,7 +117,7 @@ public class FamilyTree<T extends ItemFamilyTree> implements Serializable, Itera
 
     @Override
     public Iterator<T> iterator(){
-        return new FamilyTreeIterator<>(humanList);  // Можно написать return humanList.iterator(), т.к. список людей уже - List
+        return new FamilyTreeIterator<>(humanList);
     }
 
 }

@@ -5,6 +5,7 @@ import ru.gb.family_tree.model.familly_tree.TreeNode;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Human implements TreeNode<Human>, ItemFamilyTree{
@@ -92,10 +93,15 @@ public class Human implements TreeNode<Human>, ItemFamilyTree{
         sb.append(getMotherInfo());
         sb.append(", ");
         sb.append(getFatherInfo());
-//        sb.append(", ");
-//        sb.append(getChildrenInfo());
         return sb.toString();
     }
+
+    private int getAge() {
+        int age;
+        age = (int) (System.currentTimeMillis() - getBirthDate().getYear());
+        return age;
+    }
+
     public String getSpouseInfo(){
         String res = "супруг(а): ";
         if (spouse == null) {
@@ -127,12 +133,6 @@ public class Human implements TreeNode<Human>, ItemFamilyTree{
 
     @Override
     public String toString() {return getInfo();}
-
-
-//    @Override
-//    public int compareTo(Human anotherHuman) {
-//        return this.name.compareTo(anotherHuman.name);}
-
 }
 
 
