@@ -22,8 +22,8 @@ public class FamilyTree<T extends TreeItem> implements Serializable, Iterable<T>
     public String getFamilyTree(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список членов семьи:\n");
-        for (T object : familyTree){
-            stringBuilder.append(object);
+        for (T human : familyTree){
+            stringBuilder.append(human);
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
