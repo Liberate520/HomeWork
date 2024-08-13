@@ -4,24 +4,24 @@ import family_tree.model.family_tree.FamilyTree;
 
 import java.io.*;
 
-public  class FileHendler implements Writer {
+public class FileHendler implements Writer {
     private String filePath = "src/family_tree/model/family_tree/person.out";
 
     @Override
     public void save(FamilyTree<family_tree.model.human.Human> serializable) {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(serializable);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public Object read() {
-        try (ObjectInputStream objectInputStreamt = new ObjectInputStream(new FileInputStream(filePath))){
+        try (ObjectInputStream objectInputStreamt = new ObjectInputStream(new FileInputStream(filePath))) {
             Object object = objectInputStreamt.readObject();
             return object;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

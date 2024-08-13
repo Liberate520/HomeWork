@@ -6,15 +6,16 @@ import family_tree.model.human.Human;
 import family_tree.model.human.HumanComparatorByDOB;
 import family_tree.model.human.HumanComparatorByName;
 import family_tree.model.writer.FileHendler;
-import family_tree.view.ConsoleUI;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class Service {
-    private FamilyTree <Human>  familyTree;
-    private ConsoleUI consoleUI;
+    private FamilyTree<Human> familyTree;
+
+    public FamilyTree<Human> getFamilyTree() {
+        return familyTree;
+    }
 
     public Service() {
         familyTree = new FamilyTree<>();
@@ -27,10 +28,10 @@ public class Service {
         human.setDod(dod);
         human.setGender(gender);
         if (!fatherID.isEmpty()) {
-            human.setFather(familyTree.getHumans().get(Integer.parseInt(fatherID)-1));
+            human.setFather(familyTree.getHumans().get(Integer.parseInt(fatherID) - 1));
         }
         if (!matherID.isEmpty()) {
-            human.setFather(familyTree.getHumans().get(Integer.parseInt(matherID)-1));
+            human.setFather(familyTree.getHumans().get(Integer.parseInt(matherID) - 1));
         }
         familyTree.addHuman(human);
 
@@ -38,13 +39,11 @@ public class Service {
 
     public String getHumansInfo(int sort) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (sort == 1){
+        if (sort == 1) {
             stringBuilder.append("Список людей древа без сортировки:\n");
-        }
-        else if (sort == 2) {
+        } else if (sort == 2) {
             stringBuilder.append("Список людей древа сортировка по имени:\n");
-        }
-        else if (sort == 3) {
+        } else if (sort == 3) {
             stringBuilder.append("Список людей древа сортировка по дате рождения:\n");
         }
         Iterator<Human> iterator = familyTree.iterator();
@@ -65,19 +64,6 @@ public class Service {
         familyTree.getHumans().sort(new HumanComparatorByDOB<>());
     }
 
-
-    public List<String> searhHumansByName(String name) {
-        List<String> foundHumans = new ArrayList<>();
-        for (Human human : familyTree.getHumans()){
-
-            if(human.getName().startsWith(name)) {
-                foundHumans.add(human.toString());
-            }
-
-        }
-
-        return foundHumans;
-    }
 
     public void saveTree() {
         FileHendler fh = new FileHendler();

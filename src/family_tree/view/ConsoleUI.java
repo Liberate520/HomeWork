@@ -1,10 +1,12 @@
 package family_tree.view;
+
 import family_tree.model.human.Gender;
 import family_tree.presenter.Presenter;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI  implements View{
+public class ConsoleUI implements View {
 
     private static final String INPUT_ERROR = "Вы ввели неверное значение";
     private Scanner scanner;
@@ -29,18 +31,21 @@ public class ConsoleUI  implements View{
     public void start() {
         hello();
         presenter.readTree();
-        while (work){
+        while (work) {
             printMenu();
             execute();
         }
     }
-    public void sortHumansByName(){
+
+    public void sortHumansByName() {
         presenter.sortHumansByName();
         printAnswer(presenter.getHumanInfo(2));
     }
-    public  void getHumanInfo(){
+
+    public void getHumanInfo() {
         printAnswer(presenter.getHumanInfo(1));
     }
+
     public void addHuman() {
 
         Gender gender;
@@ -50,21 +55,21 @@ public class ConsoleUI  implements View{
         printAnswer("Укажите дату рождения в формате гггг-мм-дд :");
         String dobString = scanner.nextLine();
         LocalDate dob = LocalDate.parse(dobString);
-        printAnswer("Укажите дату смерти в формате гггг-мм-дд либо enter :" );
+        printAnswer("Укажите дату смерти в формате гггг-мм-дд либо enter :");
         String dodString = scanner.nextLine();
         if (!dodString.equals("")) {
             dod = LocalDate.parse(dodString);
         }
-        printAnswer("Укажите 1 если пол мужской или 2 если женский :" );
+        printAnswer("Укажите 1 если пол мужской или 2 если женский :");
         String genderString = scanner.nextLine();
-        if (genderString == "1"){
+        if (Integer.parseInt(genderString) == 1) {
             gender = Gender.Male;
         } else {
             gender = Gender.Female;
         }
-        printAnswer("Укажите id отца если он есть :" );
+        printAnswer("Укажите id отца если он есть :");
         String idFather = scanner.nextLine();
-        printAnswer("Укажите id матери если она есть :" );
+        printAnswer("Укажите id матери если она есть :");
         String idMather = scanner.nextLine();
         presenter.addHuman(name, dob, dod, gender, idFather, idMather);
     }
@@ -76,17 +81,19 @@ public class ConsoleUI  implements View{
     private void hello() {
         printAnswer("Добро пожаловать, выберите пункт меню :");
     }
-    private void execute(){
+
+    private void execute() {
         String line = scanner.nextLine();
-        if (checkTextForInt(line)){
+        if (checkTextForInt(line)) {
             int numCommand = Integer.parseInt(line);
-            if (checkCommand(numCommand)){
+            if (checkCommand(numCommand)) {
                 menu.execute(numCommand);
             }
         }
     }
-    private boolean checkTextForInt(String text){
-        if (text.matches("[0-9]+")){
+
+    private boolean checkTextForInt(String text) {
+        if (text.matches("[0-9]+")) {
             return true;
         } else {
             inputError();
@@ -94,8 +101,8 @@ public class ConsoleUI  implements View{
         }
     }
 
-    private boolean checkCommand(int numCommand){
-        if (numCommand <= menu.getSize()){
+    private boolean checkCommand(int numCommand) {
+        if (numCommand <= menu.getSize()) {
             return true;
         } else {
             inputError();
@@ -103,7 +110,7 @@ public class ConsoleUI  implements View{
         }
     }
 
-    private void inputError(){
+    private void inputError() {
         printAnswer(INPUT_ERROR);
     }
 
@@ -117,20 +124,21 @@ public class ConsoleUI  implements View{
         String line = scanner.nextLine();
 
 
-        if(presenter.searhHumansByName(line).size() == 0) {
-            printAnswer("Людей с таким именем не найдено\n");
-        }else {
-            printAnswer("По запросу по имени " + line + " надено следующее :\n ");
-            for(String foundHuman : presenter.searhHumansByName(line)){
+        if (presenter.searhHumansByName(line).size() == 0) {
+            printAnswer("Людей с таким именем не найдено");
+        } else {
+            printAnswer("По запросу по имени " + line + " надено следующее : ");
+            for (String foundHuman : presenter.searhHumansByName(line)) {
                 printAnswer(foundHuman);
             }
         }
 
     }
-    public void finish(){
+
+    public void finish() {
         printAnswer("Сохранить данные?\n 1 - если да 2 - если нет");
         String line = scanner.nextLine();
-        if (Integer.parseInt(line) == 1){
+        if (Integer.parseInt(line) == 1) {
             presenter.saveTree();
         }
 
@@ -139,4 +147,20 @@ public class ConsoleUI  implements View{
         work = false;
     }
 
+    public void searhHumansChild() {
+        printAnswer("Введите id человека для поиска его детей");
+        String line = scanner.nextLine();
+        String foundHuman = presenter.searhHumansById(line);
+        if (foundHuman == "false") {
+            printAnswer("Человека с таким id в древе не существует");
+        } else if (presenter.searhHumansChild(line).isEmpty()) {
+            printAnswer("У " + foundHuman + " детей в древе не найдено");
+        } else {
+            printAnswer("Для " + foundHuman + " надены следующие дети: ");
+            for (String foundHumansChild : presenter.searhHumansChild(line)) {
+                printAnswer(foundHumansChild);
+            }
+            printAnswer("");
+        }
+    }
 }

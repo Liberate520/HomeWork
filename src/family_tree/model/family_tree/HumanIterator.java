@@ -6,6 +6,7 @@ import java.util.List;
 public class HumanIterator<T> implements Iterator<T> {
     private int index;
     private List<T> humanList;
+
     public HumanIterator(List<T> humanList) {
         this.humanList = humanList;
     }

@@ -4,6 +4,8 @@ import family_tree.model.family_tree.ItemFamilyTree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 public class Human implements Serializable, ItemFamilyTree {
     private int id;
@@ -71,12 +73,42 @@ public class Human implements Serializable, ItemFamilyTree {
         this.mather = mather;
     }
 
-
-
     @Override
     public String toString() {
-        return id + ", имя: " + name + ", дата рождения: " + dob + ", дата смерти: " + dod + ", пол: " + gender +
-                ",отец: " + father + " , мать: " + mather;
+        String fatherstring;
+        String matherstring;
+        String dobstring;
+        String dodstring;
+        String genderstring;
+        if (dob == null) {
+            dobstring = "";
+        } else {
+            dobstring = ", дата рождения: " + dob.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
+        }
+        if (dod == null) {
+            dodstring = "";
+        } else {
+            dodstring = ", дата смерти: " + dod.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
+        }
+        if (father == null) {
+            fatherstring = "";
+        } else {
+            fatherstring = ", отец: " + father.id + ", " + father.getName();
+        }
+        if (mather == null) {
+            matherstring = "";
+        } else {
+            matherstring = ", мать: " + mather.id + ", " + mather.getName();
+        }
+        if (gender == null) {
+            genderstring = "";
+        } else if (gender == Gender.Male) {
+            genderstring = ", пол: мужской";
+        } else {
+            genderstring = ", пол: женский";
+        }
+        return id + ", имя: " + name + dobstring + dodstring + genderstring +
+                fatherstring + matherstring;
     }
 
 

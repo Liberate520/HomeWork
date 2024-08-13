@@ -8,7 +8,7 @@ public class AddHuman extends Command {
         description = "Добавить человека в древо";
     }
 
-    public void execute(){
+    public void execute() {
         consoleUI.addHuman();
     }
 }

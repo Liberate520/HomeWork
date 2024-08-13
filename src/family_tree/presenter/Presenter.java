@@ -1,10 +1,12 @@
 package family_tree.presenter;
 
 import family_tree.model.human.Gender;
+import family_tree.model.human.Human;
 import family_tree.model.service.Service;
 import family_tree.view.View;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Presenter {
@@ -22,10 +24,12 @@ public class Presenter {
 
 
     }
-    public void sortHumansByName(){
+
+    public void sortHumansByName() {
         service.sortByName();
     }
-    public String getHumanInfo(int sortId){
+
+    public String getHumanInfo(int sortId) {
         return service.getHumansInfo(sortId);
     }
 
@@ -34,17 +38,44 @@ public class Presenter {
     }
 
     public List<String> searhHumansByName(String name) {
-        return service.searhHumansByName(name);
-        }
+        List<String> foundHumans = new ArrayList<>();
+        for (Human human : service.getFamilyTree()) {
 
-    public void saveTree(){
+            if (human.getName().startsWith(name)) {
+                foundHumans.add(human.toString());
+            }
+        }
+        return foundHumans;
+    }
+
+
+    public void saveTree() {
         service.saveTree();
     }
 
     public void readTree() {
         service.readTree();
     }
+
+    public String searhHumansById(String line) {
+        for (Human human : service.getFamilyTree()) {
+
+            if (human.getId() == Integer.parseInt(line)) {
+                return human.toString();
+            }
+
+        }
+        return "false";
+    }
+
+    public List<String> searhHumansChild(String line) {
+        List<String> foundHumansChild = new ArrayList<>();
+        for (Human human : service.getFamilyTree()) {
+            if (human.getFather() == null) {
+            } else if (human.getFather().getId() == Integer.parseInt(line)) {
+                foundHumansChild.add(human.toString());
+            }
+        }
+        return foundHumansChild;
+    }
 }
-
-
-

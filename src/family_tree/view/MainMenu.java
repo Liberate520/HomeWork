@@ -1,5 +1,7 @@
 package family_tree.view;
+
 import family_tree.view.commands.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class MainMenu {
         commandList.add(new SortHumansByName(consoleUI));
         commandList.add(new SortHumansByDOB(consoleUI));
         commandList.add(new SearchHumanByName(consoleUI));
+        commandList.add(new SearchHumansChild(consoleUI));
         commandList.add(new Finish(consoleUI));
     }
 
