@@ -220,23 +220,7 @@ public class Service {
     }
 
     public ArrayList<String> getSavesList(){
-        File dir = new File(this.writer.getDirName());
-        File[] files = dir.listFiles();
-
-        ArrayList<String> info = new ArrayList<>();
-
-        if (files != null) {
-            ArrayList<File> list = new ArrayList<>(Arrays.asList(files));
-
-
-            if (!list.isEmpty()) {
-                for (File file : list) {
-                    info.add(file.getName());
-                }
-            }
-        }
-
-        return info;
+        return this.writer.getSavesList();
     }
 
     public String getSaveDescription() {
