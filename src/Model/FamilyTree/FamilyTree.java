@@ -1,16 +1,15 @@
 package src.Model.FamilyTree;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import src.Model.Human.HumanComparatorByAge;
-import src.Model.Human.HumanComparatorByChildrenAmount;
-import src.Model.Human.HumanComparatorByName;
+import src.Model.Human.Comparators.HumanComparatorByAge;
+import src.Model.Human.Comparators.HumanComparatorByChildrenAmount;
+import src.Model.Human.Comparators.HumanComparatorByName;
 
-public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iterable<E> {
+public class FamilyTree<E extends FamilyMember<E>> implements Iterable<E>, TreeGrowable<E> {
     private List<E> members;
 
     public FamilyTree() {

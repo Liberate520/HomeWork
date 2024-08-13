@@ -3,7 +3,7 @@ package src.Model.Human;
 import java.time.LocalDate;
 import java.util.List;
 
-public class HumanBuilder {
+public class HumanBuilder implements EntityBulder{
     private long ID;
 
     public Human build(String name, LocalDate dateofbirth, LocalDate dateofdeath, Gender gender, Human mother,
@@ -14,4 +14,5 @@ public class HumanBuilder {
     public Human build(String name, LocalDate dateofbirth, Gender gender) {
         return new Human(ID++, name, dateofbirth, gender);
     }
+
 }

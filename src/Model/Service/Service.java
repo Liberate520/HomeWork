@@ -6,24 +6,27 @@ import java.time.LocalDate;
 import java.util.List;
 
 import src.Model.FamilyTree.FamilyTree;
+import src.Model.FamilyTree.TreeGrowable;
 import src.Model.FileHandling.FileHandler;
 import src.Model.FileHandling.Writer;
+import src.Model.Human.EntityBulder;
 import src.Model.Human.Gender;
 import src.Model.Human.Human;
 import src.Model.Human.HumanBuilder;
 
 public class Service {
-    private HumanBuilder humanBuilder;
-    private FamilyTree<Human> familyTree;
+    private EntityBulder humanBuilder;
+    private TreeGrowable <Human> familyTree;
     private Writer writer;
 
     public Service() throws SecurityException, IOException {
         humanBuilder = new HumanBuilder();
-        familyTree = new FamilyTree<>();
+        this.familyTree = new FamilyTree<>();
         writer = new FileHandler();
     }
 
     public FamilyTree<Human> createTree() {
+        FamilyTree<Human> familyTree = new FamilyTree<Human>();
         return familyTree;
     }
 
