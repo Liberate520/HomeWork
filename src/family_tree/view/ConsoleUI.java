@@ -35,7 +35,7 @@ public class ConsoleUI implements View {
     }
 
     public void getFamily() {
-        printAnswer(presentor.getFamily());
+        presentor.getFamily();
     }
 
     public void removeHuman() {
@@ -52,7 +52,7 @@ public class ConsoleUI implements View {
         printAnswer("Введите id человека:");
         String str = scanner.nextLine();
         try {
-            printAnswer(presentor.idFindHuman(Integer.parseInt(str)));
+            presentor.idFindHuman(Integer.parseInt(str));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,15 +65,14 @@ public class ConsoleUI implements View {
         String last_name = scanner.nextLine();
         printAnswer("Введите отчество человека:");
         String patronymic = scanner.nextLine();
-        printAnswer(presentor.nameFindHuman(first_name, last_name, patronymic));
+        presentor.nameFindHuman(first_name, last_name, patronymic);
     }
 
     public void getAncestors() {
         printAnswer("Введите id человека:");
         String str = scanner.nextLine();
         try {
-            ArrayList<String> res = presentor.getAncestors(Integer.parseInt(str));
-            for (String human : res) printAnswer(human);
+            presentor.getAncestors(Integer.parseInt(str));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,8 +82,7 @@ public class ConsoleUI implements View {
         printAnswer("Введите id человека:");
         String str = scanner.nextLine();
         try {
-            ArrayList<String> res = presentor.getDescendants(Integer.parseInt(str));
-            for (String human : res) printAnswer(human);
+            presentor.getDescendants(Integer.parseInt(str));
         } catch (Exception e) {
             e.printStackTrace();
         }
