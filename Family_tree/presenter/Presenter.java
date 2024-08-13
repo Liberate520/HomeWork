@@ -20,20 +20,6 @@ public class Presenter {
         return service.addToTree(name, gender,dateOfBirth);
     }
 
-    public void getHuman(int id){
-        String answer;
-        if (isValid(id)) {
-            answer = service.getById(id).toString();
-        } else {
-            answer = null;
-            view.printAnswer(answer);
-        }
-    }
-
-    private boolean isValid(int id){
-        return (id >= 0 && id < service.size());
-    }
-
     public void getFamilyTreeMembers(){
         String tree = service.getHumanListInfo();
         view.printAnswer(tree);
