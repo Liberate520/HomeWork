@@ -1,11 +1,13 @@
 package ru.gb.familytree.FamilyTree.Human;
 
+import ru.gb.familytree.FamilyTree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyTreeItem {
     private String name;
     private Gender gender;
     private LocalDate birthDate, deathDate;
@@ -35,6 +37,7 @@ public class Human implements Serializable {
         this.deathDate = deathDate;
     }
 
+    @Override
     public List<Human> getParents() {
         return parents;
     }
@@ -47,6 +50,7 @@ public class Human implements Serializable {
         this.parents.add(parent);
     }
 
+    @Override
     public List<Human> getChildren() {
         return children;
     }
@@ -59,6 +63,7 @@ public class Human implements Serializable {
         this.children.add(child);
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -67,16 +72,12 @@ public class Human implements Serializable {
         return gender;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
     public LocalDate getDeathDate() {
         return deathDate;
-    }
-
-    @Override
-    public String toString() {
-
     }
 }

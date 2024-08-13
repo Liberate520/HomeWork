@@ -53,7 +53,7 @@ public class Main {
         parents3.add(person4);
         person5.setParents(parents5);
 
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<Human>();
         familyTree.setRelative(person1);
         familyTree.setRelative(person2);
         familyTree.setRelative(person3);

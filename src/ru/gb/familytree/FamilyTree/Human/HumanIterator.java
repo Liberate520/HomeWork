@@ -1,12 +1,14 @@
 package ru.gb.familytree.FamilyTree.Human;
 
+import ru.gb.familytree.FamilyTree.FamilyTreeItem;
+
 import java.util.List;
 
-public class HumanIterator implements Iterator<Human>{
+public class HumanIterator<T extends FamilyTreeItem> implements Iterator<T>{
     private int curIndex;
-    private List<Human> relatives;
+    private List<T> relatives;
 
-    public HumanIterator(List<Human> relatives) {
+    public HumanIterator(List<T> relatives) {
         this.relatives = relatives;
     }
 
@@ -16,7 +18,7 @@ public class HumanIterator implements Iterator<Human>{
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return relatives.get(curIndex++);
     }
 }

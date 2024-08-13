@@ -1,6 +1,5 @@
 package ru.gb.familytree.FamilyTree;
 
-import ru.gb.familytree.FamilyTree.Human.Human;
 import ru.gb.familytree.FamilyTree.Human.HumanIterator;
 
 import java.io.*;
@@ -9,36 +8,36 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human>, {
-    private List<Human> relatives;
+public class FamilyTree<T extends FamilyTreeItem> implements Serializable, Iterable<T>, {
+    private List<T> relatives;
 
     public FamilyTree() {
         relatives = new ArrayList<>();
     }
 
-    public void setRelative(Human human) {
+    public void setRelative(T human) {
         this.relatives.add(human);
     }
 
-    public List<Human> getParentsForHuman(Human human) {
-        List<Human> parents = relatives.get(human).getParents();
+    public List<T> getParentsForHuman(T human) {
+        List<T> parents = relatives.get(relatives.indexOf(human)).getParents();
         return parents;
     }
 
-    public List<Human> getChildrenForHuman(Human human) {
+    public List<T> getChildrenForHuman(T human) {
         return relatives.get(relatives.indexOf(human)).getChildren();
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        Iterator<Human> itH = new HumanIterator(relatives);
+    public Iterator<T> iterator() {
+        Iterator<T> itH = new HumanIterator(relatives);
         return itH;
     }
 
     public void sortByName() {
-        Comparator<Human> comparator = new Comparator<Human>() {
+        Comparator<T> comparator = new Comparator<T>() {
             @Override
-            public int compare(Human o1, Human o2) {
+            public int compare(T o1, T o2) {
                 if (o1 == null) {
                     return -1;
                 }
@@ -56,9 +55,9 @@ public class FamilyTree implements Serializable, Iterable<Human>, {
     }
 
     public void sortByBirthDate() {
-        Comparator<Human> comparator = new Comparator<Human>() {
+        Comparator<T> comparator = new Comparator<T>() {
             @Override
-            public int compare(Human o1, Human o2) {
+            public int compare(T o1, T o2) {
                 if (o1 == null) {
                     return -1;
                 }
