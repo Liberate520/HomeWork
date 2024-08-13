@@ -1,13 +1,13 @@
-package family_tree;
+package model.family_tree;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import human.Gender;
-import human.Human;
-import human.HumanBuilder;
-import places.Place;
-import places.PlaceBuilder;
+import model.human.Gender;
+import model.human.Human;
+import model.human.HumanBuilder;
+import model.places.Place;
+import model.places.PlaceBuilder;
 
 public class FamilyTreeService {
     private FamilyTree<Human, Place> familyTree;

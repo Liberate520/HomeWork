@@ -1,8 +1,10 @@
-package places;
+package model.places;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Place implements Serializable, PlaceItem<Place> {
+    private long id;
     private int homeNumber;
     private String street;
     private String region;
@@ -14,12 +16,21 @@ public class Place implements Serializable, PlaceItem<Place> {
     }
 
     public Place(int homeNumber, String street, String region, String country, int postalCode, String locality) {
+        this.id = -1;
         this.homeNumber = homeNumber;
         this.street = street;
         this.region = region;
         this.country = country;
         this.postalCode = postalCode;
         this.locality = locality;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getHomeNumber() {
@@ -77,6 +88,8 @@ public class Place implements Serializable, PlaceItem<Place> {
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
+        sb.append("ID: ");
+        sb.append(id);
         sb.append("Страна: ");
         sb.append(country);
         sb.append(", Область: ");
@@ -90,5 +103,25 @@ public class Place implements Serializable, PlaceItem<Place> {
         sb.append(", Индекс: ");
         sb.append(postalCode);
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Place place = (Place) o;
+        return id == place.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(Place o) {
+        return Long.compare(this.id, o.id);
     }
 }

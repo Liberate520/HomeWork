@@ -1,9 +1,7 @@
-package family_tree;
+package model.family_tree;
 
 import java.util.Iterator;
 import java.util.List;
-
-import human.Human;
 
 public class HumanIterator<T> implements Iterator<T> {
     private int curIndex;

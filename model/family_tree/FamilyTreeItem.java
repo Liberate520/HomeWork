@@ -1,9 +1,10 @@
-package family_tree;
+package model.family_tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import human.Gender;
 import java.util.List;
+
+import model.human.Gender;
 
 public interface FamilyTreeItem<T> extends Serializable, Comparable<T> {
     String getFirstName();

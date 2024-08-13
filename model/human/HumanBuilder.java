@@ -1,9 +1,9 @@
-package human;
+package model.human;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import places.Place;
+import model.places.Place;
 
 public class HumanBuilder {
     private long genId;

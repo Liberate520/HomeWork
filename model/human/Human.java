@@ -1,12 +1,12 @@
-package human;
+package model.human;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import family_tree.FamilyTreeItem;
-import places.Place;
+import model.family_tree.FamilyTreeItem;
+import model.places.Place;
 
 public class Human implements FamilyTreeItem<Human> {
     private long id;

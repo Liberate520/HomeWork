@@ -1,4 +1,4 @@
-package writers;
+package model.writers;
 
 public interface Writer {
     void write(Object obj);

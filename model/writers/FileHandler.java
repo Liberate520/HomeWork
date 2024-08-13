@@ -1,4 +1,4 @@
-package writers;
+package model.writers;
 
 import java.io.File;
 import java.io.FileInputStream;

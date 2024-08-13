@@ -1,4 +1,4 @@
-package family_tree;
+package model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,10 +6,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import places.*;
+import model.places.*;
 
 public class FamilyTree<E extends FamilyTreeItem<E>, P extends PlaceItem<P>> implements Serializable, Iterable<E> {
         private long humansID;
+        private long placesID;
         private List<E> humanList;
         private List<P> placeList;
 
@@ -45,6 +46,7 @@ public class FamilyTree<E extends FamilyTreeItem<E>, P extends PlaceItem<P>> imp
                         return false;
                 }
                 if (!placeList.contains(place)) {
+                        place.setId(placesID++);
                         placeList.add(place);
                         return true;
                 }

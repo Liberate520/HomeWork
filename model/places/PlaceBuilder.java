@@ -1,6 +1,7 @@
-package places;
+package model.places;
 
 public class PlaceBuilder {
+    private long genId = 0;
     private Place place;
     private int homeNumber;
     private String street;
@@ -47,6 +48,10 @@ public class PlaceBuilder {
         place = new Place();
     }
 
+    private void nextId() {
+        place.setId(genId++);
+    }
+
     private void createHomeNumber() {
         place.setHomeNumber(homeNumber);
     }
@@ -73,6 +78,7 @@ public class PlaceBuilder {
 
     public Place build() {
         createPlace();
+        nextId();
         createHomeNumber();
         createStreet();
         createRegion();
