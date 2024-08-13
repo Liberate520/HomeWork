@@ -60,13 +60,13 @@ public class Main {
         familyTree.setRelative(person4);
         familyTree.setRelative(person5);
 
-        List<Human> person5_grandParents = familyTree.getParentsForHuman(person5).get(0).getParents();
-        List<Human> person2_grandChildren = familyTree.getChildrenForHuman(person2).get(0).getChildren();
+//        List<Human> person5_grandParents = familyTree.getParentsForItem(person5).get(0).getParents();
+//        List<Human> person2_grandChildren = familyTree.getChildrenForItem(person2).get(0).getChildren();
 
         Filehandler fileHandler = new Filehandler();
         fileHandler.setPath(filePath);
         fileHandler.save(familyTree);
-        familyTree = (FamilyTree) fileHandler.read();
+        familyTree = (FamilyTree<Human>) fileHandler.read();
 
         for (Human human: familyTree) {
             human.setName("123");

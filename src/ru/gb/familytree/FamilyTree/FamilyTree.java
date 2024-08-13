@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends FamilyTreeItem> implements Serializable, Iterable<T>, {
+public class FamilyTree<T extends FamilyTreeItem> implements Serializable, Iterable<T> {
     private List<T> relatives;
 
     public FamilyTree() {
@@ -19,18 +19,18 @@ public class FamilyTree<T extends FamilyTreeItem> implements Serializable, Itera
         this.relatives.add(human);
     }
 
-    public List<T> getParentsForHuman(T human) {
+    public List<T> getParentsForItem(T human) {
         List<T> parents = relatives.get(relatives.indexOf(human)).getParents();
         return parents;
     }
 
-    public List<T> getChildrenForHuman(T human) {
+    public List<T> getChildrenForItem(T human) {
         return relatives.get(relatives.indexOf(human)).getChildren();
     }
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> itH = new HumanIterator(relatives);
+        Iterator<T> itH = (Iterator<T>) new HumanIterator(relatives);
         return itH;
     }
 
