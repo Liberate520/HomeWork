@@ -40,10 +40,12 @@ public class Service {
 
     public void sortByAge(){
         familyTree.sortByAge(familyTree.getPeopleList());
+        System.out.println(familyTree.getPeopleList());
     }
 
     public void sortByName(){
         familyTree.sortByName(familyTree.getPeopleList());
+        System.out.println(familyTree.getPeopleList());
     }
 
     public void writeHuman(){
