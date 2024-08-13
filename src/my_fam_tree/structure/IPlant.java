@@ -1,3 +1,5 @@
+package my_fam_tree.structure;
+
 import java.util.List;
 
 public interface IPlant {

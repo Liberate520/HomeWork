@@ -1,3 +1,12 @@
+package my_fam_tree;
+
+import my_fam_tree.structure.FamilyTree;
+import my_fam_tree.structure.Human;
+import my_fam_tree.structure.IPlant;
+import my_fam_tree.structure.Plant;
+import my_fam_tree.treeService.FileHandler;
+import my_fam_tree.treeService.Writer;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -43,18 +52,28 @@ public class Main {
         System.out.println("Возраст Оксаны: " + calculateAge(oksana.getDateOfBirth()) + " лет");
         System.out.println("Возраст Тимура: " + calculateAge(timur.getDateOfBirth()) + " лет" );
 
-        Writer writer = new FileHandler(familyTree);
+        System.out.println("\nСортировка по имени: ");
+        familyTree.sortName();
+        for (Human human : familyTree){
+            System.out.println(human);
+        }
+        System.out.println("\nСортировка по дате рождения: ");
+        familyTree.sortBirthDate();
+        for (Human human : familyTree){
+            System.out.println(human);
+        }
+        Writer writer = new FileHandler();
 
         try {
-            writer.saveToFile("MyFamilyTree.ser");
-            System.out.println("Сохранено");
+            writer.saveToFile("MyFamilyTree.ser", familyTree);
+            System.out.println("\nСохранено");
 
-            writer.loadFromFile("MyFamilyTree.ser");
+            FamilyTree lTree = writer.loadFromFile("MyFamilyTree.ser");
             System.out.println("Загружено");
 
-            FamilyTree loadTree = ((FileHandler) writer).getFamilyTree();
-            IPlant loadPlant = new Plant(loadTree);
-            System.out.println("Проверка данных: ");
+            FamilyTree loadTree;
+            IPlant loadPlant = new Plant(lTree);
+            System.out.println("\nПроверка данных: ");
             System.out.println("Дети Владимира: " + loadPlant.getChildren("Владимир"));
             System.out.println("Родители Алёны: " + java.util.Arrays.toString(loadPlant.getParents("Алёна")));
             System.out.println("Братья и сёстры Оксаны: " + loadPlant.getSiblings("Оксана"));

@@ -1,3 +1,5 @@
+package my_fam_tree.structure;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,18 +12,13 @@ public class Plant implements IPlant {
 
         @Override
         public List<Human> getChildren(String name) {
-            HumanAbsract human = familyTree.findHuman(name);
-            if (human != null) {
-                return human.getChildren().stream()
-                        .map(child -> (Human) child)
-                        .collect(Collectors.toList());
-            }
-            return null;
+            Human human = familyTree.findHuman(name);
+            return human != null ? human.getChildren(): null;
         }
 
         @Override
         public Human[] getParents(String name) {
-            HumanAbsract human = familyTree.findHuman(name);
+            Human human = familyTree.findHuman(name);
             if (human != null) {
                 return new Human[]{(Human) human.getFather(), (Human) human.getMother()};
             }
@@ -30,19 +27,17 @@ public class Plant implements IPlant {
 
         @Override
         public List<Human> getSiblings(String name) {
-            HumanAbsract human = familyTree.findHuman(name);
+            Human human = familyTree.findHuman(name);
             if (human != null) {
-                HumanAbsract father = human.getFather();
-                HumanAbsract mother = human.getMother();
+                Human father = human.getFather();
+                Human mother = human.getMother();
                 if (father != null) {
                     return father.getChildren().stream()
                             .filter(child -> !child.equals(human))
-                            .map(child -> (Human) child)
                             .collect(Collectors.toList());
                 } else if (mother != null) {
                     return mother.getChildren().stream()
                             .filter(child -> !child.equals(human))
-                            .map(child -> (Human) child)
                             .collect(Collectors.toList());
                 }
             }
