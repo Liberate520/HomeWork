@@ -12,7 +12,7 @@ import src.Model.FamilyTree.FamilyTree;
 
 public class FileHandler implements Writer {
 
-    private String path = "src/FileHandling/Saved_tree.txt";
+    private String path = "src/Model/FileHandling/Saved_tree.txt";
 
     @SuppressWarnings("rawtypes")
     @Override
