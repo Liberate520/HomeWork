@@ -58,4 +58,25 @@ public class Human implements Serializable {
     public void addChild(Human child) {
         this.children.add(child);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    @Override
+    public String toString() {
+
+    }
 }
