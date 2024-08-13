@@ -2,7 +2,6 @@ package Family_tree.model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-// import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,16 +46,16 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
             people.add((T) human);
             human.setId(humansId++);
             
-            // addToParents(human);
-            addToFather(human);
-            addToMother(human);
-            addToChildren(human);
+            // addToFather(human);
+            // addToMother(human);
+            // addToChildren(human);
         
             return true;
         }
         return false;
     }
     
+
         public void sortByName(){
             people.sort(new HumanComparatorByName<>());;
         }
@@ -65,54 +64,6 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
             people.sort(new HumanComparatorByAge<>());
         }
     
-    // private void addToParents(Human human){
-    //     for (Human parent : human.getParents()) {
-    //         parent.addChild(human);
-    //     }
-    // }
-
-    private void addToFather(T human){
-        if (human.getFather() != null){
-            human.getFather().addChild(human);
-        }
-    }
-
-    private void addToMother(T human){
-        if (human.getMother() != null){
-            human.getMother().addChild(human);
-        }
-    }
-    
-    
-    private void addToChildren(T human){
-        for (T child : human.getChildren()) {
-            child.addFather(human);
-            child.addMother(human);
-        }
-    }
-
-
-    // public boolean getMarried(Human human1, Human human2) {
-    //     if (human1.getSpouse() == null && human2.getSpouse() == null) {
-    //         human1.setSpouse(human2);
-    //         human2.setSpouse(human1);
-    //         human2.setChildren(human1.getChildren());
-    //         human1.setChildren(human2.getChildren());
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    public boolean getDivorsed(T human1, T human2) {
-        if (human1.getSpouse() != null && human2.getSpouse() != null) {
-            human1.setSpouse(null);
-            human2.setSpouse(null);
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
     public String toString(){
@@ -129,4 +80,6 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Serializable, It
     public Iterator<T> iterator() {
         return new HumanIterator<>(people);
     }
+
+    
 }

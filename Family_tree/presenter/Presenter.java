@@ -1,7 +1,7 @@
 package Family_tree.presenter;
 
 import java.time.LocalDate;
-
+    
 import Family_tree.model.human.Gender;
 import Family_tree.model.human.Human;
 import Family_tree.model.service.Service;
@@ -25,7 +25,7 @@ public class Presenter {
         if (isValid(id)) {
             answer = service.getById(id).toString();
         } else {
-            answer = "Something went wrong";
+            answer = null;
             view.printAnswer(answer);
         }
     }
@@ -40,33 +40,13 @@ public class Presenter {
     }
 
     public void setFather(int childId, int fatherId){
-        String answer;
-        StringBuilder sb = new StringBuilder();
-        if (isValid(childId) && isValid(fatherId)) {
-            service.setFather(childId, fatherId);
-            sb.append(service.getById(childId).getName());
-            sb.append("'s father has been added");
-            answer = sb.toString();
-        } else answer = "Something went wrong";
-        view.printAnswer(answer);
-        System.out.println();
+        service.setFather(childId, fatherId);
         getFamilyTreeMembers();
-        setChild(fatherId, childId);
     }
 
     public void setMother(int childId, int motherId){
-        String answer;
-        StringBuilder sb = new StringBuilder();
-        if (isValid(childId) && isValid(motherId)) {
-            service.setFather(childId, motherId);
-            sb.append(service.getById(childId).getName());
-            sb.append("'s mother has been added");
-            answer = sb.toString();
-        } else answer = "Something went wrong";
-        view.printAnswer(answer);
-        System.out.println();
+        service.setMother(childId, motherId);
         getFamilyTreeMembers();
-        setChild(motherId, childId);
     }
 
     public void sortByName(){
@@ -85,47 +65,12 @@ public class Presenter {
     }
 
     public void setSpouse(int husbandId, int wifeId) {
-        String answer;
-        StringBuilder sb = new StringBuilder();
-        if (isValid(husbandId) && isValid(wifeId)) {
-            service.setSpouse(husbandId, wifeId);
-            sb.append("Husband-wife relationship has been set between ");
-            sb.append(service.getById(husbandId).getName());
-            sb.append(" and ");
-            sb.append(service.getById(wifeId).getName());
-            answer = sb.toString();
-        } else {
-            answer = "Something went wrong";
-        }
-        view.printAnswer(answer);
-        System.out.println();
+        service.setSpouse(husbandId, wifeId);
         getFamilyTreeMembers();
     }
 
     public void setChild(int parentId, int childId) {
-        String answer;
-        StringBuilder sb = new StringBuilder();
-        if (isValid(parentId) && isValid(childId)) {
-            service.setChild(parentId, childId);
-            sb.append("Parent-child relationship has been set between ");
-            sb.append(service.getById(parentId).getName());
-            sb.append(" and ");
-            sb.append(service.getById(childId).getName());
-            answer = sb.toString();
-        } else {
-            answer = "Something went wrong";
-        }
-        view.printAnswer(answer);
-        System.out.println();
+        service.setChild(parentId, childId);
         getFamilyTreeMembers();
-    }
-
-    public Object read() {
-        return service.read();
-        
-    }
-
-    public void saveTheTree() {
-        service.save("src/Family_tree/writer/result.txt");    
     }
 }

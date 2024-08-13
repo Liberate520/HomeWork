@@ -1,25 +1,22 @@
 package Family_tree.model.service;
 
-import java.io.IOException;
 import java.time.LocalDate;
-
-import javax.print.DocFlavor.STRING;
-import javax.sound.midi.Soundbank;
 
 import Family_tree.model.builder.HumanBuilder;
 import Family_tree.model.family_tree.FamilyTree;
+import Family_tree.model.family_tree.RelationsManager;
 import Family_tree.model.human.Gender;
 import Family_tree.model.human.Human;
-import Family_tree.writer.FileHandler;
 
 public class Service {
     public FamilyTree<Human> tree;
     private HumanBuilder builder;
-    private FileHandler fh;
+    public RelationsManager rm;
 
     public Service() {
         tree = new FamilyTree<>();
         builder = new HumanBuilder();
+        rm = new RelationsManager();
     }
 
     public Human addToTree(String name, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath, Human spouse, Human father, Human mother){
@@ -79,26 +76,9 @@ public class Service {
     }
 
     public void setSpouse(int husbandId, int wifeId) {
-        // tree.getById(husbandId).setSpouse(getById(wifeId));
-        // tree.getById(wifeId).setSpouse(getById(husbandId));
-        tree.getById(husbandId).getMarried(getById(wifeId));;
+        rm.getMarried(getById(husbandId), getById(wifeId));;
     }
 
-    // FILEHANDLER
-
-    private String filePath = "src/Family_tree/writer/result.txt";
-    
-    public void save(String path) {
-        fh.save(tree);
-    }
-
-    public Object read() {
-        return fh.read();
-    }
-
-    public void setPath(String filePath){
-        this.filePath = filePath;
-    }
 }
 
 

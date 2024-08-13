@@ -188,17 +188,4 @@ public class ConsoleUI implements View{
         int childId = Integer.parseInt(childIdString);
         presenter.setChild(parentId, childId);     
     }
-
-    public void saveTheTree() {
-        presenter.saveTheTree();    
-    }
-
-    public void loadLastSavedTree() {
-        presenter.read();
-    }
-
-
-
-    // TODO add method to save the tree
-    // TODO add method to read the tree
 }

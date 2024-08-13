@@ -7,8 +7,6 @@ import Family_tree.view.commands.AddHuman;
 import Family_tree.view.commands.Command;
 import Family_tree.view.commands.Finish;
 import Family_tree.view.commands.GetFamilyTreeMembers;
-import Family_tree.view.commands.LoadLastSavedTree;
-import Family_tree.view.commands.SaveTheTree;
 import Family_tree.view.commands.SetFather;
 import Family_tree.view.commands.SetMother;
 import Family_tree.view.commands.SetSpouse;
@@ -27,8 +25,6 @@ public class MainOptions {
         commandList.add(new SetMother(consoleUI));
         commandList.add(new SortByName(consoleUI));
         commandList.add(new SortByAge(consoleUI));
-        // commandList.add(new SaveTheTree(consoleUI));
-        // commandList.add(new LoadLastSavedTree(consoleUI));
         commandList.add(new Finish(consoleUI));
     }
 

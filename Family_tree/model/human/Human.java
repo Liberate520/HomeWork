@@ -1,6 +1,5 @@
 package Family_tree.model.human;
 
-// import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class Human implements ItemFamilyTree<Human>, Comparable<Human> {
     private Human father;
     private Human mother;
     private List<Human> children;
-    // private List<Human> parents;
     private Human spouse;
 
     public Human(long id, String name, Gender gender, LocalDate dateOfBirth,
@@ -31,7 +29,6 @@ public class Human implements ItemFamilyTree<Human>, Comparable<Human> {
         this.father = father;
         this.mother = mother;
         children = new ArrayList<>();
-        // parents = new ArrayList<>();
     }
 
     public Human(long id, String name, Gender gender, LocalDate dateOfBirth) {
@@ -114,13 +111,6 @@ public class Human implements ItemFamilyTree<Human>, Comparable<Human> {
         this.spouse = spouse;
     }
 
-    // public List<Human> getParents() {
-    //     return parents;
-    // }
-
-    // public void setParents(List<Human> parents) {
-    //     this.parents = parents;
-    // }
 
     public int getAge() {
         LocalDate endDate = dateOfDeath != null ? dateOfDeath : LocalDate.now();
@@ -174,14 +164,14 @@ public class Human implements ItemFamilyTree<Human>, Comparable<Human> {
         }
     }
 
-    public void getMarried(Human human) {
-        if (this.getSpouse() == null || this.getSpouse() == human && human.getSpouse() == null || human.getSpouse() == this) {
-            human.setSpouse(this);
-            this.setSpouse(human);
-            this.setChildren(human.getChildren());
-            human.setChildren(this.getChildren());
-        }
-    }
+    // public void getMarried(Human human) {
+    //     if (this.getSpouse() == null || this.getSpouse() == human && human.getSpouse() == null || human.getSpouse() == this) {
+    //         human.setSpouse(this);
+    //         this.setSpouse(human);
+    //         this.setChildren(human.getChildren());
+    //         human.setChildren(this.getChildren());
+    //     }
+    // }
 
     public String toString() {
         return getInfo();
