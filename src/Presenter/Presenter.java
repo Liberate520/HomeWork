@@ -18,16 +18,16 @@ public class Presenter {
         service = new Service();
     }
 
-    public Gender setGender (String gender){
+    public Gender setGender(String gender) {
         Gender genMale = Gender.Male;
         Gender genFemale = Gender.Female;
-        if(gender == "male"){
+        if (gender == "male") {
             return genMale;
         }
-        if(gender == "female"){
+        if (gender == "female") {
             return genFemale;
         }
-        return null;        
+        return null;
     }
 
     public Human addHuman(String name, LocalDate dateofbirth, String gender) {
@@ -40,26 +40,26 @@ public class Presenter {
         service.createTree();
     }
 
-    public void getInfo(){
+    public void getInfo() {
         String info = service.printTreeInfo();
         view.printMessage(info);
     }
 
-    public Human findMember(String name){
+    public Human findMember(String name) {
         Human member = service.getMember(name);
         return member;
     }
 
-    public void getMember(String name){
+    public void getMember(String name) {
         Human member = service.getMember(name);
         view.printMessage(member.toString());
     }
-    
-    public void addParentOrChild(String childName, String parentName){
-        if(service.getMember(childName) == null){
+
+    public void addParentOrChild(String childName, String parentName) {
+        if (service.getMember(childName) == null) {
             service.addToTreeShort(childName, null, null);
         }
-        if(service.getMember(parentName) == null){
+        if (service.getMember(parentName) == null) {
             service.addToTreeShort(parentName, null, null);
         }
         Human child = service.getMember(childName);
@@ -67,25 +67,23 @@ public class Presenter {
         service.addParentOrChild(child, parent);
     }
 
-    public void sortByName(){
+    public void sortByName() {
         service.sortByName();
     }
 
-    public void sortByBirthday(){
+    public void sortByBirthday() {
         service.sortByBirthday();
     }
 
-    public void sortByChildren(){
+    public void sortByChildren() {
         service.sortByChildren();
     }
 
-    public void load() throws ClassNotFoundException, IOException{
+    public void load() throws ClassNotFoundException, IOException {
         service.load();
     }
 
-    public void save() throws FileNotFoundException, IOException{
+    public void save() throws FileNotFoundException, IOException {
         service.save();
     }
 }
-
-    

@@ -4,9 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 
-public interface Writer {
+public interface Writer extends Serializable {
 
-        public void write (Serializable serial) throws FileNotFoundException, IOException;
-    
-        public Object read () throws ClassNotFoundException, IOException;
+        public void write(Serializable serial) throws FileNotFoundException, IOException;
+
+        public Object read() throws ClassNotFoundException, IOException;
+
 }

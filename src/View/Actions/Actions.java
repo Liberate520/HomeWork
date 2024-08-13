@@ -8,7 +8,7 @@ public abstract class Actions {
     private String description;
     private ConsoleUI consoleUI;
 
-    public Actions(String description, ConsoleUI consoleUI) throws SecurityException, IOException{
+    public Actions(String description, ConsoleUI consoleUI) throws SecurityException, IOException {
         this.description = description;
         this.consoleUI = consoleUI;
     }
@@ -17,7 +17,7 @@ public abstract class Actions {
         return consoleUI;
     }
 
-    public String getDescription (){
+    public String getDescription() {
         return description;
     }
 

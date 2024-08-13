@@ -18,23 +18,20 @@ public class FileHandler implements Writer {
     @Override
     public Object read() throws ClassNotFoundException, IOException {
         try (ObjectInputStream inptree = new ObjectInputStream(
-            new FileInputStream(path))) {
-            FamilyTree tree = (FamilyTree)inptree.readObject();
+                new FileInputStream(path))) {
+            FamilyTree tree = (FamilyTree) inptree.readObject();
             return tree;
-            }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
-            }
-        }    
-    
+        }
+    }
 
     @Override
-    public void write (Serializable serial) throws FileNotFoundException, IOException{
+    public void write(Serializable serial) throws FileNotFoundException, IOException {
         try (ObjectOutputStream outtree = new ObjectOutputStream(new FileOutputStream(path))) {
             outtree.writeObject(serial);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

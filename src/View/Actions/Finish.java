@@ -4,13 +4,12 @@ import java.io.IOException;
 
 import src.View.ConsoleUI;
 
-public class Finish extends Actions{
-    public Finish (ConsoleUI consoleUI) throws SecurityException, IOException {
+public class Finish extends Actions {
+    public Finish(ConsoleUI consoleUI) throws SecurityException, IOException {
         super("Выход", consoleUI);
     }
 
-    public void run(){
+    public void run() {
         getConsoleUI().stop();
     }
-
 }

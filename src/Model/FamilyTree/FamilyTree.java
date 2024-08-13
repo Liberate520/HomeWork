@@ -10,8 +10,8 @@ import src.Model.Human.HumanComparatorByAge;
 import src.Model.Human.HumanComparatorByChildrenAmount;
 import src.Model.Human.HumanComparatorByName;
 
-public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iterable <E> {
-    private List <E> members;
+public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iterable<E> {
+    private List<E> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
@@ -21,30 +21,30 @@ public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iter
         members.add(member);
     }
 
-    public E getMember (String name) {
-        for (E member: members) {
-            if(member.getName().equals(name)){
+    public E getMember(String name) {
+        for (E member : members) {
+            if (member.getName().equals(name)) {
                 return member;
             }
         }
         return null;
-    }    
+    }
 
     public void sortByName() {
         Collections.sort(members, new HumanComparatorByName<>());
     }
 
-    public void sortByBirthday(){
+    public void sortByBirthday() {
         Collections.sort(members, new HumanComparatorByAge<>());
     }
 
-    public void sortByChildren(){
+    public void sortByChildren() {
         Collections.sort(members, new HumanComparatorByChildrenAmount<>());
     }
 
-    public String GetFamilyInfo(){
+    public String GetFamilyInfo() {
         StringBuilder sb = new StringBuilder();
-        for (E member: members){
+        for (E member : members) {
             sb.append(member);
             sb.append("\n");
         }
@@ -53,6 +53,6 @@ public class FamilyTree<E extends FamilyMember<E>> implements Serializable, Iter
 
     @Override
     public Iterator<E> iterator() {
-        return new HumanIterator<>(members);        
-    }  
+        return new HumanIterator<>(members);
+    }
 }

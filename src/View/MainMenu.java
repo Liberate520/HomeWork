@@ -20,7 +20,7 @@ import src.View.Actions.SortByName;
 public class MainMenu {
     private List<Actions> actions;
 
-    public MainMenu(ConsoleUI consoleUI) throws SecurityException, IOException{
+    public MainMenu(ConsoleUI consoleUI) throws SecurityException, IOException {
         actions = new ArrayList<>();
         actions.add(new AddHuman(consoleUI));
         actions.add(new PrintTree(consoleUI));
@@ -47,7 +47,7 @@ public class MainMenu {
         return sb.toString();
     }
 
-    public void run(int choice) throws ClassNotFoundException, IOException{
+    public void run(int choice) throws ClassNotFoundException, IOException {
         Actions action = actions.get(choice - 1);
         action.run();
     }

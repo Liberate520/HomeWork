@@ -3,7 +3,7 @@ package src.Model.FamilyTree;
 import java.util.Iterator;
 import java.util.List;
 
-public class HumanIterator <E> implements Iterator <E> {
+public class HumanIterator<E> implements Iterator<E> {
     private int CurrentID;
     private List<E> members;
 
@@ -18,6 +18,6 @@ public class HumanIterator <E> implements Iterator <E> {
 
     @Override
     public E next() {
-       return members.get(CurrentID++);
+        return members.get(CurrentID++);
     }
 }
