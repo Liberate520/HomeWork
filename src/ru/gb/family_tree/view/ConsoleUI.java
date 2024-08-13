@@ -97,7 +97,13 @@ public class ConsoleUI implements View{
         Gender gender=null;
         if (genderStr.equals("мужской")) gender = Gender.мужской;
         else if (genderStr.equals("женский")) gender = Gender.женский;
-        presenter.addHuman(firstName, lastName, dateOfBirth, gender);
+
+        presenter.getFamilyTreeInfo();
+        System.out.println("Введите id отца: ");
+        int idDad = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите id матери: ");
+        int idMom = Integer.parseInt(scanner.nextLine());
+        presenter.addHuman(firstName, lastName, dateOfBirth, gender, idMom, idDad);
     }
 
     @Override
@@ -152,5 +158,12 @@ public class ConsoleUI implements View{
     }
 
     public void addWedding() {
+        presenter.getFamilyTreeInfo();
+        System.out.println("Введите id супруга: ");
+        int idPartner1 = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите id супруги: ");
+        int idPartner2 = Integer.parseInt(scanner.nextLine());
+        presenter.setWedding(idPartner1, idPartner2);
+
     }
 }

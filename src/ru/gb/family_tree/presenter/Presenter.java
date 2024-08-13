@@ -1,6 +1,7 @@
 package ru.gb.family_tree.presenter;
 
 import ru.gb.family_tree.model.human.Gender;
+import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.view.View;
 
@@ -15,8 +16,10 @@ public class Presenter {
         service = new Service();
     }
 
-    public void addHuman(String firstName, String lastName, LocalDate dateOfBirth, Gender gender) {
-        service.addHuman(lastName, firstName,  dateOfBirth, gender);
+    public void addHuman(String firstName, String lastName, LocalDate dateOfBirth, Gender gender, int idMom, int idDad) {
+
+
+        service.addHuman(lastName, firstName,  dateOfBirth, gender, idMom, idDad);
         getFamilyTreeInfo();
     }
 
@@ -34,4 +37,12 @@ public class Presenter {
         service.sortByFirstName();
         getFamilyTreeInfo();
     }
+
+
+    public void setWedding(int idHuman1, int idHuman2){
+        service.setWedding(idHuman1, idHuman2);
+        getFamilyTreeInfo();
+    }
+
+
 }
