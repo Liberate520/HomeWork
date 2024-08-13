@@ -2,6 +2,7 @@
 package ru.gb.family_tree.presenter;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import ru.gb.family_tree.FamilyTree;
 import ru.gb.family_tree.Gender;
 import ru.gb.family_tree.Human;
@@ -14,7 +15,7 @@ public class FamilyTreePresenter {
 
     public FamilyTreePresenter(View view) {
         this.view = view;
-        this.familyTree = new FamilyTree<>();
+        this.familyTree = new FamilyTree<>(Human::getChildren);
     }
 
     public void initializeFamilyTree() {
@@ -43,15 +44,15 @@ public class FamilyTreePresenter {
     }
 
     public void sortByName() {
-        familyTree.sortByName();
+        familyTree.sortByCriterion(Comparator.comparing(Human::getFirstName));
     }
 
     public void sortByBirthDate() {
-        familyTree.sortByBirthDate();
+        familyTree.sortByCriterion(Comparator.comparing(Human::getBirthDate));
     }
 
     public Human findByFullName(String fullName) {
-        return familyTree.findByFullName(fullName);
+        return familyTree.findByCriterion(h -> h.getFullName().equalsIgnoreCase(fullName));
     }
 
     public String getChildren(Human parent) {
