@@ -1,5 +1,6 @@
 package ru.gb.familytree.FamilyTree;
 
+import ru.gb.familytree.FamilyTree.Human.FamilyTreeItem;
 import ru.gb.familytree.FamilyTree.Human.HumanIterator;
 
 import java.io.*;

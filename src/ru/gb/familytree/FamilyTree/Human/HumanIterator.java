@@ -1,7 +1,5 @@
 package ru.gb.familytree.FamilyTree.Human;
 
-import ru.gb.familytree.FamilyTree.FamilyTreeItem;
-
 import java.util.List;
 
 public class HumanIterator<T extends FamilyTreeItem> implements Iterator<T>{
