@@ -69,6 +69,12 @@ public class FamilyTree<E extends TreeElement<E>> implements Serializable, Itera
     }
 
 
-    
+    public void sortByName() {
+        Collections.sort(humans, new HumanNameComparator<>());
+    }
+
+    public void sortByAge() {
+        Collections.sort(humans, new HumanAgeComparator<>());
+    }
 
 }

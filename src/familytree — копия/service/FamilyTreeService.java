@@ -4,11 +4,8 @@ import familytree.model.human.Human;
 import familytree.model.human.Gender;
 import familytree.model.family_tree.FamilyTree;
 import familytree.model.util.FileHandler;
-import familytree.model.human.HumanAgeComparator;
-import familytree.model.human.HumanNameComparator;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 public class FamilyTreeService {
@@ -64,13 +61,11 @@ public class FamilyTreeService {
     }
 
     public void sortByName() {
-        List<Human> humans = familyTree.getAllHumans();
-        humans.sort(new HumanNameComparator<>());
+        familyTree.sortByName();
     }
 
     public void sortByAge() {
-        List<Human> humans = familyTree.getAllHumans();
-        humans.sort(new HumanAgeComparator<>());
+        familyTree.sortByAge();
     }
 
     public void saveFamilyTree() {

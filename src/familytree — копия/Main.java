@@ -6,10 +6,9 @@ import familytree.model.family_tree.FamilyTree;
 import familytree.model.util.FileHandler;
 import familytree.presenter.FamilyTreePresenter;
 import familytree.presenter.IFamilyTreePresenter;
-import familytree.menu.ConsoleMenu;
+import familytree.view.ConsoleMenu;
 import familytree.view.IFamilyTreeView;
 import familytree.view.FamilyTreeView;
-
 
 import java.time.LocalDate;
 
