@@ -1,36 +1,58 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FamilyTree {
-
-    private List<Human> family;
+    private List<Human> humans;
 
     public FamilyTree() {
-        family = new ArrayList<>();
+        this.humans = new ArrayList<>();
     }
 
-    public Human getByName (String name){
-        for (Human human: family){
-            if(human.getName().equals(name)){
-                return human;
-            }
+    public void addHuman(Human human) {
+        this.humans.add(human);
+    }
+
+
+    public List<Human> getChildren(Human parent) {
+        return parent.getChildren();
+    }
+
+    public void addParentChildRelation(Human parent, Human child) {
+        parent.addChild(child);
+        if (parent.getGender() == Gender.MALE) {
+            child.setFather(parent);
+        } else {
+            child.setMother(parent);
         }
-        return null;
     }
 
-    public void addHuman(Human human){
-        family.add(human);
+    public List<Human> getAllHumans() {
+        return humans;
     }
 
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Все члены семейного древа: \n");
-        for (Human human : family) {
-            sb.append(human);
-            sb.append("\n");
+    public void printFamilyTree(Human human) {
+        printFamilyTree(human, 0, new HashSet<>());
+    }
+
+    private void printFamilyTree(Human human, int level, Set<Human> visited) {
+        if (human == null || visited.contains(human)) {
+            return;
         }
-        return sb.toString();
 
+        visited.add(human);
+
+        for (int i = 0; i < level; i++) {
+            System.out.print("");
+        }
+        System.out.println(human);
+
+        printFamilyTree(human.getFather(), level + 1, visited);
+        printFamilyTree(human.getMother(), level + 1, visited);
+
+        for (Human child : human.getChildren()) {
+            printFamilyTree(child, level + 1, visited);
+        }
     }
 }
