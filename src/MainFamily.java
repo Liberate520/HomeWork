@@ -1,11 +1,12 @@
-import forView.View;
+import forView.NewView;
 import module.lesson2.familytree.FamilyTree;
 import module.lesson2.human.FamilyStatus;
 import module.lesson2.human.Gender;
 import module.lesson2.human.Human;
 import module.lesson2.human.Status;
+import module.lesson2.service.Service;
 import module.lesson2.writer.WriteReadHuman;
-import presenter.Presenter;
+import presenter.NewPresenter;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -65,7 +66,7 @@ public class MainFamily {
         writeReadHuman.writeHuman(human3);
         System.out.println(writeReadHuman.readHuman().getInfo());
 
-        Presenter<Human> presenter = new Presenter<>(new View(),new WriteReadHuman<Human>(), new Status(), new FamilyTree<>());
-        presenter.Button();
+        NewPresenter<Human> newPresenter = new NewPresenter<>(new NewView(), new Service(new FamilyTree<>(), new WriteReadHuman<>()), new Status());
+        newPresenter.choice();
     }
 }
