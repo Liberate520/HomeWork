@@ -1,8 +1,9 @@
 package homeWork.Writer;
 
+import homeWork.Tree.FamilyTree;
 import java.io.IOException;
 
 public interface Writer {
-    <T> void writeToFile(T object, String fileName) throws IOException;
-    <T> T readFromFile(String fileName) throws IOException, ClassNotFoundException;
+    void writeToFile(FamilyTree tree, String fileName) throws IOException;
+    FamilyTree readFromFile(String fileName) throws IOException, ClassNotFoundException;
 }

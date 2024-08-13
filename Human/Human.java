@@ -1,5 +1,6 @@
 package homeWork.Human;
 
+import homeWork.Tree.TreeItem;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Human  implements Serializable {
+public class Human  implements Serializable,TreeItem<Human>  {
     private String name;
     private Gender gender;
     private LocalDate birthDay;
@@ -125,5 +126,10 @@ public class Human  implements Serializable {
         else {
             return "name: " + name + ", gender: " + gender + ", birthday " + birthDay + ", deathDay " + deathDay + ", mother: " + addMother() + ", father " + addFather() + "; children: " + getChildrenNames();
         }
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
     }
 }

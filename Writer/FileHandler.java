@@ -1,22 +1,23 @@
 package homeWork.Writer;
 
+import homeWork.Tree.FamilyTree;
 import java.io.*;
 
 public class FileHandler implements Writer {
 
     @Override
-    public <T> void writeToFile(T object, String fileName) throws IOException {
+    public void writeToFile(FamilyTree tree, String fileName) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(object);
+            oos.writeObject(tree);
         } catch (IOException e) {
             throw new IOException("Ошибка записи в файл: " + e.getMessage());
         }
     }
 
     @Override
-    public <T> T readFromFile(String fileName) throws IOException, ClassNotFoundException {
+    public FamilyTree readFromFile(String fileName) throws IOException, ClassNotFoundException {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            return (T) ois.readObject();
+            return (FamilyTree) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw e;
         }

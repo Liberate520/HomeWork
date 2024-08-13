@@ -3,46 +3,50 @@ package homeWork.Tree;
 import homeWork.Human.Comporators.ComparingByName;
 import homeWork.Human.Comporators.ComparingByBirthday;
 import homeWork.Human.Human;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private List<Human> familyTree = new ArrayList<Human>();
+public class FamilyTree<T extends TreeItem> implements Serializable, Iterable<T> {
+    private List<T> familyTree = new ArrayList<>();
 
-    public void addHuman(Human human) {
+
+
+    public void addHuman(T human ){
         familyTree.add(human);
     }
 
-    public String getFamilyTree() {
+
+    public String getFamilyTree(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список членов семьи:\n");
-        for (Human human : familyTree) {
-            stringBuilder.append(human);
+        for (T object : familyTree){
+            stringBuilder.append(object);
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
 
-    public void removeHuman(Human human) {
-        familyTree.remove(human);
+    public void removeHuman(T object){
+        familyTree.remove(object);
     }
 
-    public void setFamilyTree(List<Human> familyTree) {
+    public void setFamilyTree(List<T> familyTree) {
         this.familyTree = familyTree;
     }
 
     @Override
-    public Iterator<Human> iterator() {
+    public Iterator<T> iterator() {
         return new HumanIterator(familyTree);
     }
 
-    public void sortByName() {
+    public void sortByName(){
         familyTree.sort(new ComparingByName());
     }
 
-    public void sortByAge() {
+    public void sortByAge(){
         familyTree.sort(new ComparingByBirthday());
     }
 }
