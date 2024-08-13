@@ -40,6 +40,7 @@ public class ConsoleUI implements View {
 
     public void loadTree() {
         presenter.loadTree();
+        presenter.getFamilyTreeInfo();
     }
 
     public void saveTree() {
