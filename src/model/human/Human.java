@@ -1,13 +1,13 @@
-package human;
+package model.human;
+
+import model.tree.TreeNode;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
-public class Human {
+public class Human implements TreeNode<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -110,9 +110,6 @@ public class Human {
         return diff.getYears();
     }
 
-    public void setSpouse(Human spouse) {
-        this.spouse = spouse;
-    }
 
     public Human getSpouse() {
         return spouse;
@@ -145,6 +142,11 @@ public class Human {
     public List<Human> getChildren() {
         return children;
     }
+
+    public void setSpouse(Human human) {
+        this.spouse = human;
+    }
+
 
     @Override
     public String toString() {
