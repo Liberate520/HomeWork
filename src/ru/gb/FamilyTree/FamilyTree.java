@@ -1,9 +1,10 @@
 package ru.gb.FamilyTree;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     private List<Human> humans;
 
     public FamilyTree() {
@@ -35,5 +36,10 @@ public class FamilyTree {
             stringBuilder.append(human).append("\n");
         }
         return stringBuilder.toString();
+    }
+
+    public FamilyTree(List<Human> humans) {
+
+        this.humans = humans;
     }
 }
