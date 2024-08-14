@@ -10,8 +10,8 @@ public class HumanService implements HumanServiceInterface {
     private FamilyTree<Human> familyTree;
     private Writer writer;
 
-    public HumanService() {
-        this.writer = new FileHandler();
+    public HumanService(Writer writer) {
+        this.writer = writer;
         familyTree = new FamilyTree<>();
     }
 

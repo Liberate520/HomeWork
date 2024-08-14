@@ -4,6 +4,7 @@ import family_tree.model.family_tree.FamilyTree;
 import family_tree.model.human.Human;
 import family_tree.model.human.HumanService;
 import family_tree.model.human.Gender;
+import family_tree.model.writer.FileHandler;
 import family_tree.view.View;
 
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new HumanService();
+        service = new HumanService(new FileHandler());
     }
 
     public void addHuman(String surname, String name, String middleName, Gender gender, LocalDate birthDate, LocalDate deathDate) {
