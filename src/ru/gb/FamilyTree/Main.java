@@ -9,20 +9,24 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException  {
         FamilyTree familyTree = new FamilyTree();
+        FamilyTreeSerializer serializer = new FamilyTreeSerializer();
         
         if (!Files.isRegularFile(Path.of("familyTree.out"))) {
             getDefault(familyTree);
-            System.out.println("Сreated for the first time: " + "\n");
+            System.out.println("Created for the first time: " + "\n");
         } else {
-            familyTree = readFromFile();
+            familyTree = serializer.deserialize();
             System.out.println("Restored: " + "\n");
         }
         System.out.println(familyTree);
 
-        writeToFile(familyTree);
+        serializer.serializer(familyTree);
+
+        /** writeToFile(familyTree); */
+
 
     }
-
+    /**
     private static void writeToFile(FamilyTree familyTree) throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(
                  new FileOutputStream("familyTree.out"));
@@ -38,7 +42,7 @@ public class Main {
         objectInputStream.close();
         return familyTree;
     }
-
+*/
     private static void getDefault(FamilyTree familyTree) {
         Human human1 = new Human(1, "Александр", Gender.Male, LocalDate.of(1960, 10, 10));
         Human human2 = new Human(2, "Екатерина", Gender.Female, LocalDate.of(1965, 05, 05));
