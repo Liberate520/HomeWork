@@ -1,10 +1,13 @@
 package family_tree.program_classes;
 
+import family_tree.help_classes.FamilyTreeItem;
+import family_tree.help_classes.Gender;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, FamilyTreeItem<Human> {
     private String document;
     private String name;
     private Gender gender;

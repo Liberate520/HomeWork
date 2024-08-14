@@ -1,43 +1,45 @@
 package family_tree.program_classes;
 
-import family_tree.help_classes.HumanComparatorByBirth;
-import family_tree.help_classes.HumanIterator;
+import family_tree.help_classes.ComparatorByBirth;
+import family_tree.help_classes.FamilyTreeItem;
+import family_tree.help_classes.ItemIterator;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
-    private ArrayList<Human> fTree;
+public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, Iterable<E> {
+    private static final long serialVersionUID = 6529685098267757690L;
+    private ArrayList<E> fTree;
 
     public FamilyTree() {
         this.fTree = new ArrayList<>();
     }
 
-    public ArrayList<Human> getfTree() {
+    public ArrayList<E> getfTree() {
         return fTree;
     }
 
-    public void addHuman(Human human){
-            if (!fTree.equals(human)) {
-                fTree.add(human);
+    public void add(E element){
+            if (!fTree.equals(element)) {
+                fTree.add(element);
             }
     }
 
-    public ArrayList<Human> findInfoByDocument(String doc) {
-        ArrayList<Human> result = new ArrayList<>();
-        for (Human human : fTree) {
-            if (human.getDocument().equals(doc)) {
-                result.add(human);
+    public E findInfoByDocument(String doc) {
+        E result = null;
+        for (E element : fTree) {
+            if (element.getDocument().equals(doc)) {
+                result = element;
             }
         }
         return result;
     }
 
-    public ArrayList<Human> findInfoByName(String name) {
-        ArrayList<Human> result = new ArrayList<>();
-        for (Human human : fTree) {
-            if (human.getName().equals(name)) {
-                result.add(human);
+    public ArrayList<E> findInfoByName(String name) {
+        ArrayList<E> result = new ArrayList<>();
+        for (E element : fTree) {
+            if (element.getName().equals(name)) {
+                result.add(element);
             }
         }
         return result;
@@ -45,8 +47,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(fTree);
+    public Iterator<E> iterator() {
+        return new ItemIterator<>(fTree);
     }
 
     public boolean isEmpty() {
@@ -58,6 +60,6 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     public void sortBybirthDate(){
-        Collections.sort(fTree, new HumanComparatorByBirth());
+        Collections.sort(fTree, new ComparatorByBirth<>());
     }
 }

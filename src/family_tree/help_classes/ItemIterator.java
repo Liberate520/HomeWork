@@ -5,11 +5,11 @@ import family_tree.program_classes.Human;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class HumanIterator implements Iterator<Human> {
+public class ItemIterator<T> implements Iterator<T> {
     private int current_index;
-    private ArrayList<Human> fTree;
+    private ArrayList<T> fTree;
 
-    public HumanIterator(ArrayList<Human> fTree) {
+    public ItemIterator(ArrayList<T> fTree) {
         this.fTree = fTree;
     }
 
@@ -19,7 +19,7 @@ public class HumanIterator implements Iterator<Human> {
     }
 
     @Override
-    public Human next() {
+    public T next() {
         return fTree.get(current_index++);
     }
 }
