@@ -1,16 +1,36 @@
+import saver.*;
 import tree.FamilyTree;
 import human.*;
 
 import java.time.LocalDate;
 
 public class Main {
+    final static String filePath = "src/saver/back_up_tree.but";
 
     public static void main(String[] args) {
-        FamilyTree myTree = buildTree();
+
+        FamilyTree myTree = restore();
+        //FamilyTree myTree = buildTree();
+
+        //save_tree(myTree);
+
+
 
         System.out.println(myTree);
 
     }
+
+    private static void save_tree(FamilyTree familyTree) {
+        FileSaver fileSaver = new FileSaver();
+        fileSaver.setPath(filePath);
+        fileSaver.save(familyTree);
+        }
+        private static FamilyTree restore(){
+        FileSaver fileSaver = new FileSaver();
+        fileSaver.setPath(filePath);
+        return (FamilyTree) fileSaver.restore();
+        }
+
 
     private static FamilyTree buildTree(){
         FamilyTree tree = new FamilyTree();
