@@ -1,12 +1,16 @@
+package familytree.model;
+
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Iterator;
 
-
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Person> {
     private static final long serialVersionUID = 1L;
     private Map<FullName, Person> members;
 
@@ -40,4 +44,20 @@ public class FamilyTree implements Serializable {
         }
     }
 
+    @Override
+    public Iterator<Person> iterator() {
+        return members.values().iterator();
+    }
+
+    public List<Person> getSortedByName() {
+        List<Person> sortedList = new ArrayList<>(members.values());
+        sortedList.sort(Comparator.comparing(p -> p.getFullName().getFirstName()));
+        return sortedList;
+    }
+
+    public List<Person> getSortedByDateOfBirth() {
+        List<Person> sortedList = new ArrayList<>(members.values());
+        sortedList.sort(Comparator.comparing(Person::getDateOfBirth));
+        return sortedList;
+    }
 }

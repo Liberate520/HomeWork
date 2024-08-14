@@ -1,3 +1,7 @@
+package familytree.io;
+
+import familytree.model.FamilyTree;
+
 import java.io.*;
 
 public class FileDataHandler implements DataHandler {

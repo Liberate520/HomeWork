@@ -1,3 +1,5 @@
+package familytree.model;
+
 import java.io.Serializable;
 
 public class FullName implements Serializable {

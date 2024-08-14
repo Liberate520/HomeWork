@@ -1,3 +1,9 @@
+package familytree.main;
+
+import familytree.io.FileDataHandler;
+import familytree.model.FamilyTree;
+import familytree.model.Person;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,34 +29,35 @@ public class Main {
         familyTree.addParentChildRelationship("Иванов", "Михаил", "Дмитриевич", "Кузнецов", "Александр", "Михайлович");
         familyTree.addParentChildRelationship("Кузнецова", "Елизавета", "Сергеевна", "Кузнецов", "Александр", "Михайлович");
 
-        // Сохранение в файл
         try {
             fileDataHandler.saveToFile("familyTree.dat", familyTree);
         } catch (IOException e) {
             System.out.println("Ошибка при сохранении: " + e.getMessage());
         }
 
-        // Загрузка из файла
         try {
             FamilyTree loadedFamilyTree = fileDataHandler.loadFromFile("familyTree.dat");
             System.out.println("Дерево загружено успешно!");
 
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Введите фамилию:");
-            String familyName = scanner.nextLine();
+            System.out.println("Выберите тип сортировки: ");
+            System.out.println("1 - По имени");
+            System.out.println("2 - По дате рождения");
+            int choice = scanner.nextInt();
 
-            System.out.println("Введите имя:");
-            String firstName = scanner.nextLine();
+            List<Person> sortedPeople;
+            if (choice == 1) {
+                sortedPeople = loadedFamilyTree.getSortedByName();
+            } else if (choice == 2) {
+                sortedPeople = loadedFamilyTree.getSortedByDateOfBirth();
+            } else {
+                System.out.println("Некорректный выбор.");
+                return;
+            }
 
-            System.out.println("Введите отчество:");
-            String fatherName = scanner.nextLine();
-
-            List<Person> children = familyTree.findChildrenByFullName(familyName, firstName, fatherName);
-
-            System.out.println("Дети у " + familyName + " " + firstName + " " + fatherName + ":");
-            for (Person child : children) {
-                System.out.println("\t" + child);
+            for (Person person : sortedPeople) {
+                System.out.println(person);
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Ошибка при загрузке: " + e.getMessage());
