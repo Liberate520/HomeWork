@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Period;
 
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -13,7 +14,7 @@ public class Person implements Serializable {
     private LocalDate dateOfDeath;
     private List<Person> parents;
     private List<Person> children;
-
+    private Person spouse;
 
     public Person(String familyName, String firstName, String fatherName, Gender gender, LocalDate dateOfBirth) {
         this.fullName = new FullName(familyName, firstName, fatherName);
@@ -22,15 +23,7 @@ public class Person implements Serializable {
         this.dateOfDeath = null;
         this.parents = new ArrayList<>();
         this.children = new ArrayList<>();
-    }
-
-        public Person(String familyName, String firstName, String fatherName, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
-        this.fullName = new FullName(familyName, firstName, fatherName);
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfDeath = dateOfDeath;
-        this.parents = new ArrayList<>();
-        this.children = new ArrayList<>();
+        this.spouse = null;
     }
 
     public FullName getFullName() {
@@ -61,6 +54,14 @@ public class Person implements Serializable {
         return children;
     }
 
+    public Person getSpouse() {
+        return spouse;
+    }
+
+    public void setSpouse(Person spouse) {
+        this.spouse = spouse;
+    }
+
     public void addParent(Person parent) {
         this.parents.add(parent);
     }
@@ -69,14 +70,39 @@ public class Person implements Serializable {
         this.children.add(child);
     }
 
+    // Метод для вычисления возраста
+    public int getAge() {
+        if (dateOfDeath != null) {
+            return Period.between(dateOfBirth, dateOfDeath).getYears();
+        } else {
+            return Period.between(dateOfBirth, LocalDate.now()).getYears();
+        }
+    }
+
     @Override
     public String toString() {
-        return " " +
-                "ФИО:" + fullName +
-                " , пол:" + gender +
-                " , дата рождения:" + dateOfBirth +
-                (dateOfDeath != null ? " , дата смерти:" + dateOfDeath : "") +
-                ' ';
+        StringBuilder sb = new StringBuilder();
+        sb.append("ФИО: ").append(fullName)
+                .append(", пол: ").append(gender)
+                .append(", дата рождения: ").append(dateOfBirth)
+                .append(", возраст: ").append(getAge());
+
+        if (dateOfDeath != null) {
+            sb.append(", дата смерти: ").append(dateOfDeath);
+        }
+
+        if (spouse != null) {
+            sb.append(", супруг/супруга: ").append(spouse.getFullName());
+        }
+
+        if (!children.isEmpty()) {
+            sb.append(", дети: ");
+            for (Person child : children) {
+                sb.append(child.getFullName()).append("; ");
+            }
+        }
+
+        return sb.toString();
     }
 
     public enum Gender {
