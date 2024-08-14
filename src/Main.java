@@ -1,10 +1,29 @@
+import family_tree.family_tree.FamilyTree;
+import family_tree.human.Gender;
+import family_tree.human.Human;
+import family_tree.writer.FileHandler;
+
 import java.time.LocalDate;
 
 public class Main {
+    final static String file = "src/family_tree/writer/tree.txt";
+
     public static void main(String[] args) {
-        FamilyTree tree = testTree();
+//        FamilyTree tree = testTree();
+//        save(tree);
+        FamilyTree tree = load();
 
         System.out.println(tree);
+    }
+
+    private static FamilyTree load(){
+        FileHandler fileHandler = new FileHandler(file);
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static void save(FamilyTree familyTree){
+        FileHandler fileHandler = new FileHandler(file);
+        fileHandler.save(familyTree);
     }
 
     private static FamilyTree testTree(){
