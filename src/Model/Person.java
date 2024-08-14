@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable, Comparable<Person>  {
+public class Person implements Serializable, Comparable<Person> {
     private static int idCounter = 0;
     private int id;
     private String firstName;

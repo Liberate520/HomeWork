@@ -4,7 +4,7 @@ import Model.FamilyTree;
 
 import java.io.*;
 
-public class FileManager implements DataHandler {
+public class FileManager implements DataHandler<FamilyTree> {
 
     @Override
     public void saveFamilyTree(FamilyTree familyTree, String saveFilename) {

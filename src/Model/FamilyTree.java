@@ -5,24 +5,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
-    private List<Person> people;
+public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
+    private List<T> people;
 
     public FamilyTree() {
         this.people = new ArrayList<>();
     }
 
     // Метод для добавления нового члена семьи в дерево
-    public void addPerson(Person person) {
+    public void addPerson(T person) {
         people.add(person);
     }
 
     // Метод для получения человека по ID
-    public Person getPerson(int id) {
+    public T getPerson(int id) {
         return people.stream()
                 .filter(person -> person.getId() == id)
                 .findFirst()
@@ -30,14 +28,14 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     }
 
     // Метод для получения списка всех людей в дереве
-    public List<Person> getAllPeople() {
+    public List<T> getAllPeople() {
         return new ArrayList<>(people);
     }
 
     // Метод для поиска людей по имени и/или фамилии
-    public List<Person> findByName(String firstName, String lastName) {
-        List<Person> results = new ArrayList<>();
-        for (Person person : people) {
+    public List<T> findByName(String firstName, String lastName) {
+        List<T> results = new ArrayList<>();
+        for (T person : people) {
             if (person.getFirstName().equalsIgnoreCase(firstName) ||
                     person.getLastName().equalsIgnoreCase(lastName)) {
                 results.add(person);
@@ -48,9 +46,9 @@ public class FamilyTree implements Serializable, Iterable<Person> {
 
     // Метод для установки родителей и обновления родственных связей
     public void setParents(int childId, int motherId, int fatherId) {
-        Person child = getPerson(childId);
-        Person mother = getPerson(motherId);
-        Person father = getPerson(fatherId);
+        T child = getPerson(childId);
+        T mother = getPerson(motherId);
+        T father = getPerson(fatherId);
 
         if (child != null) {
             child.setMother(mother);
@@ -66,7 +64,7 @@ public class FamilyTree implements Serializable, Iterable<Person> {
 
     // Метод для получения детей человека
     public void getChildren(int personId) {
-        Person person = getPerson(personId);
+        T person = getPerson(personId);
         if (person != null) {
             System.out.println("Дети " + person.getFirstName() + " " + person.getLastName() + ":");
             for (Person child : person.getChildren()) {
@@ -77,7 +75,7 @@ public class FamilyTree implements Serializable, Iterable<Person> {
 
     // Метод для получения родителей человека
     public void getParents(int personId) {
-        Person person = getPerson(personId);
+        T person = getPerson(personId);
         if (person != null) {
             System.out.println("Родители " + person.getFirstName() + " " + person.getLastName() + ":");
             if (person.getMother() != null) {
@@ -99,12 +97,12 @@ public class FamilyTree implements Serializable, Iterable<Person> {
 
     // Метод для сортировки по дате рождения
     public void sortByBirthDate() {
-        people.sort(Comparator.comparing(Person::getBirthDate));
+        people.sort(Comparator.comparing(T::getBirthDate));
     }
 
     // Реализация интерфейса Iterable
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<T> iterator() {
         return people.iterator();
     }
 }
