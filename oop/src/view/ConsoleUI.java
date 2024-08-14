@@ -23,7 +23,6 @@ public class ConsoleUI implements View{
         work = true;
     }
 
-
     @Override
     public void printAnswer(String text) {
         System.out.println(text);
@@ -37,10 +36,12 @@ public class ConsoleUI implements View{
             execute();
         }
     }
+
     public void finish() {
         System.out.println("Приятно было пообщаться");
         work = false;
     }
+
     public void sortByAge() {
         presenter.sortByAge();
     }
@@ -52,9 +53,11 @@ public class ConsoleUI implements View{
     public void getFamilyTreeInfo() {
         System.out.println(presenter.getFamilyTreeInfo());
     }
+
     private void inputError(){
         System.out.println(INPUT_ERROR);
     }
+
     private boolean checkTextForInt(String text){
         if (text.matches("[0-9]+")){
             return true;
@@ -63,11 +66,13 @@ public class ConsoleUI implements View{
             return false;
         }
     }
+
     private String name(){
         System.out.println("ВВеди имя человека:");
         String name = scanner.nextLine();
         return name;
     }
+
     private Gender gender() {
         System.out.println("Если это мужчина нажми 1, если женщина 2");
         String choice = scanner.nextLine();
@@ -81,11 +86,13 @@ public class ConsoleUI implements View{
                 return Gender.Female;
             }
     }
+
     private LocalDate date(){
         String dateString = scanner.nextLine();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return LocalDate.parse(dateString, formatter);
     }
+
     private long askId(){
         System.out.println("Введи id человека");
         String stringId = scanner.nextLine();
@@ -103,6 +110,7 @@ public class ConsoleUI implements View{
             return false;
         }
     }
+
     private void printMenu(){
         System.out.println(menu.menu());
     }
@@ -114,6 +122,7 @@ public class ConsoleUI implements View{
         LocalDate birthDate = date();
         presenter.addLivingItem(name, gender1, birthDate);
     }
+
     public void addDeathItem(){
         String name = name();
         Gender gender1= gender();
@@ -135,6 +144,7 @@ public class ConsoleUI implements View{
         long father = askId();
         presenter.addItemWithParent(name, gender1, birthDate, mather, father);
     }
+
     public void getInfoManForId(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
@@ -142,6 +152,7 @@ public class ConsoleUI implements View{
         long id = askId();
         System.out.println(presenter.getInfoManForId(id));
     }
+
     public void addChildById(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
@@ -151,6 +162,7 @@ public class ConsoleUI implements View{
         long child = askId();
         presenter.addChildById(parent, child);
     }
+
     public void addParentById(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
@@ -160,12 +172,14 @@ public class ConsoleUI implements View{
         long parent = askId();
         presenter.addParentById(child, parent);
     }
+
     public void removeById(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
         System.out.println("Кого удалить?\n");
         presenter.removeById(askId());
     }
+
     public void getParentById(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
@@ -176,6 +190,7 @@ public class ConsoleUI implements View{
             System.out.println(man.getInfo());
         }
     }
+
     public void getChildrensById(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
@@ -186,6 +201,7 @@ public class ConsoleUI implements View{
             System.out.println(man.getInfo());
         }
     }
+
     public void getByName(){
         System.out.println("Введите имя для поиска?\n");
         String name = scanner.nextLine();
@@ -194,6 +210,7 @@ public class ConsoleUI implements View{
             System.out.println(man.getInfo());
         }
     }
+
     public void setWeddingById(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
@@ -203,6 +220,7 @@ public class ConsoleUI implements View{
         long id2 = askId();
         presenter.setWeddingById(id1, id2);
     }
+
     public void setDivorceById(){
         presenter.getFamilyTreeInfo();
         System.out.println("-".repeat(80));
@@ -212,15 +230,16 @@ public class ConsoleUI implements View{
         long id2 = askId();
         presenter.setDivorceById(id1, id2);
     }
+
     public void saveTree(){
         System.out.println("Сохранил древо!\n");
         presenter.saveTree();
     }
+
     public void loadTree(){
         System.out.println("Загрузил древо!\n");
         presenter.loadTree();
     }
-
 
     private void hello(){
         System.out.println("Доброго времени суток!");
