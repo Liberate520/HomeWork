@@ -1,69 +1,190 @@
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+//    final static String fileName = "src/tree.txt";
+
     public static void main(String[] args) {
-        FamilyTree<Human> familyTree = new FamilyTree<>();
-        FileHandler<Human> fileHandler = new FileHandler<>();
-        FamilyTreeView<Human> view = new ConsoleFamilyTreeView<>();
-        FamilyTreePresenter presenter = new FamilyTreePresenterImpl<>(view, familyTree, fileHandler);
+        // Создание обработчика для работы с файлами
+        Writer fileHandler = new FileHandler("src/tree.txt");
 
-        Human john = new Human("1", "John", "Doe", 60, Human.Gender.Male, LocalDate.of(1964, 1, 1));
-        Human jane = new Human("2", "Jane", "Doe", 58, Human.Gender.Female, LocalDate.of(1966, 2, 1));
-        Human mary = new Human("3", "Mary", "Smith", 30, Human.Gender.Female, LocalDate.of(1994, 3, 1));
-        Human tom = new Human("4", "Tom", "Smith", 32, Human.Gender.Male, LocalDate.of(1992, 4, 1));
+        // Создание модели семейного дерева
+        FamilyTreeModel<Human> model = new FamilyTree<>(fileHandler);
 
-        john.addChild(mary);
-        jane.addChild(mary);
-        mary.setFather(john);
-        mary.setMother(jane);
+        // Создание представления (вывод в консоль)
+        FamilyTreeView view = new ConsoleFamilyTreeView();
 
-        familyTree.addMember(john);
-        familyTree.addMember(jane);
-        familyTree.addMember(mary);
-        familyTree.addMember(tom);
+        // Создание презентера для управления моделью и представлением
+        FamilyTreePresenter presenter = new FamilyTreePresenter(model, view);
 
+
+
+//        // FamilyTree tree = load();
+//        FamilyTree tree = testTree();
+//        save(tree);
+//
+//        System.out.println(tree);
+//    }
+//        private static FamilyTree load(){
+//            FileHandler fileHandler  = new FileHandler(fileName);
+//            return (FamilyTree) fileHandler.read();
+//
+//        }
+//        private static void save(FamilyTree familyTree){
+//            FileHandler fileHandler  = new FileHandler(fileName);
+//            fileHandler.save(familyTree);
+//        }
+//
+//
+//        private static FamilyTree testTree(){
+//            FamilyTree tree = new FamilyTree();
+
+        // Пример добавления людей в генеалогическое древо
+            Human john = new Human("John", "Doe", Gender.Male, LocalDate.of(1964, 1, 1));
+            Human jane = new Human("Jane", "Doe", Gender.Female, LocalDate.of(1966, 2, 1));
+
+            presenter.addHuman(john);
+            presenter.addHuman(jane);
+            model.setMarriage(john,jane);
+
+            Human mary = new Human("Mary", "Smith", Gender.Female, LocalDate.of(1994, 3, 1), john, jane);
+            Human tom = new Human("Tom", "Smith", Gender.Male, LocalDate.of(1992, 4, 1));
+
+
+            presenter.addHuman(mary);
+            presenter.addHuman(tom);
+            //return tree;
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Бесконечный цикл для работы программы
         while (true) {
-            presenter.showMenu();
-            int choice = ((ConsoleFamilyTreeView<Human>) view).getInput();
+            System.out.println("Выберите действие:");
+            System.out.println("1. Найти человека по ID");
+            System.out.println("2. Найти человека по имени");
+            System.out.println("3. Найти человека по фамилии");
+            System.out.println("4. Получить информацию о детях человека");
+            System.out.println("5. Выйти");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Потребляем перевод строки
+
             switch (choice) {
                 case 1 -> {
                     System.out.print("Введите ID: ");
-                    String id = ((ConsoleFamilyTreeView<Human>) view).getStringInput();
-                    presenter.onSearchById(id);
+                    long id = scanner.nextLong();
+                    scanner.nextLine(); // Потребляем перевод строки
+                    Human human = ((FamilyTree<Human>) model).getEById(id);
+                    if (human != null) {
+                        System.out.println(human);
+                    } else {
+                        System.out.println("Человек с таким ID не найден.");
+                    }
                 }
                 case 2 -> {
                     System.out.print("Введите имя: ");
-                    String name = ((ConsoleFamilyTreeView<Human>) view).getStringInput();
-                    presenter.onSearchByName(name);
+                    String name = scanner.nextLine();
+                    List<Human> humansByName = ((FamilyTree<Human>) model).getEByName(name);
+                    if (humansByName.isEmpty()) {
+                        System.out.println("Человек с таким именем не найден.");
+                    } else {
+                        humansByName.forEach(System.out::println);
+                    }
                 }
                 case 3 -> {
                     System.out.print("Введите фамилию: ");
-                    String surname = ((ConsoleFamilyTreeView<Human>) view).getStringInput();
-                    presenter.onSearchBySurname(surname);
+                    String surname = scanner.nextLine();
+                    List<Human> humansBySurname = ((FamilyTree<Human>) model).getEBySurname(surname);
+                    if (humansBySurname.isEmpty()) {
+                        System.out.println("Человек с такой фамилией не найден.");
+                    } else {
+                        humansBySurname.forEach(System.out::println);
+                    }
                 }
                 case 4 -> {
                     System.out.print("Введите ID человека для получения информации о его детях: ");
-                    String id = ((ConsoleFamilyTreeView<Human>) view).getStringInput();
-                    presenter.onShowChildren(id);
+                    long id = scanner.nextLong();
+                    scanner.nextLine(); // Потребляем перевод строки
+                    List<Human> children = ((FamilyTree<Human>) model).getAllChildren(id);
+                    if (children.isEmpty()) {
+                        System.out.println("У этого человека нет детей или ID неверен.");
+                    } else {
+                        System.out.println("Дети человека с ID " + id + ":");
+                        children.forEach(System.out::println);
+                    }
                 }
                 case 5 -> {
-                    System.out.print("Введите имя файла для сохранения: ");
-                    String filename = ((ConsoleFamilyTreeView<Human>) view).getStringInput();
-                    presenter.onSaveTree(filename);
-                }
-                case 6 -> {
-                    System.out.print("Введите имя файла для загрузки: ");
-                    String filename = ((ConsoleFamilyTreeView<Human>) view).getStringInput();
-                    presenter.onLoadTree(filename);
-                }
-                case 7 -> presenter.onSortByAge();
-                case 8 -> presenter.onSortByGender();
-                case 9 -> {
-                    presenter.onExit();
+                    System.out.println("Выход.");
+                    scanner.close(); // Закрываем сканнер
                     return;
                 }
-                default -> view.displayMessage("Неверный выбор. Попробуйте снова.");
+                default -> System.out.println("Неверный выбор. Попробуйте снова.");
             }
         }
+        }
     }
-}
+
+        // while (true) {
+        //     System.out.println("Выберите действие:");
+        //     System.out.println("1. Найти человека по ID");
+        //     System.out.println("2. Найти человека по имени");
+        //     System.out.println("3. Найти человека по фамилии");
+        //     System.out.println("4. Получить информацию о детях человека");
+        //     System.out.println("5. Выйти");
+
+        //     int choice = scanner.nextInt();
+        //     scanner.nextLine(); // Consume newline
+
+        //     switch (choice) {
+        //         case 1 -> {
+        //             System.out.print("Введите ID: ");
+        //             String id = scanner.nextLine();
+        //             E E = familyTree.getEById(id);
+        //             if (E != null) {
+        //                 System.out.println(E);
+        //             } else {
+        //                 System.out.println("Человек с таким ID не найден.");
+        //             }
+        //         }
+        //         case 2 -> {
+        //             System.out.print("Введите имя: ");
+        //             String name = scanner.nextLine();
+        //             List<E> EsByName = familyTree.getEByName(name);
+        //             if (EsByName.isEmpty()) {
+        //                 System.out.println("Человек с таким именем не найден.");
+        //             } else {
+        //                 EsByName.forEach(System.out::println);
+        //             }
+        //         }
+        //         case 3 -> {
+        //             System.out.print("Введите фамилию: ");
+        //             String surname = scanner.nextLine();
+        //             List<E> EsBySurname = familyTree.getEBySurname(surname);
+        //             if (EsBySurname.isEmpty()) {
+        //                 System.out.println("Человек с такой фамилией не найден.");
+        //             } else {
+        //                 EsBySurname.forEach(System.out::println);
+        //             }
+        //         }
+        //         case 4 -> {
+        //             System.out.print("Введите ID человека для получения информации о его детях: ");
+        //             String id = scanner.nextLine();
+        //             List<E> children = familyTree.getAllChildren(id);
+        //             if (children.isEmpty()) {
+        //                 System.out.println("У этого человека нет детей или ID неверен.");
+        //             } else {
+        //                 System.out.println("Дети человека с ID " + id + ":");
+        //                 children.forEach(System.out::println);
+        //             }
+        //         }
+        //         case 5 -> {
+        //             System.out.println("Выход.");
+        //             scanner.close();
+        //             return;
+        //         }
+        //         default -> System.out.println("Неверный выбор. Попробуйте снова.");
+        //     }
+        // }
+    

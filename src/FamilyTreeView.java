@@ -1,8 +1,6 @@
 import java.util.List;
 
-public interface FamilyTreeView<T extends FamilyMember> {
-    void displayMember(T member);
-    void displayMembers(List<T> members);
-    void displayMessage(String message);
-    void showMenu();
+public interface FamilyTreeView {
+    void displayHumans(List<? extends TreeNode<?>> humans); // Метод для отображения списка людей
+    void showMessage(String message); // Метод для отображения сообщения
 }
