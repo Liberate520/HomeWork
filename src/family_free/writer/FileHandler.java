@@ -13,6 +13,8 @@ public class FileHandler implements Writer {
     }
 
     @Override //- зачем это тут, а главное для чего?
+    //почему на семенаре в аналогичном методе в аргументах было Serializable serializable?
+    // я не очень понимаю как тут привязать этот интерфейс
     public void write(Object human){
         try(ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream("src/family_free/writer/people.bin"))) {
             file.writeObject(human);
