@@ -2,16 +2,46 @@ package family_tree;
 import family_tree.family_tree.FamilyTree;
 import family_tree.human.Gender;
 import family_tree.human.Human;
+import family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 
+import static java.nio.file.Files.write;
 
 
 public class Main {
-    public static void main(String[]args){
-        FamilyTree tree = testTree();
+    final static String filePath = "src/family_tree/writer/tree.txt";
+
+    public static void main(String[]args) {
+        FamilyTree tree = load();
+
+        //FamilyTree tree = testTree();
+
+        //save(tree);
+
         System.out.println(tree);
     }
+
+    public static FamilyTree load() {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        return (FamilyTree) fileHandler.read();
+    }
+
+    private static void save(FamilyTree familyTree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(familyTree);
+    }
+
+
+
+
+    private static void write(FamilyTree familitree) {
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(filePath);
+        }
 
     private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
@@ -44,3 +74,4 @@ public class Main {
 
     }
 }
+

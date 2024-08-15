@@ -2,13 +2,15 @@ package family_tree.human;
 
 
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Human {
+public class Human implements Serializable {
     private long id;
     private String name;
     private Gender gender;
@@ -212,7 +214,7 @@ public class Human {
         }
         return res.toString();
     }
-
+    
     @Override
     public boolean equals(Object odj){
         if (this == odj){
