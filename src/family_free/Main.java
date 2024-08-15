@@ -7,7 +7,9 @@ import family_free.human.Human;
 import java.time.LocalDate;
 
 public class Main {
+    final static String filePath = "src/family_free/writer/tree.txt";
     public static void main(String[] args) {
+
         FamilyTree familyTree = new FamilyTree();
         Human human1 = new Human("Sara", Gender.Female,LocalDate.of(2004,12,10));
         Human human2 = new Human("Mike",Gender.Male,LocalDate.of(2000,11,20));
