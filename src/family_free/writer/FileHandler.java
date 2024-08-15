@@ -1,36 +1,37 @@
 package family_free.writer;
 
+import family_free.FamilyTree.FamilyTree;
+import family_free.human.Human;
+
 import java.io.*;
 
 public class FileHandler implements Writer {
     private String filePath;
 
-    @Override
-    public boolean save(Serializable serializable){
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){
-            objectOutputStream.writeObject(serializable);
-            return true;
+    public void setPath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Override //- зачем это тут, а главное для чего?
+    public void write(Object human){
+        try(ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream("src/family_free/writer/people.bin"))) {
+            file.writeObject(human);
         }
-        catch (Exception e){
+        catch (IOException e){
             e.printStackTrace();
-            return false;
         }
     }
 
-    @Override
+    @Override //- зачем это тут, а главное для чего?
     public Object read() {
-        try(ObjectInputStream objectOutputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-            return objectOutputStream.readObject();
+        try(ObjectInputStream file = new ObjectInputStream(new FileInputStream("src/family_free/writer/people.bin"))) {
+            Object human = (Object) file.readObject();
+            return human;
         }
         catch (Exception e){
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public void setPath(String filePath) {
-        this.filePath = filePath;
     }
 
 

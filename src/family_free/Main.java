@@ -10,38 +10,33 @@ import java.time.LocalDate;
 public class Main {
     final static String filePath = "src/family_free/writer/tree.txt";
     public static void main(String[] args) {
-        FamilyTree tree = testTree();
-     //   FamilyTree tree = load();
-
-        save(tree);
-        System.out.println(tree);
+       // FamilyTree tree = completion();
+       // Write_tree(tree);
+        System.out.println(Read_tree());
     }
 
-    private static FamilyTree load(){
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        return (FamilyTree) fileHandler.read();
-    }
-
-    private static FamilyTree save(FamilyTree familyTree){
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
-        return (FamilyTree) fileHandler.read();
-    }
-
-    private static FamilyTree testTree(){
-        FamilyTree familyTree = new FamilyTree();
+    private static FamilyTree completion(){
+        FamilyTree tree = new FamilyTree();
         Human human1 = new Human("Sara", Gender.Female,LocalDate.of(2004,12,10));
         Human human2 = new Human("Mike",Gender.Male,LocalDate.of(2000,11,20));
-        Human human3 = new Human("Mike", Gender.Male,LocalDate.of(1999,9,23));
 
-        familyTree.addHuman(human1);
-        familyTree.addHuman(human2);
-        familyTree.addHuman(human3);
+        tree.addHuman(human1);
+        tree.addHuman(human2);
+        return tree;
+    }
 
-        human1.addChild(human2);
-        human1.addChild(human3);
-        return familyTree;
+    private static void Write_tree(FamilyTree tree){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.write(tree);
+
+    }
+
+
+
+    private static FamilyTree Read_tree(){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.read();
+        return(FamilyTree) fileHandler.read();
     }
 }
 
