@@ -1,4 +1,4 @@
-package com.oop.homeWorkOOP.lineAge;
+package com.oop.homeWorkOOP.model.lineAge;
 
 import java.util.Iterator;
 import java.util.List;

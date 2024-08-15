@@ -1,13 +1,13 @@
-package com.oop.homeWorkOOP.lineAge;
+package com.oop.homeWorkOOP.model.lineAge;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.oop.homeWorkOOP.human.Gender;
-import com.oop.homeWorkOOP.human.comparators.compareHumanByBirthDate;
-import com.oop.homeWorkOOP.human.comparators.compareHumanByName;
+import com.oop.homeWorkOOP.model.human.Gender;
+import com.oop.homeWorkOOP.model.human.comparators.compareHumanByBirthDate;
+import com.oop.homeWorkOOP.model.human.comparators.compareHumanByName;
 
 public class LineageTree<T extends LineAgeItem<T>> implements Serializable, Iterable<T> {
     private List<T> lineAge;
@@ -81,10 +81,8 @@ public class LineageTree<T extends LineAgeItem<T>> implements Serializable, Iter
         return res;
     }
 
-    public void printLineAge() {
-        for (int i = 0; i < lineAge.size(); i++) {
-            System.out.println("ID: " + i + " " + lineAge.get(i).toString());
-        }
+    public int getLineAgeSize() {
+        return lineAge.size();
     }
 
     public LineageTree<T> getAllFather(T human) {
@@ -153,6 +151,7 @@ public class LineageTree<T extends LineAgeItem<T>> implements Serializable, Iter
         for (T par : human.getParents()) {
             getAllParents(par, resTree);
         }
+
         return resTree;
     }
 

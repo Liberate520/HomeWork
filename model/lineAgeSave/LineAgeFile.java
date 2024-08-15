@@ -1,4 +1,4 @@
-package com.oop.homeWorkOOP.lineAgeSave;
+package com.oop.homeWorkOOP.model.lineAgeSave;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,9 +6,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import com.oop.homeWorkOOP.lineAge.LineageTree;
+import com.oop.homeWorkOOP.model.lineAge.LineAgeItem;
+import com.oop.homeWorkOOP.model.lineAge.LineageTree;
 
-public class LineAgeFile implements LineAgeSaveable {
+public class LineAgeFile<T extends LineAgeItem<T>> implements LineAgeSaveable<T> {
     private String file;
 
     public LineAgeFile(String file) {
@@ -16,7 +17,7 @@ public class LineAgeFile implements LineAgeSaveable {
     }
 
     @Override
-    public boolean saveLineAge(LineageTree tree) {
+    public boolean saveLineAge(LineageTree<T> tree) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(this.file));) {
             objectOutputStream.writeObject(tree);
             return true;
@@ -29,10 +30,10 @@ public class LineAgeFile implements LineAgeSaveable {
     }
 
     @Override
-    public LineageTree loadLineAge() {
-        LineageTree res;
+    public LineageTree<T> loadLineAge() {
+        LineageTree<T> res;
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(this.file));) {
-            res = (LineageTree) objectInputStream.readObject();
+            res = (LineageTree<T>) objectInputStream.readObject();
             return res;
         } catch (Exception e) {
             System.out.println("Что-то пошло не так, загрузить не удалось!");

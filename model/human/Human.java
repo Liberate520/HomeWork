@@ -1,11 +1,11 @@
-package com.oop.homeWorkOOP.human;
+package com.oop.homeWorkOOP.model.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oop.homeWorkOOP.lineAge.LineAgeItem;
+import com.oop.homeWorkOOP.model.lineAge.LineAgeItem;
 
 public class Human implements Serializable, Comparable<Human>, LineAgeItem<Human> {
     private String name;

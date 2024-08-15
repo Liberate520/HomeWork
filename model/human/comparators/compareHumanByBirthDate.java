@@ -1,9 +1,8 @@
-package com.oop.homeWorkOOP.human.comparators;
+package com.oop.homeWorkOOP.model.human.comparators;
 
 import java.util.Comparator;
 
-import com.oop.homeWorkOOP.human.Human;
-import com.oop.homeWorkOOP.lineAge.LineAgeItem;
+import com.oop.homeWorkOOP.model.lineAge.LineAgeItem;
 
 public class compareHumanByBirthDate<T extends LineAgeItem> implements Comparator<T> {
 

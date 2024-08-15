@@ -1,6 +1,6 @@
-package com.oop.homeWorkOOP.lineAge;
+package com.oop.homeWorkOOP.model.lineAge;
 
-import com.oop.homeWorkOOP.human.Gender;
+import com.oop.homeWorkOOP.model.human.Gender;
 
 import java.time.LocalDate;
 import java.util.List;
