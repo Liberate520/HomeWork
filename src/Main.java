@@ -1,27 +1,20 @@
 import familytree.FamilyTree;
 import person.Person;
 import presenter.Presenter;
+import service.Service;
+import service.TreeSorter;
 import view.ConsoleTreeView;
-
-import java.time.LocalDate;
+import writer.FileTreeStorage;
 
 public class Main {
     public static void main(String[] args) {
         FamilyTree<Person> familyTree = new FamilyTree<>();
+        TreeSorter<Person> sorter = new TreeSorter<>();
+        FileTreeStorage<Person> storage = new FileTreeStorage<>();
+        Service service = new Service(familyTree, sorter, storage);
         ConsoleTreeView view = new ConsoleTreeView();
-        Presenter presenter = new Presenter(familyTree, view);
+        Presenter presenter = new Presenter(service, view);
 
-        // Пример взаимодействия с пользователем через консоль
-        presenter.displayAllPersons();
-
-        // Добавление нового человека
-        presenter.addPerson("John", LocalDate.of(1980, 1, 1), null, "male");
-
-        // Поиск человека
-        presenter.findPerson("John");
-
-        // Сортировка и вывод всех людей
-        presenter.sortByName();
-        presenter.displayAllPersons();
+        view.start();
     }
 }

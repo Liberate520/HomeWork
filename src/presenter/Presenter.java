@@ -1,45 +1,51 @@
 package presenter;
 
-import familytree.FamilyTree;
-import person.Gender;
-import person.Person;
+import service.Service;
 import view.TreeView;
+import person.Person;
 
 import java.time.LocalDate;
 
 public class Presenter {
-    private FamilyTree<Person> familyTree;
+    private Service service;
     private TreeView view;
 
-    public Presenter(FamilyTree<Person> familyTree, TreeView view) {
-        this.familyTree = familyTree;
+    public Presenter(Service service, TreeView view) {
+        this.service = service;
         this.view = view;
         this.view.setPresenter(this);
     }
 
     public void addPerson(String name, LocalDate birthDate, LocalDate deathDate, String genderStr) {
-        Gender gender = Gender.valueOf(genderStr.toUpperCase());
-        Person person = new Person(name, birthDate, deathDate, gender);
-        familyTree.addPerson(person);
-        view.displayMessage("Person added: " + person);
+        service.addPerson(name, birthDate, deathDate, genderStr);
+        view.displayMessage("Person added successfully.");
     }
 
     public void findPerson(String name) {
-        Person person = familyTree.findPersonByName(name);
-        view.displayPerson(person);
+        view.displayPerson(String.valueOf(service.findPerson(name)));
     }
 
     public void displayAllPersons() {
-        view.displayAllPersons(familyTree.toString());
+        view.displayAllPersons(service.getAllMembers());
     }
 
     public void sortByName() {
-        familyTree.sortByName();
+        service.sortByName();
         view.displayMessage("Tree sorted by name.");
     }
 
     public void sortByBirthDate() {
-        familyTree.sortByBirthDate();
+        service.sortByBirthDate();
         view.displayMessage("Tree sorted by birth date.");
+    }
+
+    public void saveTree(String fileName) {
+        service.saveTree(fileName);
+        view.displayMessage("Tree saved to file: " + fileName);
+    }
+
+    public void loadTree(String fileName) {
+        service.loadTree(fileName);
+        view.displayMessage("Tree loaded from file: " + fileName);
     }
 }

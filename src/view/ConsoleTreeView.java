@@ -1,6 +1,5 @@
 package view;
 
-import person.Person;
 import presenter.Presenter;
 
 import java.time.LocalDate;
@@ -8,10 +7,65 @@ import java.util.Scanner;
 
 public class ConsoleTreeView implements TreeView {
     private Presenter presenter;
-    private Scanner scanner;
 
-    public ConsoleTreeView() {
-        this.scanner = new Scanner(System.in);
+    public void setPresenter(Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    public void start() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Enter command (add, find, display, sortName, sortBirth, save, load, exit): ");
+            String command = scanner.nextLine();
+            if (command.equalsIgnoreCase("exit")) {
+                break;
+            }
+            handleCommand(command, scanner);
+        }
+    }
+
+    private void handleCommand(String command, Scanner scanner) {
+        switch (command.toLowerCase()) {
+            case "add":
+                System.out.print("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.print("Enter birth date (YYYY-MM-DD): ");
+                LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+                System.out.print("Enter death date (YYYY-MM-DD): ");
+                LocalDate deathDate = LocalDate.parse(scanner.nextLine());
+                System.out.print("Enter gender (MALE/FEMALE): ");
+                String gender = scanner.nextLine();
+                presenter.addPerson(name, birthDate, deathDate, gender);
+                break;
+            case "find":
+                System.out.print("Enter name to find: ");
+                String findName = scanner.nextLine();
+                presenter.findPerson(findName);
+                break;
+            case "display":
+                presenter.displayAllPersons();
+                break;
+            case "sortname":
+                presenter.sortByName();
+                presenter.displayAllPersons();
+                break;
+            case "sortbirth":
+                presenter.sortByBirthDate();
+                presenter.displayAllPersons();
+                break;
+            case "save":
+                System.out.print("Enter file name to save: ");
+                String saveFileName = scanner.nextLine();
+                presenter.saveTree(saveFileName);
+                break;
+            case "load":
+                System.out.print("Enter file name to load: ");
+                String loadFileName = scanner.nextLine();
+                presenter.loadTree(loadFileName);
+                break;
+            default:
+                System.out.println("Unknown command.");
+        }
     }
 
     @Override
@@ -20,80 +74,15 @@ public class ConsoleTreeView implements TreeView {
     }
 
     @Override
-    public void displayPerson(Person person) {
-        if (person != null) {
-            System.out.println("Person found: " + person);
-        } else {
-            System.out.println("Person not found.");
-        }
+    public void displayPerson(String personInfo) {
+        System.out.println(personInfo);
     }
 
     @Override
-    public void displayAllPersons(String persons) {
-        System.out.println(persons);
+    public void displayAllPersons(String personsInfo) {
+
+        System.out.println(personsInfo);
     }
 
-    @Override
-    public String getUserInput(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextLine();
-    }
 
-    @Override
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
-    }
-
-    public void start() {
-        while (true) {
-            System.out.println("\n1. Add Person");
-            System.out.println("2. Find Person");
-            System.out.println("3. List all members");
-            System.out.println("4. Sort by Name");
-            System.out.println("5. Sort by Birth Date");
-            System.out.println("6. Exit");
-
-            String choice = getUserInput("Choose an option: ");
-
-            switch (choice) {
-                case "1":
-                    addPerson();
-                    break;
-                case "2":
-                    findPerson();
-                    break;
-                case "3":
-                    presenter.displayAllPersons();
-                    break;
-                case "4":
-                    presenter.sortByName();
-                    presenter.displayAllPersons();
-                    break;
-                case "5":
-                    presenter.sortByBirthDate();
-                    presenter.displayAllPersons();
-                    break;
-                case "6":
-                    System.out.println("Exiting...");
-                    return;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
-        }
-    }
-
-    private void addPerson() {
-        String name = getUserInput("Enter name: ");
-        LocalDate birthDate = LocalDate.parse(getUserInput("Enter birth date (YYYY-MM-DD): "));
-        String deathDateStr = getUserInput("Enter death date (YYYY-MM-DD) or leave blank if alive: ");
-        LocalDate deathDate = deathDateStr.isEmpty() ? null : LocalDate.parse(deathDateStr);
-        String gender = getUserInput("Enter gender (MALE/FEMALE): ");
-
-        presenter.addPerson(name, birthDate, deathDate, gender);
-    }
-
-    private void findPerson() {
-        String name = getUserInput("Enter name: ");
-        presenter.findPerson(name);
-    }
 }
