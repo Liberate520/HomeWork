@@ -3,46 +3,64 @@ package model.family_tree;
 import java.time.LocalDate;
 import java.util.List;
 
+import model.human.FamilyRelations;
 import model.human.Gender;
 import model.human.Human;
 import model.human.HumanBuilder;
 import model.places.Place;
 import model.places.PlaceBuilder;
+import model.writers.ObjectReader;
+import model.writers.ObjectWriter;
 
-public class FamilyTreeService {
+// Применяем DIP: Класс FamilyTreeService реализует интерфейс.
+public class FamilyTreeService implements FamilyTreeServiceInterface {
     private FamilyTree<Human, Place> familyTree;
-    private HumanBuilder humanBuilder;
-    private PlaceBuilder placeBuilder;
+    private FamilyTreeSorter<Human> sorter;
+    private ObjectWriter writer;
+    private ObjectReader reader;
 
-    public FamilyTreeService() {
+    public FamilyTreeService(ObjectWriter writer, ObjectReader reader) {
         familyTree = new FamilyTree<>();
-        humanBuilder = new HumanBuilder();
-        placeBuilder = new PlaceBuilder();
+        sorter = new FamilyTreeSorter<>();
+        this.writer = writer;
+        this.reader = reader;
     }
 
-    public void addHuman(String firstName, String lastName, String patronymic,
-            LocalDate birthDate, LocalDate deathDate, Gender gender,
-            String nationality, Human father, Human mother, Human spouse,
-            List<Human> children, Place place) {
-        Human human = humanBuilder.setFirstName(firstName)
+    @Override
+    public void addHuman(String firstName, String lastName, String patronymic, LocalDate birthDate, LocalDate deathDate,
+            Gender gender, String nationality, Human father, Human mother, Human spouse,
+            List<Human> children, Place birthPlace) {
+        Human human = new HumanBuilder()
+                .setFirstName(firstName)
                 .setLastName(lastName)
                 .setPatronymic(patronymic)
                 .setBirthDate(birthDate)
                 .setDeathDate(deathDate)
                 .setGender(gender)
                 .setNationality(nationality)
-                .setFather(father)
-                .setMother(mother)
-                .setSpouse(spouse)
-                .setChildren(children)
-                .setPlace(place)
                 .build();
+
+        FamilyRelations<Human> relations = new FamilyRelations<>();
+        relations.setFather(father);
+        relations.setMother(mother);
+        relations.setSpouse(spouse);
+        if (children != null) {
+            for (Human child : children) {
+                relations.addChild(child);
+            }
+        }
+        human.setFather(relations.getFather());
+        human.setMother(relations.getMother());
+        human.setSpouse(relations.getSpouse());
+        human.setChildren(relations.getChildren());
+        human.setBirthPlace(birthPlace);
         familyTree.addHuman(human);
     }
 
-    public void addPlace(int homeNumber, String street, String region,
-            String country, int postalCode, String locality) {
-        Place place = placeBuilder.setHomeNumber(homeNumber)
+    public void addPlace(int homeNumber, String street, String region, String country, int postalCode,
+            String locality) {
+        Place place = new PlaceBuilder()
+                .setHomeNumber(homeNumber)
                 .setStreet(street)
                 .setRegion(region)
                 .setCountry(country)
@@ -52,22 +70,39 @@ public class FamilyTreeService {
         familyTree.addPlace(place);
     }
 
-    public void sortByLastName() {
-        familyTree.sortByLastName();
-    }
-
-    public void sortByBirthDate() {
-        familyTree.sortByBirthDate();
-    }
-
-    public String getFamilyTreeInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Семейное древо:\n");
-        for (Human human : familyTree) {
-            sb.append(human);
-            sb.append("\n");
+    public void addBirthPlace(long humanID, long placeID) {
+        boolean success = familyTree.addBirthPlace(humanID, placeID);
+        if (!success) {
+            System.out.println("Человек или место не найдены.");
         }
-        return sb.toString();
+    }
+
+    @Override
+    public void sortByLastName() {
+        sorter.sort(familyTree.getHumanList(), new HumanComparatorByLastName<>());
+    }
+
+    @Override
+    public void sortByBirthDate() {
+        sorter.sort(familyTree.getHumanList(), new HumanComparatorByBirthDate<>());
+    }
+
+    @Override
+    public String getFamilyTreeInfo() {
+        return familyTree.toString();
+    }
+
+    public void saveTree() {
+        writer.write(familyTree);
+    }
+
+    public void loadTree() {
+        FamilyTree<Human, Place> loadedTree = (FamilyTree<Human, Place>) reader.read();
+        if (loadedTree != null) {
+            familyTree = loadedTree;
+        } else {
+            System.out.println("Ошибка загрузки дерева.");
+        }
     }
 
 }

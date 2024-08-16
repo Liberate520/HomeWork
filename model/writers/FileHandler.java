@@ -7,13 +7,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class FileHandler implements Writer {
+// Применяем SRP и DIP: FileHandler реализует оба интерфейса.
+public class FileHandler implements ObjectWriter, ObjectReader {
     private static final String FILE_NAME = "family_tree.dat";
 
     @Override
     public void write(Object obj) {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
-            objectOutputStream.writeObject(obj);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            oos.writeObject(obj);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -25,8 +26,8 @@ public class FileHandler implements Writer {
         if (!file.exists()) {
             return null;
         }
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            return objectInputStream.readObject();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            return ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;

@@ -1,13 +1,9 @@
 package model.human;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import model.places.Place;
 
 public class HumanBuilder {
-    private long genId;
-    private Human human;
+    private long id;
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -15,14 +11,15 @@ public class HumanBuilder {
     private LocalDate deathDate;
     private Gender gender;
     private String nationality;
-    private Human father;
-    private Human mother;
-    private Human spouse;
-    private List<Human> children;
-    private Place place;
+    private Human human;
 
     public HumanBuilder() {
         createHuman();
+    }
+
+    public HumanBuilder setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public HumanBuilder setFirstName(String firstName) {
@@ -60,37 +57,12 @@ public class HumanBuilder {
         return this;
     }
 
-    public HumanBuilder setFather(Human father) {
-        this.father = father;
-        return this;
-    }
-
-    public HumanBuilder setMother(Human mother) {
-        this.mother = mother;
-        return this;
-    }
-
-    public HumanBuilder setSpouse(Human spouse) {
-        this.spouse = spouse;
-        return this;
-    }
-
-    public HumanBuilder setChildren(List<Human> children) {
-        this.children = children;
-        return this;
-    }
-
-    public HumanBuilder setPlace(Place place) {
-        this.place = place;
-        return this;
-    }
-
     private void createHuman() {
         human = new Human();
     }
 
     private void nextId() {
-        human.setId(genId++);
+        human.setId(id);
     }
 
     private void createFirstName() {
@@ -121,27 +93,8 @@ public class HumanBuilder {
         human.setNationality(nationality);
     }
 
-    private void createFather() {
-        human.setFather(father);
-    }
-
-    private void createMother() {
-        human.setMother(mother);
-    }
-
-    private void createSpouse() {
-        human.setSpouse(spouse);
-    }
-
-    private void createChildren() {
-        human.setChildren(children);
-    }
-
-    private void createPlace() {
-        human.setPlace(place);
-    }
-
     public Human build() {
+        createHuman();
         nextId();
         createFirstName();
         createLastName();
@@ -150,11 +103,6 @@ public class HumanBuilder {
         createDeathDate();
         createGender();
         createNationality();
-        createFather();
-        createMother();
-        createSpouse();
-        createChildren();
-        createPlace();
         clear();
         return human;
     }
@@ -167,10 +115,5 @@ public class HumanBuilder {
         deathDate = null;
         gender = null;
         nationality = null;
-        father = null;
-        mother = null;
-        spouse = null;
-        children = null;
-        place = null;
     }
 }

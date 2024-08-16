@@ -1,13 +1,14 @@
 package model.human;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import model.family_tree.FamilyTreeItem;
 import model.places.Place;
 
+// Применяем SRP: Класс Human отвечает только за хранение данных человека.
 public class Human implements FamilyTreeItem<Human> {
     private long id;
     private String firstName;
@@ -21,15 +22,15 @@ public class Human implements FamilyTreeItem<Human> {
     private Human mother;
     private Human spouse;
     private List<Human> children;
-    private Place place;
+    private Place birthPlace;
 
     public Human() {
         this.children = new ArrayList<>();
     }
 
     public Human(String firstName, String lastName, String patronymic, LocalDate birthDate, LocalDate deathDate,
-            Gender gender, String nationality, Human father, Human mother, Human spouse, Place place) {
-        this.id = -1;
+            Gender gender, String nationality) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
@@ -37,70 +38,19 @@ public class Human implements FamilyTreeItem<Human> {
         this.deathDate = deathDate;
         this.gender = gender;
         this.nationality = nationality;
-        this.father = father;
-        this.mother = mother;
-        this.spouse = spouse;
-        children = new ArrayList<>();
-        this.place = place;
     }
 
-    public Human(String firstName, String lastName, String patronymic, LocalDate birthDate, LocalDate deathDate,
-            Gender gender, Place place) {
-        this(firstName, lastName, patronymic, birthDate, deathDate, gender, null, null, null, null, place);
+    @Override
+    public long getId() {
+        return id;
     }
 
-    public Human(String firstName, String lastName, String patronymic, LocalDate birthDate, Gender gender,
-            String nationality) {
-        this(firstName, lastName, patronymic, birthDate, null, gender, nationality, null, null, null, null);
+    @Override
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Human(String firstName, String lastName, LocalDate birthDate, Gender gender, String nationality) {
-        this(firstName, lastName, null, birthDate, null, gender, nationality, null, null, null, null);
-    }
-
-    public boolean addChild(Human child) {
-        if (children.contains(child)) {
-            return false;
-        } else {
-            children.add(child);
-            return true;
-        }
-    }
-
-    public boolean removeChild(Human child) {
-        if (children.contains(child)) {
-            children.remove(child);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean addParent(Human parent) {
-        if (parent.getGender().equals(Gender.MALE)) {
-            setFather(parent);
-        } else if (parent.getGender().equals(Gender.FEMALE)) {
-            setMother(parent);
-        }
-        return true;
-    }
-
-    public Human getFather() {
-        return father;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
-    }
-
-    public Human getMother() {
-        return mother;
-    }
-
-    public void setMother(Human mother) {
-        this.mother = mother;
-    }
-
+    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -109,6 +59,7 @@ public class Human implements FamilyTreeItem<Human> {
         this.firstName = firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -125,6 +76,7 @@ public class Human implements FamilyTreeItem<Human> {
         this.patronymic = patronymic;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -141,6 +93,7 @@ public class Human implements FamilyTreeItem<Human> {
         this.deathDate = deathDate;
     }
 
+    @Override
     public Gender getGender() {
         return gender;
     }
@@ -157,41 +110,29 @@ public class Human implements FamilyTreeItem<Human> {
         this.nationality = nationality;
     }
 
-    public Place getPlace() {
-        return place;
+    @Override
+    public int compareTo(Human o) {
+        return Long.compare(this.id, o.getId());
     }
 
-    public void setPlace(Place place) {
-        this.place = place;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Human getSpouse() {
-        return spouse;
-    }
-
-    public void setSpouse(Human spouse) {
-        this.spouse = spouse;
-    }
-
-    public List<Human> getChildren() {
-        if (children == null) {
-            children = new ArrayList<>();
+    @Override
+    public int getAge() {
+        if (birthDate == null) {
+            throw new IllegalStateException("Дата рождения не установлена.");
         }
-        return children;
+        LocalDate endDate = (deathDate != null) ? deathDate : LocalDate.now();
+        return Period.between(birthDate, endDate).getYears();
     }
 
-    public void setChildren(List<Human> children) {
-        this.children = children;
+    public void setFather(Human father) {
+        this.father = father;
     }
 
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    @Override
     public List<Human> getParents() {
         List<Human> parents = new ArrayList<>();
         if (father != null) {
@@ -203,137 +144,98 @@ public class Human implements FamilyTreeItem<Human> {
         return parents;
     }
 
-    public int getAge() {
-        if (deathDate != null) {
-            return deathDate.minusYears(birthDate.getYear()).getYear();
-        } else {
-            return LocalDate.now().minusYears(birthDate.getYear()).getYear();
-        }
+    @Override
+    public List<Human> getChildren() {
+        return children;
     }
 
     @Override
-    public String toString() {
-        return getInfo();
+    public void setChildren(List<Human> children) {
+        this.children = children;
     }
 
+    @Override
+    public boolean addChild(Human child) {
+        if (!children.contains(child)) {
+            children.add(child);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addParent(Human parent) {
+        if (parent == null) {
+            return false;
+        }
+        if (parent.getGender() == Gender.MALE) {
+            this.father = parent;
+        } else if (parent.getGender() == Gender.FEMALE) {
+            this.mother = parent;
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Human getSpouse() {
+        return spouse;
+    }
+
+    @Override
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+
+    public Place getBirthPlace() {
+        return birthPlace;
+    }
+
+    public void setBirthPlace(Place birthPlace) {
+        this.birthPlace = birthPlace;
+    }
+
+    @Override
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("ID");
-        sb.append(id);
-        sb.append(", \nИмя: ");
-        sb.append(firstName);
-        sb.append(", \nФамилия: ");
-        sb.append(lastName);
-        sb.append(", \nОтчество: ");
-        sb.append(patronymic);
-        sb.append(", \nДата рождения: ");
-        sb.append(birthDate);
+        sb.append("ID: ").append(id)
+                .append(", Имя: ").append(firstName)
+                .append(", Фамилия: ").append(lastName)
+                .append(", Отчество: ").append(patronymic)
+                .append(", Дата рождения: ").append(birthDate);
+
         if (deathDate != null) {
-            sb.append(", \nДата смерти: ");
-            sb.append(deathDate);
+            sb.append(", Дата смерти: ").append(deathDate);
         }
-        sb.append(", \nПол: ");
-        sb.append(gender);
-        sb.append(", \nНациональность: ");
-        sb.append(nationality);
-        sb.append(", \nОтец: ");
-        if (father != null) {
-            if (father.getClass() != this.getClass()) {
-                sb.append(father.toString());
-            } else {
-                sb.append(father.getFirstName()).append(" ").append(father.getLastName());
-            }
-        }
-        sb.append(", \nМать: ");
-        if (mother != null) {
-            if (mother.getClass() != this.getClass()) {
-                sb.append(mother.toString());
-            } else {
-                sb.append(mother.getFirstName()).append(" ").append(mother.getLastName());
-            }
-        }
-        sb.append(", \nСупруг: ");
-        if (spouse != null) {
-            if (spouse.getClass() != this.getClass()) {
-                sb.append(spouse.toString());
-            } else {
-                sb.append(spouse.getFirstName()).append(" ").append(spouse.getLastName());
-            }
-        }
-        sb.append(", \nДети: ");
-        for (Human child : getChildren()) {
-            sb.append(child.getFirstName()).append(" ").append(child.getLastName()).append(",");
+        sb.append(", Пол: ").append(gender)
+                .append(", Национальность: ").append(nationality);
+
+        if (birthPlace != null) {
+            sb.append(", Место жительства: ")
+                    .append("Дом: ").append(birthPlace.getHomeNumber())
+                    .append(", Улица: ").append(birthPlace.getStreet())
+                    .append(", Область: ").append(birthPlace.getRegion())
+                    .append(", Страна: ").append(birthPlace.getCountry())
+                    .append(", Индекс: ").append(birthPlace.getPostalCode())
+                    .append(", Населенный пункт: ").append(birthPlace.getLocality());
         }
 
-        sb.append(", \nМесто жительства: ");
-        if (place != null) {
-            sb.append(place.toString());
-        } else {
-            sb.append("Место жительства не найдено");
+        if (father != null) {
+            sb.append(", Отец: ").append(father.getFirstName()).append(" ").append(father.getLastName());
+        }
+        if (mother != null) {
+            sb.append(", Мать: ").append(mother.getFirstName()).append(" ").append(mother.getLastName());
+        }
+        if (spouse != null) {
+            sb.append(", Супруг(а): ").append(spouse.getFirstName()).append(" ").append(spouse.getLastName());
+        }
+        if (!children.isEmpty()) {
+            sb.append(", Дети: ");
+            for (Human child : children) {
+                sb.append(child.getFirstName()).append(" ").append(child.getLastName()).append("; ");
+            }
         }
         return sb.toString();
-    }
-
-    public String getSpouseInfo() {
-        String res = "Супруг(а): ";
-        if (spouse != null) {
-            res += spouse.getInfo();
-        } else {
-            res += "Супруг не найден";
-        }
-        return res;
-    }
-
-    public String getMotherInfo() {
-        String res = "Мать: ";
-        if (mother != null) {
-            res += mother.getInfo();
-        } else {
-            res += "Мать не найдена";
-        }
-        return res;
-    }
-
-    public String getFatherInfo() {
-        String res = "Отец: ";
-        if (father != null) {
-            res += father.getInfo();
-        } else {
-            res += "Отец не найден";
-        }
-        return res;
-    }
-
-    public String getChildrenInfo() {
-        StringBuilder res = new StringBuilder("Дети: ");
-        if (children.size() > 0) {
-            for (Human child : children) {
-                res.append(child.getInfo());
-                res.append(", ");
-            }
-        } else {
-            res.append("Детей нет");
-        }
-        return res.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Human human = (Human) o;
-        return id == human.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public int compareTo(Human o) {
-        return Long.compare(this.id, o.id);
     }
 }

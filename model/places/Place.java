@@ -86,23 +86,15 @@ public class Place implements Serializable, PlaceItem<Place> {
         return getInfo();
     }
 
+    @Override
     public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ID: ");
-        sb.append(id);
-        sb.append("Страна: ");
-        sb.append(country);
-        sb.append(", Область: ");
-        sb.append(region);
-        sb.append(", Населенный пункт: ");
-        sb.append(locality);
-        sb.append(", Улица: ");
-        sb.append(street);
-        sb.append(", Дом: ");
-        sb.append(homeNumber);
-        sb.append(", Индекс: ");
-        sb.append(postalCode);
-        return sb.toString();
+        return "ID: " + id +
+                ", Дом: " + homeNumber +
+                ", Улица: " + street +
+                ", Область: " + region +
+                ", Страна: " + country +
+                ", Индекс: " + postalCode +
+                ", Населенный пункт: " + locality;
     }
 
     @Override

@@ -1,14 +1,15 @@
 package view.commands;
 
-import view.ConsoleUI;
+import presenter.Presenter;
 
+// Применяем SRP: Класс GetFamilyTreeInfo отвечает за вывод информации о семейном дереве
 public class GetFamilyTreeInfo extends Command {
 
-    public GetFamilyTreeInfo(ConsoleUI consoleUI) {
-        super("Вывести дерево", consoleUI);
+    public GetFamilyTreeInfo(Presenter presenter) {
+        super("Вывести дерево", presenter);
     }
 
     public void execute() {
-        getConsoleUI().getFamilyTreeInfo();
+        presenter.getFamilyTreeInfo();
     }
 }

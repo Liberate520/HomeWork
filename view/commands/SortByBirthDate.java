@@ -1,14 +1,15 @@
 package view.commands;
 
-import view.ConsoleUI;
+import presenter.Presenter;
 
+// Применяем SRP: Класс SortByBirthDate отвечает за сортировку семейного древа по дате рождения
 public class SortByBirthDate extends Command {
 
-    public SortByBirthDate(ConsoleUI consoleUI) {
-        super("Сортировать по дате рождения", consoleUI);
+    public SortByBirthDate(Presenter presenter) {
+        super("Сортировать по дате рождения", presenter);
     }
 
     public void execute() {
-        getConsoleUI().sortByBirthDate();
+        presenter.sortByBirthDate();
     }
 }
