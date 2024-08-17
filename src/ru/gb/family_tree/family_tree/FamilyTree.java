@@ -4,9 +4,10 @@ import ru.gb.family_tree.human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private long humansId;
     private List<Human> humanList;
 
@@ -132,5 +133,16 @@ public class FamilyTree implements Serializable {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public Iterator<Human> iterator(){
+        return new FamilyTreeIterator(humanList);
+    }
+    public void sortByName(){
+        humanList.sort(new HumanComparatorByName());
+    }
+    public void sortByBirthDate(){
+        humanList.sort(new HumanComparatorByBirthDate());
     }
 }
