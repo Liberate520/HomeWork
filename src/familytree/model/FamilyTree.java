@@ -10,34 +10,34 @@ import java.util.Map;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
+public class FamilyTree<T extends Identifiable> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
-    private Map<FullName, Person> members;
+    private Map<FullName, T> members;
 
     public FamilyTree() {
         this.members = new HashMap<>();
     }
 
-    public void addPerson(Person person) {
-        members.put(person.getFullName(), person);
+    public void addMember(T member) {
+        members.put(member.getFullName(), member);
     }
 
-    public Person findPersonByFullName(String familyName, String firstName, String fatherName) {
+    public T findMemberByFullName(String familyName, String firstName, String fatherName) {
         return members.get(new FullName(familyName, firstName, fatherName));
     }
 
-    public List<Person> findChildrenByFullName(String familyName, String firstName, String fatherName) {
-        Person person = findPersonByFullName(familyName, firstName, fatherName);
-        if (person != null) {
-            return person.getChildren();
+    public List<T> findChildrenByFullName(String familyName, String firstName, String fatherName) {
+        T member = findMemberByFullName(familyName, firstName, fatherName);
+        if (member != null) {
+            return member.getChildren();
         }
         return new ArrayList<>();
     }
 
     public void addParentChildRelationship(String parentFamilyName, String parentFirstName, String parentFatherName,
                                            String childFamilyName, String childFirstName, String childFatherName) {
-        Person parent = findPersonByFullName(parentFamilyName, parentFirstName, parentFatherName);
-        Person child = findPersonByFullName(childFamilyName, childFirstName, childFatherName);
+        T parent = findMemberByFullName(parentFamilyName, parentFirstName, parentFatherName);
+        T child = findMemberByFullName(childFamilyName, childFirstName, childFatherName);
         if (parent != null && child != null) {
             parent.addChild(child);
             child.addParent(parent);
@@ -45,19 +45,19 @@ public class FamilyTree implements Serializable, Iterable<Person> {
     }
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<T> iterator() {
         return members.values().iterator();
     }
 
-    public List<Person> getSortedByName() {
-        List<Person> sortedList = new ArrayList<>(members.values());
-        sortedList.sort(Comparator.comparing(p -> p.getFullName().getFirstName()));
+    public List<T> getSortedByName() {
+        List<T> sortedList = new ArrayList<>(members.values());
+        sortedList.sort(Comparator.comparing(m -> m.getFullName().getFirstName()));
         return sortedList;
     }
 
-    public List<Person> getSortedByDateOfBirth() {
-        List<Person> sortedList = new ArrayList<>(members.values());
-        sortedList.sort(Comparator.comparing(Person::getDateOfBirth));
+    public List<T> getSortedByDateOfBirth() {
+        List<T> sortedList = new ArrayList<>(members.values());
+        sortedList.sort(Comparator.comparing(T::getDateOfBirth));
         return sortedList;
     }
 }

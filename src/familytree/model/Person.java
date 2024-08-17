@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.Period;
 
-public class Person implements Serializable {
+public class Person implements Identifiable, Serializable {
     private static final long serialVersionUID = 1L;
     private FullName fullName;
     private Gender gender;
@@ -26,6 +26,7 @@ public class Person implements Serializable {
         this.spouse = null;
     }
 
+    @Override
     public FullName getFullName() {
         return fullName;
     }
@@ -34,6 +35,7 @@ public class Person implements Serializable {
         return gender;
     }
 
+    @Override
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
@@ -50,6 +52,7 @@ public class Person implements Serializable {
         return parents;
     }
 
+    @Override
     public List<Person> getChildren() {
         return children;
     }
@@ -62,12 +65,14 @@ public class Person implements Serializable {
         this.spouse = spouse;
     }
 
-    public void addParent(Person parent) {
-        this.parents.add(parent);
+    @Override
+    public void addParent(Identifiable parent) {
+        this.parents.add((Person) parent);
     }
 
-    public void addChild(Person child) {
-        this.children.add(child);
+    @Override
+    public void addChild(Identifiable child) {
+        this.children.add((Person)child);
     }
 
     // Метод для вычисления возраста

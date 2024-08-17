@@ -19,10 +19,10 @@ public class Main {
         Person kuznetzovaMary = new Person("Кузнецова", "Мария", "Михайловна", Person.Gender.FEMALE, LocalDate.of(2005, 7, 20));
         Person kuznetzovAl = new Person("Кузнецов", "Александр", "Михайлович", Person.Gender.MALE, LocalDate.of(2007, 11, 15));
 
-        familyTree.addPerson(ivanovM);
-        familyTree.addPerson(kuznetzovaLiza);
-        familyTree.addPerson(kuznetzovaMary);
-        familyTree.addPerson(kuznetzovAl);
+        familyTree.addMember(ivanovM);
+        familyTree.addMember(kuznetzovaLiza);
+        familyTree.addMember(kuznetzovaMary);
+        familyTree.addMember(kuznetzovAl);
 
         familyTree.addParentChildRelationship("Иванов", "Михаил", "Дмитриевич", "Кузнецова", "Мария", "Михайловна");
         familyTree.addParentChildRelationship("Кузнецова", "Елизавета", "Сергеевна", "Кузнецова", "Мария", "Михайловна");
