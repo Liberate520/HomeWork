@@ -1,18 +1,14 @@
 package ru.gb.family_tree.model.service;
 
 import ru.gb.family_tree.model.family_tree.FamilyTree;
-import ru.gb.family_tree.model.human.Gender;
-import ru.gb.family_tree.model.human.Human;
 import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-public class FamilyTreeService {
-    private int humansId;
-    private FamilyTree<Human> familyTree;
-    FileHandler<Human> fileHandler;
+public class FamilyTreeService<T extends FamilyTreeItem<T>> {
+    private int Id;
+    private FamilyTree<T> familyTree;
+    FileHandler<T> fileHandler;
 
     public FamilyTreeService() {
         this.familyTree = new FamilyTree<>();
@@ -47,10 +43,11 @@ public class FamilyTreeService {
         return familyTree.getChildrenInfo(id);
     }
 
-    public String addHuman(String name, Gender gender, LocalDate birthDay) {
-        Human human = new Human(name, gender, birthDay);
-        human.setId(++humansId);
-        familyTree.addItem(human);
+    //public String addItem(String name, Gender gender, LocalDate birthDay) {
+    public String addItem(T item) {
+        //T human = new Human(name, gender, birthDay);
+        item.setId(++Id);
+        familyTree.addItem(item);
         return familyTree.getTreeInfo();
     }
 
@@ -81,7 +78,7 @@ public class FamilyTreeService {
 
     public String remove(int id) {
         familyTree.remove(id);
-        humansId--;
+        Id--;
         return familyTree.getTreeInfo();
     }
 
@@ -95,12 +92,13 @@ public class FamilyTreeService {
         //System.out.println("Семейное древо востановленно из файла.");
     }
 
+    /*
     public void createFamilyTree() {
         List<Human> humans = new ArrayList<>();
         humans.add(new Human());
         //Human hum1 = new Human();
         //humans.getLast().setId(1);
-        humans.getLast().setId(++humansId);
+        humans.getLast().setId(++Id);
         humans.getLast().setName("Михaил Федopoвич Рoмaнoв");
         humans.getLast().setBirthDay(LocalDate.parse("1596-07-12"));
         humans.getLast().setDeathDate(LocalDate.parse("1645-07-13"));
@@ -110,7 +108,7 @@ public class FamilyTreeService {
         humans.add(new Human());
         //Human hum2 = new Human();
         //humans.getLast().setId(2);
-        humans.getLast().setId(++humansId);
+        humans.getLast().setId(++Id);
         humans.getLast().setName("Алекcей Михaйлoвич Рoмaнoв");
         humans.getLast().setBirthDay(LocalDate.parse("1629-03-09"));
         humans.getLast().setDeathDate(LocalDate.parse("1676-01-29"));
@@ -121,7 +119,7 @@ public class FamilyTreeService {
         humans.add(new Human());
         //Human hum2 = new Human();
         //humans.getLast().setId(3);
-        humans.getLast().setId(++humansId);
+        humans.getLast().setId(++Id);
         humans.getLast().setName("Татьяна Михайловна Рoмaнoва");
         humans.getLast().setBirthDay(LocalDate.parse("1636-01-15"));
         humans.getLast().setDeathDate(LocalDate.parse("1706-09-04"));
@@ -132,7 +130,7 @@ public class FamilyTreeService {
         humans.add(new Human());
         //Human hum3 = new Human();
         //humans.getLast().setId(4);
-        humans.getLast().setId(++humansId);
+        humans.getLast().setId(++Id);
         humans.getLast().setName("Федop III Алекcеевич Рoмaнoв");
         humans.getLast().setBirthDay(LocalDate.parse("1661-05-30"));
         humans.getLast().setDeathDate(LocalDate.parse("1682-04-27"));
@@ -143,7 +141,7 @@ public class FamilyTreeService {
         humans.add(new Human());
         //Human hum4 = new Human();
         //humans.getLast().setId(5);
-        humans.getLast().setId(++humansId);
+        humans.getLast().setId(++Id);
         humans.getLast().setName("Ивaн V Алекcеевич Рoмaнoв");
         humans.getLast().setBirthDay(LocalDate.parse("1666-08-27"));
         humans.getLast().setDeathDate(LocalDate.parse("1696-01-29"));
@@ -154,7 +152,7 @@ public class FamilyTreeService {
         humans.add(new Human());
         //Human hum5 = new Human();
         //humans.getLast().setId(6);
-        humans.getLast().setId(++humansId);
+        humans.getLast().setId(++Id);
         humans.getLast().setName("Петp I Алекcеевич Рoмaнoв");
         humans.getLast().setBirthDay(LocalDate.parse("1672-05-30"));
         humans.getLast().setDeathDate(LocalDate.parse("1725-01-28"));
@@ -165,7 +163,7 @@ public class FamilyTreeService {
         humans.add(new Human());
         //Human hum6 = new Human();
         //humans.getLast().setId(7);
-        humans.getLast().setId(++humansId);
+        humans.getLast().setId(++Id);
         humans.getLast().setName("Елизaветa Петpoвнa Рoмaнoвa");
         humans.getLast().setBirthDay(LocalDate.parse("1709-12-18"));
         humans.getLast().setDeathDate(LocalDate.parse("1761-12-25"));
@@ -176,15 +174,17 @@ public class FamilyTreeService {
         humans.add(new Human.HumanBuilder("Евдокия Лукъяновна Стрешнева",
                 Gender.FEMALE, LocalDate.parse("1626-02-15"), null, null)
                 .setHumanDeathDate(LocalDate.parse("1645-07-23"))
-                .setHumanId(++humansId)
+                .setHumanId(++Id)
                 .build());
         familyTree.addItem(humans.getLast());
 
         humans.add(new Human.HumanBuilder("Василий Михайлович Рoмaнoв",
                 Gender.MALE, LocalDate.parse("1639-03-24"), humans.getFirst(), humans.get(7))
                 .setHumanDeathDate(LocalDate.parse("1639-04-04"))
-                .setHumanId(++humansId)
+                .setHumanId(++Id)
                 .build());
         familyTree.addItem(humans.getLast());
     }
+
+     */
 }
