@@ -1,10 +1,13 @@
 package view;
 
-import presenter.Presenter;
+import person.Person;
+
+import java.util.List;
 
 public interface TreeView {
-    void setPresenter(Presenter presenter);
     void displayMessage(String message);
-    void displayPerson(String personInfo);
-    void displayAllPersons(String personsInfo);
+    void displayPerson(Person person);
+    void displayAllPersons(List<Person> persons);
+    void addCommand(Command command);
+    void start();
 }

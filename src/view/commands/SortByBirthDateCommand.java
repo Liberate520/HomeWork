@@ -14,5 +14,9 @@ public class SortByBirthDateCommand implements Command {
     public void execute() {
         presenter.sortByBirthDate();
     }
-}
 
+    @Override
+    public String getName() {
+        return "sortbirth";
+    }
+}

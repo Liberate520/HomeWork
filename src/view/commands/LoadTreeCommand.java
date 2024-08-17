@@ -15,9 +15,15 @@ public class LoadTreeCommand implements Command {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter file name to load tree: ");
+
+        System.out.print("Enter file name to load the tree: ");
         String fileName = scanner.nextLine();
+
         presenter.loadTree(fileName);
     }
-}
 
+    @Override
+    public String getName() {
+        return "load";
+    }
+}

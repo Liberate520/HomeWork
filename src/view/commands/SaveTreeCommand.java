@@ -15,8 +15,15 @@ public class SaveTreeCommand implements Command {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter file name to save tree: ");
+
+        System.out.print("Enter file name to save the tree: ");
         String fileName = scanner.nextLine();
+
         presenter.saveTree(fileName);
+    }
+
+    @Override
+    public String getName() {
+        return "save";
     }
 }

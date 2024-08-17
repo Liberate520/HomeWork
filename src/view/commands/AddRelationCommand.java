@@ -15,10 +15,18 @@ public class AddRelationCommand implements Command {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter parent's name: ");
+
+        System.out.print("Enter parent name: ");
         String parentName = scanner.nextLine();
-        System.out.print("Enter child's name: ");
+
+        System.out.print("Enter child name: ");
         String childName = scanner.nextLine();
+
         presenter.addRelation(parentName, childName);
+    }
+
+    @Override
+    public String getName() {
+        return "addrelation";
     }
 }

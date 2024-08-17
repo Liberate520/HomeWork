@@ -7,28 +7,28 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class FamilyTree<T extends Person> implements Serializable {
+public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
     private List<T> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
-    public void addMember(T member) {
-        members.add(member);
+    public void addPerson(T person) {
+        members.add(person);
     }
 
-    public T findMemberByName(String name) {
-        for (T member : members) {
-            if (member.getName().equals(name)) {
-                return member;
+    public T findPerson(String name) {
+        for (T person : members) {
+            if (person.getName().equalsIgnoreCase(name)) {
+                return person;
             }
         }
         return null;
     }
 
-    public List<T> getMembers() {
-        return members;
+    public List<T> getAllPersons() {
+        return new ArrayList<>(members);
     }
 
     public void sortByName() {
@@ -39,8 +39,8 @@ public class FamilyTree<T extends Person> implements Serializable {
         members.sort(Comparator.comparing(Person::getBirthDate));
     }
 
-    public void addParentChildRelation(T parent, T child) {
-        parent.addChild(child);
-        child.addParent(parent);
+    @Override
+    public java.util.Iterator<T> iterator() {
+        return members.iterator();
     }
 }
