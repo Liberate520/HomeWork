@@ -1,17 +1,14 @@
-package ru.gb.family.model.jobfiles;
+package ru.gb.family.model.familyTree.jobfiles;
 
 
-
-import ru.gb.family.model.familyTree.FamilyTree;
-import ru.gb.family.model.familyTree.ItemFamilyTrees.humans.Human;
-import ru.gb.family.model.service.Service;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileHandler implements Writable {
+public class FileHandler implements Writable, Serializable {
 
+    private static final long serialVersionUID = 1L;
     public List<String> getListSaveTree(String pathDir){
         List<String> listFiles = new ArrayList<>();
         File dir = new File(pathDir);
@@ -31,6 +28,7 @@ public class FileHandler implements Writable {
 
         try {ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath));
              objectOutputStream.writeObject(serializable);
+             objectOutputStream.flush();
             return true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -39,12 +37,13 @@ public class FileHandler implements Writable {
     }
     public Object read(String pathFile) {
         try {
-            //System.out.println(pathFile);
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(pathFile));
             return objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-             throw new RuntimeException(e);
-            //return new Service();
+        } catch (IOException e) {
+             e.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }

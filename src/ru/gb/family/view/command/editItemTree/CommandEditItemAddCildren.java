@@ -11,6 +11,6 @@ public class CommandEditItemAddCildren extends Command {
 
     @Override
     public void run() {
-        getConsoleUI().editItem(DegreeOfKinship.Children);
+        getConsoleUI().editItemParent(DegreeOfKinship.Children);
     }
 }

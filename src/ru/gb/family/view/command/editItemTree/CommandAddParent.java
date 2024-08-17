@@ -11,6 +11,6 @@ public class CommandAddParent extends Command {
 
     @Override
     public void run() {
-        getConsoleUI().editItem(DegreeOfKinship.Father);
+        getConsoleUI().editItemParent(DegreeOfKinship.Father);
     }
 }

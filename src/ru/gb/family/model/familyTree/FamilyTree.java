@@ -11,28 +11,27 @@ import ru.gb.family.model.familyTree.ItemFamilyTrees.comparators.ItemFamilyTreeC
 import ru.gb.family.model.familyTree.ItemFamilyTrees.enums.DegreeOfKinship;
 import ru.gb.family.model.familyTree.ItemFamilyTrees.enums.Gender;
 import ru.gb.family.model.familyTree.ItemFamilyTrees.enums.SortBy;
-import ru.gb.family.model.familyTree.ItemFamilyTrees.humans.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class FamilyTree <T extends ItemFamilyTree<T>> implements Serializable, Iterable<ItemFamilyTree<T>> {
+public class FamilyTree <T extends ItemFamilyTree<T>> implements Serializable,Iterable<ItemFamilyTree<T>> {
 
     private List<ItemFamilyTree<T>> familyTree;
-
+    private long idItemFamilyTree;
 
     public FamilyTree() {
         familyTree = new ArrayList<>();
 
         }
 
-    public void creatItemFamilyTreeInTree(long itemFamilyTreeId, String name, LocalDate birthday,Gender gender) {
-        familyTree.add(new ItemFamilyTree<>(itemFamilyTreeId,name,birthday,gender));
+    public void creatItemFamilyTreeInTree(long id,String name, LocalDate birthday,Gender gender) {
+        familyTree.add(new ItemFamilyTree<>(id,name,birthday,gender));
     }
 
-    public void creatItemFamilyTreeInTree(long itemFamilyTreeId, String name, LocalDate birthday,LocalDate dateOfDeath,Gender gender) {
-        familyTree.add(new ItemFamilyTree<>(itemFamilyTreeId,name,birthday,dateOfDeath,gender));
+    public void creatItemFamilyTreeInTree(long id, String name, LocalDate birthday, LocalDate dateOfDeath, Gender gender) {
+        familyTree.add(new ItemFamilyTree<>(id,name,birthday,dateOfDeath,gender));
     }
 
     public void addItemFamilyTreeInTree(ItemFamilyTree<T> newItemFamilyTree) {
@@ -164,5 +163,21 @@ public class FamilyTree <T extends ItemFamilyTree<T>> implements Serializable, I
             cont++;
         };
         return cont;
+    }
+
+    public ItemFamilyTree<T> getItemFamilyTree(String name, LocalDate birthday) {
+        Iterator<T> iterator = (Iterator<T>) familyTree.iterator();
+        while (iterator.hasNext()){
+            ItemFamilyTree<T> itnext = iterator.next();
+            if(itnext.getName().equalsIgnoreCase(name)
+                    && itnext.getBirthday().equals(birthday)){
+                return itnext;
+            }
+        }
+        return null;
+    }
+
+    public  void editItemFamilyTree(ItemFamilyTree<T> itemFamilyTreeEdit,ItemFamilyTree<T> additemFamilyTree, DegreeOfKinship degreeOfKinship) {
+        itemFamilyTreeEdit.editItemFamilyTree(additemFamilyTree,degreeOfKinship);
     }
 }

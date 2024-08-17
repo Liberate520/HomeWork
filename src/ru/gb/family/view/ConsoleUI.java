@@ -3,7 +3,7 @@ package ru.gb.family.view;
 import ru.gb.family.model.familyTree.ItemFamilyTrees.ItemFamilyTree;
 import ru.gb.family.model.familyTree.ItemFamilyTrees.enums.DegreeOfKinship;
 import ru.gb.family.model.familyTree.ItemFamilyTrees.enums.Gender;
-import ru.gb.family.model.familyTree.ItemFamilyTrees.humans.Human;
+
 import ru.gb.family.presenter.Presenter;
 import ru.gb.family.view.menu.EditItemTreeMenu;
 import ru.gb.family.view.menu.EditTreeMenu;
@@ -72,6 +72,7 @@ public class ConsoleUI implements View {
     }
 
     public void loadTree() {
+
         long num = 1;
         for (String nameTree:presenter.getListDataTree()) System.out.println(num++ + ":" + nameTree);
         System.out.println(num++ +":Вернуться в главное меню..");
@@ -165,7 +166,7 @@ public class ConsoleUI implements View {
     }
 
 
-    public void editItem(DegreeOfKinship degreeOfKinship) {
+    public void editItemParent(DegreeOfKinship degreeOfKinship) {
         ItemFamilyTree item1 = null;
         ItemFamilyTree item2 = null;
 

@@ -1,4 +1,4 @@
-package ru.gb.family.model.jobfiles;
+package ru.gb.family.model.familyTree.jobfiles;
 
 import java.io.Serializable;
 import java.util.List;

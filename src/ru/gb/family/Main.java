@@ -13,6 +13,7 @@ public class Main implements Serializable {
     public static void main(String[] args) {
         View view = new ConsoleUI();
         Service service = new Service<>();
+        service.del("newTestFamilyTree");
         service.newTestFamilyTree();
         //service = null;
        // System.gc();

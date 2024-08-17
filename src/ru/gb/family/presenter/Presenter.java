@@ -64,7 +64,7 @@ public class Presenter {
 
 
     public void itemEdit(ItemFamilyTree item1, ItemFamilyTree item2, DegreeOfKinship degreeOfKinship ) {
-        this.service.getFamilyTree().searchByItemFamilyTree(item1).editItemFamilyTree(item2,degreeOfKinship);
+        this.service.getFamilyTree().editItemFamilyTree(item1,item2,degreeOfKinship);
 
     }
     public List<ItemFamilyTree> searchItemByName(String name) {
