@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Plant implements IPlant {
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
 
-        public Plant(FamilyTree familyTree) {
+        public Plant(FamilyTree<Human> familyTree) {
             this.familyTree = familyTree;
         }
 

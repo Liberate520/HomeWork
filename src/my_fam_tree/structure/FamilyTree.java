@@ -5,52 +5,52 @@ import java.io.Serializable;
 import java.util.*;
 
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree <T extends InFamily<T>> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
-    private List<Human> people;
+    private List<T> relatives;
 
     public FamilyTree() {
-        this.people = new ArrayList<>();
+        this.relatives = new ArrayList<>();
     }
 
-    public void addHuman(Human human) {
-        people.add(human);
+    public void addRelative(T relative) {
+        relatives.add(relative);
     }
 
-    public List<Human> getPeople() {
-        return people;
+    public List<T> getRelatives() {
+        return relatives;
     }
 
-    public Human findHuman(String name) {
-        for (Human human : people) {
-            if (human.getName().equals(name)) {
-                return human;
+    public T findHuman(String name) {
+        for (T relative : relatives) {
+            if (relative.getName().equals(name)) {
+                return relative;
             }
         }
         return null;
     }
     public void sortName() {
-        Collections.sort(people, comparator1);
+        relatives.sort(Comparator.comparing(InFamily:: getName));
     }
 
-    private Comparator<Human> comparator1 = Comparator.comparing(Human:: getName);
+
 
     public void sortBirthDate(){
-        Collections.sort(people, comparator2);
+        relatives.sort(Comparator.comparing(InFamily:: getDateOfBirth));
     }
 
-    private Comparator<Human> comparator2 = Comparator.comparing(Human :: getDateOfBirth);
+
 
     @Override
-    public Iterator<Human> iterator() {
-        return people.iterator();
+    public Iterator<T> iterator() {
+        return relatives.iterator();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Human human : people) {
-            sb.append(human).append("\n");
+        for (T relative : relatives) {
+            sb.append(relative).append("\n");
     }
     return sb.toString();
 }
