@@ -8,12 +8,11 @@ import java.io.*;
 public class FileTreeStorage<T extends Person> implements TreeStorage<T> {
 
     @Override
-    public void save(FamilyTree<T> tree, String fileName) {
+    public void save(FamilyTree<T> familyTree, String fileName) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(tree);
-            System.out.println("Tree saved to file: " + fileName);
+            oos.writeObject(familyTree);
         } catch (IOException e) {
-            System.err.println("Error saving tree to file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -22,8 +21,8 @@ public class FileTreeStorage<T extends Person> implements TreeStorage<T> {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             return (FamilyTree<T>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error loading tree from file: " + e.getMessage());
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 }

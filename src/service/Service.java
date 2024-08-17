@@ -9,24 +9,15 @@ import java.time.LocalDate;
 
 public class Service {
     private FamilyTree<Person> familyTree;
-    private TreeSorter<Person> sorter;
     private TreeStorage<Person> storage;
 
-    public Service(FamilyTree<Person> familyTree, TreeSorter<Person> sorter, TreeStorage<Person> storage) {
+    public Service(FamilyTree<Person> familyTree, TreeStorage<Person> storage) {
         this.familyTree = familyTree;
-        this.sorter = sorter;
         this.storage = storage;
     }
 
     public void addPerson(String name, LocalDate birthDate, LocalDate deathDate, String genderStr) {
-        PersonBuilder personBuilder = new PersonBuilder();
-        Gender gender = Gender.valueOf(genderStr.toUpperCase());
-        Person person = personBuilder
-                .setName(name)
-                .setBirthDate(birthDate)
-                .setDeathDate(deathDate)
-                .setGender(gender)
-                .build();
+        Person person = new Person(name, birthDate, deathDate, Gender.valueOf(genderStr.toUpperCase()));
         familyTree.addMember(person);
     }
 
@@ -39,11 +30,11 @@ public class Service {
     }
 
     public void sortByName() {
-        sorter.sortByName(familyTree.getMembers());
+        familyTree.sortByName();
     }
 
     public void sortByBirthDate() {
-        sorter.sortByBirthDate(familyTree.getMembers());
+        familyTree.sortByBirthDate();
     }
 
     public void saveTree(String fileName) {
@@ -54,6 +45,14 @@ public class Service {
         FamilyTree<Person> loadedTree = storage.load(fileName);
         if (loadedTree != null) {
             this.familyTree = loadedTree;
+        }
+    }
+
+    public void addRelation(String parentName, String childName) {
+        Person parent = findPerson(parentName);
+        Person child = findPerson(childName);
+        if (parent != null && child != null) {
+            familyTree.addParentChildRelation(parent, child);
         }
     }
 }

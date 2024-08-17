@@ -1,8 +1,10 @@
 package familytree;
 
 import person.Person;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class FamilyTree<T extends Person> implements Serializable {
@@ -27,5 +29,18 @@ public class FamilyTree<T extends Person> implements Serializable {
 
     public List<T> getMembers() {
         return members;
+    }
+
+    public void sortByName() {
+        members.sort(Comparator.comparing(Person::getName));
+    }
+
+    public void sortByBirthDate() {
+        members.sort(Comparator.comparing(Person::getBirthDate));
+    }
+
+    public void addParentChildRelation(T parent, T child) {
+        parent.addChild(child);
+        child.addParent(parent);
     }
 }

@@ -2,7 +2,6 @@ package presenter;
 
 import service.Service;
 import view.TreeView;
-import person.Person;
 
 import java.time.LocalDate;
 
@@ -47,5 +46,10 @@ public class Presenter {
     public void loadTree(String fileName) {
         service.loadTree(fileName);
         view.displayMessage("Tree loaded from file: " + fileName);
+    }
+
+    public void addRelation(String parentName, String childName) {
+        service.addRelation(parentName, childName);
+        view.displayMessage("Relation added successfully.");
     }
 }
