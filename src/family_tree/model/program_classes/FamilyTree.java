@@ -13,10 +13,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         this.fTree = new ArrayList<>();
     }
 
-    public ArrayList<E> getfTree() {
-        return fTree;
-    }
-
     public boolean add(E element){
             if (!fTree.contains(element)) {
                 fTree.add(element);
@@ -45,14 +41,13 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         return result;
     }
 
+    public ArrayList<E> getfTree() {
+        return fTree;
+    }
 
     @Override
     public Iterator<E> iterator() {
         return new ItemIterator<>(fTree);
-    }
-
-    public boolean isEmpty() {
-        return fTree.isEmpty();
     }
 
     public void sortByName(){
@@ -60,6 +55,6 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
     }
 
     public void sortByBirthDate(){
-        Collections.sort(fTree, new ComparatorByBirth<>());
+        fTree.sort(new ComparatorByBirth<>());
     }
 }

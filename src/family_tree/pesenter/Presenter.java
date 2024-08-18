@@ -1,14 +1,11 @@
 package family_tree.pesenter;
 
 import family_tree.model.help_classes.Gender;
-import family_tree.model.program_classes.Human;
-import family_tree.model.saving_data.FileHandler;
 import family_tree.model.services.HumanService;
 import family_tree.view.View;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Formatter;
 
 public class Presenter {
     private View view;
@@ -52,94 +49,60 @@ public class Presenter {
     }
 
     public void addFamilyLink(String childDoc, String parentDoc) {
-        Human child  = service.findByDocument(childDoc);
-        Human parent  = service.findByDocument(parentDoc);
-        if (child == null || parent == null) {
-            view.printAnswer("Один или несколько членов семьи не найдены");
-        }
-        else {
-            service.addFamilyLink(child, parent);
-            view.printAnswer("Данные добавлены");
-        }
+            if (service.addFamilyLink(childDoc, parentDoc)) {
+                view.printAnswer("Данные добавлены");
+            }
+            else {
+                view.printAnswer("Один или несколько членов семьи не найдены");
+            }
     }
 
     public void registerDeath(String doc, LocalDate date) {
-        Human human  = service.findByDocument(doc);
-        if (human == null) {
+        if (service.registerDeath(doc, date)) {
             view.printAnswer("Запись не найдена");
         }
         else {
-            service.registerDeath(human, date);
             view.printAnswer("Данные добавлены");
         }
     }
 
     public void findByDocument(String doc) {
-        StringBuilder answer = new StringBuilder();
-        Human human = service.findByDocument(doc);
-        if (human != null) {
-            answer.append(createHeader());
-            answer.append(service.findByDocument(doc).toString());
+        if (service.findByDocument(doc) != null) {
+            ArrayList<String> answer = new ArrayList<>();
+            answer.add(service.findByDocument(doc).getNamesHeader());
+            answer.add(service.findByDocument(doc).toString());
+            view.printTable(answer);
         }
         else {
-            answer.append("Не найдено");
+            view.printAnswer("Не найдено");
         }
-        view.printAnswer(answer.toString());
     }
 
     public void findByName(String name) {
-        StringBuilder answer = new StringBuilder();
-        ArrayList<Human> list = service.findByName(name);
-        if (list.isEmpty()) {
-            answer.append("Данные не найдены");
+        if (service.findByName(name).isEmpty()) {
+            view.printAnswer("Данные не найдены");
         }
         else {
-            answer.append(createHeader());
-            for (Human human : list) {
-                answer.append(human);
-                answer.append("\n");
+            ArrayList<String> answer = new ArrayList<>();
+            answer.add(service.findByName(name).get(0).getNamesHeader());
+            for (Object o : service.findByName(name)) {
+                answer.add(o.toString());
             }
+            view.printTable(answer);
         }
-        view.printAnswer(answer.toString());
     }
 
     public void getTreeInfo() {
-        StringBuilder answer = new StringBuilder();
-        answer.append(createHeader());
-        answer.append(service.getTreeInfo());
-        view.printAnswer(answer.toString());
-    }
-
-    private String createHeader() {
-        StringBuilder header = new StringBuilder();
-        Formatter formatter = new Formatter(header);
-        formatter.format("|%13s | " +
-                        "%13s |" +
-                        "%13s |" +
-                        "%14s |" +
-                        "%13s |" +
-                        "%13s |" +
-                        "%13s |" +
-                        "%50s |"
-                , "Документ",
-                "Имя",
-                "Пол",
-                "Дата рождения",
-                "Дата смерти",
-                "Мать",
-                "Отец",
-                "Дети");
-        String header_line = "";
-        for (int i = 0; i < header.length(); i++) {
-            header_line += "-";
+        if ( service.getTreeInfo().isEmpty()) {
+            view.printAnswer("Данные не найдены");
         }
-        StringBuilder answer = new StringBuilder();
-        answer.append(header_line);
-        answer.append("\n");
-        answer.append(header);
-        answer.append("\n");
-        answer.append(header_line);
-        answer.append("\n");
-        return answer.toString();
+        else {
+            ArrayList<String> answer = new ArrayList<>();
+            answer.add(service.getTreeInfo().get(0).getNamesHeader());
+            for (Object o :  service.getTreeInfo()) {
+                answer.add(o.toString());
+            }
+            view.printTable(answer);
+        }
     }
 }

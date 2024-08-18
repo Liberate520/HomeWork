@@ -6,6 +6,5 @@ public interface FamilyTreeItem<T> extends Comparable<T>{
     LocalDate getBirthDate();
     String getDocument();
     String getName();
-    int setParents(Object... o);
-    void  addChild(Object o);
+    String getNamesHeader();
 }

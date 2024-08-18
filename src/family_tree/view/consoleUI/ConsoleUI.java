@@ -1,15 +1,13 @@
 package family_tree.view.consoleUI;
 
 import family_tree.model.help_classes.Gender;
-import family_tree.model.program_classes.Human;
 import family_tree.pesenter.Presenter;
 import family_tree.view.View;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 public class ConsoleUI implements View {
     private Scanner scanner;
@@ -114,8 +112,7 @@ public class ConsoleUI implements View {
             str = scanner.nextLine();
         }
         String[] str_parts = str.split(" ");
-        LocalDate date = LocalDate.of(Integer.parseInt(str_parts[2]), Integer.parseInt(str_parts[1]), Integer.parseInt(str_parts[0]));
-        return date;
+        return LocalDate.of(Integer.parseInt(str_parts[2]), Integer.parseInt(str_parts[1]), Integer.parseInt(str_parts[0]));
     }
 
     private boolean isCorrectDate(String str) {
@@ -137,7 +134,7 @@ public class ConsoleUI implements View {
             genderMenu();
             gender = scanner.nextLine();
         }
-        if (gender == "1") {
+        if (gender.equals("1")) {
             return Gender.Male;
         }
         else {
@@ -152,10 +149,7 @@ public class ConsoleUI implements View {
     }
 
     private boolean isCorrectGender(String gender) {
-        if (gender.equals("1") || gender.equals("2")) {
-            return true;
-        }
-        return false;
+        return gender.equals("1") || gender.equals("2");
     }
 
     private String getDocument() {
@@ -177,6 +171,30 @@ public class ConsoleUI implements View {
     @Override
     public void printAnswer(String text) {
         System.out.println(text);
+    }
+
+    @Override
+    public void printTable(ArrayList<String> data) {
+        List<List<String>> table = new ArrayList<>();
+
+        int[] columnWidths = null;
+        for (String row : data) {
+            List<String> columns = Arrays.asList(row.split("//"));
+            table.add(columns);
+            if (columnWidths == null) {
+                columnWidths = new int[columns.size()];
+            }
+            for (int i = 0; i < columns.size(); i++) {
+                columnWidths[i] = Math.max(columnWidths[i], columns.get(i).length()) + 2;
+            }
+        }
+
+        for (List<String> row : table) {
+            for (int i = 0; i < row.size(); i++) {
+                System.out.printf("%" + columnWidths[i] + "s |", row.get(i));
+            }
+            System.out.println();
+        }
     }
 
 

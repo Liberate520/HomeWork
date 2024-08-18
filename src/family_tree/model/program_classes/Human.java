@@ -14,6 +14,7 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     private String mother;
     private String father;
     private List<String> children;
+    private List<String> namesHeader;
 
     public Human(String document, String name, Gender gender, LocalDate birthDate) {
         this.document = document;
@@ -21,29 +22,32 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         this.gender = gender;
         this.birthDate = birthDate;
         this.children = new ArrayList<>();
+        this.namesHeader = Arrays.asList("Документ", "Имя", "Пол", "Дата рождения", "Дата смерти", "Мать", "Отец", "Дети");
+    }
+
+    public String getNamesHeader() {
+        return String.join("//", namesHeader);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new  StringBuilder();
-        Formatter formatter = new Formatter(sb);
-        formatter.format("|%13s | " +
-                "%13s |" +
-                "%13s |" +
-                "%14s |" +
-                "%13s |" +
-                "%13s |" +
-                "%13s |" +
-                "%50s |"
-                , getNull(document),
-                getNull(name),
-                getNull(getGenderText(gender)),
-                getNull(birthDate),
-                getNull(deathDate),
-                getNull(mother),
-                getNull(father),
-                getNull(children));
-
+        sb.append(getNull(document));
+        sb.append("//");
+        sb.append(getNull(name));
+        sb.append("//");
+        sb.append(getNull(getGenderText(gender)));
+        sb.append("//");
+        sb.append(getNull(birthDate));
+        sb.append("//");
+        sb.append(getNull(deathDate));
+        sb.append("//");
+        sb.append(getNull(mother));
+        sb.append("//");
+        sb.append(getNull(father));
+        sb.append("//");
+        sb.append(getNull(children));
+        sb.append("//");
         return sb.toString();
     }
 
@@ -155,4 +159,5 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     public int compareTo(Human o) {
         return name.compareTo(o.name);
     }
+
 }

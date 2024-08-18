@@ -7,7 +7,6 @@ import family_tree.model.saving_data.FileHandler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Formatter;
 
 public class HumanService {
     private FamilyTree<Human> my_family;
@@ -46,12 +45,23 @@ public class HumanService {
         my_family.sortByBirthDate();
     }
 
-    public void addFamilyLink(Human child, Human parent) {
-        parent.addChild(child);
+    public boolean addFamilyLink(String childDoc, String parentDoc) {
+        Human child  = findByDocument(childDoc);
+        Human parent  = findByDocument(parentDoc);
+        if (child == null || parent == null) {
+            return false;
+        }
+            parent.addChild(child);
+            return true;
     }
 
-    public void registerDeath(Human human, LocalDate date) {
+    public boolean registerDeath(String doc, LocalDate date) {
+        Human human = findByDocument(doc);
+        if (human == null) {
+            return false;
+        }
         human.setDeathDate(date);
+        return true;
     }
 
     public Human findByDocument(String doc) {
@@ -59,18 +69,11 @@ public class HumanService {
     }
 
     public ArrayList<Human> findByName(String name) {
-        ArrayList<Human> list = my_family.findByName(name);
-        return list;
+        return my_family.findByName(name);
     }
 
-    public String getTreeInfo() {
-        StringBuilder answer = new StringBuilder();
-        for (Object human : my_family)
-            if (human != null) {
-                answer.append(human);
-                answer.append("\n");
-            }
-        return answer.toString();
+    public ArrayList<Human> getTreeInfo() {
+        return my_family.getfTree();
     }
 
 
