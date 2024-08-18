@@ -1,6 +1,4 @@
-package family_tree.help_classes;
-
-import family_tree.program_classes.Human;
+package family_tree.model.help_classes;
 
 import java.util.ArrayList;
 import java.util.Iterator;

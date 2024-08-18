@@ -1,14 +1,12 @@
-package family_tree.program_classes;
+package family_tree.model.program_classes;
 
-import family_tree.help_classes.ComparatorByBirth;
-import family_tree.help_classes.FamilyTreeItem;
-import family_tree.help_classes.ItemIterator;
+import family_tree.model.help_classes.ComparatorByBirth;
+import family_tree.model.help_classes.ItemIterator;
 
 import java.io.Serializable;
 import java.util.*;
 
 public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, Iterable<E> {
-    private static final long serialVersionUID = 6529685098267757690L;
     private ArrayList<E> fTree;
 
     public FamilyTree() {
@@ -19,13 +17,15 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         return fTree;
     }
 
-    public void add(E element){
-            if (!fTree.equals(element)) {
+    public boolean add(E element){
+            if (!fTree.contains(element)) {
                 fTree.add(element);
+                return true;
             }
+            return false;
     }
 
-    public E findInfoByDocument(String doc) {
+    public E findByDocument(String doc) {
         E result = null;
         for (E element : fTree) {
             if (element.getDocument().equals(doc)) {
@@ -35,7 +35,7 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         return result;
     }
 
-    public ArrayList<E> findInfoByName(String name) {
+    public ArrayList<E> findByName(String name) {
         ArrayList<E> result = new ArrayList<>();
         for (E element : fTree) {
             if (element.getName().equals(name)) {
@@ -59,7 +59,7 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         Collections.sort(fTree);
     }
 
-    public void sortBybirthDate(){
+    public void sortByBirthDate(){
         Collections.sort(fTree, new ComparatorByBirth<>());
     }
 }

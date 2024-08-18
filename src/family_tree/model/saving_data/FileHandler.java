@@ -1,6 +1,6 @@
-package family_tree.saving_data;
+package family_tree.model.saving_data;
 
-import family_tree.program_classes.FamilyTree;
+import family_tree.model.program_classes.FamilyTree;
 
 import java.io.*;
 

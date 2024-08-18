@@ -1,7 +1,6 @@
-package family_tree.program_classes;
+package family_tree.model.program_classes;
 
-import family_tree.help_classes.FamilyTreeItem;
-import family_tree.help_classes.Gender;
+import family_tree.model.help_classes.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -53,12 +52,12 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(document, human.document) && Objects.equals(name, human.name) && gender == human.gender && Objects.equals(birthDate, human.birthDate);
+        return Objects.equals(document, human.document);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(document, name, gender, birthDate);
+        return Objects.hash(document);
     }
 
     public String getName() {
@@ -81,24 +80,34 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         return deathDate;
     }
 
-    public void setParents(Human... parents) {
-        if (parents.length > 2) {
-            return;
-        }
-        else {
-            for (Human parent : parents) {
-                if (parent.getGender() == Gender.Female) {
-                    this.mother = parent.getDocument();
-                } else {
-                    this.father = parent.getDocument();
+    public int setParents(Object... parents) {
+        int status = 0;
+        if (parents.length <= 2) {
+            for (Object o : parents) {
+                if (getClass() != o.getClass()) {
+                    continue;
                 }
-                parent.addChild(this);
+                else {
+                    Human parent = (Human) o;
+                    if (parent.getGender() == Gender.Female) {
+                        this.mother = parent.getDocument();
+                    } else {
+                        this.father = parent.getDocument();
+                    }
+                    parent.addChild(this);
+                    status++;
+                }
             }
         }
+        return status;
     }
 
-    public void  addChild(Human child) {
-        if (!this.children.equals(child.getDocument())) {
+    public void  addChild(Object o) {
+        if (getClass() != o.getClass()) {
+            return;
+        }
+        Human child = (Human) o;
+        if (!this.children.contains(child.getDocument())) {
             this.children.add(child.getDocument());
         }
         if (this.gender == Gender.Male) {
