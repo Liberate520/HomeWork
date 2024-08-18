@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyMember {
     private LocalDate birthDate, deathDate;
     private Gender gender;
     private List<Human> children;
@@ -79,6 +79,6 @@ public class Human implements Serializable {
     }
 
     public int compareTo(Human o) {
-        return name.compareTo(o.name);
+        return name.compareTo(o.getName());
     }
 }

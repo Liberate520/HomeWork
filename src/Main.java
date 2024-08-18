@@ -8,7 +8,7 @@ import View.FamilyTreeView;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Human> familyTree = new FamilyTree<>();
 
         Human igor = new Human("Igor", LocalDate.of(1973, 1, 1), null, Gender.Male);
         Human mary = new Human("Mary", LocalDate.of(1978, 5, 15), null, Gender.Female);
@@ -48,11 +48,10 @@ public class Main {
         familyTree.addPerson(vladimir);
         familyTree.addPerson(anastasia);
 
-        FamilyTreeView view = new FamilyTreeConsoleView();
-        FamilyTreePresenter presenter = new FamilyTreePresenter(familyTree, view);
+        FamilyTreeView<Human> view = new FamilyTreeConsoleView<>();
+        FamilyTreePresenter<Human> presenter = new FamilyTreePresenter<>(familyTree, view);
 
-        presenter.displayFamilyTree();
-        presenter.childrenRequest();
-        presenter.parentsRequest();
+        ((FamilyTreeConsoleView<Human>) view).setPresenter(presenter);
+        view.displayMenu();
     }
 }

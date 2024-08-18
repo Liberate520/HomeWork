@@ -3,11 +3,11 @@ package Model;
 import java.util.Iterator;
 import java.util.List;
 
-public class HumanIterator implements Iterator<Human> {
+public class HumanIterator<T extends Human> implements Iterator<T> {
     private int curIndex;
-    private List<Human> human;
+    private List<T> human;
 
-    public HumanIterator(List<Human> human) {
+    public HumanIterator(List<T> human) {
         this.human = human;
     }
 
@@ -15,7 +15,7 @@ public class HumanIterator implements Iterator<Human> {
         return human.size() > curIndex;
     }
 
-    public Human next() {
+    public T next() {
         return human.get(curIndex++);
     }
 
