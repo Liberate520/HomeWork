@@ -21,17 +21,17 @@ public class FileManager implements DataHandler<FamilyTree> {
     }
 
     @Override
-    public FamilyTree loadFamilyTree(String loadFilename) {
-        if (!loadFilename.endsWith(".ser")) {
-            loadFilename += ".ser";
+    public FamilyTree loadFamilyTree(String saveFilename) {
+        if (!saveFilename.endsWith(".ser")) {
+            saveFilename += ".ser";
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(loadFilename))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFilename))) {
             return (FamilyTree) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Ошибка при загрузке файла: " + e.getMessage());
+            return null;
         }
-        return null;
     }
 
 }

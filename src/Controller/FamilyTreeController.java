@@ -4,6 +4,7 @@ import Model.FamilyTree;
 import Model.Person;
 import Util.FileManager;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,115 +12,71 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FamilyTreeController {
-    private FamilyTree<Person> familyTree;
+    private FamilyTree familyTree;
     private FileManager fileManager;
-    private Scanner scanner;
 
     public FamilyTreeController(FamilyTree<Person> familyTree, FileManager fileManager) {
         this.familyTree = familyTree;
         this.fileManager = fileManager;
-        this.scanner = new Scanner(System.in);
     }
 
     public void start() {
+        Scanner scanner = new Scanner(System.in);
+
         while (true) {
-            System.out.println("Выберите действие:");
-            System.out.println("1. Вывести на экран всех членов семьи");
-            System.out.println("2. Добавить нового члена семьи и установить его родственные связи");
-            System.out.println("3. Найти члена семьи и посмотреть его родственные связи");
-            System.out.println("4. Сохранить семейное дерево в файл");
-            System.out.println("5. Загрузить семейное дерево из файла");
-            System.out.println("6. Закончить работу");
+            System.out.println("\nМеню:");
+            System.out.println("1. Добавить человека");
+            System.out.println("2. Установить родителей");
+            System.out.println("3. Показать всех людей");
+            System.out.println("4. Найти по имени");
+            System.out.println("5. Показать детей");
+            System.out.println("6. Показать родителей");
+            System.out.println("7. Сохранить дерево");
+            System.out.println("8. Загрузить дерево");
+            System.out.println("0. Выход");
+
+            System.out.print("Выберите опцию: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();  // Очистка буфера
+            scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
-                    displayAllMembers();
+                    addPerson(scanner);
                     break;
                 case 2:
-                    addNewMember();
+                    setParents(scanner);
                     break;
                 case 3:
-                    searchMember();
+                    showAllPeople(scanner);
                     break;
                 case 4:
-                    saveTreeToFile();
+                    findByName(scanner);
                     break;
                 case 5:
-                    loadTreeFromFile();
+                    showChildren(scanner);
                     break;
                 case 6:
-                    System.out.println("Программа завершена.");
-                    scanner.close();
+                    showParents(scanner);
+                    break;
+                case 7:
+                    saveTree(scanner);
+                    break;
+                case 8:
+                    loadTree(scanner);
+                    break;
+                case 0:
+                    System.out.println("Выход из программы...");
                     return;
                 default:
-                    System.out.println("Некорректный ввод. Попробуйте снова.");
-                    break;
+                    System.out.println("Неверный выбор, попробуйте снова.");
             }
         }
     }
 
-    private void loadTreeFromFile() {
-        System.out.print("Введите имя файла для загрузки: ");
-        String filename = scanner.nextLine();
-        FamilyTree<Person> loadedTree = fileManager.loadFamilyTree(filename);
-        if (loadedTree != null) {
-            familyTree = loadedTree;
-            System.out.println("Дерево успешно загружено.");
-        } else {
-            System.out.println("Не удалось загрузить дерево.");
-        }
-    }
-
-    private void saveTreeToFile() {
-        System.out.print("Введите имя файла для сохранения: ");
-        String filename = scanner.nextLine();
-        fileManager.saveFamilyTree(familyTree, filename);
-    }
-
-    private void searchMember() {
-        // Поиск члена семьи и просмотр его родственных связей
-        System.out.print("Введите ID, имя или фамилию для поиска: ");
-        String searchInput = scanner.nextLine();
-
-        if (searchInput.matches("\\d+")) { // Проверка, является ли ввод числом
-            int searchId = Integer.parseInt(searchInput);
-            Person personById = familyTree.getPerson(searchId);
-            if (personById != null) {
-                System.out.println(personById);
-                familyTree.getParents(searchId);
-                familyTree.getChildren(searchId);
-            } else {
-                System.out.println("Член семьи с таким ID не найден.");
-            }
-        } else {
-            // Если не число, ищем по имени и/или фамилии
-            String[] nameParts = searchInput.split(" ");
-            List<Person> matchedPeople;
-
-            if (nameParts.length == 2) {
-                // Если пользователь ввел и имя, и фамилию
-                matchedPeople = familyTree.findByName(nameParts[0], nameParts[1]);
-            } else {
-                // Если введено одно слово, ищем по имени и фамилии
-                matchedPeople = familyTree.findByName(searchInput, searchInput);
-            }
-
-            if (!matchedPeople.isEmpty()) {
-                System.out.println("Найдены следующие члены семьи:");
-                for (Person person : matchedPeople) {
-                    System.out.println(person);
-                }
-            } else {
-                System.out.println("Член семьи с таким именем или фамилией не найден.");
-            }
-        }
-    }
-
-    private void addNewMember() {
+    private void addPerson(Scanner scanner) {
         System.out.print("Введите имя: ");
         String firstName = scanner.nextLine();
+
         System.out.print("Введите фамилию: ");
         String lastName = scanner.nextLine();
 
@@ -131,7 +88,22 @@ public class FamilyTreeController {
             try {
                 birthDate = LocalDate.parse(birthDateStr, DateTimeFormatter.ISO_LOCAL_DATE);
             } catch (DateTimeParseException e) {
-                System.out.println("Неправильный формат даты. Пожалуйста, используйте формат ГГГ-ММ-ДД.");
+                System.out.println("Неправильный формат даты. Пожалуйста, используйте формат ГГГГ-ММ-ДД.");
+            }
+        }
+
+        // Ввод даты смерти с проверкой
+        LocalDate deathDate = null;
+        while (deathDate == null) {
+            System.out.print("Введите дату смерти (ГГГГ-ММ-ДД или оставьте пустым): ");
+            String deathDateStr = scanner.nextLine();
+            if (deathDateStr.isEmpty()) {
+                break; // Если строка пустая, не устанавливаем дату смерти
+            }
+            try {
+                deathDate = LocalDate.parse(deathDateStr, DateTimeFormatter.ISO_LOCAL_DATE);
+            } catch (DateTimeParseException e) {
+                System.out.println("Неправильный формат даты. Пожалуйста, используйте формат ГГГГ-ММ-ДД.");
             }
         }
 
@@ -146,25 +118,30 @@ public class FamilyTreeController {
             }
         }
 
-        Person newPerson = new Person(firstName, lastName, birthDate, gender);
-        familyTree.addPerson(newPerson);
-        System.out.println("Член семьи успешно добавлен!");
+        Person person = new Person(firstName, lastName, birthDate, deathDate, gender);
+        familyTree.addPerson(person);
 
-        // Установка родителей и детей
-        System.out.print("Хотите добавить родителей? (да/нет): ");
-        if (scanner.nextLine().equalsIgnoreCase("да")) {
-            System.out.print("Введите ID матери (или -1 если неизвестно): ");
-            int motherId = scanner.nextInt();
-            System.out.print("Введите ID отца (или -1 если неизвестно): ");
-            int fatherId = scanner.nextInt();
-            scanner.nextLine();  // Очистка буфера
-            familyTree.setParents(newPerson.getId(), motherId, fatherId);
-            System.out.println("Родители успешно добавлены!");
-        }
+        System.out.println("Член семьи успешно добавлен!");
     }
 
-    private void displayAllMembers() {
-        // Сортировка членов семьи перед выводом
+    private void setParents(Scanner scanner) {
+        System.out.print("Введите ID ребенка: ");
+        int childId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        System.out.print("Введите ID матери: ");
+        int motherId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        System.out.print("Введите ID отца: ");
+        int fatherId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        familyTree.setParents(childId, motherId, fatherId);
+    }
+
+    private void showAllPeople(Scanner scanner) {
+//      Сортировка членов семьи перед выводом
         System.out.println("Выберите по какому признаку вы хотите отсортировать:");
         System.out.println("1. По имени");
         System.out.println("2. По дате рождения");
@@ -189,9 +166,98 @@ public class FamilyTreeController {
             System.out.println("В дереве пока нет членов семьи.");
         } else {
             System.out.println("Члены семьи:");
-            for (Person person : people) {
+            for (Object person : people) {
                 System.out.println(person);
             }
+        }
+//        for (Object person : familyTree.getAllPeople()) {
+//            System.out.println(person);
+//        }
+    }
+
+    private void findByName(Scanner scanner) {
+        System.out.print("Введите ID, имя или фамилию для поиска: ");
+        String searchInput = scanner.nextLine();
+
+        if (searchInput.matches("\\d+")) { // Проверка, является ли ввод числом
+            int searchId = Integer.parseInt(searchInput);
+            Person personById = (Person) familyTree.getPerson(searchId);
+            if (personById != null) {
+                System.out.println(personById);
+                familyTree.getParents(searchId);
+                familyTree.getChildren(searchId);
+            } else {
+                System.out.println("Член семьи с таким ID не найден.");
+            }
+        } else {
+            // Если не число, ищем по имени и/или фамилии
+            String[] nameParts = searchInput.split(" ");
+            List matchedPeople;
+
+            if (nameParts.length == 2) {
+                // Если пользователь ввел и имя, и фамилию
+                matchedPeople = familyTree.findByName(nameParts[0], nameParts[1]);
+            } else {
+                // Если введено одно слово, ищем по имени и фамилии
+                matchedPeople = familyTree.findByName(searchInput, searchInput);
+            }
+
+            if (!matchedPeople.isEmpty()) {
+                System.out.println("Найдены следующие члены семьи:");
+                for (Object person : matchedPeople) {
+                    System.out.println(person);
+                }
+            } else {
+                System.out.println("Член семьи с таким именем или фамилией не найден.");
+            }
+        }
+    }
+
+    private void showChildren(Scanner scanner) {
+        System.out.print("Введите ID человека: ");
+        int personId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        familyTree.getChildren(personId);
+    }
+
+    private void showParents(Scanner scanner) {
+        System.out.print("Введите ID человека: ");
+        int personId = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        familyTree.getParents(personId);
+    }
+
+    private void saveTree(Scanner scanner) {
+        System.out.print("Введите имя файла для сохранения (без расширения): ");
+        String fileName = scanner.nextLine();
+
+        if (!fileName.endsWith(".dat")) {
+            fileName += ".dat";
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(familyTree);
+            System.out.println("Дерево семьи успешно сохранено в файл " + fileName);
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении файла: " + e.getMessage());
+        }
+    }
+
+    private void loadTree(Scanner scanner) {
+        System.out.print("Введите имя файла для загрузки (без расширения): ");
+        String fileName = scanner.nextLine();
+
+        if (!fileName.endsWith(".dat")) {
+            fileName += ".dat";
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            familyTree = (FamilyTree<Person>) ois.readObject();
+            System.out.println("Дерево семьи успешно загружено из файла " + fileName);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Ошибка при загрузке файла: " + e.getMessage());
         }
     }
 }

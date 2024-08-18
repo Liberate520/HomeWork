@@ -7,21 +7,21 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
-    private List<T> people;
+public class FamilyTree<T extends FamilyMember & Comparable<T>> implements Serializable, Iterable<T> {
+    private List<T> members;
 
     public FamilyTree() {
-        this.people = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
     // Метод для добавления нового члена семьи в дерево
     public void addPerson(T person) {
-        people.add(person);
+        members.add(person);
     }
 
     // Метод для получения человека по ID
     public T getPerson(int id) {
-        return people.stream()
+        return members.stream()
                 .filter(person -> person.getId() == id)
                 .findFirst()
                 .orElse(null);
@@ -29,13 +29,13 @@ public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
 
     // Метод для получения списка всех людей в дереве
     public List<T> getAllPeople() {
-        return new ArrayList<>(people);
+        return new ArrayList<>(members);
     }
 
     // Метод для поиска людей по имени и/или фамилии
     public List<T> findByName(String firstName, String lastName) {
         List<T> results = new ArrayList<>();
-        for (T person : people) {
+        for (T person : members) {
             if (person.getFirstName().equalsIgnoreCase(firstName) ||
                     person.getLastName().equalsIgnoreCase(lastName)) {
                 results.add(person);
@@ -67,7 +67,7 @@ public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
         T person = getPerson(personId);
         if (person != null) {
             System.out.println("Дети " + person.getFirstName() + " " + person.getLastName() + ":");
-            for (Person child : person.getChildren()) {
+            for (FamilyMember child : person.getChildren()) {
                 System.out.println(child);
             }
         }
@@ -92,17 +92,17 @@ public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
     }
     // Метод для сортировки по умолчанию (по имени)
     public void sort() {
-        Collections.sort(people);
+        Collections.sort(members);
     }
 
     // Метод для сортировки по дате рождения
     public void sortByBirthDate() {
-        people.sort(Comparator.comparing(T::getBirthDate));
+        members.sort(Comparator.comparing(T::getBirthDate));
     }
 
     // Реализация интерфейса Iterable
     @Override
     public Iterator<T> iterator() {
-        return people.iterator();
+        return members.iterator();
     }
 }

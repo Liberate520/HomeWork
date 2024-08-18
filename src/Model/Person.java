@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements Serializable, Comparable<Person> {
+public class Person implements FamilyMember, Serializable, Comparable<Person> {
     private static int idCounter = 0;
     private int id;
     private String firstName;
@@ -24,7 +24,7 @@ public class Person implements Serializable, Comparable<Person> {
 
     public Person(String firstName, String lastName, LocalDate birthDate, Gender gender) {
         this(firstName, lastName, birthDate, null, gender);
-        this.id = idCounter++;
+//        this.id = idCounter++;
     }
 
     public Person(String firstName, String lastName, LocalDate birthDate, LocalDate deathDate, Gender gender) {
@@ -36,73 +36,73 @@ public class Person implements Serializable, Comparable<Person> {
         this.gender = gender;
         this.children = new ArrayList<>();
     }
-
+    @Override
     public int getId() {
         return id;
     }
-
+    @Override
     public String getFirstName() {
         return firstName;
     }
-
+    @Override
     public String getLastName() {
         return lastName;
     }
-
+    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
-
+    @Override
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-
+    @Override
     public LocalDate getDeathDate() {
         return deathDate;
     }
-
+    @Override
     public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }
-
+    @Override
     public Gender getGender() {
         return gender;
     }
-
+    @Override
     public void setGender(Gender gender) {
         this.gender = gender;
     }
-
+    @Override
     public List<Person> getChildren() {
         return children;
     }
 
-    public void addChild(Person child) {
-        this.children.add(child);
+    public void addChild(FamilyMember child) {
+        this.children.add((Person) child);
     }
-
+    @Override
     public Person getMother() {
         return mother;
     }
-
-    public void setMother(Person mother) {
-        this.mother = mother;
+    @Override
+    public void setMother(FamilyMember mother) {
+        this.mother = (Person) mother;
     }
-
+    @Override
     public Person getFather() {
         return father;
     }
-
-    public void setFather(Person father) {
-        this.father = father;
+    @Override
+    public void setFather(FamilyMember father) {
+        this.father = (Person) father;
     }
 
     @Override
