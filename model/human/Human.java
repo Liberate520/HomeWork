@@ -56,11 +56,6 @@ public class Human implements Serializable, Comparable<Human>, LineAgeItem<Human
     }
 
     @Override
-    public String toString() {
-        return getDataToString();
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -91,7 +86,7 @@ public class Human implements Serializable, Comparable<Human>, LineAgeItem<Human
         return true;
     }
 
-    private String getDataToString() {
+    public String getDataToString() {
         StringBuilder res = new StringBuilder();
         res.append("Name: ");
         res.append(name);

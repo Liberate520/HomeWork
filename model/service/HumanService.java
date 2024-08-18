@@ -3,18 +3,18 @@ package com.oop.homeWorkOOP.model.service;
 import com.oop.homeWorkOOP.model.human.Gender;
 import com.oop.homeWorkOOP.model.human.Human;
 import com.oop.homeWorkOOP.model.lineAge.LineageTree;
-import com.oop.homeWorkOOP.model.lineAgeSave.LineAgeFile;
+import com.oop.homeWorkOOP.model.lineAgeSave.LineAgeSaveable;
 
 import java.util.List;
 
 public class HumanService {
     LineageTree<Human> lineAge;
-    LineAgeFile <Human> workWithFile;
+    LineAgeSaveable<Human> workWithFile;
 
-    public HumanService () {
+    public HumanService (LineAgeSaveable<Human> workWithFile) {
         this.lineAge = new LineageTree<>();
 //        this.lineAge = creatAndFillLineAge();
-        workWithFile = new LineAgeFile<>("lineage.db");
+        this.workWithFile = workWithFile;
     }
 
     public boolean addHuman (String name, int bDay, int bMonth, int bYear, Gender gender, Human father, Human mother) {
@@ -43,7 +43,7 @@ public class HumanService {
             sb.append("Номер записи: ");
             sb.append(i+1);
             sb.append("\n");
-            sb.append(lineAge.getHumanById(i).toString());
+            sb.append(lineAge.getHumanById(i).getDataToString());
             sb.append("\n");
         }
         return sb.toString();

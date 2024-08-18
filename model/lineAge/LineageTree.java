@@ -18,14 +18,34 @@ public class LineageTree<T extends LineAgeItem<T>> implements Serializable, Iter
 
     public boolean addHuman(T human) {
         if (lineAge.contains(human)) {
-            System.out.println("Такой человек уже есть в древе.");
             return false;
         }
+        addToExistingItem(human);
         searchAndAddChildren(human);
         searchAndAddParents(human);
         lineAge.add(human);
         return true;
     }
+
+    private void addToExistingItem (T item) {
+        for (T mem : item.getParents()) {
+            if (lineAge.contains(mem)) {
+                if (!mem.getChildren().contains(item)) {
+                    mem.addChild(item);
+                }
+            }
+        }
+        for (T mem : item.getChildren()) {
+            if (lineAge.contains(mem)) {
+                if (item.getGender() == Gender.Male && mem.getFather() == null) {
+                    mem.setFather(item);
+                } else if (item.getGender() == Gender.Female && mem.getMother() == null) {
+                    mem.setMother(item);
+                }
+            }
+        }
+    }
+
 
     private boolean searchAndAddParents(T human) {
         boolean fl = false;
@@ -33,10 +53,10 @@ public class LineageTree<T extends LineAgeItem<T>> implements Serializable, Iter
             if (!mem.getChildren().isEmpty()) {
                 for (T chil : mem.getChildren()) {
                     if (chil.equals(human)) {
-                        if (chil.getGender() == Gender.Male && human.getFather() == null) {
+                        if (mem.getGender() == Gender.Male && human.getFather() == null) {
                             human.setFather(mem);
                             fl = true;
-                        } else if (chil.getGender() == Gender.Female && human.getMother() == null) {
+                        } else if (mem.getGender() == Gender.Female && human.getMother() == null) {
                             human.setMother(mem);
                             fl = true;
                         }
@@ -91,7 +111,7 @@ public class LineageTree<T extends LineAgeItem<T>> implements Serializable, Iter
         while (true) {
             if (human.getFather() == null)
                 return resTree;
-            human = (T) human.getFather();
+            human = human.getFather();
             resTree.addHuman(human);
         }
     }

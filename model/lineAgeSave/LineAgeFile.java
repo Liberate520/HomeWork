@@ -31,9 +31,9 @@ public class LineAgeFile<T extends LineAgeItem<T>> implements LineAgeSaveable<T>
 
     @Override
     public LineageTree<T> loadLineAge() {
-        LineageTree<T> res;
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(this.file));) {
-            res = (LineageTree<T>) objectInputStream.readObject();
+            @SuppressWarnings("unchecked")
+            LineageTree<T> res = (LineageTree<T>) objectInputStream.readObject();
             return res;
         } catch (Exception e) {
             System.out.println("Что-то пошло не так, загрузить не удалось!");

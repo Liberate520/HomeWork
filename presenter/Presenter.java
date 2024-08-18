@@ -2,6 +2,7 @@ package com.oop.homeWorkOOP.presenter;
 
 import com.oop.homeWorkOOP.model.human.Gender;
 import com.oop.homeWorkOOP.model.human.Human;
+import com.oop.homeWorkOOP.model.lineAgeSave.LineAgeFile;
 import com.oop.homeWorkOOP.model.service.HumanService;
 import com.oop.homeWorkOOP.view.ConsoleUI;
 
@@ -13,7 +14,7 @@ public class Presenter {
 
     public Presenter(ConsoleUI cons) {
         this.cons = cons;
-        this.service = new HumanService();
+        this.service = new HumanService(new LineAgeFile<>("lineage.db"));
     }
 
     public void getTreeInfo() {
