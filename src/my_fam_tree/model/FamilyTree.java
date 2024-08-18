@@ -1,4 +1,4 @@
-package my_fam_tree.structure;
+package my_fam_tree.model;
 
 
 import java.io.Serializable;
@@ -29,16 +29,15 @@ public class FamilyTree <T extends InFamily<T>> implements Serializable, Iterabl
         }
         return null;
     }
+
     public void sortName() {
-        relatives.sort(Comparator.comparing(InFamily:: getName));
+        relatives.sort(Comparator.comparing(InFamily::getName));
     }
 
 
-
-    public void sortBirthDate(){
-        relatives.sort(Comparator.comparing(InFamily:: getDateOfBirth));
+    public void sortBirthDate() {
+        relatives.sort(Comparator.comparing(InFamily::getDateOfBirth));
     }
-
 
 
     @Override
@@ -51,8 +50,8 @@ public class FamilyTree <T extends InFamily<T>> implements Serializable, Iterabl
         StringBuilder sb = new StringBuilder();
         for (T relative : relatives) {
             sb.append(relative).append("\n");
+        }
+        return sb.toString();
     }
-    return sb.toString();
-}
 }
 

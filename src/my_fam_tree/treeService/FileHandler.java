@@ -1,7 +1,6 @@
 package my_fam_tree.treeService;
 
-import my_fam_tree.structure.FamilyTree;
-import my_fam_tree.structure.Human;
+import my_fam_tree.model.FamilyTree;
 
 import java.io.*;
 
@@ -20,5 +19,4 @@ public class FileHandler implements Writer {
             return(FamilyTree<?>) ois.readObject();
         }
     }
-
 }

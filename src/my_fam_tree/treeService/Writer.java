@@ -1,6 +1,6 @@
 package my_fam_tree.treeService;
 
-import my_fam_tree.structure.FamilyTree;
+import my_fam_tree.model.FamilyTree;
 
 import java.io.IOException;
 
