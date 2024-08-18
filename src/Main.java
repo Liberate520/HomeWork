@@ -9,10 +9,14 @@ public class Main {
     final static String file = "src/family_tree/writer/tree.txt";
 
     public static void main(String[] args) {
-//        FamilyTree tree = testTree();
+        FamilyTree tree = testTree();
 //        save(tree);
-        FamilyTree tree = load();
+//        FamilyTree tree = load();
 
+        System.out.println(tree);
+        tree.sortByAge();
+        System.out.println(tree);
+        tree.sortByName();
         System.out.println(tree);
     }
 
