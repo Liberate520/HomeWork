@@ -5,9 +5,43 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Human implements Serializable {
+//Serializable
+public class Human implements Comparable<Human> {
     private int id;
     private String name;
+    private int age;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    /**
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -112,6 +146,7 @@ public class Human implements Serializable {
                 '}';
     }
 
+     */
 
 }
 
