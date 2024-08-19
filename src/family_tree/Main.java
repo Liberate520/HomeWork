@@ -13,13 +13,14 @@ public class Main {
     final static String filePath = "src/family_tree/writer/tree.txt";
 
     public static void main(String[]args) {
-        FamilyTree tree = load();
+        //FamilyTree tree = load();
 
-        //FamilyTree tree = testTree();
+        FamilyTree tree = testTree();
 
-        //save(tree);
+        save(tree);
 
         System.out.println(tree);
+        
     }
 
     public static FamilyTree load() {
@@ -33,12 +34,12 @@ public class Main {
     }
 
 
-
-
     private static void write(FamilyTree familyTree) {
         FileHandler fileHandler = new FileHandler(filePath);
         fileHandler.save(filePath);
         }
+
+
 
 
     private static FamilyTree testTree() {
