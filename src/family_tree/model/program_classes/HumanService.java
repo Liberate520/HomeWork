@@ -1,13 +1,12 @@
-package family_tree.model.services;
+package family_tree.model.program_classes;
 
 import family_tree.model.help_classes.Gender;
-import family_tree.model.program_classes.FamilyTree;
-import family_tree.model.program_classes.Human;
+import family_tree.model.saving_data.FileHandler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class HumanService extends Service {
+public class HumanService {
     private FamilyTree<Human> my_family;
 
     public HumanService()  {
@@ -15,21 +14,24 @@ public class HumanService extends Service {
 
     }
 
-    public boolean saveData(String filePath) {
-        return saveDataFile(filePath, my_family);
+    public boolean saveDataFile(String filePath) {
+        try {
+            FileHandler<FamilyTree<Human>> fh = new FileHandler<>(filePath);
+            fh.writeData(my_family);
+            return true;
+        }
+        catch (RuntimeException e) {
+            return false;
+        }
     }
 
-    public boolean loadData(String filePath) throws ClassCastException {
+    public boolean loadDataFile(String filePath) {
         try {
-            FamilyTree<Human> tree = (FamilyTree<Human>) loadDataFile(filePath);
-            if (tree != null) {
-                my_family = tree;
-                return true;
-            }
-            return false;
-
+            FileHandler<FamilyTree<Human>> fh = new FileHandler<>(filePath);
+            my_family =  fh.readData();
+            return true;
         }
-        catch (ClassCastException e) {
+        catch (Exception e) {
             return false;
         }
     }

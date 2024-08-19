@@ -1,10 +1,8 @@
 package family_tree.model.saving_data;
 
-import family_tree.model.program_classes.FamilyTree;
-import family_tree.model.program_classes.FamilyTreeItem;
-import family_tree.model.program_classes.Human;
+import java.io.Serializable;
 
-public interface Writer {
-    void writeData(Object o);
-    Object readData();
+public interface Writer<T> {
+    void writeData(T data);
+    T readData();
 }

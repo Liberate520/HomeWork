@@ -1,8 +1,10 @@
 package family_tree.model.saving_data;
 
+import family_tree.model.program_classes.FamilyTreeItem;
+
 import java.io.*;
 
-public class FileHandler implements Writer {
+public class FileHandler<T extends Serializable> implements Writer<Object> {
     private String filePath;
 
     public FileHandler(String filePath) {
@@ -23,11 +25,11 @@ public class FileHandler implements Writer {
     }
 
     @Override
-    public Object readData() {
+    public T readData() {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(
                     new FileInputStream(filePath));
-            Object data = objectInputStream.readObject();
+            T data = (T) objectInputStream.readObject();
             objectInputStream.close();
             return data;
         } catch (IOException | ClassNotFoundException e) {

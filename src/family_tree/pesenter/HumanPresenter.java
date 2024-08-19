@@ -1,23 +1,24 @@
 package family_tree.pesenter;
 
 import family_tree.model.help_classes.Gender;
-import family_tree.model.services.HumanService;
+import family_tree.model.program_classes.Human;
+import family_tree.model.program_classes.HumanService;
 import family_tree.view.View;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Presenter {
+public class HumanPresenter {
     private View view;
     private HumanService service;
 
-    public Presenter(View view) {
+    public HumanPresenter(View view) {
         this.view = view;
         this.service = new HumanService();
     }
 
     public void saveDataFile(String filePath) {
-        if (service.saveData(filePath)) {
+        if (service.saveDataFile(filePath)) {
             view.printAnswer("Данные сохранены");
         }
         else {
@@ -26,7 +27,7 @@ public class Presenter {
     }
 
     public void loadDataFile(String filePath) {
-        if (service.loadData(filePath)) {
+        if (service.loadDataFile(filePath)) {
             view.printAnswer("Данные загружены");
         }
         else {
@@ -72,10 +73,11 @@ public class Presenter {
     }
 
     public void findByDocument(String doc) {
-        if (service.findByDocument(doc) != null) {
+        Human human = service.findByDocument(doc);
+        if (human != null) {
             ArrayList<String> answer = new ArrayList<>();
-            answer.add(service.findByDocument(doc).getNamesHeader());
-            answer.add(service.findByDocument(doc).toString());
+            answer.add(human.getNamesHeader());
+            answer.add(human.toString());
             view.printTable(answer);
         }
         else {
@@ -84,13 +86,14 @@ public class Presenter {
     }
 
     public void findByName(String name) {
-        if (service.findByName(name).isEmpty()) {
+        ArrayList<Human> humans = service.findByName(name);
+        if (humans.isEmpty()) {
             view.printAnswer("Данные не найдены");
         }
         else {
             ArrayList<String> answer = new ArrayList<>();
-            answer.add(service.findByName(name).get(0).getNamesHeader());
-            for (Object o : service.findByName(name)) {
+            answer.add(humans.getFirst().getNamesHeader());
+            for (Object o : humans) {
                 answer.add(o.toString());
             }
             view.printTable(answer);
@@ -98,13 +101,14 @@ public class Presenter {
     }
 
     public void getTreeInfo() {
-        if ( service.getTreeInfo().isEmpty()) {
+        ArrayList<Human> humans = service.getTreeInfo();
+        if ( humans.isEmpty()) {
             view.printAnswer("Данные не найдены");
         }
         else {
             ArrayList<String> answer = new ArrayList<>();
-            answer.add(service.getTreeInfo().get(0).getNamesHeader());
-            for (Object o :  service.getTreeInfo()) {
+            answer.add(humans.getFirst().getNamesHeader());
+            for (Object o :  humans) {
                 answer.add(o.toString());
             }
             view.printTable(answer);

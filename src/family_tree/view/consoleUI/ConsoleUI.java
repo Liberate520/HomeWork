@@ -1,7 +1,7 @@
 package family_tree.view.consoleUI;
 
 import family_tree.model.help_classes.Gender;
-import family_tree.pesenter.Presenter;
+import family_tree.pesenter.HumanPresenter;
 import family_tree.view.View;
 
 import java.text.ParseException;
@@ -12,14 +12,14 @@ import java.util.*;
 public class ConsoleUI implements View {
     private Scanner scanner;
     private boolean work;
-    private Presenter presenter;
+    private HumanPresenter humanPresenter;
     private MainMenu menu;
     String filePath = "src/family_tree/model/saving_data/data.out";
 
     public ConsoleUI() {
         this.scanner = new Scanner(System.in);
         this.work = true;
-        presenter = new Presenter(this);
+        humanPresenter = new HumanPresenter(this);
         menu = new MainMenu(this);
     }
 
@@ -34,7 +34,7 @@ public class ConsoleUI implements View {
     }
 
     private void loadData() {
-        presenter.loadDataFile(filePath);
+        humanPresenter.loadDataFile(filePath);
     }
 
     private void execute() {
@@ -52,31 +52,31 @@ public class ConsoleUI implements View {
     }
 
     public void saveDataFile() {
-        presenter.saveDataFile(filePath);
+        humanPresenter.saveDataFile(filePath);
     }
 
     public void sortByName() {
-        presenter.sortByName();
+        humanPresenter.sortByName();
     }
 
     public void sortByBirthDate() {
-        presenter.sortByBirthDate();
+        humanPresenter.sortByBirthDate();
     }
 
     public void findByDocument() {
         String doc = getDocument();
-        presenter.findByDocument(doc);
+        humanPresenter.findByDocument(doc);
     }
 
     public void findByName() {
         String name = getName();
-        presenter.findByName(name);
+        humanPresenter.findByName(name);
     }
 
     public void registerDeath() {
         String doc = getDocument();
         LocalDate date = getDate();
-        presenter.registerDeath(doc, date);
+        humanPresenter.registerDeath(doc, date);
     }
 
     public void addFamilyLink() {
@@ -84,7 +84,7 @@ public class ConsoleUI implements View {
         String childDoc = getDocument();
         System.out.println("Родитель: ");
         String parentDoc = getDocument();
-        presenter.addFamilyLink(childDoc, parentDoc);
+        humanPresenter.addFamilyLink(childDoc, parentDoc);
     }
 
     public void addHuman() {
@@ -92,7 +92,7 @@ public class ConsoleUI implements View {
         String name = getName();
         Gender gender = getGender();
         LocalDate date = getDate();
-        presenter.addHuman(doc,name,gender,date);
+        humanPresenter.addHuman(doc,name,gender,date);
     }
 
     private LocalDate getDate() {
@@ -155,7 +155,7 @@ public class ConsoleUI implements View {
     }
 
     public void finish() {
-        presenter.saveDataFile(filePath);
+        humanPresenter.saveDataFile(filePath);
         work = false;
         System.out.println("Работа завершена.");
     }
@@ -181,6 +181,11 @@ public class ConsoleUI implements View {
             }
         }
 
+        System.out.println(getTableString(table, columnWidths));
+
+    }
+
+    private String  getTableString(List<List<String>> table, int[] columnWidths) {
         StringBuilder out = new StringBuilder();
         int table_width=0;
         for (List<String> row : table) {
@@ -188,7 +193,7 @@ public class ConsoleUI implements View {
             for (int i = 0; i < row.size(); i++) {
                 out.append(String.format("%" + columnWidths[i] + "s |", row.get(i)));
             }
-            table_width=out.length()/table.size();
+            table_width=out.length()/ table.size();
             out.append("\n");
         }
 
@@ -199,13 +204,12 @@ public class ConsoleUI implements View {
         }
         out.insert(0, header_line + "\n");
         out.insert(table_width + header_line.length()+2, header_line + "\n");
-        out.append(header_line + "\n");
-        System.out.println(out.toString());
-
+        out.append(header_line).append("\n");
+        return out.toString();
     }
 
 
     public void ShowTree() {
-        presenter.getTreeInfo();
+        humanPresenter.getTreeInfo();
     }
 }
