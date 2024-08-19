@@ -1,0 +1,132 @@
+public class Person {
+    private String name;
+    private String dateOfBirth;
+    private List<Person> children;
+    public Person(String name, String dateOfBirth) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.children = new ArrayList<>();
+    }
+    public void addChild(Person child) {
+        children.add(child);
+    }
+    public List<Person> getChildren() {
+        return children;
+    }
+}
+public class FamilyTree {
+    private List<Person> people;
+    public FamilyTree() {
+        this.people = new ArrayList<>();
+    }
+    public void addPerson(Person person) {
+        people.add(person);
+    }
+    public List<Person> getAllChildren(String personName) {
+        for (Person person : people) {
+            if (person.getName().equals(personName)) {
+                return person.getChildren();
+            }
+        }
+        return new ArrayList<>();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Person father = new Person("Father", "01/01/1980");
+        Person mother = new Person("Mother", "01/01/1982");
+        Person child1 = new Person("Child1", "01/01/2000");
+        Person child2 = new Person("Child2", "01/01/2005");
+
+        father.addChild(child1);
+        father.addChild(child2);
+        mother.addChild(child1);
+        FamilyTree familyTree = new FamilyTree();
+        familyTree.addPerson(father);
+        familyTree.addPerson(mother);
+        familyTree.addPerson(child1);
+        familyTree.addPerson(child2);
+        List<Person> children = familyTree.getAllChildren("Father");
+        for (Person child : children) {
+            System.out.println(child.getName());
+
+        }
+
+    }
+    public class FileHandler {
+           public void writeObjectToFile(Object obj, String fileName) {
+             try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(obj);
+            System.out.println("Object has been written to the file");
+            } catch (IOException e) {
+            System.out.println("Error writing object to file: " + e.getMessage());
+            }
+    }
+    public Object readObjectFromFile(String fileName) {
+        try (FileInputStream fileIn = new FileInputStream(fileName);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            Object obj = objectIn.readObject();
+            System.out.println("Object has been read from the file");
+            return obj;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error reading object from file: " + e.getMessage());
+            return null;
+            }
+        }
+    }
+}
+public class Node {
+    private Person person;
+    private List<Node> children;
+    public Node(Person person) {
+        this.person = person;
+        this.children = new ArrayList<>();
+
+    }
+}
+public class Tree implements Iterable<Person> {
+    private Node root;
+    public Tree(Node root) {
+        this.root = root;
+    }
+    @Override
+    public Iterator<Person> iterator() {
+        return new TreeIterator(root);
+    }
+    private class TreeIterator implements Iterator<Person> {
+        private Queue<Node> queue;
+        public TreeIterator(Node root) {
+            queue = new LinkedList<>();
+            queue.add(root);
+        }
+        @Override
+        public boolean hasNext() {
+            return !queue.isEmpty();
+        }
+        @Override
+        public Person next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Node current = queue.remove();
+            for (Node child : current.getChildren()) {
+                queue.add(child);
+            }
+            return current.getPerson();
+        }
+    }
+}
+public void sortByFirstName() {
+    List<Person> sortedList = StreamSupport.stream(this.spliterator(), false)
+            .sorted(Comparator.comparing(Person::getFirstName))
+            .collect(Collectors.toList());
+    sortedList.forEach(person -> System.out.println(person.getFirstName()));
+
+}
+
+
+
+
+
+
