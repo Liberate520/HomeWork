@@ -20,7 +20,7 @@ public class Main {
         while (true) {
             System.out.println("Выберите команду: ");
             System.out.println("1 - Добавить нового члена");
-            System.out.println("2 - Найти члена по имени");
+            System.out.println("2 - Найти по имени");
             System.out.println("3 - Добавить родительско-детскую связь");
             System.out.println("4 - Вывести всех членов, отсортированных по имени");
             System.out.println("5 - Вывести всех членов, отсортированных по дате рождения");
@@ -32,13 +32,57 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    // Логика для добавления нового члена
+                    System.out.println("Введите фамилию:");
+                    String familyName = scanner.nextLine();
+                    System.out.println("Введите имя:");
+                    String firstName = scanner.nextLine();
+                    System.out.println("Введите отчество:");
+                    String fatherName = scanner.nextLine();
+                    System.out.println("Введите пол (MALE/FEMALE):");
+                    String genderInput = scanner.nextLine();
+                    Person.Gender gender = Person.Gender.valueOf(genderInput.toUpperCase());
+                    System.out.println("Введите дату рождения (YYYY-MM-DD):");
+                    LocalDate dateOfBirth = LocalDate.parse(scanner.nextLine());
+
+                    Person newPerson = new Person(familyName, firstName, fatherName, gender, dateOfBirth);
+                    familyTree.addMember(newPerson);
+                    System.out.println("Член семьи добавлен!");
                     break;
                 case 2:
-                    // Логика для поиска члена по имени
+                    System.out.println("Введите фамилию:");
+                    familyName = scanner.nextLine();
+                    System.out.println("Введите имя:");
+                    firstName = scanner.nextLine();
+                    System.out.println("Введите отчество:");
+                    fatherName = scanner.nextLine();
+
+                    Person foundPerson = familyTree.findMemberByFullName(familyName, firstName, fatherName);
+                    if (foundPerson != null) {
+                        System.out.println("Найден член семьи: " + foundPerson);
+                    } else {
+                        System.out.println("Член семьи не найден.");
+                    }
                     break;
                 case 3:
-                    // Логика для добавления родительско-детской связи
+                    System.out.println("Введите данные родителя:");
+                    System.out.println("Фамилия:");
+                    String parentFamilyName = scanner.nextLine();
+                    System.out.println("Имя:");
+                    String parentFirstName = scanner.nextLine();
+                    System.out.println("Отчество:");
+                    String parentFatherName = scanner.nextLine();
+
+                    System.out.println("Введите данные ребенка:");
+                    System.out.println("Фамилия:");
+                    String childFamilyName = scanner.nextLine();
+                    System.out.println("Имя:");
+                    String childFirstName = scanner.nextLine();
+                    System.out.println("Отчество:");
+                    String childFatherName = scanner.nextLine();
+
+                    familyTree.addParentChildRelationship(parentFamilyName, parentFirstName, parentFatherName,
+                            childFamilyName, childFirstName, childFatherName);
+                    System.out.println("Родительско-детская связь добавлена!");
                     break;
                 case 4:
                     List<Person> sortedByName = familyTree.getSortedByName();
