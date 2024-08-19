@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 public class FamilyTree<T extends Identifiable> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
     private Map<FullName, T> members;
@@ -28,10 +31,19 @@ public class FamilyTree<T extends Identifiable> implements Serializable, Iterabl
 
     public List<T> findChildrenByFullName(String familyName, String firstName, String fatherName) {
         T member = findMemberByFullName(familyName, firstName, fatherName);
-        if (member != null) {
-            return member.getChildren();
+
+        if (member == null) {
+            return Collections.emptyList();
         }
-        return new ArrayList<>();
+
+        // Предполагается, что T имеет метод getChildren(), который возвращает List<? extends Identifiable>
+        List<? extends Identifiable> children = member.getChildren();
+
+        // Фильтруем и приводим только те элементы, которые действительно являются экземплярами T
+        return children.stream()
+                .filter(child -> child.getClass().equals(member.getClass())) // Если T — это член семьи
+                .map(child -> (T) child)
+                .collect(Collectors.toList());
     }
 
     public void addParentChildRelationship(String parentFamilyName, String parentFirstName, String parentFatherName,
