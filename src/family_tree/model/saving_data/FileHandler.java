@@ -1,7 +1,5 @@
 package family_tree.model.saving_data;
 
-import family_tree.model.program_classes.FamilyTree;
-
 import java.io.*;
 
 public class FileHandler implements Writer {
@@ -11,12 +9,8 @@ public class FileHandler implements Writer {
         this.filePath = filePath;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
     @Override
-    public void writeData(FamilyTree fTree)  {
+    public void writeData(Object fTree)  {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(
                     new FileOutputStream(filePath));
@@ -29,11 +23,11 @@ public class FileHandler implements Writer {
     }
 
     @Override
-    public FamilyTree readData() {
+    public Object readData() {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(
                     new FileInputStream(filePath));
-            FamilyTree data = (FamilyTree) objectInputStream.readObject();
+            Object data = objectInputStream.readObject();
             objectInputStream.close();
             return data;
         } catch (IOException | ClassNotFoundException e) {

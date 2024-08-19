@@ -34,16 +34,8 @@ public class ConsoleUI implements View {
     }
 
     private void loadData() {
-        try {
-            presenter.loadDataFile(filePath);
-            System.out.println("Данные загружены");
-        }
-        catch (Exception e) {
-            System.out.println("Не удалось загрузить данные");
-        }
-
+        presenter.loadDataFile(filePath);
     }
-
 
     private void execute() {
         String line = scanner.nextLine();
@@ -189,12 +181,27 @@ public class ConsoleUI implements View {
             }
         }
 
+        StringBuilder out = new StringBuilder();
+        int table_width=0;
         for (List<String> row : table) {
+            out.append("|");
             for (int i = 0; i < row.size(); i++) {
-                System.out.printf("%" + columnWidths[i] + "s |", row.get(i));
+                out.append(String.format("%" + columnWidths[i] + "s |", row.get(i)));
             }
-            System.out.println();
+            table_width=out.length()/table.size();
+            out.append("\n");
         }
+
+        String header_line = "";
+        for (int i = 0; i < table_width; i++) {
+            header_line += "-";
+
+        }
+        out.insert(0, header_line + "\n");
+        out.insert(table_width + header_line.length()+2, header_line + "\n");
+        out.append(header_line + "\n");
+        System.out.println(out.toString());
+
     }
 
 

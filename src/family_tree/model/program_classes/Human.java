@@ -2,11 +2,10 @@ package family_tree.model.program_classes;
 
 import family_tree.model.help_classes.Gender;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Human implements Serializable, FamilyTreeItem<Human> {
+public class Human implements FamilyTreeItem<Human> {
     private String document;
     private String name;
     private Gender gender;

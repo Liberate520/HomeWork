@@ -17,7 +17,7 @@ public class Presenter {
     }
 
     public void saveDataFile(String filePath) {
-        if (service.saveDataFile(filePath)) {
+        if (service.saveData(filePath)) {
             view.printAnswer("Данные сохранены");
         }
         else {
@@ -26,7 +26,12 @@ public class Presenter {
     }
 
     public void loadDataFile(String filePath) {
-        service.loadDataFile(filePath);
+        if (service.loadData(filePath)) {
+            view.printAnswer("Данные загружены");
+        }
+        else {
+            view.printAnswer("Не удалось загрузить данные");
+        }
     }
 
     public void addHuman(String doc, String name, Gender gender, LocalDate birth) {
