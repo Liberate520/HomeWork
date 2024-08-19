@@ -1,4 +1,6 @@
-package ru.gb.FamilyTree;
+package ru.gb.family_tree.family_tree;
+
+import ru.gb.family_tree.human.Human;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -39,7 +41,6 @@ public class FamilyTree implements Serializable {
     }
 
     public FamilyTree(List<Human> humans) {
-
         this.humans = humans;
     }
 }

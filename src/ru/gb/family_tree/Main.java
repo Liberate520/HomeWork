@@ -1,4 +1,9 @@
-package ru.gb.FamilyTree;
+package ru.gb.family_tree;
+
+import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Gender;
+import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.writer.FileHandler;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -7,42 +12,35 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException  {
+    final static String filePath = "src/ru/gb/family_tree/writer/tree.txt";
+    public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
-        FamilyTreeSerializer serializer = new FamilyTreeSerializer();
-        
-        if (!Files.isRegularFile(Path.of("familyTree.out"))) {
+
+        if (!Files.isRegularFile(Path.of(filePath))) {
             getDefault(familyTree);
             System.out.println("Created for the first time: " + "\n");
         } else {
-            familyTree = serializer.deserialize();
+            familyTree = load();
             System.out.println("Restored: " + "\n");
         }
         System.out.println(familyTree);
 
-        serializer.serializer(familyTree);
-
-        /** writeToFile(familyTree); */
-
+        save(familyTree);
 
     }
-    /**
-    private static void writeToFile(FamilyTree familyTree) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-                 new FileOutputStream("familyTree.out"));
-        objectOutputStream.writeObject(familyTree);
-        objectOutputStream.close();
+
+    private static FamilyTree load(){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        return (FamilyTree) fileHandler.read();
     }
 
-    private static FamilyTree readFromFile() throws IOException, ClassNotFoundException {
-        FamilyTree familyTree;
-        ObjectInputStream objectInputStream = new ObjectInputStream(
-                new FileInputStream("familyTree.out"));
-        familyTree = (FamilyTree) objectInputStream.readObject();
-        objectInputStream.close();
-        return familyTree;
+    private static void save(FamilyTree familyTree){
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.setPath(filePath);
+        fileHandler.save(familyTree);
     }
-*/
+
     private static void getDefault(FamilyTree familyTree) {
         Human human1 = new Human(1, "Александр", Gender.Male, LocalDate.of(1960, 10, 10));
         Human human2 = new Human(2, "Екатерина", Gender.Female, LocalDate.of(1965, 05, 05));
