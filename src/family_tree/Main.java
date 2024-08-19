@@ -23,25 +23,23 @@ public class Main {
     }
 
     public static FamilyTree load() {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
+        FileHandler fileHandler = new FileHandler(filePath);
         return (FamilyTree) fileHandler.read();
     }
 
     private static void save(FamilyTree familyTree) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
+        FileHandler fileHandler = new FileHandler(filePath);
         fileHandler.save(familyTree);
     }
 
 
 
 
-    private static void write(FamilyTree familitree) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.setPath(filePath);
+    private static void write(FamilyTree familyTree) {
+        FileHandler fileHandler = new FileHandler(filePath);
         fileHandler.save(filePath);
         }
+
 
     private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
