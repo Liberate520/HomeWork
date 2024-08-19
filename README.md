@@ -93,7 +93,7 @@
 ## Пакетная структура проекта
 
 *   `FamilyTree.model`: Содержит классы `FamilyTree` и `Human`.
-*   `FamilyTree.utility`: Содержит классы `FileHandler` и `Writer`.
+*   `FamilyTree.model.utility`: Содержит классы `FileHandler` и `Writer`.
 *   `FamilyTree.iterator`: Содержит класс `FamilyTreeIterator`.
-*   `FamilyTree.human`: Содержит перечисляемый тип `Gender`.
+*   `FamilyTree.model.human`: Содержит перечисляемый тип `Gender`.
 *   `FamilyTree`: Содержит класс `Main`.

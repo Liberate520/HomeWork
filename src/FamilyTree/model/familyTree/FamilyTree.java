@@ -1,14 +1,9 @@
-package FamilyTree.model;
+package FamilyTree.model.familyTree;
 
-import FamilyTree.iterator.FamilyTreeIterator;
-import FamilyTree.model.Comparators.*;
+import FamilyTree.model.human.Comparators.*;
+import FamilyTree.model.human.Human;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -23,8 +18,10 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
     }
 
     @Override
-//    public Iterator<T> iterator() {return members.iterator();}
-    public Iterator<T> iterator() {return new FamilyTreeIterator<>(members);}
+    public Iterator<T> iterator() {return members.iterator();}
+//    public Iterator<T> iterator() {
+//        return new FamilyTreeIterator<>(members);
+//    }
 
     public void addChild(T child) {
         if (child.getFather() != null && members.contains(child.getFather())) {
@@ -117,27 +114,101 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
         if (member == null) {
             return false;
         }
+
         for (T existingMember : members) {
-            if (existingMember.equals(member)) {
-                member = existingMember;
-                break;
+            if (existingMember.getName().equals(member.getName()) &&
+                    existingMember.getBirthDate().equals(member.getBirthDate())) {
+                System.out.println("Член семьи с таким именем уже существует: " + member.getName());
+                return false;
             }
         }
-        if (!members.contains(member)) {
-            members.add(member);
-            member.setId(id++);
-            if (member.getFather() != null && members.contains(member.getFather())) {
-                member.getFather().addChild(member);
-            }
-            if (member.getMother() != null && members.contains(member.getMother())) {
-                member.getMother().addChild(member);
-            }
-            // Обновим семейное дерево с учетом новых отношений члена семьи
-            updateFamilyTree(member);
-            return true;
+
+        member.setId(id++);
+        members.add(member);
+        System.out.println("Добавлен новый член семьи с id: " + member.getId() + ", имя: " + member.getName());
+
+        if (member.getFather() != null && members.contains(member.getFather())) {
+            member.getFather().addChild(member);
         }
+        if (member.getMother() != null && members.contains(member.getMother())) {
+            member.getMother().addChild(member);
+        }
+        updateFamilyTree(member);
         return true;
     }
+
+//    public boolean addMember(T member) {
+//        if (member == null) {
+//            return false;
+//        }
+//
+//        // Проверка, есть ли уже такой член в дереве
+//        T existingMember = null;
+//        for (T existing : members) {
+//            if (existing.equals(member)) {
+//                existingMember = existing;
+//                break;
+//            }
+//        }
+//
+//        if (existingMember == null) {
+//            // Новый член семьи
+//            members.add(member);
+//            member.setId(id++);
+//
+//            // Привязываем к отцу и матери, если они есть в дереве
+//            if (member.getFather() != null && members.contains(member.getFather())) {
+//                member.getFather().addChild(member);
+//            }
+//            if (member.getMother() != null && members.contains(member.getMother())) {
+//                member.getMother().addChild(member);
+//            }
+//
+//            // Обновляем семейное дерево с учетом новых отношений
+//            updateFamilyTree(member);
+//            return true;
+//        }
+//
+//        // Если член уже существует в дереве, ничего не делаем
+//        return false;
+//    }
+//
+////    public boolean addMember(T member) {
+////        System.out.println("___ЧЛЕН - " + member);
+////        System.out.println("___id before - " + id);
+////        if (member == null) {
+////            return false;
+////        }
+////        for (T existingMember : members) {
+////            if (existingMember.equals(member)) {
+////                member = existingMember;
+////                break;
+////            }
+////        }
+////        System.out.println("__ЧЛЕН - " + member);
+////        System.out.println("__id before - " + id);
+//////        if (!members.contains(member)) {
+////            System.out.println("ЧЛЕН - " + member);
+////            members.add(member);
+////            System.out.println("id before - " + id);
+////            member.setId(id++);
+////            System.out.println("id after - " + id);
+////            if (member.getFather() != null && members.contains(member.getFather())) {
+////                member.getFather().addChild(member);
+////            }
+////            if (member.getMother() != null && members.contains(member.getMother())) {
+////                member.getMother().addChild(member);
+////            }
+////            // Обновим семейное дерево с учетом новых отношений члена семьи
+////            updateFamilyTree(member);
+////
+////            System.out.println("_ЧЛЕН - " + member);
+////            System.out.println("_id before - " + id);
+////
+//////            return true;
+//////        }
+////        return true;
+////    }
 
     private void updateFamilyTree(T member) {
         List<T> children = new ArrayList<>();
@@ -150,15 +221,6 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
         for (T child : children) {
             addChild(child);
         }
-    }
-
-    public T getMember(long id) {
-        for (T member : members) {
-            if (member.getId() == id) {
-                return member;
-            }
-        }
-        return null;
     }
 
     public List<T> getMembers() {
@@ -211,6 +273,10 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
         return members.size();
     }
 
+//    public boolean removeMember(T member) {
+//        return members.remove(member);
+//    }
+
     public boolean removeMember(T member) {
         if (members.contains(member)) {
             members.remove(member);
@@ -233,11 +299,13 @@ public class FamilyTree<T extends ItemFamilyTree<T>> implements Iterable<T>, Ser
         members.clear();
     }
 
-    public void printFamilyTree() {
-        System.out.println("Семейное дерево:");
+    public StringBuilder printFamilyTree() {
+        StringBuilder info = new StringBuilder();
+        info.append("Семейное дерево:\n");
         for (T member : members) {
-            System.out.println(member.getInfo());
+            info.append(member.getInfo()).append("\n");  // Добавляем информацию о члене дерева в StringBuilder
         }
+        return info;
     }
 
     public void printChildren(T person) {

@@ -1,6 +1,6 @@
-package FamilyTree.utility;
+package FamilyTree.model.utility;
 
-import FamilyTree.model.FamilyTree;
+import FamilyTree.model.familyTree.FamilyTree;
 
 import java.io.Serializable;
 

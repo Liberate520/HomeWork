@@ -1,12 +1,16 @@
-package FamilyTree.model;
+package FamilyTree.model.human;
+
+import FamilyTree.model.familyTree.Gender;
+import FamilyTree.model.familyTree.ItemFamilyTree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Human implements ItemFamilyTree<Human> {
+public class Human implements ItemFamilyTree<Human>, Serializable {
     private long humanId;
     private String name;
     private LocalDate birthDate;
@@ -23,7 +27,8 @@ public class Human implements ItemFamilyTree<Human> {
     private List<Human> grandchildren = new ArrayList<>();
     private Human spouse;
 
-    public Human(String name,
+    public Human(long humanId,
+                 String name,
                  LocalDate birthDate,
                  LocalDate deathDate,
                  Gender gender,
@@ -46,12 +51,12 @@ public class Human implements ItemFamilyTree<Human> {
         this.children = new ArrayList<>();
     }
 
-    public Human(String name, LocalDate birthDate, Gender gender) {
-        this(name, birthDate, null, gender, null, null, null, null, null);
+    public Human(long humanId, String name, LocalDate birthDate, Gender gender) {
+        this(humanId, name, birthDate, null, gender, null, null, null, null, null);
     }
 
-    public Human(String name, LocalDate birthDate, Gender gender, Human father, Human mother) {
-        this(name, birthDate, null, gender, null, null, null, father, mother);
+    public Human(long humanId, String name, LocalDate birthDate, Gender gender, Human father, Human mother) {
+        this(humanId, name, birthDate, null, gender, null, null, null, father, mother);
     }
 
 //    private static final long serialVersionUID = 1L;
@@ -129,6 +134,10 @@ public class Human implements ItemFamilyTree<Human> {
         grandchildren.add(grandchild);
     }
 
+    public void removeChild(Human child) {
+        children.remove(child);
+    }
+
     @Override
     public int getAge() {
         if (deathDate == null) {
@@ -170,7 +179,6 @@ public class Human implements ItemFamilyTree<Human> {
         } else {
             info.append(", дети: отсутствуют");
         }
-
         return info.toString();
     }
 
@@ -307,22 +315,39 @@ public class Human implements ItemFamilyTree<Human> {
         return res.toString();
     }
 
+
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Human)) {
-            return false;
-        }
-        Human other = (Human) obj;
-        return this.humanId == other.humanId;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Human human = (Human) obj;
+        return Objects.equals(name, human.name) &&
+                Objects.equals(birthDate, human.birthDate) &&
+                gender == human.gender;
     }
 
     @Override
     public int hashCode() {
-        return Long.hashCode(humanId);
+        return Objects.hash(name, birthDate, gender);
     }
+
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        if (!(obj instanceof Human)) {
+//            return false;
+//        }
+//        Human other = (Human) obj;
+//        return this.humanId == other.humanId;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Long.hashCode(humanId);
+//    }
 
     // Setters
 
