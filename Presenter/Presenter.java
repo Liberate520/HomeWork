@@ -43,11 +43,11 @@ public class Presenter {
         view.printAnswer(info);
     }
 
-    public void saveToFile() {
-        service.saveToFile();
+    public void saveToFile(String fileName) {
+        service.saveToFile(fileName);
     }
 
-    public void loadFromFile() {
-        service.loadFromFile();
+    public void loadFromFile(String fileName) {
+        service.loadFromFile(fileName);
     }
 }

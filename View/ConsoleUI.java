@@ -54,11 +54,15 @@ public class ConsoleUI implements View{
     }
 
     public void saveToFile() {
-        presenter.saveToFile();
+        System.out.println("Название для сохранения файла");
+        String fileName = scanner.nextLine();
+        presenter.saveToFile(fileName);
     }
 
     public void loadFromFile() {
-        presenter.loadFromFile();
+        System.out.println("Название файла из которого выгрузить данные");
+        String fileName = scanner.nextLine();
+        presenter.loadFromFile(fileName);
     }
 
 

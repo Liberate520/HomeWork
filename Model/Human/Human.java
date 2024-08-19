@@ -11,6 +11,7 @@ import homeWork.Model.Tree.TreeItem;
 
 public class Human  implements Serializable, TreeItem<Human> {
     private int id;
+    private static int currentId = 0;
     private String name;
     private Gender gender;
     private LocalDate birthDay;
@@ -21,7 +22,7 @@ public class Human  implements Serializable, TreeItem<Human> {
 
 
     public Human(String name,  Gender gender, LocalDate birthday, LocalDate deathDay, Human mother, Human father, List<Human> children){
-        this.id = id;
+        this.id = ++currentId;
         this.birthDay = birthday;
         this.gender = gender;
         this.name = name;
@@ -34,7 +35,7 @@ public class Human  implements Serializable, TreeItem<Human> {
     public Human(int id, String name, Gender gender, LocalDate birthDay, LocalDate deathDay) {
         this(name, gender, birthDay, deathDay, null, null, null);
     }
-    
+
 
 
 
@@ -43,9 +44,6 @@ public class Human  implements Serializable, TreeItem<Human> {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id++;
-    }
 
     public String getName() {return name;}
 
@@ -96,6 +94,8 @@ public class Human  implements Serializable, TreeItem<Human> {
         return getFather().getName();
     }
 
+
+
     public void addChild(Human child) {
         if (this.children == null) {
             this.children = new ArrayList<>();
@@ -123,8 +123,6 @@ public class Human  implements Serializable, TreeItem<Human> {
         }
         return childrenNames.substring(0, childrenNames.length() - 2);
     }
-
-
 
 
     @Override
