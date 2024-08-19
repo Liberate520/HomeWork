@@ -10,8 +10,8 @@ public class HumanComparatorById implements Comparator<Human> {
 
     @Override
     public int compare(Human o1, Human o2) {
-        Integer intO1 = new Integer(o1.getId());
-        Integer intO2 = new Integer(o2.getId());
-        return intO1.compareTo(intO2);
+        Integer integerO1 = o1.getId();
+        Integer integerO2 = o2.getId();
+        return integerO1.compareTo(integerO2);
     }
 }
