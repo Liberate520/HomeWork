@@ -1,9 +1,11 @@
 package familytree.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import java.time.LocalDate;
 import java.time.Period;
 
 public class Person implements Identifiable, Serializable {
@@ -16,8 +18,8 @@ public class Person implements Identifiable, Serializable {
     private List<Person> children;
     private Person spouse;
 
-    public Person(String familyName, String firstName, String fatherName, Gender gender, LocalDate dateOfBirth) {
-        this.fullName = new FullName(familyName, firstName, fatherName);
+    public Person(FullName fullName, Gender gender, LocalDate dateOfBirth) {
+        this.fullName = fullName;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.dateOfDeath = null;
