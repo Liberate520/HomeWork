@@ -9,14 +9,25 @@ public class Main {
 
     public static void main(String[] args) {
 
-        FamilyTree myTree = restore();
-        //FamilyTree myTree = buildTree();
+        //FamilyTree myTree = restore();
+        FamilyTree myTree = buildTree();
 
         //save_tree(myTree);
 
+        System.out.println(myTree);
 
+        myTree.sortByName();
 
         System.out.println(myTree);
+
+        myTree.sortById();
+
+        System.out.println(myTree);
+
+        myTree.sortByBirsday();
+
+        System.out.println(myTree);
+
 
     }
 

@@ -4,9 +4,10 @@ import human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private int humansId;
     private List<Human> humanList;
 
@@ -102,8 +103,6 @@ public class FamilyTree implements Serializable {
         }else { return false;}
     }
 
-
-
     public boolean remove(int humansId){
         if(checkId(humansId)){
             Human human = getById(humansId);
@@ -124,6 +123,20 @@ public class FamilyTree implements Serializable {
             infoTree.append("\n");
         }
         return infoTree.toString();
+    }
+
+    @Override
+    public Iterator<Human> iterator(){
+        return new FamilyTreeIterator(humanList);
+    }
+    public void sortByName(){
+        humanList.sort(new HumanComparatorByName());
+    }
+    public void sortByBirsday(){
+        humanList.sort(new HumanComparatorByBirthday());
+    }
+    public void sortById(){
+        humanList.sort(new HumanComparatorById());
     }
 
 
