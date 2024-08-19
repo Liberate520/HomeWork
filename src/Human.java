@@ -8,10 +8,16 @@ public class Human implements Serializable {
     private String name;
     private Gender gender;
     private LocalDate birthDate;
+
+
+
     private LocalDate deathDate;
     private Human mom;
     private Human dad;
     private List<Human> children;
+    public Human(){
+
+    }
 
     public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human dad, Human mom) {
         children = new ArrayList<>();
@@ -105,7 +111,9 @@ public class Human implements Serializable {
     public LocalDate getDeathDate() {
         return deathDate;
     }
-
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
     public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }
