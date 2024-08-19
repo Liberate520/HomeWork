@@ -3,23 +3,25 @@ package GB_FamilyTree.Family_Tree.FileManager;
 import java.io.*;
 
 public class FileHandler implements Writer {
-    private String filePath;
 
+    private String filePath = "src/GB_FamilyTree/Family_Tree/FileManager/Tree.txt";
+
+    // Метод сохранения
     @Override
-    public boolean save(Serializable serializable) {
+    public void save(Serializable serializable) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
             objectOutputStream.writeObject(serializable);
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
+    // Метод загрузки
     @Override
     public Object read() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-            return objectInputStream.readObject();
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))){
+            Object object = objectInputStream.readObject();
+            return object;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

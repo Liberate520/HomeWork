@@ -3,9 +3,13 @@ package GB_FamilyTree.Family_Tree.FileManager;
 import java.io.Serializable;
 
 public interface Writer {
-    boolean save(Serializable serializable);
 
+    // Метод сохранения
+    void save(Serializable serializable);
+
+    // Метод загрузки
     Object read();
 
-    void setPath(String filePath);
+    // Путь к файлу
+    void setPath(String path);
 }
