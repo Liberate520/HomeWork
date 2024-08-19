@@ -63,7 +63,8 @@ public class FamilyTree<T extends Identifiable> implements Serializable, Iterabl
 
     public List<T> getSortedByName() {
         List<T> sortedList = new ArrayList<>(members.values());
-        sortedList.sort(Comparator.comparing(m -> m.getFullName().getFirstName()));
+        sortedList.sort(Comparator.comparing((T member) -> member.getFullName().getFamilyName())
+                .thenComparing(member -> member.getFullName().getFirstName()));
         return sortedList;
     }
 
