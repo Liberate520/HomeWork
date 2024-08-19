@@ -3,7 +3,6 @@ package tree;
 import human.Human;
 
 import java.util.Comparator;
-import java.util.Iterator;
 
 public class HumanComparatorById implements Comparator<Human> {
 
