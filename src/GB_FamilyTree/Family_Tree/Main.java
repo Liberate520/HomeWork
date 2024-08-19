@@ -11,8 +11,8 @@ public class Main {
     public static void main(String[] args) {
 
         FamilyTree tree = testTree();
-        tree = readFamilyTree();
-//        saveFamilyTree(tree);
+//        tree = readFamilyTree();
+        saveFamilyTree(tree);
 
         System.out.println("Без сортировки");
         System.out.println(tree);
