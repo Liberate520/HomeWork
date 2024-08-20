@@ -8,7 +8,8 @@ import java.util.List;
 public class Human implements Serializable, Comparable<Human> {
     private int id;
     private String name;
-    private int age;
+    private LocalDate birthDate;
+
 
     public void setId(int id) {
         this.id = id;
@@ -18,16 +19,21 @@ public class Human implements Serializable, Comparable<Human> {
         this.name = name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getAge() {
-        return age;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public int getId() {
         return id;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public String DatetoString(LocalDate localDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return localDate.format(formatter);
     }
 
     @Override
@@ -40,21 +46,18 @@ public class Human implements Serializable, Comparable<Human> {
         return "Human{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", age=" + age +
+                ", birthDate=" + DatetoString(birthDate) +
                 '}';
     }
 
-    /**
-    private Gender gender;
-    private LocalDate birthDate;
+/**
+
+
     private LocalDate deathDate;
     private List<Human> parents;
     private List<Human> children;
 
-    public String DatetoString(LocalDate localDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        return localDate.format(formatter);
-    }
+
     public Human(int id, String name, Gender gender, LocalDate birthDate) {
         this.id = id;
         this.name = name;

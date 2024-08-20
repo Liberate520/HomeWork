@@ -2,6 +2,7 @@ package ru.gb.family_tree.human;
 
 import ru.gb.family_tree.family_tree.FamilyTree;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class HumanService {
@@ -13,10 +14,10 @@ public class HumanService {
         builder = new HumanBuilder();
     }
 
-    public void addHuman(String humanName, int humanAge){
+    public void addHuman(String humanName, int humanAge, LocalDate humanBirthday){
         Human human = builder
                 .setHumanName(humanName)
-                .setHumanAge(humanAge)
+                .setHumanBirthDate(humanBirthday)
                 .build();
         familyTree.addHuman(human);
     }
@@ -31,10 +32,6 @@ public class HumanService {
 
     public void sortByName(){
         familyTree.sortByName();
-    }
-
-    public void sortByAge(){
-        familyTree.sortByAge();
     }
 
     public List<Human> getHumans(){

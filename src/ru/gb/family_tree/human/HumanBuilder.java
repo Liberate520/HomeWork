@@ -1,18 +1,20 @@
 package ru.gb.family_tree.human;
 
+import java.time.LocalDate;
+
 public class HumanBuilder {
     private int genId;
     private Human human;
-    private int humanAge;
     private String humanName;
-
-    public HumanBuilder setHumanAge(int humanAge){
-        this.humanAge = humanAge;
-        return this;
-    }
+    private LocalDate humanBirthDate;
 
     public HumanBuilder setHumanName(String humanName){
         this.humanName = humanName;
+        return this;
+    }
+
+    public HumanBuilder setHumanBirthDate(LocalDate humanBirthDate){
+        this.humanBirthDate = humanBirthDate;
         return this;
     }
 
@@ -28,14 +30,12 @@ public class HumanBuilder {
         human.setName(humanName);
     }
 
-    private void createAge(){
-        human.setAge(humanAge);
-    }
+    private void createBirthDate(){human.setBirthDate(humanBirthDate);}
 
     public Human build(){
         createHuman();
         createName();
-        createAge();
+        createBirthDate();
         nextId();
         return human;
     }

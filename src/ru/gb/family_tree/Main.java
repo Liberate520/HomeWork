@@ -9,6 +9,7 @@ import ru.gb.family_tree.writer.FileHandler;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
@@ -29,15 +30,6 @@ public class Main {
         System.out.println(service.getHumanListInfo());
 
 
-        /**
-        HumanService service2 = new HumanService();
-        createDefaultSecondFamilyTree(service2);
-        System.out.println(service2.getHumanListInfo());
-
-        service.addHumans(service.getHumans());
-        System.out.println(service.getHumanListInfo());
-        */
-
 /**
         System.out.println(service.getHumanListInfo());
         service.sortByName();
@@ -45,26 +37,19 @@ public class Main {
         service.sortByAge();
         System.out.println(service.getHumanListInfo());
 */
-        service.sortById();
-        System.out.println(service.getHumanListInfo());
 
         fileHandler.save((Serializable) service.getHumans());
 
     }
 
     private static void createDefaultFamilyTree(HumanService service) {
-        service.addHuman("Александр", 60);
-        service.addHuman("Екатерина", 55);
-        service.addHuman("Михаил", 35);
-        service.addHuman("Евгения", 30);
+        service.addHuman("Александр", 60, LocalDate.of(1960, 10, 10));
+        service.addHuman("Екатерина", 55, LocalDate.of(1965, 05, 05));
+        service.addHuman("Михаил", 35, LocalDate.of(1985, 06, 15));
+        service.addHuman("Евгения", 30, LocalDate.of(1990, 12, 25));
+        service.addHuman("Геннадий", 30, LocalDate.of(2015, 7, 7));
     }
 
-    private static void createDefaultSecondFamilyTree(HumanService service) {
-        service.addHuman("Саша", 60);
-        service.addHuman("Катя", 55);
-        service.addHuman("Миша", 35);
-        service.addHuman("Женя", 30);
-    }
 
     /**
     private static void loadFamilyTree(HumanService service){
