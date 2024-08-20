@@ -3,13 +3,10 @@ package View.Commands;
 import model.Model;
 import View.View;
 
-public class ShowFamilyTree implements Command {
-    private Model model;
-    private View view;
+public class ShowFamilyTree extends Command {
 
     public ShowFamilyTree(Model model, View view) {
-        this.model = model;
-        this.view = view;
+        super(model, view);
     }
 
     @Override
@@ -22,3 +19,4 @@ public class ShowFamilyTree implements Command {
         return "Показать всё семейное дерево";
     }
 }
+

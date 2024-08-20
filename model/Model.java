@@ -10,16 +10,12 @@ import java.time.LocalDate;
 public class Model {
     private Service service;
 
-    public Model() {
-        this.service = new Service();
+    public Model(Service service) {
+        this.service = service;
     }
 
     public void addMember(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
         service.addMember(name, gender, birthDate, deathDate);
-    }
-
-    public void addParents(String childName, String parent1Name, String parent2Name) {
-        service.addParents(childName, parent1Name, parent2Name);
     }
 
     public void sortByName() {

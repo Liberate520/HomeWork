@@ -3,13 +3,10 @@ package View.Commands;
 import model.Model;
 import View.View;
 
-public class SortByName implements Command {
-    private Model model;
-    private View view;
+public class SortByName extends Command {
 
     public SortByName(Model model, View view) {
-        this.model = model;
-        this.view = view;
+        super(model, view);
     }
 
     @Override
@@ -23,3 +20,4 @@ public class SortByName implements Command {
         return "Сортировать по имени";
     }
 }
+

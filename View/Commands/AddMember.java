@@ -5,13 +5,10 @@ import model.familyTree.Gender;
 import java.time.LocalDate;
 import View.View;
 
-public class AddMember implements Command {
-    private Model model;
-    private View view;
+public class AddMember extends Command {
 
     public AddMember(Model model, View view) {
-        this.model = model;
-        this.view = view;
+        super(model, view);
     }
 
     @Override
@@ -21,7 +18,7 @@ public class AddMember implements Command {
         LocalDate birthDate = view.getBirthDateInput();
         LocalDate deathDate = view.getDeathDateInput();
         model.addMember(name, gender, birthDate, deathDate);
-        view.showMessage("Член семьи добавлен.");
+        view.showMessage("Сделано!");
     }
 
     @Override

@@ -2,13 +2,29 @@ package View;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+import View.Commands.*;
+import model.Model;
 import model.familyTree.Gender;
 
 public class View {
     private Scanner scanner;
+    private Model model;
+    private Menu menu;
 
-    public View() {
+    public View(Model model, Menu menu) {
         this.scanner = new Scanner(System.in);
+        this.model = model;
+        this.menu = menu;
+        initializeMenu();
+    }
+
+    private void initializeMenu() {
+        menu.addCommand(new AddMember(model, this));
+        menu.addCommand(new SortByName(model, this));
+        menu.addCommand(new SortByAge(model, this));
+        menu.addCommand(new ShowFamilyTree(model, this));
+        menu.addCommand(new SaveFamilyTree(model, this));
+        menu.addCommand(new LoadFamilyTree(model, this));
     }
 
     public String getNameInput() {
@@ -52,5 +68,10 @@ public class View {
 
     public void showFamilyTree(String familyTree) {
         System.out.println("Семейное дерево:\n" + familyTree);
+    }
+
+    public int getUserChoice() {
+        System.out.print("Выберите действие: ");
+        return Integer.parseInt(scanner.nextLine());
     }
 }
