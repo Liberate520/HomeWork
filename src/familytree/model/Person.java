@@ -50,6 +50,7 @@ public class Person implements Identifiable<Person>, Serializable {
         this.dateOfDeath = dateOfDeath;
     }
 
+    @Override
     public List<Person> getParents() {
         return parents;
     }
