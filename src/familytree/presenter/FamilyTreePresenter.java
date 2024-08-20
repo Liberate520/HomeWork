@@ -1,9 +1,8 @@
 package familytree.presenter;
 
-import familytree.io.FileDataHandler;
 import familytree.model.FamilyTree;
 import familytree.model.Person;
-import familytree.model.FullName;
+import familytree.service.FamilyTreeService;
 import familytree.ui.UserInterface;
 
 import java.io.IOException;
@@ -11,12 +10,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class FamilyTreePresenter {
-    private FamilyTree<Person> familyTree;
+    private final FamilyTreeService familyTreeService;
     private final UserInterface view;
-    private final FileDataHandler fileDataHandler = new FileDataHandler();
 
-    public FamilyTreePresenter(FamilyTree<Person> familyTree, UserInterface view) {
-        this.familyTree = familyTree;
+    public FamilyTreePresenter(FamilyTreeService familyTreeService, UserInterface view) {
+        this.familyTreeService = familyTreeService;
         this.view = view;
     }
 
@@ -25,7 +23,6 @@ public class FamilyTreePresenter {
         String firstName = view.getUserInput("Введите имя:");
         String fatherName = view.getUserInput("Введите отчество:");
 
-        // Запрашиваем пол
         String genderInput = view.getUserInput("Введите пол (MALE/FEMALE):").toUpperCase();
         Person.Gender gender;
         try {
@@ -37,25 +34,22 @@ public class FamilyTreePresenter {
 
         LocalDate dateOfBirth = LocalDate.parse(view.getUserInput("Введите дату рождения (YYYY-MM-DD):"));
 
-        Person newMember = new Person(new FullName(familyName, firstName, fatherName), gender, dateOfBirth);
-
         String deathKnown = view.getUserInput("Известна ли дата смерти? (да/нет):").toLowerCase();
+        LocalDate dateOfDeath = null;
         if (deathKnown.equals("да")) {
-            LocalDate dateOfDeath = LocalDate.parse(view.getUserInput("Введите дату смерти (YYYY-MM-DD):"));
-            newMember.setDateOfDeath(dateOfDeath);
+            dateOfDeath = LocalDate.parse(view.getUserInput("Введите дату смерти (YYYY-MM-DD):"));
         }
 
-        familyTree.addMember(newMember);
+        familyTreeService.addMember(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
         view.displayMessage("Член семьи добавлен.");
     }
-
 
     public void findMember() {
         String familyName = view.getUserInput("Введите фамилию:");
         String firstName = view.getUserInput("Введите имя:");
         String fatherName = view.getUserInput("Введите отчество:");
 
-        Person member = familyTree.findMemberByFullName(familyName, firstName, fatherName);
+        Person member = familyTreeService.findMember(familyName, firstName, fatherName);
         if (member != null) {
             view.displayMessage("Найденный член семьи: " + member);
         } else {
@@ -72,35 +66,33 @@ public class FamilyTreePresenter {
         String childFirstName = view.getUserInput("Введите имя ребенка:");
         String childFatherName = view.getUserInput("Введите отчество ребенка:");
 
-        familyTree.addParentChildRelationship(parentFamilyName, parentFirstName, parentFatherName,
+        familyTreeService.addParentChildRelationship(parentFamilyName, parentFirstName, parentFatherName,
                 childFamilyName, childFirstName, childFatherName);
         view.displayMessage("Родительско-детская связь добавлена!");
     }
 
     public void printSortedByName() {
-        List<Person> sortedByName = familyTree.getSortedByName();
+        List<Person> sortedByName = familyTreeService.getSortedByName();
         view.displayPersons(sortedByName);
     }
 
     public void printSortedByDateOfBirth() {
-        List<Person> sortedByDateOfBirth = familyTree.getSortedByDateOfBirth();
+        List<Person> sortedByDateOfBirth = familyTreeService.getSortedByDateOfBirth();
         view.displayPersons(sortedByDateOfBirth);
     }
 
     public void saveToFile() {
         try {
-            fileDataHandler.saveToFile("familyTree.dat", familyTree);
+            familyTreeService.saveToFile("familyTree.dat");
             view.displayMessage("Дерево сохранено успешно!");
         } catch (IOException e) {
             view.displayMessage("Ошибка при сохранении: " + e.getMessage());
         }
     }
 
-    public void loadFromFile() {
+    public void loadFromFile(String filename) {
         try {
-            FamilyTree<Person> loadedFamilyTree = fileDataHandler.loadFromFile("familyTree.dat");
-            // Обновляем ссылку на familyTree
-            this.familyTree = loadedFamilyTree;
+            familyTreeService.loadFromFile("familyTree.dat");
             view.displayMessage("Дерево загружено успешно!");
         } catch (IOException | ClassNotFoundException e) {
             view.displayMessage("Ошибка при загрузке: " + e.getMessage());
@@ -130,7 +122,8 @@ public class FamilyTreePresenter {
                 saveToFile();
                 break;
             case 7:
-                loadFromFile();
+                String filename = view.getUserInput("Введите имя файла для загрузки:");
+                loadFromFile(filename);
                 break;
             case 0:
                 System.exit(0);
