@@ -1,9 +1,15 @@
 package ru.gb.family_tree;
 
 import ru.gb.family_tree.family_tree.FamilyTree;
+import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.HumanBuilder;
 import ru.gb.family_tree.human.HumanService;
 import ru.gb.family_tree.writer.FileHandler;
+
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 public class Main {
 
@@ -11,32 +17,57 @@ public class Main {
 
     public static void main(String[] args) {
         HumanService service = new HumanService();
+        FileHandler fileHandler = new FileHandler(filePath);
 
-        service.addHuman("Александр", 60);
-        service.addHuman("Екатерина", 55);
-        service.addHuman("Михаил", 35);
-        service.addHuman("Евгения", 30);
+        if (!Files.isRegularFile(Path.of(filePath))) {
+            createDefaultFamilyTree(service);
+            System.out.println("Created for the first time: " + "\n");
+        } else {
+            service.addHumans((List<Human>) fileHandler.read());
+            System.out.println("Restored: " + "\n");
+        }
+        System.out.println(service.getHumanListInfo());
 
+
+        /**
+        HumanService service2 = new HumanService();
+        createDefaultSecondFamilyTree(service2);
+        System.out.println(service2.getHumanListInfo());
+
+        service.addHumans(service.getHumans());
+        System.out.println(service.getHumanListInfo());
+        */
+
+/**
         System.out.println(service.getHumanListInfo());
         service.sortByName();
         System.out.println(service.getHumanListInfo());
         service.sortByAge();
         System.out.println(service.getHumanListInfo());
-        /**
-        if (!Files.isRegularFile(Path.of(filePath))) {
-            getDefault(familyTree);
-            System.out.println("Created for the first time: " + "\n");
-        } else {
-            familyTree = load();
-            System.out.println("Restored: " + "\n");
-        }
-        System.out.println(familyTree);
+*/
+        service.sortById();
+        System.out.println(service.getHumanListInfo());
 
-        save(familyTree);
+        fileHandler.save((Serializable) service.getHumans());
 
     }
 
-    private static FamilyTree load(){
+    private static void createDefaultFamilyTree(HumanService service) {
+        service.addHuman("Александр", 60);
+        service.addHuman("Екатерина", 55);
+        service.addHuman("Михаил", 35);
+        service.addHuman("Евгения", 30);
+    }
+
+    private static void createDefaultSecondFamilyTree(HumanService service) {
+        service.addHuman("Саша", 60);
+        service.addHuman("Катя", 55);
+        service.addHuman("Миша", 35);
+        service.addHuman("Женя", 30);
+    }
+
+    /**
+    private static void loadFamilyTree(HumanService service){
         FileHandler fileHandler = new FileHandler(filePath);
         //fileHandler.setPath(filePath);
         return (FamilyTree) fileHandler.read();
@@ -47,8 +78,16 @@ public class Main {
         //fileHandler.setPath(filePath);
         fileHandler.save(familyTree);
     }
+*/
+        /**
+    private void getDefault() {
 
-    private static void getDefault(FamilyTree familyTree) {
+        service.addHuman("Александр", 60);
+        service.addHuman("Екатерина", 55);
+        service.addHuman("Михаил", 35);
+        service.addHuman("Евгения", 30);
+
+         /**
 
         Human human1 = new Human(1, "Александр", Gender.Male, LocalDate.of(1960, 10, 10));
         Human human2 = new Human(2, "Екатерина", Gender.Female, LocalDate.of(1965, 05, 05));
@@ -69,8 +108,8 @@ public class Main {
         familyTree.addHuman(human3);
         familyTree.addHuman(human4);
         familyTree.addHuman(human5);
-         */
-    }
 
+    }
+    */
 
 }

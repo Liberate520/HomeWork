@@ -2,6 +2,7 @@ package ru.gb.family_tree.family_tree;
 
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.HumanComparatorByAge;
+import ru.gb.family_tree.human.HumanComparatorById;
 import ru.gb.family_tree.human.HumanIterator;
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Iterable<Human> /**Serializable*/ {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private int genId;
 
     private List<Human> humans;
@@ -20,8 +21,11 @@ public class FamilyTree implements Iterable<Human> /**Serializable*/ {
     }
 
     public void addHuman(Human human){
-        //human.setId(genId++);
         humans.add(human);
+    }
+
+    public void addHumans(List<Human> humans) {
+        this.humans.addAll(humans);
     }
 
     public void sortByName(){
@@ -32,9 +36,17 @@ public class FamilyTree implements Iterable<Human> /**Serializable*/ {
         Collections.sort(humans, new HumanComparatorByAge());
     }
 
+    public List<Human> getHumans() {
+        return humans;
+    }
+
     @Override
     public Iterator<Human> iterator() {
         return new HumanIterator(humans);
+    }
+
+    public void sortById() {
+        Collections.sort(humans, new HumanComparatorById());
     }
 
 

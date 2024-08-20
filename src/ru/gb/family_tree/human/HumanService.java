@@ -2,6 +2,8 @@ package ru.gb.family_tree.human;
 
 import ru.gb.family_tree.family_tree.FamilyTree;
 
+import java.util.List;
+
 public class HumanService {
     private FamilyTree familyTree;
     private HumanBuilder builder;
@@ -19,12 +21,24 @@ public class HumanService {
         familyTree.addHuman(human);
     }
 
+    public void addHumans(List<Human> humans){
+        familyTree.addHumans(humans);
+    }
+
+    public void sortById(){
+        familyTree.sortById();
+    }
+
     public void sortByName(){
         familyTree.sortByName();
     }
 
     public void sortByAge(){
         familyTree.sortByAge();
+    }
+
+    public List<Human> getHumans(){
+        return familyTree.getHumans();
     }
 
     public String getHumanListInfo() {

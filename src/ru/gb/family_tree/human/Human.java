@@ -5,8 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-//Serializable
-public class Human implements Comparable<Human> {
+public class Human implements Serializable, Comparable<Human> {
     private int id;
     private String name;
     private int age;
@@ -25,6 +24,10 @@ public class Human implements Comparable<Human> {
 
     public int getAge() {
         return age;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
