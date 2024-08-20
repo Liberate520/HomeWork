@@ -19,6 +19,7 @@ public class ConsoleUI implements View {
         presenter = new Presenter(this);
         isWork = true;
         menu = new MainMenu(this);
+
     }
 
     @Override

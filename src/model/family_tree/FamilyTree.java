@@ -4,7 +4,6 @@ import model.human.*;
 import model.human.comparators.HumanComparatorByAge;
 import model.human.comparators.HumanComparatorByBirthDate;
 import model.human.comparators.HumanComparatorByName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;

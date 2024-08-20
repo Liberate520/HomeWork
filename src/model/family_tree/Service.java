@@ -8,14 +8,12 @@ import model.writer.FileHandler;
 import java.time.LocalDate;
 
 public class Service {
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
     private HumanBuilder humanBuilder;
-    FileHandler fileHandler;
 
     public Service() {
         familyTree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
-        fileHandler = new FileHandler();
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate) {
@@ -55,8 +53,12 @@ public class Service {
         return familyTree.findById(child).addParent(familyTree.findById(parent));
     }
 
-    public FamilyTree getFamilyTree() {
+    public FamilyTree<Human> getFamilyTree() {
         return familyTree;
+    }
+
+    public void setFamilyTree(FamilyTree<Human> familyTree) {
+        this.familyTree = familyTree;
     }
 
     public void sortByName() {
@@ -69,19 +71,5 @@ public class Service {
 
     public void sortByBirthDate() {
         familyTree.sortByBirthDate();
-    }
-
-    public boolean saveToFile(String filename) {
-        fileHandler.setPath(filename);
-        return fileHandler.save(familyTree);
-    }
-
-    public boolean loadFromFile(String filePath) {
-        fileHandler.setPath(filePath);
-        familyTree = (FamilyTree) fileHandler.read();
-        if (familyTree.equals(null))
-            return false;
-        else
-            return true;
     }
 }

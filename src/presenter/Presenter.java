@@ -1,19 +1,27 @@
 package presenter;
 
+import model.family_tree.FamilyTree;
 import model.family_tree.Service;
 import model.human.Gender;
+import model.human.Human;
+import model.writer.FileHandler;
+import model.writer.FileManager;
+import model.writer.Writer;
 import view.View;
 
+import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Presenter {
     private View view;
     private Service service;
+    private FileManager fileManager;
 
     public Presenter(View view) {
         this.view = view;
         service = new Service();
+        fileManager = new FileManager(new FileHandler());
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate) {
@@ -54,8 +62,8 @@ public class Presenter {
     }
 
     public void getFamilyTreeInfo() {
-        String info = service.getFamilyTree().toString();
-        view.printAnswer(info);
+        FamilyTree<Human> familyTree = service.getFamilyTree();
+        view.printAnswer(familyTree.toString());
     }
 
     public boolean setWedding(String name1, String name2) {
@@ -74,11 +82,18 @@ public class Presenter {
         return service.setDivorce(id1, id2);
     }
 
+
+
     public boolean saveToFile(String filename) {
-        return service.saveToFile(filename);
+        return fileManager.saveToFile(filename,service.getFamilyTree());
     }
 
-    public boolean loadFromFile(String filename) {
-        return service.loadFromFile(filename);
+    public boolean loadFromFile(String filePath) {
+        fileManager.loadFromFile(filePath);
+        service.setFamilyTree(fileManager.loadFromFile(filePath));
+        if (service.getFamilyTree().equals(null))
+            return false;
+        else
+            return true;
     }
 }
