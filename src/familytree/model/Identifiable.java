@@ -3,11 +3,11 @@ package familytree.model;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface Identifiable {
+public interface Identifiable<T extends Identifiable> {
     FullName getFullName();
     LocalDate getDateOfBirth();
     LocalDate getDateOfDeath();
-    List<? extends Identifiable> getChildren();
-    void addParent(Identifiable parent);
-    void addChild(Identifiable child);
+    List<Person> getChildren();
+    void addParent(T parent);
+    void addChild(T child);
 }

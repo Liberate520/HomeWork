@@ -8,7 +8,7 @@ import java.util.List;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Person implements Identifiable, Serializable {
+public class Person implements Identifiable<Person>, Serializable {
     private static final long serialVersionUID = 1L;
     private FullName fullName;
     private Gender gender;
@@ -68,16 +68,15 @@ public class Person implements Identifiable, Serializable {
     }
 
     @Override
-    public void addParent(Identifiable parent) {
-        this.parents.add((Person) parent);
+    public void addParent(Person parent) {
+        this.parents.add(parent);
     }
 
     @Override
-    public void addChild(Identifiable child) {
-        this.children.add((Person)child);
+    public void addChild(Person child) {
+        this.children.add(child);
     }
 
-    // Метод для вычисления возраста
     public int getAge() {
         if (dateOfDeath != null) {
             return Period.between(dateOfBirth, dateOfDeath).getYears();

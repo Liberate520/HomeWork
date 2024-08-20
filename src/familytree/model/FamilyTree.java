@@ -11,9 +11,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import java.util.Collections;
-import java.util.stream.Collectors;
 
-public class FamilyTree<T extends Identifiable> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends Identifiable<T>> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
     private Map<FullName, T> members;
 
@@ -36,14 +35,8 @@ public class FamilyTree<T extends Identifiable> implements Serializable, Iterabl
             return Collections.emptyList();
         }
 
-        // Предполагается, что T имеет метод getChildren(), который возвращает List<? extends Identifiable>
-        List<? extends Identifiable> children = member.getChildren();
-
-        // Фильтруем и приводим только те элементы, которые действительно являются экземплярами T
-        return children.stream()
-                .filter(child -> child.getClass().equals(member.getClass())) // Если T — это член семьи
-                .map(child -> (T) child)
-                .collect(Collectors.toList());
+        List<T> children = (List<T>) member.getChildren();
+        return children;
     }
 
     public void addParentChildRelationship(String parentFamilyName, String parentFirstName, String parentFatherName,
