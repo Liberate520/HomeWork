@@ -29,7 +29,7 @@ public class ConsoleUserInterface implements UserInterface {
     @Override
     public void showMenu() {
         System.out.println("Выберите команду: ");
-        System.out.println("1 - Добавить нового члена");
+        System.out.println("1 - Добавить члена семьи");
         System.out.println("2 - Найти по имени");
         System.out.println("3 - Добавить родительско-детскую связь");
         System.out.println("4 - Вывести всех членов, отсортированных по фамилии и имени");

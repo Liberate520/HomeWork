@@ -1,13 +1,15 @@
 package familytree.presenter;
 
-import familytree.model.FamilyTree;
-import familytree.model.Person;
+import familytree.commands.Command;
 import familytree.service.FamilyTreeService;
 import familytree.ui.UserInterface;
+import familytree.model.Person;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
+//import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FamilyTreePresenter {
     private final FamilyTreeService familyTreeService;
@@ -34,8 +36,8 @@ public class FamilyTreePresenter {
 
         LocalDate dateOfBirth = LocalDate.parse(view.getUserInput("Введите дату рождения (YYYY-MM-DD):"));
 
-        String deathKnown = view.getUserInput("Известна ли дата смерти? (да/нет):").toLowerCase();
         LocalDate dateOfDeath = null;
+        String deathKnown = view.getUserInput("Известна ли дата смерти? (да/нет):").toLowerCase();
         if (deathKnown.equals("да")) {
             dateOfDeath = LocalDate.parse(view.getUserInput("Введите дату смерти (YYYY-MM-DD):"));
         }
@@ -49,7 +51,7 @@ public class FamilyTreePresenter {
         String firstName = view.getUserInput("Введите имя:");
         String fatherName = view.getUserInput("Введите отчество:");
 
-        Person member = familyTreeService.findMember(familyName, firstName, fatherName);
+        var member = familyTreeService.findMember(familyName, firstName, fatherName);
         if (member != null) {
             view.displayMessage("Найденный член семьи: " + member);
         } else {
@@ -72,12 +74,12 @@ public class FamilyTreePresenter {
     }
 
     public void printSortedByName() {
-        List<Person> sortedByName = familyTreeService.getSortedByName();
+        var sortedByName = familyTreeService.getSortedByName();
         view.displayPersons(sortedByName);
     }
 
     public void printSortedByDateOfBirth() {
-        List<Person> sortedByDateOfBirth = familyTreeService.getSortedByDateOfBirth();
+        var sortedByDateOfBirth = familyTreeService.getSortedByDateOfBirth();
         view.displayPersons(sortedByDateOfBirth);
     }
 
@@ -92,7 +94,7 @@ public class FamilyTreePresenter {
 
     public void loadFromFile(String filename) {
         try {
-            familyTreeService.loadFromFile("familyTree.dat");
+            familyTreeService.loadFromFile(filename);
             view.displayMessage("Дерево загружено успешно!");
         } catch (IOException | ClassNotFoundException e) {
             view.displayMessage("Ошибка при загрузке: " + e.getMessage());
@@ -103,34 +105,18 @@ public class FamilyTreePresenter {
         view.showMenu();
         int choice = Integer.parseInt(view.getUserInput("Выберите команду:"));
         switch (choice) {
-            case 1:
-                addMember();
-                break;
-            case 2:
-                findMember();
-                break;
-            case 3:
-                addParentChildRelationship();
-                break;
-            case 4:
-                printSortedByName();
-                break;
-            case 5:
-                printSortedByDateOfBirth();
-                break;
-            case 6:
-                saveToFile();
-                break;
-            case 7:
+            case 1 -> addMember();
+            case 2 -> findMember();
+            case 3 -> addParentChildRelationship();
+            case 4 -> printSortedByName();
+            case 5 -> printSortedByDateOfBirth();
+            case 6 -> saveToFile();
+            case 7 -> {
                 String filename = view.getUserInput("Введите имя файла для загрузки:");
                 loadFromFile(filename);
-                break;
-            case 0:
-                System.exit(0);
-                break;
-            default:
-                view.displayMessage("Некорректный выбор.");
-                break;
+            }
+            case 0 -> System.exit(0);
+            default -> view.displayMessage("Некорректный выбор.");
         }
     }
 }
