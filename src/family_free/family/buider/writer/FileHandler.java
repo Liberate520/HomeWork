@@ -1,8 +1,5 @@
 package family_free.writer;
 
-import family_free.FamilyTree.FamilyTree;
-import family_free.human.Human;
-
 import java.io.*;
 
 public class FileHandler implements Writer {
@@ -15,7 +12,7 @@ public class FileHandler implements Writer {
     @Override //- зачем это тут, а главное для чего?
     //почему на семенаре в аналогичном методе в аргументах было Serializable serializable?
     // я не очень понимаю как тут привязать этот интерфейс
-    public void write(Object human){
+    public void write(Serializable human){
         try(ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream("src/family_free/writer/people.bin"))) {
             file.writeObject(human);
         }

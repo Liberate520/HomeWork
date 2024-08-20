@@ -1,8 +1,8 @@
 package family_free.writer;
 
-import family_free.human.Human;
+import java.io.Serializable;
 
 public interface Writer {
-    void write(Object human);
+    void write(Serializable human);
     Object read();
 }

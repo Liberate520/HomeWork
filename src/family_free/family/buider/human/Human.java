@@ -18,6 +18,10 @@ public class Human implements Serializable {
     private Human father;
     private List<Human> children;
 
+    public Human(){
+
+    }
+
 //My
     public Human(String name, Gender gender, LocalDate birthday, LocalDate deathDate, Human mother, Human father) {
         this.name = name;
@@ -30,7 +34,7 @@ public class Human implements Serializable {
         this.father = father;
         children = new ArrayList<>();
     }
-// В соответствии с принципом Don’t repeat yourself. Перегрузка
+ //В соответствии с принципом Don’t repeat yourself. Перегрузка
     public Human (String name,Gender gender, LocalDate birthday){
         //вызов конструктора текущего класса
         this(name,gender,birthday,null,null,null);
@@ -96,7 +100,9 @@ public class Human implements Serializable {
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
 
-
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 
     public int getAge(){
         if(deathDate==null){

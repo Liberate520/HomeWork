@@ -1,12 +1,13 @@
-package family_free.FamilyTree;
+package family_free.family.buider.FamilyTree;
 
-import family_free.human.Human;
+import family_free.family.buider.human.Sort.ComparatorByAge;
+import family_free.family.buider.human.Sort.ComparatorByName;
+import family_free.family.buider.human.Human;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree {
     //переменая для генирации индентификаторов
     private long humansId;
     //список людей
@@ -19,6 +20,10 @@ public class FamilyTree implements Serializable {
     public FamilyTree(List<Human> humanList){
         //обычный сеттер принимает лист и записывает его
         this.humanList = humanList;
+    }
+
+    public void addHumanNew(Human human){
+        humanList.add(human);
     }
 
     public boolean addHuman(Human human){
@@ -66,7 +71,30 @@ public class FamilyTree implements Serializable {
         return null;
     }
 
-//    //My
+
+
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Дерево:\n");
+        for (Human human : humanList) {
+            stringBuilder.append(human);
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public void sortByName(){
+        humanList.sort(new ComparatorByName());
+    }
+
+    public void sortByAge() {
+        humanList.sort(new ComparatorByAge());
+    }
+}
+
+//My
 //    public List<List<Human>> getAllDescendants(Human human){
 //        if (human.getChildren().size()==0) {
 //            return null;
@@ -87,16 +115,3 @@ public class FamilyTree implements Serializable {
 //    }
 //        return res;
 //    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Дерево:\n");
-        for (Human human : humanList) {
-            stringBuilder.append(human);
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
-    }
-}
