@@ -22,11 +22,12 @@ public class AddMemberCommand implements Command {
         String fatherName = view.getUserInput("Введите отчество:");
 
         String genderInput = view.getUserInput("Введите пол (MALE/FEMALE):").toUpperCase();
-        Person.Gender gender = Person.Gender.MALE; // Default value
+        Person.Gender gender;
         try {
             gender = Person.Gender.valueOf(genderInput);
         } catch (IllegalArgumentException e) {
             view.displayMessage("Некорректный ввод пола. Используется MALE по умолчанию.");
+            gender = Person.Gender.MALE;
         }
 
         LocalDate dateOfBirth = LocalDate.parse(view.getUserInput("Введите дату рождения (YYYY-MM-DD):"));
@@ -36,7 +37,8 @@ public class AddMemberCommand implements Command {
             dateOfDeath = LocalDate.parse(view.getUserInput("Введите дату смерти (YYYY-MM-DD):"));
         }
 
-        familyTreeService.addMember(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
+        Person newMember = familyTreeService.createPerson(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
+        familyTreeService.addMember(newMember);
         view.displayMessage("Член семьи добавлен.");
     }
 }

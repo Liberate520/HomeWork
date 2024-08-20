@@ -42,7 +42,8 @@ public class FamilyTreePresenter {
             dateOfDeath = LocalDate.parse(view.getUserInput("Введите дату смерти (YYYY-MM-DD):"));
         }
 
-        familyTreeService.addMember(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
+        Person newMember = familyTreeService.createPerson(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
+        familyTreeService.addMember(newMember);
         view.displayMessage("Член семьи добавлен.");
     }
 

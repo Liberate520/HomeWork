@@ -18,11 +18,11 @@ public class Person implements Identifiable<Person>, Serializable {
     private List<Person> children;
     private Person spouse;
 
-    public Person(FullName fullName, Gender gender, LocalDate dateOfBirth) {
+    public Person(FullName fullName, Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
         this.fullName = fullName;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
-        this.dateOfDeath = null;
+        this.dateOfDeath = dateOfDeath;
         this.parents = new ArrayList<>();
         this.children = new ArrayList<>();
         this.spouse = null;

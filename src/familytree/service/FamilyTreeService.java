@@ -18,11 +18,7 @@ public class FamilyTreeService {
         this.dataHandler = dataHandler;
     }
 
-    public void addMember(String familyName, String firstName, String fatherName, Person.Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
-        Person newMember = new Person(new FullName(familyName, firstName, fatherName), gender, dateOfBirth);
-        if (dateOfDeath != null) {
-            newMember.setDateOfDeath(dateOfDeath);
-        }
+    public void addMember(Person newMember) {
         familyTree.addMember(newMember);
     }
 
@@ -55,4 +51,9 @@ public class FamilyTreeService {
     public FamilyTree<Person> getFamilyTree() {
         return familyTree;
     }
+
+    public Person createPerson(String familyName, String firstName, String fatherName, Person.Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
+        return new Person(new FullName(familyName, firstName, fatherName), gender, dateOfBirth, dateOfDeath);
+    }
+
 }
