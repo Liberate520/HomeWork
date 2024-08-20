@@ -1,9 +1,8 @@
-package family_free;
+package family_free.family.buider;
 
-import family_free.FamilyTree.FamilyTree;
-import family_free.buider.HumanBuider;
-import family_free.human.Gender;
-import family_free.human.Human;
+import family_free.family.buider.FamilyTree.FamilyTree;
+import family_free.family.buider.human.Gender;
+import family_free.family.buider.human.Human;
 
 import java.time.LocalDate;
 

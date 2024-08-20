@@ -1,10 +1,10 @@
-package about_abstract.Iterator;
+package about_abstract.about_abstract_for;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class Beverage implements Iterator<Ingredients> {
+public abstract class Beverage implements Iterable<Ingredients> {
     List<Ingredients> components;
     int index;
     public Beverage() {
@@ -17,12 +17,12 @@ public abstract class Beverage implements Iterator<Ingredients> {
     }
 
 
-    @Override
+  //  @Override
     public boolean hasNext() {
         return index<components.size();
     }
 
-    @Override
+ //   @Override
     public Ingredients next() {
         return components.get(index++);
     }

@@ -1,4 +1,4 @@
-package family_free.human;
+package family_free.family.buider.human;
 
 import java.io.Serializable;
 import java.time.LocalDate;

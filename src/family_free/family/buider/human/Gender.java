@@ -1,4 +1,4 @@
-package family_free.human;
+package family_free.family.buider.human;
 
 public enum Gender {
     Male,Female;
