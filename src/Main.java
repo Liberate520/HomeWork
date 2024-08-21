@@ -13,11 +13,11 @@ public class Main {
 //        save(tree);
 //        FamilyTree tree = load();
 
-        System.out.println(tree);
-        tree.sortByAge();
-        System.out.println(tree);
-        tree.sortByName();
-        System.out.println(tree);
+          System.out.println(tree);
+//        tree.sortByAge();
+//        System.out.println(tree);
+//        tree.sortByName();
+//        System.out.println(tree);
     }
 
     private static FamilyTree load(){
