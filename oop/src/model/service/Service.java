@@ -9,15 +9,13 @@ import model.writer.Saving;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Service<E extends FamilyTreeItem<E>> {
+public class Service {
     private FamilyTree<Man> myFamilyTree;
     Saving save;
 
     public Service() {
         myFamilyTree = new FamilyTree<>();
         save = new Saving();
-
-
     }
 
     public void addLivingItem(String name, Gender gender, LocalDate birthDate) {
@@ -110,8 +108,8 @@ public class Service<E extends FamilyTreeItem<E>> {
         save.saveTree("tree.txt", myFamilyTree);
     }
 
-    public FamilyTree<Man> loadTree() {
-        return myFamilyTree = save.loadingTree("tree.txt");
+    public void loadTree() {
+        myFamilyTree = save.loadingTree("tree.txt");
     }
 
 

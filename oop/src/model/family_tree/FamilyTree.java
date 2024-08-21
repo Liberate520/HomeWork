@@ -69,8 +69,8 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
 
     public boolean setWedding(Man man, Man man2) {
         if (man.getSpouse() == null && man2.getSpouse() == null) {
-            man.getMerried(man);
-            man2.getMerried(man2);
+            man.getMerried(man2);
+            man2.getMerried(man);
             return true;
         } else {
             return false;
