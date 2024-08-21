@@ -12,7 +12,7 @@ public class Main {
     final static String fileName = "src/familyTree/file.txt";
 
     public static void main(String[] args) throws IOException {
-//
+
 //        ServiceFamilyTree service = new ServiceFamilyTree();
 //        service.addHuman("Петров", "Валентин", "Петрович",
 //                Gender.Male, LocalDate.of(1944, 4, 12), null, null, null, null, "г.Уфа");
