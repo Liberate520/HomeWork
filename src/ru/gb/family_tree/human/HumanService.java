@@ -34,6 +34,8 @@ public class HumanService {
         familyTree.sortByName();
     }
 
+    public void sortByBirthDate(){familyTree.sortByBirthDate();}
+
     public List<Human> getHumans(){
         return familyTree.getHumans();
     }

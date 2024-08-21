@@ -28,6 +28,8 @@ public class Main {
             System.out.println("Restored: " + "\n");
         }
         System.out.println(service.getHumanListInfo());
+        service.sortByBirthDate();
+        //System.out.println(service.getHumanListInfo());
 
 
 /**
@@ -43,11 +45,11 @@ public class Main {
     }
 
     private static void createDefaultFamilyTree(HumanService service) {
-        service.addHuman("Александр", 60, LocalDate.of(1960, 10, 10));
         service.addHuman("Екатерина", 55, LocalDate.of(1965, 05, 05));
+        service.addHuman("Александр", 60, LocalDate.of(1960, 10, 10));
+        service.addHuman("Геннадий", 30, LocalDate.of(2015, 7, 7));
         service.addHuman("Михаил", 35, LocalDate.of(1985, 06, 15));
         service.addHuman("Евгения", 30, LocalDate.of(1990, 12, 25));
-        service.addHuman("Геннадий", 30, LocalDate.of(2015, 7, 7));
     }
 
 

@@ -39,4 +39,9 @@ public class HumanBuilder {
         nextId();
         return human;
     }
+
+    public void clear(){
+        humanName = null;
+        humanBirthDate = null;
+    }
 }

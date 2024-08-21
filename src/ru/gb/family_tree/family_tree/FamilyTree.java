@@ -2,6 +2,7 @@ package ru.gb.family_tree.family_tree;
 
 import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.human.HumanComparatorById;
+import ru.gb.family_tree.human.HumanCoparatorByBirthDate;
 import ru.gb.family_tree.human.HumanIterator;
 
 import java.io.*;
@@ -43,6 +44,8 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     public void sortById() {
         Collections.sort(humans, new HumanComparatorById());
     }
+
+    public void sortByBirthDate(){ Collections.sort(humans, new HumanCoparatorByBirthDate());}
 
 
     /**
