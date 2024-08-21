@@ -39,7 +39,7 @@ public class Main {
     private static FamilyTree testTree() {
         FamilyTree tree = new FamilyTree();
 
-        Human vasya = new Human("Vasisualiy", Gender.Male, LocalDate.of(1978, 11, 16));
+        Human vasya = new Human("Vasiliy", Gender.Male, LocalDate.of(1979, 11, 16));
         Human masha = new Human("Mariane", Gender.Female, LocalDate.of(1986, 5, 5));
 
         tree.add(vasya);
