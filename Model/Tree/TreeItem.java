@@ -1,6 +1,6 @@
 package homeWork.Model.Tree;
 
-public interface TreeItem<T> extends Comparable<T> {
+public interface TreeItem<Human> extends Comparable<Human> {
     int getAge();
     String getName();
 }

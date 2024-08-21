@@ -5,25 +5,29 @@ import java.io.IOException;
 import homeWork.Model.Human.Human;
 import homeWork.Model.Tree.FamilyTree;
 import homeWork.Model.Writer.FileHandler;
+import homeWork.Model.Writer.Writer;
 
-public class SaverLoader {
-    FileHandler fileHandler = new FileHandler();
-    public void saveToFile(FamilyTree<Human> service, String fileName){
+public class SaverLoader<T> {
+    private final Writer writer;
+
+    public SaverLoader(Writer writer) {
+        this.writer = writer;
+    }
+
+    public void saveToFile(FamilyTree tree, String fileName) throws IOException {
         try {
-            fileHandler.writeToFile(service, fileName);
-            System.out.println("Family tree сохранён в файл.");
+            writer.writeToFile(tree, fileName);
         } catch (IOException e) {
-            System.out.println("Ошибка сохранения family tree: " + e.getMessage());
+
+            throw new IOException("Error saving data to file: " + e.getMessage(), e);
         }
     }
 
-    public void loadFromFile(String fileName){
+    public FamilyTree loadFromFile(String fileName) throws IOException, ClassNotFoundException {
         try {
-            FamilyTree loadedTree = fileHandler.readFromFile(fileName);
-            System.out.println("Family tree загружен из файла:");
-            System.out.println(loadedTree);
+            return writer.readFromFile(fileName);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Ошибка загрузки family tree: " + e.getMessage());
+            throw new RuntimeException("Error loading data from file: " + e.getMessage(), e);
         }
     }
 }

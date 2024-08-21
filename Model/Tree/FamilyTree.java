@@ -9,12 +9,12 @@ import homeWork.Model.Human.Human;
 import homeWork.Model.Human.Comporators.ComparingByBirthday;
 import homeWork.Model.Human.Comporators.ComparingByName;
 
-public class FamilyTree<T extends TreeItem> implements Serializable, Iterable<T> {
-    private List<T> familyTree = new ArrayList<>();
+public class FamilyTree<Human extends TreeItem> implements Serializable, Iterable<Human> {
+    private List<Human> familyTree = new ArrayList<>();
 
 
 
-    public void addHuman(T human ){
+    public void addHuman(Human human ){
         familyTree.add(human);
     }
 
@@ -22,23 +22,23 @@ public class FamilyTree<T extends TreeItem> implements Serializable, Iterable<T>
     public String getFamilyTree(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список членов семьи:\n");
-        for (T object : familyTree){
-            stringBuilder.append(object);
+        for (Human human : familyTree){
+            stringBuilder.append(human);
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
 
-    public void removeHuman(T object){
-        familyTree.remove(object);
+    public void removeHuman(Human human){
+        familyTree.remove(human);
     }
 
-    public void setFamilyTree(List<T> familyTree) {
+    public void setFamilyTree(List<Human> familyTree) {
         this.familyTree = familyTree;
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<Human> iterator() {
         return new HumanIterator(familyTree);
     }
 

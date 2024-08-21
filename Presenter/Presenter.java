@@ -1,5 +1,6 @@
 package homeWork.Presenter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import homeWork.Model.Human.Gender;
 import homeWork.Model.Service.Service;
@@ -11,43 +12,56 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        this.service = new Service();
+    }
+
+    private void updateView() {
+        String info = service.getFamilyTree();
+        view.printAnswer(info);
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDay, LocalDate deathDay) {
         service.addHuman(name, gender, birthDay, deathDay);
-        String info = service.getFamilyTree();
-        view.printAnswer(info);
+        updateView();
     }
 
     public void removeHuman(int idHuman) {
         service.removeHuman(idHuman);
-        String info = service.getFamilyTree();
-        view.printAnswer(info);
+        updateView();
     }
 
     public void getFamilyTree() {
-        String info = service.getFamilyTree();
-        view.printAnswer(info);
+        updateView();
     }
 
     public void sortByAge() {
         service.sortByAge();
-        String info = service.getFamilyTree();
-        view.printAnswer(info);
+        updateView();
     }
 
     public void sortByName() {
         service.sortByName();
-        String info = service.getFamilyTree();
-        view.printAnswer(info);
+        updateView();
     }
 
     public void saveToFile(String fileName) {
-        service.saveToFile(fileName);
+        try {
+            service.saveToFile(fileName);
+            view.printAnswer("Family tree has been saved to file: " + fileName);
+        } catch (IOException e) {
+            view.printAnswer("Error saving family tree: " + e.getMessage());
+        }
     }
 
     public void loadFromFile(String fileName) {
-        service.loadFromFile(fileName);
+        try {
+            service.loadFromFile(fileName);
+            view.printAnswer("Family tree has been loaded from file: " + fileName);
+            updateView();
+        } catch (IOException | ClassNotFoundException e) {
+            view.printAnswer("Error loading family tree: " + e.getMessage());
+        }
     }
+
+
 }

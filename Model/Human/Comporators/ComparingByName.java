@@ -5,9 +5,9 @@ import homeWork.Model.Tree.TreeItem;
 
 import java.util.Comparator;
 
-public class ComparingByName<T extends TreeItem> implements Comparator<T> {
+public class ComparingByName<Human extends TreeItem> implements Comparator<Human> {
     @Override
-    public int compare(T o1, T o2) {
+    public int compare(Human o1, Human o2) {
         return o1.getName().compareTo(o2.getName());
     }
 }

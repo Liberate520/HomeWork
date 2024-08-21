@@ -1,18 +1,20 @@
 package homeWork.Model.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import homeWork.Model.Human.Gender;
 import homeWork.Model.Human.Human;
 import homeWork.Model.Tree.FamilyTree;
-
+import homeWork.Model.Writer.FileHandler;
 
 public class Service {
     private int idHuman;
     private FamilyTree<Human> service;
-    private SaverLoader saverLoader = new SaverLoader();
+    private SaverLoader<FamilyTree<Human>> saverLoader;
 
-    public Service(){
+    public Service() {
         service = new FamilyTree<>();
+        this.saverLoader = new SaverLoader<>(new FileHandler());
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
@@ -20,12 +22,11 @@ public class Service {
         service.addHuman(human);
     }
 
-
     public void removeHuman(int idHuman) {
         service.removeHuman(getHumanById(idHuman));
     }
 
-    public void addChildren(Human human){
+    public void addChildren(Human human) {
         Human mother = getHumanById(human.getMother().getId());
         Human father = getHumanById(human.getFather().getId());
         mother.addChild(human);
@@ -41,34 +42,33 @@ public class Service {
         return null;
     }
 
-    public String getFamilyTree(){
+    public String getFamilyTree() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список членов семьи:\n");
-        for (Human human : service){
+        for (Human human : service) {
             stringBuilder.append(human);
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
 
-
-
-    public void sortByName(){
+    public void sortByName() {
         service.sortByName();
     }
 
-    public void sortByAge(){
+    public void sortByAge() {
         service.sortByAge();
     }
-    
-    
-    
-    public void saveToFile(String fileName){
+
+    public void saveToFile(String fileName) throws IOException {
         saverLoader.saveToFile(service, fileName);
     }
 
-    public void loadFromFile(String fileName){
-        saverLoader.loadFromFile(fileName);
+    public void loadFromFile(String fileName) throws IOException, ClassNotFoundException {
+        FamilyTree<Human> loadedTree = saverLoader.loadFromFile(fileName);
+        if (loadedTree != null) {
+            this.service = loadedTree;
+        }
     }
-    
+
 }

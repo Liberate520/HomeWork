@@ -5,10 +5,10 @@ import homeWork.Model.Tree.TreeItem;
 
 import java.util.Comparator;
 
-public class ComparingByBirthday<T extends TreeItem> implements Comparator<T> {
+public class ComparingByBirthday<Human extends TreeItem> implements Comparator<Human> {
 
     @Override
-    public int compare(T o1, T o2) {
+    public int compare(Human o1, Human o2) {
         return Integer.compare(o1.getAge(), o2.getAge());
     }
 }
