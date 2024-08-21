@@ -1,4 +1,4 @@
-package Homework3_OOP.Human;
+package Homework4_OOP.Human;
 
 public enum Gender {
     Male, Female;
