@@ -1,11 +1,13 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.family_tree.FamilyTreeItem;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Human implements Serializable, Comparable<Human> {
+public class Human implements Serializable, FamilyTreeItem<Human> {
     private int id;
     private String name;
     private LocalDate birthDate;
@@ -23,10 +25,12 @@ public class Human implements Serializable, Comparable<Human> {
         this.birthDate = birthDate;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }

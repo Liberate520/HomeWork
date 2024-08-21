@@ -11,20 +11,20 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, Iterable<E> {
     private int genId;
 
-    private List<Human> humans;
+    private List<E> humans;
 
     public FamilyTree() {
         humans = new ArrayList<>();
     }
 
     public void addHuman(Human human){
-        humans.add(human);
+        humans.add((E) human);
     }
 
-    public void addHumans(List<Human> humans) {
+    public void addHumans(List<E> humans) {
         this.humans.addAll(humans);
     }
 
@@ -32,20 +32,20 @@ public class FamilyTree implements Serializable, Iterable<Human> {
         Collections.sort(humans);
     }
 
-    public List<Human> getHumans() {
+    public List<E> getHumans() {
         return humans;
     }
 
     @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(humans);
+    public Iterator<E> iterator() {
+        return new HumanIterator<>(humans);
     }
 
     public void sortById() {
-        Collections.sort(humans, new HumanComparatorById());
+        Collections.sort(humans, new HumanComparatorById<>());
     }
 
-    public void sortByBirthDate(){ Collections.sort(humans, new HumanCoparatorByBirthDate());}
+    public void sortByBirthDate(){ Collections.sort(humans, new HumanCoparatorByBirthDate<>());}
 
 
     /**
