@@ -3,11 +3,11 @@ import human.Human;
 
 import java.util.Comparator;
 
-public class HumanComparatorByBirthday implements Comparator<Human> {
+public class HumanComparatorByBirthday<T extends TreeConn<T>> implements Comparator<T> {
 
 
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(T o1, T o2) {
         return o1.getBirthDay().compareTo(o2.getBirthDay());
     }
 }
