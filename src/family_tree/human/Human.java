@@ -2,6 +2,9 @@ package family_tree.human;
 
 
 
+import com.sun.source.tree.Tree;
+import family_tree.family_tree.TreeNode;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Human implements Serializable {
+public class Human implements TreeNode<Human> {
     private long id;
     private String name;
     private Gender gender;
