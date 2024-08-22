@@ -4,7 +4,7 @@ import ru.gb.family_tree.family_tree.FamilyTreeItem;
 
 import java.util.Comparator;
 
-public class HumanCoparatorByBirthDate<T extends FamilyTreeItem>
+public class HumanCoparatorByBirthDate<T extends FamilyTreeItem<T>>
         implements Comparator<T> {
 
     @Override
