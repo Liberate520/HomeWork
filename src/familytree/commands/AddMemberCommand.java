@@ -37,8 +37,7 @@ public class AddMemberCommand implements Command {
             dateOfDeath = LocalDate.parse(view.getUserInput("Введите дату смерти (YYYY-MM-DD):"));
         }
 
-        Person newMember = familyTreeService.createPerson(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
-        familyTreeService.addMember(newMember);
+        familyTreeService.addMember(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
         view.displayMessage("Член семьи добавлен.");
     }
 }

@@ -1,15 +1,12 @@
 package familytree.presenter;
 
-import familytree.commands.Command;
 import familytree.service.FamilyTreeService;
 import familytree.ui.UserInterface;
 import familytree.model.Person;
 
 import java.io.IOException;
 import java.time.LocalDate;
-//import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class FamilyTreePresenter {
     private final FamilyTreeService familyTreeService;
