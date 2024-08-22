@@ -8,16 +8,16 @@ import java.util.List;
 /**
  * Итератор для обхода элементов семейного дерева.
  *
- * @param <E> Тип элементов, наследуемый от FamilyTreeElement.
+ * @param <E> тип элемента, наследующего {@link FamilyTreeElement}
  */
 public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Iterator<E> {
     private int idx;
     private List<E> familyTreeList;
 
     /**
-     * Конструктор инициализирует итератор списком элементов семейного дерева.
+     * Конструктор инициализирует итератор с предоставленным списком элементов семейного дерева.
      *
-     * @param familyTreeList Список элементов семейного дерева.
+     * @param familyTreeList список элементов семейного дерева для обхода
      */
     public FamilyTreeIterator(List<E> familyTreeList) {
         this.familyTreeList = familyTreeList;
@@ -27,7 +27,7 @@ public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Itera
     /**
      * Проверяет, есть ли следующий элемент в списке.
      *
-     * @return true, если существует следующий элемент, иначе false.
+     * @return true, если существует следующий элемент, иначе false
      */
     @Override
     public boolean hasNext() {
@@ -37,7 +37,8 @@ public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Itera
     /**
      * Возвращает следующий элемент в списке.
      *
-     * @return следующий элемент в списке.
+     * @return следующий элемент семейного дерева
+     * @throws java.util.NoSuchElementException если больше нет элементов
      */
     @Override
     public E next() {

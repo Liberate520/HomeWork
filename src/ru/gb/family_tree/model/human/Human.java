@@ -11,7 +11,8 @@ import java.time.LocalDate;
 import java.time.Period;
 
 /**
- * Класс Human представляет человека и его информацию для семейного древа.
+ * Класс Human представляет человека в семейном дереве и реализует интерфейс {@link FamilyTreeElement}.
+ * Хранит основную информацию о человеке, его родственных связях, супругах и жизненном статусе.
  */
 public class Human implements Serializable, FamilyTreeElement<Human> {
     private long id;
@@ -27,24 +28,21 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
      *
      * @param name   имя человека
      * @param gender пол человека
-     * @param dob    дата рождения человека в формате "yyyy-MM-dd"
+     * @param dob    дата рождения человека (в формате "yyyy-mm-dd")
      */
     public Human(String name, Gender gender, String dob) {
         this.id = -1;
         this.name = name;
         this.gender = gender;
         this.dob = LocalDate.parse(dob);
-        this.dod = null;
         this.children = new ArrayList<>();
-        this.mother = null;
-        this.father = null;
         this.spouses = new HashMap<>();
     }
 
     /**
      * Возвращает уникальный идентификатор человека.
      *
-     * @return уникальный идентификатор человека
+     * @return уникальный идентификатор
      */
     public long getId() {
         return id;
@@ -53,7 +51,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Устанавливает уникальный идентификатор человека.
      *
-     * @param id уникальный идентификатор человека
+     * @param id уникальный идентификатор
      */
     public void setId(long id) {
         this.id = id;
@@ -80,7 +78,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Возвращает дату рождения человека.
      *
-     * @return дата рождения человека
+     * @return дата рождения
      */
     public LocalDate getDob() {
         return dob;
@@ -89,16 +87,16 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Устанавливает дату рождения человека.
      *
-     * @param dob дата рождения человека
+     * @param dob дата рождения
      */
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
     /**
-     * Возвращает дату смерти человека.
+     * Возвращает дату смерти человека (если применимо).
      *
-     * @return дата смерти человека
+     * @return дата смерти или null, если человек еще жив
      */
     public LocalDate getDod() {
         return dod;
@@ -107,7 +105,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Устанавливает дату смерти человека.
      *
-     * @param dod дата смерти человека
+     * @param dod дата смерти
      */
     public void setDod(LocalDate dod) {
         this.dod = dod;
@@ -134,16 +132,16 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Возвращает список детей человека.
      *
-     * @return список детей человека
+     * @return список детей
      */
     public List<Human> getChildren() {
         return children;
     }
 
     /**
-     * Добавляет ребенка к человеку.
+     * Добавляет ребенка к списку детей человека.
      *
-     * @param child ребенок
+     * @param child ребенок для добавления
      * @return true, если ребенок был успешно добавлен, иначе false
      */
     public boolean addChild(Human child) {
@@ -155,9 +153,9 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Возвращает информацию о детях человека.
+     * Возвращает информацию о детях человека в виде строки.
      *
-     * @return информация о детях человека
+     * @return информация о детях
      */
     public String getChildrenAbout() {
         StringBuilder childrenAbout = new StringBuilder();
@@ -177,7 +175,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Возвращает мать человека.
      *
-     * @return мать человека
+     * @return мать человека или null, если информация отсутствует
      */
     public Human getMother() {
         return mother;
@@ -193,9 +191,9 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Возвращает информацию о матери человека.
+     * Возвращает информацию о матери человека в виде строки.
      *
-     * @return информация о матери человека
+     * @return информация о матери
      */
     public String getMotherAbout() {
         String motherAbout = "Mother: ";
@@ -211,7 +209,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Возвращает отца человека.
      *
-     * @return отец человека
+     * @return отец человека или null, если информация отсутствует
      */
     public Human getFather() {
         return father;
@@ -227,9 +225,9 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Возвращает информацию об отце человека.
+     * Возвращает информацию об отце человека в виде строки.
      *
-     * @return информация об отце человека
+     * @return информация об отце
      */
     public String getFatherAbout() {
         String fatherAbout = "Father: ";
@@ -243,9 +241,9 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Добавляет родителя к человеку.
+     * Добавляет родителя к человеку (мать или отец).
      *
-     * @param parent родитель
+     * @param parent родитель для добавления
      */
     public void addParent(Human parent) {
         if (parent.gender.equals(Gender.male)) {
@@ -264,17 +262,17 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     /**
      * Возвращает список супругов человека и их статус.
      *
-     * @return список супругов человека и их статус
+     * @return карта супругов и их статусов
      */
     public HashMap<Human, SpouseStatus> getSpouse() {
         return spouses;
     }
 
     /**
-     * Добавляет супруга(-у) к человеку.
+     * Добавляет супруга к человеку с указанным статусом.
      *
-     * @param spouse супруг(-а)
-     * @param status статус супруга(-и)
+     * @param spouse супруг для добавления
+     * @param status статус супруга
      */
     public void addSpouse(Human spouse, SpouseStatus status) {
         if (!this.spouses.containsKey(spouse)) {
@@ -284,13 +282,14 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Возвращает информацию о супругах человека.
+     * Возвращает информацию о супругах человека в виде строки.
      *
-     * @return информация о супругах человека
+     * @return информация о супругах
      */
     public String getSpousesAbout() {
         StringBuilder spousesAbout = new StringBuilder();
         spousesAbout.append("Spouses: ");
+
         if (!spouses.isEmpty()) {
             boolean first = true;
             for (Map.Entry<Human, SpouseStatus> entry : spouses.entrySet()) {
@@ -306,11 +305,12 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         } else {
             spousesAbout.append("None");
         }
+
         return spousesAbout.toString();
     }
 
     /**
-     * Возвращает возраст человека.
+     * Возвращает возраст человека, основываясь на его дате рождения и, если применимо, дате смерти.
      *
      * @return возраст человека
      */
@@ -323,9 +323,9 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Возвращает статус жизни человека.
+     * Возвращает жизненный статус человека ("Alive" или "Dead").
      *
-     * @return статус жизни человека
+     * @return жизненный статус человека
      */
     public String getLifeStatus() {
         if (dod == null) {
@@ -336,7 +336,7 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Возвращает информацию о человеке.
+     * Возвращает полную информацию о человеке в виде строки.
      *
      * @return информация о человеке
      */
@@ -357,22 +357,21 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
     }
 
     /**
-     * Вычисляет интервал между двумя датами в годах.
+     * Возвращает строковое представление объекта человека.
      *
-     * @param dob дата начала
-     * @param dod дата окончания
-     * @return количество лет между датами
+     * @return строковое представление объекта
      */
-    private int getInterval(LocalDate dob, LocalDate dod) {
-        Period interval = Period.between(dob, dod);
-        return interval.getYears();
-    }
-
     @Override
     public String toString() {
         return getAbout();
     }
 
+    /**
+     * Проверяет равенство двух объектов Human на основе их уникальных идентификаторов.
+     *
+     * @param obj объект для сравнения
+     * @return true, если объекты равны, иначе false
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -384,4 +383,17 @@ public class Human implements Serializable, FamilyTreeElement<Human> {
         Human human = (Human) obj;
         return human.getId() == getId();
     }
+
+    /**
+     * Возвращает количество полных лет между двумя датами.
+     *
+     * @param dob дата начала периода (дата рождения)
+     * @param dod дата окончания периода (дата смерти или текущая дата)
+     * @return количество полных лет
+     */
+    private int getInterval(LocalDate dob, LocalDate dod) {
+        Period interval = Period.between(dob, dod);
+        return interval.getYears();
+    }
+
 }

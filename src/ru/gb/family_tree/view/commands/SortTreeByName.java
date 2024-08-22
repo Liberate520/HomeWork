@@ -3,27 +3,23 @@ package ru.gb.family_tree.view.commands;
 import ru.gb.family_tree.view.ConsoleUI;
 
 /**
- * Команда {@code SortTreeByName} предназначена для вывода списка членов семьи, отсортированного по имени.
- *
- * <p>Этот класс расширяет абстрактный класс {@code Command} и реализует метод {@code execute},
- * который вызывает метод {@code sortTreeByName} в {@code ConsoleUI} для сортировки и отображения
- * членов семьи по имени.</p>
+ * Класс SortTreeByName представляет собой команду для сортировки списка членов семьи по имени.
+ * Наследует класс Command и реализует метод execute для выполнения команды.
  */
 public class SortTreeByName extends Command {
 
     /**
-     * Конструктор класса {@code SortTreeByName}.
+     * Конструктор SortTreeByName инициализирует команду с объектом пользовательского интерфейса.
      *
-     * @param consoleUI экземпляр {@code ConsoleUI}, который используется для взаимодействия с пользователем.
+     * @param consoleUI Объект консольного интерфейса пользователя (ConsoleUI), через который будет выполняться команда.
      */
     public SortTreeByName(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Вывести список членов семьи в порядке сортировки по имени";
+        description = "Вывести список членов семьи в порядке сортировки по имени";  // Описание команды
     }
 
     /**
-     * Выполняет команду сортировки списка членов семьи по имени, вызывая метод {@code sortTreeByName}
-     * в {@code ConsoleUI}.
+     * Выполняет команду сортировки списка членов семьи по имени, вызывая соответствующий метод в ConsoleUI.
      */
     @Override
     public void execute() {

@@ -3,27 +3,23 @@ package ru.gb.family_tree.view.commands;
 import ru.gb.family_tree.view.ConsoleUI;
 
 /**
- * Команда {@code GetNoSortTree} предназначена для вывода неотсортированного списка членов семьи.
- *
- * <p>Этот класс расширяет абстрактный класс {@code Command} и реализует метод {@code execute},
- * который вызывает метод {@code getNoSortTree} в {@code ConsoleUI} для получения и отображения
- * неотсортированного списка членов семьи.</p>
+ * Класс GetNoSortTree представляет собой команду для вывода неотсортированного списка членов семьи из генеалогического древа.
+ * Наследует класс Command и реализует метод execute для выполнения команды.
  */
 public class GetNoSortTree extends Command {
 
     /**
-     * Конструктор класса {@code GetNoSortTree}.
+     * Конструктор GetNoSortTree инициализирует команду с объектом пользовательского интерфейса.
      *
-     * @param consoleUI экземпляр {@code ConsoleUI}, который используется для взаимодействия с пользователем.
+     * @param consoleUI Объект консольного интерфейса пользователя (ConsoleUI), через который будет выполняться команда.
      */
     public GetNoSortTree(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Вывести неотсортированный список членов семьи";
+        description = "Вывести неотсортированный список членов семьи";  // Описание команды
     }
 
     /**
-     * Выполняет команду получения неотсортированного списка членов семьи, вызывая метод {@code getNoSortTree}
-     * в {@code ConsoleUI}.
+     * Выполняет команду вывода неотсортированного списка членов семьи, вызывая соответствующий метод в ConsoleUI.
      */
     @Override
     public void execute() {

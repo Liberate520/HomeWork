@@ -3,27 +3,23 @@ package ru.gb.family_tree.view.commands;
 import ru.gb.family_tree.view.ConsoleUI;
 
 /**
- * Команда {@code SetDeathDate} предназначена для установки даты смерти члена семьи.
- *
- * <p>Этот класс расширяет абстрактный класс {@code Command} и реализует метод {@code execute},
- * который вызывает метод {@code setDeathDate} в {@code ConsoleUI} для указания даты смерти
- * конкретного члена семьи.</p>
+ * Класс SetDeathDate представляет собой команду для обозначения даты смерти члена семьи.
+ * Наследует класс Command и реализует метод execute для выполнения команды.
  */
 public class SetDeathDate extends Command {
 
     /**
-     * Конструктор класса {@code SetDeathDate}.
+     * Конструктор SetDeathDate инициализирует команду с объектом пользовательского интерфейса.
      *
-     * @param consoleUI экземпляр {@code ConsoleUI}, который используется для взаимодействия с пользователем.
+     * @param consoleUI Объект консольного интерфейса пользователя (ConsoleUI), через который будет выполняться команда.
      */
     public SetDeathDate(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Обозначить дату смерти члена семьи \uD83E\uDEA6";
+        description = "Обозначить дату смерти члена семьи \uD83E\uDEA6";  // Описание команды с использованием Unicode-символа для флага
     }
 
     /**
-     * Выполняет команду установки даты смерти, вызывая метод {@code setDeathDate}
-     * в {@code ConsoleUI}.
+     * Выполняет команду обозначения даты смерти члена семьи, вызывая соответствующий метод в ConsoleUI.
      */
     @Override
     public void execute() {

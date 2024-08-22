@@ -3,27 +3,23 @@ package ru.gb.family_tree.view.commands;
 import ru.gb.family_tree.view.ConsoleUI;
 
 /**
- * Команда {@code SetSpouse} предназначена для установки супруга(и) для члена семьи.
- *
- * <p>Этот класс расширяет абстрактный класс {@code Command} и реализует метод {@code execute},
- * который вызывает метод {@code setSpouse} в {@code ConsoleUI} для установления супружеских связей
- * для конкретных членов семьи.</p>
+ * Класс SetSpouse представляет собой команду для установки супруга(и) для члена семьи.
+ * Наследует класс Command и реализует метод execute для выполнения команды.
  */
 public class SetSpouse extends Command {
 
     /**
-     * Конструктор класса {@code SetSpouse}.
+     * Конструктор SetSpouse инициализирует команду с объектом пользовательского интерфейса.
      *
-     * @param consoleUI экземпляр {@code ConsoleUI}, который используется для взаимодействия с пользователем.
+     * @param consoleUI Объект консольного интерфейса пользователя (ConsoleUI), через который будет выполняться команда.
      */
     public SetSpouse(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Установить супруга(у) \uD83D\uDC6B";
+        description = "Установить супруга(у) \uD83D\uDC6B";  // Описание команды с использованием Unicode-символа для супружеской пары
     }
 
     /**
-     * Выполняет команду установки супруга(и), вызывая метод {@code setSpouse}
-     * в {@code ConsoleUI}.
+     * Выполняет команду установки супруга(и) для члена семьи, вызывая соответствующий метод в ConsoleUI.
      */
     @Override
     public void execute() {

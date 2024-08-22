@@ -3,25 +3,23 @@ package ru.gb.family_tree.view.commands;
 import ru.gb.family_tree.view.ConsoleUI;
 
 /**
- * Команда {@code AddMember} предназначена для добавления нового члена семьи через пользовательский интерфейс.
- *
- * <p>Этот класс расширяет абстрактный класс {@code Command} и реализует метод {@code execute},
- * который вызывает метод {@code addMember} в {@code ConsoleUI} для добавления нового члена семьи.</p>
+ * Класс AddMember представляет собой команду для добавления нового члена семьи в генеалогическое древо.
+ * Наследует класс Command и реализует метод execute для выполнения команды.
  */
 public class AddMember extends Command {
 
     /**
-     * Конструктор класса {@code AddMember}.
+     * Конструктор AddMember инициализирует команду с объектом пользовательского интерфейса.
      *
-     * @param consoleUI экземпляр {@code ConsoleUI}, который используется для взаимодействия с пользователем.
+     * @param consoleUI Объект консольного интерфейса пользователя (ConsoleUI), через который будет выполняться команда.
      */
     public AddMember(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Добавить члена семьи \uD83D\uDC64";
+        description = "Добавить члена семьи \uD83D\uDC64";  // Описание команды с использованием Unicode-символа для человека
     }
 
     /**
-     * Выполняет команду добавления нового члена семьи, вызывая соответствующий метод в {@code ConsoleUI}.
+     * Выполняет команду добавления нового члена семьи, вызывая соответствующий метод в ConsoleUI.
      */
     @Override
     public void execute() {

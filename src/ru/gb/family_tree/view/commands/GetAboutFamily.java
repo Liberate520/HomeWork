@@ -3,27 +3,23 @@ package ru.gb.family_tree.view.commands;
 import ru.gb.family_tree.view.ConsoleUI;
 
 /**
- * Команда {@code GetAboutFamily} предназначена для вывода списка всех членов семьи из древа.
- *
- * <p>Этот класс расширяет абстрактный класс {@code Command} и реализует метод {@code execute},
- * который вызывает метод {@code getAboutFamily} в {@code ConsoleUI} для получения и отображения
- * информации о всех членах семьи.</p>
+ * Класс GetAboutFamily представляет собой команду для вывода списка всех членов семьи из генеалогического древа.
+ * Наследует класс Command и реализует метод execute для выполнения команды.
  */
 public class GetAboutFamily extends Command {
 
     /**
-     * Конструктор класса {@code GetAboutFamily}.
+     * Конструктор GetAboutFamily инициализирует команду с объектом пользовательского интерфейса.
      *
-     * @param consoleUI экземпляр {@code ConsoleUI}, который используется для взаимодействия с пользователем.
+     * @param consoleUI Объект консольного интерфейса пользователя (ConsoleUI), через который будет выполняться команда.
      */
     public GetAboutFamily(ConsoleUI consoleUI) {
         super(consoleUI);
-        description = "Вывести список всех членов семьи из древа \uD83D\uDCDD";
+        description = "Вывести список всех членов семьи из древа \uD83D\uDCDD";  // Описание команды с использованием Unicode-символа для документа
     }
 
     /**
-     * Выполняет команду получения информации о всех членах семьи, вызывая метод {@code getAboutFamily}
-     * в {@code ConsoleUI}.
+     * Выполняет команду вывода списка всех членов семьи, вызывая соответствующий метод в ConsoleUI.
      */
     @Override
     public void execute() {
