@@ -1,10 +1,16 @@
-package GB_FamilyTree.Family_Tree.FileManager;
+package GB_Homework.Model.Service;
 
 import java.io.*;
 
 public class FileHandler implements Writer {
 
-    private String filePath = "src/GB_FamilyTree/Family_Tree/FileManager/Tree.txt";
+    private String filePath = "src/GB_Homework/Model/Saved_Tree/familyTree.txt";
+
+    // Метод выбора пути к файлу
+    @Override
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
     // Метод сохранения
     @Override
@@ -19,17 +25,11 @@ public class FileHandler implements Writer {
     // Метод загрузки
     @Override
     public Object read() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))){
-            Object object = objectInputStream.readObject();
-            return object;
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+            return objectInputStream.readObject();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public void setPath(String filePath) {
-        this.filePath = filePath;
     }
 }
