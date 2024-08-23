@@ -14,8 +14,8 @@ public class Model {
         this.service = service;
     }
 
-    public void addMember(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-        service.addMember(name, gender, birthDate, deathDate);
+    public void addMember(String id, String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+        service.addMember(id, name, gender, birthDate, deathDate);
     }
 
     public void sortByName() {
@@ -26,6 +26,7 @@ public class Model {
         service.sortByAge();
     }
 
+    @SuppressWarnings("unchecked")
     public FamilyTree<Human> getFamilyTree() {
         return service.getFamilyTree();
     }
@@ -37,4 +38,5 @@ public class Model {
     public void loadFamilyTree(String fileName) {
         service.loadFamilyTree(fileName);
     }
+
 }

@@ -1,24 +1,16 @@
 package View.Commands;
 
-import model.Model;
-import View.View;
+import View.ConsoleWork;
 
 public class LoadFamilyTree extends Command {
 
-    public LoadFamilyTree(Model model, View view) {
-        super(model, view);
+    public LoadFamilyTree(ConsoleWork consoleWork) {
+        super(consoleWork);
+        description = "Загрузить семейное дерево";
     }
 
-    @Override
     public void execute() {
-        String fileName = view.getFileNameInput();
-        model.loadFamilyTree(fileName);
-        view.showMessage("Загружено!");
-    }
-
-    @Override
-    public String getDescription() {
-        return "Загрузить семейное дерево";
+        consoleWork.loadFamilyTree();
     }
 }
 

@@ -1,23 +1,17 @@
 package View.Commands;
 
-import model.Model;
-import View.View;
+import View.ConsoleWork;
 
 public class SortByAge extends Command {
 
-    public SortByAge(Model model, View view) {
-        super(model, view);
+    public SortByAge(ConsoleWork consoleWork) {
+        super(consoleWork);
+        description = "Сортировка по дате рождения";
     }
 
     @Override
     public void execute() {
-        model.sortByAge();
-        view.showMessage("Семейное дерево отсортировано по дате рождения.");
-    }
-
-    @Override
-    public String getDescription() {
-        return "Сортировать по дате рождения";
+        consoleWork.sortByAge();
     }
 }
 

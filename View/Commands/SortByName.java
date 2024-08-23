@@ -1,23 +1,16 @@
 package View.Commands;
 
-import model.Model;
-import View.View;
+import View.ConsoleWork;
 
 public class SortByName extends Command {
 
-    public SortByName(Model model, View view) {
-        super(model, view);
+    public SortByName(ConsoleWork consoleWork) {
+        super(consoleWork);
+        description = "Сортировака по имени";
     }
 
     @Override
     public void execute() {
-        model.sortByName();
-        view.showMessage("Семейное дерево отсортировано по имени.");
-    }
-
-    @Override
-    public String getDescription() {
-        return "Сортировать по имени";
+        consoleWork.sortByName();
     }
 }
-

@@ -1,24 +1,17 @@
 package View.Commands;
 
-import model.Model;
-import View.View;
+import View.ConsoleWork;
 
 public class SaveFamilyTree extends Command {
 
-    public SaveFamilyTree(Model model, View view) {
-        super(model, view);
+    public SaveFamilyTree(ConsoleWork consoleWork) {
+        super(consoleWork);
+        description = "Сохранить семейное дерево";
     }
 
-    @Override
     public void execute() {
-        String fileName = view.getFileNameInput();
-        model.saveFamilyTree(fileName);
-        view.showMessage("Сохранено!");
-    }
-
-    @Override
-    public String getDescription() {
-        return "Сохранить семейное дерево";
+        consoleWork.saveFamilyTree();
+        consoleWork.printAnswer("Семейное дерево сохранено.");
     }
 }
 

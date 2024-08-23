@@ -1,18 +1,18 @@
 package View.Commands;
 
-import View.View;
-import model.Model;
+import View.ConsoleWork;
 
 public abstract class Command {
-    protected Model model;
-    protected View view;
+    String description;
+    ConsoleWork consoleWork;
 
-    public Command(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    public Command(ConsoleWork consoleWork) {
+        this.consoleWork = consoleWork;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public abstract void execute();
-
-    public abstract String getDescription();
 }

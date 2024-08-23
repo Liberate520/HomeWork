@@ -34,4 +34,24 @@ public class FamilyTree<E extends FamilyTreeMember<E>> implements Iterable<E>, S
         }
         return sb.toString();
     }
+
+    public E findById(String id) {
+        for (E member : family) {
+            if (member instanceof Human && ((Human) member).getId().equals(id)) {
+                return member;
+            }
+        }
+        return null;
+    }
+
+    public void createFamilyLink(String childId, String parentId) {
+        E child = findById(childId);
+        E parent = findById(parentId);
+        if (child != null && parent != null) {
+            child.addParent(parent);
+            if (parent instanceof Human) {
+                ((Human) parent).addChild((Human) child);
+            }
+        }
+    }
 }

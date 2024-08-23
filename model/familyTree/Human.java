@@ -4,19 +4,27 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Comparable<Human>, FamilyTreeMember<Human> {
+public class Human implements FamilyTreeMember<Human> {
+    private String id;
     private String name;
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private List<Human> parents = new ArrayList<>();
-    private List<Human> children = new ArrayList<>();
+    private List<Human> parents;
+    private List<Human> children;
 
-    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+    public Human(String id, String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
+        this.parents = new ArrayList<>();
+        this.children = new ArrayList<>();
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -36,18 +44,15 @@ public class Human implements Comparable<Human>, FamilyTreeMember<Human> {
 
     @Override
     public void addParent(Human parent) {
-        this.parents.add(parent);
-        parent.children.add(this);
+        parents.add(parent);
     }
 
-    @Override
-    public int compareTo(Human other) {
-        return this.birthDate.compareTo(other.birthDate);
+    public void addChild(Human child) {
+        children.add(child);
     }
 
     @Override
     public String toString() {
-        return "Name: " + name + ", Gender: " + gender + ", Birth Date: " + birthDate + 
-               ", Death Date: " + (deathDate == null ? "Alive" : deathDate);
+        return "Человек{ID = " + id + ", Имя = " + name + ", Пол = " + gender + ", День рождения = " + birthDate + ", Дата смерти = " + deathDate + "}";
     }
 }

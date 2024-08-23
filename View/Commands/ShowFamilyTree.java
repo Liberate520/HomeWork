@@ -1,22 +1,18 @@
 package View.Commands;
 
-import model.Model;
-import View.View;
+import View.ConsoleWork;
 
 public class ShowFamilyTree extends Command {
 
-    public ShowFamilyTree(Model model, View view) {
-        super(model, view);
+    public ShowFamilyTree(ConsoleWork consoleWork) {
+        super(consoleWork);
+        description = "Показать всё семейное дерево";
     }
 
     @Override
     public void execute() {
-        view.showFamilyTree(model.getFamilyTree().toString());
-    }
-
-    @Override
-    public String getDescription() {
-        return "Показать всё семейное дерево";
+        consoleWork.showFamilyTree();
     }
 }
+
 

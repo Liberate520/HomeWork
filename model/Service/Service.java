@@ -1,36 +1,43 @@
 package model.Service;
 
 import model.familyTree.FamilyTree;
+import model.familyTree.FamilyTreeMember;
 import model.familyTree.Gender;
 import model.familyTree.Human;
 import model.Writer.FileHandler;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-public class Service {
-    private FamilyTree<Human> familyTree;
-    private FileHandler fileHandler; 
+public class Service<T extends FamilyTreeMember<T>> {
+    private FamilyTree<T> familyTree;
+    private FileHandler fileHandler;
+    private Gender gender;
 
     public Service(FileHandler fileHandler) {
         this.familyTree = new FamilyTree<>();
         this.fileHandler = fileHandler;
     }
 
-    public void addMember(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
-        Human member = new Human(name, gender, birthDate, deathDate);
+    public void addMember(String id, String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
+        @SuppressWarnings("unchecked")
+        T member = (T) new Human(id, name, gender, birthDate, deathDate);
         familyTree.addMember(member);
     }
 
-    public void sort(Comparator<Human> comparator) {
+    public void createFamilyLink(String childId, String parentId) {
+        familyTree.createFamilyLink(childId, parentId);
+    }
+
+    public void sort(Comparator<T> comparator) {
         familyTree.sort(comparator);
     }
 
     public void sortByName() {
-        sort(Comparator.comparing(Human::getName));
+        sort(Comparator.comparing(FamilyTreeMember::getName));
     }
 
     public void sortByAge() {
-        sort(Comparator.comparing(Human::getBirthDate));
+        sort(Comparator.comparing(FamilyTreeMember::getBirthDate));
     }
 
     public void saveFamilyTree(String fileName) {
@@ -41,7 +48,11 @@ public class Service {
         this.familyTree = fileHandler.readFromFile(fileName);
     }
 
-    public FamilyTree<Human> getFamilyTree() {
+    public FamilyTree<T> getFamilyTree() {
         return familyTree;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 }

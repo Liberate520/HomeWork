@@ -1,36 +1,40 @@
 package View;
 
-import View.Commands.Command;
-
+import View.Commands.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private List<Command> commands;
+    private List<Command> commandList;
 
-    public Menu() {
-        this.commands = new ArrayList<>();
+    public Menu(ConsoleWork consoleWork) {
+        commandList = new ArrayList<>();
+        commandList.add(new AddMember(consoleWork));
+        commandList.add(new SortByName(consoleWork));
+        commandList.add(new SortByAge(consoleWork));
+        commandList.add(new ShowFamilyTree(consoleWork));
+        commandList.add(new SaveFamilyTree(consoleWork));
+        commandList.add(new LoadFamilyTree(consoleWork));
+        commandList.add(new CreateFamilyLinkCommand(consoleWork)); 
     }
 
-    public void addCommand(Command command) {
-        commands.add(command);
-    }
-
-    public void showMenu() {
-        System.out.println("Меню:");
-        for (int i = 0; i < commands.size(); i++) {
-            System.out.println((i + 1) + ". " + commands.get(i).getDescription());
+    public String menu() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < commandList.size(); i++) {
+            stringBuilder.append(i + 1);
+            stringBuilder.append(". ");
+            stringBuilder.append(commandList.get(i).getDescription());
+            stringBuilder.append("\n");
         }
-        System.out.println((commands.size() + 1) + ". Выйти");
+        return stringBuilder.toString();
     }
 
-    public void executeCommand(int choice) {
-        if (choice > 0 && choice <= commands.size()) {
-            commands.get(choice - 1).execute();
-        } else if (choice == commands.size() + 1) {
-            System.exit(0);
-        } else {
-            System.out.println("Неверный выбор. Пожалуйста, попробуйте снова.");
-        }
+    public void execute(int choice) {
+        Command command = commandList.get(choice - 1);
+        command.execute();
+    }
+
+    public int getSize() {
+        return commandList.size();
     }
 }
