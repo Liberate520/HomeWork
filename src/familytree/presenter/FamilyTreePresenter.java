@@ -1,22 +1,20 @@
 package familytree.presenter;
 
-import familytree.model.FamilyTree;
 import familytree.model.Person;
-import familytree.service.FileHandler;
-import familytree.service.Research;
+import familytree.model.Gender;
+import familytree.service.FamilyTreeService;
 import familytree.view.ConsoleView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class FamilyTreePresenter {
-    private FamilyTree<Person> model;
+    private FamilyTreeService service;
     private ConsoleView view;
-    private FileHandler<Person> fileHandler;
 
-    public FamilyTreePresenter(FamilyTree<Person> model, ConsoleView view) {
-        this.model = model;
+    public FamilyTreePresenter(FamilyTreeService service, ConsoleView view) {
+        this.service = service;
         this.view = view;
-        this.fileHandler = new FileHandler<>();
     }
 
     public void run() {
@@ -55,43 +53,33 @@ public class FamilyTreePresenter {
     }
 
     private void addPerson() {
-        Person person = view.getPersonInfo();
-        model.addMember(person);
+        String name = view.getPersonName();
+        LocalDate birthDate = view.getPersonBirthDate();
+        String gender = view.getPersonGender();
+        Person person = new Person(name, birthDate, Gender.valueOf(gender));
+        service.addPerson(person);
         view.showMessage("Person added successfully.");
     }
 
     private void showAllPeople() {
-        view.showPeople(model.getMembers());
+        List<Person> people = service.getAllPeople();
+        view.showPeople(people);
     }
 
     private void findChildren() {
         String name = view.getPersonName();
-        Person person = findPersonByName(name);
-        if (person != null) {
-            List<Person> children = Research.findChildren(person);
-            view.showChildren(children);
-        } else {
-            view.showMessage("Person not found.");
-        }
-    }
-
-    private Person findPersonByName(String name) {
-        for (Person person : model) {
-            if (person.getName().equalsIgnoreCase(name)) {
-                return person;
-            }
-        }
-        return null;
+        List<Person> children = service.findChildren(name);
+        view.showChildren(children);
     }
 
     private void sortByName() {
-        model.sortByName();
+        service.sortByName();
         view.showMessage("Family tree sorted by name.");
         showAllPeople();
     }
 
     private void sortByBirthDate() {
-        model.sortByBirthDate();
+        service.sortByBirthDate();
         view.showMessage("Family tree sorted by birth date.");
         showAllPeople();
     }
@@ -99,7 +87,7 @@ public class FamilyTreePresenter {
     private void saveToFile() {
         String fileName = view.getFileName();
         try {
-            fileHandler.save(model, fileName);
+            service.saveToFile(fileName);
             view.showMessage("Family tree saved successfully.");
         } catch (Exception e) {
             view.showMessage("Error saving family tree: " + e.getMessage());
@@ -109,8 +97,7 @@ public class FamilyTreePresenter {
     private void loadFromFile() {
         String fileName = view.getFileName();
         try {
-            FamilyTree<Person> loadedTree = fileHandler.load(fileName);
-            model = loadedTree;
+            service.loadFromFile(fileName);
             view.showMessage("Family tree loaded successfully.");
         } catch (Exception e) {
             view.showMessage("Error loading family tree: " + e.getMessage());

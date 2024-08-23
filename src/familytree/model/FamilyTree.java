@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends TreeMember> implements Iterable<T>, Serializable {
+public class FamilyTree<T extends TreeMember> implements Iterable<T>, Searchable<T>, Serializable {
     private List<T> members;
 
     public FamilyTree() {
@@ -33,5 +33,11 @@ public class FamilyTree<T extends TreeMember> implements Iterable<T>, Serializab
 
     public void sortByBirthDate() {
         Collections.sort(members, Comparator.comparing(TreeMember::getBirthDate));
+    }
+
+    @Override
+    public List<T> search(SearchCriteria criteria) {
+        // Implement search logic
+        return new ArrayList<>();
     }
 }

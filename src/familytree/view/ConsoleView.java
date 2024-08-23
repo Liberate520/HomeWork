@@ -1,7 +1,6 @@
 package familytree.view;
 
 import familytree.model.Person;
-import familytree.model.Gender;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,15 +30,19 @@ public class ConsoleView {
         return scanner.nextInt();
     }
 
-    public Person getPersonInfo() {
-        scanner.nextLine(); // Consume newline
+    public String getPersonName() {
         System.out.print("Enter name: ");
-        String name = scanner.nextLine();
+        return scanner.next();
+    }
+
+    public LocalDate getPersonBirthDate() {
         System.out.print("Enter birth date (YYYY-MM-DD): ");
-        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+        return LocalDate.parse(scanner.next());
+    }
+
+    public String getPersonGender() {
         System.out.print("Enter gender (MALE/FEMALE): ");
-        Gender gender = Gender.valueOf(scanner.nextLine().toUpperCase());
-        return new Person(name, birthDate, gender);
+        return scanner.next().toUpperCase();
     }
 
     public void showPeople(List<Person> people) {
@@ -48,27 +51,18 @@ public class ConsoleView {
         }
     }
 
-    public String getPersonName() {
-        scanner.nextLine(); // Consume newline
-        System.out.print("Enter person's name: ");
-        return scanner.nextLine();
-    }
-
     public void showChildren(List<Person> children) {
         if (children.isEmpty()) {
-            System.out.println("This person has no children.");
+            System.out.println("No children found.");
         } else {
             System.out.println("Children:");
-            for (Person child : children) {
-                System.out.println(child.getName());
-            }
+            showPeople(children);
         }
     }
 
     public String getFileName() {
-        scanner.nextLine(); // Consume newline
         System.out.print("Enter file name: ");
-        return scanner.nextLine();
+        return scanner.next();
     }
 
     public void showMessage(String message) {
