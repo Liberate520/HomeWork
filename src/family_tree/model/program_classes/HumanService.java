@@ -6,7 +6,7 @@ import family_tree.model.saving_data.FileHandler;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class HumanService {
+public class HumanService<T extends FamilyTreeItem<T>> {
     private FamilyTree<Human> my_family;
 
     public HumanService()  {
@@ -16,7 +16,7 @@ public class HumanService {
 
     public boolean saveDataFile(String filePath) {
         try {
-            FileHandler<FamilyTree<Human>> fh = new FileHandler<>(filePath);
+            FileHandler<FamilyTree<T>> fh = new FileHandler<>(filePath);
             fh.writeData(my_family);
             return true;
         }
