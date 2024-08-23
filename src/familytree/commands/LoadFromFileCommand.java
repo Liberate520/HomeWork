@@ -1,14 +1,14 @@
 package familytree.commands;
-import familytree.service.FamilyTreeService;
+import familytree.service.FamilyTreeServiceInterface;
 import familytree.ui.UserInterface;
 
 import java.io.IOException;
 
 public class LoadFromFileCommand implements Command {
-    private final FamilyTreeService familyTreeService;
+    private final FamilyTreeServiceInterface familyTreeService;
     private final UserInterface view;
 
-    public LoadFromFileCommand(FamilyTreeService familyTreeService, UserInterface view) {
+    public LoadFromFileCommand(FamilyTreeServiceInterface familyTreeService, UserInterface view) {
         this.familyTreeService = familyTreeService;
         this.view = view;
     }

@@ -1,65 +1,78 @@
 package familytree.service;
 
-import familytree.factory.PersonFactory;
-import familytree.io.DataHandler;
-import familytree.model.FamilyTree;
 import familytree.model.Person;
 import familytree.model.FullName;
+import familytree.model.FamilyTree;
+
+import familytree.ui.ConsoleUserInterface;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class FamilyTreeService {
-    private FamilyTree<Person> familyTree;
-    private final DataHandler dataHandler;
-    private final PersonFactory personFactory;
+public class FamilyTreeService implements FamilyTreeServiceInterface {
+    private final MemberManagerInterface memberManager;
+    private final RelationshipManagerInterface relationshipManager;
+    private final DataManagerInterface dataManager;
+    private final ConsoleUserInterface ui;
 
-    public FamilyTreeService(FamilyTree<Person> familyTree, DataHandler dataHandler,PersonFactory personFactory) {
-        this.familyTree = familyTree;
-        this.dataHandler = dataHandler;
-        this.personFactory = personFactory;
+    public FamilyTreeService(MemberManagerInterface memberManager,
+                             RelationshipManagerInterface relationshipManager,
+                             DataManagerInterface dataManager,
+                             ConsoleUserInterface ui) {
+        this.memberManager = memberManager;
+        this.relationshipManager = relationshipManager;
+        this.dataManager = dataManager;
+        this.ui = ui;
     }
 
-    public void addMember(String familyName, String firstName, String fatherName, Person.Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
-        Person newMember = personFactory.createPerson(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
-        familyTree.addMember(newMember);
+    @Override
+    public void addMember(String familyName, String firstName, String fatherName, Person.Gender gender,
+                          LocalDate dateOfBirth, LocalDate dateOfDeath) {
+
+        FullName fullName = new FullName(familyName, firstName, fatherName);
+        Person newMember = new Person(fullName, gender, dateOfBirth, dateOfDeath);
+
+        memberManager.addMember(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
     }
 
+    @Override
     public Person findMember(String familyName, String firstName, String fatherName) {
-        return familyTree.findMemberByFullName(familyName, firstName, fatherName);
+        return memberManager.findMember(familyName, firstName, fatherName);
     }
 
+    @Override
     public void addParentChildRelationship(String parentFamilyName, String parentFirstName, String parentFatherName,
                                            String childFamilyName, String childFirstName, String childFatherName) {
-        familyTree.addParentChildRelationship(parentFamilyName, parentFirstName, parentFatherName,
+        relationshipManager.addParentChildRelationship(parentFamilyName, parentFirstName, parentFatherName,
                 childFamilyName, childFirstName, childFatherName);
     }
 
+    @Override
     public List<Person> getSortedByName() {
-        return familyTree.getSortedByName();
+        return memberManager.getSortedByName();
     }
 
+    @Override
     public List<Person> getSortedByDateOfBirth() {
-        return familyTree.getSortedByDateOfBirth();
+        return memberManager.getSortedByDateOfBirth();
     }
 
+    @Override
     public void saveToFile(String filename) throws IOException {
-        dataHandler.saveToFile(filename, familyTree);
+        dataManager.saveToFile(filename);
     }
 
-    public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
-        familyTree = dataHandler.loadFromFile(filename);
-    }
-
-    public FamilyTree<Person> getFamilyTree() {
+    @Override
+    public FamilyTree<Person> loadFromFile(String filename) throws IOException, ClassNotFoundException {
+        FamilyTree<Person> familyTree = dataManager.loadFromFile(filename);
+        memberManager.updateFamilyTree(familyTree);
+        relationshipManager.updateFamilyTree(familyTree);
         return familyTree;
     }
 
-    public Person createPerson(String familyName, String firstName, String fatherName, Person.Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
-        return new Person(new FullName(familyName, firstName, fatherName), gender, dateOfBirth, dateOfDeath);
-    }
-
-    public void addMember(Person newMember) {
+    @Override
+    public FamilyTree<Person> updateFamilyTree(FamilyTree<Person> familyTree) {
+        return familyTree;
     }
 }

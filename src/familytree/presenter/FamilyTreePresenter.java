@@ -1,120 +1,150 @@
 package familytree.presenter;
-
-import familytree.service.FamilyTreeService;
-import familytree.ui.UserInterface;
+import familytree.model.FamilyTree;
 import familytree.model.Person;
 
-import java.io.IOException;
+
+import familytree.service.FamilyTreeServiceInterface;
+import familytree.ui.ConsoleUserInterface;
+
 import java.time.LocalDate;
+import java.util.List;
+import java.io.IOException;
+
 
 
 public class FamilyTreePresenter {
-    private final FamilyTreeService familyTreeService;
-    private final UserInterface view;
+    private final FamilyTreeServiceInterface familyTreeService;
+    private final ConsoleUserInterface ui;
+    private FamilyTree<Person> familyTree;
 
-    public FamilyTreePresenter(FamilyTreeService familyTreeService, UserInterface view) {
+    public FamilyTreePresenter(FamilyTreeServiceInterface familyTreeService, ConsoleUserInterface ui) {
         this.familyTreeService = familyTreeService;
-        this.view = view;
-    }
-
-    public void addMember() {
-        String familyName = view.getUserInput("Введите фамилию:");
-        String firstName = view.getUserInput("Введите имя:");
-        String fatherName = view.getUserInput("Введите отчество:");
-
-        String genderInput = view.getUserInput("Введите пол (MALE/FEMALE):").toUpperCase();
-        Person.Gender gender;
-        try {
-            gender = Person.Gender.valueOf(genderInput);
-        } catch (IllegalArgumentException e) {
-            view.displayMessage("Некорректный ввод пола. Используется MALE по умолчанию.");
-            gender = Person.Gender.MALE;
-        }
-
-        LocalDate dateOfBirth = LocalDate.parse(view.getUserInput("Введите дату рождения (YYYY-MM-DD):"));
-
-        LocalDate dateOfDeath = null;
-        String deathKnown = view.getUserInput("Известна ли дата смерти? (да/нет):").toLowerCase();
-        if (deathKnown.equals("да")) {
-            dateOfDeath = LocalDate.parse(view.getUserInput("Введите дату смерти (YYYY-MM-DD):"));
-        }
-
-        Person newMember = familyTreeService.createPerson(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
-        familyTreeService.addMember(newMember);
-        view.displayMessage("Член семьи добавлен.");
-    }
-
-    public void findMember() {
-        String familyName = view.getUserInput("Введите фамилию:");
-        String firstName = view.getUserInput("Введите имя:");
-        String fatherName = view.getUserInput("Введите отчество:");
-
-        var member = familyTreeService.findMember(familyName, firstName, fatherName);
-        if (member != null) {
-            view.displayMessage("Найденный член семьи: " + member);
-        } else {
-            view.displayMessage("Член семьи не найден.");
-        }
-    }
-
-    public void addParentChildRelationship() {
-        String parentFamilyName = view.getUserInput("Введите фамилию родителя:");
-        String parentFirstName = view.getUserInput("Введите имя родителя:");
-        String parentFatherName = view.getUserInput("Введите отчество родителя:");
-
-        String childFamilyName = view.getUserInput("Введите фамилию ребенка:");
-        String childFirstName = view.getUserInput("Введите имя ребенка:");
-        String childFatherName = view.getUserInput("Введите отчество ребенка:");
-
-        familyTreeService.addParentChildRelationship(parentFamilyName, parentFirstName, parentFatherName,
-                childFamilyName, childFirstName, childFatherName);
-        view.displayMessage("Родительско-детская связь добавлена!");
-    }
-
-    public void printSortedByName() {
-        var sortedByName = familyTreeService.getSortedByName();
-        view.displayPersons(sortedByName);
-    }
-
-    public void printSortedByDateOfBirth() {
-        var sortedByDateOfBirth = familyTreeService.getSortedByDateOfBirth();
-        view.displayPersons(sortedByDateOfBirth);
-    }
-
-    public void saveToFile() {
-        try {
-            familyTreeService.saveToFile("familyTree.dat");
-            view.displayMessage("Дерево сохранено успешно!");
-        } catch (IOException e) {
-            view.displayMessage("Ошибка при сохранении: " + e.getMessage());
-        }
-    }
-
-    public void loadFromFile(String filename) {
-        try {
-            familyTreeService.loadFromFile(filename);
-            view.displayMessage("Дерево загружено успешно!");
-        } catch (IOException | ClassNotFoundException e) {
-            view.displayMessage("Ошибка при загрузке: " + e.getMessage());
-        }
+        this.ui = ui;
     }
 
     public void handleUserInput() {
-        view.showMenu();
-        int choice = Integer.parseInt(view.getUserInput("Выберите команду:"));
-        switch (choice) {
-            case 1 -> addMember();
-            case 2 -> findMember();
-            case 3 -> addParentChildRelationship();
-            case 4 -> printSortedByName();
-            case 5 -> printSortedByDateOfBirth();
-            case 6 -> saveToFile();
-            case 7 -> {
-                String filename = view.getUserInput("Введите имя файла для загрузки:");
-                loadFromFile(filename);
+        while (true) {
+            ui.showMenu();
+            String command = ui.getUserInput("Введите команду: ");
+
+            switch (command) {
+                case "1":
+                    addMember();
+                    break;
+                case "2":
+                    findMember();
+                    break;
+                case "3":
+                    addParentChildRelationship();
+                    break;
+                case "4":
+                    displaySortedByName();
+                    break;
+                case "5":
+                    displaySortedByDateOfBirth();
+                    break;
+                case "6":
+                    saveToFile();
+                    break;
+                case "7":
+                    loadFromFile();
+                    break;
+                case "0":
+                    ui.displayMessage("Выход из программы.");
+                    System.exit(0);
+                    break;
+                default:
+                    ui.displayMessage("Неизвестная команда. Попробуйте снова.");
+                    break;
             }
-            case 0 -> System.exit(0);
-            default -> view.displayMessage("Некорректный выбор.");
         }
     }
+
+    private void addMember() {
+        String fullNameInput = ui.getUserInput("Введите ФИО (фамилия имя отчество):");
+        String[] nameParts = fullNameInput.split(" ");
+        if (nameParts.length < 3) {
+            ui.displayMessage("Ошибка: необходимо ввести фамилию, имя и отчество.");
+            return;
+        }
+        String familyName = nameParts[0];
+        String firstName = nameParts[1];
+        String fatherName = nameParts[2];
+
+        Person.Gender gender = Person.Gender.valueOf(ui.getUserInput("Введите пол (MALE/FEMALE):").toUpperCase());
+
+        LocalDate dateOfBirth = LocalDate.parse(ui.getUserInput("Введите дату рождения (yyyy-mm-dd):"));
+
+        String dateOfDeathInput = ui.getUserInput("Введите дату смерти (yyyy-mm-dd, если нет - оставьте пустым):");
+        LocalDate dateOfDeath = dateOfDeathInput.isEmpty() ? null : LocalDate.parse(dateOfDeathInput);
+
+        familyTreeService.addMember(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
+        ui.displayMessage("Член семьи добавлен.");
+    }
+
+    private void findMember() {
+        String fullNameInput = ui.getUserInput("Введите ФИО для поиска (фамилия имя отчество):");
+        String[] nameParts = fullNameInput.split(" ");
+        if (nameParts.length < 3) {
+            ui.displayMessage("Ошибка: необходимо ввести фамилию, имя и отчество.");
+            return;
+        }
+        Person foundMember = familyTreeService.findMember(nameParts[0], nameParts[1], nameParts[2]);
+        if (foundMember != null) {
+            ui.displayMessage("Найденный член семьи: " + foundMember);
+        } else {
+            ui.displayMessage("Член семьи не найден.");
+        }
+    }
+
+    private void addParentChildRelationship() {
+        String parentFullName = ui.getUserInput("Введите ФИО родителя (фамилия имя отчество):");
+        String childFullName = ui.getUserInput("Введите ФИО ребенка (фамилия имя отчество):");
+        String[] parentParts = parentFullName.split(" ");
+        String[] childParts = childFullName.split(" ");
+
+        if (parentParts.length < 3 || childParts.length < 3) {
+            ui.displayMessage("Ошибка: необходимо ввести ФИО для родителя и ребенка.");
+            return;
+        }
+
+        familyTreeService.addParentChildRelationship(
+                parentParts[0], parentParts[1], parentParts[2],
+                childParts[0], childParts[1], childParts[2]
+        );
+        ui.displayMessage("Связь родитель-ребенок добавлена.");
+    }
+
+    private void displaySortedByName() {
+        List<Person> sortedList = familyTreeService.getSortedByName();
+        ui.displayMessage("Отсортированные члены семьи:");
+        ui.displayPersons(sortedList);
+    }
+
+    private void displaySortedByDateOfBirth() {
+        List<Person> sortedList = familyTreeService.getSortedByDateOfBirth();
+        ui.displayMessage("Отсортированные члены семьи по дате рождения:");
+        ui.displayPersons(sortedList);
+    }
+
+    private void saveToFile() {
+        String filename = ui.getUserInput("Введите имя файла для сохранения:");
+        try {
+            familyTreeService.saveToFile(filename);
+            ui.displayMessage("Дерево семьи успешно сохранено в файл " + filename);
+        } catch (IOException e) {
+            ui.displayMessage("Ошибка при сохранении: " + e.getMessage());
+        }
+    }
+
+    private void loadFromFile() {
+        String filename = ui.getUserInput("Введите имя файла для загрузки:");
+        try {
+            FamilyTree<Person> loadedTree = familyTreeService.loadFromFile(filename);
+            ui.displayMessage("Дерево семьи успешно загружено из файла " + filename);
+        } catch (IOException | ClassNotFoundException e) {
+            ui.displayMessage("Ошибка при загрузке: " + e.getMessage());
+        }
+    }
+
 }
