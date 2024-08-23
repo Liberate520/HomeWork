@@ -23,15 +23,22 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Hu
     private int id;
 
 
-    public Human( String name, String familiya, String pol, String birthDate, String dethDate ){
+    public Human( String name, String familiya, String pol, String birthDate, String dethDate ) {
+        try{
+            this.birthDate=setBirtdayDate(birthDate);
+            setAge();
+        }catch(Exception e){
+            System.out.println("Nepravilno vvedena data rozhdenia");
+            this.birthDate=null;
+        }
 
         this.name= name;
         this.familiya=familiya;
         this.suprug=null;
         if (pol.equals("man")){
-            this.pol = Pol.valueOf("man");
+            this.pol = Pol.valueOf("MAN");
         }else if (pol.equals("woman")){
-            this.pol = Pol.valueOf("woman");
+            this.pol = Pol.valueOf("WOMAN");
         }else{
             System.out.println("vvedite pol: man ili woman");
         }
@@ -42,8 +49,6 @@ public class Human implements Serializable, Comparable<Human>, FamilyTreeItem<Hu
         setId();
 
 
-        this.birthDate=setBirtdayDate(birthDate);
-        setAge();
 
         if (dethDate != null && !dethDate.equals("")){
 

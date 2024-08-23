@@ -17,6 +17,5 @@ public class Main {
 
         View view = new ConsoleUI();
         view.start();
-
     }
 }

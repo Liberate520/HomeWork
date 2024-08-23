@@ -33,52 +33,49 @@ public class FamilyTree<T extends FamilyTreeItem> implements Iterable <T>, Seria
     }
 
     public String toString(){
+        StringBuilder sb=new StringBuilder();
         if (tree.isEmpty()){
             return "V dereve net ludey";
 
         }else{
             for (T el:tree){
-                System.out.println(el);
+                sb.append(el +"\n");
 
 
             }
         }
 
-        return "konec dereva!";
+        return sb.toString();
     }
 
     public String getInfo(){
         StringBuilder sB= new StringBuilder();
 
         if (tree.isEmpty()){
-            sB.append("V dereve net ludey");
+            sB.append("V dereve net ludey"+"\n");
         }else{
             int i=1;
             for (T el:tree){
+                sB.append("*********************************************************"+"\n");
                 sB.append("("+Integer.toString(i++)+")");
                 sB.append(el+"\n");
                 sB.append("ID: "+Integer.toString(el.getId())+"\n");
                 if (!(el.getSuprug()==null)){
+                    sB.append("-----------------------------------------------------------"+"\n");
                     sB.append(" zhenat na "+ "\n");
                     sB.append(el.getSuprug() +"\n");
                 }else{
+                    sB.append("-----------------------------------------------------------"+"\n");
                     sB.append(" Holost."+ "\n");
                 }
                 if (!(el.getChildren().isEmpty())){
+                    sB.append("-----------------------------------------------------------"+"\n");
                     sB.append(" dety: "+"\n");
                     sB.append(el.getChildren() +"\n");
                 }else{
+                    sB.append("-----------------------------------------------------------"+"\n");
                     sB.append(" Net detey."+ "\n");
                 }
-                sB.append("konec dereva!"+ "\n");
-                // System.out.println( el+"\n"+
-                // " zhenat na "+ "\n"+
-
-                // el.getSuprug() +"\n"+
-                // " dety: "+"\n"+
-                // el.getChildren());
-
-
             }
         }
 
@@ -92,7 +89,7 @@ public class FamilyTree<T extends FamilyTreeItem> implements Iterable <T>, Seria
 
     public T getHuman (String name, String familiya, String pol, String birthDate){
         int count=0;
-        T res;
+        T res=null;
         for (T el :  tree){
             if (((el.getName()).equals(name)) &&((el.getFamilia()).equals(familiya))&&(el.getPol().equals(pol)) &&(el.getBirtdayDate().equals(birthDate)) ){
                 res=el;
@@ -101,10 +98,10 @@ public class FamilyTree<T extends FamilyTreeItem> implements Iterable <T>, Seria
         }
 
         if (count==0){
-            System.out.println("Chelovek s dannim imenem ne nayden");
+            return res=null;
         }
 
-        return res=null;
+        return res;
 
     }
 
@@ -119,7 +116,7 @@ public class FamilyTree<T extends FamilyTreeItem> implements Iterable <T>, Seria
         }
 
         if (count==0){
-            System.out.println("Chelovek s dannim imenem ne nayden");
+
             return res;
         }else{
             return res;
@@ -129,18 +126,19 @@ public class FamilyTree<T extends FamilyTreeItem> implements Iterable <T>, Seria
 
     public String findByName (String name){
         int count=0;
+        String res="";
         for (T el : tree){
             if ((el.getName()).equals(name)){
-                System.out.println(el);
+                res=el.toString();
                 count++;
             }
         }
 
         if (count==0){
-            System.out.println("Chelovek s dannim imenem ne nayden");
+            res="Chelovek s dannim imenem ne nayden";
         }
 
-        return "Poisk zavershen";
+        return res;
 
     }
 
