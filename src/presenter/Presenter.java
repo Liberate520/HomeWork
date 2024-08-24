@@ -2,22 +2,18 @@ package presenter;
 
 import model.human.Gender;
 import model.service.Service;
-import model.writer.DataHandler;
 import view.View;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Presenter {
-    private String filePath;
     private View view;
     private Service service;
-    private DataHandler dataHandler;
 
     public Presenter(View view) {
         this.view = view;
         service = new Service();
-        dataHandler = new DataHandler();
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate){
@@ -46,23 +42,14 @@ public class Presenter {
     }
 
     public void setFilePath(String filePath) {
-        this.filePath = filePath;
-        dataHandler.setPath(filePath);
+        service.setFilePath(filePath);
     }
 
     public void save(){
-        dataHandler.setPath(filePath);
-        dataHandler.save(service);
+        service.save();
     }
 
-    public Serializable load(){
-        dataHandler.setPath(filePath);
-        service = (Service) dataHandler.read();
-        return service;
-
-//        dataHandler.setPath(filePath);
-//        Serializable loadedData = (Serializable)dataHandler.read();
-//        service = (Service) loadedData;
-//        return service;
+    public Serializable load() {
+        return service.load();
     }
 }
