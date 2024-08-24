@@ -5,6 +5,7 @@ import presenter.Presenter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
@@ -74,11 +75,12 @@ public class ConsoleUI implements View{
         String name = scanner.nextLine();
         System.out.println("Укажите пол: MALE - 1/FEMALE - 2");
         Gender gender = findGender(scanner.nextLine());
-        System.out.println("Укажите возраст");
+        System.out.println("Укажите дату рождения - формат: дд.ММ.гггг");
         String ageString = scanner.nextLine();
-        int age = Integer.parseInt(ageString);
-        LocalDate today = LocalDate.now();
-        LocalDate birthday = today.minusYears(age);
+        LocalDate birthday = LocalDate.parse(ageString, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+//        int age = Integer.parseInt(ageString);
+//        LocalDate today = LocalDate.now();
+//        LocalDate birthday = today.minusYears(age);
 
         presenter.addHuman(name, gender, birthday);
     }
