@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class HumanPresenter {
     private View view;
-    private HumanService<Human> service;
+    private HumanService service;
 
     public HumanPresenter(View view) {
         this.view = view;
-        this.service = new HumanService<>();
+        this.service = new HumanService();
     }
 
     public void saveDataFile(String filePath) {
