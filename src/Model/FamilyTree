@@ -1,0 +1,17 @@
+public class FamilyTree {
+    private List<Person> people;
+    public FamilyTree() {
+        this.people = new ArrayList<
+    }
+    public void addPerson(Person per
+        people.add(person);
+    }
+    public List<Person> getAllChildr
+        for (Person person : people)
+            if (person.getName().equ
+                return person.getChi
+            }
+        }
+        return new ArrayList<>();
+    }
+}

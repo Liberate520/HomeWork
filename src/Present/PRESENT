@@ -1,0 +1,26 @@
+public interface FamilyTreePresenter {
+    void loadData();
+    void updateView();
+    void onPersonClicked(Person person);
+    public class PresenterImpl implements FamilyTreePresenter {
+    private FamilyTreeView view;
+    private FamilyTreeModel model;
+    public PresenterImpl(FamilyTreeView view, FamilyTreeModel model) {
+        this.view = view;
+        this.model = model;
+    }
+    @Override
+    public void loadData() {
+        List<Person> familyMembers = model.getFamilyTree(); 
+        view.displayFamilyTree(familyMembers); 
+    }
+    @Override
+    public void updateView() {
+        view.refresh(); 
+    }
+    @Override
+    public void onPersonClicked(Person person) {
+        view.showPersonDetails(person);
+    }
+}
+FamilyTreePresenter presenter = new PresenterImpl(view, model);

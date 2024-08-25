@@ -1,0 +1,63 @@
+public class Tree implements Iterable<Person> {
+    private Node root;
+    public Tree(Node root) {
+        this.root = root;
+    }
+    @Override
+    public Iterator<Person> iterator() {
+        return new TreeIterator(root);
+    }
+    private class TreeIterator implements Iterator<Person> {
+        private Queue<Node> queue;
+        public TreeIterator(Node root) {
+            queue = new LinkedList<>();
+            queue.add(root);
+        }
+        @Override
+        public boolean hasNext() {
+            return !queue.isEmpty();
+        }
+        @Override
+        public Person next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Node current = queue.remove();
+            for (Node child : current.getChildren()) {
+                queue.add(child);
+            }
+            return current.getPerson();
+        }
+    }
+}
+public void sortByFirstName() {
+    List<Person> sortedList = StreamSupport.stream(this.spliterator(),
+            .sorted(Comparator.comparing(Person::getFirstName))
+            .collect(Collectors.toList());
+    sortedList.forEach(person -> System.out.println(person.getFirstNam
+
+}
+public class LivingBeing:
+    def __init__(self, name, age, being_type):
+        self.name = name
+        self.age = age
+        self.being_type = being_type
+    class Person(LivingBeing):
+    def __init__(self, name, age):
+        super().__init__(name, age, "person")
+    class Dog(LivingBeing):
+    def __init__(self, name, age):
+        super().__init__(name, age, "dog")
+public class UserInteraction:
+    def __init__(self, family_tree):
+        self.family_tree = family_tree
+    def add_person(self, name, age):
+        person = Person(name, age)
+        self.family_tree.add_member(person)
+    def add_dog(self, name, age):
+        dog = Dog(name, age)
+        self.family_tree.add_member(dog)
+    def search_relationships(self, member):
+        relationships = self.family_tree.find_relationships(member)
+        return relationships
+

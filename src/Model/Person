@@ -1,0 +1,16 @@
+ublic class Person {
+   private String name;
+   private String dateOfBirth;
+   private List<Person> childr
+   public Person(String name, 
+       this.name = name;
+       this.dateOfBirth = date
+       this.children = new Arr
+   }
+   public void addChild(Person
+       children.add(child);
+   }
+   public List<Person> getChil
+       return children;
+   }
+}
