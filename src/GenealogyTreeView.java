@@ -1,5 +1,5 @@
-interface GenealogyTreeView {
-    void showGenealogyTree(GenealogyTree tree);
+public interface GenealogyTreeView {
+    void showGenealogyTree(GenealogyTree<Person> tree);
 
     void addButtonClickListener(Runnable listener);
 

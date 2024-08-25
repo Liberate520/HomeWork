@@ -4,6 +4,6 @@ import java.io.Serializable;
 
 public interface Writer {
     void save(Serializable serializable);
-    Object read();
+    Serializable load();
     void setPath(String path);
 }

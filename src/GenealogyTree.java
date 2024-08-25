@@ -4,9 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-// Использование полиморфизма для улучшения читаемости и обслуживания кода.
-
-class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
+public class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
     private List<T> persons;
 
     public GenealogyTree() {
@@ -34,24 +32,8 @@ class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
     public String toString() {
         StringBuilder treeString = new StringBuilder();
         for (T person : persons) {
-            treeString.append("Имя: ").append(person.getName()).append(", ");
-            treeString.append("Год рождения: ").append(person.getBirthDate()).append(", ");
-            treeString.append("Пол: ").append(person.getGender()).append("\n");
-            treeString.append("Отец: ").append(person.getFather() != null ? person.getFather().getName() : "").append("\n");
-            treeString.append("Мать: ").append(person.getMother() != null ? person.getMother().getName() : "").append("\n");
-            treeString.append("Дети: ").append(formatChildrenList(person.getChildren())).append("\n\n");
+            treeString.append(person.toString()).append("\n");
         }
         return treeString.toString();
-    }
-
-    private String formatChildrenList(List<T> children) {
-        StringBuilder childrenList = new StringBuilder();
-        for (T child : children) {
-            childrenList.append(child.getName()).append(", ");
-        }
-        if (childrenList.length() > 0) {
-            childrenList.delete(childrenList.length() - 2, childrenList.length());
-        }
-        return childrenList.toString();
     }
 }
