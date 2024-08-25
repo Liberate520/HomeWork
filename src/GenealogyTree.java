@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
+class GenealogyTree<T extends Person> implements Serializable, Iterable<T> {
     private List<T> persons;
 
     public GenealogyTree() {
@@ -32,8 +32,29 @@ public class GenealogyTree<T extends Person> implements Serializable, Iterable<T
     public String toString() {
         StringBuilder treeString = new StringBuilder();
         for (T person : persons) {
-            treeString.append(person.toString()).append("\n");
+            treeString.append("Имя: ").append(person.getName()).append(", ");
+            treeString.append("Год рождения: ").append(person.getBirthDate()).append(", ");
+            treeString.append("Пол: ").append(person.getGender()).append("\n");
+            treeString.append("Отец: ").append(person.getFather() != null ? person.getFather().getName() : "").append("\n");
+            treeString.append("Мать: ").append(person.getMother() != null ? person.getMother().getName() : "").append("\n");
+            treeString.append("Дети: ").append(formatChildrenList(person.getChildren())).append("\n\n");
         }
         return treeString.toString();
+    }
+
+    // Исправленный метод с wildcard
+    private String formatChildrenList(List<? extends Person> children) {
+        StringBuilder childrenList = new StringBuilder();
+        for (Person child : children) {
+            childrenList.append(child.getName()).append(", ");
+        }
+        if (childrenList.length() > 0) {
+            childrenList.delete(childrenList.length() - 2, childrenList.length());
+        }
+        return childrenList.toString();
+    }
+
+    static interface Loader {
+        Object load();
     }
 }

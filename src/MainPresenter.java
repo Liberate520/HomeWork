@@ -1,15 +1,16 @@
-import writer.Writer;
-import writer.FileHandler;
-
-public class MainPresenter {
+class MainPresenter {
     private GenealogyTreeModel model;
     private GenealogyTreeView view;
-    private Writer fileWriter;
+    private FamilyRelationsService relationsService;
+    private Saver saver;
+    private Loader loader;
 
-    public MainPresenter(GenealogyTreeView view) {
+    public MainPresenter(GenealogyTreeView view, Saver saver, Loader loader) {
         this.view = view;
         this.model = new GenealogyTreeModel();
-        this.fileWriter = new FileHandler(); // Зависимость от Writer
+        this.relationsService = new FamilyRelationsService();
+        this.saver = saver;
+        this.loader = loader;
     }
 
     public void initialize() {
@@ -32,13 +33,18 @@ public class MainPresenter {
         });
 
         view.addSaveButtonClickListener(() -> {
-            fileWriter.save(model.getGenealogyTree());
+            saver.save(model.getGenealogyTree());
+            System.out.println("Древо сохранено.");
         });
 
         view.addLoadButtonClickListener(() -> {
-            GenealogyTree loadedTree = (GenealogyTree) fileWriter.load();
-            model.setGenealogyTree(loadedTree);
-            view.showGenealogyTree(model.getGenealogyTree());
+            GenealogyTree loadedTree = (GenealogyTree) loader.load();
+            if (loadedTree != null) {
+                model.setGenealogyTree(loadedTree);
+                view.showGenealogyTree(model.getGenealogyTree());
+            } else {
+                System.out.println("Не удалось загрузить древо.");
+            }
         });
     }
 }

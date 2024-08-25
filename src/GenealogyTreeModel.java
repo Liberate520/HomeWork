@@ -1,8 +1,8 @@
-public class GenealogyTreeModel {
-    private GenealogyTree<Person> genealogyTree;
+class GenealogyTreeModel {
+    private GenealogyTree genealogyTree;
 
     public GenealogyTreeModel() {
-        this.genealogyTree = new GenealogyTree<>();
+        this.genealogyTree = new GenealogyTree();
     }
 
     public void addPerson(Person person) {
@@ -17,11 +17,11 @@ public class GenealogyTreeModel {
         genealogyTree.sortByBirthDate();
     }
 
-    public GenealogyTree<Person> getGenealogyTree() {
+    public GenealogyTree getGenealogyTree() {
         return genealogyTree;
     }
 
-    public void setGenealogyTree(GenealogyTree<Person> genealogyTree) {
+    public void setGenealogyTree(GenealogyTree genealogyTree) {
         this.genealogyTree = genealogyTree;
     }
 }

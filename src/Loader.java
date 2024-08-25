@@ -1,0 +1,3 @@
+interface Loader {
+    Object load();
+}

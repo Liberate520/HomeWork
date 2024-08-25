@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+class Person {
     private String name;
     private LocalDate birthDate;
     private Gender gender;
@@ -35,9 +35,6 @@ public class Person {
 
     public void setFather(Person father) {
         this.father = father;
-        if (father != null) {
-            father.addChild(this);
-        }
     }
 
     public Person getMother() {
@@ -46,16 +43,13 @@ public class Person {
 
     public void setMother(Person mother) {
         this.mother = mother;
-        if (mother != null) {
-            mother.addChild(this);
-        }
     }
 
     public List<Person> getChildren() {
         return children;
     }
 
-    private void addChild(Person child) {
+    public void addChild(Person child) {
         children.add(child);
     }
 
