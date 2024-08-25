@@ -1,10 +1,8 @@
-package family_tree.family_tree;
+package family_tree.model.family_tree;
 
-import family_tree.ComparatorByAge;
-import family_tree.ComparatorByName;
-import family_tree.FamilyTreeItem;
-import family_tree.FamilyTreeIterator;
-import family_tree.human.Human;
+import family_tree.model.human.comparators.ComparatorByAge;
+import family_tree.model.human.comparators.ComparatorByName;
+import family_tree.model.FamilyTreeIterator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,32 +22,8 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         this.humans = humans;
     }
 
-    public boolean add(E human){
-        if (human == null){
-            return false;
-        }
-        if (!humans.contains(human)){
-            humans.add(human);
-            human.setId(humanId++);
-
-            addToParents(human);
-            addToChildren(human);
-
-            return true;
-        }
-        return false;
-    }
-
-    private void addToParents(E human){
-        for (E parent: human.getParents()){
-            parent.addChild(human);
-        }
-    }
-
-    private void addToChildren(E human){
-        for (E child: human.getChildren()){
-            child.addParent(human);
-        }
+    public void add(E human){
+        this.humans.add(human);
     }
 
     public List<E> getByName(String name){
@@ -72,15 +46,15 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
     }
 
     public void sortByAge(){
-        Collections.sort(humans, new ComparatorByAge());
+        Collections.sort(humans, new ComparatorByAge<>());
     }
 
     public void sortByName(){
-        Collections.sort(humans, new ComparatorByName());
+        Collections.sort(humans, new ComparatorByName<>());
     }
 
     public Iterator<E> iterator(){
-        return new FamilyTreeIterator(humans);
+        return new FamilyTreeIterator<>(humans);
     }
 
     @Override

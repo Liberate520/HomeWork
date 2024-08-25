@@ -1,6 +1,6 @@
-package family_tree.human;
+package family_tree.model.human;
 
-import family_tree.FamilyTreeItem;
+import family_tree.model.family_tree.FamilyTreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,21 +14,26 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     private Gender gender;
     private LocalDate birthDate;
     private LocalDate deathDate;
-    private List<Human> parents;
+    private Human mother;
+    private Human father;
     private List<Human> children;
 
-    public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender){
+    public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender, Human mother, Human father){
         id = -1;
         this.name = name;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         this.gender = gender;
-        parents = new ArrayList<>();
+        this.mother = mother;
+        this.father = father;
         children = new ArrayList<>();
     }
 
     public Human(String name, LocalDate birthDate, Gender gender){
-        this(name, birthDate, null, gender);
+        this(name, birthDate, null, gender, null, null);
+    }
+
+    public Human(){
     }
 
     public long getId() {
@@ -67,8 +72,24 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         return children;
     }
 
-    public List<Human> getParents() {
-        return parents;
+    public void setChildren(List<Human> children) {
+        this.children = children;
+    }
+
+    public Human getMother(Human mother) {
+        return mother;
+    }
+
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    public Human getFather() {
+        return father;
+    }
+
+    public void setFather(Human father) {
+        this.father = father;
     }
 
     public boolean addChild(Human child){
@@ -80,11 +101,12 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
     }
 
     public boolean addParent(Human parent){
-        if (!parents.contains(parent)){
-            parents.add(parent);
-            return true;
+        if (parent.gender.equals(Gender.Female)) {
+            setMother(parent);
+        } else if (parent.gender.equals(Gender.Male)) {
+            setFather(parent);
         }
-        return false;
+        return true;
     }
 
     public void setGender(Gender gender){
@@ -117,27 +139,25 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         stringBuilder.append(getAge());
         stringBuilder.append(", пол: ");
         stringBuilder.append(gender);
-        stringBuilder.append(", ");
-        stringBuilder.append(getParentsInfo());
+        stringBuilder.append(", мать: ");
+        stringBuilder.append(getMotherInfo());
+       stringBuilder.append(", отец: ");
+       stringBuilder.append(getFatherInfo());
         stringBuilder.append(", ");
         stringBuilder.append(getChildrenInfo());
         return stringBuilder.toString();
    }
 
-   public String getParentsInfo(){
-        StringBuilder par = new StringBuilder();
-        par.append("Родители: ");
-        if (parents.size() != 0){
-            par.append(parents.get(0).getName());
-            for (int i = 1; i < parents.size(); i++) {
-                par.append(", ");
-                par.append(parents.get(i).getName());
-            }
-        }else {
-            par.append("не известны");
-        }
-        return par.toString();
+   public String getMotherInfo(){
+       if (this.mother == null)
+           return "Неизвестно";
+       return this.mother.name;
    }
+    private String getFatherInfo() {
+        if (this.father == null)
+            return "Неизвестно";
+        return this.father.name;
+    }
 
     public String getChildrenInfo(){
         StringBuilder chil = new StringBuilder();
