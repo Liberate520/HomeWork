@@ -7,13 +7,13 @@ import Model.Human.Human;
 import java.io.*;
 
 public class FileHandler implements Writer {
-    private FamilyTree familyTree;
+    private FamilyTree<Human> familyTree;
 
-    public FileHandler(FamilyTree familyTree) {
+    public FileHandler(FamilyTree<Human> familyTree) {
         this.familyTree = familyTree;
     }
 
-    public void saveToFile(String filename, FamilyTree familyTree) throws IOException {
+    public void saveToFile(String filename, FamilyTree<Human> familyTree) throws IOException {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
             objectOutputStream.writeObject(familyTree);
         } catch (IOException e) {
@@ -21,9 +21,9 @@ public class FileHandler implements Writer {
         }
     }
 
-    public FamilyTree readFromFile(String filename) throws IOException, ClassNotFoundException {
+    public FamilyTree<Human> readFromFile(String filename) throws IOException, ClassNotFoundException {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename))) {
-            familyTree = (FamilyTree) objectInputStream.readObject();
+            familyTree = (FamilyTree<Human>) objectInputStream.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         }

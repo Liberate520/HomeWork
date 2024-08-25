@@ -16,10 +16,12 @@ import java.util.List;
 public class HumanService {
     private FamilyTree<Human> familyTree;
     private HumanBuilder builder;
+    private Writer writer;
 
     public HumanService() {
         familyTree = new FamilyTree<>();
         builder = new HumanBuilder();
+        this.writer = new FileHandler(familyTree);
     }
 
     public String addHuman(String name, Gender gender, LocalDate birthDate, LocalDate deathDate) {
@@ -95,14 +97,12 @@ public class HumanService {
     }
 
     public String saveToFile(String filename) throws IOException {
-        Writer fileWriter = new FileHandler(familyTree);
-        fileWriter.saveToFile(filename, familyTree);
+        writer.saveToFile(filename, familyTree);
         return "Семейное дерево сохранено в файл \"" + filename + "\".";
     }
 
     public String loadFromFile(String filename) throws IOException, ClassNotFoundException {
-        Writer fileWriter = new FileHandler(familyTree);
-        familyTree = fileWriter.readFromFile(filename);
+        familyTree = writer.readFromFile(filename);
         return "Семейное дерево загружено из файла \"" + filename + "\".";
     }
 
