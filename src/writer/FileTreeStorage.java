@@ -6,11 +6,10 @@ import person.Person;
 import java.io.*;
 
 public class FileTreeStorage<T extends Person> implements TreeStorage<T> {
-
     @Override
-    public void save(FamilyTree<T> familyTree, String fileName) {
+    public void save(FamilyTree<T> tree, String fileName) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(familyTree);
+            oos.writeObject(tree);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -22,7 +21,7 @@ public class FileTreeStorage<T extends Person> implements TreeStorage<T> {
             return (FamilyTree<T>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }

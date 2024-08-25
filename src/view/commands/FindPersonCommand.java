@@ -15,8 +15,15 @@ public class FindPersonCommand implements Command {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
+
         System.out.print("Enter name to find: ");
         String name = scanner.nextLine();
+
         presenter.findPerson(name);
+    }
+
+    @Override
+    public String getName() {
+        return "find";
     }
 }

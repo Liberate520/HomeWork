@@ -14,4 +14,9 @@ public class DisplayAllPersonsCommand implements Command {
     public void execute() {
         presenter.displayAllPersons();
     }
+
+    @Override
+    public String getName() {
+        return "display";
+    }
 }

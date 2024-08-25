@@ -14,5 +14,9 @@ public class SortByNameCommand implements Command {
     public void execute() {
         presenter.sortByName();
     }
-}
 
+    @Override
+    public String getName() {
+        return "sortname";
+    }
+}
