@@ -1,8 +1,11 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class Person {
+class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private LocalDate birthDate;
     private Gender gender;
@@ -35,6 +38,9 @@ class Person {
 
     public void setFather(Person father) {
         this.father = father;
+        if (father != null) {
+            father.addChild(this);
+        }
     }
 
     public Person getMother() {
@@ -43,6 +49,9 @@ class Person {
 
     public void setMother(Person mother) {
         this.mother = mother;
+        if (mother != null) {
+            mother.addChild(this);
+        }
     }
 
     public List<Person> getChildren() {
