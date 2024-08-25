@@ -1,0 +1,71 @@
+public class FamilyTreeNode {
+    private String name;
+    private int age;
+    private List<FamilyTreeNode> parents;
+    private List<FamilyTreeNode> children;
+    public FamilyTreeNode(String name, int age) {
+        this.name = name;
+        this.age = age;
+        this.parents = new ArrayList<>();
+        this.children = new ArrayList<>();
+    }
+}
+public class FamilyTreeView extends Application {
+
+
+
+    @Override
+
+    public void start(Stage primaryStage) {
+
+        // Создаем корневой узел
+
+        TreeItem<FamilyTreeNode> rootNode = new TreeItem<>(new FamilyTreeNode("John Doe", 40));
+
+
+
+        // Добавляем детей к корневому узлу
+
+        TreeItem<FamilyTreeNode> child1 = new TreeItem<>(new FamilyTreeNode("Alice Doe", 15));
+
+        TreeItem<FamilyTreeNode> child2 = new TreeItem<>(new FamilyTreeNode("Bob Doe", 10));
+
+        rootNode.getChildren().addAll(child1, child2);
+
+
+
+        // Создаем TreeView и добавляем корневой узел
+
+        TreeView<FamilyTreeNode> treeView = new TreeView<>(rootNode);
+
+
+
+        // Создаем сцену и добавляем TreeView
+
+        StackPane root = new StackPane();
+
+        root.getChildren().add(treeView);
+
+
+
+        Scene scene = new Scene(root, 300, 250);
+
+
+
+        primaryStage.setTitle("Family Tree View");
+
+        primaryStage.setScene(scene);
+
+        primaryStage.show();
+
+    }
+
+
+
+    public static void main(String[] args) {
+
+        launch(args);
+
+    }
+
+}

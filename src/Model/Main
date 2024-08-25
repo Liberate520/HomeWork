@@ -1,0 +1,105 @@
+public class Main {
+    public static void main(String[]
+        Person father = new Person("
+        Person mother = new Person("
+        Person child1 = new Person("
+        Person child2 = new Person("
+
+        father.addChild(child1);
+        father.addChild(child2);
+        mother.addChild(child1);
+        FamilyTree familyTree = new 
+        familyTree.addPerson(father)
+        familyTree.addPerson(mother)
+        familyTree.addPerson(child1)
+        familyTree.addPerson(child2)
+        List<Person> children = fami
+        for (Person child : children
+            System.out.println(child
+
+  public class FileHandler {
+    public static void writeToFile(Object object, String fileName) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(fileName);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(object);
+            objectOut.close();
+            fileOut.close();
+            System.out.println("Object has been serialized and written to the file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Object readFromFile(String fileName) {
+        Object object = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(fileName);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            object = objectIn.readObject();
+            objectIn.close();
+            fileIn.close();
+            System.out.println("Object has been deserialized and read from the file");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
+} 
+  import java.io.Serializable;
+
+import java.util.ArrayList;
+
+import java.util.List;
+
+
+
+public class Person implements Serializable {
+
+    private String name;
+
+    private int age;
+
+
+
+    // Constructors, getters, and setters
+
+
+
+    @Override
+
+    public String toString() {
+
+        return "Person{" +
+
+                "name='" + name + ''' +
+
+                ", age=" + age +
+
+                '}';
+
+    }
+
+}
+public class FamilyTree implements Serializable {
+    private List<Person> familyMembers;
+    public FamilyTree() {
+        this.familyMembers = new ArrayList<>();
+    }
+    public void addFamilyMember(Person person) {
+        familyMembers.add(person);
+    }
+    public List<Person> getFamilyMembers() {
+        return familyMembers;
+    }
+}   
+public static void main(String[] args) {
+    Person person = new Person("John", 30);
+    FamilyTree familyTree = new FamilyTree();
+    familyTree.addFamilyMember(person);
+    FileHandler.writeToFile(familyTree, "family_tree.ser");
+    FamilyTree readFamilyTree = (FamilyTree) FileHandler.readFromFile("family_tree.ser");
+    List<Person> familyMembers = readFamilyTree.getFamilyMembers();
+    for (Person member : familyMembers) {
+        System.out.println(member);
+    }
+}

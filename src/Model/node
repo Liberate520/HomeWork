@@ -1,0 +1,9 @@
+public class Node {
+    private Person person;
+    private List<Node> children;
+    public Node(Person person) {
+        this.person = person;
+        this.children = new ArrayList<>();
+
+    }
+}
