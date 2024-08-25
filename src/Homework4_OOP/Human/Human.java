@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.Period;
 
-public class Human implements Serializable {
+public class Human implements Person, Serializable {
     private long id;
     private Gender gender;
     private String name;

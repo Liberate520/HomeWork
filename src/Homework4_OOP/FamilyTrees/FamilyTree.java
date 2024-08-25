@@ -1,5 +1,6 @@
 package Homework4_OOP.FamilyTrees;
 
+import Homework4_OOP.Human.Person;
 import Homework4_OOP.Human.Human;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T> implements Iterable<T>, Serializable {
+public class FamilyTree<T extends Person> implements Iterable<T>, Serializable {
     private long entityId;
     private List<T> entityList;
 
@@ -56,25 +57,25 @@ public class FamilyTree<T> implements Iterable<T>, Serializable {
     }
 
     public List<Human> getSiblings(int id) {
-        Human human = (Human) getById(id);
-        if (human == null) {
-            return null;
-        }
-        List<Human> res = new ArrayList<>();
-        for (Human parent : human.getParents()) {
-            for (Human child : parent.getChildren()) {
-                if (!child.equals(human)) {
-                    res.add(child);
+        T person = getById(id);
+        if (person instanceof Human human) {
+            List<Human> res = new ArrayList<>();
+            for (Human parent : human.getParents()) {
+                for (Human child : parent.getChildren()) {
+                    if (!child.equals(human)) {
+                        res.add(child);
+                    }
                 }
             }
+            return res;
         }
-        return res;
+        return null;
     }
 
     public List<T> getByName(String name) {
         List<T> res = new ArrayList<>();
         for (T entity : entityList) {
-            if (entity instanceof Human && ((Human) entity).getName().equals(name)) {
+            if (entity.getName().equals(name)) {
                 res.add(entity);
             }
         }
@@ -113,7 +114,7 @@ public class FamilyTree<T> implements Iterable<T>, Serializable {
 
     public T getById(long id) {
         for (T entity : entityList) {
-            if (entity instanceof Human && ((Human) entity).getId() == id) {
+            if (entity.getId() == id) {
                 return entity;
             }
         }
@@ -121,12 +122,7 @@ public class FamilyTree<T> implements Iterable<T>, Serializable {
     }
 
     public void sortByName() {
-        entityList.sort(Comparator.comparing(entity -> {
-            if (entity instanceof Human) {
-                return ((Human) entity).getName();
-            }
-            return "";
-        }));
+        entityList.sort(Comparator.comparing(Person::getName));
     }
 
     public void sortByBirthDate() {
