@@ -21,4 +21,8 @@ public interface FamilyTreeServiceInterface {
     void sortByBirthDate();
 
     String getFamilyTreeInfo();
+
+    void saveTree();
+
+    void loadTree();
 }

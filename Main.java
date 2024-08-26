@@ -12,7 +12,7 @@ public class Main {
                 ObjectWriter writer = new FileHandler();
                 ObjectReader reader = new FileHandler();
                 FamilyTreeServiceInterface service = new FamilyTreeService(writer, reader);
-                Presenter presenter = new Presenter(service, writer, reader);
+                Presenter presenter = new Presenter(service);
                 View view = new ConsoleUI(presenter);
                 presenter.setView(view);
                 view.start();

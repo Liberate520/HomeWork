@@ -104,5 +104,4 @@ public class FamilyTreeService implements FamilyTreeServiceInterface {
             System.out.println("Ошибка загрузки дерева.");
         }
     }
-
 }

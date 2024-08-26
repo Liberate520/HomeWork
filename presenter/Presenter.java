@@ -7,25 +7,21 @@ import model.family_tree.FamilyTreeServiceInterface;
 import model.human.Gender;
 import model.human.Human;
 import model.places.Place;
-import model.writers.ObjectReader;
-import model.writers.ObjectWriter;
+import view.ConsoleUI;
 import view.MainMenu;
 import view.View;
 import view.commands.*;
 
 // Применяем DIP: Presenter теперь зависит от интерфейса FamilyTreeServiceInterface.
 // Применяем DIP: Presenter зависит от ObjectWriter и ObjectReader.
+
 public class Presenter {
     private View view;
     private FamilyTreeServiceInterface service;
-    private ObjectWriter writer;
-    private ObjectReader reader;
     private MainMenu menu;
 
-    public Presenter(FamilyTreeServiceInterface service, ObjectWriter writer, ObjectReader reader) {
+    public Presenter(FamilyTreeServiceInterface service) {
         this.service = service;
-        this.writer = writer;
-        this.reader = reader;
         this.menu = new MainMenu();
     }
 
@@ -51,17 +47,13 @@ public class Presenter {
     }
 
     public void saveFamilyTree() {
-        writer.write(service.getFamilyTreeInfo());
+        service.saveTree();
         view.printAnswer("Дерево сохранено.");
     }
 
     public void loadFamilyTree() {
-        Object obj = reader.read();
-        if (obj != null) {
-            view.printAnswer("Дерево загружено: \n" + obj.toString());
-        } else {
-            view.printAnswer("Файл не найден или дерево не загружено.");
-        }
+        service.loadTree();
+        view.printAnswer("Дерево загружено.");
     }
 
     public void addHuman(String firstName, String lastName, String patronymic, LocalDate birthDate, LocalDate deathDate,
@@ -100,5 +92,9 @@ public class Presenter {
 
     public String getMenu() {
         return menu.menu();
+    }
+
+    public View getView() {
+        return this.view;
     }
 }
