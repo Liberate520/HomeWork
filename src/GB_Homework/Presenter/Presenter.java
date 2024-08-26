@@ -34,7 +34,7 @@ public class Presenter implements Serializable {
     }
 
     public void sortByBirthDate() {
-        service.sortByName();
+        service.sortByBirthDate();
         getHumanListInfo();
     }
 
