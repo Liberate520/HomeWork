@@ -1,12 +1,14 @@
 package family_tree;
 
+import family_tree.family_tree.TreeNode;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Serializable {
+public class Human implements TreeNode<Human>, Serializable, Comparable<Human> {
 
 
     private long id;
@@ -31,6 +33,9 @@ public class Human implements Serializable {
         this.mother = mother;
         this.father = father;
     }
+
+
+
     public long getId() {
         return id;
     }
@@ -199,4 +204,8 @@ public class Human implements Serializable {
     }
 
 
+    @Override
+    public int compareTo(Human o) {
+        return name.compareTo(o.name);
+    }
 }

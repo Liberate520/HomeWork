@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import family_tree.writer.FileHandler;
 
+
+
+
+
+
 public class Main {
 final static String filePath = "src/family_tree/writer/tree.txt";
 
@@ -14,15 +19,20 @@ final static String filePath = "src/family_tree/writer/tree.txt";
         FamilyTree tree = testTree();
         System.out.println(tree);
         save(tree);
+        tree.sortByAge();
+        System.out.println(tree);
+        tree.sortByName();
+        System.out.println(tree);
 
     }
 
 
 
-        private static FamilyTree testTree() {
+
+    private static FamilyTree testTree() {
             FamilyTree tree = new FamilyTree();
 
-            Human grisha = new Human("Гриша", Gender.Male, LocalDate.of(1945, 12, 12), null, null, null, null);
+            Human grisha = new Human("Гриша", Gender.Male, LocalDate.of(1952, 12, 12), null, null, null, null);
             Human masha = new Human("Мария", Gender.Female, LocalDate.of(1951, 1, 2), null, null, null, null);
 
             tree.add(grisha);
@@ -33,6 +43,7 @@ final static String filePath = "src/family_tree/writer/tree.txt";
             tree.add(sveta);
 
             return tree;
+
         }
 
 
@@ -49,5 +60,7 @@ final static String filePath = "src/family_tree/writer/tree.txt";
 
         return (FamilyTree) fileHandler.read();
 
+
     }
+
 }
