@@ -1,4 +1,4 @@
-package family_tree;
+package model.family_tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,15 +9,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FamilyTree<E extends FamilyTreeItem> implements Serializable, Iterable<E> {
-    private List<E> familyTree = new ArrayList<>();
+    private List<E> familyTree;
+
+    public FamilyTree() {
+        familyTree = new ArrayList<>();
+    }
 
     @Override
     public String toString() {
         return printList(familyTree);
     }
 
-    public void add(E human) {
-        familyTree.add(human);
+    public void add(E item) {
+        familyTree.add(item);
     }
 
     public List<E> getFamilyTree() {
@@ -34,6 +38,12 @@ public class FamilyTree<E extends FamilyTreeItem> implements Serializable, Itera
                 .collect(Collectors.toList());
     }
 
+    public E findById(int id) {
+        return familyTree.stream()
+                .filter(e -> e.getId() == id)
+                .findFirst().orElse(null);
+    }
+
     public void sortByName() {
         Collections.sort(familyTree);
     }
@@ -43,10 +53,10 @@ public class FamilyTree<E extends FamilyTreeItem> implements Serializable, Itera
     }
 
     /**
-     * Сортировка по возрасту (с учетом даты смерти) по убыванию.
+     * Сортировка по возрасту (с учетом даты смерти).
      */
     public void sortByAge() {
-        familyTree.sort(Comparator.comparing(E::getAge).reversed());
+        familyTree.sort(Comparator.comparing(E::getAge));
     }
 
     public String printList(List<E> list) {

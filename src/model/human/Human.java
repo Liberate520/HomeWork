@@ -1,6 +1,6 @@
-package human;
+package model.human;
 
-import family_tree.FamilyTreeItem;
+import model.family_tree.FamilyTreeItem;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Human implements FamilyTreeItem {
+    private int id;
     private final String name;
     private LocalDate birthDate;
     private LocalDate deathDate;
@@ -48,6 +49,10 @@ public class Human implements FamilyTreeItem {
         this.deathDate = deathDate;
     }
 
+    public void setFamilyTies(FamilyTreeItem father, FamilyTreeItem mother) {
+
+    }
+
     public void setFamilyTies(Human father, Human mother) {
         if (father != null) {
             if (father.sex != Sex.MALE)
@@ -71,10 +76,12 @@ public class Human implements FamilyTreeItem {
         }
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -117,10 +124,23 @@ public class Human implements FamilyTreeItem {
         return result;
     }
 
+    @Override
     public int getAge() {
+        if (birthDate == null)
+            return Integer.MAX_VALUE;   // С неизвестным днем рождения - в конец списка.
         return (deathDate == null) ?
                 Period.between(birthDate, LocalDate.now()).getYears() :
                 Period.between(birthDate, deathDate).getYears();
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -133,7 +153,8 @@ public class Human implements FamilyTreeItem {
                 "нет";
 
         return "Человек{" +
-                "имя: " + name +
+                "ID: " + id +
+                ", имя: " + name +
                 ", возраст: " + age +
                 ", пол: " + (sex == Sex.MALE ? "м." : "ж.") +
                 ", отец: " + fatherName +

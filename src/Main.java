@@ -1,12 +1,19 @@
-import family_tree.FamilyTree;
-import human.Human;
-import human.Sex;
-import writer.FileHandler;
+import model.family_tree.FamilyTree;
+import model.human.Human;
+import model.human.Sex;
+import model.writer.FileHandler;
+import view.ConsoleUI;
+import view.View;
 
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+        View view = new ConsoleUI();
+        view.start();
+    }
+
+    public static void test() {
         Human human1 = new Human("Андрей", LocalDate.of(1975, 1, 1), Sex.MALE);
         Human human2 = new Human("Ирина", LocalDate.of(1972, 12, 28), Sex.FEMALE);
         Human human3 = new Human("Анна", LocalDate.of(1995, 10, 31), Sex.FEMALE,
