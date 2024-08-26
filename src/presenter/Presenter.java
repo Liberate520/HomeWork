@@ -21,8 +21,7 @@ public class Presenter {
                          Gender gender, LocalDate dayBirth, LocalDate dayDeath,
                          Human father, Human mother, List<Human> children, String placeBorn) {
         service.addHuman(lastName, firstname, patronymic,
-                gender, dayBirth, dayDeath,
-                null, null, null, placeBorn);
+                gender, dayBirth, dayDeath, placeBorn);
         getFamilyTree();
     }
 
@@ -49,7 +48,7 @@ public class Presenter {
     public void saveFile() {
         try {
             service.saveFile("src/familyTree/file.txt");
-            System.out.println("Программа успешно сохранена");
+            view.PrintAnwser("Программа успешно сохранена");
         } catch (Exception e) {
             System.out.println("Ошибка сохранения");
         } finally {
@@ -70,7 +69,7 @@ public class Presenter {
 
     public void loadFile() {
         try {
-            service.openFile("src/familyTree/file.txt");
+            service.openFile("src/file.txt");
             service.setMaxID();
             System.out.println("Семейное древо успешно загружено");
             getFamilyTree();

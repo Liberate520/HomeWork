@@ -1,5 +1,6 @@
 package model.familyTree;
 
+import model.FileHandler.Writer;
 import model.HumanBuilder.HumanBuilder;
 import model.FileHandler.FileHandler;
 import model.human.Gender;
@@ -110,7 +111,7 @@ public class ServiceFamilyTree {
 
     public boolean saveFile(String fileName) {
         try {
-            FileHandler fileHandler = new FileHandler();
+            Writer fileHandler = new FileHandler();
             fileHandler.setFileName(fileName);
             fileHandler.saveFile(familyTree);
             return true;
