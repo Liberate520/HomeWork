@@ -1,11 +1,12 @@
-package ru.gb.family_tree.family_tree;
+package ru.gb.family_tree.model.family_tree;
 
-import ru.gb.family_tree.human.Human;
-import ru.gb.family_tree.human.HumanComparatorById;
-import ru.gb.family_tree.human.HumanCoparatorByBirthDate;
-import ru.gb.family_tree.human.HumanIterator;
+import ru.gb.family_tree.model.human.Human;
+import ru.gb.family_tree.model.human.HumanComparatorById;
+import ru.gb.family_tree.model.human.HumanCoparatorByBirthDate;
+import ru.gb.family_tree.model.human.HumanIterator;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;

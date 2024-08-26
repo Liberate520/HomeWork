@@ -1,11 +1,10 @@
-package ru.gb.family_tree.human;
+package ru.gb.family_tree.model.human;
 
-import ru.gb.family_tree.family_tree.FamilyTreeItem;
+import ru.gb.family_tree.model.family_tree.FamilyTreeItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class Human implements Serializable, FamilyTreeItem<Human> {
     private int id;
