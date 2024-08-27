@@ -24,7 +24,6 @@ public class FamilyTree<T> implements Serializable, Iterable<T> {
         return this.elements.values().iterator();
     }
 
-    // Метод сортировки по имени для объектов Person
     public List<Person> personSortedByName() {
         List<Person> sortedPersons = new ArrayList<>();
         for (T element : elements.values()) {
@@ -36,7 +35,6 @@ public class FamilyTree<T> implements Serializable, Iterable<T> {
         return sortedPersons;
     }
 
-    // Метод сортировки по дате рождения для объектов Person
     public List<Person> personSortedByBirthDay() {
         List<Person> sortedPersons = new ArrayList<>();
         for (T element : elements.values()) {

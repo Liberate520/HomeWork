@@ -5,7 +5,6 @@ import model.human.Gender;
 import model.human.Person;
 import model.writer.FileLoader;
 import model.writer.FileSaver;
-import view.ConsoleUI;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,7 +38,6 @@ public class Presenter<T> {
         System.out.println("Человек успешно добавлен в дерево.");
     }
 
-    // Метод для поиска человека по имени
     public void getPerson(Scanner scanner) {
         System.out.print("Введите имя: ");
         String name = scanner.nextLine();
@@ -51,7 +49,6 @@ public class Presenter<T> {
         }
     }
 
-    // Метод для получения списка детей родителя
     public void getChildren(Scanner scanner) {
         System.out.print("Введите имя родителя: ");
         String name = scanner.nextLine();
