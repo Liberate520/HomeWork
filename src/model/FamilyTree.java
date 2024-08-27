@@ -1,10 +1,10 @@
 package model;
 
-import model.human.*;
 import java.io.Serializable;
 import java.util.*;
+import model.human.Person;
 
-public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
+public class FamilyTree<T> implements Serializable, Iterable<T> {
     private Map<String, T> elements;
 
     public FamilyTree() {
@@ -24,14 +24,26 @@ public class FamilyTree<T extends Person> implements Serializable, Iterable<T> {
         return this.elements.values().iterator();
     }
 
-    public List<T> personSortedByName() {
-        List<T> sortedPersons = new ArrayList<>(elements.values());
+    // Метод сортировки по имени для объектов Person
+    public List<Person> personSortedByName() {
+        List<Person> sortedPersons = new ArrayList<>();
+        for (T element : elements.values()) {
+            if (element instanceof Person) {
+                sortedPersons.add((Person) element);
+            }
+        }
         sortedPersons.sort(Comparator.comparing(Person::getName));
         return sortedPersons;
     }
 
-    public List<T> personSortedByBirthDay() {
-        List<T> sortedPersons = new ArrayList<>(elements.values());
+    // Метод сортировки по дате рождения для объектов Person
+    public List<Person> personSortedByBirthDay() {
+        List<Person> sortedPersons = new ArrayList<>();
+        for (T element : elements.values()) {
+            if (element instanceof Person) {
+                sortedPersons.add((Person) element);
+            }
+        }
         sortedPersons.sort(Comparator.comparing(Person::getBirthDate));
         return sortedPersons;
     }
