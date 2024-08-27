@@ -19,6 +19,7 @@ public class ConsoleView implements FamilyTreeView {
         System.out.println("6. Показать родителей");
         System.out.println("7. Сохранить дерево");
         System.out.println("8. Загрузить дерево");
+        System.out.println("9. Редактирование записи");
         System.out.println("0. Выход");
         System.out.print("Выберите опцию: ");
     }

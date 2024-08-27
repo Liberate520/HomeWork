@@ -33,5 +33,4 @@ public class FileManager implements DataHandler<FamilyTree> {
             return null;
         }
     }
-
 }
