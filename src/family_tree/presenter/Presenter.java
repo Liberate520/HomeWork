@@ -42,4 +42,13 @@ public class Presenter {
         String info = service.getFamilyTree().toString();
         view.printAnswer(info);
     }
+
+    public boolean saveToFile(String filename){
+        return service.saveToFile(filename);
+    }
+
+    public boolean loadFromFile(String filename){
+        return service.loadFromFile(filename);
+    }
+
 }

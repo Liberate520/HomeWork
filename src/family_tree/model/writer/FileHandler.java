@@ -5,7 +5,7 @@ import java.io.*;
 public class FileHandler implements Writer {
     private String file;
 
-    public FileHandler(String file) {
+    public FileHandler() {
         this.file = file;
     }
 
@@ -26,5 +26,9 @@ public class FileHandler implements Writer {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 }

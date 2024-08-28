@@ -103,6 +103,30 @@ public class ConsoleUI implements View{
         presenter.addHuman(name, gender, birthDate);
     }
 
+    public void saveToFile(){
+        String filename;
+        String file = "src/family_tree/model/writer/";
+        printAnswer("Укажите имя файла");
+        filename = scanner.nextLine();
+        file += filename + ".txt";
+        if (presenter.saveToFile(file))
+            printAnswer("Файл " + filename + " успешно сохранен");
+        else
+            printAnswer("Ошибка сохранения");
+    }
+
+    public void loadFromFile(){
+        String filename;
+        String file = "src/family_tree/model/writer/";
+        printAnswer("Укажите имя файла");
+        filename = scanner.nextLine();
+        file += filename + ".txt";
+        if (presenter.loadFromFile(file))
+            printAnswer("Файл " + filename + " успешно загружен");
+        else
+            printAnswer("Ошибка загрузки");
+    }
+
     @Override
     public void printAnswer(String answer) {
         System.out.println(answer);
