@@ -49,10 +49,6 @@ public class Human implements FamilyTreeItem {
         this.deathDate = deathDate;
     }
 
-    public void setFamilyTies(FamilyTreeItem father, FamilyTreeItem mother) {
-
-    }
-
     public void setFamilyTies(Human father, Human mother) {
         if (father != null) {
             if (father.sex != Sex.MALE)
@@ -138,7 +134,6 @@ public class Human implements FamilyTreeItem {
         return id;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }

@@ -1,16 +1,19 @@
 package presenter;
 
-import model.family_tree.FamilyTreeItem;
+import model.human.Human;
+import model.human.Sex;
 import model.service.Service;
 import view.View;
 
-public class Presenter<E extends FamilyTreeItem> {
+import java.time.LocalDate;
+
+public class Presenter {
     private View view;
-    private Service<E> service;
+    private Service service;
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service<>();
+        service = new Service();
     }
 
     public void getFamilyTree() {
@@ -18,9 +21,10 @@ public class Presenter<E extends FamilyTreeItem> {
         view.printAnswer(answer);
     }
 
-    public void add(E item) {
-        service.add(item);
-        view.printAnswer("Запись добавлена: " + item);
+    public void add(String name, LocalDate birthDate, LocalDate deathDate, Sex sex, Human father, Human mother) {
+        service.add(name, birthDate, deathDate, sex, father, mother);
+        view.printAnswer("Запись добавлена.");
+        getFamilyTree();
     }
 
     public void findByName(String name) {
@@ -28,7 +32,7 @@ public class Presenter<E extends FamilyTreeItem> {
         view.printAnswer(answer);
     }
 
-    public E findById(int id) {
+    public Human findById(int id) {
         return service.findById(id);
     }
 
@@ -50,9 +54,31 @@ public class Presenter<E extends FamilyTreeItem> {
         view.printAnswer(answer);
     }
 
-    public void updateItem(E item) {
-        String answer = item.toString();
+    public void setBirthDate(Human human, LocalDate birthDate) {
+        service.setBirthDate(human, birthDate);
+        String answer = "Запись обновлена" + human.toString();
         view.printAnswer(answer);
     }
 
+    public void setDeathDate(Human human, LocalDate deathDate) {
+        service.setDeathDate(human, deathDate);
+        String answer = "Запись обновлена" + human.toString();
+        view.printAnswer(answer);
+    }
+
+    public void setParents(Human human, Human father, Human mother) {
+        service.setParents(human, father, mother);
+        String answer = "Запись обновлена" + human.toString();
+        view.printAnswer(answer);
+    }
+
+    public void save() {
+        service.save();
+        view.printAnswer("Данные сохранены");
+    }
+
+    public void load() {
+        service.load();
+        view.printAnswer("Данные загружены");
+    }
 }

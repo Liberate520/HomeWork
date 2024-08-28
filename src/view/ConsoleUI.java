@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class ConsoleUI implements View {
     private boolean run;
     private Scanner scanner;
-    private Presenter<Human> presenter;
+    private Presenter presenter;
     private MainMenu mainMenu;
     private final String ERR_INPUT = "Неверное значение. ";
     private final String CANCEL_INPUT = "Ввод прерван. ";
@@ -20,7 +20,7 @@ public class ConsoleUI implements View {
     public ConsoleUI() {
         run = true;
         scanner = new Scanner(System.in);
-        presenter = new Presenter<>(this);
+        presenter = new Presenter(this);
         mainMenu = new MainMenu(this);
     }
 
@@ -75,18 +75,12 @@ public class ConsoleUI implements View {
             System.out.println(CANCEL_INPUT);
             return;
         }
-        Human newHuman = new Human(name, sex);
         LocalDate birthDate = inputDate("Введите дату рождения: ");
-        if (birthDate != null)
-            newHuman.setBirthDate(birthDate);
         LocalDate deathDate = inputDate("Введите дату смерти: ");
-        if (deathDate != null)
-            newHuman.setDeathDate(deathDate);
         Human father = inputParent("Введите ID отца:", "Отец должен быть мужчиной.", Sex.MALE);
         Human mother = inputParent("Введите ID матери:", "Мать должна быть женщиной.", Sex.FEMALE);
-        newHuman.setFamilyTies(father, mother); // Обработка нулевых значений предусмотрена в методе.
         System.out.println();
-        presenter.add(newHuman);
+        presenter.add(name, birthDate, deathDate, sex, father, mother);
     }
 
     private String inputString(String mess) {
@@ -173,13 +167,10 @@ public class ConsoleUI implements View {
             return;
         }
         LocalDate birthDate = inputDate("Введите дату рождения: ");
-        if (birthDate != null) {
-            human.setBirthDate(birthDate);
-            presenter.updateItem(human);
-        }
-        else {
+        if (birthDate != null)
+            presenter.setBirthDate(human, birthDate);
+        else
             System.out.println(CANCEL_INPUT);
-        }
     }
 
     public void setDeathDate() {
@@ -189,13 +180,10 @@ public class ConsoleUI implements View {
             return;
         }
         LocalDate deathDate = inputDate("Введите дату смерти: ");
-        if (deathDate != null) {
-            human.setDeathDate(deathDate);
-            presenter.updateItem(human);
-        }
-        else {
+        if (deathDate != null)
+            presenter.setDeathDate(human, deathDate);
+        else
             System.out.println(CANCEL_INPUT);
-        }
     }
 
     public void setParents() {
@@ -206,8 +194,7 @@ public class ConsoleUI implements View {
         }
         Human father = inputParent("Введите ID отца:", "Отец должен быть мужчиной.", Sex.MALE);
         Human mother = inputParent("Введите ID матери:", "Мать должна быть женщиной.", Sex.FEMALE);
-        human.setFamilyTies(father, mother); // Обработка нулевых значений предусмотрена в методе.
-        presenter.updateItem(human);
+        presenter.setParents(human, father, mother);
     }
 
     public void findByName() {
@@ -231,5 +218,13 @@ public class ConsoleUI implements View {
     public void finish() {
         System.out.println("Выход...");
         run = false;
+    }
+
+    public void save() {
+        presenter.save();
+    }
+
+    public void load() {
+        presenter.load();
     }
 }

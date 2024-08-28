@@ -1,16 +1,18 @@
 package view.commands;
 
-import model.family_tree.FamilyTreeItem;
+import model.human.Human;
+import model.human.Sex;
 
+import java.time.LocalDate;
 import java.util.List;
 
-public interface CommandList<T extends FamilyTreeItem> {
+public interface CommandList {
 
-    void add(T item);
+    void add(String name, LocalDate birthDate, LocalDate deathDate, Sex sex, Human father, Human mother);
 
-    List<T> getFamilyTree();
+    List<Human> getFamilyTree();
 
-    List<T> findByName(String name);
+    List<Human> findByName(String name);
 
     void sortByName();
 
@@ -18,5 +20,15 @@ public interface CommandList<T extends FamilyTreeItem> {
 
     void sortByAge();
 
-    String printList(List<T> list);
+    String printList(List<Human> list);
+
+    void save();
+
+    void load();
+
+    void setBirthDate(Human human, LocalDate birthDate);
+
+    void setDeathDate(Human human, LocalDate deathDate);
+
+    void setParents(Human human, Human father, Human mother);
 }

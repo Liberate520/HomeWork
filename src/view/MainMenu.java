@@ -5,6 +5,8 @@ import view.commands.Command;
 import view.commands.FindByName;
 import view.commands.Finish;
 import view.commands.GetFamilyTreeInfo;
+import view.commands.Load;
+import view.commands.Save;
 import view.commands.SetBirthDate;
 import view.commands.SetDeathDate;
 import view.commands.SetParents;
@@ -20,6 +22,8 @@ public class MainMenu {
 
     public MainMenu(ConsoleUI consoleUI) {
         commandList = new ArrayList<>();
+        commandList.add(new Save(consoleUI));
+        commandList.add(new Load(consoleUI));
         commandList.add(new Add(consoleUI));
         commandList.add(new GetFamilyTreeInfo(consoleUI));
         commandList.add(new SetBirthDate(consoleUI));

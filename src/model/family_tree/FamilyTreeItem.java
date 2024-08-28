@@ -12,6 +12,6 @@ public interface FamilyTreeItem extends Serializable, Comparable<FamilyTreeItem>
 
     int getId();
 
-    void setId(int id);
+    // --Commented out by Inspection (28.08.2024 8:54):void setId(int id);
 
 }
