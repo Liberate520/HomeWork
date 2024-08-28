@@ -1,18 +1,15 @@
-package family_tree.model.family_tree;
+package model.family_tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
-public interface FamilyTreeItem<T> extends Serializable {
-    String getName();
-    void setId(long id);
-    long getId();
-    LocalDate getBirthDate();
-    LocalDate getDeathDate();
-    boolean addParent(T parent);
-    boolean addChild(T human);
-    List<T> getChildren();
+public interface FamilyTreeItem<E> extends Serializable {
     int getAge();
-
+    String getName();
+    int getId();
+    LocalDate getBirthDate();
+    E getSpouse();
+    void setSpouse(E human);
+    boolean addChild(E child);
+    boolean addParent(E parent);
 }

@@ -1,11 +1,12 @@
-package family_tree.model.human;
+package model.human;
 
+import model.family_tree.FamilyTreeItem;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HumanBuilder {
-    private int humanId;
+    private int genId;
     private Human human;
     private String name;
     private Gender gender;
@@ -20,41 +21,32 @@ public class HumanBuilder {
         this.name = name;
         return this;
     }
-
-    public HumanBuilder setGender(Gender gender) {
+    public HumanBuilder setGender(Gender gender){
         this.gender = gender;
         return this;
     }
-
-    public HumanBuilder setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public HumanBuilder setBirthDate(LocalDate birthdate){
+        this.birthDate = birthdate;
         return this;
     }
-
-    public void setChildren() {
+    private void setChildren(){
         human.setChildren(new ArrayList<>());
     }
-
-    public void createHuman(){
+    private void createHuman(){
         human = new Human();
     }
-
     private void nextId(){
-        human.setId(humanId++);
+        human.setId(genId++);
     }
-
     private void createName(){
         human.setName(name);
     }
-
     private void createGender(){
         human.setGender(gender);
     }
-
     private void createBirthDate(){
         human.setBirthDate(birthDate);
     }
-
     public Human build(){
         createHuman();
         createName();

@@ -1,4 +1,4 @@
-package family_tree.view;
+package view;
 
 public interface View {
     void start();

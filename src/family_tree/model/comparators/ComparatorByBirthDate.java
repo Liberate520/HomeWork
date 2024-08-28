@@ -4,9 +4,9 @@ import model.family_tree.FamilyTreeItem;
 
 import java.util.Comparator;
 
-public class ComparatorByName<E extends FamilyTreeItem<E>> implements Comparator<E> {
+public class ComparatorByBirthDate<E extends FamilyTreeItem<E>> implements Comparator<E> {
     @Override
     public int compare(E o1, E o2) {
-        return o1.getName().compareTo(o1.getName());
+        return o1.getBirthDate().compareTo(o2.getBirthDate());
     }
 }

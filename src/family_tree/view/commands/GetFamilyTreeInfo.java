@@ -1,13 +1,15 @@
-package family_tree.view.commands;
+package view.commands;
 
-import family_tree.view.ConsoleUI;
+import view.ConsoleUI;
 
 public class GetFamilyTreeInfo extends Command{
+
     public GetFamilyTreeInfo(ConsoleUI consoleUI){
-        super("Получить семейное древо", consoleUI);
+        super(consoleUI);
+        description = "Показать весь список";
     }
     @Override
-    public void execute(){
-        getConsoleUI().getFamilyTreeInfo();
+    public void execute() {
+        consoleUI.getFamilyTreeinfo();
     }
 }

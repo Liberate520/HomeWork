@@ -1,13 +1,15 @@
-package family_tree.view.commands;
+package view.commands;
 
-import family_tree.view.ConsoleUI;
+import view.ConsoleUI;
 
 public class SortByAge extends Command{
+
     public SortByAge(ConsoleUI consoleUI){
-        super("Отсортировать по возрасту", consoleUI);
+        super(consoleUI);
+        description = "Отсортировать по возрасту";
     }
     @Override
-    public void execute(){
-        getConsoleUI().sortByAge();
+    public void execute() {
+        consoleUI.sortByAge();
     }
 }

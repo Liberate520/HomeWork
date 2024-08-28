@@ -1,13 +1,15 @@
-package family_tree.view.commands;
+package view.commands;
 
-import family_tree.view.ConsoleUI;
+import view.ConsoleUI;
 
 public class SortByName extends Command{
+
     public SortByName(ConsoleUI consoleUI){
-        super("Отсортировать по имени", consoleUI);
+        super(consoleUI);
+        description = "Отсортировать по имени";
     }
     @Override
-    public void execute(){
-        getConsoleUI().sortByName();
+    public void execute() {
+        consoleUI.sortByName();
     }
 }

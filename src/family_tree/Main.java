@@ -1,6 +1,4 @@
-import family_tree.model.family_tree.FamilyTree;
-import family_tree.model.writer.FileHandler;
-import family_tree.view.ConsoleUI;
+import view.ConsoleUI;
 
 public class Main {
     public static void main(String[] args) {

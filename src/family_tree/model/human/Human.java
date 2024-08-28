@@ -1,106 +1,56 @@
-package family_tree.model.human;
+package model.human;
 
-import family_tree.model.family_tree.FamilyTreeItem;
-
-import java.io.Serializable;
+import model.family_tree.FamilyTreeItem;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Human implements Serializable, FamilyTreeItem<Human> {
-    private long id;
+public class Human implements FamilyTreeItem<Human> {
+    private int id;
     private String name;
     private Gender gender;
-    private LocalDate birthDate;
-    private LocalDate deathDate;
+    private LocalDate birthDate, deathDate;
+    private Human spouse;
     private Human mother;
     private Human father;
     private List<Human> children;
 
-    public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender, Human mother, Human father){
-        id = -1;
+    public Human(String name, Gender gender, LocalDate birthDate, LocalDate deathDate, Human father, Human mother) {
         this.name = name;
+        this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
-        this.gender = gender;
-        this.mother = mother;
         this.father = father;
-        children = new ArrayList<>();
+        this.mother = mother;
+        this.children = new ArrayList<>();
     }
-
-    public Human(String name, LocalDate birthDate, Gender gender){
-        this(name, birthDate, null, gender, null, null);
+    public Human(String name, Gender gender, LocalDate birthDate) {
+        this(name, gender, birthDate, null, null, null);
     }
-
-    public Human(){
+    public Human(String name, Gender gender, LocalDate birthDate, Human father, Human mother) {
+        this(name, gender, birthDate, null, father, mother);
     }
-
-    public long getId() {
-        return id;
+    public Human() {
     }
-
-    public void setId(long id) {
+    public void setId(int id){
         this.id = id;
     }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public int getId(){
+        return id;
     }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public LocalDate getDeathDate() {
-        return deathDate;
-    }
-
-    public void setDeathDate(LocalDate deathDate) {
-        this.deathDate = deathDate;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Human> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Human> children) {
+    public void setChildren(List<Human> children){
         this.children = children;
     }
-
-    public Human getMother(Human mother) {
-        return mother;
-    }
-
-    public void setMother(Human mother) {
-        this.mother = mother;
-    }
-
-    public Human getFather() {
-        return father;
-    }
-
-    public void setFather(Human father) {
-        this.father = father;
-    }
-
-    public boolean addChild(Human child){
-        if (!children.contains(child)){
+    public boolean addChild(Human child) {
+        if (!children.contains(child)) {
             children.add(child);
             return true;
         }
         return false;
     }
-
-    public boolean addParent(Human parent){
+    public boolean addParent(Human parent) {
         if (parent.gender.equals(Gender.Female)) {
             setMother(parent);
         } else if (parent.gender.equals(Gender.Male)) {
@@ -108,81 +58,110 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         }
         return true;
     }
-
-    public void setGender(Gender gender){
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
-
-    public int getAge(){
-        if (deathDate == null){
-            return getPeriod(birthDate, LocalDate.now());
-        }else {
-            return getPeriod(birthDate, deathDate);
-        }
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
-    public int getPeriod(LocalDate birthDate, LocalDate deathDate){
-        Period diff = Period.between(birthDate, deathDate);
+    public LocalDate getBirthDate(){
+        return birthDate;
+    }
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+    public Human getMother() {
+        return mother;
+    }
+    public void setFather(Human father) {
+        this.father = father;
+    }
+    public Human getFather() {
+        return father;
+    }
+    public Human getSpouse() {
+        return this.spouse;
+    }
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(name, human.name) && gender == human.gender && Objects.equals(birthDate, human.birthDate) && Objects.equals(deathDate, human.deathDate) && Objects.equals(spouse, human.spouse) && Objects.equals(mother, human.mother) && Objects.equals(father, human.father) && Objects.equals(children, human.children);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, gender, birthDate, deathDate, spouse, mother, father, children);
+    }
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
+    }
+    @Override
+    public int getAge() {
+        LocalDate date = LocalDate.now();
+        if (this.deathDate != null) {
+            date = this.deathDate;
+        }
+        return getPeriod(this.birthDate, date);
+    }
+    private int getPeriod(LocalDate startPeriod, LocalDate endPeriod) {
+        Period diff = Period.between(startPeriod, endPeriod);
         return diff.getYears();
     }
-
-    public String toString(){
-        return getInfo();
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public String getInfo(){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("id: ");
-        stringBuilder.append(id);
-        stringBuilder.append(", имя: ");
-        stringBuilder.append(name);
-        stringBuilder.append(", возраст: ");
-        stringBuilder.append(getAge());
-        stringBuilder.append(", пол: ");
-        stringBuilder.append(gender);
-        stringBuilder.append(", мать: ");
-        stringBuilder.append(getMotherInfo());
-        stringBuilder.append(", отец: ");
-        stringBuilder.append(getFatherInfo());
-        stringBuilder.append(", ");
-        stringBuilder.append(getChildrenInfo());
-        return stringBuilder.toString();
+    @Override
+    public String getName() {
+        return this.name;
     }
-
-    public String getMotherInfo(){
+    private String getGender() {
+        return this.gender.toString();
+    }
+    private String getSpauseInfo() {
+        if (this.spouse == null)
+            return "нет";
+        return getSpouse().name;
+    }
+    private String getMotherInfo() {
         if (this.mother == null)
-            return "Неизвестно";
+            return "нет информации";
         return this.mother.name;
     }
     private String getFatherInfo() {
         if (this.father == null)
-            return "Неизвестно";
+            return "нет информации";
         return this.father.name;
     }
-
-    public String getChildrenInfo(){
-        StringBuilder chil = new StringBuilder();
-        chil.append("Дети: ");
-        if (children.size() != 0){
-            chil.append(children.get(0).getName());
-            for (int i = 1; i < children.size(); i++) {
-                chil.append(", ");
-                chil.append(children.get(i).getName());
+    private String getChildrenInfo() {
+        if (this.children.isEmpty()) {
+            return "отсутствуют";
+        } else {
+            String[] children = new String[this.children.size()];
+            for (int i = 0; i < this.children.size(); i++) {
+                children[i] = this.children.get(i).name;
             }
-        }else {
-            chil.append("отсутствуют");
+            return String.join(", ", children);
         }
-        return chil.toString();
     }
-
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (!(obj instanceof Human)){
-            return false;
-        }
-        Human human = (Human) obj;
-        return human.getId() == getId();
+    public String toString() {
+        return getInfo();
+    }
+    private String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id: ").append(id);
+        sb.append(". Имя: ").append(getName());
+        sb.append(", пол: ").append(getGender());
+        sb.append(", возраст: ").append(getAge());
+        sb.append(", супруг(а): ").append(getSpauseInfo());
+        sb.append(", мать: ").append(getMotherInfo());
+        sb.append(", отец: ").append(getFatherInfo());
+        sb.append(", дети: ");
+        sb.append(getChildrenInfo());
+        return sb.toString();
     }
 }

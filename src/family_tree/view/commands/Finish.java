@@ -1,15 +1,14 @@
-package family_tree.view.commands;
+package view.commands;
 
-import family_tree.view.ConsoleUI;
+import view.ConsoleUI;
 
-public class Finish extends Command{
-
+public class Finish extends Command {
     public Finish(ConsoleUI consoleUI) {
-        super("Закончить работу", consoleUI);
+        super(consoleUI);
+        description = "Закончить работу";
     }
 
-    @Override
     public void execute(){
-        getConsoleUI().finish();
+        consoleUI.finish();
     }
 }

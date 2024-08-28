@@ -1,42 +1,57 @@
-package family_tree.model.family_tree;
+package model.family_tree;
 
-import family_tree.model.human.comparators.ComparatorByAge;
-import family_tree.model.FamilyTreeIterator;
-
+import model.human.*;
+import model.comparators.ComparatorByAge;
+import model.comparators.ComparatorByBirthDate;
+import model.comparators.ComparatorByName;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, Iterable<E> {
-    private long humanId;
-    private List<E> humans;
+public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, Iterable<E>{
+    private List<E> familyTree;
 
-    public FamilyTree(){
-        this(new ArrayList<>());
+    public FamilyTree() {
+        this.familyTree = new ArrayList<>();
     }
 
-    public FamilyTree(List<E> humans){
-        this.humans = humans;
+    public List<E> getHumans(){
+        return familyTree;
     }
-
-    public void add(E human){
-        this.humans.add(human);
+    public void add(E human) {
+        this.familyTree.add(human);
     }
-
-    public List<E> getByName(String name){
-        List<E> res = new ArrayList<>();
-        for (E human : humans) {
-            if (human.getName().equals(name)){
-                res.add(human);
+    public boolean setWedding(E human1, E human2) {
+        if (human1.getSpouse() == null && human2.getSpouse() == null) {
+            human1.setSpouse(human2);
+            human2.setSpouse(human1);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean setDivorce(E human1, E human2) {
+        if (human1.getSpouse() != null && human2.getSpouse() != null) {
+            human1.setSpouse(null);
+            human2.setSpouse(null);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public E findByName(String name) {
+        for (E human : familyTree) {
+            if (human.getName().equals(name)) {
+                return human;
             }
         }
-        return res;
+        return null;
     }
 
-    public E getById(long id){
-        for (E human: humans){
+    public E findById(int id){
+        for(E human : familyTree){
             if (human.getId() == id){
                 return human;
             }
@@ -44,31 +59,36 @@ public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, It
         return null;
     }
 
-    public void sortByAge(){
-        Collections.sort(humans, new ComparatorByAge<>());
+    public boolean remove(E human) {
+        if (human != null) {
+            familyTree.remove(human);
+            return true;
+        }
+        return false;
     }
-
-    public void sortByName(){
-        Collections.sort(humans, new ComparatorByName<>());
-    }
-
-    public Iterator<E> iterator(){
-        return new FamilyTreeIterator<>(humans);
-    }
-
     @Override
-    public String toString(){
+    public String toString() {
         return getInfo();
     }
-    public String getInfo() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("В семье ");
-        stringBuilder.append(humans.size());
-        stringBuilder.append(" человек(а) \n");
-        for (E human : humans){
-            stringBuilder.append(human);
-            stringBuilder.append("\n");
+    private String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("В вашем древе ").append(familyTree.size()).append(" объектов\n");
+        for (int i = 0; i < familyTree.size(); i++) {
+            sb.append(i + 1 + ". " + familyTree.get(i) + "\n");
         }
-        return stringBuilder.toString();
+        return sb.toString();
+    }
+    public void sortByName(){
+        Collections.sort(familyTree, new ComparatorByName<>());
+    }
+    public void sortByAge(){
+        Collections.sort(familyTree, new ComparatorByAge<>());
+    }
+    public void sortByBirthDate(){
+        Collections.sort(familyTree, new ComparatorByBirthDate<>());
+    }
+    @Override
+    public Iterator<E> iterator() {
+        return new HumanIterator<>(this);
     }
 }

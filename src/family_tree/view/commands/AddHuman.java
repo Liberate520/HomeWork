@@ -1,13 +1,15 @@
-package family_tree.view.commands;
+package view.commands;
 
-import family_tree.view.ConsoleUI;
+import view.ConsoleUI;
 
 public class AddHuman extends Command{
+
     public AddHuman(ConsoleUI consoleUI){
-        super("Добавить человека", consoleUI);
+        super(consoleUI);
+        description = "Добавить человека";
     }
     @Override
-    public void execute(){
-        getConsoleUI().addHuman();
+    public void execute() {
+        consoleUI.addHuman();
     }
 }
