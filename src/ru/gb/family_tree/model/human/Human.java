@@ -9,8 +9,9 @@ import java.time.format.DateTimeFormatter;
 public class Human implements Serializable, FamilyTreeItem<Human> {
     private int id;
     private String name;
+    private Gender gender;
     private LocalDate birthDate;
-
+    private LocalDate deathDate;
 
     public void setId(int id) {
         this.id = id;
@@ -20,13 +21,29 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         this.name = name;
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public void setDeathDate(LocalDate deathDate) {
+        this.deathDate = deathDate;
     }
 
     @Override
     public int getId() {
         return id;
+    }
+
+    public String getGender(Gender gender) {
+        if (gender == Gender.Male){
+            return "мужской";
+        } else {
+            return  "женский";
+        }
     }
 
     @Override
@@ -39,6 +56,14 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         return localDate.format(formatter);
     }
 
+    public String getDeathDate() {
+        if (deathDate == null) {
+            return "";
+        } else {
+            return "дата смерти: " + DatetoString(deathDate) + ", ";
+        }
+    }
+
     @Override
     public int compareTo(Human o) {
         return name.compareTo(o.name);
@@ -46,17 +71,17 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
 
     @Override
     public String toString() {
-        return "Human{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", birthDate=" + DatetoString(birthDate) +
+        return "{id = " + id +
+                ", " + name +
+                ", пол " + getGender(gender) +
+                ", дата рождения: " + DatetoString(birthDate) +
+                ", " + getDeathDate() +
                 '}';
     }
 
 /**
 
 
-    private LocalDate deathDate;
     private List<Human> parents;
     private List<Human> children;
 
@@ -71,29 +96,8 @@ public class Human implements Serializable, FamilyTreeItem<Human> {
         this.children = children;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public String getName() {
-        return name;
-    }
 
-    public String getGender() {
-        if (gender == Gender.Male){
-            return "мужской";
-        } else {
-            return  "женский";
-        }
-    }
-
-    public String getDeathDate() {
-        if (deathDate == null) {
-            return "";
-        } else {
-            return "дата смерти: " + DatetoString(deathDate) + ", ";
-        }
-    }
 
 
 

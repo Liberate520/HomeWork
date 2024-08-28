@@ -1,5 +1,6 @@
 package ru.gb.family_tree.presenter;
 
+import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.model.human.HumanService;
 import ru.gb.family_tree.view.View;
 
@@ -14,8 +15,11 @@ public class Presenter {
         service = new HumanService();
     }
 
-    public void addHuman(String name, LocalDate birthdate) {
-        service.addHuman(name, birthdate);
+    public void addHuman(String name,
+                         Gender gender,
+                         LocalDate birthDate,
+                         LocalDate deathDate) {
+        service.addHuman(name, gender, birthDate, deathDate);
         getHumanListInfo();
     }
 

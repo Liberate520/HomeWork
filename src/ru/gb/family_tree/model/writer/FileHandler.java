@@ -3,9 +3,10 @@ package ru.gb.family_tree.model.writer;
 import java.io.*;
 
 public class FileHandler implements Writer {
-    private String filePath;
 
-    public FileHandler(String filePath) {
+    static String filePath = "src/ru/gb/family_tree/model/writer/tree.txt";
+
+    public FileHandler() {
         this.filePath = filePath;
     }
 

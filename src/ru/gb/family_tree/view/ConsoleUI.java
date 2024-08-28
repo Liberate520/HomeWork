@@ -1,5 +1,6 @@
 package ru.gb.family_tree.view;
 
+import ru.gb.family_tree.model.human.Gender;
 import ru.gb.family_tree.presenter.Presenter;
 
 import java.time.LocalDate;
@@ -55,11 +56,27 @@ public class ConsoleUI implements View {
     public void addHuman() {
         System.out.println("Enter human name: ");
         String name = scanner.nextLine();
-        System.out.println("Enter human birthdate in the format dd.MM.yyyy: ");
+
+        System.out.println("Enter human gender (Male/Female): ");
+        String strGender = scanner.nextLine();
+        //TODO: Add validity testing methods
+        Gender gender = Gender.valueOf(strGender);
+
+        System.out.println("Enter human birthDate in the format dd.MM.yyyy: ");
         String strBirthdate = scanner.nextLine();
         //TODO: Add validity testing methods
-        LocalDate birthdate = LocalDate.parse(strBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        presenter.addHuman(name, birthdate);
+        LocalDate birthDate = LocalDate.parse(strBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+        System.out.println("Enter human date of death in the format dd.MM.yyyy ");
+        System.out.println("or continue without entering: ");
+        String strDeathdate = scanner.nextLine();
+        //TODO: Add validity testing methods
+        LocalDate deathDate = null;
+        if (strDeathdate != "") {
+            deathDate = LocalDate.parse(strDeathdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        }
+
+        presenter.addHuman(name, gender, birthDate, deathDate);
     }
 
     public void save(){
