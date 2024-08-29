@@ -30,10 +30,10 @@ public class FileSaver implements Saver{
             objectInputStream = new ObjectInputStream(new FileInputStream(filePath));
             tree = objectInputStream.readObject();
             objectInputStream.close();
-            return tree;
+            return (FamilyTree<Human>) tree;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
 
 
