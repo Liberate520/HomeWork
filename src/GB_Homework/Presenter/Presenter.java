@@ -1,63 +1,82 @@
 package GB_Homework.Presenter;
 
-import GB_Homework.Model.Human.Gender;
+import GB_Homework.Model.Family_Tree.FamilyTree;
+import GB_Homework.Model.Gender.Gender;
+import GB_Homework.Model.Human.Human;
 import GB_Homework.Model.Service.Service;
 import GB_Homework.View.View;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
-public class Presenter implements Serializable {
+public class Presenter {
     private View view;
     private Service service;
-
-
 
     public Presenter(View view) {
         this.view = view;
         service = new Service();
     }
 
+    public void addHuman(String name, LocalDate birthDate, LocalDate deathDate, Gender gender){
+        service.addHuman(name,birthDate,deathDate,gender);
+    }
+
     public void addHuman(String name, LocalDate birthDate, Gender gender) {
-        service.addHuman(name, birthDate, gender);
-        getHumanListInfo();
+        service.addHuman(name,birthDate,gender);
     }
 
-    public void getHumanListInfo() {
-        String answer = service.getHumanListInfo();
-        view.printAnswer(answer);
+    public FamilyTree<Human> getFamilyTree(){
+        return service.getFamilyTree();
     }
 
-    public void sortByName() {
+    public List<Human> getByName(String name){  //вернуть по имени
+        return service.getByName(name);
+    }
+
+    public Human getById(int id){   // вернуть по id
+        return service.getById(id);
+    }
+
+    public void addChild(Human human,Human child) { //добавить ребёнка
+
+        service.addChild(human, child);
+    }
+
+    public void addMother(Human human,Human mother) {  //добавить мать
+        service.addMother(human,mother);
+    }
+
+
+    public void addFather(Human human,Human father) {   //добавить отца
+        service.addFather(human,father);
+    }
+
+    public void addSpouse(Human human,Human spouse) {   //добавить супруга,супругу
+        service.addSpouse(human,spouse);
+    }
+
+    public  List<Human> getSiblings(int id) {   //найти братьев и сестёр
+        return service.getSiblings(id);
+    }
+
+    public void getAge(Human human) {   //возвращает возраст либо годы жизни
+        view.printAnswer(service.getAge(human));
+    }
+
+    public void printNameFamilyTree(){
+        service.printNameFamilyTree();
+    }
+
+    public void sortByName(){
         service.sortByName();
-        getHumanListInfo();
     }
 
-    public void sortByBirthDate() {
-        service.sortByBirthDate();
-        getHumanListInfo();
+    public void sortByData(){
+        service.sortByData();
     }
 
-
-    public void saveTree() {
-        service.saveTree(service);
-    }
-
-    public void readTree() {
-        Service loadedService = service.readTree();
-        if (loadedService != null) {
-            this.service = loadedService;
-            view.printAnswer("Семейное дерево успешно загружено.\n");
-        } else {
-            view.printAnswer("Ошибка при загрузке семейного дерева.\n");
-        }
-    }
-
-    public void setParentId(long childId, long parentId) {
-        service.setParentId(childId,parentId);
-    }
-
-    public int familyTreeSize() {
-        return service.familyTreeSize();
-    }
+    public void saveFamilyTree(String file) throws IOException {service.saveFamilyTree(file);}
+    public void readFamilyTree(String file) throws IOException, ClassNotFoundException {service.readFamilyTree(file);}
 }

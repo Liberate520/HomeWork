@@ -1,117 +1,100 @@
 package GB_Homework.Model.Family_Tree;
 
-import GB_Homework.Model.Family_Tree.Comporators.HumanComparatorByBirthDate;
-import GB_Homework.Model.Family_Tree.Comporators.HumanComparatorByName;
-import GB_Homework.Model.Human.Human;
+import GB_Homework.Model.Gender.Gender;
+import GB_Homework.Model.Human.HumanComporator;
+import GB_Homework.Model.Human.HumanIterator;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class FamilyTree<E extends ItemFamilyTree> implements Serializable, Iterable<E> {
-    private List<E> humans;
+public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable,Iterable<T>{
+    public List<T> humanList;
 
     public FamilyTree() {
-        this.humans = new ArrayList<>();
+        humanList = new ArrayList<T>();
     }
 
-    // Добавление человека в семейное дерево
-    public void addHuman(E human) {
-        this.humans.add(human);
+    public FamilyTree(List<T> humanList) {
+        this.humanList = humanList;
     }
 
-    // Внесение данных о матери
-    public void setMother(E child, E mother) {
-        E childToUpdate = findHumanById(child.getId());
-        E motherToUpdate = findHumanById(mother.getId());
+    public void addHuman(T human){
+        if (human != null){
+            if (!humanList.contains(human)){
+                humanList.add(human);
 
-        if (childToUpdate != null && motherToUpdate != null) {
-            childToUpdate.setMother(motherToUpdate);
-            motherToUpdate.addChild(childToUpdate);
-        }
-    }
-
-    // Внесение данных о матери по ID
-    public void setMotherId(long childId, long motherId) {
-        E childToUpdate = findHumanById(childId);
-        E motherToUpdate = findHumanById(motherId);
-
-        if (childToUpdate != null && motherToUpdate != null) {
-            childToUpdate.setMother(motherToUpdate);
-            motherToUpdate.addChild(childToUpdate);
-        }
-    }
-
-    // Внесение данных об отце
-    public void setFather(Human child, Human father) {
-        E childToUpdate = findHumanById(child.getId());
-        E fatherToUpdate = findHumanById(father.getId());
-
-        if (childToUpdate != null && fatherToUpdate != null) {
-            childToUpdate.setFather(fatherToUpdate);
-            fatherToUpdate.addChild(childToUpdate);
-        }
-    }
-
-    // Внесение данных об отце по ID
-    public void setFatherId(long childId, long fatherId) {
-        E childToUpdate = findHumanById(childId);
-        E fatherToUpdate = findHumanById(fatherId);
-
-        if (childToUpdate != null && fatherToUpdate != null) {
-            childToUpdate.setFather(fatherToUpdate);
-            fatherToUpdate.addChild(childToUpdate);
-        }
-    }
-
-    // Внесение данных о родителе по ID
-    public void setParentId(long childId, long parentId) {
-        E childToUpdate = findHumanById(childId);
-        E parentToUpdate = findHumanById(parentId);
-
-        if (childToUpdate != null && parentToUpdate != null) {
-            childToUpdate.setParent(parentToUpdate);
-            parentToUpdate.addChild(childToUpdate);
-        }
-    }
-
-    //Поиск человека по ID
-    public E findHumanById(long id) {
-        for (E human : humans) {
-            if (human.getId() == id) {
-                return human;
+                addChildToParents(human);
+                addParentsToChild(human);
             }
+        }
+    }
+
+    private void addChildToParents(T human){  //добавить родителям ребёнка
+        if (human.getMother() != null)
+            human.getMother().addChild(human);
+        if (human.getFather() != null)
+            human.getFather().addChild(human);
+    }
+
+    private void addParentsToChild(T human){  //К детям родителя
+        if(human.getGender() == Gender.FEMALE)
+            human.getChildren().forEach((ch) -> ch.addMother(human)) ;
+
+
+        if(human.getGender() == Gender.MALE)
+            human.getChildren().forEach((ch) -> ch.addFather(human)) ;
+
+    }
+
+    public T getById(int id){
+        for (T human : humanList) {
+            if (human.getId() == id)return human;
         }
         return null;
     }
 
-    //Поиск человека по имени
-    public E findHumanByName(String name) {
-        for (E human : humans) {
-            if (human.getName().equals(name)) {
-                return human;
-            }
+    public  List<T> getByName(String name){
+        List<T> humans = new ArrayList<>();
+        for (T human : humanList) {
+            if (human.getName().equals(name)) humans.add(human);
         }
-        return null;
+        return humans;
     }
 
-    // Сортировка по имени
-    public void sortByName() {
-        humans.sort(new HumanComparatorByName<>());
+    public  List<T> getSiblings(int id){   //найти братьев и сестёр
+        T humanId=getById(id);
+        if (humanId==null)return null;
+
+        List<T> humans=new ArrayList<>();
+        if (humanId.getFather() != null) {
+            for (T human : humanId.getFather().getChildren()) {
+                if (!human.equals(humanId))
+                    humans.add(human);
+            }
+            return humans;
+        }
+        else return null;
     }
 
-    // Сортировка по дате рождения
-    public void sortByBirthDate() {
-        humans.sort(new HumanComparatorByBirthDate<>());
+    public void sortByName(){
+        Collections.sort(humanList);
+    }
+
+    public void sortByData(){
+        Collections.sort(humanList, new HumanComporator<T>());
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return new HumanIterator<>(humans);
+    public String toString() {
+        return "FamilyTree{ " +
+                "humanList = " + humanList +
+                '}';
     }
 
-    public int familyTreeSize() {
-        return humans.size();
+
+    @Override
+    public Iterator<T> iterator() {
+        return new HumanIterator<T>(humanList);
     }
+
 }

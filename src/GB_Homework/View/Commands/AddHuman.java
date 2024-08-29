@@ -2,14 +2,14 @@ package GB_Homework.View.Commands;
 
 import GB_Homework.View.ConsoleUI;
 
-public class AddHuman extends Command{
+public class AddHuman extends Commands{
 
     public AddHuman(ConsoleUI consoleUI) {
-        super("Добавить члена семьи", consoleUI);
+        super(consoleUI,"Добавить человека в семейное дерево");// description устанавливаем тут
     }
 
     @Override
-    public void execute() {
+    void execute() {
         getConsoleUI().addHuman();
     }
 }

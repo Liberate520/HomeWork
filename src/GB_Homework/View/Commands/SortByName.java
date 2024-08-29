@@ -2,16 +2,13 @@ package GB_Homework.View.Commands;
 
 import GB_Homework.View.ConsoleUI;
 
-public class SortByName extends Command{
-
+public class SortByName extends Commands{
     public SortByName(ConsoleUI consoleUI) {
-        super("Отсортировать по имени", consoleUI);
+        super(consoleUI,"Вернуть все имена из дерева отсортированные по имени");// description устанавливаем тут
     }
 
     @Override
-    public void execute() {
+    void execute() {
         getConsoleUI().sortByName();
     }
-
-    // Ошибка в сортировке, нужно будет исправить!
 }

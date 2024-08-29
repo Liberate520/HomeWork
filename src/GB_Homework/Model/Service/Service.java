@@ -1,112 +1,103 @@
 package GB_Homework.Model.Service;
 
-import GB_Homework.Model.Builder.HumanBuilder;
+import GB_Homework.Model.Handler.FileHandler;
+import GB_Homework.Model.Handler.Writable;
+import GB_Homework.Model.Human.HumanBuilder;
 import GB_Homework.Model.Family_Tree.FamilyTree;
-import GB_Homework.Model.Human.Gender;
+import GB_Homework.Model.Gender.Gender;
 import GB_Homework.Model.Human.Human;
 
-import java.io.Serializable;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDate;
+import java.util.List;
 
-public class Service implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Service {
+    private Human human;
     private FamilyTree<Human> familyTree;
     private HumanBuilder humanBuilder;
-
-    private void setFamilyTree(FamilyTree<Human> familyTree) {
-        this.familyTree = familyTree;
-    }
+    private Writable writable;
 
     public Service() {
-        familyTree = new FamilyTree<>();
-        humanBuilder = new HumanBuilder();
+        human=new Human();
+        familyTree=new FamilyTree<Human>();
+        humanBuilder=new HumanBuilder();
+        writable=new FileHandler();
     }
 
-    // Добавление данных о члене семьи
-    public Human addHuman(String name, LocalDate birthDate, Gender gender) {
-        Human human = humanBuilder.build(name, gender, birthDate);
-        familyTree.addHuman(human);
-        return human;
+    public void addHuman(String name, LocalDate birghDate, LocalDate deathDate, Gender gender){
+        Human human1=humanBuilder.build(name,birghDate,deathDate,gender);
+        familyTree.addHuman(human1);
     }
 
-    // Внесение данных о матери
-    public void setMother(Human child, Human mother) {
-        familyTree.setMother(child, mother);
+    public void addHuman(String name, LocalDate birghDate, Gender gender) {
+        Human human1 = humanBuilder.build(name, birghDate, gender);
+        familyTree.addHuman(human1);
     }
 
-    // Внесение данных о матери по ID
-    public void setMotherId(long childId, long motherId) {
-        familyTree.setMotherId(childId, motherId);
+    public void addChild(Human human,Human child) {  //добавить ребёнка
+
+        human.addChild(child);
+
     }
 
-    // Внесение данных об отце
-    public void setFather(Human child, Human father) {
-        familyTree.setFather(child, father);
+    public void addMother(Human human,Human mother) {  //добавить мать
+        human.addMother(mother);
     }
 
-    // Внесение данных об отце по ID
-    public void setFatherId(long childId, long fatherId) {
-        familyTree.setFatherId(childId, fatherId);
+    public void addFather(Human human,Human father) {   //добавить отца
+        human.addFather(father);
     }
 
-    // Внесение данных о родителе по ID
-    public void setParentId(long childId, long parentId) {
-        familyTree.setParentId(childId, parentId);
+    public void addSpouse(Human human,Human spouse) {   //добавить супруга,супругу
+        human.addSpouse(spouse);
     }
 
-
-
-    // Поиск человека по ID
-    public String findHumanById(int id) {
-        Human found = familyTree.findHumanById(id);
-        return found != null ? found.toString() : "Человек с ID " + id + " не найден";
+    public int getAge(Human human) {   //возвращает возраст либо годы жизни
+        return human.getAge();
     }
 
-    // Поиск человека по имени
-    public String findHumanByName(String name) {
-        if (name != null) {
-            Human found = familyTree.findHumanByName(name);
-            return found != null ? found.toString() : "Нет данных";
-        } else {
-            return "Имя не может быть null";
+    public Human getById(int id){   // вернуть по id
+        return familyTree.getById(id);
+    }
+
+    public List<Human> getByName(String name){   //вернуть по имени
+        return familyTree.getByName(name);
+    }
+
+    public  List<Human> getSiblings(int id) {   //найти братьев и сестёр
+        return familyTree.getSiblings(id);
+    }
+
+    public FamilyTree<Human> getFamilyTree(){
+        return familyTree;
+    }
+
+    public void printNameFamilyTree(){
+        for (Human h:familyTree){
+            System.out.println(h.getName());
         }
     }
 
-    // Сохранение семейного дерева в файл
-    public void saveTree(Service tree) {
-        FileHandler fileHandler = new FileHandler();
-        fileHandler.save(tree);
-    }
-
-    // Чтение семейного дерева из файла и создание нового сервиса
-    public Service readTree() {
-        FileHandler fileHandler = new FileHandler();
-        return (Service) fileHandler.read();
-    }
-
-    // Сортировка по имени
-    public void sortByName() {
+    public void sortByName(){
         familyTree.sortByName();
     }
 
-    // Сортировка по дате рождения
-    public void sortByBirthDate() {
-        familyTree.sortByBirthDate();
+    public void sortByData(){
+        familyTree.sortByData();
     }
 
-    // Получение списка членов семейного дерева
-    public String getHumanListInfo() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Семейное дерево: \n");
-        for (Human human : familyTree) {
-            stringBuilder.append(human);
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
+    public void saveFamilyTree(String file) throws IOException {  // Сохранить в файл
+        writable.save(getFamilyTree(),file);
     }
 
+    public void readFamilyTree(String file) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+        FamilyTree<Human> loadedTree = (FamilyTree<Human>) ois.readObject();
+        ois.close();
 
-    public int familyTreeSize() {
-        return familyTree.familyTreeSize();
+        // Восстановление данных в текущем экземпляре Service
+        this.familyTree = loadedTree;
     }
 }
