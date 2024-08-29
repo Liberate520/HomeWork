@@ -20,32 +20,28 @@ import java.util.List;
 public class MainMenu {
     private List<Command> commandList;
 
-    public MainMenu(ConsoleUI consoleUI) {
+    public MainMenu(View ui) {
         commandList = new ArrayList<>();
-        commandList.add(new Save(consoleUI));
-        commandList.add(new Load(consoleUI));
-        commandList.add(new Add(consoleUI));
-        commandList.add(new GetFamilyTreeInfo(consoleUI));
-        commandList.add(new SetBirthDate(consoleUI));
-        commandList.add(new SetDeathDate(consoleUI));
-        commandList.add(new SetParents(consoleUI));
-        commandList.add(new FindByName(consoleUI));
-        commandList.add(new SortByName(consoleUI));
-        commandList.add(new SortByBirthDate(consoleUI));
-        commandList.add(new SortByAge(consoleUI));
-        commandList.add(new Finish(consoleUI));
+        commandList.add(new Save(ui));
+        commandList.add(new Load(ui));
+        commandList.add(new Add(ui));
+        commandList.add(new GetFamilyTreeInfo(ui));
+        commandList.add(new SetBirthDate(ui));
+        commandList.add(new SetDeathDate(ui));
+        commandList.add(new SetParents(ui));
+        commandList.add(new FindByName(ui));
+        commandList.add(new SortByName(ui));
+        commandList.add(new SortByBirthDate(ui));
+        commandList.add(new SortByAge(ui));
+        commandList.add(new Finish(ui));
     }
 
-    public String getMenu() {
-        StringBuilder stringBuilder = new StringBuilder("\nГлавное меню\n");
-        for (int i = 0; i < commandList.size(); i++) {
-            stringBuilder
-                    .append(i + 1)
-                    .append(". ")
-                    .append(commandList.get(i).getDescription())
-                    .append(System.lineSeparator());
+    public List<String> getMenu() {
+        List<String> menu = new ArrayList<>();
+        for (Command command : commandList) {
+            menu.add(command.getDescription());
         }
-        return stringBuilder.toString();
+        return menu;
     }
 
     public void execute(int choice) {

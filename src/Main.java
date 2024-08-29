@@ -14,12 +14,17 @@ public class Main {
     }
 
     public static void test() {
+        int id = 0;
         Human human1 = new Human("Андрей", LocalDate.of(1975, 1, 1), Sex.MALE);
+        human1.setId(id++);
         Human human2 = new Human("Ирина", LocalDate.of(1972, 12, 28), Sex.FEMALE);
+        human2.setId(id++);
         Human human3 = new Human("Анна", LocalDate.of(1995, 10, 31), Sex.FEMALE,
                 human1, human2);
+        human3.setId(id++);
         Human human4 = new Human("Петр", LocalDate.of(1995, 10, 31), Sex.MALE);
         human4.setFamilyTies(human1, human2);
+        human4.setId(id++);
         human2.setDeathDate(LocalDate.of(2014, 1, 20));
 
         FamilyTree<Human> familyTree = new FamilyTree<>();
@@ -59,4 +64,5 @@ public class Main {
         System.out.println("Проверка итератора");
         familyTree.forEach(System.out::println);
     }
+
 }

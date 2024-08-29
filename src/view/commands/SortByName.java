@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
 public class SortByName extends Command{
 
-    public SortByName(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public SortByName(View ui) {
+        super(ui);
         description = "Отсортировать по именам.";
     }
 
     @Override
     public void execute() {
-        consoleUI.sortByName();
+        ui.sortByName();
     }
 }

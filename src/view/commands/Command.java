@@ -1,13 +1,13 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
 public abstract class Command {
     String description;
-    ConsoleUI consoleUI;
+    View ui;
 
-    public Command(ConsoleUI consoleUI) {
-        this.consoleUI = consoleUI;
+    public Command(View ui) {
+        this.ui = ui;
     }
 
     public String getDescription() {

@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
-public class Save extends Command{
+public class Save extends Command {
 
-    public Save(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public Save(View ui) {
+        super(ui);
         description = "Сохранить.";
     }
 
     @Override
     public void execute() {
-        consoleUI.save();
+        ui.save();
     }
 }

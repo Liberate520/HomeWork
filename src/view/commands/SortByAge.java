@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
 public class SortByAge extends Command{
 
-    public SortByAge(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public SortByAge(View ui) {
+        super(ui);
         description = "Отсортировать по возрасту.";
     }
 
     @Override
     public void execute() {
-        consoleUI.sortByAge();
+        ui.sortByAge();
     }
 }

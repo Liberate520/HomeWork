@@ -3,6 +3,7 @@ package presenter;
 import model.human.Human;
 import model.human.Sex;
 import model.service.Service;
+import model.writer.MyWriter;
 import view.View;
 
 import java.time.LocalDate;
@@ -10,10 +11,11 @@ import java.time.LocalDate;
 public class Presenter {
     private View view;
     private Service service;
+    private final static String ITEM_UPDATED = "Запись обновлена:";
 
-    public Presenter(View view) {
+    public Presenter(View view, MyWriter handler) {
         this.view = view;
-        service = new Service();
+        service = new Service(handler);
     }
 
     public void getFamilyTree() {
@@ -56,29 +58,33 @@ public class Presenter {
 
     public void setBirthDate(Human human, LocalDate birthDate) {
         service.setBirthDate(human, birthDate);
-        String answer = "Запись обновлена" + human.toString();
+        String answer = ITEM_UPDATED + human.toString();
         view.printAnswer(answer);
     }
 
     public void setDeathDate(Human human, LocalDate deathDate) {
         service.setDeathDate(human, deathDate);
-        String answer = "Запись обновлена" + human.toString();
+        String answer = ITEM_UPDATED + human.toString();
         view.printAnswer(answer);
     }
 
     public void setParents(Human human, Human father, Human mother) {
         service.setParents(human, father, mother);
-        String answer = "Запись обновлена" + human.toString();
+        String answer = ITEM_UPDATED + human.toString();
         view.printAnswer(answer);
     }
 
     public void save() {
-        service.save();
-        view.printAnswer("Данные сохранены");
+        if (service.save())
+            view.printAnswer("Данные сохранены.");
+        else 
+            view.printAnswer("Ошибка сохранения.");
     }
 
     public void load() {
-        service.load();
-        view.printAnswer("Данные загружены");
+        if (service.load())
+            view.printAnswer("Данные загружены.");
+        else 
+            view.printAnswer("Ошибка загрузки.");
     }
 }

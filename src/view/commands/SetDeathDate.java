@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
 public class SetDeathDate extends Command{
 
-    public SetDeathDate(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public SetDeathDate(View ui) {
+        super(ui);
         description = "Установить дату смерти.";
     }
 
     @Override
     public void execute() {
-        consoleUI.setDeathDate();
+        ui.setDeathDate();
     }
 }

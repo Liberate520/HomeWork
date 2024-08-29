@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
 public class SetBirthDate extends Command{
 
-    public SetBirthDate(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public SetBirthDate(View ui) {
+        super(ui);
         description = "Установить дату рождения.";
     }
 
     @Override
     public void execute() {
-        consoleUI.setBirthDate();
+        ui.setBirthDate();
     }
 }

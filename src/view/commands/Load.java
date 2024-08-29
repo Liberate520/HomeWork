@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
-public class Load extends Command{
+public class Load extends Command {
 
-    public Load(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public Load(View ui) {
+        super(ui);
         description = "Загрузить.";
     }
 
     @Override
     public void execute() {
-        consoleUI.load();
+        ui.load();
     }
 }

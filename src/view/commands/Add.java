@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
-public class Add extends Command{
+public class Add extends Command {
 
-    public Add(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public Add(View ui) {
+        super(ui);
         description = "Добавить человека.";
     }
 
     @Override
     public void execute() {
-        consoleUI.add();
+        ui.add();
     }
 }

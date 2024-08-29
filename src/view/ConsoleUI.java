@@ -2,11 +2,13 @@ package view;
 
 import model.human.Human;
 import model.human.Sex;
+import model.writer.FileHandler;
 import presenter.Presenter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
@@ -20,7 +22,7 @@ public class ConsoleUI implements View {
     public ConsoleUI() {
         run = true;
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+        presenter = new Presenter(this, new FileHandler<Human>());
         mainMenu = new MainMenu(this);
     }
 
@@ -38,7 +40,16 @@ public class ConsoleUI implements View {
     }
 
     private void printMenu() {
-        System.out.println(mainMenu.getMenu());
+        StringBuilder menu = new StringBuilder("\nГлавное меню\n");
+        List<String> menuList = mainMenu.getMenu();
+        for (int i = 0; i < menuList.size(); i++) {
+            menu
+                    .append(i + 1)
+                    .append(". ")
+                    .append(menuList.get(i))
+                    .append(System.lineSeparator());
+        }
+        System.out.println(menu);
     }
 
     private void execute() {
@@ -63,6 +74,17 @@ public class ConsoleUI implements View {
         }
     }
 
+    @Override
+    public void save() {
+        presenter.save();
+    }
+
+    @Override
+    public void load() {
+        presenter.load();
+    }
+
+    @Override
     public void add() {
         System.out.println("Добавление нового человека в семейное древо.");
         String name = inputString("Введите имя: ");
@@ -156,10 +178,12 @@ public class ConsoleUI implements View {
         }
     }
 
+    @Override
     public void getFamilyTreeInfo() {
         presenter.getFamilyTree();
     }
 
+    @Override
     public void setBirthDate() {
         Human human = inputHuman("Введите ID человека для редактирования:");
         if (human == null) {
@@ -173,6 +197,7 @@ public class ConsoleUI implements View {
             System.out.println(CANCEL_INPUT);
     }
 
+    @Override
     public void setDeathDate() {
         Human human = inputHuman("Введите ID человека для редактирования:");
         if (human == null) {
@@ -186,6 +211,7 @@ public class ConsoleUI implements View {
             System.out.println(CANCEL_INPUT);
     }
 
+    @Override
     public void setParents() {
         Human human = inputHuman("Введите ID человека для редактирования:");
         if (human == null) {
@@ -197,34 +223,31 @@ public class ConsoleUI implements View {
         presenter.setParents(human, father, mother);
     }
 
+    @Override
     public void findByName() {
         System.out.print("Введите имя для поиска: ");
         String name = scanner.nextLine();
         presenter.findByName(name);
     }
 
+    @Override
     public void sortByName() {
         presenter.sortByName();
     }
 
+    @Override
     public void sortByBirthDate() {
         presenter.sortByBirthDate();
     }
 
+    @Override
     public void sortByAge() {
         presenter.sortByAge();
     }
 
+    @Override
     public void finish() {
         System.out.println("Выход...");
         run = false;
-    }
-
-    public void save() {
-        presenter.save();
-    }
-
-    public void load() {
-        presenter.load();
     }
 }

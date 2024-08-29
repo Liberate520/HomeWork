@@ -1,18 +1,22 @@
 package view.commands;
 
-import model.human.Human;
-import model.human.Sex;
-
-import java.time.LocalDate;
-import java.util.List;
-
 public interface CommandList {
 
-    void add(String name, LocalDate birthDate, LocalDate deathDate, Sex sex, Human father, Human mother);
+    void save();
 
-    List<Human> getFamilyTree();
+    void load();
 
-    List<Human> findByName(String name);
+    void add();
+
+    void getFamilyTreeInfo();
+
+    void setBirthDate();
+
+    void setDeathDate();
+
+    void setParents();
+
+    void findByName();
 
     void sortByName();
 
@@ -20,15 +24,5 @@ public interface CommandList {
 
     void sortByAge();
 
-    String printList(List<Human> list);
-
-    void save();
-
-    void load();
-
-    void setBirthDate(Human human, LocalDate birthDate);
-
-    void setDeathDate(Human human, LocalDate deathDate);
-
-    void setParents(Human human, Human father, Human mother);
+    void finish();
 }

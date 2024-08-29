@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
 public class SortByBirthDate extends Command{
 
-    public SortByBirthDate(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public SortByBirthDate(View ui) {
+        super(ui);
         description = "Отсортировать по дате рождения.";
     }
 
     @Override
     public void execute() {
-        consoleUI.sortByBirthDate();
+        ui.sortByBirthDate();
     }
 }

@@ -1,16 +1,16 @@
 package view.commands;
 
-import view.ConsoleUI;
+import view.View;
 
 public class SetParents extends Command{
 
-    public SetParents(ConsoleUI consoleUI) {
-        super(consoleUI);
+    public SetParents(View ui) {
+        super(ui);
         description = "Установить родителей.";
     }
 
     @Override
     public void execute() {
-        consoleUI.setParents();
+        ui.setParents();
     }
 }
