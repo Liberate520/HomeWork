@@ -1,4 +1,4 @@
-package Homework4_OOP.FamilyTrees;
+package Homework6_OOP.FamilyTrees;
 
 import java.util.Iterator;
 import java.util.List;

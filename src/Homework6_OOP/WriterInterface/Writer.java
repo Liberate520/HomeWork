@@ -1,4 +1,4 @@
-package Homework4_OOP.WriterInterface;
+package Homework6_OOP.WriterInterface;
 
 import java.io.Serializable;
 

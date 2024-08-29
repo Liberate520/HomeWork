@@ -1,19 +1,19 @@
-package Homework4_OOP.Services;
+package Homework6_OOP.Services;
 
-import Homework4_OOP.FamilyTrees.FamilyTree;
-import Homework4_OOP.Human.Human;
-import Homework4_OOP.WritersClasses.FileHandler;
+import Homework6_OOP.FamilyTreeInterface.IFamilyTree;
+import Homework6_OOP.Human.Human;
+import Homework6_OOP.WritersClasses.FileHandler;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class FamilyTreeService implements Serializable {
-    private final FamilyTree<Human> familyTree;
+    private final IFamilyTree<Human> familyTree;
     private final FileHandler fileHandler;
 
-    public FamilyTreeService() {
-        this.familyTree = new FamilyTree<>();
-        this.fileHandler = new FileHandler();
+    public FamilyTreeService(IFamilyTree<Human> familyTree, FileHandler fileHandler) {
+        this.familyTree = familyTree;
+        this.fileHandler = fileHandler;
     }
 
     public void addHuman(Human human) {
@@ -28,14 +28,14 @@ public class FamilyTreeService implements Serializable {
         return familyTree.remove(id);
     }
 
-    public void createFamilyRelationship(long parentId, long childId) {
+    public boolean createFamilyRelationship(long parentId, long childId) {
         Human parent = familyTree.getById(parentId);
         Human child = familyTree.getById(childId);
 
         if (parent != null && child != null) {
-            child.addParent(parent);
-            parent.addChild(child);
+            familyTree.addParentChildRelation(parent, child);
         }
+        return false;
     }
 
     public boolean setWedding(long id1, long id2) {
@@ -47,14 +47,14 @@ public class FamilyTreeService implements Serializable {
     }
 
     public boolean saveFamilyTree(String filename) {
-        return fileHandler.save(familyTree, filename);
+        return fileHandler.save((Serializable) familyTree, filename);
     }
 
     public boolean loadFamilyTree(String filename) {
-        FamilyTree<Human> loadedTree = (FamilyTree<Human>) fileHandler.read(filename);
+        IFamilyTree<Human> loadedTree = (IFamilyTree<Human>) fileHandler.load(filename);
         if (loadedTree != null) {
-            familyTree.getEntityList().clear(); // Очищаем текущее дерево
-            familyTree.getEntityList().addAll(loadedTree.getEntityList()); // Загружаем новое дерево
+            familyTree.getEntityList().clear();
+            familyTree.getEntityList().addAll(loadedTree.getEntityList());
             return true;
         }
         return false;

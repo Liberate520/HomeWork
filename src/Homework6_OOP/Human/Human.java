@@ -1,6 +1,6 @@
-package Homework4_OOP.Human;
+package Homework6_OOP.Human;
 
-import Homework4_OOP.HumanInterfaces.Person;
+import Homework6_OOP.HumanInterfaces.Person;
 
 import java.io.Serializable;
 import java.time.LocalDate;
