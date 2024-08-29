@@ -1,0 +1,68 @@
+import model.family_tree.FamilyTree;
+import model.human.Human;
+import model.human.Sex;
+import model.writer.FileHandler;
+import view.ConsoleUI;
+import view.View;
+
+import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+        View view = new ConsoleUI();
+        view.start();
+    }
+
+    public static void test() {
+        int id = 0;
+        Human human1 = new Human("Андрей", LocalDate.of(1975, 1, 1), Sex.MALE);
+        human1.setId(id++);
+        Human human2 = new Human("Ирина", LocalDate.of(1972, 12, 28), Sex.FEMALE);
+        human2.setId(id++);
+        Human human3 = new Human("Анна", LocalDate.of(1995, 10, 31), Sex.FEMALE,
+                human1, human2);
+        human3.setId(id++);
+        Human human4 = new Human("Петр", LocalDate.of(1995, 10, 31), Sex.MALE);
+        human4.setFamilyTies(human1, human2);
+        human4.setId(id++);
+        human2.setDeathDate(LocalDate.of(2014, 1, 20));
+
+        FamilyTree<Human> familyTree = new FamilyTree<>();
+        familyTree.add(human1);
+        familyTree.add(human2);
+        familyTree.add(human3);
+        familyTree.add(human4);
+        System.out.println(familyTree);
+        System.out.println(human1.isSibling(human4));
+        System.out.println(human3.isSibling(human4));
+        System.out.println(familyTree.printList(human1.getChildren()));
+
+        System.out.println("Сиблинги:");
+        System.out.println(familyTree.printList(human3.findSiblings().stream().toList()));
+
+        System.out.println();
+        System.out.println("Данные перед сохранением:");
+        System.out.println(familyTree);
+        FileHandler<Human> handler = new FileHandler<>();
+        handler.save(familyTree);
+        FamilyTree<Human> loadedTree = handler.load();
+        System.out.println("Загруженные данные:");
+        System.out.println(loadedTree);
+
+        System.out.println();
+        System.out.println("Сортировка по имени:");
+        familyTree.sortByName();
+        System.out.println(familyTree);
+        System.out.println("Сортировка по дате рождения:");
+        familyTree.sortByBirthDate();
+        System.out.println(familyTree);
+        System.out.println("Сортировка по возрасту:");
+        familyTree.sortByAge();
+        System.out.println(familyTree);
+
+        System.out.println();
+        System.out.println("Проверка итератора");
+        familyTree.forEach(System.out::println);
+    }
+
+}
