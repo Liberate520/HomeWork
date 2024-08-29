@@ -1,18 +1,29 @@
-import saver.*;
-import tree.FamilyTree;
-import human.*;
+import model.Service;
+import model.human.Gender;
 
 import java.time.LocalDate;
 
 public class Main {
-    final static String filePath = "src/saver/back_up_tree.but";
+    final static String filePath = "src/model.human.saver/back_up_tree.but";
 
     public static void main(String[] args) {
+        Service serviceHuman = new Service();
+
+        serviceHuman.addHuman("Олег", Gender.MALE, LocalDate.of(2010,11,2));
+        serviceHuman.addHuman("Ольга", Gender.FEMALE, LocalDate.of(2013, 3,13));
+        serviceHuman.addHuman("Георгий", Gender.MALE, LocalDate.of(1988,12,4));
+        serviceHuman.addHuman("Елизавета", Gender.FEMALE, LocalDate.of(1990, 4,21));
+        serviceHuman.addHuman("Потап", Gender.MALE, LocalDate.of(1960,02,3));
+        serviceHuman.addHuman("Дуся", Gender.FEMALE, LocalDate.of(1965, 5,12));
+
+        System.out.println(serviceHuman.printTree());
+
 
         //FamilyTree myTree = restore();
-        FamilyTree myTree = buildTree();
+       // FamilyTree myTree = buildTree();
 
         //save_tree(myTree);
+        /*
 
         System.out.println(myTree);
 
@@ -28,9 +39,11 @@ public class Main {
 
         System.out.println(myTree);
 
+         */
+
 
     }
-
+    /*
     private static void save_tree(FamilyTree familyTree) {
         FileSaver fileSaver = new FileSaver();
         fileSaver.setPath(filePath);
@@ -78,4 +91,6 @@ public class Main {
 
         return tree;
     }
+
+     */
 }

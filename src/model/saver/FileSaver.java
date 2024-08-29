@@ -1,4 +1,7 @@
-package saver;
+package model.saver;
+
+import model.human.Human;
+import model.tree.FamilyTree;
 
 import java.io.*;
 
@@ -20,7 +23,7 @@ public class FileSaver implements Saver{
     }
 
     @Override
-    public Object restore() {
+    public FamilyTree<Human> restore() {
         Object tree = null;
         ObjectInputStream objectInputStream = null;
         try {

@@ -1,4 +1,4 @@
-package saver;
+package model.saver;
 
 import java.io.Serializable;
 

@@ -1,6 +1,4 @@
-package tree;
-
-import human.Human;
+package model.tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,11 +6,16 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree<E extends TreeConn<E>> implements Serializable, Iterable<E> {
+    //private String nameTree;
     private int humansId;
     private List<E> humanList;
 
     public FamilyTree(){this(new ArrayList<>());}
     public FamilyTree(List<E> humanList){this.humanList = humanList;}
+
+   // public void setName(String name){
+   //     nameTree = name;
+   // }
 
     public boolean add(E human){
         if(human == null){ return false; }
@@ -20,8 +23,8 @@ public class FamilyTree<E extends TreeConn<E>> implements Serializable, Iterable
 
         humanList.add(human);
         human.setId(humansId++);
-        //addToParents(human);
-        //addToChildren(human);
+        //addToParents(model.human);
+        //addToChildren(model.human);
 
         return true;
         }

@@ -1,8 +1,7 @@
-package tree;
+package model.tree;
 
-import human.Alive;
-import human.Gender;
-import human.Human;
+import model.human.Alive;
+import model.human.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
