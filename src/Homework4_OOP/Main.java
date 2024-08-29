@@ -1,15 +1,21 @@
 package Homework4_OOP;
 
-import Homework4_OOP.FamilyTrees.FamilyTree;
-import Homework4_OOP.Human.Human;
-import Homework4_OOP.MVP.Presenter;
+import Homework4_OOP.Services.FamilyTreeService;
+import Homework4_OOP.WritersClasses.Presenter;
 import Homework4_OOP.WritersClasses.UserInterface;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree<Human> tree = new FamilyTree<>();
+        // Создание сервисного класса
+        FamilyTreeService service = new FamilyTreeService();
+
+        // Создание представления
         UserInterface ui = new UserInterface();
-        Presenter presenter = new Presenter(ui, tree);
+
+        // Создание презентера, который связывает представление и сервис
+        Presenter presenter = new Presenter(ui, service);
+
+        // Запуск приложения через презентер
         presenter.start();
     }
 }

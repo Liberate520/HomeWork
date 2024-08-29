@@ -1,5 +1,7 @@
 package Homework4_OOP.Human;
 
+import Homework4_OOP.HumanInterfaces.Person;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,10 +26,10 @@ public class Human implements Person, Serializable {
         this.deathDate = deathDate;
         this.father = father;
         this.mother = mother;
-        children = new ArrayList<>();
+        this.children = new ArrayList<>();
     }
 
-    public Human(String name, Gender gender, LocalDate birthDate) { // Перегрузка конструктора
+    public Human(String name, Gender gender, LocalDate birthDate) {
         this(name, gender, birthDate, null, null, null);
     }
 
@@ -147,71 +149,47 @@ public class Human implements Person, Serializable {
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("id: ");
-        sb.append(id);
-        sb.append(", имя: ");
-        sb.append(name);
-        sb.append(", пол: ");
-        sb.append(getGender());
-        sb.append(", возраст: ");
-        sb.append(getAge());
-        sb.append(", ");
-        sb.append(getSpouseInfo());
-        sb.append(", ");
-        sb.append(getMotherInfo());
-        sb.append(", ");
-        sb.append(getFatherInfo());
-        sb.append(", ");
-        sb.append(getChildrenInfo());
+        sb.append("id: ").append(id);
+        sb.append(", имя: ").append(name);
+        sb.append(", пол: ").append(gender);
+        sb.append(", возраст: ").append(getAge());
+        sb.append(", ").append(getSpouseInfo());
+        sb.append(", ").append(getMotherInfo());
+        sb.append(", ").append(getFatherInfo());
+        sb.append(", ").append(getChildrenInfo());
         return sb.toString();
     }
 
     public String getSpouseInfo() {
-        String res = "супруг(-а): ";
         if (spouse == null) {
-            res += "нет";
+            return "супруг(-а): нет";
         } else {
-            res += spouse.getName();
+            return "супруг(-а): " + spouse.getName();
         }
-        return res;
     }
 
     public String getMotherInfo() {
-        String res = "мать: ";
-        Human mother = getMother();
         if (mother != null) {
-            res += mother.getName();
+            return "мать: " + mother.getName();
         } else {
-            res += "неизвестна";
+            return "мать: неизвестна";
         }
-        return res;
     }
 
     public String getFatherInfo() {
-        String res = "отец: ";
-        Human father = getFather();
         if (father != null) {
-            res += father.getName();
+            return "отец: " + father.getName();
         } else {
-            res += "неизвестен";
+            return "отец: неизвестен";
         }
-        return res;
     }
 
     public String getChildrenInfo() {
-        StringBuilder res = new StringBuilder();
-        res.append("дети: ");
-        if (children.size() != 0) {
-            res.append(children.get(0).getName());
-            for (int i = 1; i < children.size(); i++) {
-                res.append(", ");
-                res.append(children.get(i).getName());
-            }
+        if (children.isEmpty()) {
+            return "дети: отсутствуют";
         } else {
-            res.append("отсутствуют");
+            return "дети: " + String.join(", ", children.stream().map(Human::getName).toList());
         }
-
-        return res.toString();
     }
 
     @Override
@@ -223,6 +201,6 @@ public class Human implements Person, Serializable {
             return false;
         }
         Human human = (Human) obj;
-        return human.getId() == getId();
+        return id == human.getId();
     }
 }

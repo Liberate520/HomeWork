@@ -1,97 +1,58 @@
 package Homework4_OOP.FamilyTrees;
 
-import Homework4_OOP.Human.Person;
 import Homework4_OOP.Human.Human;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
-public class FamilyTree<T extends Person> implements Iterable<T>, Serializable {
-    private long entityId;
-    private List<T> entityList;
+public class FamilyTree<T extends Human> implements Serializable {
+    private final List<T> entityList;
+    private long entityId = 0; // Счетчик ID
 
     public FamilyTree() {
-        this(new ArrayList<>());
+        this.entityList = new ArrayList<>();
     }
 
-    public FamilyTree(List<T> entityList) {
-        this.entityList = entityList;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new FamilyTreeIterator<>(entityList);
-    }
-
-    public boolean add(T entity) {
-        if (entity == null) {
-            return false;
-        }
-
-        if (!entityList.contains(entity)) {
-            entityList.add(entity);
-            if (entity instanceof Human) {
-                Human human = (Human) entity;
-                human.setId(entityId++);
-                addToParents(human);
-                addToChildren(human);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private void addToParents(Human human) {
-        for (Human parent : human.getParents()) {
-            parent.addChild(human);
-        }
-    }
-
-    private void addToChildren(Human human) {
-        for (Human child : human.getChildren()) {
-            child.addParent(human);
-        }
-    }
-
-    public List<Human> getSiblings(int id) {
-        T person = getById(id);
-        if (person instanceof Human human) {
-            List<Human> res = new ArrayList<>();
-            for (Human parent : human.getParents()) {
-                for (Human child : parent.getChildren()) {
-                    if (!child.equals(human)) {
-                        res.add(child);
-                    }
-                }
-            }
-            return res;
-        }
-        return null;
+    public void add(T entity) {
+        entity.setId(entityId++); // Присвоение уникального ID
+        entityList.add(entity);
     }
 
     public List<T> getByName(String name) {
-        List<T> res = new ArrayList<>();
-        for (T entity : entityList) {
-            if (entity.getName().equals(name)) {
-                res.add(entity);
-            }
-        }
-        return res;
+        return entityList.stream()
+                .filter(entity -> entity.getName().equalsIgnoreCase(name))
+                .toList();
+    }
+
+    public T getById(long id) {
+        return entityList.stream()
+                .filter(entity -> entity.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean remove(long id) {
+        return entityList.removeIf(entity -> entity.getId() == id);
     }
 
     public boolean setWedding(long id1, long id2) {
-        if (checkId(id1) && checkId(id2)) {
-            Human human1 = (Human) getById(id1);
-            Human human2 = (Human) getById(id2);
-            return setWedding(human1, human2);
+        T person1 = getById(id1);
+        T person2 = getById(id2);
+
+        if (person1 instanceof Human human1 && person2 instanceof Human human2) {
+            return createMarriage(human1, human2);
         }
         return false;
     }
 
-    public boolean setWedding(Human human1, Human human2) {
+    public boolean createMarriage(Human human1, Human human2) {
+        if (human1 == null || human2 == null || human1.equals(human2)) {
+            return false;
+        }
+
+        // Проверяем, что оба человека не состоят в браке
         if (human1.getSpouse() == null && human2.getSpouse() == null) {
             human1.setSpouse(human2);
             human2.setSpouse(human1);
@@ -100,54 +61,15 @@ public class FamilyTree<T extends Person> implements Iterable<T>, Serializable {
         return false;
     }
 
-    public boolean remove(long id) {
-        if (checkId(id)) {
-            T entity = getById(id);
-            return entityList.remove(entity);
-        }
-        return false;
-    }
-
-    private boolean checkId(long id) {
-        return id < entityId && id >= 0;
-    }
-
-    public T getById(long id) {
-        for (T entity : entityList) {
-            if (entity.getId() == id) {
-                return entity;
-            }
-        }
-        return null;
-    }
-
-    public void sortByName() {
-        entityList.sort(Comparator.comparing(Person::getName));
-    }
-
-    public void sortByBirthDate() {
-        entityList.sort(Comparator.comparing(entity -> {
-            if (entity instanceof Human) {
-                return ((Human) entity).getBirthDate();
-            }
-            return null;
-        }));
-    }
-
-    @Override
-    public String toString() {
-        return getInfo();
-    }
-
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("В древе: ");
-        sb.append(entityList.size());
-        sb.append(" объектов(-а): \n");
         for (T entity : entityList) {
-            sb.append(entity);
-            sb.append("\n");
+            sb.append(entity).append("\n");
         }
         return sb.toString();
+    }
+
+    public List<T> getEntityList() {
+        return entityList;
     }
 }

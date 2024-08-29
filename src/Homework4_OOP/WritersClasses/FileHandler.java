@@ -1,5 +1,7 @@
 package Homework4_OOP.WritersClasses;
 
+import Homework4_OOP.WriterInterface.Writer;
+
 import java.io.*;
 
 public class FileHandler implements Writer {
