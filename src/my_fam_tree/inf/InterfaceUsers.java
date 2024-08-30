@@ -2,8 +2,8 @@ package my_fam_tree.inf;
 
 import my_fam_tree.model.FamilyTree;
 import my_fam_tree.model.Human;
-import my_fam_tree.treeService.Plant;
-import my_fam_tree.treeService.FileHandler;
+import my_fam_tree.service.Plant;
+import my_fam_tree.service.FileHandler;
 
 import java.time.LocalDate;
 import java.util.Scanner;

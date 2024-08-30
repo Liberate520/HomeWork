@@ -5,22 +5,24 @@ import java.io.Serializable;
 import java.util.*;
 
 
-public class FamilyTree <T extends InFamily<T>> implements Serializable, Iterable<T> {
+public class FamilyTree <T extends InFamily<T>> implements FamTreeOper<T>, Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
     private List<T> relatives;
 
     public FamilyTree() {
         this.relatives = new ArrayList<>();
     }
-
+    @Override
     public void addRelative(T relative) {
         relatives.add(relative);
     }
 
+    @Override
     public List<T> getRelatives() {
         return relatives;
     }
 
+    @Override
     public T findHuman(String name) {
         for (T relative : relatives) {
             if (relative.getName().equals(name)) {
@@ -30,11 +32,12 @@ public class FamilyTree <T extends InFamily<T>> implements Serializable, Iterabl
         return null;
     }
 
+    @Override
     public void sortName() {
         relatives.sort(Comparator.comparing(InFamily::getName));
     }
 
-
+    @Override
     public void sortBirthDate() {
         relatives.sort(Comparator.comparing(InFamily::getDateOfBirth));
     }

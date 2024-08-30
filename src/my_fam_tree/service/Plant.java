@@ -1,4 +1,4 @@
-package my_fam_tree.treeService;
+package my_fam_tree.service;
 
 import my_fam_tree.model.FamilyTree;
 import my_fam_tree.model.Human;
