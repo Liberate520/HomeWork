@@ -7,6 +7,7 @@ import java.util.List;
 public interface UserInterface {
     void displayMessage(String message);
     void displayPersons(List<Person> persons);
+    String promptForInput(String prompt);
     String getUserInput(String prompt);
     void showMenu();
 }

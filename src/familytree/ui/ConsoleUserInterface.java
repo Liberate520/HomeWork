@@ -25,6 +25,11 @@ public class ConsoleUserInterface implements UserInterface {
         System.out.print(prompt + " ");
         return scanner.nextLine();
     }
+    @Override
+    public String promptForInput(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine();
+    }
 
     @Override
     public void showMenu() {

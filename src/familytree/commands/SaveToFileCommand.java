@@ -16,9 +16,11 @@ public class SaveToFileCommand implements Command {
 
     @Override
     public void execute() {
+        String filename = view.promptForInput("Введите имя файла для сохранения: ");
+
         try {
-            familyTreeService.saveToFile("familyTree.dat");
-            view.displayMessage("Дерево сохранено успешно!");
+            familyTreeService.saveToFile(filename);
+            view.displayMessage("Дерево успешно сохранено в файл: " + filename);
         } catch (IOException e) {
             view.displayMessage("Ошибка при сохранении: " + e.getMessage());
         }

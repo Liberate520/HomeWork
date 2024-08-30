@@ -3,7 +3,6 @@ package familytree.service;
 import familytree.model.Person;
 import familytree.model.FullName;
 import familytree.model.FamilyTree;
-
 import familytree.ui.ConsoleUserInterface;
 
 import java.io.IOException;
@@ -14,16 +13,15 @@ public class FamilyTreeService implements FamilyTreeServiceInterface {
     private final MemberManagerInterface memberManager;
     private final RelationshipManagerInterface relationshipManager;
     private final DataManagerInterface dataManager;
-    private final ConsoleUserInterface ui;
+
 
     public FamilyTreeService(MemberManagerInterface memberManager,
                              RelationshipManagerInterface relationshipManager,
-                             DataManagerInterface dataManager,
-                             ConsoleUserInterface ui) {
+                             DataManagerInterface dataManager
+    ) {
         this.memberManager = memberManager;
         this.relationshipManager = relationshipManager;
         this.dataManager = dataManager;
-        this.ui = ui;
     }
 
     @Override
@@ -33,7 +31,7 @@ public class FamilyTreeService implements FamilyTreeServiceInterface {
         FullName fullName = new FullName(familyName, firstName, fatherName);
         Person newMember = new Person(fullName, gender, dateOfBirth, dateOfDeath);
 
-        memberManager.addMember(familyName, firstName, fatherName, gender, dateOfBirth, dateOfDeath);
+        memberManager.addMember(newMember);
     }
 
     @Override
@@ -68,11 +66,6 @@ public class FamilyTreeService implements FamilyTreeServiceInterface {
         FamilyTree<Person> familyTree = dataManager.loadFromFile(filename);
         memberManager.updateFamilyTree(familyTree);
         relationshipManager.updateFamilyTree(familyTree);
-        return familyTree;
-    }
-
-    @Override
-    public FamilyTree<Person> updateFamilyTree(FamilyTree<Person> familyTree) {
         return familyTree;
     }
 }

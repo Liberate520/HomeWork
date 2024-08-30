@@ -1,6 +1,6 @@
 package familytree.service;
 
-import familytree.factory.PersonFactory;
+//import familytree.factory.PersonFactory;
 import familytree.model.FamilyTree;
 import familytree.model.Person;
 import familytree.model.FullName;
@@ -17,10 +17,14 @@ public class MemberManager implements MemberManagerInterface{
     }
 
     @Override
-    public void addMember(String familyName, String firstName, String fatherName, Person.Gender gender, LocalDate dateOfBirth, LocalDate dateOfDeath) {
-        FullName fullName = new FullName(familyName, firstName, fatherName);
-        Person newMember = new Person(fullName, gender, dateOfBirth, dateOfDeath);
-        familyTree.addMember(newMember);
+    public void addMember(Person person) {
+//        FullName fullName = new FullName(familyName, firstName, fatherName);
+//        Person newMember = new Person(fullName, gender, dateOfBirth, dateOfDeath);
+//        familyTree.addMember(newMember);
+        if (familyTree == null) {
+            throw new IllegalStateException("Семейное дерево не инициализировано. Пожалуйста, загрузите данные.");
+        }
+        familyTree.addMember(person);
     }
 
     @Override

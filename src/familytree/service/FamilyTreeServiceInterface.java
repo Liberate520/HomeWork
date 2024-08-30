@@ -17,5 +17,5 @@ public interface FamilyTreeServiceInterface {
     void saveToFile(String filename) throws IOException;
     FamilyTree<Person>  loadFromFile(String filename) throws IOException, ClassNotFoundException;
 
-    FamilyTree<Person> updateFamilyTree(FamilyTree<Person> newFamilyTree);
+//    FamilyTree<Person> updateFamilyTree(FamilyTree<Person> newFamilyTree);
 }

@@ -23,7 +23,7 @@ public class Main {
         DataService dataService = new DataService(memberService);
 
         ConsoleUserInterface ui = new ConsoleUserInterface();
-        FamilyTreeService familyTreeService = new FamilyTreeService(memberManager, relationshipManager, dataManager, ui);
+        FamilyTreeService familyTreeService = new FamilyTreeService(memberManager, relationshipManager, dataManager);
 
         memberManager.updateFamilyTree(familyTree);
 
