@@ -3,7 +3,6 @@ package familytree.service;
 import familytree.model.Person;
 import familytree.model.FullName;
 import familytree.model.FamilyTree;
-import familytree.ui.ConsoleUserInterface;
 
 import java.io.IOException;
 import java.time.LocalDate;
