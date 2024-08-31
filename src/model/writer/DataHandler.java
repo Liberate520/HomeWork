@@ -2,7 +2,7 @@ package model.writer;
 
 import java.io.*;
 
-public class DataHandler<T> implements Writer<T> {
+public class DataHandler<T extends Serializable> implements Writer<T> {
 
     private String filePath;
 

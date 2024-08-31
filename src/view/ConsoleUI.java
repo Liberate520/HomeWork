@@ -3,7 +3,6 @@ package view;
 import model.human.Gender;
 import presenter.Presenter;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -141,10 +140,10 @@ public class ConsoleUI implements View{
         presenter.save();
     }
 
-    public Serializable load() {
+    public void load() {
         System.out.println("Введите путь для загрузки файла");
         String filePath = scanner.nextLine();
         presenter.setFilePath(filePath);
-        return presenter.load();
+        presenter.load();
     }
 }

@@ -4,7 +4,6 @@ import model.human.Gender;
 import model.service.Service;
 import view.View;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Presenter {
@@ -49,7 +48,7 @@ public class Presenter {
         service.save();
     }
 
-    public Serializable load() {
-        return service.load();
+    public void load() {
+        service.load();
     }
 }

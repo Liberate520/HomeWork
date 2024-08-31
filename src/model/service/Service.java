@@ -7,11 +7,10 @@ import model.human.Human;
 import model.writer.DataHandler;
 import model.writer.Writer;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Service implements Serializable {
+public class Service{
     private FamilyTree<Human> tree;
     private HumanBuilder builder;
     private Writer<FamilyTree<Human>> dataHandler;
@@ -69,9 +68,8 @@ public class Service implements Serializable {
         dataHandler.save(tree);
     }
 
-    public FamilyTree<Human> load() {
+    public void load() {
         tree = dataHandler.read();
-        return tree;
     }
 
     @Override
