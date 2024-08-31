@@ -1,20 +1,20 @@
 package familytree.commands;
 
 import familytree.model.Person;
-import familytree.service.FamilyTreeService;
+import familytree.service.FamilyTreeServiceInterface;
 import familytree.ui.UserInterface;
 
 public class FindMemberCommand implements Command {
-    private final FamilyTreeService familyTreeService;
+    private final FamilyTreeServiceInterface familyTreeService;
     private final UserInterface view;
 
-    public FindMemberCommand(FamilyTreeService familyTreeService, UserInterface view) {
+    public FindMemberCommand(FamilyTreeServiceInterface familyTreeService, UserInterface view) {
         this.familyTreeService = familyTreeService;
         this.view = view;
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         String familyName = view.getUserInput("Введите фамилию:");
         String firstName = view.getUserInput("Введите имя:");
         String fatherName = view.getUserInput("Введите отчество:");
@@ -25,5 +25,6 @@ public class FindMemberCommand implements Command {
         } else {
             view.displayMessage("Член семьи не найден.");
         }
+        return false;
     }
 }

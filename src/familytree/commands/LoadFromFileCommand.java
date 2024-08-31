@@ -14,7 +14,7 @@ public class LoadFromFileCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         try {
             String filename = view.getUserInput("Введите имя файла для загрузки:");
             familyTreeService.loadFromFile(filename);
@@ -22,5 +22,6 @@ public class LoadFromFileCommand implements Command {
         } catch (IOException | ClassNotFoundException e) {
             view.displayMessage("Ошибка при загрузке: " + e.getMessage());
         }
+        return false;
     }
 }

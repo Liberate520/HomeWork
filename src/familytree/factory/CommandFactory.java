@@ -1,7 +1,7 @@
 package familytree.factory;
 
 import familytree.commands.*;
-import familytree.service.FamilyTreeService;
+import familytree.service.FamilyTreeServiceInterface;
 import familytree.ui.UserInterface;
 
 import java.util.HashMap;
@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class CommandFactory {
     private final Map<String, Command> commands = new HashMap<>();
+    private final FamilyTreeServiceInterface familyTreeService;
     private final UserInterface userInterface;
-    private final FamilyTreeService familyTreeService;
 
-    public CommandFactory(FamilyTreeService familyTreeService, UserInterface userInterface) {
+    public CommandFactory(FamilyTreeServiceInterface familyTreeService, UserInterface userInterface) {
         this.familyTreeService = familyTreeService;
         this.userInterface = userInterface;
         initializeCommands();

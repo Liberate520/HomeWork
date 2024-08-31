@@ -1,27 +1,35 @@
 package familytree.presenter;
 
 import familytree.commands.Command;
+import familytree.commands.ExitCommand;
 import familytree.factory.CommandFactory;
-import familytree.service.FamilyTreeService;
+import familytree.service.FamilyTreeServiceInterface;
 import familytree.ui.UserInterface;
 
 public class FamilyTreePresenter {
-    private final FamilyTreeService familyTreeService;
+    private final FamilyTreeServiceInterface familyTreeService;
     private final UserInterface userInterface;
     private final CommandFactory commandFactory;
 
-    public FamilyTreePresenter(FamilyTreeService familyTreeService, UserInterface userInterface) {
+    public FamilyTreePresenter(FamilyTreeServiceInterface familyTreeService, UserInterface userInterface) {
         this.familyTreeService = familyTreeService;
         this.userInterface = userInterface;
         this.commandFactory = new CommandFactory(familyTreeService, userInterface);
     }
 
-    public void handleUserInput() {
+    public void start() {
         while (true) {
-            userInterface.showMenu();
-            String commandKey = userInterface.getUserInput("Введите команду: ");
-            Command command = commandFactory.getCommand(commandKey);
-            command.execute();
+            handleUserInput();
+        }
+    }
+
+    private void handleUserInput() {
+        userInterface.showMenu();
+        String commandKey = userInterface.getUserInput("Введите команду: ");
+        Command command = commandFactory.getCommand(commandKey);
+        command.execute();
+        if (command instanceof ExitCommand) {
+            return;  // Завершение программы
         }
     }
 }

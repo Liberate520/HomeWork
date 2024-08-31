@@ -10,7 +10,8 @@ public class UnknownCommand implements Command {
         }
 
         @Override
-        public void execute() {
+        public boolean execute() {
             userInterface.displayMessage("Неизвестная команда. Попробуйте снова.");
+            return false;
         }
     }
