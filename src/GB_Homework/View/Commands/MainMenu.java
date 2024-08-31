@@ -13,8 +13,8 @@ public class MainMenu {
 
         commandsList.add(new AddHuman(consoleUI));
         commandsList.add(new AddChild(consoleUI));
-        commandsList.add(new AddFather(consoleUI));
-        commandsList.add(new AddMother(consoleUI));
+        commandsList.add(new AddParent(consoleUI, "father")); // Добавление отца
+        commandsList.add(new AddParent(consoleUI, "mother")); // Добавление матери
         commandsList.add(new AddSpouse (consoleUI));
         commandsList.add(new GetAge(consoleUI));
         commandsList.add(new GetFamilyTree(consoleUI));
