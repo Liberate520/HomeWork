@@ -5,6 +5,7 @@ import family_tree.model.human.Gender;
 import family_tree.model.human.Human;
 import family_tree.model.human.HumanBuilder;
 import family_tree.model.writer.FileHandler;
+import family_tree.model.writer.FileManager;
 
 import java.time.LocalDate;
 
@@ -12,12 +13,13 @@ public class Service {
     private int idHuman;
     private FamilyTree<Human> tree;
     private HumanBuilder humanBuilder;
-    FileHandler fileHandler;
+    private FileManager fileManager;
+
 
     public Service(){
         tree = new FamilyTree<>();
         humanBuilder = new HumanBuilder();
-        fileHandler = new FileHandler();
+        fileManager = new FileManager(new FileHandler());
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate){
@@ -47,14 +49,12 @@ public class Service {
         tree.sortByAge();
     }
 
-    public boolean saveToFile(String filename){
-        fileHandler.setFile(filename);
-        return fileHandler.save(tree);
+    public boolean saveToFile(String file){
+        return fileManager.saveToFile(file,getFamilyTree());
     }
 
     public boolean loadFromFile(String filePath){
-        fileHandler.setFile(filePath);
-        tree = (FamilyTree<Human>) fileHandler.read();
+       tree = fileManager.loadFromFile(filePath);
         if (tree.equals(null))
             return false;
         else
