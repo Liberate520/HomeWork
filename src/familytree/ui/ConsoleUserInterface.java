@@ -9,23 +9,28 @@ import java.util.TreeMap;
 
 public class ConsoleUserInterface implements UserInterface {
     private final Scanner scanner = new Scanner(System.in);
-    private final Map<String, String> menuItems;
+    private final MenuProviderInterface menuProvider;
+//    private final Map<String, String> menuItems;
 
-    public ConsoleUserInterface() {
-        menuItems = new TreeMap<>();
-        initializeMenu();
+//    public ConsoleUserInterface() {
+//        menuItems = new TreeMap<>();
+//        initializeMenu();
+//    }
+
+    public ConsoleUserInterface(MenuProviderInterface menuProvider) {
+        this.menuProvider = menuProvider;
     }
 
-    private void initializeMenu() {
-        menuItems.put("1", "Добавить члена семьи");
-        menuItems.put("2", "Найти по имени");
-        menuItems.put("3", "Добавить родительско-детскую связь");
-        menuItems.put("4", "Вывести всех членов, отсортированных по фамилии и имени");
-        menuItems.put("5", "Вывести всех членов, отсортированных по дате рождения");
-        menuItems.put("6", "Сохранить дерево в файл");
-        menuItems.put("7", "Загрузить дерево из файла");
-        menuItems.put("0", "Выйти");
-    }
+//    private void initializeMenu() {
+//        menuItems.put("1", "Добавить члена семьи");
+//        menuItems.put("2", "Найти по имени");
+//        menuItems.put("3", "Добавить родительско-детскую связь");
+//        menuItems.put("4", "Вывести всех членов, отсортированных по фамилии и имени");
+//        menuItems.put("5", "Вывести всех членов, отсортированных по дате рождения");
+//        menuItems.put("6", "Сохранить дерево в файл");
+//        menuItems.put("7", "Загрузить дерево из файла");
+//        menuItems.put("0", "Выйти");
+//    }
 
     @Override
     public void displayMessage(String message) {
@@ -54,13 +59,9 @@ public class ConsoleUserInterface implements UserInterface {
     @Override
     public void showMenu() {
         System.out.println("Выберите команду: ");
-        for (Map.Entry<String, String> entry : menuItems.entrySet()) {
+        for (Map.Entry<String, String> entry : menuProvider.getMenuItems().entrySet()) {
+//        for (Map.Entry<String, String> entry : menuItems.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
     }
-
-    public void addMenuItem(String key, String description) {
-        menuItems.put(key, description);
-    }
-
 }

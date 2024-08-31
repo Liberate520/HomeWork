@@ -8,6 +8,8 @@ import familytree.model.Person;
 import familytree.presenter.FamilyTreePresenter;
 import familytree.service.*;
 import familytree.ui.ConsoleUserInterface;
+import familytree.ui.MenuProvider;
+import familytree.ui.MenuProviderInterface;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,8 +21,9 @@ public class Main {
         DataManagerInterface dataManager = new DataManager(fileDataHandler, familyTree);
 
         FamilyTreeServiceInterface familyTreeService = new FamilyTreeService(memberManager, relationshipManager, dataManager);
+        MenuProviderInterface menuProvider = new MenuProvider();
+        ConsoleUserInterface ui = new ConsoleUserInterface(menuProvider);
 
-        ConsoleUserInterface ui = new ConsoleUserInterface();
         CommandFactoryInterface commandFactory = new CommandFactory(familyTreeService, ui);
         FamilyTreePresenter presenter = new FamilyTreePresenter(familyTreeService, ui, commandFactory);
 
