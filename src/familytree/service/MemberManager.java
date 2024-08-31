@@ -1,11 +1,9 @@
 package familytree.service;
 
-//import familytree.factory.PersonFactory;
 import familytree.model.FamilyTree;
 import familytree.model.Person;
-import familytree.model.FullName;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
 public class MemberManager implements MemberManagerInterface{
@@ -18,9 +16,7 @@ public class MemberManager implements MemberManagerInterface{
 
     @Override
     public void addMember(Person person) {
-//        FullName fullName = new FullName(familyName, firstName, fatherName);
-//        Person newMember = new Person(fullName, gender, dateOfBirth, dateOfDeath);
-//        familyTree.addMember(newMember);
+
         if (familyTree == null) {
             throw new IllegalStateException("Семейное дерево не инициализировано. Пожалуйста, загрузите данные.");
         }
