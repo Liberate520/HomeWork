@@ -2,6 +2,7 @@ package presenter;
 
 import model.human.Gender;
 import model.service.Service;
+import model.writer.DataHandler;
 import view.View;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class Presenter {
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        service = new Service(new DataHandler<>());
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate){

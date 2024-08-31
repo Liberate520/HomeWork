@@ -15,10 +15,10 @@ public class Service{
     private HumanBuilder builder;
     private Writer<FamilyTree<Human>> dataHandler;
 
-    public Service() {
+    public Service(Writer dataHandler) {
         tree = new FamilyTree<>();
         builder = new HumanBuilder();
-        dataHandler = new DataHandler<>();
+        this.dataHandler = dataHandler;
     }
 
     public void addHuman(String name, Gender gender, LocalDate birthDate){
