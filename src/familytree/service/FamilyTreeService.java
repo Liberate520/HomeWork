@@ -61,10 +61,9 @@ public class FamilyTreeService implements FamilyTreeServiceInterface {
     }
 
     @Override
-    public FamilyTree<Person> loadFromFile(String filename) throws IOException, ClassNotFoundException {
+    public void loadFromFile(String filename) throws IOException, ClassNotFoundException {
         FamilyTree<Person> familyTree = dataManager.loadFromFile(filename);
         memberManager.updateFamilyTree(familyTree);
         relationshipManager.updateFamilyTree(familyTree);
-        return familyTree;
     }
 }

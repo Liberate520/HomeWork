@@ -1,6 +1,5 @@
 package familytree.service;
 
-import familytree.model.FamilyTree;
 import familytree.model.Person;
 
 import java.io.IOException;
@@ -15,7 +14,5 @@ public interface FamilyTreeServiceInterface {
     List<Person> getSortedByName();
     List<Person> getSortedByDateOfBirth();
     void saveToFile(String filename) throws IOException;
-    FamilyTree<Person>  loadFromFile(String filename) throws IOException, ClassNotFoundException;
-
-//    FamilyTree<Person> updateFamilyTree(FamilyTree<Person> newFamilyTree);
+    void loadFromFile(String filename) throws IOException, ClassNotFoundException;
 }

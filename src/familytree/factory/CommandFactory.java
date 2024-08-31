@@ -7,7 +7,7 @@ import familytree.ui.UserInterface;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandFactory {
+public class CommandFactory implements CommandFactoryInterface {
     private final Map<String, Command> commands = new HashMap<>();
     private final FamilyTreeServiceInterface familyTreeService;
     private final UserInterface userInterface;
