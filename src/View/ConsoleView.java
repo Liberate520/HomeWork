@@ -1,7 +1,9 @@
 package View;
 
 import Model.Person;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,5 +50,38 @@ public class ConsoleView implements FamilyTreeView {
 
     public Scanner getScanner() {
         return scanner;
+    }
+    public LocalDate getDateInput(String prompt) {
+        LocalDate date = null;
+        while (date == null) {
+            System.out.print(prompt);
+            String dateStr = scanner.nextLine();
+            if (dateStr.isEmpty()) {
+                break;
+            }
+            try {
+                date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
+            } catch (DateTimeParseException e) {
+                System.out.println("Неправильный формат даты. Пожалуйста, используйте формат ГГГГ-ММ-ДД.");
+            }
+        }
+        return date;
+    }
+
+    public Person.Gender getGenderInput(String prompt) {
+        Person.Gender gender = null;
+        while (gender == null) {
+            System.out.print(prompt);
+            String genderStr = scanner.nextLine();
+            if (genderStr.isEmpty()) {
+                break;
+            }
+            try {
+                gender = Person.Gender.valueOf(genderStr.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Неправильный формат гендера. Пожалуйста, используйте МУЖЧИНА или ЖЕНЩИНА.");
+            }
+        }
+        return gender;
     }
 }

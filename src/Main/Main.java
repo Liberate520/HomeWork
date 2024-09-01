@@ -19,4 +19,3 @@ public class Main {
         presenter.start();
     }
 }
-

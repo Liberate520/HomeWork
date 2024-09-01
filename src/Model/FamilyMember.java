@@ -23,4 +23,3 @@ public interface FamilyMember {
     void setGender(Person.Gender gender);
 
 }
-
