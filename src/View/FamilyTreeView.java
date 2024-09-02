@@ -2,9 +2,7 @@ package View;
 
 import java.util.List;
 
-import Model.Human;
-
-public interface FamilyTreeView<T extends Human> {
+public interface FamilyTreeView<T> {
     void displayFamilyTree(List<T> familyMembers);
 
     String getNameForChildren();

@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import Model.FamilyTree;
-import Model.Human;
+import Model.FamilyMember;
 import Presenter.FamilyTreePresenter;
 
-public class FamilyTreeConsoleView<T extends Human> implements FamilyTreeView<T> {
+public class FamilyTreeConsoleView<T extends FamilyMember> implements FamilyTreeView<T> {
     private Scanner scanner;
     private FamilyTreePresenter<T> presenter;
 

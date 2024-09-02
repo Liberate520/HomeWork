@@ -9,9 +9,9 @@ import java.util.List;
 public class Human implements Serializable, FamilyMember {
     private LocalDate birthDate, deathDate;
     private Gender gender;
-    private List<Human> children;
+    private List<FamilyMember> children;
     private String name;
-    private List<Human> parents;
+    private List<FamilyMember> parents;
 
     public Human(String name, LocalDate birthDate, LocalDate deathDate, Gender gender) {
         this.name = name;
@@ -22,10 +22,12 @@ public class Human implements Serializable, FamilyMember {
         this.parents = new ArrayList<>();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -38,22 +40,27 @@ public class Human implements Serializable, FamilyMember {
         return gender;
     }
 
-    public List<Human> getParents() {
+    @Override
+    public List<FamilyMember> getParents() {
         return parents;
     }
 
-    public List<Human> getChildren() {
+    @Override
+    public List<FamilyMember> getChildren() {
         return children;
     }
 
-    public void addParent(Human parent) {
+    @Override
+    public void addParent(FamilyMember parent) {
         this.parents.add(parent);
     }
 
-    public void addChild(Human child) {
+    @Override
+    public void addChild(FamilyMember child) {
         this.children.add(child);
     }
 
+    @Override
     public int getAgeAt(LocalDate date) {
         LocalDate endDate = (deathDate != null) ? deathDate : date;
         return Period.between(birthDate, endDate).getYears();
@@ -71,14 +78,10 @@ public class Human implements Serializable, FamilyMember {
         sb.append(", Возраст: ").append(getAgeAt(LocalDate.now()));
         if (!parents.isEmpty()) {
             sb.append(", Родители: ");
-            for (Human parent : parents) {
+            for (FamilyMember parent : parents) {
                 sb.append(parent.getName()).append(" ");
             }
         }
         return sb.toString();
-    }
-
-    public int compareTo(Human o) {
-        return name.compareTo(o.getName());
     }
 }

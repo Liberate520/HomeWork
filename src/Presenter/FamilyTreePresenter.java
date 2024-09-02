@@ -3,11 +3,11 @@ package Presenter;
 import java.util.List;
 
 import Model.FamilyTree;
-import Model.Human;
-import Model.HumanComporatorByBirthDate;
+import Model.FamilyMember;
+import Model.FamilyMemberComparatorByBirthDate;
 import View.FamilyTreeView;
 
-public class FamilyTreePresenter<T extends Human> {
+public class FamilyTreePresenter<T extends FamilyMember> {
     private FamilyTree<T> familyTree;
     private FamilyTreeView<T> view;
 
@@ -28,14 +28,22 @@ public class FamilyTreePresenter<T extends Human> {
     public void childrenRequest() {
         String name = view.getNameForChildren();
         List<T> children = familyTree.getChildrenOf(name);
-        children.sort(new HumanComporatorByBirthDate<Human>());
-        view.displayChildren(name, children);
+        if (children != null) {
+            children.sort(new FamilyMemberComparatorByBirthDate<>());
+            view.displayChildren(name, children);
+        } else {
+            view.displayMessage("Дети не найдены.");
+        }
     }
 
     public void parentsRequest() {
         String name = view.getNameForParents();
         List<T> parents = familyTree.getParentsOf(name);
-        parents.sort(new HumanComporatorByBirthDate<Human>());
-        view.displayParents(name, parents);
+        if (parents != null) {
+            parents.sort(new FamilyMemberComparatorByBirthDate<>());
+            view.displayParents(name, parents);
+        } else {
+            view.displayMessage("Родители не найдены.");
+        }
     }
 }

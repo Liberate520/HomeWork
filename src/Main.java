@@ -39,19 +39,20 @@ public class Main {
         igor.addParent(george);
         igor.addParent(inga);
 
-        familyTree.addPerson(igor);
-        familyTree.addPerson(mary);
-        familyTree.addPerson(anna);
-        familyTree.addPerson(vitaly);
-        familyTree.addPerson(inga);
-        familyTree.addPerson(george);
-        familyTree.addPerson(vladimir);
-        familyTree.addPerson(anastasia);
+        familyTree.addMember(igor);
+        familyTree.addMember(mary);
+        familyTree.addMember(anna);
+        familyTree.addMember(vitaly);
+        familyTree.addMember(inga);
+        familyTree.addMember(george);
+        familyTree.addMember(vladimir);
+        familyTree.addMember(anastasia);
 
         FamilyTreeView<Human> view = new FamilyTreeConsoleView<>();
         FamilyTreePresenter<Human> presenter = new FamilyTreePresenter<>(familyTree, view);
 
         ((FamilyTreeConsoleView<Human>) view).setPresenter(presenter);
+
         view.displayMenu();
     }
 }

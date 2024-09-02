@@ -6,38 +6,38 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends FamilyMember> implements Serializable, Iterable<T> {
     private List<T> members;
 
     public FamilyTree() {
         this.members = new ArrayList<>();
     }
 
-    public void addPerson(T human) {
-        members.add(human);
+    public void addMember(T member) {
+        members.add(member);
     }
 
-    public T findPersonByName(String name) {
-        for (T human : members) {
-            if (human.getName().equalsIgnoreCase(name)) {
-                return human;
+    public T findMemberByName(String name) {
+        for (T member : members) {
+            if (member.getName().equalsIgnoreCase(name)) {
+                return member;
             }
         }
         return null;
     }
 
     public List<T> getParentsOf(String name) {
-        T human = findPersonByName(name);
-        if (human != null) {
-            return (List<T>) human.getParents();
+        T member = findMemberByName(name);
+        if (member != null) {
+            return (List<T>) member.getParents();
         }
         return null;
     }
 
     public List<T> getChildrenOf(String name) {
-        T human = findPersonByName(name);
-        if (human != null) {
-            return (List<T>) human.getChildren();
+        T member = findMemberByName(name);
+        if (member != null) {
+            return (List<T>) member.getChildren();
         }
         return null;
     }
@@ -46,22 +46,16 @@ public class FamilyTree<T extends Human> implements Serializable, Iterable<T> {
         return members;
     }
 
-    public void printAllMembers() {
-        for (T human : members) {
-            System.out.println(human);
-        }
-    }
-
     public void sortByName() {
-        Collections.sort(members, new HumanComporatorByName<T>());
+        Collections.sort(members, new FamilyMemberComparatorByName<>());
     }
 
     public void sortByBirthDate() {
-        Collections.sort(members, new HumanComporatorByBirthDate<T>());
+        Collections.sort(members, new FamilyMemberComparatorByBirthDate<>());
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new HumanIterator<>(members);
+        return new FamilyMemberIterator<>(members);
     }
 }

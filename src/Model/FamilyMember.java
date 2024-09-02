@@ -11,4 +11,10 @@ public interface FamilyMember {
     List<? extends FamilyMember> getParents();
 
     List<? extends FamilyMember> getChildren();
+
+    void addParent(FamilyMember parent);
+
+    void addChild(FamilyMember child);
+
+    int getAgeAt(LocalDate date);
 }
