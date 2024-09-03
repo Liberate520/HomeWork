@@ -1,7 +1,6 @@
-package family_tree.family_tree;
+package model.human;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 public interface TreeNode<T> extends Serializable {

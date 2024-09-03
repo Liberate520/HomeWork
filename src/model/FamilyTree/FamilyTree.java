@@ -1,5 +1,9 @@
-package family_tree.family_tree;
+package model.FamilyTree;
 
+
+import model.human.comparators.HumanComparatorByAge;
+import model.human.comparators.HumanComparatorByName;
+import model.human.TreeNode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -78,6 +82,8 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     }
 
 
+    public void addHuman(E human) {
+    }
 }
 
 

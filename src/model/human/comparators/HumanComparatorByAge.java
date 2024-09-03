@@ -1,4 +1,6 @@
-package family_tree.family_tree;
+package model.human.comparators;
+
+import model.human.TreeNode;
 
 import java.util.Comparator;
 public class HumanComparatorByAge<T extends TreeNode<T>> implements Comparator<T>{
