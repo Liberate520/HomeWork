@@ -26,14 +26,15 @@ public class Human implements TreeNode<Human>, Serializable, Comparable<Human> {
         this.gender = gender;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
-        this.parents = parents;
+        this.parents = new ArrayList<>();
         this.children = new ArrayList<>();
         this.mother = mother;
         this.father = father;
     }
 
     public Human() {
-
+        this.parents = new ArrayList<>();
+        this.children = new ArrayList<>();
     }
 
 

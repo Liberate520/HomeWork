@@ -59,7 +59,7 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("tree:\n");
-        sb.append(humanList.size());
+        sb.append(humanList.size()).append(" members\n");
         for (E human : humanList) {
             sb.append(human);
             sb.append("\n");
@@ -79,13 +79,12 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new HumanIterator<>(humanList);
     }
 
 
     public void addHuman(E human) {
-        long id = human.getId();
-
+        add(human);
     }
 }
 

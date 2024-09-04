@@ -1,7 +1,9 @@
 package view;
 
+import model.human.Gender;
 import presenter.Presenter;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ConsoleUI implements View{
@@ -50,7 +52,9 @@ public class ConsoleUI implements View{
         public void getHumanListInfo() {
             presenter.getHumanListInfo();
         }
-
+        public Presenter getPresenter() {
+        return presenter;
+        }
 
 
 
@@ -95,11 +99,14 @@ public class ConsoleUI implements View{
         }
 
         public void save() {
+            presenter.save();
          }
 
-    public void setMenu(MainMenu menu) {
-        this.menu = menu;
+
+    public void load() {
+            presenter.load();
     }
+
 
 }
 

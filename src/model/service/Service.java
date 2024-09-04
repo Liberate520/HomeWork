@@ -1,3 +1,4 @@
+
 package model.service;
 
 import model.FamilyTree.FamilyTree;
@@ -12,68 +13,80 @@ public class Service {
     private FamilyTree<Human> tree;
     final static String filePath = "src/model/writer/tree.txt";
 
-    public <E extends TreeNode<E>> Service(){
-        FamilyTree<E> tree = new FamilyTree<E>();
-        tree = new FamilyTree<>();
+    public Service() {
+        this.tree = (FamilyTree<Human>) load(); // Загрузка дерева при создании сервиса
+        if (this.tree == null) {
+            this.tree = new FamilyTree<>();
+        }
     }
 
-
-    private static FamilyTree load() {
+    public static FamilyTree<Human> load() {
         FileHandler fileHandler = new FileHandler(filePath);
-
-        return (FamilyTree) fileHandler.read();
-
-
+        return (FamilyTree<Human>) fileHandler.read();
     }
 
-    private void save(FamilyTree tree) {
+    public void save() {
         FileHandler fileHandler = new FileHandler(filePath);
-
-        Serializable familyTree;
         fileHandler.save(tree);
-
     }
 
-    public void addHuman() {
+    public void addOrUpdateHuman(Human human) {
+        if (human == null) {
+            throw new IllegalArgumentException("Human cannot be null");
+        }
 
-        Human human = new Human(null, null, null, null, null, null, null);
-
-       tree.addHuman(human);
-        //       FamilyTree tree = new FamilyTree();
-//
-//        Human grisha = new Human("Гриша", Gender.Male, LocalDate.of(1952, 12, 12), null, null, null, null);
-//        Human masha = new Human("Мария", Gender.Female, LocalDate.of(1951, 1, 2), null, null, null, null);
-//
-//        tree.add(grisha);
-//        tree.add(masha);
-//        Human gena = new Human("Геннадий",Gender.Male, LocalDate.of(1971, 4, 29),null,null, masha, grisha);
-//        tree.add(gena);
-//        Human sveta = new Human("Светлана", Gender.Female, LocalDate.of(1976, 2, 17), null, null, masha, grisha);
-//        tree.add(sveta);
-//
-//        return tree;
-
+        if (human.getId() == -1) {
+            // Adding new human
+            tree.add(human);
+        } else {
+            // Updating existing human
+            for (Human existingHuman : tree) {
+                if (existingHuman.getId() == human.getId()) {
+                    existingHuman.setName(human.getName());
+                    existingHuman.setGender(human.getGender());
+                    existingHuman.setBirthDate(human.getBirthDate());
+                    existingHuman.setDeathDate(human.getDeathDate());
+                    existingHuman.setChildren(human.getChildren());
+                    existingHuman.setMother(human.getMother());
+                    existingHuman.setFather(human.getFather());
+                    return;
+                }
+            }
+            throw new IllegalArgumentException("Human with ID " + human.getId() + " not found");
+        }
+        save();
     }
 
+    private void updateRelations(Human human) {
+        // Обновляем связи с родителями и детьми
+        for (Human parent : human.getParents()) {
+            parent.addChild(human);
+        }
+        for (Human child : human.getChildren()) {
+            child.addParent(human);
+        }
+    }
 
-    public String getHumanInfo(){
+    public String getHumanInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список членов семьи\n");
-       for (Human human: tree){
-           stringBuilder.append(human);
-           stringBuilder.append("\n");
-       }
-       return stringBuilder.toString();
+        for (Human human : tree) {
+            stringBuilder.append(human);
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 
     public void sortByAge() {
-       tree.sortByAge();
+        tree.sortByAge();
     }
 
     public void sortByName() {
         tree.sortByName();
     }
-}
 
+
+
+}
 
 
