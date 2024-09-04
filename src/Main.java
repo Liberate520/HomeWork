@@ -5,7 +5,11 @@ import model.human.Human;
 import java.io.IOException;
 import java.time.LocalDate;
 import model.writer.FileHandler;
-
+import presenter.Presenter;
+import view.ConsoleUI;
+import view.MainMenu;
+import view.View;
+import model.service.Service;
 
 
 
@@ -15,6 +19,8 @@ public class Main {
 //final static String filePath = "src/model/writer/tree.txt";
 
     public static void main(String[] args) throws IOException {
+        ConsoleUI consoleUI = new ConsoleUI();
+        consoleUI.start();
 ////        FamilyTree tree = load();
 //        FamilyTree tree = testTree();
 //        System.out.println(tree);

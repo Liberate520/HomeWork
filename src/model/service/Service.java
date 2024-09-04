@@ -34,13 +34,12 @@ public class Service {
 
     }
 
-    public boolean addHuman() {
+    public void addHuman() {
 
         Human human = new Human(null, null, null, null, null, null, null);
 
        tree.addHuman(human);
-       return true;
-//       FamilyTree tree = new FamilyTree();
+        //       FamilyTree tree = new FamilyTree();
 //
 //        Human grisha = new Human("Гриша", Gender.Male, LocalDate.of(1952, 12, 12), null, null, null, null);
 //        Human masha = new Human("Мария", Gender.Female, LocalDate.of(1951, 1, 2), null, null, null, null);

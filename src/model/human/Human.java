@@ -32,6 +32,9 @@ public class Human implements TreeNode<Human>, Serializable, Comparable<Human> {
         this.father = father;
     }
 
+    public Human() {
+
+    }
 
 
     public long getId() {

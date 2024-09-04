@@ -1,6 +1,7 @@
 package model.FamilyTree;
 
 
+import model.human.Human;
 import model.human.comparators.HumanComparatorByAge;
 import model.human.comparators.HumanComparatorByName;
 import model.human.TreeNode;
@@ -83,6 +84,8 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
 
     public void addHuman(E human) {
+        long id = human.getId();
+
     }
 }
 
