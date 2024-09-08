@@ -1,83 +1,78 @@
 package presenter;
 
-import model.FamilyTree.Service;
-
+import model.FamilyTree.ServiceFamilyTree;
 import model.Human.Gender;
+import model.Human.Human;
 import view.View;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Presenter {
     private View view;
-    private Service service;
+    private ServiceFamilyTree service;
 
     public Presenter(View view) {
         this.view = view;
-        service = new Service();
+        service = new ServiceFamilyTree();
     }
 
-    public void addHuman(String name, Gender gender, LocalDate birthDate) {
-        service.addHuman(name, gender, birthDate);
-        getFamilyTreeInfo();
+    public void addHuman(String lastName, String firstname, String patronymic, Gender gender, LocalDate dayBirth, LocalDate dayDeath, Human father, Human mother, List<Human> children, String placeBorn) {
+        service.addHuman(lastName, firstname, patronymic, gender, dayBirth, dayDeath, placeBorn);
+        getFamilyTree();
     }
 
-    public boolean addParent(String childName, String parentName) {
-        return service.addParent(childName, parentName);
-    }
-
-    public boolean addParent(int childId, int parentId) {
-        return service.addParent(childId, parentId);
-    }
-
-    public boolean addChild(String parentName, String childName) {
-        return service.addChild(parentName, childName);
-    }
-
-    public boolean addChild(int parentId, int childId) {
-        return service.addChild(parentId, childId);
-    }
-
-    public void sortByAge() {
-        service.sortByAge();
-        getFamilyTreeInfo();
+    public void sortByID() {
+        service.sortByID();
+        getFamilyTree();
     }
 
     public void sortByName() {
         service.sortByName();
-        getFamilyTreeInfo();
+        getFamilyTree();
     }
 
-    public void sortByBirthDate() {
-        service.sortByBirthDate();
-        getFamilyTreeInfo();
+    public void sortByAge() {
+        service.sortByAge();
+        getFamilyTree();
     }
 
-    public void getFamilyTreeInfo() {
-        String info = service.getFamilyTree().toString();
-        view.printAnswer(info);
+    public void getFamilyTree() {
+        String answer = service.getFamilyTreeList();
+        view.PrintAnwser(answer);
     }
 
-    public boolean setWedding(String name1, String name2) {
-        return service.setWedding(name1, name2);
+    public void saveFile() {
+        try {
+            service.saveFile("src/familyTree/file.txt");
+            view.PrintAnswer("Программа успешно сохранена");
+        } catch (Exception e) {
+            System.out.println("Ошибка сохранения");
+        } finally {
+            getFamilyTree();
+        }
     }
 
-    public boolean setWedding(int id1, int id2) {
-        return service.setWedding(id1, id2);
+    public void addParent(int idHuman,int idParent){
+        service.addParent(idHuman, idParent);
+        getFamilyTree();
     }
 
-    public boolean setDivorce(String name1, String name2) {
-        return service.setDivorce(name1, name2);
+    public void addChild(int idHuman,int idChild){
+        service.addChild(idHuman, idChild);
+        getFamilyTree();
     }
 
-    public boolean setDivorce(int id1, int id2) {
-        return service.setDivorce(id1, id2);
+
+    public void loadFile() {
+        try {
+            service.openFile("src/file.txt");
+            service.setMaxID();
+            System.out.println("Семейное древо успешно загружено");
+            getFamilyTree();
+        } catch (Exception e) {
+            System.out.println("Ошибка открытия");
+        }
     }
 
-    public boolean saveToFile(String filename) {
-        return service.saveToFile(filename);
-    }
-
-    public boolean loadFromFile(String filename) {
-        return service.loadFromFile(filename);
-    }
 }

@@ -3,13 +3,15 @@ package view.commands;
 import view.ConsoleUI;
 
 public class SortByName extends Command{
+    private String description;
+    private ConsoleUI consoleUI;
 
-    public SortByName(ConsoleUI consoleUI){
-        super(consoleUI);
-        description = "Отсортировать по имени";
+    public SortByName(ConsoleUI consoleUI) {
+        super("Сортировать по имени", consoleUI);
     }
+
     @Override
     public void execute() {
-        consoleUI.sortByName();
+        getConsoleUI().sortByName();
     }
 }

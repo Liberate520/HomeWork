@@ -3,12 +3,15 @@ import view.ConsoleUI;
 
 public class SortByAge extends Command{
 
-    public SortByAge(ConsoleUI consoleUI){
-        super(consoleUI);
-        description = "Отсортировать по возрасту";
+    private String description;
+    private ConsoleUI consoleUI;
+
+    public SortByAge(ConsoleUI consoleUI) {
+        super("Сортировать по возрасту", consoleUI);
     }
+
     @Override
     public void execute() {
-        consoleUI.sortByAge();
+        getConsoleUI().sortByAge();
     }
 }

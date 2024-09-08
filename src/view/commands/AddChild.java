@@ -3,13 +3,15 @@ package view.commands;
 import view.ConsoleUI;
 
 public class AddChild extends Command{
+    private String description;
+    private ConsoleUI consoleUI;
 
-    public AddChild(ConsoleUI consoleUI){
-        super(consoleUI);
-        description = "Добавить ребёнка";
+    public AddChild(ConsoleUI consoleUI) {
+        super("Добавить человеку сына/дочь", consoleUI);
     }
+
     @Override
     public void execute() {
-        consoleUI.addChild();
+        getConsoleUI().addChild();
     }
 }

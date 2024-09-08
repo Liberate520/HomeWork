@@ -8,54 +8,161 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HumanBuilder {
-    private int genId;
+    private long humID;
     private Human human;
-    private String name;
+    private String lastName;
+    private String firstname;
+    private String patronymic;
     private Gender gender;
-    private LocalDate birthDate;
+    private LocalDate dayBirth;
+    private LocalDate dayDeath;
+    private Human father;
+    private Human mother;
     private List<Human> children;
+    private String placeBorn;
 
-    public HumanBuilder(){
-        createHuman();
+
+    public HumanBuilder() {
+
     }
 
-    public HumanBuilder setName(String name){
-        this.name = name;
+    private void createHuman() {
+        human = new Human();
+    }
+
+    private void createLastName() {
+
+        human.setLastName(lastName);
+    }
+
+    private void createFirstName() {
+
+        human.setFirstname(firstname);
+    }
+
+    private void createPatronymic() {
+        human.setPatronymic(patronymic);
+    }
+
+    private void createGender() {
+        human.setGender(gender);
+    }
+
+    private void createDayBirth() {
+        try {
+            human.setDayBirth(dayBirth);
+        } catch (Exception ex) {
+            human.setDayBirth(null);
+        }
+    }
+
+    private void createDayDeath() {
+        try {
+            human.setDayDeath(dayDeath);
+        } catch (Exception ex) {
+            human.setDayDeath(null);
+        }
+    }
+
+    private void createFather() {
+        human.setFather(father);
+    }
+
+    private void createMother() {
+        human.setMother(mother);
+    }
+
+    private void createChildren() {
+        human.setChildren(children);
+    }
+
+    private void createPlaceBorn() {
+        human.setPlaceBorn(placeBorn);
+    }
+
+    public HumanBuilder setLastName(String lastName) {
+        this.lastName = lastName;
         return this;
     }
-    public HumanBuilder setGender(Gender gender){
+
+    public HumanBuilder setFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public HumanBuilder setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+        return this;
+    }
+
+    public HumanBuilder setGender(Gender gender) {
         this.gender = gender;
         return this;
     }
-    public HumanBuilder setBirthDate(LocalDate birthdate){
-        this.birthDate = birthdate;
+
+    public HumanBuilder setDayBirth(LocalDate dayBirth) {
+        this.dayBirth = dayBirth;
         return this;
     }
-    private void setChildren(){
-        human.setChildren(new ArrayList<>());
+
+    public HumanBuilder setDayDeath(LocalDate dayDeath) {
+        this.dayDeath = dayDeath;
+        return this;
     }
-    private void createHuman(){
-        human = new Human();
+
+    public HumanBuilder setFather(Human father) {
+        this.father = father;
+        return this;
     }
-    private void nextId(){
-        human.setId(genId++);
+
+    public HumanBuilder setMother(Human mother) {
+        this.mother = mother;
+        return this;
     }
-    private void createName(){
-        human.setName(name);
+
+    public HumanBuilder setChildren(List<Human> children) {
+        this.children = children;
+        return this;
     }
-    private void createGender(){
-        human.setGender(gender);
+
+    public HumanBuilder setPlaceBorn(String placeBorn) {
+        this.placeBorn = placeBorn;
+        return this;
     }
-    private void createBirthDate(){
-        human.setBirthDate(birthDate);
+
+    private void setHumID(Human human) {
+        human.setID(humID++);
+
     }
-    public Human build(){
+    public void setMaxID(long maxID) {
+        this.humID = maxID+1;
+    }
+
+    private void clearData() {
+        lastName = null;
+        patronymic = null;
+        gender = null;
+        dayBirth = null;
+        dayDeath = null;
+        father = null;
+        mother = null;
+        children = null;
+        placeBorn = null;
+    }
+    public Human build() {
         createHuman();
-        createName();
+        createLastName();
+        createFirstName();
+        createPatronymic();
         createGender();
-        createBirthDate();
-        nextId();
-        setChildren();
+        createDayBirth();
+        createDayDeath();
+        createFather();
+        createMother();
+        createChildren();
+        createPlaceBorn();
+        setHumID(human);
+        clearData();
         return human;
     }
 }

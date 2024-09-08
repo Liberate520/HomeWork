@@ -8,25 +8,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class ConsoleUI implements View {
-    private static final String INPUT_ERROR = "Вы ввели неверное значение";
     private Scanner scanner;
     private Presenter presenter;
-    private boolean isWork;
+    private boolean flag;
     private MainMenu menu;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
         presenter = new Presenter(this);
-        isWork = true;
+        flag = true;
         menu = new MainMenu(this);
     }
 
+
     @Override
     public void start() {
-        hello();
-        while (isWork) {
-            printMenu();
-            execute();
+        while (flag) {
+            System.out.println(menu.menuInfo());
+            String strChoice = scanner.nextLine();
+            try {
+                int choice = Integer.parseInt(strChoice);
+                menu.execute(choice);
+            } catch (Exception e) {
+                error();
+            }
         }
     }
 
@@ -35,221 +40,133 @@ public class ConsoleUI implements View {
         System.out.println(answer);
     }
 
-    private void hello() {
-        printAnswer("Доброго времени суток!");
-    }
-
-    private void execute() {
-        String line = scanner.nextLine();
-        if (checkTextForInt(line)) {
-            int numCommand = Integer.parseInt(line);
-            if (checkCommand(numCommand)) {
-                menu.execute(numCommand);
-            }
-        }
-    }
-
-    private boolean checkTextForInt(String text) {
-        if (text.matches("[0-9]+")) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
-
-    private boolean checkCommand(int numCommand) {
-        if (numCommand <= menu.getSize()) {
-            return true;
-        } else {
-            inputError();
-            return false;
-        }
-    }
-
-    private void printMenu() {
-        printAnswer(menu.menu());
-    }
-
-    private void inputError() {
-        printAnswer(INPUT_ERROR);
-    }
-
     public void finish() {
-        printAnswer("До свидания");
-        isWork = false;
+        System.out.println("До свидания!");
+        flag = false;
     }
 
-    public void addHuman() {
-        String name;
-        Gender gender;
-        LocalDate birthDate;
-        String strFormatter = "dd.MM.yyyy";
-        printAnswer("Введите имя:");
-        name = scanner.nextLine();
-        printAnswer("Укажите пол\n1 - мужской, 2- женский");
-        String sex = scanner.nextLine();
-        while (!(sex.charAt(0) == '1' || sex.charAt(0) == '2')) {
-            inputError();
-            printAnswer("Укажите пол\n1 - мужской, 2- женский");
-            sex = scanner.nextLine();
-        }
-        if (sex.equals("1"))
-            gender = Gender.Male;
-        else
-            gender = Gender.Female;
-
-        printAnswer("Введите дату рождения в формате " + strFormatter);
-        String strDate = scanner.nextLine();
-        while (strDate.length() != 10 && strDate.split(".").length != 3) {
-            inputError();
-            printAnswer("Введите дату рождения в формате " + strFormatter);
-            strDate = scanner.nextLine();
-        }
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(strFormatter);
-        birthDate = LocalDate.parse(strDate, dateTimeFormatter);
-        presenter.addHuman(name, gender, birthDate);
+    public void getFamilyTree() {
+        presenter.getFamilyTree();
     }
 
-    public void addParent() {
-        String childName, parentName;
-        int childId, parentId;
-        printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-        int choice = Integer.parseInt(scanner.nextLine());
-        while (choice < 1 || choice > 2) {
-            inputError();
-            printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-            choice = Integer.parseInt(scanner.nextLine());
-        }
-        if (choice == 1) {
-            printAnswer("Введите имя ребёнка");
-            childName = scanner.nextLine();
-            printAnswer("Введите имя родителя");
-            parentName = scanner.nextLine();
-            presenter.addParent(childName, parentName);
-        } else {
-            printAnswer("Введите id ребёнка");
-            childId = Integer.parseInt(scanner.nextLine());
-            printAnswer("Введите id родителя");
-            parentId = Integer.parseInt(scanner.nextLine());
-            presenter.addParent(childId, parentId);
-        }
-        presenter.getFamilyTreeInfo();
-    }
-
-    public void addChild() {
-        String childName, parentName;
-        int childId, parentId;
-        printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-        int choice = Integer.parseInt(scanner.nextLine());
-        while (choice < 1 || choice > 2) {
-            inputError();
-            printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-            choice = Integer.parseInt(scanner.nextLine());
-        }
-        if (choice == 1) {
-            printAnswer("Введите имя родителя");
-            parentName = scanner.nextLine();
-            printAnswer("Введите имя ребёнка");
-            childName = scanner.nextLine();
-            presenter.addChild(parentName, childName);
-        } else {
-            printAnswer("Введите id родителя");
-            parentId = Integer.parseInt(scanner.nextLine());
-            printAnswer("Введите id ребёнка");
-            childId = Integer.parseInt(scanner.nextLine());
-            presenter.addChild(parentId, childId);
-        }
-        presenter.getFamilyTreeInfo();
-    }
-
-    public void setWedding() {
-        String name1, name2;
-        int id1, id2;
-        printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-        int choice = Integer.parseInt(scanner.nextLine());
-        while (choice < 1 || choice > 2) {
-            inputError();
-            printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-            choice = Integer.parseInt(scanner.nextLine());
-        }
-        if (choice == 1) {
-            printAnswer("Введите первое имя");
-            name1 = scanner.nextLine();
-            printAnswer("Введите второе имя");
-            name2 = scanner.nextLine();
-            presenter.setWedding(name1, name2);
-        } else {
-            printAnswer("Введите первый id");
-            id1 = Integer.parseInt(scanner.nextLine());
-            printAnswer("Введите второй id");
-            id2 = Integer.parseInt(scanner.nextLine());
-            presenter.setWedding(id1, id2);
-        }
-    }
-
-    public void setDivorce() {
-        String name1, name2;
-        int id1, id2;
-        printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-        int choice = Integer.parseInt(scanner.nextLine());
-        while (choice < 1 || choice > 2) {
-            inputError();
-            printAnswer("Выберете способ добавления:\n1 - по имени; 2 - по id");
-            choice = Integer.parseInt(scanner.nextLine());
-        }
-        if (choice == 1) {
-            printAnswer("Введите первое имя");
-            name1 = scanner.nextLine();
-            printAnswer("Введите второе имя");
-            name2 = scanner.nextLine();
-            presenter.setDivorce(name1, name2);
-        } else {
-            printAnswer("Введите первый id");
-            id1 = Integer.parseInt(scanner.nextLine());
-            printAnswer("Введите второй id");
-            id2 = Integer.parseInt(scanner.nextLine());
-            presenter.setDivorce(id1, id2);
-        }
-    }
-
-    public void getFamilyTreeinfo() {
-        presenter.getFamilyTreeInfo();
-    }
-
-    public void sortByName() {
-        presenter.sortByName();
+    public void sortByID() {
+        presenter.sortByID();
     }
 
     public void sortByAge() {
         presenter.sortByAge();
     }
 
-    public void sortByBirthdate() {
-        presenter.sortByBirthDate();
+    public void sortByName() {
+        presenter.sortByName();
     }
 
-    public void saveToFile() {
-        String filename;
-        String filePath = "src/model/writer/";
-        printAnswer("Укажите имя файла");
-        filename = scanner.nextLine();
-        filePath += filename + ".txt";
-        if (presenter.saveToFile(filePath))
-            printAnswer("Файл " + filename + " успешно сохранен");
-        else
-            printAnswer("Ошибка сохранения");
+    public void saveTree() {
+        presenter.saveFile();
     }
 
-    public void loadFromFile() {
-        String filename;
-        String filePath = "src/model/writer/";
-        printAnswer("Укажите имя файла");
-        filename = scanner.nextLine();
-        filePath += filename + ".txt";
-        if (presenter.loadFromFile(filePath))
-            printAnswer("Файл " + filename + " успешно загружен");
-        else
-            printAnswer("Ошибка загрузки");
+    public void loadTree() {
+        presenter.loadFile();
+    }
+
+    public void addParent() {
+        int idHuman;
+        int idParent;
+        try {
+            idHuman = Integer.parseInt(idHuman());
+            idParent = Integer.parseInt(idParent());
+            presenter.addParent(idHuman, idParent);
+        } catch (Exception e) {
+            System.out.println("Ошибка ввода id");
+        }
+
+    }
+
+    public void addChild() {
+        int idHuman;
+        int idChild;
+        try {
+            idHuman = Integer.parseInt(idHuman());
+            idChild = Integer.parseInt(idChild());
+            presenter.addChild(idHuman, idChild);
+        } catch (Exception e) {
+            System.out.println("Ошибка ввода id");
+        }
+
+    }
+
+    public void addHuman() {
+        System.out.println("Введите Имя (Обязательно)");
+        String firstName = scanner.nextLine();
+        System.out.println("Введите Фамилию(Обязательно)");
+        String lastName = scanner.nextLine();
+        System.out.println("Введите Отчество(Обязательно)");
+        String patronymic = scanner.nextLine();
+        System.out.println("Введите пол (Male или Female) (Обязательно)");
+        Gender gender;
+        try {
+            gender = Gender.valueOf(scanner.nextLine());
+        } catch (Exception e) {
+            gender = null;
+            System.out.println("пол не задан");
+        }
+        System.out.println("Введите год рождения");
+        String yearBirth = scanner.nextLine();
+        System.out.println("Введите месяц рождения");
+        String monthBirth = scanner.nextLine();
+        System.out.println("Введите день рождения");
+        String dayBirth = scanner.nextLine();
+        System.out.println("Введите год смерти");
+        String yearDeath = scanner.nextLine();
+        System.out.println("Введите месяц смерти");
+        String monthDeath = scanner.nextLine();
+        System.out.println("Введите день смерти");
+        String dayDeath = scanner.nextLine();
+        System.out.println("Введите место рождения");
+        String placeBorn = scanner.nextLine();
+
+        LocalDate dataBirth, dataDeath;
+        dataBirth = getData(yearBirth, monthBirth, dayBirth);
+        dataDeath = getData(yearDeath, monthDeath, dayDeath);
+        if (lastName != "" && firstName!= "" && patronymic !="" && gender!=null) {
+            presenter.addHuman(lastName, firstName, patronymic, gender, dataBirth,
+                    dataDeath, null, null, null, placeBorn);
+        }else {
+            error();
+        }
+
+    }
+
+    public String idHuman() {
+        System.out.println("Введите id человека");
+        return scanner.nextLine();
+    }
+
+    public String idChild() {
+        System.out.println("Введите id ребенка");
+        return scanner.nextLine();
+    }
+
+    public String idParent() {
+        System.out.println("Введите id родителя");
+        return scanner.nextLine();
+    }
+
+
+    private LocalDate getData(String year, String month, String day) {
+        LocalDate date;
+        try {
+            int iyear = Integer.parseInt(year);
+            int imonth = Integer.parseInt(month);
+            int iday = Integer.parseInt(day);
+            date = LocalDate.of(iyear, imonth, iday);
+
+            return date;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public void error() {
+        System.out.println("Ошибка ввода");
     }
 }

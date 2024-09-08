@@ -2,12 +2,15 @@ package view.commands;
 import view.ConsoleUI;
 
 public class Finish extends Command {
+    private String description;
+    private ConsoleUI consoleUI;
+
     public Finish(ConsoleUI consoleUI) {
-        super(consoleUI);
-        description = "Закончить работу";
+        super("Закрыть программу", consoleUI);
     }
 
-    public void execute(){
-        consoleUI.finish();
+    @Override
+    public void execute() {
+        getConsoleUI().finish();
     }
 }

@@ -1,7 +1,9 @@
 package model.FamilyTree;
 
-import model.Human.HumanComparatorByAge;
-import model.Human.HumanComparatorByName;
+import model.Human.HumanComporatorByAge;
+import model.Human.HumanComporatorByName;
+import model.Human.HumanComporatorByID;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,84 +12,87 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree<E extends FamilyTreeItem<E>> implements Serializable, Iterable<E>{
-    private List<E> familyTree;
+    private List<E> familyTree = new ArrayList<>();
 
-    public FamilyTree() {
-        this.familyTree = new ArrayList<>();
-    }
-
-    public List<E> getHumans(){
-        return familyTree;
-    }
-    public void add(E human) {
-        this.familyTree.add(human);
-    }
-    public boolean setWedding(E human1, E human2) {
-        if (human1.getSpouse() == null && human2.getSpouse() == null) {
-            human1.setSpouse(human2);
-            human2.setSpouse(human1);
-            return true;
-        } else {
+    public boolean addHuman(E human) {
+        if (human == null) {
             return false;
         }
-    }
-    public boolean setDivorce(E human1, E human2) {
-        if (human1.getSpouse() != null && human2.getSpouse() != null) {
-            human1.setSpouse(null);
-            human2.setSpouse(null);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public E findByName(String name) {
-        for (E human : familyTree) {
-            if (human.getName().equals(name)) {
-                return human;
-            }
-        }
-        return null;
-    }
-
-    public E findById(int id){
-        for(E human : familyTree){
-            if (human.getId() == id){
-                return human;
-            }
-        }
-        return null;
-    }
-
-    public boolean remove(E human) {
-        if (human != null) {
-            familyTree.remove(human);
+        if (!familyTree.contains(human)) {
+            familyTree.add(human);
+            addToParent(human);
+            addToChildren(human);
             return true;
         }
         return false;
+
     }
+
     @Override
     public String toString() {
-        return getInfo();
-    }
-    private String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("В вашем древе ").append(familyTree.size()).append(" объектов\n");
-        for (int i = 0; i < familyTree.size(); i++) {
-            sb.append(i + 1 + ". " + familyTree.get(i) + "\n");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Список двера семьи:\n");
+        for (E human : familyTree) {
+            stringBuilder.append(human);
+            stringBuilder.append("\n");
+
         }
-        return sb.toString();
+        return stringBuilder.toString();
+
     }
-    public void sortByName(){
-        Collections.sort(familyTree, new HumanComparatorByName<>());
+
+    public void addToParent(E human) {
+        for (E parent : human.getParents()) {
+            parent.addChild(human);
+        }
     }
-    public void sortByAge(){
-        Collections.sort(familyTree, new HumanComparatorByAge<>());
+
+    public void addToChildren(E human) {
+        if (human.getChildren() != null) {
+            for (E child : human.getChildren()) {
+                child.addParent(human);
+            }
+        }
     }
-    public void sortByBirthDate(){
-        Collections.sort(familyTree, new HumanComparatorByAge<>());
+
+    public E getHuman(long id) {
+        if (familyTree != null) {
+            for (E human : familyTree) {
+                if (human.getID() == id) {
+                    return human;
+                }
+            }
+        }
+        return null;
     }
+
+    public void sortByName() {
+        Collections.sort(familyTree, new HumanComporatorByName<>());
+    }
+
+    public long findMaxID() {
+        long maxID = 0;
+        for (E e : familyTree) {
+            if (maxID < e.getID()) {
+                maxID = e.getID();
+            }
+        }
+        return maxID;
+    }
+
+    public void sortByAge() {
+        Collections.sort(familyTree, new HumanComporatorByAge<>());
+    }
+
+    public void sortByID() {
+        Collections.sort(familyTree, new HumanComporatorByID<>());
+    }
+
     @Override
     public Iterator<E> iterator() {
-        return new FamilyIterator<>(this);
+        return new HumanIterator<>(familyTree);
     }
-    }
+
+
+}

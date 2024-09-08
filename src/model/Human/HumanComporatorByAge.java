@@ -4,9 +4,10 @@ import model.FamilyTree.FamilyTreeItem;
 
 import java.util.Comparator;
 
-public class HumanComparatorByAge<E extends FamilyTreeItem<E>> implements Comparator<E> {
+public class HumanComporatorByAge<T extends FamilyTreeItem<T>> implements Comparator<T> {
+
     @Override
-    public int compare(E o1, E o2) {
+    public int compare(T o1, T o2) {
         return Integer.compare(o1.getAge(), o2.getAge());
     }
 }

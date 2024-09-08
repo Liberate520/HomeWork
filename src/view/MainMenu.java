@@ -4,38 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenu {
-    private List<Command> commandList;
+    private List<Command> commands;
 
-    public MainMenu(ConsoleUI consoleUI){
-        commandList = new ArrayList<>();
-        commandList.add(new AddHuman(consoleUI));
-        commandList.add(new AddParent(consoleUI));
-        commandList.add(new AddChild(consoleUI));
-        commandList.add(new SetWedding(consoleUI));
-        commandList.add(new SetDivorce(consoleUI));
-        commandList.add(new SortByName(consoleUI));
-        commandList.add(new SortByAge(consoleUI));
-        commandList.add(new SortByBirthdate(consoleUI));
-        commandList.add((new GetFamilyTreeInfo(consoleUI)));
-        commandList.add((new SaveToFile(consoleUI)));
-        commandList.add((new LoadFromFile(consoleUI)));
-        commandList.add((new Finish(consoleUI)));
+    public MainMenu(ConsoleUI consoleUI) {
+        commands = new ArrayList<>();
+        commands.add(new AddHuman(consoleUI));
+        commands.add(new SortByName(consoleUI));
+        commands.add(new SortByAge(consoleUI));
+        commands.add(new SortByID(consoleUI));
+        commands.add(new AddParent(consoleUI));
+        commands.add(new AddChild(consoleUI));
+        commands.add(new GetFamilyTree(consoleUI));
+        commands.add(new SaveTree(consoleUI));
+        commands.add(new LoadTree(consoleUI));
+        commands.add(new Finish(consoleUI));
+
     }
-    public String menu(){
+
+    public String menuInfo(){
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < commandList.size(); i++) {
-            stringBuilder.append(i+1);
-            stringBuilder.append(". ");
-            stringBuilder.append(commandList.get(i).getDescription());
-            stringBuilder.append("\n");
+        stringBuilder.append("Список команд: \n");
+        for (int i = 0; i < commands.size(); i++) {
+            stringBuilder.append(i+1).append(". ").append(commands.get(i).getDescription()).append("\n");
         }
         return stringBuilder.toString();
     }
-    public void execute(int choice){
-        Command command = commandList.get(choice-1);
+
+    public void execute (int choice) {
+        Command command = commands.get(choice - 1);
         command.execute();
     }
-    public int getSize(){
-        return commandList.size();
+
+    public int menuSize() {
+        return commands.size();
     }
 }
