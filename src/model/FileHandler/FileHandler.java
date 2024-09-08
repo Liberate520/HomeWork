@@ -1,6 +1,8 @@
+package model.FileHandler;
+
 import java.io.*;
 
-public class FileHandler implements Writer{
+public class FileHandler implements Writer {
     private String filePath;
     public boolean save(Serializable serializable){
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath))){
