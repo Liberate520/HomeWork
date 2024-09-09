@@ -16,6 +16,8 @@ public class MainMenu {
         commandList.add(new Finish(consoleUI));
         commandList.add(new Save(consoleUI));
         commandList.add(new Load(consoleUI));
+        commandList.add(new AddParent(consoleUI)); // Новая команда для добавления родителя
+        commandList.add(new AddChild(consoleUI));
 
     }
 

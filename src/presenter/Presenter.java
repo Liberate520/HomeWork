@@ -6,6 +6,7 @@ import model.human.Gender;
 import view.ConsoleUI;
 import view.View;
 
+import java.security.Provider;
 import java.time.LocalDate;
 
 public class Presenter {
@@ -27,10 +28,17 @@ public class Presenter {
         service.sortByName();
         getHumanListInfo();
     }
+    public void addParentToHuman(long childId, Human parent) {
+        service.addParentToHuman(childId, parent);
+        getHumanListInfo();
+    }
+
+
+
 
     public void getHumanListInfo() {
-        String info = service.getHumanInfo();
-        view.printAnswer(info);
+        service.getHumanInfo();
+        view.printAnswer(toString());
     }
 
 
@@ -45,7 +53,7 @@ public class Presenter {
     }
 
     public Service getService() {
-return service;
+        return service;
     }
 
     public void load() {
@@ -58,3 +66,6 @@ return service;
         getHumanListInfo();
     }
 }
+
+
+

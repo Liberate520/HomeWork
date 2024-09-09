@@ -77,6 +77,24 @@ public class Service {
         return stringBuilder.toString();
     }
 
+    public void addParentToHuman(long childId, Human parent) {
+        Human child = findHumanById(childId);
+        if (child != null && parent != null) {
+            child.addParent(parent);
+            parent.addChild(child);
+            save();
+        }
+    }
+
+    private Human findHumanById(long id) {
+        for (Human human : tree) {
+            if (human.getId() == id) {
+                return human;
+            }
+        }
+        return null;
+    }
+
     public void sortByAge() {
         tree.sortByAge();
     }
@@ -85,8 +103,22 @@ public class Service {
         tree.sortByName();
     }
 
+    public void addChildToHuman(long parentId, Human child) {
+
+            Human parent = findHumanById(parentId);
+            if (parent != null && child != null) {
+                parent.addChild(child);
+                child.addParent(parent);
+                save();
+            }
+        }
+    }
 
 
-}
+
+
+
+
+
 
 

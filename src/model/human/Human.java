@@ -56,22 +56,29 @@ public class Human implements TreeNode<Human>, Serializable, Comparable<Human> {
     }
 
     public boolean addChild(Human child) {
+        if (child == null) return false;
         if (!children.contains(child)) {
             children.add(child);
+            child.addParent(this);
             return true;
         }
         return false;
     }
 
     public boolean addParent(Human parent) {
-        if (parent.getGender().equals(Gender.Female)) {
-            setMother(parent);
+        if (parent == null) return false;
+        if (!parents.contains(parent)) {
+            parents.add(parent);
+            if (parent.getGender() == Gender.Female) {
+                setMother(parent);
+            } else if (parent.getGender() == Gender.Male) {
+                setFather(parent);
+            }
+            return true;
         }
-        if (parent.getGender().equals(Gender.Male)) {
-            setFather(parent);
-        }
-        return true;
+        return false;
     }
+
 
     public List<Human> getParents() {
         List<Human> list = new ArrayList<>(2);

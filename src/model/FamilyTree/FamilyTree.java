@@ -39,18 +39,22 @@ public class FamilyTree<E extends TreeNode<E>> implements Serializable, Iterable
 
     private void addToParents(E human) {
         for (E parent : human.getParents()) {
-            parent.addChild(human);
+            if (!parent.getChildren().contains(human)) {
+                parent.addChild(human);
+            }
         }
     }
 
     private void addToChildren(E human) {
-        if (human.getChildren() == null) {
-            return;
-        }
+        if (human.getChildren() != null) {
+
         for (E child : human.getChildren()) {
-            child.addParent(human);
+            if (!child.getParents().contains(human)) {
+                child.addParent(human);}
+            }
         }
     }
+
 
     public String toString() {
         return getInfo();
