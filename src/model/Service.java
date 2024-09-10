@@ -33,9 +33,10 @@ public class Service {
     public void saveTree(FamilyTree<Human> familyTree){
         fileSaver.save(familyTree);
     }
-    public FamilyTree<Human> restoreTree(){
-        return fileSaver.restore();
+    public void restoreTree(){
+        this.familyTree = fileSaver.restore();
     }
+    
 
 //TODO дописать все методы из Human, Tree
 
