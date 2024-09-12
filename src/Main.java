@@ -16,7 +16,7 @@ public class Main {
         serviceHuman.addHuman("Потап", Gender.MALE, LocalDate.of(1960,02,3));
         serviceHuman.addHuman("Дуся", Gender.FEMALE, LocalDate.of(1965, 5,12));
 
-        System.out.println(serviceHuman.printTree());
+        serviceHuman.printTree();
 
 
         //FamilyTree myTree = restore();

@@ -1,8 +1,10 @@
 package view;
 
 import model.human.Gender;
+import model.human.Human;
 import presenter.Presenter;
 
+import java.security.PublicKey;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -21,29 +23,22 @@ public class ConsoleUi implements View{
     @Override
     public void start() {
         while (true){
-            System.out.println("1. Добавить человека");
-            System.out.println("2. Вывести список людей");
-            System.out.println("3. Сортировка");
-            System.out.println("4. Сохранить/восстановить");
-            System.out.println("5. Выход");
+            //System.out.println("1. Добавить человека");
+            //System.out.println("2. Вывести список людей");
+            //System.out.println("3. Сортировка");
+            //System.out.println("4. Сохранить/восстановить");
+            //System.out.println("5. Выход");
 
-            String choice = scanner.nextLine();
-            switch (choice){
-                case "1":
-                    addHuman();
-                    break;
-                case "2":
-                    printTree();
-                    break;
-                case "3"://TODO вложенные меню на сортировку и сохр.восст
-                    break;
-                case "4":
-                    break;
-                case "5":
-                    break;
-                default: error();
-
-            }
+            //выбор человека
+            //инфо о человеке
+            //добавить родственную связь-- добавить родителя, ребенка, брата/сестру
+            //установить дату смерти
+            //отсортировать дерево-- по ID, по имени, по возрасту
+            // загрузить/сохранить дерево
+            //загрузить тестовый список
+            //распечатать дерево
+            //очистить дерево
+            //завершить работу
 
 
         }
@@ -52,7 +47,7 @@ public class ConsoleUi implements View{
     private void error(){
         System.out.println("Неверный выбор");
     }
-    private void addHuman(){
+    public void addHuman(){
         System.out.println("Введите имя: ");
         String name = scanner.nextLine();
         System.out.println("Введите пол: MALE/FEEMALE");
@@ -60,6 +55,9 @@ public class ConsoleUi implements View{
         System.out.println("Введите дату рождения: ");
         LocalDate birthday = LocalDate.parse(scanner.nextLine());
         //TODO а если не gender и не LocalDate, дописать
+    }
+    public Human findHuman(int id){
+        return presenter.getById(id);
     }
     private void printTree(){
         presenter.printTree();

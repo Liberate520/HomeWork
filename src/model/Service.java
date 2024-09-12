@@ -25,19 +25,25 @@ public class Service {
         human.setBirthDay(birthDay);
         human.setGender(gender);
         familyTree.add(human);
+        System.out.println(name + " добавлен!");
     }
-    public String printTree(){
-        return familyTree.toString();
+    public void printTree(){
+        System.out.println(familyTree.toString());
     }
 
     public void saveTree(FamilyTree<Human> familyTree){
         fileSaver.save(familyTree);
+        System.out.println("Дерево сохранено!");
     }
     public void restoreTree(){
         this.familyTree = fileSaver.restore();
+        System.out.println("Дерево загружено!");
+    }
+    public Human getHuman(int id){
+        return familyTree.getById(id);
     }
     
 
-//TODO дописать все методы из Human, Tree
+//TODO дописать сортировка и поиск, родственная связь методы из Human, Tree
 
 }
