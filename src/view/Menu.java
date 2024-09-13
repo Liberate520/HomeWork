@@ -13,9 +13,6 @@ public class Menu {
     public Menu(ConsoleUi consoleUi) {
         commandList = new ArrayList<>();
         commandList.add(new FindHuman(consoleUi));
-
-
-
     }
 
     public String menu(){
