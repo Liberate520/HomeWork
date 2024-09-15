@@ -23,11 +23,10 @@ public class FamilyTree<E extends TreeConn<E>> implements Serializable, Iterable
 
         humanList.add(human);
         human.setId(humansId++);
-        //addToParents(model.human);
-        //addToChildren(model.human);
-
+        yes();
         return true;
         }
+        no();
         return false;
     }
 
@@ -36,10 +35,19 @@ public class FamilyTree<E extends TreeConn<E>> implements Serializable, Iterable
             parent.addChildren(human);
         }
     }
+    public void addToParents(int id){
+        E human = getById(id);
+        addToParents(human);
+    }
+
     private void addToChildren(E human){
         for (E child: human.getChildren()){
             child.addParent(human);
         }
+    }
+    public void addToChildren(int id){
+        E human = getById(id);
+        addToChildren(human);
     }
 
     private boolean checkId(int id){
@@ -87,6 +95,7 @@ public class FamilyTree<E extends TreeConn<E>> implements Serializable, Iterable
         if(human1.getSpouse()== null && human2.getSpouse() == null){
             human1.setSpouse(human2);
             human2.setSpouse(human1);
+            System.out.println("");
             return true;
         }else { return false;}
     }
@@ -102,15 +111,29 @@ public class FamilyTree<E extends TreeConn<E>> implements Serializable, Iterable
         if(human1.getSpouse() != null && human2.getSpouse() != null){
             human1.setSpouse(null);
             human2.setSpouse(null);
+            yes();
             return true;
-        }else { return false;}
+        }else {
+            no();
+            return false;
+        }
     }
 
     public boolean remove(int humansId){
         if(checkId(humansId)){
             E human = getById(humansId);
+            yes();
             return humanList.remove(human);
-        } else { return false;}
+        } else {
+            no();
+            return false;
+        }
+    }
+    public void yes(){
+        System.out.println("Успешно!");
+    }
+    public void no(){
+        System.out.println("Не выполнено!");
     }
 
     @Override

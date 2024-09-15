@@ -1,5 +1,6 @@
 import model.Service;
 import model.human.Gender;
+import view.ConsoleUi;
 
 import java.time.LocalDate;
 
@@ -7,7 +8,13 @@ public class Main {
     final static String filePath = "src/model.human.saver/back_up_tree.but";
 
     public static void main(String[] args) {
-        Service serviceHuman = new Service();
+        ConsoleUi consoleUi = new ConsoleUi();
+        consoleUi.start();
+
+
+
+
+        /*Service serviceHuman = new Service();
 
         serviceHuman.addHuman("Олег", Gender.MALE, LocalDate.of(2010,11,2));
         serviceHuman.addHuman("Ольга", Gender.FEMALE, LocalDate.of(2013, 3,13));
@@ -17,6 +24,8 @@ public class Main {
         serviceHuman.addHuman("Дуся", Gender.FEMALE, LocalDate.of(1965, 5,12));
 
         serviceHuman.printTree();
+
+         */
 
 
         //FamilyTree myTree = restore();

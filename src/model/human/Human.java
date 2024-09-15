@@ -175,7 +175,8 @@ public class Human implements TreeConn<Human> {
         info.append(", имя: ");
         info.append(getName());
         info.append(", пол: ");
-        info.append(getGender());
+        //info.append(getGender());
+        info.append(getGender().getTitle());
         info.append(", дата рождения: ");
         info.append(getBirthDay());
         if(alive.equals(Alive.DEATH)){

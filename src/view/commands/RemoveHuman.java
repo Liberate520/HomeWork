@@ -1,15 +1,14 @@
 package view.commands;
 
-import model.human.Human;
 import view.ConsoleUi;
 
 import java.util.Scanner;
 
-public class FindHuman extends Command{
+public class RemoveHuman extends Command{
     private Scanner scanner;
 
-    public FindHuman(ConsoleUi consoleUi) {
-        super("Выбрать человека по ID", consoleUi);
+    public RemoveHuman(ConsoleUi consoleUi) {
+        super("Удалить человека по ID", consoleUi);
         scanner = new Scanner(System.in);
     }
 
@@ -20,6 +19,6 @@ public class FindHuman extends Command{
         System.out.println("Введите ID человека: ");
         String idString = scanner.nextLine();
         int id = Integer.parseInt(idString);
-        getConsoleUi().findHuman(id);
+        getConsoleUi().removeHuman(id);
     }
 }

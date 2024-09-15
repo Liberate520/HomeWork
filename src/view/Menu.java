@@ -1,8 +1,6 @@
 package view;
-import view.commands.AddHuman;
-import view.commands.Command;
+import view.commands.*;
 import view.commands.Command.*;
-import view.commands.FindHuman;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +10,20 @@ public class Menu {
 
     public Menu(ConsoleUi consoleUi) {
         commandList = new ArrayList<>();
+        commandList.add(new PrintTreeInfo(consoleUi));
+        commandList.add((new AddHuman(consoleUi)));
         commandList.add(new FindHuman(consoleUi));
+        commandList.add(new RemoveHuman(consoleUi));
+        commandList.add(new SetWedding(consoleUi));
+        commandList.add(new SetDivorce(consoleUi));
+        commandList.add(new SetChild(consoleUi));
+        commandList.add(new SetParent(consoleUi));
+        commandList.add(new SaveTree(consoleUi));
+        commandList.add(new LoadTree(consoleUi));
+        commandList.add(new SortById(consoleUi));
+        commandList.add(new SortByName(consoleUi));
+        commandList.add(new SortByAge(consoleUi));
+        commandList.add(new Finish(consoleUi));
     }
 
     public String menu(){

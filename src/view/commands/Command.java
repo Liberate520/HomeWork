@@ -17,5 +17,5 @@ public abstract class Command {
     public ConsoleUi getConsoleUi(){
         return consoleUi;
     }
-    public abstract Human execute();
+    public abstract void execute();
 }

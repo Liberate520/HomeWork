@@ -10,6 +10,7 @@ public class Service {
     private FamilyTree<Human> familyTree;
     private Human human;
     private FileSaver fileSaver;
+    final static String filePath = "src/model.human.saver/back_up_tree.but";
 
     public Service(){
         familyTree = new FamilyTree<Human>();
@@ -42,8 +43,46 @@ public class Service {
     public Human getHuman(int id){
         return familyTree.getById(id);
     }
+    public void setWedding(int h, int w){
+        familyTree.setWedding(h,w);
+    }
+    public void setDivorce(int h, int w){
+        familyTree.setDivorce(h, w);
+    }
+    public void setParent(int parentId, int humanId){
+        Human human = getHuman(humanId);
+        Human parent = getHuman(parentId);
+        human.addParent(parent);
+    }
+    public void setChild(int childId, int humanId){
+        Human human = getHuman(humanId);
+        Human child = getHuman(childId);
+        human.addChildren(child);
+    }
+    public void removeHuman(int human){
+        familyTree.remove(human);
+    }
+    public void saveTree(){
+        FileSaver fileSaver = new FileSaver();
+        fileSaver.setPath(filePath);
+        fileSaver.save(familyTree);
+    }
+    public void loadTree(){
+        FileSaver fileSaver = new FileSaver();
+        fileSaver.setPath(filePath);
+        familyTree =  fileSaver.restore();
+    }
+    public void sortById(){
+        familyTree.sortById();
+    }
+    public void sortByName(){
+        familyTree.sortByName();
+    }
+    public void sortByAge(){
+        familyTree.sortByBirsday();
+    }
     
 
-//TODO дописать сортировка и поиск, родственная связь методы из Human, Tree
+
 
 }
