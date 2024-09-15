@@ -45,7 +45,7 @@ public class Presenter {
         service.saveTree();
     }
     public void loadTree(){
-        service.loadTree();
+        service.restoreTree();
     }
     public void sortById(){
         service.sortById();
@@ -55,6 +55,9 @@ public class Presenter {
     }
     public void sortByAge(){
         service.sortByAge();
+    }
+    public void setDeathDay(int humanId, LocalDate deathDay){
+        service.setDeathDay(humanId, deathDay);
     }
 
 }

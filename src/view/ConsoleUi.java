@@ -2,6 +2,7 @@ package view;
 
 import model.human.Gender;
 import model.human.Human;
+import model.tree.FamilyTree;
 import presenter.Presenter;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ public class ConsoleUi implements View{
     private boolean work;
     private static final String inputErr = "Неверный ввод!";
     private Human human;
+    //private FamilyTree familyTree;
 
     public ConsoleUi(){
         scanner = new Scanner(System.in);
@@ -133,6 +135,15 @@ public class ConsoleUi implements View{
     public void findHuman(int id){
         this.human = presenter.getById(id);
     }
+    public void setDeath(){
+
+        System.out.println("Введите ID человека: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        LocalDate deathDay = inputDate();
+        presenter.setDeathDay(id, deathDay);
+
+    }
+
     public void printTree(){
         presenter.printTree();
     }

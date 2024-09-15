@@ -112,6 +112,7 @@ public class Human implements TreeConn<Human> {
     public void setDeathDay(LocalDate deathDay){
         this.deathDay = deathDay;
         this.alive = Alive.DEATH;
+        System.out.println("Выполнено");
     }
     private void setMother(Human mother){this.mother = mother;}
     private void setFather(Human father){this.father = father;}
@@ -129,7 +130,10 @@ public class Human implements TreeConn<Human> {
         if(children.contains(child)){
             System.out.println("Ребенок уже добавлен!");
         }
-        else {children.add(child);}
+        else {
+            children.add(child);
+            System.out.println("Ребенок добавлен!");
+        }
     }
     public void addParent(Human parent){
         if(parent.getGender().equals(Gender.FEMALE)){

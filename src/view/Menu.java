@@ -13,6 +13,7 @@ public class Menu {
         commandList.add(new PrintTreeInfo(consoleUi));
         commandList.add((new AddHuman(consoleUi)));
         commandList.add(new FindHuman(consoleUi));
+        commandList.add(new SetDeathDay(consoleUi));
         commandList.add(new RemoveHuman(consoleUi));
         commandList.add(new SetWedding(consoleUi));
         commandList.add(new SetDivorce(consoleUi));

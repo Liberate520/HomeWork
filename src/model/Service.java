@@ -10,7 +10,7 @@ public class Service {
     private FamilyTree<Human> familyTree;
     private Human human;
     private FileSaver fileSaver;
-    final static String filePath = "src/model.human.saver/back_up_tree.but";
+    final static String filePath = "src.model.saver.back_up_tree.but";
 
     public Service(){
         familyTree = new FamilyTree<Human>();
@@ -33,10 +33,12 @@ public class Service {
     }
 
     public void saveTree(FamilyTree<Human> familyTree){
+        FileSaver fileSaver = new FileSaver();
         fileSaver.save(familyTree);
         System.out.println("Дерево сохранено!");
     }
     public void restoreTree(){
+        FileSaver fileSaver = new FileSaver();
         this.familyTree = fileSaver.restore();
         System.out.println("Дерево загружено!");
     }
@@ -65,7 +67,7 @@ public class Service {
     public void saveTree(){
         FileSaver fileSaver = new FileSaver();
         fileSaver.setPath(filePath);
-        fileSaver.save(familyTree);
+        fileSaver.save(this.familyTree);
     }
     public void loadTree(){
         FileSaver fileSaver = new FileSaver();
@@ -80,6 +82,10 @@ public class Service {
     }
     public void sortByAge(){
         familyTree.sortByBirsday();
+    }
+    public void setDeathDay(int humanId, LocalDate deathDay){
+        Human human = getHuman(humanId);
+        human.setDeathDay(deathDay);
     }
     
 
