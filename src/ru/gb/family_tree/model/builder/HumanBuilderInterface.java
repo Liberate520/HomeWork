@@ -7,4 +7,6 @@ import java.time.LocalDate;
 
 public interface HumanBuilderInterface {
     Human build(String lastName, String name, Gender gender, LocalDate birthDate);
+
+    void setStartId(long id);
 }

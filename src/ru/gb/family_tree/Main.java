@@ -4,12 +4,12 @@ import ru.gb.family_tree.model.FT.FamilyTreeItem;
 
 import ru.gb.family_tree.view.ConsoleUI;
 import ru.gb.family_tree.view.View;
-
+import ru.gb.family_tree.AppFactory;
 
 public class Main {
     public static <T extends FamilyTreeItem<T>> void main(String[] args) {
 
-        View view = new ConsoleUI();
+        View view = AppFactory.createView();
         view.start();
 
 //        service.addHuman("Шульга", "Анастасия", Gender.Female, LocalDate.of(1991,3,16));

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 public class Service {
     private FamilyTreeInterface<Human> familyTree;
     private HumanBuilderInterface humanBuilder;
-    private HumanBuilderFileHandler humanBuilderFileHandler;
     private FileHandler fileHandler;
     private String familyTreeFilePath;
     private String humanBuilderFilePath;
@@ -21,13 +20,13 @@ public class Service {
     public Service(FamilyTreeInterface<Human> familyTree, HumanBuilderInterface humanBuilder, String familyTreeFilePath, String humanBuilderFilePath) {
         this.familyTree = familyTree;
         this.humanBuilder = humanBuilder;
-        this.humanBuilderFileHandler = new HumanBuilderFileHandler();
         this.fileHandler = new FileHandler();
         this.familyTreeFilePath = familyTreeFilePath;
         this.humanBuilderFilePath = humanBuilderFilePath;
     }
 
-    public void addHuman(String lastName, String name, Gender gender, LocalDate birthDate){
+    public void addHuman(String lastName, String name, String genderInput, LocalDate birthDate) {
+        Gender gender = Gender.valueOf(genderInput.toLowerCase());
         Human human = humanBuilder.build(lastName, name, gender, birthDate);
         familyTree.addHuman(human);
         saveFamilyTree();
@@ -37,11 +36,11 @@ public class Service {
         return familyTree.findHumanByName(nameHuman);
     }
 
-    public void sortByName(){
+    public void sortByName() {
         familyTree.sortByName();
     }
 
-    public void sortByBirthDate(){
+    public void sortByBirthDate() {
         familyTree.sortByBirthDate();
     }
 
@@ -57,8 +56,7 @@ public class Service {
     public void saveFamilyTree() {
         try {
             fileHandler.saveFamilyTree(familyTree, familyTreeFilePath);
-            humanBuilderFileHandler.saveHumanBuilder(humanBuilder, humanBuilderFilePath);
-            System.out.println("FamilyTree и HumanBuilder сохранены в файлы: " + familyTreeFilePath + " и " + humanBuilderFilePath);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,32 +65,22 @@ public class Service {
     public void loadFamilyTree() {
         try {
             this.familyTree = fileHandler.loadFamilyTree(familyTreeFilePath);
-            this.humanBuilder = humanBuilderFileHandler.loadHumanBuilder(humanBuilderFilePath);
+            long maxId = familyTree.findMaxId();
+            humanBuilder.setStartId(maxId + 1); // Предположим, что у билдера есть метод setStartId
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Файл не найден или поврежден, создаем новое семейное древо.");
-            this.familyTree = new FamilyTree<>();
+                        this.familyTree = new FamilyTree<>();
             this.humanBuilder = new HumanBuilder();
             saveFamilyTree();
         }
     }
 
-    public void findHumanById(long id) {
-        System.out.println("Поиск человека с ID: " + id);
-        Human human = familyTree.findHumanById(id);
-        if (human != null) {
-            System.out.println("Найден человек: " + human);
-        } else {
-            System.out.println("Человек с ID " + id + " не найден.");
-        }
+    public Human findHumanById(long id) {
+        return familyTree.findHumanById(id);
     }
 
     public boolean delHuman(long id) {
-        System.out.println("Попытка удаления человека с ID: " + id);
         boolean result = familyTree.removeHumanById(id);
         if (result) {
-            System.out.println("Человек с ID " + id + " успешно удален.");
-        } else {
-            System.out.println("Человек с ID " + id + " не найден.");
             saveFamilyTree();
         }
         return result;

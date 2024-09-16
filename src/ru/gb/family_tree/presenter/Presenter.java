@@ -1,15 +1,9 @@
 package ru.gb.family_tree.presenter;
-
-import ru.gb.family_tree.model.FT.FamilyTree;
-import ru.gb.family_tree.model.FT.FamilyTreeInterface;
 import ru.gb.family_tree.model.Human.Gender;
-import ru.gb.family_tree.model.Human.Human;
 import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.view.View;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Presenter {
     private View view;
@@ -20,18 +14,24 @@ public class Presenter {
         this.service = service;
     }
 
-    public void addHuman(String lastName, String name, Gender gender, LocalDate birthDate) {
-        service.addHuman(lastName, name, gender, birthDate);
+    public void addHuman(String lastName, String name, String genderInput, String birthDateInput) {
+        LocalDate birthDate = LocalDate.parse(birthDateInput);
+        service.addHuman(lastName, name, genderInput, birthDate);
         getFamilyTree();
     }
 
-    public Human findHumanByName(String nameHuman){
-        return service.findHumanByName(nameHuman);
+    public void findHumanByName(String nameHuman){
+        var human = service.findHumanByName(nameHuman);
+        if (human != null){
+            view.printAnswer(human.toString());
+        }else {
+            view.printAnswer("Член семьи с указанным именем не найден");
+        }
     }
 
     public void getFamilyTree() {
-        FamilyTreeInterface familyTree = service.getFamilyTree();
-        List<Human> humanList = new ArrayList<>(familyTree.getHumanList());
+        var familyTree = service.getFamilyTree();
+        var humanList = familyTree.getHumanList();
         view.printAnswer(humanList.toString());
     }
 
@@ -60,15 +60,20 @@ public class Presenter {
 
     public void delHuman(long id) {
         service.delHuman(id);
-//        boolean success = service.delHuman(id);
-//        if (success) {
-//            view.printAnswer("Человек с ID " + id + " был успешно удален.");
-//        } else {
-//            view.printAnswer("Человек с ID " + id + " не найден.");
-//        }
+        boolean success = service.delHuman(id);
+        if (success) {
+            view.printAnswer("Человек с ID " + id + " был успешно удален.");
+        } else {
+            view.printAnswer("Человек с ID " + id + " не найден.");
+        }
     }
 
     public void findHumanById(long id) {
-        service.findHumanById(id);
+        var human = service.findHumanById(id);
+        if (human != null) {
+            view.printAnswer("Найден человек: " + human.toString());
+        } else {
+            view.printAnswer("Человек с ID " + id + " не найден.");
+        }
     }
 }

@@ -12,9 +12,5 @@ public interface FamilyTreeInterface<T> {
     void sortByBirthDate();
     List<T> getHumanList();
 
-    static <T extends FamilyTreeItem<T>> FamilyTreeInterface<T> createFamilyTree() {
-        return new FamilyTree<>();
-    }
-
-
+    long findMaxId();
 }

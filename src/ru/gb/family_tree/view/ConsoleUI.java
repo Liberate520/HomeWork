@@ -1,14 +1,6 @@
 package ru.gb.family_tree.view;
-
-import ru.gb.family_tree.model.FT.FamilyTree;
-import ru.gb.family_tree.model.FT.FamilyTreeInterface;
 import ru.gb.family_tree.model.Human.Gender;
-import ru.gb.family_tree.model.Human.Human;
-import ru.gb.family_tree.model.builder.HumanBuilder;
-import ru.gb.family_tree.model.builder.HumanBuilderInterface;
-import ru.gb.family_tree.model.service.Service;
 import ru.gb.family_tree.presenter.Presenter;
-
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -17,22 +9,16 @@ public class ConsoleUI implements View {
     private Presenter presenter;
     private boolean work;
     private MainMenu menu;
-    private Service service;
 
-    public ConsoleUI() {
+
+    public ConsoleUI(Presenter presenter) {
+        this.presenter = presenter;
         scanner = new Scanner(System.in);
         work = true;
         menu = new MainMenu(this);
 
-        String familyTreeFilePath = "familyTree.txt";
-        String humanBuilderFilePath = "humanBuilder.txt";
-        FamilyTreeInterface<Human> familyTree = new FamilyTree<>();
-        HumanBuilderInterface humanBuilder = new HumanBuilder();
-        Service service = new Service(familyTree, humanBuilder, "familyTree.txt", "humanBuilder.txt");
-
-        presenter = new Presenter(this, service);
-        loadFamilyTree();
     }
+
 
     @Override
     public void start() {
@@ -53,24 +39,19 @@ public class ConsoleUI implements View {
         String name = scanner.nextLine();
         System.out.println("Укажите пол (мужской/женский): ");
         String genderInput = scanner.nextLine().toLowerCase();
-        Gender gender = Gender.valueOf(genderInput);
+        Gender gender = Gender.valueOf(genderInput.toLowerCase());
         System.out.println("Введите дату рождения (ГГГГ-ММ-ДД): ");
         String birthDateInput = scanner.nextLine();
         LocalDate birthDate = LocalDate.parse(birthDateInput);
 
-        presenter.addHuman(lastName, name, gender, birthDate);
+        presenter.addHuman(lastName, name, genderInput, birthDateInput);
         saveFamilyTree();
     }
 
     public void findHumanByName() {
         System.out.println("Введите имя человека для поиска: ");
         String nameHuman = scanner.nextLine();
-        Human human = presenter.findHumanByName(nameHuman);
-        if (human != null) {
-            System.out.println("Найден член семьи: " + human);
-        } else {
-            System.out.println("Член семьи с таким именем не найден.");
-        }
+        presenter.findHumanByName(nameHuman);
     }
 
     public void findHumanById() {
@@ -127,5 +108,11 @@ public class ConsoleUI implements View {
         System.out.println("Введите ID человека, которого нужно удалить: ");
         long id = Long.parseLong(scanner.nextLine());
         presenter.delHuman(id);
+    }
+
+    public void setPresenter(Presenter presenter) {
+        this.presenter = presenter;
+
+        loadFamilyTree();
     }
 }

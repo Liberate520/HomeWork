@@ -15,6 +15,10 @@ public class HumanBuilder implements Serializable, HumanBuilderInterface {
         return new Human(genID++, lastName, name, gender, birthDate);
     }
 
+    public void setStartId(long id) {
+        this.genID = id;
+    }
+
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
         in.defaultReadObject();
     }
@@ -22,4 +26,6 @@ public class HumanBuilder implements Serializable, HumanBuilderInterface {
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
         out.defaultWriteObject();
     }
+
+
 }

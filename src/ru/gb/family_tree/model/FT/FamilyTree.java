@@ -72,7 +72,7 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
 
     }
 
-    public boolean removeHumanById(long id) {
+        public boolean removeHumanById(long id) {
         T human = findHumanById(id);
         if (human != null) {
             T mother = human.getMother();
@@ -117,6 +117,14 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
     }
 
     @Override
+    public long findMaxId() {
+        return humanList.stream()
+                .mapToLong(T::getId) // Предполагаем, что у T есть метод getId
+                .max()
+                .orElse(0); // Если список пуст, возвращаем 0
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new HumanIterator(humanList);
     }
@@ -127,5 +135,7 @@ public class FamilyTree<T extends FamilyTreeItem<T>> implements Serializable, It
                 "Список членов семьи: " + humanList +
                 '}';
     }
+
+
 
 }
