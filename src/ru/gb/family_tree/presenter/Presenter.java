@@ -29,10 +29,23 @@ public class Presenter {
         }
     }
 
-    public void getFamilyTree() {
-        var familyTree = service.getFamilyTree();
-        var humanList = familyTree.getHumanList();
-        view.printAnswer(humanList.toString());
+    public void findHumanById(long id) {
+        var human = service.findHumanById(id);
+        if (human != null) {
+            view.printAnswer("Найден человек: " + human.toString());
+        } else {
+            view.printAnswer("Человек с ID " + id + " не найден.");
+        }
+    }
+
+    public void delHuman(long id) {
+        service.delHuman(id);
+        boolean success = service.delHuman(id);
+        if (success) {
+            view.printAnswer("Человек с ID " + id + " был успешно удален.");
+        } else {
+            view.printAnswer("Человек с ID " + id + " не найден.");
+        }
     }
 
     public void sortByBirthDate() {
@@ -50,30 +63,19 @@ public class Presenter {
         getFamilyTree();
     }
 
-    public void saveFamilyTree() {
-        service.saveFamilyTree();
+    public void getFamilyTree() {
+        var familyTree = service.getFamilyTree();
+        var humanList = familyTree.getHumanList();
+        view.printAnswer(humanList.toString());
     }
 
     public void loadFamilyTree() {
         service.loadFamilyTree();
     }
 
-    public void delHuman(long id) {
-        service.delHuman(id);
-        boolean success = service.delHuman(id);
-        if (success) {
-            view.printAnswer("Человек с ID " + id + " был успешно удален.");
-        } else {
-            view.printAnswer("Человек с ID " + id + " не найден.");
-        }
+    public void saveFamilyTree() {
+        service.saveFamilyTree();
     }
 
-    public void findHumanById(long id) {
-        var human = service.findHumanById(id);
-        if (human != null) {
-            view.printAnswer("Найден человек: " + human.toString());
-        } else {
-            view.printAnswer("Человек с ID " + id + " не найден.");
-        }
-    }
+
 }

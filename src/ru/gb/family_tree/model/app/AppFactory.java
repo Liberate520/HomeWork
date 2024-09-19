@@ -1,4 +1,4 @@
-package ru.gb.family_tree;
+package ru.gb.family_tree.model.app;
 
 import ru.gb.family_tree.model.FT.FamilyTree;
 import ru.gb.family_tree.model.FT.FamilyTreeInterface;

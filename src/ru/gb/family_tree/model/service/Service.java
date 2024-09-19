@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class Service {
     private FamilyTreeInterface<Human> familyTree;
     private HumanBuilderInterface humanBuilder;
-    private FileHandler fileHandler;
+    private FileHandlerInterface fileHandler;
     private String familyTreeFilePath;
     private String humanBuilderFilePath;
 
@@ -36,6 +36,10 @@ public class Service {
         return familyTree.findHumanByName(nameHuman);
     }
 
+    public Human findHumanById(long id) {
+        return familyTree.findHumanById(id);
+    }
+
     public void sortByName() {
         familyTree.sortByName();
     }
@@ -44,13 +48,21 @@ public class Service {
         familyTree.sortByBirthDate();
     }
 
-    public FamilyTreeInterface<Human> getFamilyTree() {
-        return familyTree;
+    public boolean delHuman(long id) {
+        boolean result = familyTree.removeHumanById(id);
+        if (result) {
+            saveFamilyTree();
+        }
+        return result;
     }
 
     public void addChildById(long parentId, long childId) {
         familyTree.addChildById(parentId, childId);
         saveFamilyTree();
+    }
+
+    public FamilyTreeInterface<Human> getFamilyTree() {
+        return familyTree;
     }
 
     public void saveFamilyTree() {
@@ -66,23 +78,13 @@ public class Service {
         try {
             this.familyTree = fileHandler.loadFamilyTree(familyTreeFilePath);
             long maxId = familyTree.findMaxId();
-            humanBuilder.setStartId(maxId + 1); // Предположим, что у билдера есть метод setStartId
+            humanBuilder.setStartId(maxId + 1);
         } catch (IOException | ClassNotFoundException e) {
-                        this.familyTree = new FamilyTree<>();
+            this.familyTree = new FamilyTree<>();
             this.humanBuilder = new HumanBuilder();
             saveFamilyTree();
         }
     }
 
-    public Human findHumanById(long id) {
-        return familyTree.findHumanById(id);
-    }
 
-    public boolean delHuman(long id) {
-        boolean result = familyTree.removeHumanById(id);
-        if (result) {
-            saveFamilyTree();
-        }
-        return result;
-    }
 }

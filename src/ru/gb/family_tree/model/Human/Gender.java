@@ -1,8 +1,10 @@
 package ru.gb.family_tree.model.Human;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Gender implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final Gender Male = new Gender("мужской");

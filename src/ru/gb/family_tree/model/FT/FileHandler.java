@@ -5,7 +5,7 @@ import ru.gb.family_tree.model.builder.HumanBuilder;
 
 import java.io.*;
 
-public class FileHandler<T extends FamilyTreeItem<T>>  implements Writable {
+public class FileHandler<T extends FamilyTreeItem<T>>  implements Writable, FileHandlerInterface {
     public void saveFamilyTree(FamilyTreeInterface<Human> familyTree, String filePath) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(familyTree);

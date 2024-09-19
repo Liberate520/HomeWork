@@ -19,7 +19,6 @@ public class ConsoleUI implements View {
 
     }
 
-
     @Override
     public void start() {
         System.out.println("Привествую!");
@@ -60,8 +59,10 @@ public class ConsoleUI implements View {
         presenter.findHumanById(id);
     }
 
-    public void getFamilyTree() {
-        presenter.getFamilyTree();
+    public void delHuman(){
+        System.out.println("Введите ID человека, которого нужно удалить: ");
+        long id = Long.parseLong(scanner.nextLine());
+        presenter.delHuman(id);
     }
 
     public void sortByBirthDate() {
@@ -74,26 +75,6 @@ public class ConsoleUI implements View {
         getFamilyTree();
     }
 
-    public void finish() {
-        saveFamilyTree();
-        System.out.println("До новых встреч!");
-        work = false;
-    }
-
-    @Override
-    public void printAnswer(String answer) {
-        System.out.println(answer);
-    }
-
-    private void saveFamilyTree() {
-        presenter.saveFamilyTree();
-    }
-
-    private void loadFamilyTree() {
-        presenter.loadFamilyTree();
-    }
-
-
     public void addChildByID() {
         System.out.println("Введите ID родителя: ");
         long parentId = Long.parseLong(scanner.nextLine());
@@ -104,10 +85,22 @@ public class ConsoleUI implements View {
         saveFamilyTree();
     }
 
-    public void delHuman(){
-        System.out.println("Введите ID человека, которого нужно удалить: ");
-        long id = Long.parseLong(scanner.nextLine());
-        presenter.delHuman(id);
+    public void getFamilyTree() {
+        presenter.getFamilyTree();
+    }
+
+    private void saveFamilyTree() {
+        presenter.saveFamilyTree();
+    }
+
+    private void loadFamilyTree() {
+        presenter.loadFamilyTree();
+    }
+
+    public void finish() {
+        saveFamilyTree();
+        System.out.println("До новых встреч!");
+        work = false;
     }
 
     public void setPresenter(Presenter presenter) {
@@ -115,4 +108,10 @@ public class ConsoleUI implements View {
 
         loadFamilyTree();
     }
+
+    @Override
+    public void printAnswer(String answer) {
+        System.out.println(answer);
+    }
+
 }
