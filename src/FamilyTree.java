@@ -1,16 +1,18 @@
+import java.io.Serializable;
+import java.lang.foreign.SegmentAllocator;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
     static long treeId = 0;
     private List<Human> familyTree;
 
     public FamilyTree() {
-        this(new ArrayList<>());
+        this(new ArrayList<Human>());
     }
 
-    public FamilyTree(ArrayList humans) {
+    public FamilyTree(ArrayList<Human> humans) {
         this.familyTree = humans;
     }
 
@@ -18,7 +20,7 @@ public class FamilyTree {
         boolean res = false;
         if (!familyTree.contains(human)) {
             familyTree.add(human);
-            this.treeId += 1;
+            treeId += 1;
             human.setId(treeId);
             addToFamily(human);
             res = true;
@@ -57,16 +59,20 @@ public class FamilyTree {
     }
 
     public String findByName(String name) {
-        String humanToFind = "no data found";
+        StringBuilder humanToFind = new StringBuilder();
+//        String humanToFind = "no data found";
         for (Human human : familyTree) {
+            if (human.getName().equalsIgnoreCase(name)) {
+                humanToFind.append(human.toString());
+            }
             if (human.getFirstName().equalsIgnoreCase(name)) {
-                humanToFind = human.toString();
+                humanToFind.append(human.toString());
             }
-            if (human.getSecondName().equalsIgnoreCase(name)) {
-                humanToFind = human.toString();
-            }
+            else if (human.getSecondName().equalsIgnoreCase(name)) {
+                humanToFind.append(human.toString());
+            } else humanToFind.append("no data found");
         }
-        return humanToFind;
+        return humanToFind.toString();
     }
 
     public String findByBirthDate(LocalDate birthDate) {
