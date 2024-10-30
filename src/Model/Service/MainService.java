@@ -2,13 +2,14 @@ package Model.Service;
 
 import Model.FamilyTree.FamilyTree;
 import Model.FamilyTree.LeafFamilyTree;
+import Model.Human.Gender;
 import Model.Writer.FileHandler;
 
-public class Service<E extends LeafFamilyTree<E>> {
+public class MainService<E extends LeafFamilyTree<E>> {
     private static int genLeafID;
     public FamilyTree<E> familyTree;
 
-    public Service() {familyTree = new FamilyTree<E>();}
+    public MainService() {familyTree = new FamilyTree<E>();}
     public boolean addLeaf(E leaf){
         if (leaf.getId() == -1){
             leaf.setId(genLeafID++);
@@ -33,4 +34,5 @@ public class Service<E extends LeafFamilyTree<E>> {
         FileHandler handler = new FileHandler();
         return (FamilyTree) handler.read(filePath);
     }
+
 }

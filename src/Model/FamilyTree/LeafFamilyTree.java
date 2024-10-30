@@ -1,12 +1,13 @@
 package Model.FamilyTree;
 
-import Model.Human.Human;
+import Model.Human.Gender;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 public interface LeafFamilyTree<E> extends Serializable {
+
     String getFirstName();
 
     String getLastName();
@@ -24,12 +25,21 @@ public interface LeafFamilyTree<E> extends Serializable {
     void setDod(LocalDate dod);
     E getSpouse();
 
+    Gender getGender();
+
     Long getAge();
     String toString();
     String getStatus();
     String getChildrenInfo();
-    String getInfo();
+//    String getInfo();
 
 
-    void setSpouse(E human);
+    void setSpouse(E spouse);
+
+    void setChildren(E child);
+
+    void setFather(E father);
+
+    void setMother(E mother);
+
 }

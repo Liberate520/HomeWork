@@ -1,10 +1,12 @@
 package Model.FamilyTree;
+import Model.Service.LeafService;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.io.Serializable;
 
 public class FamilyTree<E extends LeafFamilyTree<E>> implements Iterable<E>, Serializable{
-
+    LeafService<E> leafService = new LeafService<>();
 //    private long idLeaf;
     private final LinkedList<E> familyTree;
     public FamilyTree(){
@@ -14,10 +16,7 @@ public class FamilyTree<E extends LeafFamilyTree<E>> implements Iterable<E>, Ser
     public int count(){
         return this.familyTree.size();
     }
-//    public long createID(){
-//        this.idLeaf++;
-//        return this.idLeaf;
-//    }
+
     public void addHuman(E human){
             this.familyTree.add(human);
     }
@@ -28,17 +27,15 @@ public class FamilyTree<E extends LeafFamilyTree<E>> implements Iterable<E>, Ser
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
         for (E human : familyTree){
-            stringBuilder.append(human.toString());
+            stringBuilder.append(leafService.getInfoLeaf(human));
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
     public E getHuman(long id){
-        if (id<1 && id > this.count()){
-            return null;
-        } else{
-            return this.familyTree.get((int) (id-1));
-        }
+            return this.getFamilyTree().
+                    stream().filter(i -> i.getId() == id).
+                    findFirst().orElse(null);
     }
     public Iterator<E> iterator(){return new FamilyTreeIterator(familyTree);}
 

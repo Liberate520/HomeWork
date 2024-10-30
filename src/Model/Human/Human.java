@@ -1,13 +1,11 @@
 package Model.Human;
 
 import Model.FamilyTree.LeafFamilyTree;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class Human implements Serializable, LeafFamilyTree {
+public class Human implements LeafFamilyTree<Human> {
     private long id = -1;
     private final String firstName;
     private final String lastName;
@@ -27,7 +25,7 @@ public class Human implements Serializable, LeafFamilyTree {
         this.dod = dod;
         this.mother = mother;
         this.father = father;
-        this.childrens = new LinkedList<Human>();
+        this.childrens = new LinkedList<>();
     }
 
     public Human(String firstName, String lastName, Gender gender, LocalDate dob) {
@@ -60,6 +58,10 @@ public class Human implements Serializable, LeafFamilyTree {
         return childrens;
     }
 
+    public Gender getGender(){
+        return gender;
+    }
+
     public LocalDate getDob() {
         return dob;
     }
@@ -75,17 +77,8 @@ public class Human implements Serializable, LeafFamilyTree {
         this.id = id;
     }
 
-    public boolean setChildren(Human children) {
-        if (!childrens.contains(children)) {
-            this.childrens.add(children);
-            if (this.gender.equals(Gender.male) && children.father == null) {
-                children.father = this;
-            } else if (this.gender.equals(Gender.female) && children.mother == null) {
-                children.mother = this;
-            }
-        return true;
-        }
-        else return false;
+    public void setChildren(Human children) {
+        this.childrens.add(children);
     }
 
 
@@ -93,18 +86,12 @@ public class Human implements Serializable, LeafFamilyTree {
         this.dod = dod;
     }
 
-    public boolean addParent(Human parent) {
-        if (this.getMother() == null && parent.gender.equals(Gender.female)) {
-            this.mother = parent;
-            boolean x = parent.setChildren(this);
-            return true;
-        }
-        else if (this.getFather() == null && parent.gender.equals(Gender.male)) {
-            this.father = parent;
-            boolean x = parent.setChildren(this);
-            return true;
-        }
-        else return false;
+
+    public void setMother(Human mother){
+        this.mother = mother;
+    }
+    public void setFather(Human father){
+        this.father = father;
     }
 
     public List<Human> getParents(){
@@ -127,10 +114,10 @@ public class Human implements Serializable, LeafFamilyTree {
     }
 
 
-    @Override
-    public String toString() {
-        return this.getInfo();
-    }
+//    @Override
+//    public String toString() {
+//        return this.getInfo();
+//    }
 
     public String getStatus(){
         if (dod == null){
@@ -150,65 +137,56 @@ public class Human implements Serializable, LeafFamilyTree {
         }
         return stringBuilder.toString();
     }
-
-    public List<String> getGrandParents(){
-        List<String> list = new LinkedList<String>();
-        if (this.mother != null && !this.mother.getParents().isEmpty()){
-            for (Human human : this.mother.getParents()){
-                list.add(human.getFirstName());
-            }
-        }
-        if (this.father != null && !this.father.getParents().isEmpty()){
-            for (Human human : this.father.getParents()){
-                list.add(human.getFirstName());
-            }
-
-        }
-        return list;
-    }
-
-
-    public String getInfo(){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("ID: ");
-        stringBuilder.append(id);
-        stringBuilder.append(", Name: ");
-        stringBuilder.append(firstName);
-        stringBuilder.append(", Last Name: ");
-        stringBuilder.append(lastName);
-        stringBuilder.append(", Age: ");
-        stringBuilder.append(this.getAge());
-        stringBuilder.append(", Father: ");
-        if (father != null) stringBuilder.append(father.firstName);
-        else stringBuilder.append("N/D");
-        stringBuilder.append(", Mother: ");
-        if (mother != null) stringBuilder.append(mother.firstName);
-        else stringBuilder.append("N/D");
-        stringBuilder.append(", Spouse: ");
-        if (spouse != null) stringBuilder.append(spouse.firstName);
-        else stringBuilder.append("N/D");
-        stringBuilder.append(", Children: ");
-        stringBuilder.append(this.getChildrenInfo());
-        stringBuilder.append(", Status: ");
-        stringBuilder.append(this.getStatus());
-
-        return stringBuilder.toString();
-    }
-
-    @Override
-    public void setSpouse(Object human) {
-        this.spouse = (Human) human;
-    }
-
-
-//    public boolean setSpouse(Human spouse) {
-//        if (spouse.getSpouse() == null && this.getSpouse() == null){
-//            this.spouse = spouse;
-//            return true;
-//        }
-//        else return false;
 //
+//    public List<String> getGrandParents(){
+//        List<String> list = new LinkedList<String>();
+//        if (this.mother != null && !this.mother.getParents().isEmpty()){
+//            for (Human human : this.mother.getParents()){
+//                list.add(human.getFirstName());
+//            }
+//        }
+//        if (this.father != null && !this.father.getParents().isEmpty()){
+//            for (Human human : this.father.getParents()){
+//                list.add(human.getFirstName());
+//            }
+//
+//        }
+//        return list;
 //    }
+
+
+//    public String getInfo(){
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("ID: ");
+//        stringBuilder.append(id);
+//        stringBuilder.append(", Name: ");
+//        stringBuilder.append(firstName);
+//        stringBuilder.append(", Last Name: ");
+//        stringBuilder.append(lastName);
+//        stringBuilder.append(", Age: ");
+//        stringBuilder.append(this.getAge());
+//        stringBuilder.append(", Father: ");
+//        if (father != null) stringBuilder.append(father.firstName);
+//        else stringBuilder.append("N/D");
+//        stringBuilder.append(", Mother: ");
+//        if (mother != null) stringBuilder.append(mother.firstName);
+//        else stringBuilder.append("N/D");
+//        stringBuilder.append(", Spouse: ");
+//        if (spouse != null) stringBuilder.append(spouse.firstName);
+//        else stringBuilder.append("N/D");
+//        stringBuilder.append(", Children: ");
+//        stringBuilder.append(this.getChildrenInfo());
+//        stringBuilder.append(", Status: ");
+//        stringBuilder.append(this.getStatus());
+//
+//        return stringBuilder.toString();
+//    }
+
+//    @Override
+    public void setSpouse(Human spouse) {
+        this.spouse = spouse;
+    }
+
 
     public Human getSpouse() {
         return spouse;

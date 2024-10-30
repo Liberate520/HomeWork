@@ -1,14 +1,13 @@
-import Model.FamilyTree.FamilyTree;
 import Model.Human.Human;
 import Model.Human.Gender;
-import Model.Service.Service;
-import Model.Writer.FileHandler;
-
+import Model.Service.LeafService;
+import Model.Service.MainService;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 public class Main {
 
     public static void main(String[] args) {
+        LeafService<Human> leafService = new LeafService<>();
         String filePath = "src\\familyTree.txt";
         Human dima = new Human("Dmitry",
                 "Yermoshin",
@@ -17,22 +16,19 @@ public class Main {
         Human daniil = new Human("Daniil",
                 "Yermoshin", Gender.male,
                 LocalDate.of(1984, 8, 28));
-        daniil.setChildren(dima);
-        dima.addParent(daniil);
-        System.out.println(dima.getInfo());
-        System.out.println(daniil.getInfo());
-        System.out.println(daniil.getChildren());
+
         Human alina = new Human("Alina",
                 "Yermoshina",
                 Gender.female,
                 LocalDate.of(1986, 10, 8));
         Human yulia = new Human("Yulia", "Yermoshina",
                 Gender.female, LocalDate.of(2018, 2, 7));
-        daniil.setChildren(yulia);
-        alina.setChildren(yulia);
-        dima.addParent(alina);
-        Service service = new Service();
-//        FamilyTree familyTree = new FamilyTree();
+        leafService.setBond(daniil, yulia);
+        leafService.setBond(alina, yulia);
+        leafService.setBond(daniil, dima);
+        leafService.setBond(alina, dima);
+        MainService service = new MainService();
+
         Human tatyana1 = new Human("Tatyana", "Yermoshina",
                 Gender.female, LocalDate.of(1950, 7, 24));
         Human tatyana2 = new Human("Tatyana", "Kuznetsova",
@@ -47,16 +43,17 @@ public class Main {
                 Gender.male, LocalDate.of(1982, 3, 29));
         Human pavel = new Human("Pavel", "Yermoshin",
                 Gender.male, LocalDate.of(1979, 11, 15));
-        boolean x = tatyana1.setChildren(daniil);
-        x = fedor.setChildren(daniil);
-        x = tatyana1.setChildren(alexey);
-        x = fedor.setChildren(alexey);
-        x = tatyana1.setChildren(kirill);
-        x = fedor.setChildren(kirill);
-        x = tatyana1.setChildren(pavel);
-        x = fedor.setChildren(pavel);
-        x = tatyana2.setChildren(alina);
-        x = alexander.setChildren(alina);
+        leafService.setBond(tatyana1, daniil);
+        leafService.setBond(tatyana1, alexey);
+        leafService.setBond(tatyana1, pavel);
+        leafService.setBond(tatyana1, kirill);
+        leafService.setBond(fedor, daniil);
+        leafService.setBond(fedor, alexey);
+        leafService.setBond(fedor, pavel);
+        leafService.setBond(fedor, kirill);
+        leafService.setBond(tatyana2, alina);
+        leafService.setBond(alexander, alina);
+
         boolean y = service.addLeaf(dima);
         y = service.addLeaf(yulia);
         y = service.addLeaf(alina);
@@ -72,10 +69,10 @@ public class Main {
         z = service.setWedding(tatyana1, fedor);
         z = service.setWedding(tatyana2, alexander);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         service.saveTree(service.familyTree, filePath);
         for (Object human: service.familyTree){
-            System.out.println(human);
+            System.out.println(leafService.getInfoLeaf((Human) human));
         }
         service.familyTree.sortByAge();
         System.out.println();
