@@ -18,4 +18,9 @@ public void showTree(){
     }
 }
 
+    @Override
+    public String toString() {
+        return String.format("Семьи:", familys);
+    }
+    
 }

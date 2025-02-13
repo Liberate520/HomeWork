@@ -1,7 +1,10 @@
 
+import java.io.Serializable;
 
 
-public class Human {
+
+
+public class Human implements Serializable {
     Integer age;
     String name;
     gender sex;
@@ -18,6 +21,6 @@ public class Human {
         return name + " " + lastName; 
     }
 
-    
+  
     
 }

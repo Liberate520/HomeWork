@@ -1,4 +1,10 @@
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,11 +13,12 @@ import java.util.List;
 import java.util.Map.Entry;
 
 
-public class Family {
+public class Family implements Serializable {
 
     Human wife, husband;
     String family;
     AbstractMap<Human,List<Human>> childParents = new HashMap<>();
+    ArrayList<Human> children = new ArrayList<>();
 
     public Family(String family){
         this.family = family;
@@ -31,6 +38,7 @@ public class Family {
         List<Human> parents = new ArrayList<>();
         parents.addAll(Arrays.asList(father,mother));
         childParents.put(child, parents);
+        children.add(child);
         child.lastName = family;
         parents.clear();
     }
@@ -46,9 +54,31 @@ public class Family {
         System.out.println(String.format(" %s.", children.getLast()));
     }
 
+    
+
     private void getChildren(List<Human> children) {
         for (Entry<Human,List<Human>> elem : childParents.entrySet()) {
             children.add(elem.getKey());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Муж: %s; Жена: %s; \n" +
+                            "Дети: %s", husband, wife, children);
+    }
+    
+
+       public Family read(String path) throws IOException, ClassNotFoundException {
+           try (ObjectInputStream intput = new ObjectInputStream(new FileInputStream(path))) {
+            Family smt = (Family) intput.readObject();
+               return smt;
+        }
+   }
+
+    public void write (Family elem, String file) throws IOException, ClassNotFoundException{
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+            out.writeObject(elem);
         }
     }
 }
