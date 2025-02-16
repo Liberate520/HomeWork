@@ -1,3 +1,4 @@
+package src;
 
 import java.util.LinkedList;
 
@@ -14,7 +15,6 @@ public void addNewFamily(Family e){
 public void showTree(){
     for (Family e : familys) {
         System.out.println(String.format("Семья: %s", e.family));
-        e.showFamily();
     }
 }
 

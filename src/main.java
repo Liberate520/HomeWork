@@ -1,3 +1,4 @@
+package src;
 
 import java.io.IOException;
 
@@ -19,7 +20,6 @@ public class main {
         System.out.println(Ivanovs.husband);
         Ivanovs.newChild(Oleg, Olga, Ivan);
         Ivanovs.newChild(Oleg, Olga, Andrey);
-        Ivanovs.showFamily();
         System.out.println(Ivanovs);
         FamilyTree TreeOfIvanovs = new FamilyTree();
         TreeOfIvanovs.addNewFamily(Ivanovs);

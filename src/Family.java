@@ -1,3 +1,5 @@
+package src;
+
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -5,20 +7,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
+import java.util.Iterator;
 
 
-public class Family implements Serializable {
+public class Family implements Serializable, Iterable<Human> {
 
     Human wife, husband;
     String family;
-    AbstractMap<Human,List<Human>> childParents = new HashMap<>();
     ArrayList<Human> children = new ArrayList<>();
+    ArrayList<Human> fam = new ArrayList<>();
 
     public Family(String family){
         this.family = family;
@@ -27,40 +25,22 @@ public class Family implements Serializable {
     public void setWife(Human wife) {
         this.wife = wife;
         wife.lastName = family;
+        this.fam.add(wife);
     }
 
     public void setHusband(Human husband) {
         this.husband = husband;
         husband.lastName = family;
+        this.fam.add(husband);
     }
 
     public void newChild(Human father, Human mother, Human child){
-        List<Human> parents = new ArrayList<>();
-        parents.addAll(Arrays.asList(father,mother));
-        childParents.put(child, parents);
+        child.father = father;
+        child.mother = mother;
         children.add(child);
         child.lastName = family;
-        parents.clear();
     }
 
-    public void showFamily(){
-        List<Human> children = new ArrayList<>();
-        System.out.println(String.format("Муж: %s;", husband));
-        System.out.println(String.format("Жена: %s; \nДети: ", wife));
-        getChildren(children);
-        for (int i = 0; i < children.size()-1; i++) {
-            System.out.println(String.format("%s, ", children.get(i)));
-        }
-        System.out.println(String.format(" %s.", children.getLast()));
-    }
-
-    
-
-    private void getChildren(List<Human> children) {
-        for (Entry<Human,List<Human>> elem : childParents.entrySet()) {
-            children.add(elem.getKey());
-        }
-    }
 
     @Override
     public String toString() {
@@ -80,6 +60,14 @@ public class Family implements Serializable {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
             out.writeObject(elem);
         }
+    }
+
+
+
+    @Override
+    public Iterator<Human> iterator() {
+        // TODO Auto-generated method stub
+        return fam.iterator();
     }
 }
 /*
